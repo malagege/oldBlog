@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="要做blog移轉，筆記先存檔…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="electron 新手轉exe筆記">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/logdown/2017-09-15-2463354/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="要做blog移轉，筆記先存檔…">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-04-03T18:12:18.224Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="electron 新手轉exe筆記">
+<meta name="twitter:description" content="要做blog移轉，筆記先存檔…">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/logdown/2017-09-15-2463354/"/>
+
+
+
+
+
+  <title>electron 新手轉exe筆記 | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/logdown/2017-09-15-2463354/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">electron 新手轉exe筆記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-15T15:11:00+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/electron/" itemprop="url" rel="index">
+                    <span itemprop="name">electron</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>要做blog移轉，筆記先存檔…<br><a id="more"></a></p>
+<p><a href="https://github.com/pfan123/electron-docs" target="_blank" rel="noopener">https://github.com/pfan123/electron-docs</a></p>
+<p>Logdown<br><a href="https://logdown.com/account/posts/2463354/edit" target="_blank" rel="noopener">https://logdown.com/account/posts/2463354/edit</a><br>electron-packager<br><a href="https://github.com/pfan123/electron-docs" target="_blank" rel="noopener">https://github.com/pfan123/electron-docs</a><br>Getting Started for Electron<br><a href="https://help.syncfusion.com/js/electron" target="_blank" rel="noopener">https://help.syncfusion.com/js/electron</a><br>demian85/electron-chat-app-demo: Simple Electron Chat App Demo (evaluation task)<br><a href="https://github.com/demian85/electron-chat-app-demo" target="_blank" rel="noopener">https://github.com/demian85/electron-chat-app-demo</a><br>pfan123/electron-docs: electron-docs学习文档<br><a href="https://github.com/pfan123/electron-docs" target="_blank" rel="noopener">https://github.com/pfan123/electron-docs</a><br>Squirrel.Windows/5-updating.md at master · Squirrel/Squirrel.Windows<br><a href="https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/getting-started/5-updating.md" target="_blank" rel="noopener">https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/getting-started/5-updating.md</a></p>
+<p>chat package.json</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">  &quot;express&quot;: &quot;4.14.0&quot;,</span><br><span class="line">  &quot;marked&quot;: &quot;^0.3.6&quot;,</span><br><span class="line">  &quot;socket.io&quot;: &quot;1.4.8&quot;,</span><br><span class="line">  &quot;babel-cli&quot;: &quot;^6.16.0&quot;,</span><br><span class="line">  &quot;babel-preset-react&quot;: &quot;^6.16.0&quot;,</span><br><span class="line">  &quot;electron&quot;: &quot;^1.4.2&quot;,</span><br><span class="line">  &quot;eslint&quot;: &quot;^3.7.0&quot;,</span><br><span class="line">  &quot;eslint-config-airbnb&quot;: &quot;^12.0.0&quot;,</span><br><span class="line">  &quot;eslint-plugin-import&quot;: &quot;^1.16.0&quot;,</span><br><span class="line">  &quot;eslint-plugin-jsx-a11y&quot;: &quot;^2.2.2&quot;,</span><br><span class="line">  &quot;eslint-plugin-react&quot;: &quot;^6.3.0&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">1181 verbose unbuild rmStuff eslint-config-airbnb@12.0.0 from C:\Users\ADMINI~1\AppData\Local\Temp\electron-packager\win32-x64\electron-chat-app-demo-win32-x64\resources\app\node_modules</span><br><span class="line">1182 verbose unbuild rmStuff in node_modules</span><br><span class="line">1183 info lifecycle eslint-config-airbnb@12.0.0~postuninstall: eslint-config-airbnb@12.0.0</span><br><span class="line">1184 silly unbuild eslint@3.19.0</span><br><span class="line">1185 info lifecycle eslint@3.19.0~preuninstall: eslint@3.19.0</span><br><span class="line">1186 info lifecycle eslint@3.19.0~uninstall: eslint@3.19.0</span><br><span class="line">1187 verbose unbuild rmStuff eslint@3.19.0 from C:\Users\ADMINI~1\AppData\Local\Temp\electron-packager\win32-x64\electron-chat-app-demo-win32-x64\resources\app\node_modules</span><br><span class="line">1188 verbose unbuild rmStuff in node_modules</span><br><span class="line">1189 verbose unlock done using C:\Users\Administrator\AppData\Roaming\npm-cache\_locks\staging-834cabcd517fd52e.lock for C:\Users\ADMINI~1\AppData\Local\Temp\electron-packager\win32-x64\electron-chat-app-demo-win32-x64\resources\app\node_modules\.staging</span><br><span class="line">1190 verbose stack Error: May not delete: C:\Users\ADMINI~1\AppData\Local\Temp\electron-packager\win32-x64\electron-chat-app-demo-win32-x64\resources\app\node_modules\.bin</span><br><span class="line">1190 verbose stack     at gentlyRm (C:\Program Files\nodejs\node_modules\npm\lib\utils\gently-rm.js:49:15)</span><br><span class="line">1190 verbose stack     at gentlyRmBinRoot (C:\Program Files\nodejs\node_modules\npm\lib\unbuild.js:86:12)</span><br><span class="line">1190 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)</span><br><span class="line">1190 verbose stack     at LOOP (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\chain.js:7:26)</span><br><span class="line">1190 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\chain.js:18:7</span><br><span class="line">1190 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\utils\gently-rm.js:70:40</span><br><span class="line">1190 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\chain.js:16:22</span><br><span class="line">1190 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\iferr\index.js:11:16</span><br><span class="line">1190 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\graceful-fs\polyfills.js:284:29</span><br><span class="line">1190 verbose stack     at FSReqWrap.oncomplete (fs.js:153:21)</span><br><span class="line">1191 verbose cwd C:\Users\ADMINI~1\AppData\Local\Temp\electron-packager\win32-x64\electron-chat-app-demo-win32-x64\resources\app</span><br><span class="line">1192 verbose Windows_NT 10.0.15063</span><br><span class="line">1193 verbose argv &quot;C:\\Program Files\\nodejs\\node.exe&quot; &quot;C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js&quot; &quot;prune&quot; &quot;--production&quot;</span><br><span class="line">1194 verbose node v8.5.0</span><br><span class="line">1195 verbose npm  v5.3.0</span><br><span class="line">1196 error May not delete: C:\Users\ADMINI~1\AppData\Local\Temp\electron-packager\win32-x64\electron-chat-app-demo-win32-x64\resources\app\node_modules\.bin</span><br><span class="line">1197 verbose exit [ 1, true ]</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/11/logdown/2017-09-11-erection-of-https/" rel="next" title="Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)">
+                <i class="fa fa-chevron-left"></i> Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/19/logdown/2017-09-19-2496270/" rel="prev" title="electron 新手做Tray通知(以electron-chat-app-demo為例)">
+                electron 新手做Tray通知(以electron-chat-app-demo為例) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,TLS,SSL,Let’s Encrypt,Certbot," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近想讓動物機增加安全性，有看到免費的letsencrypt教學文 又好像有工具自動產生憑證 以經有看到勇者試了，當然也要嘗試:P">
+<meta name="keywords" content="Linux,TLS,SSL,Let’s Encrypt,Certbot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)">
+<meta property="og:url" content="http://yoursite.com/2017/09/11/logdown/2017-09-11-erection-of-https/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近想讓動物機增加安全性，有看到免費的letsencrypt教學文 又好像有工具自動產生憑證 以經有看到勇者試了，當然也要嘗試:P">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-04-03T18:12:06.976Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)">
+<meta name="twitter:description" content="最近想讓動物機增加安全性，有看到免費的letsencrypt教學文 又好像有工具自動產生憑證 以經有看到勇者試了，當然也要嘗試:P">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/11/logdown/2017-09-11-erection-of-https/"/>
+
+
+
+
+
+  <title>Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證) | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/logdown/2017-09-11-erection-of-https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-11T13:09:00+08:00">
+                2017-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 最近想讓動物機增加安全性，有看到免費的letsencrypt教學文<br> 又好像有工具自動產生憑證<br> 以經有看到勇者試了，當然也要嘗試:P</p>
+<a id="more"></a>
+<p>本來想說應該會很順利吧<br>結果沒有…</p>
+<p><a href="https://www.weblink.idv.tw/2017/74" target="_blank" rel="noopener">申請Let’s Encrypt－以Raspberry Pi為例 </a>，<br>再做這篇的時候會跳出版本太舊</p>
+<p><code>sudo ./certbot-auto --apache --domain=**網域** certonly</code></p>
+<p>動物機好像說版本太舊</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get remove libaugeas0 augeas-tools libaugeas-dev</span><br><span class="line">$ sudo apt-get install libreadline6-dev libxml2-dev</span><br><span class="line">$ cd /tmp</span><br><span class="line">$ wget http://download.augeas.net/augeas-1.6.0.tar.gz</span><br><span class="line">$ tar -zxf augeas-1.6.0.tar.gz</span><br><span class="line">$ cd augeas-1.6.0</span><br><span class="line">$ CFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; CPPFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; ./configure</span><br><span class="line">$ CFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; CPPFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+<p><a href="https://lordofthemoon.com/blog/2016/08/lets-encrypt-for-the-raspberry-pi-model-b/" target="_blank" rel="noopener">Let’s Encrypt for the Raspberry Pi (model B)</a><br>後來找上面那個方法還是沒用<br>最後<del>賭</del>升級<code>sudo apt-get dist-uprgrade</code><br>升上去就可以跑了…</p>
+<p>但會出現Timeout狀態<br>(之後有找到原因我的AP的 Virtual Server沒有設定443PORT)<br>不過我最後設完，apache設定沒有自動增加ssl設定</p>
+<p>看來有機會還是要開一個apache筆記</p>
+<p>最後看到另一篇用webroot方法，<a href="https://ezbox.idv.tw/52/free-ssl-lets-encrypt-certbot/" target="_blank" rel="noopener">免費的 SSL 憑證：Let’s Encrypt！</a></p>
+<p><code>sudo ./certbot-auto certonly --webroot -d ***網域***</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Saving debug log to /var/log/letsencrypt/letsencrypt.log</span><br><span class="line">Plugins selected: Authenticator webroot, Installer None</span><br><span class="line">Obtaining a new certificate</span><br><span class="line">Performing the following challenges:</span><br><span class="line">http-01 challenge for ****</span><br><span class="line"></span><br><span class="line">Select the webroot for ****</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">1: Enter a new webroot</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Press 1 [enter] to confirm the selection (press &apos;c&apos; to cancel):</span><br><span class="line"></span><br><span class="line">** Invalid input **</span><br><span class="line">Press 1 [enter] to confirm the selection (press &apos;c&apos; to cancel): 1</span><br><span class="line">Input the webroot for ******: (Enter &apos;c&apos; to cancel):</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"> does not exist or is not a directory</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Input the webroot for ********: (Enter &apos;c&apos; to cancel): /var/www/</span><br><span class="line">Waiting for verification...</span><br><span class="line">Cleaning up challenges</span><br><span class="line"></span><br><span class="line">IMPORTANT NOTES:</span><br><span class="line"> - Congratulations! Your certificate and chain have been saved at:</span><br><span class="line">   /etc/letsencrypt/live/****/fullchain.pem</span><br><span class="line">   Your key file has been saved at:</span><br><span class="line">   /etc/letsencrypt/live/****/privkey.pem</span><br><span class="line">   Your cert will expire on 2017-12-10. To obtain a new or tweaked</span><br><span class="line">   version of this certificate in the future, simply run certbot-auto</span><br><span class="line">   again. To non-interactively renew *all* of your certificates, run</span><br><span class="line">   &quot;certbot-auto renew&quot;</span><br><span class="line"> - If you like Certbot, please consider supporting our work by:</span><br><span class="line"></span><br><span class="line">   Donating to ISRG / Let&apos;s Encrypt:   https://letsencrypt.org/donate</span><br><span class="line">   Donating to EFF:                    https://eff.org/donate-le</span><br></pre></td></tr></table></figure>
+<p>看到這個就表示成功</p>
+<blockquote>
+<p> 申請的網域的SSL憑證<br>cert.pem: Your domain’s certificate<br> Let’s Encrypt 的 鏈證書<br>chain.pem: The Let’s Encrypt chain certificate<br> cert.pem 和 chain.pem 的合併檔<br>fullchain.pem: cert.pem and chain.pem combined<br> SSL憑證的私鑰，千千萬萬要飽護好<br>privkey.pem: Your certificate’s private key</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:443&gt;</span><br><span class="line">        ServerAdmin service@**網域**</span><br><span class="line">        DocumentRoot /var/www/</span><br><span class="line">        ServerName **網域**</span><br><span class="line">        ServerAlias **網域**</span><br><span class="line"></span><br><span class="line">        SSLEngine On</span><br><span class="line">        SSLCertificateFile /etc/letsencrypt/live/**網域**/cert.pem</span><br><span class="line">        SSLCertificateKeyFile /etc/letsencrypt/live/**網域**/privkey.pem</span><br><span class="line">        SSLCertificateChainFile /etc/letsencrypt/live/**網域**/chain.pem</span><br><span class="line">        SSLCACertificateFile /etc/letsencrypt/live/**網域**/fullchain.pem</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<p><code>Invalid command &#39;SSLEngine&#39;, perhaps misspelled or defined by a module not included in the server configuration</code><br>這個錯誤訊息是  沒有啟用ssl模組<br>啟用<br><code>sudo a2dismod ssl</code></p>
+<p>但後來發現怎麼很多沒有教關閉<br>爬文一下就找到了</p>
+<p>關閉<br><code>sudo a2enmod ssl</code></p>
+<p>因為先前發現不能連webroot可以產生<br>但還是連不到443port<br>後來發現是Virtual Server沒設<br>設定完OK<br>想說試試第一個方法跑一次<br>結果跑出另一個憑證</p>
+<p>爬文找刪除<br>直接刪資料夾是不能解決問題的XD</p>
+<h1 id="回收憑證"><a href="#回收憑證" class="headerlink" title="回收憑證"></a>回收憑證</h1><p>　　<code>certbot revoke --cert-path /etc/letsencrypt/live/example.com/cert.pem</code></p>
+<p>　　<code>certbot delete --cert-name example.com</code></p>
+<p>Ubuntu 12.04啟用apache的 SSL<br><a href="http://kirby86a.pixnet.net/blog/post/95136568-ubuntu-12.04%E5%95%9F%E7%94%A8apache%E7%9A%84-ssl" target="_blank" rel="noopener">http://kirby86a.pixnet.net/blog/post/95136568-ubuntu-12.04%E5%95%9F%E7%94%A8apache%E7%9A%84-ssl</a><br>免費的 SSL 憑證：Let’s Encrypt！<br><a href="https://ezbox.idv.tw/52/free-ssl-lets-encrypt-certbot/" target="_blank" rel="noopener">https://ezbox.idv.tw/52/free-ssl-lets-encrypt-certbot/</a></p>
+<p>番外apache mod rewrite功能</p>
+<p><code>sudo a2enmod rewrite</code></p>
+<p>or</p>
+<p><code>sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load</code></p>
+<p>在/etc/apache2/sites-enabled/000-default</p>
+<p><code>AllowOverride None</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond  %&#123;HTTPS&#125; !=on</span><br><span class="line">#RewriteRule  ^(.*) https://%&#123;SERVER_NAME&#125;$1 [L,R]</span><br><span class="line"> RewriteRule ^(.*)$ https://%&#123;HTTP_HOST&#125;%&#123;REQUEST_URI&#125; [L,R]</span><br></pre></td></tr></table></figure>
+<p>這樣http就能導到https了</p>
+<p>我有擋國外IP要怎麼自動更新憑證</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">/usr/local/bin/certbot-auto renew --quiet</span><br><span class="line">sh /etc/network/iptables.sh</span><br></pre></td></tr></table></figure>
+<p>自動更新憑證<br><code>30 2 1 * * sh /root/ssl_bot.sh</code></p>
+<p><strong>2017/10/17</strong><br>發現網站憑證日期怎麼沒有更新…<br>以為設定有問題<br>Google查了一下</p>
+<blockquote>
+<p>這是因為certbot-auto renew 會讀取 /etc/letsencrypt/renewal 下的設定<br>檢查每個授權是否距離過期時間只剩30天，如果是才執行更新<br>( 參考：<a href="https://tiicle.com/items/15/ubuntu-1404-using-the-let-s-configuration-is-security-to-encrypt-nginx-https-server" target="_blank" rel="noopener">https://tiicle.com/items/15/ubuntu-1404-using-the-let-s-configuration-is-security-to-encrypt-nginx-https-server</a> )</p>
+</blockquote>
+<p>待下個月再檢查</p>
+<p>參考來源: <a href="https://www.tipga.com/e/597853093286fe2b8f7a56e5" target="_blank" rel="noopener">https://www.tipga.com/e/597853093286fe2b8f7a56e5</a></p>
+<hr>
+<p>在RT1900AC上使用Let’s Encrypt的SSL憑證-半殘版<br><a href="https://darkdragon-darkdragon.blogspot.com/2017/05/rt1900aclets-encryptssl.html" target="_blank" rel="noopener">https://darkdragon-darkdragon.blogspot.com/2017/05/rt1900aclets-encryptssl.html</a><br>NGINX 使用 Let’s Encrypt 免費 SSL 憑證設定 HTTPS 安全加密網頁教學<br><a href="https://blog.gtwang.org/linux/secure-nginx-with-lets-encrypt-ssl-certificate-on-ubuntu-and-debian/" target="_blank" rel="noopener">https://blog.gtwang.org/linux/secure-nginx-with-lets-encrypt-ssl-certificate-on-ubuntu-and-debian/</a></p>
+<p>啟動 Ubuntu 下的 Apache mod rewrite 與相關設定<br><a href="http://asika.windspeaker.co/post/3471-start-with-ubuntu-apache-the-mod-the-rewrite-set" target="_blank" rel="noopener">http://asika.windspeaker.co/post/3471-start-with-ubuntu-apache-the-mod-the-rewrite-set</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/TLS/" rel="tag"># TLS</a>
+          
+            <a href="/tags/SSL/" rel="tag"># SSL</a>
+          
+            <a href="/tags/Let’s-Encrypt/" rel="tag"># Let’s Encrypt</a>
+          
+            <a href="/tags/Certbot/" rel="tag"># Certbot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/10/logdown/2017-09-10-2375763/" rel="next" title="修改iptables設定筆記">
+                <i class="fa fa-chevron-left"></i> 修改iptables設定筆記
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/15/logdown/2017-09-15-2463354/" rel="prev" title="electron 新手轉exe筆記">
+                electron 新手轉exe筆記 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#回收憑證"><span class="nav-number">1.</span> <span class="nav-text">回收憑證</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

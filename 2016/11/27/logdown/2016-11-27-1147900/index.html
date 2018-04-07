@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="爬蟲,Kimono," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前幾天看到無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料就想之前的Kimono但現在官網要收掉這個服務不過有官網友留下kimono desktop edition 離線版程式使用(只有MAC和Windows)目前不知道有沒有辦法移植到Linux上面玩      kimonolabs.com kimono for desktop     Create APIs with Ch">
+<meta name="keywords" content="爬蟲,Kimono">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不用程式寫爬蟲記錄(Kimono Desktop)">
+<meta property="og:url" content="http://yoursite.com/2016/11/27/logdown/2016-11-27-1147900/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="前幾天看到無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料就想之前的Kimono但現在官網要收掉這個服務不過有官網友留下kimono desktop edition 離線版程式使用(只有MAC和Windows)目前不知道有沒有辦法移植到Linux上面玩      kimonolabs.com kimono for desktop     Create APIs with Ch">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/4xl8wny7RwWp7WYxUY9l_k1.png">
+<meta property="og:image" content="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/hJk274dUQWevRRnnZ50e_k2.png">
+<meta property="og:image" content="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/yIHnKB00Ta6ZkdISSZ7V_k3.png">
+<meta property="og:image" content="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/0oIV98RT9K5ZIULkibM3_k4.png">
+<meta property="og:image" content="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/lHJfAnWyQ2C8wbHncI7t_k5.png">
+<meta property="og:updated_time" content="2018-04-03T17:51:51.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="不用程式寫爬蟲記錄(Kimono Desktop)">
+<meta name="twitter:description" content="前幾天看到無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料就想之前的Kimono但現在官網要收掉這個服務不過有官網友留下kimono desktop edition 離線版程式使用(只有MAC和Windows)目前不知道有沒有辦法移植到Linux上面玩      kimonolabs.com kimono for desktop     Create APIs with Ch">
+<meta name="twitter:image" content="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/4xl8wny7RwWp7WYxUY9l_k1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/27/logdown/2016-11-27-1147900/"/>
+
+
+
+
+
+  <title>不用程式寫爬蟲記錄(Kimono Desktop) | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/27/logdown/2016-11-27-1147900/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">不用程式寫爬蟲記錄(Kimono Desktop)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-11-27T05:25:00+08:00">
+                2016-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/實用工具/" itemprop="url" rel="index">
+                    <span itemprop="name">實用工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前幾天看到<a href="http://blog.infographics.tw/2016/11/google-spreadsheet-data-scraping/" target="_blank" rel="noopener">無痛爬梳自己來，用 Google Spreadsheet 爬取網頁資料</a><br>就想之前的Kimono<br>但現在官網要收掉這個服務<br>不過有官網友留下kimono desktop edition 離線版程式使用(只有MAC和Windows)<br>目前不知道有沒有辦法移植到Linux上面玩</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th>kimonolabs.com</th>
+<th>kimono for desktop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create APIs with Chrome Ext</td>
+<td>v</td>
+<td></td>
+</tr>
+<tr>
+<td>Create APIs with Bookmarklet</td>
+<td>v</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Manage and configure APIs</td>
+<td>v</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Run APIs manually</td>
+<td>v</td>
+<td></td>
+</tr>
+<tr>
+<td>Run APIs on a schedule</td>
+<td>v</td>
+<td></td>
+</tr>
+<tr>
+<td>Cloud hosted API endpoints</td>
+<td></td>
+<td>v (w/ Firebase)</td>
+</tr>
+<tr>
+<td>Crawling &amp; Pagination</td>
+<td>v</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Get data behind a login</td>
+<td>v</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Kimono Apps / Blocks</td>
+<td>v</td>
+<td></td>
+</tr>
+<tr>
+<td>Google sheets integration</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Webhooks &amp; Email alerts</td>
+<td>v</td>
+</tr>
+<tr>
+<td>Save scraped data to file</td>
+<td>v</td>
+<td>v</td>
+</tr>
+<tr>
+<td>CSV &amp; RSS output</td>
+<td>v</td>
+<td>v</td>
+</tr>
+</tbody>
+</table>
+<p>當然離線版沒有這麼多功能，可惜沒有排程可以用<br>但發現他程式透過NodeJS去寫，好像可以透過API方式去實作<br>在此先記錄一下筆記</p>
+<a id="more"></a>
+<p>首先，安裝kimono desktop edition 和chrome extension<br>相關套件網路就一堆，我就先偷懶拉o.&lt;<br><a href="http://blog.infographics.tw/2015/04/crawl-data-without-code-using-kimonolabs/" target="_blank" rel="noopener">不會寫程式也能爬，Kimono 幫你把網站變資料</a></p>
+<p>API建立好，開kimono desktop edition可以看到剛剛家加入的任務<br><img src="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/4xl8wny7RwWp7WYxUY9l_k1.png" alt="k1.png"></p>
+<p><img src="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/hJk274dUQWevRRnnZ50e_k2.png" alt="k2.png"></p>
+<p><img src="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/yIHnKB00Ta6ZkdISSZ7V_k3.png" alt="k3.png"><br>按下Start Crawl 可執行爬蟲</p>
+<p>後來我發現kimono desktop edition可以開啟開發者工具<br>發現執行Web API可以跑爬蟲<br>看來排程執行爬蟲指日可待XD</p>
+<p><img src="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/0oIV98RT9K5ZIULkibM3_k4.png" alt="k4.png"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /ws/startcrawl/ HTTP/1.1</span><br><span class="line">Host: localhost:3000</span><br><span class="line">Origin: http://localhost:3000</span><br><span class="line">X-DevTools-Emulate-Network-Conditions-Client-Id: 93A1E1D6-2642-4DD4-84B2-5BAE0E75261C</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) kimono-desktop/1.0.5 Chrome/45.0.2454.85 Electron/0.35.4 Safari/537.36</span><br><span class="line">Content-Type: application/json;charset=UTF-8</span><br><span class="line">Referer: http://localhost:3000/apis/b8ed4oy2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-TW</span><br><span class="line">Cache-Control: no-cache</span><br><span class="line">Postman-Token: 0b770020-6467-cff2-5923-6300dc330def</span><br><span class="line"></span><br><span class="line">&#123;&quot;apiid&quot;:&quot;b8ed4oy2&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://user-image.logdown.io/user/8284/blog/8171/post/1147900/lHJfAnWyQ2C8wbHncI7t_k5.png" alt="k5.png"></p>
+<p>看爬蟲API任務的狀態WEB API</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬蟲/" rel="tag"># 爬蟲</a>
+          
+            <a href="/tags/Kimono/" rel="tag"># Kimono</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/02/logdown/2016-10-02-javascript-closure-note/" rel="next" title="[JavaScript]閉包筆記記錄">
+                <i class="fa fa-chevron-left"></i> [JavaScript]閉包筆記記錄
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/02/logdown/2016-12-02-1163133/" rel="prev" title="用Qunit驗證身份證">
+                用Qunit驗證身份證 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="為什麼能用document.form1.username這個東西? 這個困擾我很久…，在這公司這幾年常常看到舊的code，從不解用成習慣同事也不知道為什麼，古早人都是這樣寫之前有找，但沒有找到相關資訊…今天花一些時間找到資料，終於找到為什麼 平常見網路教使用document.form1.elements[&amp;#39;username&amp;#39;]或document.forms[&amp;#39;form1&amp;#">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JS]為什麼能用document.form1.username呢?">
+<meta property="og:url" content="http://yoursite.com/2018/01/15/logdown/2018-01-15-4769676/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="為什麼能用document.form1.username這個東西? 這個困擾我很久…，在這公司這幾年常常看到舊的code，從不解用成習慣同事也不知道為什麼，古早人都是這樣寫之前有找，但沒有找到相關資訊…今天花一些時間找到資料，終於找到為什麼 平常見網路教使用document.form1.elements[&amp;#39;username&amp;#39;]或document.forms[&amp;#39;form1&amp;#">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-04-03T18:25:09.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[JS]為什麼能用document.form1.username呢?">
+<meta name="twitter:description" content="為什麼能用document.form1.username這個東西? 這個困擾我很久…，在這公司這幾年常常看到舊的code，從不解用成習慣同事也不知道為什麼，古早人都是這樣寫之前有找，但沒有找到相關資訊…今天花一些時間找到資料，終於找到為什麼 平常見網路教使用document.form1.elements[&amp;#39;username&amp;#39;]或document.forms[&amp;#39;form1&amp;#">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/15/logdown/2018-01-15-4769676/"/>
+
+
+
+
+
+  <title>[JS]為什麼能用document.form1.username呢? | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/15/logdown/2018-01-15-4769676/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[JS]為什麼能用document.form1.username呢?</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-15T12:06:00+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>為什麼能用document.form1.username這個東西?</p>
+<p>這個困擾我很久…，在這公司這幾年<br>常常看到舊的code，從不解用成習慣<br>同事也不知道為什麼，古早人都是這樣寫<br>之前有找，但沒有找到相關資訊…<br>今天花一些時間找到資料，終於找到為什麼</p>
+<p>平常見網路教使用<code>document.form1.elements[&#39;username&#39;]</code>或<code>document.forms[&#39;form1&#39;].elements[&#39;uername&#39;]</code>.<br>公司常見寫法<code>document.form1.username</code>，只知道form1是用name不是用id去命名的<br>一直思考到今日，我又繼續查</p>
+<a id="more"></a>
+<h1 id="JavaScript-Properties"><a href="#JavaScript-Properties" class="headerlink" title="JavaScript Properties"></a>JavaScript Properties</h1><p>今天爬到<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Working_with_Objects#%E7%B5%A6%E7%89%A9%E4%BB%B6%E5%B1%AC%E4%BB%B6%E7%B7%A8%E7%B4%A2%E5%BC%95" target="_blank" rel="noopener">物件的使用 - JavaScript | MDN</a>這篇</p>
+<blockquote>
+<p>The exception to this rule is objects reflected from HTML, such as the forms array. You can always refer to objects in these arrays by either their ordinal number (based on where they appear in the document) or their name (if defined). For example, if the second <form> tag in a document has a NAME attribute of “myForm”, you can refer to the form as document.forms[1] or document.forms[“myForm”] or document.myForm.</form></p>
+</blockquote>
+<p>當下嘗試寫下面code<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a = [];</span><br><span class="line">a[&apos;length&apos;];</span><br><span class="line">//return 0</span><br><span class="line">//常見的a.length</span><br></pre></td></tr></table></figure></p>
+<p>竟然能work</p>
+<p>看到這篇我晃然大悟…</p>
+<h2 id="今天我終於還債了，開心-D"><a href="#今天我終於還債了，開心-D" class="headerlink" title="今天我終於還債了，開心:D"></a>今天我終於還債了，開心:D</h2><h3 id="簡單深入了解"><a href="#簡單深入了解" class="headerlink" title="簡單深入了解"></a>簡單深入了解</h3><p><code>document.forms</code>傳回<a href="https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLCollection" target="_blank" rel="noopener">HTMLCollection</a>東西<br>HTMLCollection在W3C文件可以看見</p>
+<blockquote>
+<p>element = collection[name]<br>    Returns the first element with ID or name name from the collection.</p>
+</blockquote>
+<p><a href="https://dom.spec.whatwg.org/#htmlcollection" target="_blank" rel="noopener">DOM Standard</a></p>
+<p>所以<code>document.forms.(name)</code>跟<code>document.forms.(id)</code>都可以抓到</p>
+<p>做到這邊我發現怪怪的…<br><code>document.(form1)</code>怎麼可以抓到name，但不能抓到ID<br>不過先排除HTMLCollection一樣問題</p>
+<p>直接找W3C文件Document文件<a href="https://html.spec.whatwg.org/multipage/dom.html#dom-document-nameditem-filter" target="_blank" rel="noopener">Named elements</a></p>
+<blockquote>
+<ol>
+<li>Exposed embed, form, iframe, img, or exposed object elements that have a name content attribute whose value is name, or</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>Exposed object elements that have an id content attribute whose value is name, or</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>img elements that have an id content attribute whose value is name, and that have a non-empty name content attribute present also.</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li>An embed or object element is said to be exposed if it has no exposed object ancestor, and, for object elements, is additionally either not showing its fallback content or has no object or embed descendants.</li>
+</ol>
+</blockquote>
+<p>看了文件驚呆了，原來不是只有name會抓，object的id也會抓，還有img有id跟name的時候，才會在<code>document.(id)</code>出現<br><em>WTF</em>這什麼鬼?! 不過文件規定是這樣應該就沒錯了…，不知道這樣設計是運用在什麼地方<br>至少不會再踩到雷了吧XD</p>
+<p>再來是Form文件<a href="https://html.spec.whatwg.org/multipage/forms.html#dom-form-nameditem" target="_blank" rel="noopener">HTML Standard</a><br>id跟name都能吃到，詳細就自己去看</p>
+<h3 id="20180124-發現window也跟document一樣有帶有屬性-HTMLCollection"><a href="#20180124-發現window也跟document一樣有帶有屬性-HTMLCollection" class="headerlink" title="20180124 發現window也跟document一樣有帶有屬性[HTMLCollection]"></a>20180124 發現window也跟document一樣有帶有<code>屬性</code>[HTMLCollection]</h3><p>難怪平常看到form1，可以正常跑，是因為抓到<code>window</code>變數<br>突然恍然大悟，window.(id)可以抓到我設定的<input id="(id)"></p>
+<hr>
+<h2 id="BTW"><a href="#BTW" class="headerlink" title="BTW"></a>BTW</h2><p>其實找超久的，原本從MDN裡的document,form手冊看<br>沒有看到我要的，我又從W3C找有沒有相關內容<br>結果還是沒有…，不過好在爬到MDN<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Working_with_Objects#%E7%B5%A6%E7%89%A9%E4%BB%B6%E5%B1%AC%E4%BB%B6%E7%B7%A8%E7%B4%A2%E5%BC%95" target="_blank" rel="noopener">物件的使用 - JavaScript | MDN</a>這篇<br>為什麼許多教學文不會教<code>document.form1.username</code>?</p>
+<h3 id="因為這都是JavaScript裡基礎的東西"><a href="#因為這都是JavaScript裡基礎的東西" class="headerlink" title="因為這都是JavaScript裡基礎的東西"></a>因為這都是JavaScript裡基礎的東西</h3><p>看到都快要去跪鍵盤了orz</p>
+<p>參考來源：<br><a href="https://www.w3schools.com/js/js_properties.asp" target="_blank" rel="noopener">JavaScript Properties</a><br><a href="https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLCollection" target="_blank" rel="noopener">HTMLCollection - Web APIs | MDN</a><br><a href="https://pjchender.blogspot.com/2015/11/javascript.html" target="_blank" rel="noopener">[筆記]用javascript來取得表單元素內容的值(javascript取值) ~ PJCHENder<br>那些沒告訴你的小細節</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/14/logdown/2018-01-14-docker-permission-issues/" rel="next" title="Docker權限問題">
+                <i class="fa fa-chevron-left"></i> Docker權限問題
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/15/logdown/2018-01-15-4769997/" rel="prev" title="有關GET POST 傳輸內容">
+                有關GET POST 傳輸內容 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-Properties"><span class="nav-number">1.</span> <span class="nav-text">JavaScript Properties</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#今天我終於還債了，開心-D"><span class="nav-number">1.1.</span> <span class="nav-text">今天我終於還債了，開心:D</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#簡單深入了解"><span class="nav-number">1.1.1.</span> <span class="nav-text">簡單深入了解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20180124-發現window也跟document一樣有帶有屬性-HTMLCollection"><span class="nav-number">1.1.2.</span> <span class="nav-text">20180124 發現window也跟document一樣有帶有屬性[HTMLCollection]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BTW"><span class="nav-number">1.2.</span> <span class="nav-text">BTW</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#因為這都是JavaScript裡基礎的東西"><span class="nav-number">1.2.1.</span> <span class="nav-text">因為這都是JavaScript裡基礎的東西</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

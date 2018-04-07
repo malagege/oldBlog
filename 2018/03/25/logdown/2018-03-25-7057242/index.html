@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS,animation,SVG," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="例用CSS ANIMTION畫邊框https://jsbin.com/huteruhopa/edit?html,css,output上面例用CSS Animation做繪制邊框、填色動作參考了CSS + SVG stroke 動態描繪 | 前端，沒有極限 SVG 研究之路 (6) - stroke 邊框 - OXXO.STUDIO">
+<meta name="keywords" content="CSS,animation,SVG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="svg畫邊特效">
+<meta property="og:url" content="http://yoursite.com/2018/03/25/logdown/2018-03-25-7057242/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="例用CSS ANIMTION畫邊框https://jsbin.com/huteruhopa/edit?html,css,output上面例用CSS Animation做繪制邊框、填色動作參考了CSS + SVG stroke 動態描繪 | 前端，沒有極限 SVG 研究之路 (6) - stroke 邊框 - OXXO.STUDIO">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-04-03T18:28:02.940Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="svg畫邊特效">
+<meta name="twitter:description" content="例用CSS ANIMTION畫邊框https://jsbin.com/huteruhopa/edit?html,css,output上面例用CSS Animation做繪制邊框、填色動作參考了CSS + SVG stroke 動態描繪 | 前端，沒有極限 SVG 研究之路 (6) - stroke 邊框 - OXXO.STUDIO">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/25/logdown/2018-03-25-7057242/"/>
+
+
+
+
+
+  <title>svg畫邊特效 | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/25/logdown/2018-03-25-7057242/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">svg畫邊特效</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-25T16:34:00+08:00">
+                2018-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/網頁特效/" itemprop="url" rel="index">
+                    <span itemprop="name">網頁特效</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="例用CSS-ANIMTION畫邊框"><a href="#例用CSS-ANIMTION畫邊框" class="headerlink" title="例用CSS ANIMTION畫邊框"></a>例用CSS ANIMTION畫邊框</h1><p><a href="https://jsbin.com/huteruhopa/edit?html,css,output" target="_blank" rel="noopener">https://jsbin.com/huteruhopa/edit?html,css,output</a><br>上面例用CSS Animation做繪制邊框、填色動作<br>參考了<a href="https://wcc723.github.io/svg/2014/06/15/svg-css-stroke-animation/" target="_blank" rel="noopener">CSS + SVG stroke 動態描繪 | 前端，沒有極限</a></p>
+<p><a href="http://www.oxxostudio.tw/articles/201406/svg-06-stroke.html" target="_blank" rel="noopener">SVG 研究之路 (6) - stroke 邊框 - OXXO.STUDIO</a></p>
+<a id="more"></a>
+<h2 id="stroke-dasharray-虛線"><a href="#stroke-dasharray-虛線" class="headerlink" title="stroke-dasharray 虛線"></a>stroke-dasharray 虛線</h2><blockquote>
+<p>Value: none | &lt; dasharray&gt; | inherit<br><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray" target="_blank" rel="noopener">stroke-dasharray - SVG | MDN</a></p>
+</blockquote>
+<h2 id="什麼是-dasharray"><a href="#什麼是-dasharray" class="headerlink" title="什麼是 dasharray?"></a>什麼是 dasharray?</h2><blockquote>
+<p>stroke-dasharray是把stroke做成了是虛線的效果，線段會被拆成<strong>線段、空白、線段、空白</strong><br> 原本這句看不是很懂，但是從實側做一下<br> 就是 線段長度{1} 空白{0,1}<br> 當只有一個數字<br> 線段、空白都會設為一樣長度(有點像margin、padding)<br> 當然也可以設定不一樣<br> <code>100 20 30 20</code><br>‘stroke-dasharray’ controls the pattern of dashes and gaps used to stroke paths. <dasharray> contains a list of comma and/or white space separated <length>s and <percentage>s that specify the lengths of alternating dashes and gaps. If an odd number of values is provided, then the list of values is repeated to yield an even number of values. Thus, stroke-dasharray: 5,3,2 is equivalent to stroke-dasharray: 5,3,2,5,3,2.<br><a href="https://www.w3.org/TR/SVG11/painting.html#StrokeDashoffsetProperty" target="_blank" rel="noopener">Painting: Filling, Stroking and Marker Symbols – SVG 1.1 (Second Edition)</a></percentage></length></dasharray></p>
+</blockquote>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>好了，知道這樣還是沒法知道為什麼可以連線過去</p>
+<blockquote>
+<p>stroke-dashoffset屬性是將上面的虛線推移，兩者會有以下幾點特性：<br>   推移後，dasharray還是會保持循環。<br>   dashoffset的值不會大於dasharray。<br>   如果dashoffset 等於 dasharray，線段起始點會是空白。</p>
+</blockquote>
+<p>這當出原理看不是很了解<br>原來線長度是dasharray把<strong>線段、空白</strong>設定一樣長度<br>然後對dashoffset做位移動作<br>例如：<br>svg裡的line 500<br>dasharray線段500空白500<br>當你做dashoffset<br>自然而然沒有線，不過dashoffset超過500以上就會跑出來了<br>!!!!等等那不是就沒法做到畫線方法!!!!<br>但只要再把dasharray跟dashoffset設定2000<br>只要大於你的邊線長度就沒有問題了<br>知道原理真的豁然開朗XD</p>
+<p><a href="https://jsbin.com/duhudisifi/edit?html,css,output" target="_blank" rel="noopener">https://jsbin.com/duhudisifi/edit?html,css,output</a><br>小小的改造成慢慢消失</p>
+<h1 id="vivus-js"><a href="#vivus-js" class="headerlink" title="vivus.js"></a>vivus.js</h1><p>在網路上爬到<a href="http://www.htmleaf.com/html5/SVG/201501261279.html" target="_blank" rel="noopener">HTML5 SVG图形轮廓线条绘制动画插件-vivus_jQuery之家-自由分享jQuery、html5、css3的插件库</a><br>有中文翻譯…，果然有中文我才能吸收  orz</p>
+<blockquote>
+<p>下面是一些你在使用SVG文件时需要注意的问题：</p>
+<ul>
+<li>SVG必须以内联的方式放置在HTML文件中，另外不能使用javascript来操控它。</li>
+<li>所有的元素都必须有stroke属性而且不能填充图形。因为插件只是绘制图形的轮廓而不会去检查它的颜色。例如：fill: “none”; ，stroke: “#FFF”;。</li>
+<li>你应该避免创建隐藏的SVG元素。Vivus会在执行动画前过滤掉一些不合格的元素。如果隐藏SVG没有被过滤掉，在执行路径动画时将会出现一些空白区域和缝隙。</li>
+<li>不允许使用text元素，它们不能被转换为path元素。</li>
+</ul>
+</blockquote>
+<p><a href="http://nora-anime.net/" target="_blank" rel="noopener">TVアニメ「ノラと皇女と野良猫ハート」公式サイト</a><br>左上角的logo是用兩個svg作處理<br>我原本以為那個vivus.js有做填色效果….<br>結果後來發現有兩個svg    orz</p>
+<p>這兩個方法差別一個是用css，另一個是用js<br>但原理都相同…<br>所以把<a href="http://nora-anime.net/" target="_blank" rel="noopener">TVアニメ「ノラと皇女と野良猫ハート」公式サイト</a>完整SVG<br>用到<a href="https://jsbin.com/huteruhopa/edit?html,css,output" target="_blank" rel="noopener">https://jsbin.com/huteruhopa/edit?html,css,output</a><br>改一下CSS的class  .cls-2<br>哈    也是可以用XD</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hi = <span class="keyword">new</span> Vivus(<span class="string">'hi-there'</span>, &#123;<span class="attr">duration</span>:  <span class="number">500</span>&#125; ,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">window</span>.console) &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'Animation finished. [log triggered from callback]'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+<p>然後這篇文章我放著多天…<br>終於補完了…</p>
+<p>參考來源：<br><a href="https://maxwellito.github.io/vivus/" target="_blank" rel="noopener">https://maxwellito.github.io/vivus/</a><br><a href="http://nora-anime.net/" target="_blank" rel="noopener">http://nora-anime.net/</a><br><a href="https://wcc723.github.io/svg/2014/06/15/svg-css-stroke-animation/" target="_blank" rel="noopener">CSS + SVG stroke 動態描繪 | 前端，沒有極限</a><br><a href="http://www.oxxostudio.tw/articles/201406/svg-06-stroke.html" target="_blank" rel="noopener">SVG 研究之路 (6) - stroke 邊框 - OXXO.STUDIO</a><br><a href="http://java.ctolib.com/NBSeven-vue-svg-draw.html" target="_blank" rel="noopener">一个封装了vivus的vue组件，能够播放svg路径动画 - JavaScript开发社区 | CTOLib码库</a><br><a href="https://www.jianshu.com/p/20bfeda0ba3b" target="_blank" rel="noopener">10 个非常有用的 SVG 动画的 JavaScript 库 - 简书</a><br><a href="https://codepen.io/creotip/pen/JodMVL" target="_blank" rel="noopener">Vivus js</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/animation/" rel="tag"># animation</a>
+          
+            <a href="/tags/SVG/" rel="tag"># SVG</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/25/logdown/2018-03-25-terminal-recording-tool-asciinema/" rel="next" title="終端機錄制工具 asciinema">
+                <i class="fa fa-chevron-left"></i> 終端機錄制工具 asciinema
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/25/logdown/2018-03-25-7057276/" rel="prev" title="css的小箭頭原理">
+                css的小箭頭原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#例用CSS-ANIMTION畫邊框"><span class="nav-number">1.</span> <span class="nav-text">例用CSS ANIMTION畫邊框</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stroke-dasharray-虛線"><span class="nav-number">1.1.</span> <span class="nav-text">stroke-dasharray 虛線</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什麼是-dasharray"><span class="nav-number">1.2.</span> <span class="nav-text">什麼是 dasharray?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.3.</span> <span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vivus-js"><span class="nav-number">2.</span> <span class="nav-text">vivus.js</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

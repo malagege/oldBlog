@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,usermod," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="修改使用者帳號資訊（管理者）  usermod -l newname username　　　　　# 變更使用者帳號名稱usermod -o -u 101 username　　　　　 # 變更使用者 UIDusermod -g users username　　　　　　# 變更使用者主要群組usermod -G mis,sales username　　　　# 變更使用者次要群組usermod -c">
+<meta name="keywords" content="Linux,usermod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 利用 usermod 修改使用者的參數和資料">
+<meta property="og:url" content="http://yoursite.com/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="修改使用者帳號資訊（管理者）  usermod -l newname username　　　　　# 變更使用者帳號名稱usermod -o -u 101 username　　　　　 # 變更使用者 UIDusermod -g users username　　　　　　# 變更使用者主要群組usermod -G mis,sales username　　　　# 變更使用者次要群組usermod -c">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-04-03T17:37:21.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 利用 usermod 修改使用者的參數和資料">
+<meta name="twitter:description" content="修改使用者帳號資訊（管理者）  usermod -l newname username　　　　　# 變更使用者帳號名稱usermod -o -u 101 username　　　　　 # 變更使用者 UIDusermod -g users username　　　　　　# 變更使用者主要群組usermod -G mis,sales username　　　　# 變更使用者次要群組usermod -c">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/"/>
+
+
+
+
+
+  <title>Linux 利用 usermod 修改使用者的參數和資料 | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux 利用 usermod 修改使用者的參數和資料</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-09-15T17:11:00+08:00">
+                2014-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>修改使用者帳號資訊（管理者）</p>
+</blockquote>
+<h1 id="usermod-l-newname-username-變更使用者帳號名稱"><a href="#usermod-l-newname-username-變更使用者帳號名稱" class="headerlink" title="usermod -l newname username　　　　　# 變更使用者帳號名稱"></a>usermod -l newname username　　　　　# 變更使用者帳號名稱</h1><h1 id="usermod-o-u-101-username-變更使用者-UID"><a href="#usermod-o-u-101-username-變更使用者-UID" class="headerlink" title="usermod -o -u 101 username　　　　　 # 變更使用者 UID"></a>usermod -o -u 101 username　　　　　 # 變更使用者 UID</h1><h1 id="usermod-g-users-username-變更使用者主要群組"><a href="#usermod-g-users-username-變更使用者主要群組" class="headerlink" title="usermod -g users username　　　　　　# 變更使用者主要群組"></a>usermod -g users username　　　　　　# 變更使用者主要群組</h1><h1 id="usermod-G-mis-sales-username-變更使用者次要群組"><a href="#usermod-G-mis-sales-username-變更使用者次要群組" class="headerlink" title="usermod -G mis,sales username　　　　# 變更使用者次要群組"></a>usermod -G mis,sales username　　　　# 變更使用者次要群組</h1><h1 id="usermod-c-“manager”-username-修改使用者註解內容"><a href="#usermod-c-“manager”-username-修改使用者註解內容" class="headerlink" title="usermod -c “manager” username　　　 # 修改使用者註解內容"></a>usermod -c “manager” username　　　 # 修改使用者註解內容</h1><h1 id="usermod-m-d-home-user-username-變更使用者家目錄路徑"><a href="#usermod-m-d-home-user-username-變更使用者家目錄路徑" class="headerlink" title="usermod -m -d /home/user username　# 變更使用者家目錄路徑"></a>usermod -m -d /home/user username　# 變更使用者家目錄路徑</h1><h1 id="usermod-s-usr-bin-ksh-username-變更使用者預設-Shell"><a href="#usermod-s-usr-bin-ksh-username-變更使用者預設-Shell" class="headerlink" title="usermod -s /usr/bin/ksh username　　 # 變更使用者預設 Shell"></a>usermod -s /usr/bin/ksh username　　 # 變更使用者預設 Shell</h1><h1 id="usermod-e-1-1-2010-username-變更使用者過期期限"><a href="#usermod-e-1-1-2010-username-變更使用者過期期限" class="headerlink" title="usermod -e 1/1/2010 username　　　　# 變更使用者過期期限"></a>usermod -e 1/1/2010 username　　　　# 變更使用者過期期限</h1><h1 id="usermod-p-FEeig-jYifke-username-變更使用者密碼"><a href="#usermod-p-FEeig-jYifke-username-變更使用者密碼" class="headerlink" title="usermod -p FEeig.jYifke username　　 # 變更使用者密碼"></a>usermod -p FEeig.jYifke username　　 # 變更使用者密碼</h1><p> 來源：<a href="http://blog.yam.com/gavint/article/23264761" target="_blank" rel="noopener">http://blog.yam.com/gavint/article/23264761</a></p>
+<blockquote>
+<p>Linux usermod -p 修改用户密码</p>
+</blockquote>
+<hr>
+<p>passwd也可以修改口令，但是这是一种交互式的方式，需要用户干预。当然也可以使用重定向或者管道向passwd喂数据，暂且不提。<br>linux下增加用户的命令是useradd，修改用户的命令是usermod，二者都有一个参数 –p，这个参数可以直接指定用户的口令，但是需要注意的是，这个口令并不是明文，而是经过加密的一个字串。<br>linux下可以用python编辑器通过编程的方法得到加密字串（linux下用python命令启动编辑器）：<br>下面是一个完整的过程，蓝色字体的是用户输入的命令，而红色的是系统输出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@linux ~]# python</span><br><span class="line">Python 2.3.4 (#1, Oct 26 2004, 16:42:40)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[GCC <span class="number">3.4</span><span class="number">.2</span> <span class="number">20041017</span> (Red Hat <span class="number">3.4</span><span class="number">.2</span><span class="number">-6.</span>fc3)] on linux2</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"> <span class="keyword">import</span> crypt;print(crypt.crypt(<span class="string">"your password"</span>,<span class="string">"ab"</span>));</span><br><span class="line">ab62Jfo2yjBEo</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>上面用户输入信息中的“your password”可以替换为需要加密的口令，“ab”可替换为任意的两个大小写字符或者数字，而“ab62Jfo2yjBEo”就是加密后的密文。<br>一个简单的例子如下：<br>useradd –p ab62Jfo2yjBEo testuser<br>usermod –p ab62Jfo2yjBEo testuser</p>
+<p>來源：<a href="http://www.cppblog.com/aaxron/archive/2010/12/02/135251.html" target="_blank" rel="noopener">http://www.cppblog.com/aaxron/archive/2010/12/02/135251.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/usermod/" rel="tag"># usermod</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/09/03/logdown/2014-09-03-2014-random-notes/" rel="next" title="2014  隨意筆記紀錄">
+                <i class="fa fa-chevron-left"></i> 2014  隨意筆記紀錄
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/10/23/logdown/2014-10-23-csstext-overflow-text-overflow-characters-too-often-substituted-for/" rel="prev" title="[CSS]text-overflow - 文字太常溢出的字元替代為...">
+                [CSS]text-overflow - 文字太常溢出的字元替代為... <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">169</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">143</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-l-newname-username-變更使用者帳號名稱"><span class="nav-number">1.</span> <span class="nav-text">usermod -l newname username　　　　　# 變更使用者帳號名稱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-o-u-101-username-變更使用者-UID"><span class="nav-number">2.</span> <span class="nav-text">usermod -o -u 101 username　　　　　 # 變更使用者 UID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-g-users-username-變更使用者主要群組"><span class="nav-number">3.</span> <span class="nav-text">usermod -g users username　　　　　　# 變更使用者主要群組</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-G-mis-sales-username-變更使用者次要群組"><span class="nav-number">4.</span> <span class="nav-text">usermod -G mis,sales username　　　　# 變更使用者次要群組</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-c-“manager”-username-修改使用者註解內容"><span class="nav-number">5.</span> <span class="nav-text">usermod -c “manager” username　　　 # 修改使用者註解內容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-m-d-home-user-username-變更使用者家目錄路徑"><span class="nav-number">6.</span> <span class="nav-text">usermod -m -d /home/user username　# 變更使用者家目錄路徑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-s-usr-bin-ksh-username-變更使用者預設-Shell"><span class="nav-number">7.</span> <span class="nav-text">usermod -s /usr/bin/ksh username　　 # 變更使用者預設 Shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-e-1-1-2010-username-變更使用者過期期限"><span class="nav-number">8.</span> <span class="nav-text">usermod -e 1/1/2010 username　　　　# 變更使用者過期期限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-p-FEeig-jYifke-username-變更使用者密碼"><span class="nav-number">9.</span> <span class="nav-text">usermod -p FEeig.jYifke username　　 # 變更使用者密碼</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
