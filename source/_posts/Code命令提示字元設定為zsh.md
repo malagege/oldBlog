@@ -1,9 +1,13 @@
 ---
 title: Code命令提示字元設定為zsh
+tags:
+  - zsh
+  - visual studio code
 comments: true
 categories: 實用工具
-tags: [zsh,visual studio code,]
+date: 2018-04-08 21:18:53
 ---
+
 
 這篇記錄我在code設定command line設定
 <!--more-->

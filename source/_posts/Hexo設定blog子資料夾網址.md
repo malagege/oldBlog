@@ -1,9 +1,15 @@
 ---
-title: 子資料夾網址
+title: Hexo設定blog子資料夾網址
 comments: true
-categories:
+date: 2018-04-08 21:18:09
 tags:
+categories:
 ---
+
+
+設定筆記紀錄
+
+<!--more-->
 
 
 ```yml
