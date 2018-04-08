@@ -2,8 +2,8 @@
 title: hexo在blog貼圖
 comments: true
 date: 2018-04-08 21:19:17
-tags:
-categories:
+tags: [hexo,img]
+categories: 寫程式一些事
 ---
 
 

@@ -46,4 +46,4 @@ categories:
 
 
 ##參考來源
-[snippet generator](https://pawelgrzybek.github.io/snippet-generator/?description=asset_link&tabtrigger=asset_link&snippet={%25+asset_link+%24{1%3Aurl}+%24{2%3Atitle}+%25}&mode=vscode)
+[snippet generator](https://pawelgrzybek.github.io/snippet-generator/?description=asset_link&tabtrigger=asset_link&snippet={% asset_link ${1:url} ${2:title} %}&mode=vscode)

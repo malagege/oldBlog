@@ -2,8 +2,8 @@
 title: git不需要打帳號密碼push(SSH)
 comments: true
 date: 2018-04-08 21:19:07
-tags:
-categories:
+tags: [git,ssh,bitbucket,github,hexo]
+categories: 寫程式一些事
 ---
 
 
