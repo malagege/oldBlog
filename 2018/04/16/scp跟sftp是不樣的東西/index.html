@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="scp,sftp," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="日誌荒廢無限久，不是我放棄，是我沒有動力寫。 六個月之前，有面試好幾間程式公司，雖然沒有什麼入取通知，不過讓我知道我哪裡有很多缺點地方。 由於工作回來就累了關係…，所以這裡也算半放生了一陣子，不過今天覺得難得沒什麼事，就打開來寫一寫。隨意筆記也放生了很久，有空也該補一補…">
+<meta name="description" content="最近在公司做使用PHP做sftp傳輸上去結果一直出問題使用ssh2_scp_send傳輸檔案公司內部測試可以傳檔案但別的主機卻不能">
+<meta name="keywords" content="scp,sftp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面試心得，從心開始">
-<meta property="og:url" content="./2016/04/15/logdown/2016-04-15-interview-the-center-began/index.html">
+<meta property="og:title" content="scp跟sftp是不樣的東西">
+<meta property="og:url" content="./2018/04/16/scp跟sftp是不樣的東西/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="日誌荒廢無限久，不是我放棄，是我沒有動力寫。 六個月之前，有面試好幾間程式公司，雖然沒有什麼入取通知，不過讓我知道我哪裡有很多缺點地方。 由於工作回來就累了關係…，所以這裡也算半放生了一陣子，不過今天覺得難得沒什麼事，就打開來寫一寫。隨意筆記也放生了很久，有空也該補一補…">
+<meta property="og:description" content="最近在公司做使用PHP做sftp傳輸上去結果一直出問題使用ssh2_scp_send傳輸檔案公司內部測試可以傳檔案但別的主機卻不能">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-04-03T09:08:38.000Z">
+<meta property="og:updated_time" content="2018-04-16T13:03:56.405Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="面試心得，從心開始">
-<meta name="twitter:description" content="日誌荒廢無限久，不是我放棄，是我沒有動力寫。 六個月之前，有面試好幾間程式公司，雖然沒有什麼入取通知，不過讓我知道我哪裡有很多缺點地方。 由於工作回來就累了關係…，所以這裡也算半放生了一陣子，不過今天覺得難得沒什麼事，就打開來寫一寫。隨意筆記也放生了很久，有空也該補一補…">
+<meta name="twitter:title" content="scp跟sftp是不樣的東西">
+<meta name="twitter:description" content="最近在公司做使用PHP做sftp傳輸上去結果一直出問題使用ssh2_scp_send傳輸檔案公司內部測試可以傳檔案但別的主機卻不能">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="./2016/04/15/logdown/2016-04-15-interview-the-center-began/"/>
+  <link rel="canonical" href="./2018/04/16/scp跟sftp是不樣的東西/"/>
 
 
 
 
 
-  <title>面試心得，從心開始 | 程式狂想筆記</title>
+  <title>scp跟sftp是不樣的東西 | 程式狂想筆記</title>
   
 
 
@@ -252,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="./blog/2016/04/15/logdown/2016-04-15-interview-the-center-began/">
+    <link itemprop="mainEntityOfPage" href="./blog/2018/04/16/scp跟sftp是不樣的東西/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
@@ -269,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">面試心得，從心開始</h1>
+          <h1 class="post-title" itemprop="name headline">scp跟sftp是不樣的東西</h1>
         
 
         <div class="post-meta">
@@ -281,8 +282,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2016-04-15T11:38:00+08:00">
-                2016-04-15
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-04-16T20:35:20+08:00">
+                2018-04-16
               </time>
             
 
@@ -304,8 +305,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/成長日記/" itemprop="url" rel="index">
-                    <span itemprop="name">成長日記</span>
+                  <a href="/blog/categories/程式心法/" itemprop="url" rel="index">
+                    <span itemprop="name">程式心法</span>
                   </a>
                 </span>
 
@@ -341,42 +342,22 @@
       
 
       
-        <p>日誌荒廢無限久，不是我放棄，是我沒有動力寫。</p>
-<p>六個月之前，有面試好幾間程式公司，雖然沒有什麼入取通知，不過讓我知道我哪裡有很多缺點地方。</p>
-<p>由於工作回來就累了關係…，所以這裡也算半放生了一陣子，不過今天覺得難得沒什麼事，就打開來寫一寫。<br>隨意筆記也放生了很久，有空也該補一補…</p>
+        <p>最近在公司做使用PHP做sftp傳輸上去<br>結果一直出問題<br>使用<code>ssh2_scp_send</code>傳輸檔案<br>公司內部測試可以傳檔案<br>但別的主機卻不能</p>
 <a id="more"></a>
-<p>我覺得我程式底子不差，但缺少業界實作經驗，我確實實力還不夠扎實，但我相信努力可以讓我更進步的。</p>
-<p>我第一間面試，南港科學園區小公司   官網人數寫五人    但我去好像只有老闆跟一個女員工</p>
-<p>一開始老闆問我覺得php程度如何?由於我說雖然很久開發(大學專題/碩士論文都用Java)，但基本功還是有。<br>馬上就進行網路測驗，<a href="http://www.w3schools.com/php/php_quiz.asp" target="_blank" rel="noopener">http://www.w3schools.com/php/php_quiz.asp</a><br>考試總題數20題，我錯了4題<br>經過跟老闆面談後，老闆還是希望找有程式工作經驗的來，他們說有drupal 經驗最佳，怕我學習曲線不好。</p>
-<p><strong>結果：沒有通知。</strong></p>
-<p>第二間  悠夏爾科技股份有限公司<br>這間公司是面試徵PHP 工程師，雖然有Laravel缺，但程式新手不敢馬上接手碰這塊東西。<br>一開始前面自我介紹，然後問你程是一些問題。<br>後面沒想到叫你寫  1~100質數出來在黑板上(用別的程式語言或演算法都可)，在黑板前面幾分鐘，有點緊張…沒有動筆<br>怕用PHP語言寫錯  有些函式用Python寫出來 <del>(上帝OS:你是來亂的嗎)</del><br>最後糾正一些錯誤，然後完成。在這之後叫你改善/優化程式碼<br>這時候我想個老半天 囧  真的想不到。<br>雖然後來有提示之前算出來質數來算，但我就是不知如何寫<br>最後簡單聊個天，結束End</p>
-<p><strong>結果：沒有通知。</strong></p>
-<p>第三間   東森購物網站<br>這間題目是考5題題目，用字寫的出答案<br>我離jsp開發一段時間，怎麼連資料庫都要看一下API<br>最有印象有一題</p>
+<p>我在我的主機安裝ssh2環境（改天來補筆記）<br>發現還是不能連到那台</p>
+<p>後來我決定，試著打 sftp command line連過去<br>看到顯示<code>freeFTPd</code>，我就找相關資料<br>freeFTPd是window平台，可以免費架設sftp/ftp東西<br>不過我爬到…</p>
 <blockquote>
-<p>請用JAVA程式來開Google瀏覽器</p>
+<p>SFTP 雖然提供了一個安全可靠的傳送渠道，但是SFTP不能直接用瀏覽器開啟。需要使用支援SFTP的軟件才能進入SFTP Server，例如CuteFTP、WinSCP、或者Client Side的FileZilla。還有，freeFTPd的SFTP是不能用SSH登入及使用SCP傳送檔案的。<br><a href="https://yzl1218.tian.yam.com/posts/62969137" target="_blank" rel="noopener">在Windows下使用freeFTP來架設SFTP Server &amp; 我是我，葉子 - yzl1218 # 天空部落 TIAN #</a></p>
 </blockquote>
-<p>這題我有想過用Java執行cmd呼叫<br>但在不能查api狀態不知道要怎麼寫…</p>
-<p>後來主管約談，也對我興趣缺缺，最快面試結束一間公司。</p>
-<p><strong>結果：沒有通知。</strong></p>
-<p>第四間  又是南港科學園區  12棟  又很剛好同一層  同一個會議事(剛好跟第一間公司面試地點一樣)<br>這間人數有2x人樣子</p>
-<p>前面考的是PHP題目，都不太會寫<br>寫一些echo 結果，果然自學PHP都沒有想過這些問題<br>我很少用php寫class實作，所以對PHP的OO怎麼用沒有研究<br>其中一題trait是什麼??後來回家Google才知道那個又是OO東西<br>這間看起來不錯，還想進去的…<br>工程式還問我知道最近PHP有出一本書嗎?叫現代PHP<br>後來問一些問題，感覺我答得沒有很好<br>接下來人資主管面試，簡單問我幾個問題，就叫我回去等消息</p>
-<p><strong>結果：沒有通知。</strong></p>
-<p>第五間  台灣大哥大</p>
-<p>前面是一個寫程式工程師，問我知不知道MVC?我有看相關ROR的MVC，所以說知道，但我沒有開發程式用MVC<br>但他說我剛出來是這樣是正常的<br>第二個專案經理說我穿的衣服不太正式，他們說今天是禮拜五所以大家都穿便服<br>我穿綠色格線整齊襯衫，我其他面試其他間也是穿這件…，但也沒說怎樣<br>我第一間面是老闆穿無袖調嘎、短褲XD<br>第三個 應該是組管，應為說組管在開會，可能專案經理要我下次來，但我不想下次再來，就等下去<br>後來那個組管跟我聊天<del>砲我</del>，說我怎麼沒有帶作品來(OS:筆電壞掉…)，怎麼不展現作品</p>
-<p><strong>結果：GG。</strong></p>
-<p>第六間  資策會</p>
-<p>原本想<del>砍掉重練</del>重新思考如何改善<br>但是沒想到這時候接到資策會電話，我主動跟對方說我是新人可能沒有經驗，想說婉拒邀約。後來他說會跟主管討論<br>過沒幾天他又打來說，沒資歷可以去面試看看<br>由於這次有規定要帶筆電、簡報<br>所以跟老姊借電腦，還穿西裝去迎戰。<br>後來主管跟主管討論技術東西，說我還懂滿多東西。</p>
-<p><strong>結果：沒有消息。</strong></p>
-<p>打這麼多心酸，反正這Blog應該<del>也只有我會看</del>也沒有什麼人會看XD<br>之後網路查有一個<strong>助理程式工程師</strong>，反正從底層開始，後來就在104找…，發現怎麼這麼少缺<br>之後就投了兩間</p>
-<p>1.XXX訓練中心<br>要寫PHP程式+MIS電腦修理<br>既然要打怪練功，什麼處境都不是很在意了<br>最後主管好像有意想用我<br>他們這邊目前資訊人員只有他一個<br>好像很想要我會程式又會修電腦</p>
-<p>過沒幾天，換人資打電話跟我面試<br>叫我自我借紹一下跟自己家庭<br>我就簡單借紹自己，爸媽姊沒有講很多<br>他說我家庭部份沒有講很多(os:<del>幹!!</del> 是我要面試…還是我全家都要去面試!!!)<br>講一些我不是很好，然後…就說之後再聯絡…<br>看起來不會上的樣子</p>
-<p>沒想到過幾天，我接到主管說我offer<br>但我沒馬上答應<br>我說還要等另外一間回應，主管馬叫我先去實習7天</p>
-<p>後來那邊電腦處理、寫簡單程式作業都有寫出來</p>
-<p>最後2天，我事前說我要去別間，後來被找去人資談薪資<br>人資談判很厲害，一直說讓我先待這間公司試看看<br>真不愧是XXX訓練中心，談判技巧這麼好<br>他覺得我能力不錯，薪水把我調38k  後來又加1k<br>但我還是忍住了，<del>加上人資之前打電話讓我印象不是很多</del><br>而且組管又不太會寫程式…，就等於我一人<del>幹</del>維護那邊寫的系統<br>還是去XX醫院會比較好</p>
-<p><strong>結果：婉拒。</strong></p>
-<p>2.XX醫院<br>一開始寫考卷(有網路查一下考SQL和JAVA)<br>由於以前有考SCJP，所以我面試前只復習SQL<br>JAVA考題大概有SCJP觀念就會寫<br>SQL慢慢算就能寫的出來<br>交完題目後，等了一段時間<br>後來三個主管跟我面談，有一個主管開門見山說  不想待這間公司不要浪費我們的時間<br>就開始面試，前面說我題目對的還滿多的(皇天不负苦心人)<br>他們說有SCJP或學校成績單都不一定會對的多<br>我說考SCJP有深入研究<br>然後談一下這邊福利，回去等消息</p>
-<p><strong>結果： offer get</strong></p>
-<p>至於現在公司待得如何，有空再寫好了</p>
+<p>有找到使用<code>copy(&quot;ssh2.sftp://{$ftp_IP}&quot;.$remote, $local);</code>就可以用了<br><a href="http://blog.51cto.com/11760810/2044534" target="_blank" rel="noopener">PHP-sftp文件上传-11750810-51CTO博客</a></p>
+<p>我一直以為SCP跟SFTP是差不多東西<br>但結果證明是不一樣的<br>SCP沒有續傳功能，有點類似做<code>cp</code>指令動作透過ssh</p>
+<blockquote>
+<p>sftp是基於ftp使用ssh<br>SCP和CP命令相似，SFTP和FTP的使用方法也類似。SCP和SFTP的共同之處在於「使用SSH將文件加密才傳輸的」<br>使用「WinSCP」或者「FileZilla」之類的客戶端，還可以和Windows之間進行文件傳輸。 </p>
+</blockquote>
+<blockquote>
+<p>SCP和SFTP的不同之處，首先就是之前提到的，SCP使用「SCP命令」，SFTP則類似「FTP處理文件」的使用方式。<br>它們的不同之處還不止如此，還有「SCP比較簡單，是輕量級的，SFTP的功能則比較多」。<br>詳細說的話，雖然還有很多不同之處，但2者的最大不同之處在於「SFTP在文件傳輸過程中中斷的話，連接後還可以繼續傳輸，但SCP不行」。<br><a href="http://wb8206656.iteye.com/blog/2231060" target="_blank" rel="noopener">SCP和SFTP區別 - - ITeye博客</a></p>
+</blockquote>
+<p>經過這次….<br>下次應該不會再踩這個雷了吧</p>
 
       
     </div>
@@ -392,6 +373,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/blog/tags/scp/" rel="tag"># scp</a>
+          
+            <a href="/blog/tags/sftp/" rel="tag"># sftp</a>
+          
+        </div>
+      
 
       
       
@@ -401,8 +390,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2015/06/22/logdown/2015-06-22-autoit-asked-the-week-6th-automated-shutdown-script/" rel="next" title="[Autoit]詢問禮拜六日自動關機腳本">
-                <i class="fa fa-chevron-left"></i> [Autoit]詢問禮拜六日自動關機腳本
+              <a href="/blog/2018/04/08/hexo在blog貼圖/" rel="next" title="hexo在blog貼圖">
+                <i class="fa fa-chevron-left"></i> hexo在blog貼圖
               </a>
             
           </div>
@@ -410,10 +399,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/2016/06/12/logdown/2016-06-12-javascript-simple-date-object-record/" rel="prev" title="[JavaScript] Date物件  小筆記">
-                [JavaScript] Date物件  小筆記 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -492,7 +477,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -503,7 +488,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
