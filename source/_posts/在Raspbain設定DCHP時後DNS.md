@@ -46,6 +46,8 @@ prepend domain-name-servers 8.8.8.8;
 不過動物機還是不管用，但很多人好像都成功了
 不知道為什麼
 
+
+[networking - How to override the DHCP-provided nameserver? - Ask Ubuntu](https://askubuntu.com/questions/63160/how-to-override-the-dhcp-provided-nameserver)
 ```
 A resolution that will resolve your problem is to configure your resolvconf package. This will give precedence to your preferred nameservers as well as any other desired settings resolv.conf settings such as search and domain preferences.
 
@@ -85,3 +87,4 @@ nameserver 192.168.1.1
 [Linux DHCP DNS設定問題 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10071258)
 [Ubuntu DNS 設定 @ Welkin小窩 :: 痞客邦 ::](http://welkinchen.pixnet.net/blog/post/5456817-ubuntu-dns-%E8%A8%AD%E5%AE%9A)
 [VPC DHCP类型的ECS修改DNS](https://zhuanlan.zhihu.com/p/34027883)
+[networking - How to override the DHCP-provided nameserver? - Ask Ubuntu](https://askubuntu.com/questions/63160/how-to-override-the-dhcp-provided-nameserver)
