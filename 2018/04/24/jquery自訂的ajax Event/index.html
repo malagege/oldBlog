@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="今天看到Ajax-Global Ajax Event Handlers .ajaxComplete()、.ajaxError()、.ajaxSend()、.ajaxStart()、.ajaxStop()、.ajaxSuccess() | 阿沙布魯 - 點部落平常都不會這樣寫，發現這樣寫可以模組化今天用少部份時間，來研究出來ajax event來實做出動畫特效備註：ajax event都是jQuer">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-04-24T13:20:48.118Z">
+<meta property="og:updated_time" content="2018-04-24T13:22:31.542Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jQuery自訂的ajax Event">
 <meta name="twitter:description" content="今天看到Ajax-Global Ajax Event Handlers .ajaxComplete()、.ajaxError()、.ajaxSend()、.ajaxStart()、.ajaxStop()、.ajaxSuccess() | 阿沙布魯 - 點部落平常都不會這樣寫，發現這樣寫可以模組化今天用少部份時間，來研究出來ajax event來實做出動畫特效備註：ajax event都是jQuer">
@@ -355,7 +355,11 @@
 </blockquote>
 <p>花了不少時間，但相信這個對未來實做<a href="http://expect7.pixnet.net/blog/post/39829979-%5B%E7%A8%8B%E5%BC%8F%5D%5Bjquery%5D-%E8%AE%93ajax%E9%81%8B%E4%BD%9C%E7%9A%84%E6%99%82%E5%80%99%EF%BC%8C%E8%B7%B3%E5%87%BAloding%E7%9A%84%E8%A8%8A" target="_blank" rel="noopener">[程式][JQuery] 讓AJAX運作的時候，跳出loding的訊息。－Part 1 @ 四處流浪的阿基。I am Vagrant Walker :: 痞客邦 ::</a></p>
 <blockquote>
-<p>   .ajaxComplete() - runs for every request that completes, use this when you want to do something with each request/result. Note that this doesn’t replace the success handler, since the parsed data is not one of the arguments (and it runs even when there’s an error) - you may want .ajaxSuccess() in some per-request situations instead.<br>    .ajaxStop() - runs when every batch of requests completes, usually you’d use this in combination with .ajaxStart() for things like showing/hiding a “Loading…” indicator of some sort - or to do something else once a batch of AJAX requests finishes, like a master last step.<br><a href="https://stackoverflow.com/questions/4419241/jqueryajaxstop-versus-jqueryajaxcomplete" target="_blank" rel="noopener">ajax - jquery::ajaxStop() versus jquery::ajaxComplete() - Stack Overflow</a><br>恩…英文弱弱的…有找一下中文版說明XD<br>   .ajaxComplete() ——運行每個請求完成,用這個當你想做一些與每個請求/結果。 注意這並不替換 success 處理程序，因為解析的數據不是一個參數( 即使有錯誤，它也運行) - 你可能需要 .ajaxSuccess() 在某些per-request情況下。<br>    .ajaxStop() ——運行當完成每批請求,通常你有使用這種結合 .ajaxStart() 例如顯示/隱藏某種”正在載入。”指示器,或者做一些其他一批ajax請求完成後,就像一個主人的最後一步。<br><a href="http://hant.ask.helplib.com/ajax/post_779385" target="_blank" rel="noopener">jquery::ajaxStop() 与 jquery::ajaxComplete( )<em>ajax</em>帮酷编程问答</a></p>
+<p>   .ajaxComplete() - runs for every request that completes, use this when you want to do something with each request/result. Note that this doesn’t replace the success handler, since the parsed data is not one of the arguments (and it runs even when there’s an error) - you may want .ajaxSuccess() in some per-request situations instead.<br>    .ajaxStop() - runs when every batch of requests completes, usually you’d use this in combination with .ajaxStart() for things like showing/hiding a “Loading…” indicator of some sort - or to do something else once a batch of AJAX requests finishes, like a master last step.<br><a href="https://stackoverflow.com/questions/4419241/jqueryajaxstop-versus-jqueryajaxcomplete" target="_blank" rel="noopener">ajax - jquery::ajaxStop() versus jquery::ajaxComplete() - Stack Overflow</a></p>
+</blockquote>
+<p>恩…英文弱弱的…有找一下中文版說明XD</p>
+<blockquote>
+<p>   .ajaxComplete() ——運行每個請求完成,用這個當你想做一些與每個請求/結果。 注意這並不替換 success 處理程序，因為解析的數據不是一個參數( 即使有錯誤，它也運行) - 你可能需要 .ajaxSuccess() 在某些per-request情況下。<br>    .ajaxStop() ——運行當完成每批請求,通常你有使用這種結合 .ajaxStart() 例如顯示/隱藏某種”正在載入。”指示器,或者做一些其他一批ajax請求完成後,就像一個主人的最後一步。<br><a href="http://hant.ask.helplib.com/ajax/post_779385" target="_blank" rel="noopener">jquery::ajaxStop() 与 jquery::ajaxComplete( )<em>ajax</em>帮酷编程问答</a></p>
 </blockquote>
 <p>相信這個能跟下面UI整合，有空再實做<br><a href="http://vadimsva.github.io/waitMe/" target="_blank" rel="noopener">waitMe</a><br><a href="https://piccard21.github.io/busy-load/" target="_blank" rel="noopener">busy-load</a><br><a href="http://malsup.com/jquery/block/#page" target="_blank" rel="noopener">jQuery BlockUI Plugin</a></p>
 <p>因為BlockUI看到是用<code>$(document).ajaxStop($.unblockUI);</code>，有去找兩著比較ajaxComplete、ajaxStop<br>我看到範例是用ajaxComplete，不過照文件說用ajaxStop做顯示/隱藏是最好的樣子</p>
