@@ -88,6 +88,7 @@ vmax——大尺寸的百分比。50vmax = 500px。
 >    .ajaxComplete() - runs for every request that completes, use this when you want to do something with each request/result. Note that this doesn't replace the success handler, since the parsed data is not one of the arguments (and it runs even when there's an error) - you may want .ajaxSuccess() in some per-request situations instead.
     .ajaxStop() - runs when every batch of requests completes, usually you'd use this in combination with .ajaxStart() for things like showing/hiding a "Loading..." indicator of some sort - or to do something else once a batch of AJAX requests finishes, like a master last step.
 [ajax - jquery::ajaxStop() versus jquery::ajaxComplete() - Stack Overflow](https://stackoverflow.com/questions/4419241/jqueryajaxstop-versus-jqueryajaxcomplete)
+
 恩...英文弱弱的...有找一下中文版說明XD
 >    .ajaxComplete() ——運行每個請求完成,用這個當你想做一些與每個請求/結果。 注意這並不替換 success 處理程序，因為解析的數據不是一個參數( 即使有錯誤，它也運行) - 你可能需要 .ajaxSuccess() 在某些per-request情況下。
     .ajaxStop() ——運行當完成每批請求,通常你有使用這種結合 .ajaxStart() 例如顯示/隱藏某種"正在載入。"指示器,或者做一些其他一批ajax請求完成後,就像一個主人的最後一步。
@@ -105,4 +106,4 @@ vmax——大尺寸的百分比。50vmax = 500px。
 
 
 這篇其實有很多雜七雜八的東西，其實要分開寫會比較好...
-不過哪貼再踩到雷再補好了
+不過哪天再踩到雷再補好了
