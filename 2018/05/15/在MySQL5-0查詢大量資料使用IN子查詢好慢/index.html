@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近使用有一個程式SQL會跑3秒程式共花了1x秒鐘想把他cost 時間降下來但IN方法不知道為什麼那麼慢就簡單研究有沒有更好的寫法">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-05-16T12:31:14.343Z">
+<meta property="og:updated_time" content="2018-05-17T12:19:46.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在MySQL5.0查詢大量資料使用IN子查詢好慢(優化方法)">
 <meta name="twitter:description" content="最近使用有一個程式SQL會跑3秒程式共花了1x秒鐘想把他cost 時間降下來但IN方法不知道為什麼那麼慢就簡單研究有沒有更好的寫法">
@@ -376,7 +376,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> b.sid,</span><br><span class="line">  (<span class="keyword">SELECT</span> ptm.tablename</span><br><span class="line">   <span class="keyword">FROM</span> <span class="string">`social`</span>.<span class="string">`secord_big_table`</span> ptm</span><br><span class="line">   <span class="keyword">WHERE</span> ptm.playlistID = b.a)</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">  (<span class="keyword">SELECT</span> g.sid,</span><br><span class="line"></span><br><span class="line">     (<span class="keyword">SELECT</span> stm.playlistID</span><br><span class="line">      <span class="keyword">FROM</span> <span class="string">`social`</span>.<span class="string">`first_big_table`</span> stm</span><br><span class="line">      <span class="keyword">WHERE</span> stm.sid = g.sid) <span class="keyword">AS</span> a</span><br><span class="line">   <span class="keyword">FROM</span> <span class="string">`pay`</span>.<span class="string">`activity_guess_item`</span> g</span><br><span class="line">   <span class="keyword">WHERE</span> as_id = <span class="number">1</span></span><br><span class="line">     <span class="keyword">AND</span> item_no = <span class="number">4</span>) <span class="keyword">AS</span> b</span><br></pre></td></tr></table></figure>
 <p>雖然程式只需要抓到一筆<br>但上面方法可以抓到多筆<br>效能能吃到key</p>
 <p>算是另類解法 </p>
-<h1 id="INNER-JOIN解決方法"><a href="#INNER-JOIN解決方法" class="headerlink" title="INNER JOIN解決方法"></a>INNER JOIN解決方法</h1><p>最後網路爬到用INNER JOIN 優化<br><a href="http://www.cnblogs.com/zhengyun_ustc/p/slowquery3.html" target="_blank" rel="noopener">[慢查优化]慎用MySQL子查询，尤其是看到DEPENDENT SUBQUERY标记时 - 旁观者 - 博客园</a><br><a href="http://codingstandards.iteye.com/blog/1344833" target="_blank" rel="noopener">MySQL性能优化小记：MySQL子查询很慢的问题 - Bash @ Linux - ITeye博客</a></p>
+<h2 id="INNER-JOIN解決方法"><a href="#INNER-JOIN解決方法" class="headerlink" title="INNER JOIN解決方法"></a>INNER JOIN解決方法</h2><p>最後網路爬到用INNER JOIN 優化<br><a href="http://www.cnblogs.com/zhengyun_ustc/p/slowquery3.html" target="_blank" rel="noopener">[慢查优化]慎用MySQL子查询，尤其是看到DEPENDENT SUBQUERY标记时 - 旁观者 - 博客园</a><br><a href="http://codingstandards.iteye.com/blog/1344833" target="_blank" rel="noopener">MySQL性能优化小记：MySQL子查询很慢的问题 - Bash @ Linux - ITeye博客</a></p>
 <p><code>`</code>sql<br>SELECT stm.tablename<br>FROM<br>    (SELECT ptm.playlistID<br>     FROM <code>secord_big_table</code> ptm<br>     INNER JOIN <code>smaill_table</code> g ON ptm.sid = g.sid<br>     WHERE as_id = 1<br>       AND item_no = 4 ) p<br>INNER JOIN<br><code>first_big_table</code> stm<br>ON stm.playlistID  = p.playlistID<br>WHERE stm.playlistID  = p.playlistID</p>
 <p>用這種解法，速度有變比較快<br>但這種寫法真的不時直覺…</p>
 <h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>網路上查，好像MySQL到5.7和8.0效能上有很大的改進<br>希望我有機會能使用到…</p>
@@ -436,6 +436,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/05/17/MySQL查詢進行中程序狀況，並刪掉lock程序/" rel="prev" title="MySQL查詢進行中程序狀況，並刪掉lock程序">
+                MySQL查詢進行中程序狀況，並刪掉lock程序 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -512,7 +516,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">188</span>
+                  <span class="site-state-item-count">192</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -523,7 +527,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -534,7 +538,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">185</span>
+                  <span class="site-state-item-count">188</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -567,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#exists優化IN語句"><span class="nav-number">1.</span> <span class="nav-text">exists優化IN語句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實戰MySQL5-0上面"><span class="nav-number">2.</span> <span class="nav-text">實戰MySQL5.0上面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子查詢語句注意問題"><span class="nav-number">3.</span> <span class="nav-text">子查詢語句注意問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用程式組IN字串就PK"><span class="nav-number">4.</span> <span class="nav-text">用程式組IN字串就PK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#柳暗花明又一村"><span class="nav-number">5.</span> <span class="nav-text">柳暗花明又一村</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#INNER-JOIN解決方法"><span class="nav-number"></span> <span class="nav-text">INNER JOIN解決方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#結論"><span class="nav-number">1.</span> <span class="nav-text">結論</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#exists優化IN語句"><span class="nav-number">1.</span> <span class="nav-text">exists優化IN語句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實戰MySQL5-0上面"><span class="nav-number">2.</span> <span class="nav-text">實戰MySQL5.0上面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子查詢語句注意問題"><span class="nav-number">3.</span> <span class="nav-text">子查詢語句注意問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用程式組IN字串就PK"><span class="nav-number">4.</span> <span class="nav-text">用程式組IN字串就PK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#柳暗花明又一村"><span class="nav-number">5.</span> <span class="nav-text">柳暗花明又一村</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INNER-JOIN解決方法"><span class="nav-number">6.</span> <span class="nav-text">INNER JOIN解決方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#結論"><span class="nav-number">7.</span> <span class="nav-text">結論</span></a></li></ol></div>
             
 
           </div>
