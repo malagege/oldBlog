@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="平常用到時間運算，假如能在SQL撈到想要的資料這樣程式可以寫得少，速度也跟者快…但是偏偏MySQL時間運算不太熟在此網路找一些，寫筆記….">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-05-31T14:02:46.548Z">
+<meta property="og:updated_time" content="2018-05-31T14:06:17.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MYSQL 時間運算 筆記">
 <meta name="twitter:description" content="平常用到時間運算，假如能在SQL撈到想要的資料這樣程式可以寫得少，速度也跟者快…但是偏偏MySQL時間運算不太熟在此網路找一些，寫筆記….">
@@ -389,7 +389,16 @@
 <p>DATE_ADD和DATE_SUB其實可以通用，因為expr可以為一個負數。<br>其實很簡單，一個是用加一個是減，不過…DATE_ADD(xxx, - INTERVAL 5 MINUNT) 可以用負數</p>
 </blockquote>
 <p>最後，感覺能用在TIME_TO_SEC用在運算上面<br>但不知道網路上很少這樣用</p>
-<h3 id="小心效能"><a href="#小心效能" class="headerlink" title="小心效能"></a>小心效能</h3><p>where DATE(<code>time_stamp</code>) = DATE(now());</p>
+<h3 id="小心效能"><a href="#小心效能" class="headerlink" title="小心效能"></a>小心效能</h3><h1 id="MySQL裡的NOW-與UNIX-TIMESTAMP"><a href="#MySQL裡的NOW-與UNIX-TIMESTAMP" class="headerlink" title="MySQL裡的NOW()與UNIX_TIMESTAMP()"></a>MySQL裡的NOW()與UNIX_TIMESTAMP()</h1><p>date(欄位) = xxx 很吃效能<br>盡量用 WHERE <code>date</code> &gt;= ‘2010-10-01’ AND <code>date</code> &lt; ‘2010-11-01’</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/14849911/difference-between-unix-timestamp-and-now-in-mysql" target="_blank" rel="noopener">date - Difference between UNIX_TIMESTAMP and NOW() in MySQL - Stack Overflow</a></li>
+<li><a href="https://blog.csdn.net/qq2712193/article/details/48766575" target="_blank" rel="noopener">mysql中日期比较大小的方法 - CSDN博客</a></li>
+<li><a href="https://stackoverflow.com/questions/2758486/mysql-compare-date-string-with-string-from-datetime-field/17169859#17169859" target="_blank" rel="noopener">MySQL compare DATE string with string from DATETIME field - Stack Overflow</a></li>
+<li><a href="http://www.piaoyi.org/database/MYSQL-INT-TIMESTAMP-DATETIME.html" target="_blank" rel="noopener">MYSQL数据库时间字段INT,TIMESTAMP,DATETIME性能效率比较</a></li>
+<li><a href="https://stackoverflow.com/questions/4233095/how-to-optimize-date-time-search-in-mysql" target="_blank" rel="noopener">datetime - How to optimize date time search in Mysql? - Stack Overflow</a></li>
+<li><a href="http://www.cnblogs.com/hongfei/archive/2012/06/08/2541599.html" target="_blank" rel="noopener">MySQL中的UNIX_TIMESTAMP函数使用总结 - 曾是土木人 - 博客园</a></li>
+</ul>
+<p>where DATE(<code>time_stamp</code>) = DATE(now());</p>
 <p>用在欄位很吃效能，可能會造成full scan<br>datetime要怎麼比較今天呢??<br>這個我相信很常用<br>有找到這個<br><code>WHERE startTime &gt;= &#39;2010-04-29&#39; AND startTime &lt; (&#39;2010-04-29&#39; + INTERVAL 1 DAY)</code><br><a href="https://stackoverflow.com/questions/2758486/mysql-compare-date-string-with-string-from-datetime-field/17169859#17169859" target="_blank" rel="noopener">MySQL compare DATE string with string from DATETIME field - Stack Overflow</a><br>可以參考上面第二個解答<br>對非欄位做轉換比較不會吃資源<br>雖然不知道為什麼最佳解答是第一個吃效能的<br>呵呵</p>
 <p>相信可能還有更好用的<br>可能我沒有記錄到<br>不過我相信我應該會很常回來看這篇</p>
 <p>參考來源:</p>
@@ -584,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-lt-gt-FROM-UNIXTIME"><span class="nav-number">1.</span> <span class="nav-text">UNIX_TIMESTAMP()&lt;==&gt;FROM_UNIXTIME()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATEDIFF-‘2015-09-28-21-00-01’-’2015-08-31-13-00-01’"><span class="nav-number">2.</span> <span class="nav-text">DATEDIFF(‘2015-09-28 21:00:01’,’2015-08-31 13:00:01’);</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMEDIFF-‘2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">3.</span> <span class="nav-text">TIMEDIFF(‘2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMESTAMPDIFF-DAY-’2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">4.</span> <span class="nav-text">TIMESTAMPDIFF(DAY,’2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-days-lt-gt-from-days"><span class="nav-number">5.</span> <span class="nav-text">to_days&lt;=&gt;from_days</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time-to-sec-lt-gt-sec-to-time"><span class="nav-number">6.</span> <span class="nav-text">time_to_sec&lt;=&gt;sec_to_time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL跟DB2-差異寫法"><span class="nav-number">7.</span> <span class="nav-text">MySQL跟DB2 差異寫法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-時間加法運算"><span class="nav-number">8.</span> <span class="nav-text">UNIX_TIMESTAMP 時間加法運算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小心效能"><span class="nav-number">9.</span> <span class="nav-text">小心效能</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-lt-gt-FROM-UNIXTIME"><span class="nav-number">1.</span> <span class="nav-text">UNIX_TIMESTAMP()&lt;==&gt;FROM_UNIXTIME()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATEDIFF-‘2015-09-28-21-00-01’-’2015-08-31-13-00-01’"><span class="nav-number">2.</span> <span class="nav-text">DATEDIFF(‘2015-09-28 21:00:01’,’2015-08-31 13:00:01’);</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMEDIFF-‘2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">3.</span> <span class="nav-text">TIMEDIFF(‘2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMESTAMPDIFF-DAY-’2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">4.</span> <span class="nav-text">TIMESTAMPDIFF(DAY,’2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-days-lt-gt-from-days"><span class="nav-number">5.</span> <span class="nav-text">to_days&lt;=&gt;from_days</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time-to-sec-lt-gt-sec-to-time"><span class="nav-number">6.</span> <span class="nav-text">time_to_sec&lt;=&gt;sec_to_time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL跟DB2-差異寫法"><span class="nav-number">7.</span> <span class="nav-text">MySQL跟DB2 差異寫法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-時間加法運算"><span class="nav-number">8.</span> <span class="nav-text">UNIX_TIMESTAMP 時間加法運算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小心效能"><span class="nav-number">9.</span> <span class="nav-text">小心效能</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL裡的NOW-與UNIX-TIMESTAMP"><span class="nav-number"></span> <span class="nav-text">MySQL裡的NOW()與UNIX_TIMESTAMP()</span></a></div>
             
 
           </div>
