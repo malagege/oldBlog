@@ -13,3 +13,7 @@ date: 2018-05-14 21:24:11
 * [小惡魔 - 美食介紹，電腦技術，生活日記 - AppleBOY’s Blog](https://blog.wu-boy.com/)
 * [Java程式教學甘仔店](http://pclevin.blogspot.tw/)
 * [Puritys Blog](https://www.puritys.me/)
+* [DEVLOG of andyyou](https://andyyou.github.io/)
+* [w3cschool - 学编程，从w3cschool开始](https://www.w3cschool.cn/)
+* [Web前端攻城狮 互联网时代最火爆的技术](https://class.imooc.com/?c=fe&mc_marking=032475ea974e6e9bb1ee3f2caad1acb2&mc_channel=L1)
+* [文章 - 伯乐在线](http://blog.jobbole.com/)

@@ -33,14 +33,14 @@ full scan
 
 最後試試，IN優化方法(使用inner join )
 
-{% asset_img normal.png "primary key,index key查詢" %}
+{% asset_img best.png "primary key,index key查詢" %}
 
 **注意where用哪張表，select就要用另一張表**
 
 這樣就不會full scan了
 愉悅!!!!
 
-參考來源：s
+參考來源：
 * [对mysql中last_insert_id()的新理解-博客即日起停止更新-51CTO博客](http://blog.51cto.com/sucre/723808)
 * [[数据库与SQL] - No.5 MYSQL实现 RANK函数排序功能 - CSDN博客](https://blog.csdn.net/tjuyanming/article/details/77825875)
 * [Mysql row number()排序函数的用法和注意_Mysql_脚本之家](http://www.jb51.net/article/87777.htm)
