@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS,flex,margin," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今天看到官網Bootstrap 4的Nabars，好奇他的Navbar怎麼排版的發現竟然是使用flex去編排，但是搜尋位置竟然可以靠右中間空白是怎麼用的??查了一下，發現他有使用margin究竟flex和margin碰在一起會產生甚麼化學反應呢?讓我們紀錄吧!!!">
+<meta name="keywords" content="CSS,flex,margin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flex margin-right:auto 右邊元素靠右(參考bootstrap4 navbar)">
+<meta property="og:url" content="./2018/07/02/flex-margin-right-auto-右邊元素靠右-參考bootstrap4-navbar/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="今天看到官網Bootstrap 4的Nabars，好奇他的Navbar怎麼排版的發現竟然是使用flex去編排，但是搜尋位置竟然可以靠右中間空白是怎麼用的??查了一下，發現他有使用margin究竟flex和margin碰在一起會產生甚麼化學反應呢?讓我們紀錄吧!!!">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-07-02T15:18:27.114Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flex margin-right:auto 右邊元素靠右(參考bootstrap4 navbar)">
+<meta name="twitter:description" content="今天看到官網Bootstrap 4的Nabars，好奇他的Navbar怎麼排版的發現竟然是使用flex去編排，但是搜尋位置竟然可以靠右中間空白是怎麼用的??查了一下，發現他有使用margin究竟flex和margin碰在一起會產生甚麼化學反應呢?讓我們紀錄吧!!!">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="./2018/07/02/flex-margin-right-auto-右邊元素靠右-參考bootstrap4-navbar/"/>
+
+
+
+
+
+  <title>flex margin-right:auto 右邊元素靠右(參考bootstrap4 navbar) | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="./blog/2018/07/02/flex-margin-right-auto-右邊元素靠右-參考bootstrap4-navbar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">flex margin-right:auto 右邊元素靠右(參考bootstrap4 navbar)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-07-02T23:13:12+08:00">
+                2018-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天看到官網Bootstrap 4的Nabars，好奇他的Navbar怎麼排版的<br>發現竟然是使用flex去編排，但是搜尋位置竟然可以靠右<br>中間空白是怎麼用的??查了一下，發現他有使用margin<br>究竟flex和margin碰在一起會產生甚麼化學反應呢?<br>讓我們紀錄吧!!!</p>
+<a id="more"></a>
+<p>在講flex之前，我就有紀錄過margin搭配position可以置中，但其他是有公式的</p>
+<blockquote>
+<p>‘margin-left’ + ‘border-left-width’ + ‘padding-left’ + ‘width’ + ‘padding-right’ +’border-right-width’ + ‘margin-right’ = width of containing block<br><a href="https://segmentfault.com/q/1010000008431088/a-1020000008431730" target="_blank" rel="noopener">margin-left: auto;为什么可以使的元素靠右 - SharkU的回答 - SegmentFault 思否</a></p>
+</blockquote>
+<blockquote>
+<p>margin-right 不设置的话默认是0，width 定宽之后，margin-left取值为 auto ，自动占据了剩余的全部宽度，具体见 《css权威指南》 P170<br><a href="https://github.com/threerocks/studyFiles/blob/master/%E5%89%8D%E7%AB%AF/CSS%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E7%AC%AC%E4%B8%89%E7%89%88%EF%BC%89(jb51.net" target="_blank" rel="noopener">studyFiles/CSS权威指南（第三版）(jb51.net).pdf at master · threerocks/studyFiles</a>.pdf)</p>
+</blockquote>
+<p>bootstrap 4 是用 左邊最後一個元素加上<code>margin-right:auto</code> 右邊會靠右<br>當然反過來也可以在左邊search 加上<code>margin-left:auto</code></p>
+<p>在簡書看到我想知道的東西(備份:<a href="https://screenshots.firefox.com/0gK3HJq4OS6WkyCk/www.jianshu.com" target="_blank" rel="noopener">https://screenshots.firefox.com/0gK3HJq4OS6WkyCk/www.jianshu.com</a>)</p>
+<blockquote>
+<p>Flex布局算法中对auto margins的对齐原理有如下解释，原文是英文，我尽量准确翻译：<br>    在主轴（main axis）方向<br>        如剩余空间为正数，则剩余空间会被平均分配在拥有主轴方向auto margin(s)的flex元素之间。<br>        如剩余空间为负数，则将主轴方向的auto margin(s)设定为‘0’。</p>
+</blockquote>
+<blockquote>
+<p>看过这些例图，auto margins的使用方法应该不会忘了吧。最后再来提个醒儿：</p>
+<ul>
+<li>auto margins仅针对当前的flex item，对其子元素无效。</li>
+<li>在计算flex-bases与flexible lengths （main size与cross size）时，auto margins取值为0。</li>
+<li>auto margins优先于justify-content与align-self。由于相应方向上的剩余空间已分配给auto margins，justify-content与align-self将无效。</li>
+<li>auto margins对溢出的（overflowing）flex item无效。</li>
+</ul>
+</blockquote>
+<p>作者：蜂蜜柚子茶<br>链接：<a href="https://www.jianshu.com/p/beeb93a76830" target="_blank" rel="noopener">https://www.jianshu.com/p/beeb93a76830</a><br>來源：简书</p>
+<p>沒想到還能這樣用，筆記筆記…</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/blog/tags/flex/" rel="tag"># flex</a>
+          
+            <a href="/blog/tags/margin/" rel="tag"># margin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/07/02/不留這次Linux-bash-歷史記錄的方法/" rel="next" title="不留這次Linux bash 歷史記錄的方法">
+                <i class="fa fa-chevron-left"></i> 不留這次Linux bash 歷史記錄的方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">210</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">214</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
