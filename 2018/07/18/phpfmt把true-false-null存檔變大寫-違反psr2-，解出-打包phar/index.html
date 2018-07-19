@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vscode,php,phpfmt,psr2,phar," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="由於目前公司開發團隊，有自訂PHP程式風格但是規則跟PSR規則不太一樣其中一個就是要true,false要大寫(drupal規範好像是要大寫)平常我也都小寫orz不知道當初訂製這個規則是不是有開發過drupal最近使用phpfmt一直在找解決這個問題(常常忘記大寫orz)最後研究出來，當然一定要筆記一下有需要可能可以參考這篇應該沒有什麼人需要吧 呵呵">
+<meta name="keywords" content="vscode,php,phpfmt,psr2,phar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="phpfmt把true,false,null存檔變大寫(違反psr2)，解出&#x2F;打包phar">
+<meta property="og:url" content="./2018/07/18/phpfmt把true-false-null存檔變大寫-違反psr2-，解出-打包phar/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="由於目前公司開發團隊，有自訂PHP程式風格但是規則跟PSR規則不太一樣其中一個就是要true,false要大寫(drupal規範好像是要大寫)平常我也都小寫orz不知道當初訂製這個規則是不是有開發過drupal最近使用phpfmt一直在找解決這個問題(常常忘記大寫orz)最後研究出來，當然一定要筆記一下有需要可能可以參考這篇應該沒有什麼人需要吧 呵呵">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="/blog/2018/07/18/phpfmt把true-false-null存檔變大寫-違反psr2-，解出-打包phar/fmt.gif">
+<meta property="og:updated_time" content="2018-07-19T13:08:13.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="phpfmt把true,false,null存檔變大寫(違反psr2)，解出&#x2F;打包phar">
+<meta name="twitter:description" content="由於目前公司開發團隊，有自訂PHP程式風格但是規則跟PSR規則不太一樣其中一個就是要true,false要大寫(drupal規範好像是要大寫)平常我也都小寫orz不知道當初訂製這個規則是不是有開發過drupal最近使用phpfmt一直在找解決這個問題(常常忘記大寫orz)最後研究出來，當然一定要筆記一下有需要可能可以參考這篇應該沒有什麼人需要吧 呵呵">
+<meta name="twitter:image" content="/blog/2018/07/18/phpfmt把true-false-null存檔變大寫-違反psr2-，解出-打包phar/fmt.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="./2018/07/18/phpfmt把true-false-null存檔變大寫-違反psr2-，解出-打包phar/"/>
+
+
+
+
+
+  <title>phpfmt把true,false,null存檔變大寫(違反psr2)，解出/打包phar | 程式狂想筆記</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="./blog/2018/07/18/phpfmt把true-false-null存檔變大寫-違反psr2-，解出-打包phar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">phpfmt把true,false,null存檔變大寫(違反psr2)，解出/打包phar</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-07-18T23:41:48+08:00">
+                2018-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/實用工具/" itemprop="url" rel="index">
+                    <span itemprop="name">實用工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>由於目前公司開發團隊，有自訂PHP程式風格<br>但是規則跟PSR規則不太一樣<br>其中一個就是要true,false要大寫(drupal規範好像是要大寫)<br>平常我也都小寫orz<br>不知道當初訂製這個規則是不是有開發過drupal<br>最近使用phpfmt一直在找解決這個問題(常常忘記大寫orz)<br>最後研究出來，當然一定要筆記一下<br>有需要可能可以參考這篇<br>應該沒有什麼人需要吧 呵呵</p>
+<a id="more"></a>
+<p>找出phpfmt路徑<br><code>%USERPROFILE%\.vscode\extensions</code></p>
+<p>進入phpfmt路徑(可搜尋phpfmt)<br>裡面有<code>fmt.phar</code>檔案</p>
+<p>phar是類似php多隻程式打包成一個檔案，有一點跟jar一樣<br>但怎麼不能用zip打開orz<br>不過說真的打包過程很麻煩樣子<br>composer也不能直接做phar(可能沒有找到)<br>最後有Google到方法</p>
+<h3 id="解出phar"><a href="#解出phar" class="headerlink" title="解出phar"></a>解出phar</h3><p><a href="https://blog.csdn.net/u011474028/article/details/54973571" target="_blank" rel="noopener">php归档格式：phar文件详解（创建、使用、解包还原提取） - CSDN博客</a><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$phar = <span class="keyword">new</span> Phar(<span class="string">'fmt.phar'</span>);</span><br><span class="line">$phar-&gt;extractTo(<span class="string">'fmt'</span>); <span class="comment">//提取一份原項目文件</span></span><br><span class="line">$phar-&gt;convertToData(Phar::ZIP); <span class="comment">//另外再提取一份，和上行二選一即可</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="打包phar"><a href="#打包phar" class="headerlink" title="打包phar"></a>打包phar</h3><p>參考<a href="https://it.mlc.edu.tw/index.php/2012-03-24-08-48-16/2012-03-24-08-49-32/27-php/54-php-phar" target="_blank" rel="noopener">苗栗縣教育處資訊教育中心 - 打包多個php檔案變成phar執行檔</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$p=<span class="keyword">new</span> Phar(<span class="string">'./fmt.phar'</span>);</span><br><span class="line">$p-&gt;setStub(file_get_contents(<span class="string">'fmt.stub.php'</span>));<span class="comment">//入口網頁</span></span><br><span class="line">$p-&gt;buildFromDirectory(<span class="string">'.'</span>);<span class="comment">//不確定要有</span></span><br></pre></td></tr></table></figure>
+<h3 id="無法解出phar問題"><a href="#無法解出phar問題" class="headerlink" title="無法解出phar問題"></a>無法解出phar問題</h3><p>因為在公司不知道為什麼?phar一直失敗</p>
+<ul>
+<li>注意資料夾是不是唯讀</li>
+<li>確定php.ini有沒有把phar.readonly = Off</li>
+<li>phar.readonly前面有沒有把; del掉(我就是卡在這邊orz)</li>
+</ul>
+<p>要怎麼知道command line 的php.ini是吃哪裡?預設應該是php目錄裡面（PS:phpfmt是對應OS環境變數path裡面php)<br><a href="https://stackoverflow.com/questions/2750580/how-to-find-the-php-ini-file-used-by-the-command-line" target="_blank" rel="noopener">easyphp - How to find the php.ini file used by the command line? - Stack Overflow</a><br><code>php -i</code>可以看裡面設定內容，可以看到phar.readonly有沒有關閉才能正確執行</p>
+<p>phar參考連結</p>
+<ul>
+<li><a href="https://github.com/akalongman/fmt" target="_blank" rel="noopener">akalongman/fmt: Tooling for PHP - testing, code coverage and formatting</a></li>
+<li><a href="https://newsn.net/say/php-phar-extract.html" target="_blank" rel="noopener">如何解包还原一个phar文件</a></li>
+<li><a href="http://www.cnblogs.com/CraryPrimitiveMan/p/6158196.html" target="_blank" rel="noopener">PHP的学习–使用phar打包 - 疯狂的原始人 - 博客园</a></li>
+<li><a href="https://it.mlc.edu.tw/index.php/2012-03-24-08-48-16/2012-03-24-08-49-32/27-php/54-php-phar" target="_blank" rel="noopener">苗栗縣教育處資訊教育中心 - 打包多個php檔案變成phar執行檔</a></li>
+<li><a href="https://stackoverflow.com/questions/2750580/how-to-find-the-php-ini-file-used-by-the-command-line" target="_blank" rel="noopener">easyphp - How to find the php.ini file used by the command line? - Stack Overflow</a></li>
+<li><a href="https://scar.tw/article/2013/01/09/php-phar-create-and-use/" target="_blank" rel="noopener">Phar建立與使用 | ScarShow | 刀疤說</a></li>
+</ul>
+<p>修改完成<br><img src="/blog/2018/07/18/phpfmt把true-false-null存檔變大寫-違反psr2-，解出-打包phar/fmt.gif" title="vscode結果"></p>
+<p>最後修改完php<br>做上面打包動作<br>覆蓋fmt.phar，即可完成<br>fmt_smt.php修改部分<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">         <span class="keyword">if</span> (<span class="string">'true'</span> === $lcText || <span class="string">'false'</span> === $lcText || <span class="string">'null'</span> === $lcText) &#123;</span><br><span class="line">             $lcText = strtoupper($text);</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (</span><br><span class="line">	(</span><br><span class="line">		(<span class="string">'TRUE'</span> === $lcText || <span class="string">'FALSE'</span> === $lcText || <span class="string">'NULL'</span> === $lcText) &amp;&amp;</span><br><span class="line">		!<span class="keyword">$this</span>-&gt;leftUsefulTokenIs([</span><br></pre></td></tr></table></figure></p>
+<p>很麻煩的話，可以下載我改過的:D<br>打包完的phar檔案需要的話可以自取<br><a href="/blog/2018/07/18/phpfmt把true-false-null存檔變大寫-違反psr2-，解出-打包phar/fmt.phar" title="fmt.phar下載">fmt.phar下載</a></p>
+<p>最後設定檔下面可以拿掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;phpfmt.psr2&quot;: false,</span><br></pre></td></tr></table></figure></p>
+<p>不過psr2除了小寫，不知道還有做什麼事情= =a</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/vscode/" rel="tag"># vscode</a>
+          
+            <a href="/blog/tags/php/" rel="tag"># php</a>
+          
+            <a href="/blog/tags/phpfmt/" rel="tag"># phpfmt</a>
+          
+            <a href="/blog/tags/psr2/" rel="tag"># psr2</a>
+          
+            <a href="/blog/tags/phar/" rel="tag"># phar</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/07/18/vscode-套件調整PHP-code-style-使用記錄/" rel="next" title="vscode 套件調整PHP code style 使用記錄">
+                <i class="fa fa-chevron-left"></i> vscode 套件調整PHP code style 使用記錄
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/07/19/mysql-COALESCE-取代null值好方法/" rel="prev" title="mysql COALESCE 取代null值好方法">
+                mysql COALESCE 取代null值好方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">227</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#解出phar"><span class="nav-number">1.</span> <span class="nav-text">解出phar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包phar"><span class="nav-number">2.</span> <span class="nav-text">打包phar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#無法解出phar問題"><span class="nav-number">3.</span> <span class="nav-text">無法解出phar問題</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

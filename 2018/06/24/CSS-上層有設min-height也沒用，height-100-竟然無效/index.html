@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="父flex子height:100%;竟然不會延展不過flex好像不用設定height:100%就會延展(default:stretch)">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-06-23T16:56:55.153Z">
+<meta property="og:updated_time" content="2018-07-08T06:35:53.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[CSS]上層有設min-height也沒用，height:100%竟然無效??">
 <meta name="twitter:description" content="父flex子height:100%;竟然不會延展不過flex好像不用設定height:100%就會延展(default:stretch)">
@@ -355,7 +355,9 @@
         <p>父flex<br>子height:100%;<br>竟然不會延展<br>不過flex<br>好像不用設定height:100%就會延展(default:stretch)</p>
 <a id="more"></a>
 <p>同樣div父層設定min-height:100px;<br>div子層height:100%;<br>不會變大，可在子層設定min-height:inherit<br><a href="http://www.zhangxinxu.com/wordpress/2015/02/different-height-100-height-inherit/" target="_blank" rel="noopener">CSS中height:100%和height:inherit的异同 « 张鑫旭-鑫空间-鑫生活</a><br><code>在她裡面</code>，我瞬間背起來單字了<br>這個背法還真好背，哈哈</p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>不過還是有找到解法，設定父position:relative和子position:absolte，父不用設定height就可以讓子height:100%，是不是很神奇?!!</p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>不過還是有找到解法，設定父position:relative和子position:absolute，父不用設定height就可以讓子height:100%，是不是很神奇?!!</p>
+<p>2018-07-08<br>今天做week5 前端修練時光屋發現我有一個高度怪怪的(是用position:absolute) 有加到padding-top:20<br>後來查了一下<br>left + margin-left + border-left-width + padding-left + width + padding-right + border-right-width + margin-right + right = 包含块宽度</p>
+<p>預設position:static的高度是算 content-box 沒有padding跟margin<br>所以可能用absolute跟relative要注意一下他常寬的算法，可能會踩到雷XD</p>
 <blockquote>
 <p>Your CSS means that the child element’s height is 100% of the specified height of the parent element. If you do not specify a height for the parent, then the 100% doesn’t mean anything. Hence it doesn’t work.<br>What you want can be achieved by using position:relative on the parent and position:absolute on the child:<br><a href="http://jsfiddle.net/57EZn/25/" target="_blank" rel="noopener">http://jsfiddle.net/57EZn/25/</a><br>It’s not a beautiful solution but it does what you are after.</p>
 </blockquote>
@@ -485,7 +487,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">214</span>
+                  <span class="site-state-item-count">218</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -507,7 +509,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">219</span>
+                  <span class="site-state-item-count">227</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
