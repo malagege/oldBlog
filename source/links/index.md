@@ -17,3 +17,7 @@ date: 2018-05-14 21:24:11
 * [w3cschool - 学编程，从w3cschool开始](https://www.w3cschool.cn/)
 * [Web前端攻城狮 互联网时代最火爆的技术](https://class.imooc.com/?c=fe&mc_marking=032475ea974e6e9bb1ee3f2caad1acb2&mc_channel=L1)
 * [文章 - 伯乐在线](http://blog.jobbole.com/)
+* [张鑫旭的个人主页 » 张鑫旭-鑫空间-鑫生活](http://www.zhangxinxu.com/)
+* [阮一峰的网络日志](http://www.ruanyifeng.com/blog/)
+* [CookieTsai 的手記](https://tsai-cookie.blogspot.com/)
+* [XYZ的筆記本](https://xyz.cinc.biz/)
