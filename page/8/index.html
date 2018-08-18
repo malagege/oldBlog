@@ -293,6 +293,454 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="./blog/2018/03/29/logdown/2018-03-29-7072140/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/03/29/logdown/2018-03-29-7072140/" itemprop="url">動畫特效繪制框架(Sketch.js)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-29T15:39:00+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/網頁特效/" itemprop="url" rel="index">
+                    <span itemprop="name">網頁特效</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Sketch.js</p>
+<p>最近看到<a href="http://lost-song.com/" target="_blank" rel="noopener">TVアニメ『LOST SONG』</a>網站還滿酷的<br>所以研究了一下，發現是使用<a href="http://soulwire.github.io/sketch.js/" target="_blank" rel="noopener">sketch.js</a></p>
+<p>本來想說是很復雜的東西<br>結果看了一下，發現是用官網範例<a href="http://soulwire.github.io/Plasmatic-Isosurface/" target="_blank" rel="noopener">Plasmatic Isosurface</a><br>好像把<code>dat.ui</code>拿掉就跑出上面樣子</p>
+<p>插點看WebGL那邊去了XD<br>不過發現圖象矩陣，感覺也是一門大<del>坑</del>學問</p>
+<p><a href="http://lost-song.com/" target="_blank" rel="noopener">TVアニメ『LOST SONG』</a><br><a href="http://soulwire.github.io/sketch.js/" target="_blank" rel="noopener">sketch.js</a><br><a href="https://ithelp.ithome.com.tw/articles/10197789" target="_blank" rel="noopener">2018鐵人賽索引和心得(圖多慎入) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><br><a href="http://soulwire.github.io/Plasmatic-Isosurface/" target="_blank" rel="noopener">Plasmatic Isosurface</a><br><a href="http://taobaofed.org/blog/2015/12/21/webgl-handbook/" target="_blank" rel="noopener">WebGL 技术储备指南 | Taobao FED | 淘宝前端团队</a><br><a href="https://github.com/soulwire/Plasmatic-Isosurface" target="_blank" rel="noopener">soulwire/Plasmatic-Isosurface: A 2 dimensional plasma simulation running on the GPU, written in GLSL and CoffeeScript and rendered with WebGL.</a></p>
+<p>矩陣</p>
+<ul>
+<li><a href="https://lfkid.github.io/2016/05/03/%E8%AF%A6%E8%A7%A3CSS%E7%9A%84%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0matrix/" target="_blank" rel="noopener">详解CSS的矩阵变换函数matrix() | 中二病也要玩 front end</a></li>
+<li><a href="https://www.youtube.com/watch?v=ywmWnccKXDA" target="_blank" rel="noopener">【介紹】Geogebra 與線性變換矩陣（1／8）：矩陣變換與圖形 - YouTube</a></li>
+<li><a href="https://lfkid.github.io/2016/05/03/%E8%AF%A6%E8%A7%A3CSS%E7%9A%84%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0matrix/" target="_blank" rel="noopener">详解CSS的矩阵变换函数matrix() | 中二病也要玩 front end</a></li>
+<li><a href="http://www.eion.com.tw/Blogger/?Pid=1168" target="_blank" rel="noopener">CSS3 transform-function matrix 變形矩陣</a></li>
+<li><a href="http://www.liangshunet.com/ca/201707/793190018.htm" target="_blank" rel="noopener">CSS3 matrix双板划水、拉伸、打板动画实例animation-亮术网</a></li>
+<li><a href="http://ncase.me/matrix/" target="_blank" rel="noopener">THE MAGNIFICENT 2D MATRIX</a></li>
+<li><a href="https://blog.csdn.net/u010884130/article/details/50005437" target="_blank" rel="noopener">如何通过js获取到CSS3里面transform rotate旋转角度的度数，matrix解析 - CSDN博客</a></li>
+<li><a href="http://thecodeplayer.com/walkthrough/matrix-rain-animation-html5-canvas-javascript" target="_blank" rel="noopener">Matrix rain animation using HTML5 canvas and javascript</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="./blog/2018/03/26/logdown/2018-03-26-7062187/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/03/26/logdown/2018-03-26-7062187/" itemprop="url">連續打指令&& 與;差別</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-26T19:36:00+08:00">
+                2018-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://community.hpe.com/t5/System-Administration/cron-question-about-multiple-commands/td-p/3444393" target="_blank" rel="noopener">Solved: cron question about multiple commands - Hewlett Packard Enterprise Community</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Re: cron question about multiple commands</span><br><span class="line">&quot;echo ; ls&quot; will execute both echo and ls, whatever is echo exit code.</span><br><span class="line"></span><br><span class="line">&quot;echo &amp;&amp; ls&quot; will execute ls only if echo exit code is 0.</span><br><span class="line"></span><br><span class="line">Maybe you should do a script. Complex lines in crontab make it not clear and harder to maintain.</span><br><span class="line"></span><br><span class="line">Regards,</span><br><span class="line"></span><br><span class="line">Fred</span><br><span class="line">--</span><br><span class="line"></span><br><span class="line">&quot;Reality is just a point of view.&quot; (P. K. D.)</span><br></pre></td></tr></table></figure></p>
+<p>我有做個小實驗，簡單來講exit code<code>;</code>會傳回最後一個<br>但是<code>&amp;&amp;</code>會兩個看有沒有有沒有成功<br><a href="https://i.imgur.com/ei5cDId.png" target="_blank" rel="noopener">Imgur</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="./blog/2018/03/26/logdown/2018-03-26-7060577/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/03/26/logdown/2018-03-26-7060577/" itemprop="url">開機執行程式(/etc/rc.d/rc.local、Update-rc.d)筆記</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-03-26T13:59:00+08:00">
+                2018-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近玩linux用到…<br>不過還沒實作過<br>因為要做logdown移轉動作<br>先筆記存檔一下</p>
+<ul>
+<li><a href="https://www.linuxidc.com/Linux/2017-09/147166.htm" target="_blank" rel="noopener">Ubuntu 16.04设置rc.local开机启动命令/脚本的方法_Linux教程_Linux公社-Linux系统门户网站</a></li>
+<li><a href="https://blog.csdn.net/wzy_1988/article/details/8476901" target="_blank" rel="noopener">Update-rc.d &amp;&amp; rc.local管理Ubuntu的开机启动 - CSDN博客</a></li>
+<li><a href="http://fecbob.pixnet.net/blog/post/39347095-linux%E9%96%8B%E6%A9%9F%E8%87%AA%E5%8B%95%E5%95%9F%E5%8B%95" target="_blank" rel="noopener">fecbob.pixnet.net/blog/post/39347095-linux%E9%96%8B%E6%A9%9F%E8%87%AA%E5%8B%95%E5%95%9F%E5%8B%95</a></li>
+</ul>
+<p>centos<br><a href="http://imchao.wang/2014/02/21/make-your-service-autostart-on-linux/" target="_blank" rel="noopener">在CentOS下配置自启动服务 | 王超的技术博客</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="./blog/2018/03/26/logdown/2018-03-26-7060547/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1301,443 +1749,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="./blog/2018/01/22/logdown/2018-01-22-super-terminal-fzy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/01/22/logdown/2018-01-22-super-terminal-fzy/" itemprop="url">超級終端機 fzy</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-22T02:47:00+08:00">
-                2018-01-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>網路上看到fzy工具<br>感覺在選擇多個檔案會很有幫助<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/01/22/logdown/2018-01-22-super-terminal-fzy/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="./blog/2018/01/22/logdown/2018-01-22-super-terminal-bd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/01/22/logdown/2018-01-22-super-terminal-bd/" itemprop="url">超級終端機 bd</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-22T02:46:00+08:00">
-                2018-01-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>常常因為要做<code>cd ../..</code>而煩腦嗎<br>發現有人介紹zplug其中一個套件 bd<br>這指令跟bd是相反的</p>
-<p>zplug 安裝方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zplug &quot;tarrasch/zsh-bd&quot;, at:3724233, frozen:1</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://asciinema.org/a/9HZ5Pkigj34EvGUwQOshH5ddK" target="_blank" rel="noopener"><img src="https://asciinema.org/a/9HZ5Pkigj34EvGUwQOshH5ddK.png" alt="asciicast"></a><br><a href="https://asciinema.org/a/9HZ5Pkigj34EvGUwQOshH5ddK" target="_blank" rel="noopener">URL</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="./blog/2018/01/22/logdown/2018-01-22-super-terminal-command-completion/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/01/22/logdown/2018-01-22-super-terminal-command-completion/" itemprop="url">超級終端機 指令補全</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-22T02:45:00+08:00">
-                2018-01-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>oh-my-zsh有一個指令補全功能<br>再我裝zsh在elementary OS 上面少這個功能<br>就不太習慣XD</p>
-<p>好來我找到了</p>
-<p>在<a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh" target="_blank" rel="noopener">oh-my-zsh/completion.zsh at master · robbyrussell/oh-my-zsh</a>抓下來(檔案抓下來，對照設定檔錄徑)<br>.zshrc設定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#　TAB 補完選單</span><br><span class="line">source ~/.zplug/completion.zsh</span><br></pre></td></tr></table></figure></p>
-<p>就能完成了</p>
-<p><img src="https://asciinema.org/a/kLj4j7cwjwsUnrIvTM3GZ9VtC.png" alt="asciicast"><br><a href="https://asciinema.org/a/kLj4j7cwjwsUnrIvTM3GZ9VtC" target="_blank" rel="noopener">URL</a></p>
-<p><a href="https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh" target="_blank" rel="noopener">oh-my-zsh/completion.zsh at master · robbyrussell/oh-my-zsh</a><br><a href="https://asciinema.org/a/37390" target="_blank" rel="noopener">Installing zsh-autosuggestions - asciinema</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1788,7 +1799,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-count">236</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -1810,7 +1821,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">240</span>
+                  <span class="site-state-item-count">244</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
