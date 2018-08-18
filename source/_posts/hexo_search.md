@@ -28,7 +28,7 @@ local_search:
 ##遇到奇怪錯誤問題
 怎麼點搜尋一直轉圈圈
 
-{% asset_img search.png hexo_search不能搜尋 %}
+{% asset_img error.gif hexo_search不能搜尋 %}
 
 XML解析錯誤
 ```
