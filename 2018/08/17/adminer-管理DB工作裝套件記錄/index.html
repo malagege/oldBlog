@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="這篇記錄adminer要怎麼裝套件，步驟真的不複雜簡單記一下">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-08-17T14:46:38.098Z">
+<meta property="og:updated_time" content="2018-08-22T14:24:28.183Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="adminer 管理DB工作裝套件記錄">
 <meta name="twitter:description" content="這篇記錄adminer要怎麼裝套件，步驟真的不複雜簡單記一下">
@@ -402,7 +402,7 @@
 <p>等等，還沒介紹adminer</p>
 <p>可以先新增一個資料夾<br>把adminer放裡面，再把順眼的adminer plugin抓下來<br>推薦<a href="https://raw.githubusercontent.com/vrana/adminer/master/plugins/struct-comments.php" target="_blank" rel="noopener">struct-comments</a><br>設定一個<code>index.php</code><br><a href="https://www.adminer.org/en/plugins/#use" target="_blank" rel="noopener">使用套件教學</a></p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">adminer_object</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// required to run any plugin</span></span><br><span class="line">    <span class="keyword">include_once</span> <span class="string">"./plugins/plugin.php"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// autoloader</span></span><br><span class="line">    <span class="keyword">foreach</span> (glob(<span class="string">"plugins/*.php"</span>) <span class="keyword">as</span> $filename) &#123;</span><br><span class="line">        <span class="keyword">include_once</span> <span class="string">"./$filename"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    $plugins = <span class="keyword">array</span>(</span><br><span class="line">        <span class="comment">// specify enabled plugins here</span></span><br><span class="line">        <span class="keyword">new</span> AdminerDumpXml,</span><br><span class="line">        <span class="keyword">new</span> AdminerTinymce,</span><br><span class="line">        <span class="keyword">new</span> AdminerFileUpload(<span class="string">"data/"</span>),</span><br><span class="line">        <span class="keyword">new</span> AdminerSlugify,</span><br><span class="line">        <span class="keyword">new</span> AdminerTranslation,</span><br><span class="line">        <span class="keyword">new</span> AdminerForeignSystem,</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* It is possible to combine customization and plugins:</span></span><br><span class="line"><span class="comment">    class AdminerCustomization extends AdminerPlugin &#123;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    return new AdminerCustomization($plugins);</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AdminerPlugin($plugins);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// include original Adminer or Adminer Editor</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">"./adminer.php"</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p><a href="http://php.net/manual/en/function.glob.php" target="_blank" rel="noopener">PHP: glob - Manual</a><br>算是很神的method<br>可以用神奇的方法抓到想要的檔案</p>
+<p><a href="http://php.net/manual/en/function.glob.php" target="_blank" rel="noopener">PHP: glob - Manual</a><br>算是很神的method<br>可以用神奇的方法抓到想要的檔案<br>自動載入也可以參考__autoload</p>
 <p>當然也可以直接去github找人家用好的adminer版本<br><a href="https://github.com/dg/adminer-custom" target="_blank" rel="noopener">dg/adminer-custom: Customizations for Adminer, the best database management tool written in PHP.</a><br>不過我還是覺得原版看比較順眼</p>
 
       
@@ -514,7 +514,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">238</span>
+                  <span class="site-state-item-count">241</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -525,7 +525,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -536,7 +536,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">246</span>
+                  <span class="site-state-item-count">248</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
