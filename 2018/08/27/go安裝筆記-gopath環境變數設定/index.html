@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近想玩玩看GO在ElementaryOS安裝GO踩幾個雷，紀錄一下筆記這次的雷還深深了解以前code設定環境變數用途">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-08-27T15:14:57.842Z">
+<meta property="og:updated_time" content="2018-08-27T15:19:40.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go安裝筆記&amp;gopath環境變數設定">
 <meta name="twitter:description" content="最近想玩玩看GO在ElementaryOS安裝GO踩幾個雷，紀錄一下筆記這次的雷還深深了解以前code設定環境變數用途">
@@ -394,9 +394,8 @@
 <p>Go 1.8 is introducing a default GOPATH. If you don’t set one, the tools will use the default. Default GOPATH is:<br>   $HOME/go on Unix-like systems<br>   %USERPROFILE%\go on Windows<br><a href="https://rakyll.org/default-gopath/" target="_blank" rel="noopener">The default GOPATH · Go, the unwritten parts</a></p>
 </blockquote>
 <p>原本以為會遇到這個問題<br>還有<code>GOROOT</code>可以設定GO目錄<br>不過我沒設定好像也能跑<br>所以就沒設定<br>詳細一些東西可以看裡面東西<br><a href="https://www.jianshu.com/p/4e699ff478a5" target="_blank" rel="noopener">go环境变量配置 (GOROOT和GOPATH) - 简书</a></p>
-<p>##其他程式語言兩三事</p>
-<p>等等…，為什麼GOPATH就能解決權限問題<br>那…php,nodejs,沒有一樣設定的東西嗎</p>
-<p>###java classpath<br>印象中…可以在環境變數先加classpath<br>不過這應該跟我們這篇沒關係<br>先跳過</p>
+<h2 id="其他程式語言兩三事"><a href="#其他程式語言兩三事" class="headerlink" title="其他程式語言兩三事"></a>其他程式語言兩三事</h2><p>等等…，為什麼GOPATH就能解決權限問題<br>那…php,nodejs,沒有一樣設定的東西嗎</p>
+<h3 id="java-classpath"><a href="#java-classpath" class="headerlink" title="java classpath"></a>java classpath</h3><p>印象中…可以在環境變數先加classpath<br>不過這應該跟我們這篇沒關係<br>先跳過</p>
 <h3 id="nodejs-設定套件golbal存放位置"><a href="#nodejs-設定套件golbal存放位置" class="headerlink" title="nodejs 設定套件golbal存放位置"></a>nodejs 設定套件golbal存放位置</h3><p><code>npm config get prefix</code><br>可以抓到現在<code>npm install xxxx -g</code>存放路徑<br>Linux預設存放<br><code>/usr/</code><br><code>C:\Users\(User)\AppData\Roaming\npm</code></p>
 <p>這邊我就很好奇，為什麼Linux可以執行<code>node</code>global為什麼可以在cmd上面打<br>原來那些路徑有設定到<code>PATH</code><br>LINUX會在<code>/usr/bin</code>加程式位置<br>所以你可以打指令執行</p>
 <p>所以你自訂<code>npm config set prefix ~/.npm-package</code><br>加完<del>不要高興太早</del>記得要在<code>$PATH</code>加入你npm設定位置<br>不然cmd呼叫不到<br><a href="https://blog.miniasp.com/post/2015/09/01/Change-npm-default-global-installation-directory-for-nodejs-modules-in-Windows.aspx" target="_blank" rel="noopener">The Will Will Web | 如何在 Windows 平台變更 Node.js / npm 全域模組的預設安裝路徑</a></p>
@@ -591,7 +590,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#apt-get-安裝GO"><span class="nav-number">1.</span> <span class="nav-text">apt-get 安裝GO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOPATH"><span class="nav-number">2.</span> <span class="nav-text">GOPATH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nodejs-設定套件golbal存放位置"><span class="nav-number">2.1.</span> <span class="nav-text">nodejs 設定套件golbal存放位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-composer-global"><span class="nav-number">2.2.</span> <span class="nav-text">php - composer  global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-pip"><span class="nav-number">2.3.</span> <span class="nav-text">python pip</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#apt-get-安裝GO"><span class="nav-number">1.</span> <span class="nav-text">apt-get 安裝GO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOPATH"><span class="nav-number">2.</span> <span class="nav-text">GOPATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他程式語言兩三事"><span class="nav-number">3.</span> <span class="nav-text">其他程式語言兩三事</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java-classpath"><span class="nav-number">3.1.</span> <span class="nav-text">java classpath</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nodejs-設定套件golbal存放位置"><span class="nav-number">3.2.</span> <span class="nav-text">nodejs 設定套件golbal存放位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#php-composer-global"><span class="nav-number">3.3.</span> <span class="nav-text">php - composer  global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-pip"><span class="nav-number">3.4.</span> <span class="nav-text">python pip</span></a></li></ol></li></ol></div>
             
 
           </div>
