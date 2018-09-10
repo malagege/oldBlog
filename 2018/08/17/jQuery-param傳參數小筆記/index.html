@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="之前我很常在大學自學jQuery很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP使用上可能需要用到$.param">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-08-17T14:18:54.801Z">
+<meta property="og:updated_time" content="2018-09-10T14:23:54.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jQuery $.param傳參數小筆記">
 <meta name="twitter:description" content="之前我很常在大學自學jQuery很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP使用上可能需要用到$.param">
@@ -400,7 +400,9 @@
 <p>但我對他第二個參數，比較有興趣<br>在開方者工作測試</p>
 <p>$.param除了可以吃<code>$.serializeArray</code>傳回的陣列以外<br>他還能實接對物件做解析</p>
 <p>比較需要注意的事情是<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line">  a: &#123;</span><br><span class="line">    one: <span class="number">1</span>,</span><br><span class="line">    two: <span class="number">2</span>,</span><br><span class="line">    three: <span class="number">3</span></span><br><span class="line">  &#125;,</span><br><span class="line">  b: [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> recursiveEncoded = $.param( myObject );</span><br><span class="line"><span class="keyword">var</span> recursiveDecoded = <span class="built_in">decodeURIComponent</span>( $.param( myObject ) );</span><br><span class="line"> </span><br><span class="line">alert( recursiveEncoded );</span><br><span class="line">alert( recursiveDecoded );</span><br></pre></td></tr></table></figure></p>
-<p>php程式需要做form表單送出的時候，需要用<code>a[]=xxxx&amp;a[]=oooo</code><br>但這時候myObject屬性塞<code>陣列/物件</code>，jQuery預設不會轉<br>$.param接收<code>物件</code>的時候，第二個參數就有差了</p>
+<p>php程式需要做form表單送出的時候，需要用<code>a[one]=1&amp;a[two]=2&amp;a[three]=3&amp;b[]=1&amp;b[]=2&amp;b[]=3</code><br>但這時候myObject屬性塞<code>陣列/物件</code>，jQuery預設不會轉<br>$.param接收<code>物件</code>的時候，第二個參數就有差了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.param(myObject, false)</span><br></pre></td></tr></table></figure>
+<p>顯示結果為<code>a=[object+Object]&amp;b=1&amp;b=2&amp;b=3</code></p>
 <p><strong>所以不管怎麼用，checkbox name還是一定要加[]</strong></p>
 <p>##寫PHP checkbox記得一件事</p>
 <p>我覺得我還是一定會忘記XDD<br>再寫一次</p>
@@ -530,7 +532,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">244</span>
+                  <span class="site-state-item-count">246</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
