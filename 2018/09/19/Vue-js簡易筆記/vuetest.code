@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue test</title>
+</head>
+<body>
+    <div id="app">
+        {{ test }}
+        <input v-model="test">
+        <input :value="test" @input="test=$event.target.value">
+        <!--
+            v-model 是 :value跟@input語法糖
+            同樣效果
+            input底層(原生)使用$event.target.value
+            custom-component使用$event(有emit回傳值使用)，$event指的是 $emit第二個參數回傳值
+        -->
+        <hr>
+        <!-- custom-view2可客製化，放到別的地方-->
+        <!-- <custom-view2 :obj_name="'test2'"></custom-view2> -->
+        <custom-view :text="test"></custom-view>
+        <custom-input :abc="test" @testa="testf($event)"></custom-input>
+        <custom-view :text="test2"></custom-view>
+        <custom-input :abc="test2" @testa.once="testf2($event)"></custom-input>  <!-- .once 只能對event使用，prop和:bind不能用，bind要用v-once-->
+        <!-- once [1-3 vue指令 v-once - 简书](https://www.jianshu.com/p/4545df97ffd5) -->
+
+        <!--使用Event Bus測試-->
+        <!-- event bus [Vue中的EventBus使用时你遇到过这个问题吗？？？ - 掘金](https://juejin.im/post/5ad1fe8ff265da239d49bdc2) -->
+        <custom-view2 :obj_name="'test'"></custom-view2>
+        <custom-input2 :obj_name="'test'"></custom-input2>
+        {{ custom_inputs.length }}
+        <button @click="custom_inputs.push('')">+</button>
+        <button @click="custom_inputs.splice(-1,1)">-</button>
+        <custom-view2 :obj_name="index" v-for="(custom_input,index) in custom_inputs"></custom-view2>
+        <custom-input2 :obj_name="index" v-for="(custom_input,index) in custom_inputs"></custom-input2>
+        <!-- event bus 記得beforeDestroy 要$off('event',method)掉，不然會有記憶體殘留問題，詳細看alex影片-->
+        <!-- v-for    xxx in var_int   ，var_int為數字會從1....var_int-->
+        <!-- v-for    xxx in var_array   ，var_array為數字會從0....var_array-->
+        <hr>
+
+        sync test
+        <!--
+            sync算是一個簡單語法糖，還是需要在子組件觸發update:abc event
+            覺得他跟v-model比起來，他那個可以對應多個值做同步
+        -->
+        <custom-view :text="test_sync"></custom-view>
+        <customsync-input :abc.sync="test_sync"></customsync-input>
+        <customsync-input :abc="test_sync" @update:abc="test_sync=$event"></customsync-input>
+
+        <!--
+            [vue.js - 使用的是vue2.0，如何动态添加组件。例如实现点击A按钮添加aTest组件，点击B按钮添加bTest组件。 - SegmentFault 思否](https://segmentfault.com/q/1010000007148050)
+            動態組件寫法
+            v-for可用成多個
+        -->
+
+        <hr>
+
+        slot 用法<br>
+        <slot-demo>test_mark</slot-demo>
+        <slot-demo2></slot-demo2>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script>
+    <script>
+    window.Bus = new Vue();
+    Vue.component('custom-input',{
+        props: ['abc'],
+        data(){
+            return {
+                abc: 'test2'
+            }
+        },
+        methods:{
+            callP(e){
+                this.$emit('testa',e.target.value);
+            }
+        },
+        template:`<div><input :value="abc" @input="callP($event)"></div>`
+    });
+    Vue.component('custom-view',{
+        props: ['text'],
+        data(){
+            return {
+                test: 'test show'
+            }
+        },
+        template:`<div><h1>{{ text }} </h1></div>`
+    });
+
+//
+
+    Vue.component('custom-input2',{
+        props: ["obj_name"],
+        data(){
+            return{
+                abc:""
+            }
+        },
+        methods:{
+            callP(e){
+                console.log(e.target.value)
+               Bus.$emit('postData:' + this.obj_name,e.target.value);
+            }
+        },
+        template:`<div><input :value="abc" @input="callP($event)"></div>`
+    });
+    Vue.component('custom-view2',{
+        props: ["obj_name"],
+        data(){
+            return {
+                text: ''
+            }
+        },
+        methods:{
+            callP(){
+               Bus.$on('postData:' + this.obj_name, this.eventHandler)
+            },
+            eventHandler(data){
+                console.log(this.text)
+                this.text = data;
+            }
+        },
+        created(){  //event mount呼叫
+            this.callP()
+        },
+        beforeDestroy(){
+            Bus.$off('postData:' + this.obj_name, this.eventHandler)
+        },
+        template:`<div><h1>{{ text }} </h1></div>`
+    });
+
+
+    Vue.component('customsync-input',{
+        props: ['abc'],
+        data(){
+            return {
+                abc: 'test2'
+            }
+        },
+        methods:{
+            callP(e){
+                this.$emit('update:abc',e.target.value);
+            }
+        },
+        template:`<div><input :value="abc" @input="callP($event)"></div>`
+    });
+
+    var slot_set = {
+        data(){
+            return {
+
+            }
+        },
+        template: `
+        <mark> <slot></slot> </mark>
+        `
+    };
+    Vue.component('slot-demo',slot_set);
+
+    slot_set.template = `
+        <mark> <slot>default</slot> </mark>
+        `;
+    
+    // 無用方法??不知道為什麼
+    // Vue.component('slot-demo2',slot_set)
+    //但用 extends就正常了
+    //[vue组件 组件的继承extend - CSDN博客](https://blog.csdn.net/m0_37068028/article/details/79827132)
+    //[Vue入门系列（六）组件继承mixin - 简书](https://www.jianshu.com/p/d7054a0d0c48)
+    Vue.component('slot-demo2',{
+        extends: slot_set,
+        template: `
+        <mark> <slot>default</slot> </mark>
+        `
+    })
+    var vm = new Vue({
+        el: '#app',
+        data:{
+            test:  'Hello',
+            test2:'',
+            custom_inputs:["test1","test2"],
+            test_sync: ''
+        },
+        methods:{
+            testf(a){
+               this.test=a;
+            },
+            testf2(a){
+               this.test2=a;
+            }
+        }
+    });
+    </script>
+</body>
+</html>
