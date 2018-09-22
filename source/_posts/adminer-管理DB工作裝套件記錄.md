@@ -97,6 +97,7 @@ include "./adminer.php";
 [PHP: glob - Manual](http://php.net/manual/en/function.glob.php)
 算是很神的method
 可以用神奇的方法抓到想要的檔案
+自動載入也可以參考__autoload
 
 
 當然也可以直接去github找人家用好的adminer版本

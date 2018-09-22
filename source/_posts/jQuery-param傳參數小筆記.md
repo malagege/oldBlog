@@ -83,10 +83,14 @@ var recursiveDecoded = decodeURIComponent( $.param( myObject ) );
 alert( recursiveEncoded );
 alert( recursiveDecoded );
 ```
-php程式需要做form表單送出的時候，需要用`a[]=xxxx&a[]=oooo`
+php程式需要做form表單送出的時候，需要用`a[one]=1&a[two]=2&a[three]=3&b[]=1&b[]=2&b[]=3`
 但這時候myObject屬性塞`陣列/物件`，jQuery預設不會轉
 $.param接收`物件`的時候，第二個參數就有差了
 
+```
+$.param(myObject, false)
+```
+顯示結果為`a=[object+Object]&b=1&b=2&b=3`
 
 **所以不管怎麼用，checkbox name還是一定要加[]**
 
