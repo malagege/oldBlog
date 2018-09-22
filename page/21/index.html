@@ -293,6 +293,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="./blog/2015/06/22/logdown/2015-06-22-autoit-asked-the-week-6th-automated-shutdown-script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2015/06/22/logdown/2015-06-22-autoit-asked-the-week-6th-automated-shutdown-script/" itemprop="url">[Autoit]詢問禮拜六日自動關機腳本</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2015-06-22T05:24:00+08:00">
+                2015-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/AutoIt/" itemprop="url" rel="index">
+                    <span itemprop="name">AutoIt</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>就公文開啟腳本加上禮拜六日自動關機程式，不要浪費學校的電<br>然後怕卡在國定假日要來上課，所以寫出這個角本<br>自動開機就在BIOS設定，就搞定了XD</p>
+<figure class="highlight vb"><figcaption><span>xxx.au3</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#include &lt;Date.au3&gt;</span></span><br><span class="line"></span><br><span class="line">Func OpenProc()</span><br><span class="line">   <span class="meta">#Working code</span></span><br><span class="line"></span><br><span class="line">EndFunc</span><br><span class="line"></span><br><span class="line"><span class="keyword">If</span> @WDAY==<span class="number">1</span> <span class="keyword">or</span> @WDAY == <span class="number">7</span> <span class="keyword">Then</span></span><br><span class="line">   run(<span class="string">"shutdown -s -f -t 600"</span>)</span><br><span class="line">   sleep(<span class="number">5</span>)</span><br><span class="line">   $goSutdown = MsgBox($MB_OKCANCEL,@WDAY,<span class="string">"今天是周休假日，程式自動執行關機，請問你是否繼續執行關機？"</span>)</span><br><span class="line">   <span class="keyword">If</span> $goSutdown = $IDCANCEL <span class="keyword">Then</span></span><br><span class="line">	  run(<span class="string">"shutdown -a"</span>)</span><br><span class="line">	  OpenProc()</span><br><span class="line">   EndIf</span><br><span class="line">   <span class="keyword">exit</span>(<span class="number">1</span>)</span><br><span class="line">EndIf</span><br><span class="line"></span><br><span class="line">OpenProc()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="./blog/2015/05/04/logdown/2015-05-04-python-conditional-expressions-and-generator-expressions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1579,149 +1721,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="./blog/2014/12/23/logdown/2014-12-23-css3transition-transition-effects/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2014/12/23/logdown/2014-12-23-css3transition-transition-effects/" itemprop="url">[CSS3]transition的轉場效果</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-12-23T09:35:00+08:00">
-                2014-12-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/CSS/" itemprop="url" rel="index">
-                    <span itemprop="name">CSS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight"><figcaption><span>CSS Syntax</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transition: property duration timing-function delay|initial|inherit;</span><br></pre></td></tr></table></figure>
-<p><a href="http://www.w3schools.com/cssref/css3_pr_transition.asp" target="_blank" rel="noopener">http://www.w3schools.com/cssref/css3_pr_transition.asp</a><br><a href="http://www.wibibi.com/info.php?tid=CSS3_transition_%E5%B1%AC%E6%80%A7" target="_blank" rel="noopener">http://www.wibibi.com/info.php?tid=CSS3_transition_%E5%B1%AC%E6%80%A7</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1772,7 +1771,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">248</span>
+                  <span class="site-state-item-count">249</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -1794,7 +1793,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">252</span>
+                  <span class="site-state-item-count">253</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
