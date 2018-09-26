@@ -87,7 +87,7 @@
 <meta property="og:description" content="最近vscode挖到Rest Client套件這個有點類似postman可以直接簡單做Server溝通簡單測試外，感覺還可以順便寫文件XD但功能好像有點多，所以我就沒玩很深入">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="/blog/2018/09/25/vscode套件Rest-Client搭配JSON-Server簡單使用小記/1.png">
-<meta property="og:updated_time" content="2018-09-25T13:37:59.801Z">
+<meta property="og:updated_time" content="2018-09-26T13:39:21.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vscode套件Rest Client搭配JSON-Server簡單使用小記">
 <meta name="twitter:description" content="最近vscode挖到Rest Client套件這個有點類似postman可以直接簡單做Server溝通簡單測試外，感覺還可以順便寫文件XD但功能好像有點多，所以我就沒玩很深入">
@@ -372,6 +372,7 @@
 <p>設定<code>db.json</code>(注意:一定要xxx.json)<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"posts"</span>:[]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>存檔<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">json-server db.json</span><br></pre></td></tr></table></figure></p>
 <p>簡單就架好一個Restful 測試Server XD<br>想說要模擬分頁、搜尋沒辦法做到<br>結果一看他的文件<br>竟然可以做到<a href="https://github.com/typicode/json-server#paginate" target="_blank" rel="noopener">typicode/json-server: Get a full fake REST API with zero coding in less than 30 seconds (seriously) #paginate</a><br>最近要練VueJS<br>剛好可以用這個練習</p>
+<p><strong>NOTE 2018/09/26</strong><br><code>json-server db.json --static .</code>可設定<code>index.html</code>可以直接連<a href="http://localhost/index.html" target="_blank" rel="noopener">http://localhost/index.html</a></p>
 <h2 id="REST-Client"><a href="#REST-Client" class="headerlink" title="REST Client"></a>REST Client</h2><p><code>###</code>用來當分格線</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">###</span><br><span class="line"># 取得資料</span><br><span class="line">GET http://localhost:3000/posts</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Content-Type 可以參考</span><br><span class="line"># [四种常见的 POST 提交数据方式 | JerryQu 的小站](https://imququ.com/post/four-ways-to-post-data-in-http.html)</span><br><span class="line">### 新增資料</span><br><span class="line"></span><br><span class="line">POST http://localhost:3000/posts  HTTP/1.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">test=2&amp;a=1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#  傳JSON，一定要加content-type: application/json 一定要填寫，不然會錯</span><br><span class="line">###</span><br><span class="line"># 新增資料</span><br><span class="line">POST http://localhost:3000/posts  HTTP/1.1</span><br><span class="line">content-type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;test&quot; : 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">###</span><br><span class="line"># PUT 更新資料</span><br><span class="line">PUT http://localhost:3000/posts/1  HTTP/1.1</span><br><span class="line">content-type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;test2&quot; : &quot;3&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">###</span><br><span class="line"># DELETE 刪除資料</span><br><span class="line">DELETE http://localhost:3000/posts/1  HTTP/1.1</span><br><span class="line">content-type: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;test2&quot; : &quot;3&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <img src="/blog/2018/09/25/vscode套件Rest-Client搭配JSON-Server簡單使用小記/1.png" title="查詢請按紅框">
@@ -409,6 +410,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/09/26/蒐集一些網頁波浪動態圖示/" rel="prev" title="蒐集一些網頁波浪動態圖示">
+                蒐集一些網頁波浪動態圖示 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -485,7 +490,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">251</span>
+                  <span class="site-state-item-count">253</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -496,7 +501,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -507,7 +512,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">254</span>
+                  <span class="site-state-item-count">255</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
