@@ -142,7 +142,9 @@ echo "I'd like an {${beers::$ale}}\n";
  heredoc 語法結構
 nowdoc 語法結構（自 PHP 5.3.0 起） 
 
-nowdoc可以用$var 帶變數
+heredoc可以用$var 帶變數
+但是nowdoc不會帶入$var變數
+nowdoc用在XML會比較不會有問題
 
 官網範例
 ```php
