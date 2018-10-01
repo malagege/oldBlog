@@ -79,15 +79,20 @@
 
 
 
+<meta name="description" content="解決上一篇遇到win10通知沒法出來electron Notification win 10 失敗小記 | 程式狂想筆記最後仔細看了官方文件才解決…..">
 <meta name="keywords" content="electron,notification">
 <meta property="og:type" content="article">
-<meta property="og:title" content="electron win 10設定通知(AppUserModelId)&amp;electron-builder相關設定">
+<meta property="og:title" content="electron win 10設定通知(AppUserModelId)&amp;electron-builder相關NSIS設定">
 <meta property="og:url" content="./2018/10/01/electron-win-10設定通知-AppUserMOdelId-electron-builder相關設定/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="解決上一篇遇到win10通知沒法出來electron Notification win 10 失敗小記 | 程式狂想筆記最後仔細看了官方文件才解決…..">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-10-01T12:36:29.075Z">
+<meta property="og:image" content="/blog/2018/10/01/electron-win-10設定通知-AppUserMOdelId-electron-builder相關設定/1.png">
+<meta property="og:updated_time" content="2018-10-01T12:57:21.141Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="electron win 10設定通知(AppUserModelId)&amp;electron-builder相關設定">
+<meta name="twitter:title" content="electron win 10設定通知(AppUserModelId)&amp;electron-builder相關NSIS設定">
+<meta name="twitter:description" content="解決上一篇遇到win10通知沒法出來electron Notification win 10 失敗小記 | 程式狂想筆記最後仔細看了官方文件才解決…..">
+<meta name="twitter:image" content="/blog/2018/10/01/electron-win-10設定通知-AppUserMOdelId-electron-builder相關設定/1.png">
 
 
 
@@ -123,7 +128,7 @@
 
 
 
-  <title>electron win 10設定通知(AppUserModelId)&electron-builder相關設定 | 程式狂想筆記</title>
+  <title>electron win 10設定通知(AppUserModelId)&electron-builder相關NSIS設定 | 程式狂想筆記</title>
   
 
 
@@ -311,7 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">electron win 10設定通知(AppUserModelId)&electron-builder相關設定</h1>
+          <h1 class="post-title" itemprop="name headline">electron win 10設定通知(AppUserModelId)&electron-builder相關NSIS設定</h1>
         
 
         <div class="post-meta">
@@ -333,6 +338,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -361,7 +388,21 @@
       
 
       
-        
+        <p>解決上一篇遇到win10通知沒法出來<br><a href="https://malagege.github.io/blog/2018/09/30/electron-Notification-win-10-%E5%A4%B1%E6%95%97%E5%B0%8F%E8%A8%98/" target="_blank" rel="noopener">electron Notification win 10 失敗小記 | 程式狂想筆記</a><br>最後仔細看了官方文件<br>才解決…..</p>
+<a id="more"></a>
+<p>首先，win8 之後應用程式做通知都需要註冊<code>AppModelUserId</code><br>在dev時候很難註冊到(沒有方法)<br>在查詢一堆資料(NSIS….)<br>發現需要做安裝動作<br>才能註冊<code>AppModelUserId</code></p>
+<p>node-notifier是透過SnoreToast.exe程式呼叫<br>所以其實也可以不用安裝這個</p>
+<p>首先來看官方AppUserModelId設定<br>檔案請設定package.json(不是設定electron_dist裡面的)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...,(第一階層)</span><br><span class="line">    "build": &#123;</span><br><span class="line">    "appId": "com.example.app"</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但可以注意到<a href="https://www.electron.build/configuration/configuration#configuration" target="_blank" rel="noopener">Common Configuration - electron-builder</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Configuration¶</span><br><span class="line"></span><br><span class="line">    appId = com.electron.$&#123;name&#125; String - The application id. Used as CFBundleIdentifier for MacOS and as Application User Model ID for Windows (NSIS target only, Squirrel.Windows not supported). It is strongly recommended that an explicit ID is set.</span><br><span class="line">    productName String - As name, but allows you to specify a product name for your executable which contains spaces and other special characters not allowed in the name property.</span><br><span class="line">    copyright = Copyright © year $&#123;author&#125; String - The human-readable copyright line for the app.</span><br></pre></td></tr></table></figure></p>
+<p>appId預設有設定<br>所以其實用預設可以不用再package.json設定</p>
+<p>最後起在background.js裡面加入<code>app.setUserModelId(&quot;com.electron.exampleName&quot;)</code>，最後exampleName改成package.json專案名子(name)</p>
+<p>之後安裝，執行程式可以看到通知結果</p>
+<p>NOTE: 通知安裝完，不會馬上在控制台看到程式設定<br>要第一次通知才能看到<br><img src="/blog/2018/10/01/electron-win-10設定通知-AppUserMOdelId-electron-builder相關設定/1.png" title="Win10控制通知設定"></p>
+<h2 id="NSIS-取消一件安裝、設定安裝路徑"><a href="#NSIS-取消一件安裝、設定安裝路徑" class="headerlink" title="NSIS  取消一件安裝、設定安裝路徑"></a>NSIS  取消一件安裝、設定安裝路徑</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...,</span><br><span class="line">"build":&#123;</span><br><span class="line">  "nsis":&#123;</span><br><span class="line">    "oneClick" : false,</span><br><span class="line">    "allowToChangeInstallationDirectory": true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>oneClick是否為一鍵安裝<br>allowToChangeInstallationDirectory是否讓User改安裝目錄</p>
+<p>更多設定我就不寫了<br><a href="https://www.electron.build/configuration/configuration#configuration" target="_blank" rel="noopener">Common Configuration - electron-builder</a></p>
+<p>未來有空可以研究更新<br>不過目前這個用不到<br>先留者記錄<br><a href="https://segmentfault.com/a/1190000012904543" target="_blank" rel="noopener">Electron应用使用electron-builder配合electron-updater实现自动更新 - 个人文章 - SegmentFault 思否</a></p>
+
       
     </div>
     
@@ -453,8 +494,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -524,6 +574,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NSIS-取消一件安裝、設定安裝路徑"><span class="nav-number">1.</span> <span class="nav-text">NSIS  取消一件安裝、設定安裝路徑</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
