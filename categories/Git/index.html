@@ -370,7 +370,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">262</span>
+                  <span class="site-state-item-count">264</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -381,7 +381,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -392,7 +392,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">266</span>
+                  <span class="site-state-item-count">267</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -939,56 +939,28 @@
 
 </body>
 </html>
-arch();
-        }
-      });
-    }
+           index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
 
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
 
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
-               while (indexOfContent.length != 0) {
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
                     var item = indexOfContent[indexOfContent.length - 1];
                     var position = item.position;
                     var word = item.word;
