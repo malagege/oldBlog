@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="(暫存) FBthemes - How can I change the default Terminal font? - elementary OS Stack Exchange .zshrc .zsh">
+<meta name="description" content="To change font in the Terminal you need dconf-editor. Install it, if you haven’t done so: sudo apt-get install dconf-tools Run it and go to path org &amp;gt; gnome &amp;gt; desktop &amp;gt; interface &amp;gt; monospa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elementary OS更換Terminal字形 &amp; 設定zsh環境變數">
 <meta property="og:url" content="./2018/08/26/elementary-OS更換Terminal字形-設定zsh環境變數/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="(暫存) FBthemes - How can I change the default Terminal font? - elementary OS Stack Exchange .zshrc .zsh">
+<meta property="og:description" content="To change font in the Terminal you need dconf-editor. Install it, if you haven’t done so: sudo apt-get install dconf-tools Run it and go to path org &amp;gt; gnome &amp;gt; desktop &amp;gt; interface &amp;gt; monospa">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-09-15T15:45:12.314Z">
+<meta property="og:updated_time" content="2018-10-20T09:36:01.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elementary OS更換Terminal字形 &amp; 設定zsh環境變數">
-<meta name="twitter:description" content="(暫存) FBthemes - How can I change the default Terminal font? - elementary OS Stack Exchange .zshrc .zsh">
+<meta name="twitter:description" content="To change font in the Terminal you need dconf-editor. Install it, if you haven’t done so: sudo apt-get install dconf-tools Run it and go to path org &amp;gt; gnome &amp;gt; desktop &amp;gt; interface &amp;gt; monospa">
 
 
 
@@ -363,10 +363,14 @@
       
 
       
-        <p>(暫存)</p>
+        <p>To change font in the Terminal you need dconf-editor. Install it, if you haven’t done so:</p>
+<p>sudo apt-get install dconf-tools</p>
+<p>Run it and go to path org &gt; gnome &gt; desktop &gt; interface &gt; monospace-font-name. </p>
 <p><a href="https://www.facebook.com/groups/199493136812961/permalink/1544001102362151/?__xts__%5B0%5D=68.ARC1KrGOX9zJkDFN4oR8J3H5qUpRcg4qwmQqIuL9msps-za6SyHMsgZJBkwg5PyLQVaSV5S9sIzyG5WI982VuimrBiaxzKkLE88JdlPNUY1UQSfEt2d1yeNj2_rXMCr2zrN8ODo&amp;__tn__=-R" target="_blank" rel="noopener">FB</a><br><a href="https://elementaryos.stackexchange.com/questions/1149/how-can-i-change-the-default-terminal-font/1153#1153" target="_blank" rel="noopener">themes - How can I change the default Terminal font? - elementary OS Stack Exchange</a></p>
 <p>.zshrc</p>
-<p>.zsh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">下面修改环境变量，将~/.composer/vendor/bin写入 PATH 环境变量里。</span><br><span class="line"></span><br><span class="line">注意： 如果你的命令行安装了zsh和oh-my-zsh，修改环境变量时有些小的变化。</span><br><span class="line"></span><br><span class="line">我遇到的就是这个问题，怎么修改，环境变量都不生效，比如我修改的是~/.bash_profile，那么必须`source</span><br><span class="line">~/.bash_profile`才能生效，而且重启后继续无效，为什么呢？因为 zsh ！我的终端是</span><br><span class="line">iTerm2，它很炫酷，但是就是环境变量搞不成。Google 找到了问题所在，安装 zsh</span><br><span class="line">后，~/.bash_profile并没有被执行，所以需要编辑 zsh 的配置文件~/.zshrc，在该文件里加入</span><br><span class="line"></span><br><span class="line">source ~/.bash_profile 现在我们应该可以用homestead命令了。</span><br></pre></td></tr></table></figure>
+<p><a href="https://segmentfault.com/q/1010000004376181/a-1020000004377872" target="_blank" rel="noopener">https://segmentfault.com/q/1010000004376181/a-1020000004377872</a></p>
+<p>發現這篇很久沒補<br>就先寫重點吧…</p>
 
       
     </div>
@@ -471,7 +475,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">266</span>
+                  <span class="site-state-item-count">268</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -493,7 +497,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">267</span>
+                  <span class="site-state-item-count">268</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
