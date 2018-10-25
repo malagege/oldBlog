@@ -723,17 +723,18 @@
                         return itemRight.position - itemLeft.position;
                       } else {
                         return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
+                > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
 
-                  // merge hits into slices
+                // show search results
 
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, i                  var hits = [];
                     var searchTextCountInSlice = 0;
                     while (position + word.length <= end && index.length != 0) {
                       if (word === searchText) {
