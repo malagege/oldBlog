@@ -388,7 +388,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-count">268</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -723,18 +723,17 @@
                         return itemRight.position - itemLeft.position;
                       } else {
                         return itemLeft.word.length - itemRight.word.length;
-                > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
+                      }
+                    });
+                  });
 
-                // show search results
+                  // merge hits into slices
 
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, i                  var hits = [];
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
                     var searchTextCountInSlice = 0;
                     while (position + word.length <= end && index.length != 0) {
                       if (word === searchText) {
