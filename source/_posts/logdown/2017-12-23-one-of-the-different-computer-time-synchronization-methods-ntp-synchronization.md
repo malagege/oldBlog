@@ -3,7 +3,7 @@ layout: post
 title: '不同電腦時間同步方法之一(NTP 同步)'
 date: 2017-12-23 15:36
 comments: true
-categories:
+categories: Linux
 tags: [NTP]
 ---
 最近做生理監測設定，組長發現廠商時間上傳時間跟HIS不太合理

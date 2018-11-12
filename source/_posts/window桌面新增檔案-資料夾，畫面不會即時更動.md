@@ -2,7 +2,7 @@
 title: window桌面新增檔案/資料夾，畫面不會即時更動
 date: 2018-08-22 22:28:21
 tags: [windows]
-categories:
+categories: 維修小記
 ---
 
 公司電腦桌面新增檔案，畫面不會即時...

@@ -1,7 +1,7 @@
 ---
 title: MySQL抓資料設定字串欄位為索引查詢優化方法
 date: 2018-05-26 00:40:01
-tags: [SQL,MySQL, index, MySQL優化]
+tags: [sql,MySQL, index, MySQL優化]
 categories: MySQL
 ---
 

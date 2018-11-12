@@ -1,8 +1,8 @@
 ---
 title: Raspberry PI 設定固定IP
 comments: true
-categories:
-tags:
+categories: Linux
+tags: [linux]
 ---
 https://sites.google.com/site/raspberypishare0918/home/di-yi-ci-qi-dong/1-6-you-xian-huo-wu-xian-dedhcp
 

@@ -1,7 +1,7 @@
 ---
 title: 調教MYSQL效能，SQL_NO_CACHE不讀取緩存
 date: 2018-05-17 20:23:20
-tags: [MySQL,SQL]
+tags: [MySQL,sql]
 categories: MySQL
 ---
 

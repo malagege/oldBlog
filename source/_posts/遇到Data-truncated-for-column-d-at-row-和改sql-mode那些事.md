@@ -1,5 +1,5 @@
 ---
-title: 遇到Data truncated for column 'd' at row 和改sql_mode那些事
+title: "遇到Data truncated for column 'd' at row 和改sql_mode那些事"
 date: 2018-09-01 11:25:46
 tags: [sql,mysql]
 categories: MySQL

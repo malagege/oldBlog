@@ -1,5 +1,5 @@
 ---
-title: mysql COALESCE 取代null值好方法
+title: 'mysql COALESCE 取代null值好方法'
 date: 2018-07-19 21:15:18
 tags: [sql,mysql,value,coalesce]
 categories: MySQL

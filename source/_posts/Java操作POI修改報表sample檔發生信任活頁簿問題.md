@@ -1,8 +1,8 @@
 ---
 title: Java操作POI修改報表sample檔發生信任活頁簿問題
 date: 2018-09-18 23:41:17
-tags:
-categories:
+tags: [POI,java]
+categories: 寫程式一些事
 ---
 
 最近使用Java做報表，產生出來資料正確

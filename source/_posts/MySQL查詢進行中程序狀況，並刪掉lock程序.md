@@ -1,7 +1,7 @@
 ---
 title: MySQL查詢進行中程序狀況，並刪掉lock程序
 date: 2018-05-17 20:20:12
-tags: [MySQL,SQL,lock]
+tags: [MySQL,sql,lock]
 categories: MYSQL
 ---
 

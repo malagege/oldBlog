@@ -1,7 +1,7 @@
 ---
-title: SQL not in & in 拆開寫法
+title: 'SQL not in & in 拆開寫法'
 date: 2018-07-03 21:06:04
-tags: [NOT IN,IN,SQL]
+tags: [NOT IN,IN,sql]
 categories: SQL
 ---
 

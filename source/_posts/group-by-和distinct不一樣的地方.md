@@ -1,7 +1,7 @@
 ---
-title: group by 和distinct不一樣的地方
+title: 'group by 和distinct不一樣的地方'
 date: 2018-05-17 20:25:30
-tags: [MySQL, distinct]
+tags: [MySQL, distinct,sql]
 categories: SQL
 ---
 

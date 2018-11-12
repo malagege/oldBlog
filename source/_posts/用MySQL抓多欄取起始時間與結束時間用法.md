@@ -1,7 +1,7 @@
 ---
 title: 用MySQL抓多列取起始時間與結束時間用法
 date: 2018-05-25 23:27:00
-tags: [SQL,MySQL]
+tags: [sql,MySQL]
 categories: MySQL
 ---
 

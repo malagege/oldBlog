@@ -1,7 +1,7 @@
 ---
-title: PHP 產生動態sql技巧(IN)
+title: 'PHP 產生動態sql技巧(IN)'
 date: 2018-07-03 20:56:44
-tags: [PHP,SQL,IN,NOT IN]
+tags: [PHP,sql,IN,NOT IN]
 categories: PHP
 ---
 
