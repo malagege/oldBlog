@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近看到網頁上的影音，他播放的時候不會全下載好奇就網頁爬了一下是用hls技術，雖然現在還沒有用到不過我還滿感一點興趣就查一些記錄，筆記筆記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-11-13T16:21:17.425Z">
+<meta property="og:updated_time" content="2018-11-14T13:07:37.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hls影音串流小記">
 <meta name="twitter:description" content="最近看到網頁上的影音，他播放的時候不會全下載好奇就網頁爬了一下是用hls技術，雖然現在還沒有用到不過我還滿感一點興趣就查一些記錄，筆記筆記">
@@ -427,8 +427,11 @@
 </li>
 </ul>
 <p>簡單來說，hls是基於http<br>但是只有apple支援，所以apple裝置可以直接用<br>要瀏覽器支援要用<a href="https://github.com/video-dev/hls.js/" target="_blank" rel="noopener">video-dev/hls.js: JavaScript HLS client using Media Source Extension</a></p>
-<h4 id="nginx-rtmp-module"><a href="#nginx-rtmp-module" class="headerlink" title="nginx-rtmp-module"></a>nginx-rtmp-module</h4><p>目前感覺就是跟rtmp與rtmp server串接用<br><a href="http://blog.51cto.com/lyd0721/1429803" target="_blank" rel="noopener">Nginx-rtmp模块实现流媒体play、push、pull功能-Dream come true-51CTO博客</a><br>裡面寫的很詳細</p>
-<h4 id="影片-音樂傳流檔案"><a href="#影片-音樂傳流檔案" class="headerlink" title="影片/音樂傳流檔案"></a>影片/音樂傳流檔案</h4><p>mp2t  for video<br>m3u8  for audio</p>
+<h4 id="nginx-rtmp-module"><a href="#nginx-rtmp-module" class="headerlink" title="nginx-rtmp-module"></a>nginx-rtmp-module</h4><p><del>目前感覺就是跟rtmp與rtmp server串接用</del><br><a href="http://blog.51cto.com/lyd0721/1429803" target="_blank" rel="noopener">Nginx-rtmp模块实现流媒体play、push、pull功能-Dream come true-51CTO博客</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Nginx RTMP Module - 架構在Nginx之上, 也算老牌了, 支援RTMP和HLS, 但看code base, 實在也沒啥在更新</span><br><span class="line">Mona server - 支援RTMP, HTTP(非HLS), Web socket等等</span><br><span class="line">Red5 Media Server - 支援RTMP, HLS, WebSocket, RTSP, 好像是要錢</span><br><span class="line">Simpe RTMP Server - 這是由中國的觀止雲這家開源出來的, 講”Simple”其實一點都不Simple, 輕量, 穩定(至少我試直播一晚上都還蠻順利的), 好擴展(支援forward to edge), 可RTMP轉HLS, 因此我最後選擇這個方案</span><br></pre></td></tr></table></figure></p>
+<p>其實今天仔細找了一下，SRS跟nginx-rtmp-module只要選其中一種就可以了<br>參考來源:<a href="http://blog.jln.co/%E7%AD%86%E8%A8%98-%E4%B8%AD%E7%A7%8B%E9%80%A3%E5%81%87%E5%B0%8F%E5%AF%A6%E9%A9%97/" target="_blank" rel="noopener">[筆記] 中秋連假小實驗 – Le murmure de Julian</a></p>
+<p>裡面寫的很詳細</p>
+<h4 id="影片-音樂傳流檔案"><a href="#影片-音樂傳流檔案" class="headerlink" title="影片/音樂傳流檔案"></a>影片/音樂傳流檔案</h4><p>mp2t  for audio/video<br>m3u8  for 多媒體列表檔案格式</p>
+<p>雖然最近沒有打算做這個相關東西<br>但是不知道為什麼對hls特別有興趣XD<br>越記越多，希望哪天有機會用到</p>
 
       
     </div>
@@ -470,6 +473,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/" rel="prev" title="git commit 指定幾行 & git stash 查看差異內容">
+                git commit 指定幾行 & git stash 查看差異內容 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -546,7 +553,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">280</span>
+                  <span class="site-state-item-count">281</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -568,7 +575,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">277</span>
+                  <span class="site-state-item-count">278</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
