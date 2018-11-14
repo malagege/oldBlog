@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近看到網頁上的影音，他播放的時候不會全下載好奇就網頁爬了一下是用hls技術，雖然現在還沒有用到不過我還滿感一點興趣就查一些記錄，筆記筆記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-11-14T13:07:37.858Z">
+<meta property="og:updated_time" content="2018-11-14T15:00:38.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hls影音串流小記">
 <meta name="twitter:description" content="最近看到網頁上的影音，他播放的時候不會全下載好奇就網頁爬了一下是用hls技術，雖然現在還沒有用到不過我還滿感一點興趣就查一些記錄，筆記筆記">
@@ -391,7 +391,7 @@
 <li><a href="https://my.oschina.net/ososchina/blog/828100" target="_blank" rel="noopener">流媒体：ffmpeg生成HLS的m3u8与ts片段 - 小雨伞漂流记 - 开源中国</a></li>
 <li><a href="http://www.cnblogs.com/wainiwann/p/4128154.html" target="_blank" rel="noopener">ffmpeg常用基本命令(转) - wainiwann - 博客园</a></li>
 </ul>
-<p>切割hls檔案<br><code>ffmpeg -i low_30.mp3 -c:a aac -b:a 64k -vn -hls_list_size 0 abc.m3u8</code><br><code>ffmpeg -i eq_1.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb -hls_time 10 -hls_list_size 999999999 output.m3u8</code></p>
+<p>切割hls檔案<br><code>ffmpeg -i low_30.mp3 -c:a aac -b:a 64k -vn -hls_list_size 0 abc.m3u8</code><br><code>ffmpeg -i eq_1.mp4 -vcodec copy -acodec copy ~~-vbsf h264_mp4toannexb~~ -hls_time 10 -hls_list_size 999999999 output.m3u8</code><br><code>-vbsf h264_mp4toannexb</code> 拿掉就可以跑了<br>雖然不知道甚麼問題，不過解決了</p>
 <ul>
 <li><a href="https://stackoverflow.com/questions/45367762/only-one-ts-file-is-generating-while-encoding-mp3-file-to-m3u8-using-ffmpeg" target="_blank" rel="noopener">Only one .ts file is generating while encoding mp3 file to m3u8 using ffmpeg - Stack Overflow</a></li>
 <li><a href="https://jonlabelle.com/snippets/view/shell/ffmpeg-http-live-streaming" target="_blank" rel="noopener">ffmpeg HTTP Live Streaming</a></li>
