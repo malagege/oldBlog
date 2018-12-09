@@ -82,16 +82,17 @@
 <meta name="description" content="最近試玩一下gitea使用choco install  gitea順利安裝成功預設第一個申請帳號會是管理者">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gitea試完合併分支(PR)">
+<meta property="og:title" content="gitea試玩合併分支(PR)">
 <meta property="og:url" content="./2018/12/06/gitea試完合併分支-PR/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近試玩一下gitea使用choco install  gitea順利安裝成功預設第一個申請帳號會是管理者">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="/blog/2018/12/06/gitea試完合併分支-PR/1.jpg">
 <meta property="og:image" content="/blog/2018/12/06/gitea試完合併分支-PR/2.jpg">
-<meta property="og:updated_time" content="2018-12-06T16:13:56.212Z">
+<meta property="og:image" content="/blog/2018/12/06/gitea試完合併分支-PR/3.png">
+<meta property="og:updated_time" content="2018-12-09T10:41:39.022Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gitea試完合併分支(PR)">
+<meta name="twitter:title" content="gitea試玩合併分支(PR)">
 <meta name="twitter:description" content="最近試玩一下gitea使用choco install  gitea順利安裝成功預設第一個申請帳號會是管理者">
 <meta name="twitter:image" content="/blog/2018/12/06/gitea試完合併分支-PR/1.jpg">
 
@@ -129,7 +130,7 @@
 
 
 
-  <title>gitea試完合併分支(PR) | 程式狂想筆記</title>
+  <title>gitea試玩合併分支(PR) | 程式狂想筆記</title>
   
 
 
@@ -315,7 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">gitea試完合併分支(PR)</h1>
+          <h1 class="post-title" itemprop="name headline">gitea試玩合併分支(PR)</h1>
         
 
         <div class="post-meta">
@@ -392,11 +393,56 @@
 <p>直接進入主題</p>
 <p>之前有在想PR後，分支會變成什麼狀況??<br>今天實驗用一般PR<br>合併PR會有兩條branch<br><img src="/blog/2018/12/06/gitea試完合併分支-PR/1.jpg" title="合併PR會有兩條branch"></p>
 <hr>
-<p>PR還有兩種branch(rebase,squash)<br><img src="/blog/2018/12/06/gitea試完合併分支-PR/2.jpg" title="另外兩種分支"></p>
+<h2 id="gitea-合併分支有兩個選項"><a href="#gitea-合併分支有兩個選項" class="headerlink" title="gitea 合併分支有兩個選項"></a>gitea 合併分支有兩個選項</h2><p>PR還有兩種branch(rebase,squash)<br><img src="/blog/2018/12/06/gitea試完合併分支-PR/2.jpg" title="另外兩種分支"></p>
 <p>稍微google一下<br><a href="https://juejin.im/post/59c7b00df265da065e323acf" target="_blank" rel="noopener">使用 git rebase 提高 PR 质量 - 掘金</a><br><a href="/blog/2018/12/06/gitea試完合併分支-PR/web.png" title="備份圖">備份圖</a></p>
-<p>不過我覺得PR在不傷commit情況下，一般合併應該就可以了</p>
-<p>最近還發現revert不能取消merge branch<br>雖然我會用<code>git reset</code><br>但還是有找了一下<br><a href="https://segmentfault.com/q/1010000000140446" target="_blank" rel="noopener">Git怎样撤销一次分支的合并Merge - SegmentFault 思否</a></p>
-<p>也有爬到git pull可能會衝突解決辦法<br>不過還沒有實驗，先記錄<br><a href="https://gist.github.com/timdream/5968469#%E6%83%85%E5%A2%83pull-request-%E9%81%8E%E6%9C%9F%E7%84%A1%E6%B3%95%E5%90%88%E4%BD%B5" target="_blank" rel="noopener">Github 發 Pull Request &amp; 貢獻流程速查</a></p>
+<p><del>不過我覺得PR在不傷commit情況下，一般合併應該就可以了</del></p>
+<p>由於最近在想公司</p>
+<h2 id="revert無法取笑merge-branch"><a href="#revert無法取笑merge-branch" class="headerlink" title="revert無法取笑merge branch"></a>revert無法取笑merge branch</h2><p>最近還發現revert不能取消merge branch<br>雖然我會用<code>git reset</code><br>但還是有找了一下<br><a href="https://segmentfault.com/q/1010000000140446" target="_blank" rel="noopener">Git怎样撤销一次分支的合并Merge - SegmentFault 思否</a><br><a href="https://github.com/git/git/blob/master/Documentation/howto/revert-a-faulty-merge.txt" target="_blank" rel="noopener">git/revert-a-faulty-merge.txt at master · git/git</a><br><a href="https://www.itread01.com/content/1531335500.html" target="_blank" rel="noopener">git revert 讓提交不再害怕 - IT閱讀</a></p>
+<p>有機會情境用到來測試看看…</p>
+<h2 id="PR衝突解決方法"><a href="#PR衝突解決方法" class="headerlink" title="PR衝突解決方法"></a>PR衝突解決方法</h2><p>也有爬到PR可能會衝突解決辦法<br><del>不過還沒有實驗，先記錄</del></p>
+<p>經過實驗得到很驚奇的結果<br>PR假如會發生衝突，gitea或gitlab不會讓你做合併動作(按鈕會變灰色的)<br>但要如何修正呢</p>
+<p>當然就一般兩種</p>
+<ul>
+<li>merge<br>先加入fork remote的資訊，在做<code>master</code>做<code>git pull add_remote_name</code><br>正常會遇到衝突<br>就直接解這個問題(git merge –continue)<br>git push上去後，PR那個merge按鈕應該就可以按了</li>
+</ul>
+<p><strong>但這個有嚴重的缺點，會自動產生merge commit</strong><br>其實這也不是缺點，保留當下時間的commit也只有這個方法</p>
+<p>所以為了好看，大部分應該都會選擇rebase<br><a href="https://ihower.tw/blog/archives/3843" target="_blank" rel="noopener">使用 git rebase 避免無謂的 merge | ihower { blogging }</a></p>
+<ul>
+<li>rebase<br>先加入fork remote的資訊，在做<code>master</code>做<code>git pull --rebase add_remote_name</code><br>正常會遇到衝突<br>就直接解這個問題(git rebase –continue)<br>正常你的repo應該只有你一個人<br>之前的commit會改變<br>可能需要<code>git push -f</code><br>但有多人的話<code>git push --force-with-lease</code><br>與多人衝突要怎麼辦??<br>這時候可能只能用<code>merge</code>方法，但如先前所說會有缺點<br><a href="https://walterlv.com/post/safe-push-using-force-with-lease.html" target="_blank" rel="noopener">Git 更安全的强制推送，–force-with-lease - walterlv</a></li>
+</ul>
+<p>相關資料:</p>
+<ul>
+<li><a href="https://gist.github.com/timdream/5968469#%E6%83%85%E5%A2%83pull-request-%E9%81%8E%E6%9C%9F%E7%84%A1%E6%B3%95%E5%90%88%E4%BD%B5" target="_blank" rel="noopener">Github 發 Pull Request &amp; 貢獻流程速查</a></li>
+<li><a href="https://walterlv.com/post/safe-push-using-force-with-lease.html" target="_blank" rel="noopener">Git 更安全的强制推送，–force-with-lease - walterlv</a></li>
+<li><a href="https://www.v2ex.com/t/184888" target="_blank" rel="noopener">自己提交的 pull request 一直是 open，这个意思说一直在审核期吗？是不是说进入 close 了 就是审核通过了？ - V2EX</a><br>(<a href="https://bitmingw.com/2017/02/16/git-merge-rebase-ours-and-theirs/" target="_blank" rel="noopener">https://bitmingw.com/2017/02/16/git-merge-rebase-ours-and-theirs/</a>)</li>
+<li><a href="https://cythilya.github.io/2018/05/27/git-merge-and-solve-conflict/" target="_blank" rel="noopener">Git: 更新分支+解衝突 | Summer。桑莫。夏天</a></li>
+<li><a href="https://cythilya.github.io/2018/05/29/git-merge-squash-vs-rebase-squash/" target="_blank" rel="noopener">Git: 比較 Merge Squash 與 Rebase Squash | Summer。桑莫。夏天</a></li>
+<li><a href="https://stackoverflow.com/questions/38017517/git-pull-rebase-vs-git-rebase-whats-the-danger" target="_blank" rel="noopener">git pull –rebase vs git rebase : what’s the danger? - Stack Overflow</a></li>
+</ul>
+<h2 id="git-pull-–rebase"><a href="#git-pull-–rebase" class="headerlink" title="git pull –rebase"></a>git pull –rebase</h2><p>這個東西非常玄<br>印象中感覺<code>Github Desktop</code>會做<code>git pull --rebase</code><br>所以好像很少會產生merge branch commit</p>
+<p><code>git pull --rebase = git fetch + git rebase</code></p>
+<p>發現git rebase , git merge 合併預設remote可以省略<br>詳細裡面內容</p>
+<ul>
+<li><a href="https://cythilya.github.io/2018/05/27/git-merge-and-solve-conflict/" target="_blank" rel="noopener">Git: 更新分支+解衝突 | Summer。桑莫。夏天</a></li>
+<li><a href="https://cythilya.github.io/2018/05/29/git-merge-squash-vs-rebase-squash/" target="_blank" rel="noopener">Git: 比較 Merge Squash 與 Rebase Squash | Summer。桑莫。夏天</a><a href="/blog/2018/12/06/gitea試完合併分支-PR/web2.png" title="備份圖">備份圖</a>
+還有Squash，感覺可以應用比較特別情境上面<br>先留著筆記</li>
+</ul>
+<h2 id="PR-其實local端也可以做到"><a href="#PR-其實local端也可以做到" class="headerlink" title="PR  其實local端也可以做到"></a>PR  其實local端也可以做到</h2><p>參考gitlab說明<br><img src="/blog/2018/12/06/gitea試完合併分支-PR/3.png" title="gitlab上面local合併說明"><br><del>不過有好PR功能不用嗎o.&lt;</del></p>
+<h2 id="怎麼快速了解git-ours和theirs"><a href="#怎麼快速了解git-ours和theirs" class="headerlink" title="怎麼快速了解git ours和theirs"></a>怎麼快速了解git ours和theirs</h2><p>查看裡面說明，講得很清楚<br><a href="https://bitmingw.com/2017/02/16/git-merge-rebase-ours-and-theirs/" target="_blank" rel="noopener">化解冲突：git merge 与 git rebase 中的 ours 和 theirs | Ming’s Blog</a></p>
+<blockquote>
+<p>可以看出，&lt;&lt;&lt;&lt;&lt;&lt;&lt; 和 &gt;&gt;&gt;&gt;&gt;&gt;&gt; 清晰地标示出了冲突的部分。你需要将它们改成期望的样子。如果你想保留两个版本中的一个而不引入新的修订，就可以使用两个预先定义的代词。&lt;&lt;&lt;&lt;&lt;&lt;&lt; 和 ======= 之间的部分称为 ours, ======= 和 &gt;&gt;&gt;&gt;&gt;&gt;&gt; 之间则称为 theirs. 此时，你只需要键入合适的指令即可化解冲突，而不需要进入文本编辑器。在当前项目可以得到如下运行结果</p>
+</blockquote>
+<p>不過…，rebase是相反的<br>我這邊猜rebase因為是把<code>另外分支</code>為基準<br>所以自己的code可能算在theirs(自己猜測)</p>
+<h2 id="git-rebase小記"><a href="#git-rebase小記" class="headerlink" title="git rebase小記"></a>git rebase小記</h2><p>從開始commit開始做<br>舊的commit會從<code>上面依序往下排</code><br><code>git rebase -i --root</code></p>
+<ul>
+<li><a href="https://www.youtube.com/user/blue524326/videos" target="_blank" rel="noopener">沈弘哲 - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=8h0K-2OaeSk" target="_blank" rel="noopener">git pull vs git pull –rebase - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=JhY0rR2wQq0&amp;t=3s" target="_blank" rel="noopener">git rebase interactive - reword - PART 1 - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=TCKjQppHxxQ" target="_blank" rel="noopener">git rebase interactive - edit - PART 2 - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=bfrZrbEHis0" target="_blank" rel="noopener">git rebase interactive - squash fixup - PART 3 - YouTube</a></li>
+<li><a href="https://www.youtube.com/watch?v=u8imRiiSyzk" target="_blank" rel="noopener">(20) git rebase interactive - exec drop - PART 4 - YouTube</a></li>
+</ul>
+<p>題外話，剛剛我筆電(elementaryos, git 2.7.x)做<code>git log</code>確沒有顯示HEAD跟remote資訊<br>查了一下，需要加<code>--decorate</code><br>疑似之後2.13的git預設是<code>--decorate</code><br><a href="https://stackoverflow.com/questions/21607305/how-to-make-git-log-decorate-by-default" target="_blank" rel="noopener">git log - How to make git log decorate by default - Stack Overflow</a></p>
 
       
     </div>
@@ -487,8 +533,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -558,6 +613,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gitea-合併分支有兩個選項"><span class="nav-number">1.</span> <span class="nav-text">gitea 合併分支有兩個選項</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#revert無法取笑merge-branch"><span class="nav-number">2.</span> <span class="nav-text">revert無法取笑merge branch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PR衝突解決方法"><span class="nav-number">3.</span> <span class="nav-text">PR衝突解決方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-pull-–rebase"><span class="nav-number">4.</span> <span class="nav-text">git pull –rebase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PR-其實local端也可以做到"><span class="nav-number">5.</span> <span class="nav-text">PR  其實local端也可以做到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎麼快速了解git-ours和theirs"><span class="nav-number">6.</span> <span class="nav-text">怎麼快速了解git ours和theirs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-rebase小記"><span class="nav-number">7.</span> <span class="nav-text">git rebase小記</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
