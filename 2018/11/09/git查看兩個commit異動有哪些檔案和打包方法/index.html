@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="git,">
+  <meta name="keywords" content="git,git archive,">
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="最近有同事需要我異動有哪些檔案我找一個(方便)方法到用git看方法在這邊小記">
-<meta name="keywords" content="git">
+<meta name="keywords" content="git,git archive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git查看兩個commit異動有哪些檔案和打包方法">
 <meta property="og:url" content="./2018/11/09/git查看兩個commit異動有哪些檔案和打包方法/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近有同事需要我異動有哪些檔案我找一個(方便)方法到用git看方法在這邊小記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-11-21T15:04:58.801Z">
+<meta property="og:updated_time" content="2018-12-15T11:03:29.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git查看兩個commit異動有哪些檔案和打包方法">
 <meta name="twitter:description" content="最近有同事需要我異動有哪些檔案我找一個(方便)方法到用git看方法在這邊小記">
@@ -131,6 +131,15 @@
 
 
 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
 
 
 
@@ -394,6 +403,16 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cat &gt; ~/bin/git-zip</span><br><span class="line">#!/bin/sh</span><br><span class="line">git archive --format zip -o $(git log --pretty=format:&quot;%h&quot; -1).zip HEAD</span><br><span class="line">$ chmod u+x ~/bin/git-zip</span><br><span class="line">$ cd git-repository</span><br><span class="line">$ git zip</span><br></pre></td></tr></table></figure>
 <p>以上範例參考如<a href="http://blog.nutsfactory.net/2010/02/01/git-archive-and-log/" target="_blank" rel="noopener">git archive 與 log 小技巧 – Rex’s blah blah blah</a><br>感覺這東西以後還是會用的到</p>
 <p>更進階的用法:<a href="http://lulualulu.com/%E5%A6%82%E4%BD%95%E8%AE%93git%E5%8C%AF%E5%87%BA%E5%85%A9%E5%80%8Bcommit%E4%B9%8B%E9%96%93%E6%9B%B4%E6%96%B0%E6%88%96%E6%96%B0%E5%A2%9E%E7%9A%84%E6%AA%94%E6%A1%88/" target="_blank" rel="noopener">如何讓Git匯出兩個Commit之間更新或新增的檔案 – 可達鴨村</a></p>
+<p>Date: 2018-12-15</p>
+<p>今天PM跟我要最近上傳更動幾個commit<br>由於我們公司上傳git方式比較不一樣<br>部屬程式導致有些commit有上線、有些沒有上線….</p>
+<p>剛好之前有記錄到<a href="http://lulualulu.com/%E5%A6%82%E4%BD%95%E8%AE%93git%E5%8C%AF%E5%87%BA%E5%85%A9%E5%80%8Bcommit%E4%B9%8B%E9%96%93%E6%9B%B4%E6%96%B0%E6%88%96%E6%96%B0%E5%A2%9E%E7%9A%84%E6%AA%94%E6%A1%88/" target="_blank" rel="noopener">如何讓Git匯出兩個Commit之間更新或新增的檔案 – 可達鴨村</a></p>
+<p>裡面有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">echo Eport GitDiff</span><br><span class="line">set /p input1=Export Start Commit ID: </span><br><span class="line">set commitIdStart=%input1%</span><br><span class="line">set /p input2=Export End Commit ID: </span><br><span class="line">if [%input2%] ==[] (set commitIdEnd=HEAD) else (set commitIdEnd=%input2%)</span><br><span class="line">echo Start ID = %commitIdStart%</span><br><span class="line">echo End ID = %commitIdEnd%</span><br><span class="line">for /f &quot;skip=1&quot; %%x in (&apos;wmic os get localdatetime&apos;) do if not defined DateTime set DateTime=%%x</span><br><span class="line">echo %DateTime%</span><br><span class="line">set exportFolder=%DateTime:~0,4%%DateTime:~4,2%%DateTime:~6,2%_%DateTime:~8,6%</span><br><span class="line">echo %exportFolder%</span><br><span class="line">for /f &quot;usebackq tokens=*&quot; %%A in (`git diff-tree -r --no-commit-id --name-only --diff-filter=ACMRT %commitIdStart% %commitIdEnd%`) do echo FA|xcopy &quot;%%~fA&quot; &quot;GitExport\%exportFolder%\%%A&quot;</span><br><span class="line">set /p DUMMY =Hit Enter To Continue....</span><br></pre></td></tr></table></figure></p>
+<p>這段就派上用場了</p>
+<p>我以為這些內容都是從commit提取出來<br>但事實上不是這樣的<br>其實是透過<code>git diff-tree</code>顯示commit 改動有哪些檔案<br>然後她會從你現在本地端複製檔案到資料夾裡面，<strong>不是從commit複製當時候的內容</strong><br>所以使用上也要特別注意一下head現在狀態是不是你要打包的內容</p>
+<p><strong>上面敘述commit踩雷事項</strong><br>因為上次實作，需要做兩個commit<code>commitIdStart</code>、<code>commitIdEnd</code><br>輸入完只有打包到兩個commit內容<br>但是…其實第一個commit不會包到<br>也就是放置兩個commit第一個commit不會算到<br>為什麼呢?<br>其實<code>git diff-tree</code>是比較兩個commit差異，所以第一個commit不會被比較到<br>讓我想到rebase也是一樣</p>
+<p><strong>當不連續commit要怎麼辦</strong></p>
+<p>PM要求不練續的commit要怎麼辦?<br>其實我覺得上面腳本只適合做連續commit<br>但今天研究了一下<br>其實透過上面腳本還是能做到啦</p>
+<p>只要改腳本  時間資料夾拿掉<br>在多次執行腳本就可以了<br>雖然還是沒反杜絕手動的錯誤<br>但還是可以這樣用<br>總比人工續複製檔案好多了吧</p>
 
       
     </div>
@@ -412,6 +431,8 @@
         <div class="post-tags">
           
             <a href="/blog/tags/git/" rel="tag"># git</a>
+          
+            <a href="/blog/tags/git-archive/" rel="tag"># git archive</a>
           
         </div>
       
@@ -513,7 +534,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">291</span>
+                  <span class="site-state-item-count">292</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -535,7 +556,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">283</span>
+                  <span class="site-state-item-count">284</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
