@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近有同事需要我異動有哪些檔案我找一個(方便)方法到用git看方法在這邊小記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-12-16T04:53:47.812Z">
+<meta property="og:updated_time" content="2018-12-18T13:48:45.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git查看兩個commit異動有哪些檔案和打包方法">
 <meta name="twitter:description" content="最近有同事需要我異動有哪些檔案我找一個(方便)方法到用git看方法在這邊小記">
@@ -369,6 +369,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2018/11/09/git查看兩個commit異動有哪些檔案和打包方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/09/git查看兩個commit異動有哪些檔案和打包方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -412,7 +422,7 @@
 <p><strong>上面敘述commit踩雷事項</strong><br>因為上次實作，需要做兩個commit<code>commitIdStart</code>、<code>commitIdEnd</code><br>輸入完只有打包到兩個commit內容<br>但是…其實第一個commit不會包到<br>也就是放置兩個commit第一個commit不會算到<br>為什麼呢?<br>其實<code>git diff-tree</code>是比較兩個commit差異，所以第一個commit不會被比較到<br>讓我想到rebase也是一樣</p>
 <p><strong>當不連續commit要怎麼辦</strong></p>
 <p>PM要求不練續的commit要怎麼辦?<br>其實我覺得上面腳本只適合做連續commit<br>但今天研究了一下<br>其實透過上面腳本還是能做到啦</p>
-<p>只要改腳本  時間資料夾拿掉<br>在多次執行腳本就可以了<br>雖然還是沒反杜絕手動的錯誤<br>但還是可以這樣用<br>總比人工複製檔案好多了吧</p>
+<p>只要改腳本  時間資料夾拿掉<br>在多次執行腳本就可以了<br>雖然還是沒反杜絕手動的錯誤<br>但還是可以這樣用<br>總比人工scp跟sftp是不樣的東西複製檔案好多了吧</p>
 
       
     </div>
@@ -487,6 +497,16 @@
           
 
   
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
 
 
 
@@ -534,7 +554,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">292</span>
+                  <span class="site-state-item-count">293</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -556,7 +576,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">284</span>
+                  <span class="site-state-item-count">285</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -755,6 +775,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://malagege_blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = './2018/11/09/git查看兩個commit異動有哪些檔案和打包方法/';
+          this.page.identifier = '2018/11/09/git查看兩個commit異動有哪些檔案和打包方法/';
+          this.page.title = 'git查看兩個commit異動有哪些檔案和打包方法';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege_blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -767,10 +807,6 @@
   
 
 
-
-
-
-  
 
 
 
