@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="之前用子查詢第二層，竟然抓不到外層的欄位有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層但這種強制記這種觀念感覺不是很好，今天Google查一下原因在這邊整理一下XD">
+<meta name="description" content="之前用子查詢第二層，竟然抓不到外層的欄位已經找到 終於知道為什麼子查詢沒辦法抓取外面的表有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層但這種強制記這種觀念感覺不是很好，今天 Google 查一下原因在這邊整理一下 XD">
 <meta name="keywords" content="sql,相關子查詢,非相關子查詢">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL子查詢筆記(相關子查詢&#x2F;非相關子查詢)">
 <meta property="og:url" content="./2017/12/23/logdown/2017-12-23-sql-subquery-notes/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="之前用子查詢第二層，竟然抓不到外層的欄位有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層但這種強制記這種觀念感覺不是很好，今天Google查一下原因在這邊整理一下XD">
+<meta property="og:description" content="之前用子查詢第二層，竟然抓不到外層的欄位已經找到 終於知道為什麼子查詢沒辦法抓取外面的表有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層但這種強制記這種觀念感覺不是很好，今天 Google 查一下原因在這邊整理一下 XD">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-11-21T15:04:58.818Z">
+<meta property="og:updated_time" content="2018-12-24T14:25:14.764Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL子查詢筆記(相關子查詢&#x2F;非相關子查詢)">
-<meta name="twitter:description" content="之前用子查詢第二層，竟然抓不到外層的欄位有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層但這種強制記這種觀念感覺不是很好，今天Google查一下原因在這邊整理一下XD">
+<meta name="twitter:description" content="之前用子查詢第二層，竟然抓不到外層的欄位已經找到 終於知道為什麼子查詢沒辦法抓取外面的表有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層但這種強制記這種觀念感覺不是很好，今天 Google 查一下原因在這邊整理一下 XD">
 
 
 
@@ -403,25 +403,39 @@
       
 
       
-        <p>之前用子查詢第二層，竟然抓不到外層的欄位<br>有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層<br>但這種強制記這種觀念感覺不是很好，今天Google查一下原因<br>在這邊整理一下XD<br><a id="more"></a></p>
-<p>今天<a href="http://blog.itpub.net/16591471/viewspace-695491/" target="_blank" rel="noopener">多層次子查詢的sql執行順序的問題-wj_zizi-ITPUB博客</a>和<a href="http://blog.jobbole.com/95027/" target="_blank" rel="noopener">你真的会玩SQL吗？无处不在的子查询 - 文章 - 伯乐在线</a><br>看到子查詢有分兩類</p>
+        <p><del>之前用子查詢第二層，竟然抓不到外層的欄位</del><br>已經找到 終於知道為什麼子查詢沒辦法抓取外面的表<br>有時候跟本不知道為什麼?後來問公司的前軰，他說第二層就抓不到最外一層<br>但這種強制記這種觀念感覺不是很好，今天 Google 查一下原因<br>在這邊整理一下 XD</p>
+<a id="more"></a>
+<p>今天<a href="http://blog.itpub.net/16591471/viewspace-695491/" target="_blank" rel="noopener">多層次子查詢的 sql 執行順序的問題-wj_zizi-ITPUB 博客</a>和<a href="http://blog.jobbole.com/95027/" target="_blank" rel="noopener">你真的会玩 SQL 吗？无处不在的子查询 - 文章 - 伯乐在线</a><br>看到子查詢有分兩類</p>
 <ol>
 <li>相關子查詢</li>
 <li>非相關子查詢</li>
 </ol>
-<p>這兩個其實不難分，不要被兩個專有名詞嚇到<br>先講非相關子查詢，簡單講就是子查詢跟外面SQL查詢內容沒有相關<br>非相關子查詢只會跑一次，所以效能上會非常快<br>執行順序也比外層先，所以這也是為什麼<strong>非相關子查詢</strong>沒法取得外層欄位的原因<br>範例如下，以下子查詢只會查一次<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxxx</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">class</span> = (<span class="keyword">SELECT</span> <span class="keyword">max</span>(<span class="keyword">cost</span>)</span><br><span class="line"><span class="keyword">FROM</span> bbbb</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>相關子查詢就反知，比較吃效能，每一行都會執行loop<br>先不談<a href="https://github.com/TritonHo/slides/blob/master/Taipei%202016-08%20talk/SQL_reporting.pdf" target="_blank" rel="noopener">slides/SQL_reporting.pdf at master · TritonHo/slides</a>裡面有介紹有些DB會自動做join動作<br>這個我們比較常用到<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>＊</span><br><span class="line"><span class="keyword">FROM</span> xxxx a</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">cost</span> &gt; (<span class="keyword">SELECT</span> <span class="keyword">avg</span>(<span class="keyword">cost</span>)</span><br><span class="line"><span class="keyword">FROM</span> bbbb</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">class</span> = a.class</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>這兩個其實不難分，不要被兩個專有名詞嚇到<br>先講非相關子查詢，簡單講就是子查詢跟外面 SQL 查詢內容沒有相關<br>非相關子查詢只會跑一次，所以效能上會非常快<br>執行順序也比外層先，所以這也是為什麼<strong>非相關子查詢</strong>沒法取得外層欄位的原因<br>範例如下，以下子查詢只會查一次</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> xxxx</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">class</span> = (<span class="keyword">SELECT</span> <span class="keyword">max</span>(<span class="keyword">cost</span>)</span><br><span class="line"><span class="keyword">FROM</span> bbbb</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>相關子查詢就反知，比較吃效能，每一行都會執行 loop<br>先不談<a href="https://github.com/TritonHo/slides/blob/master/Taipei%202016-08%20talk/SQL_reporting.pdf" target="_blank" rel="noopener">slides/SQL_reporting.pdf at master · TritonHo/slides</a>裡面有介紹有些 DB 會自動做 join 動作<br>這個我們比較常用到</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>＊</span><br><span class="line"><span class="keyword">FROM</span> xxxx a</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">cost</span> &gt; (<span class="keyword">SELECT</span> <span class="keyword">avg</span>(<span class="keyword">cost</span>)</span><br><span class="line"><span class="keyword">FROM</span> bbbb</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">class</span> = a.class</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line">  <span class="keyword">FROM</span> a1</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span></span><br><span class="line">(<span class="keyword">SELECT</span> <span class="string">'X'</span></span><br><span class="line">          <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> w2.corp_id <span class="keyword">FROM</span> a1 w2 <span class="keyword">WHERE</span> w2.period_id &lt;= a1.period_id) u</span><br><span class="line">         <span class="keyword">WHERE</span> u.corp_id = a1.corp_id);</span><br></pre></td></tr></table></figure>
-<p><a href="http://www.itpub.net/thread-1027910-1-1.html#post_11069036" target="_blank" rel="noopener">第二层子查询居然不认最外层表中的列 - Oracle开发 - ITPUB论坛－中国最专业的IT技术社区</a>看到有不能跑的example<br>目前猜測form是非相關子查詢，我猜因為from會先執行，所以抓不到外層</p>
-<p><a href="http://blog.itpub.net/28612416/viewspace-773763/" target="_blank" rel="noopener">sql语法相关子查询与非相关子查询-流浪的野狼-ITPUB博客</a>看到一個標量子查詢(相對於多值子查詢)名稱<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> OrderId <span class="keyword">From</span> Orders <span class="keyword">where</span> EmployeeId <span class="keyword">IN</span></span><br><span class="line">(<span class="keyword">select</span> EmployeeId <span class="keyword">From</span> employees <span class="keyword">where</span> lastName <span class="keyword">like</span> <span class="string">'Da%'</span>)</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://www.itpub.net/thread-1027910-1-1.html#post_11069036" target="_blank" rel="noopener">第二层子查询居然不认最外层表中的列 - Oracle 开发 - ITPUB 论坛－中国最专业的 IT 技术社区</a>看到有不能跑的 example<br>目前猜測 form 是非相關子查詢，我猜因為 from 會先執行，所以抓不到外層</p>
+<p><a href="http://blog.itpub.net/28612416/viewspace-773763/" target="_blank" rel="noopener">sql 语法相关子查询与非相关子查询-流浪的野狼-ITPUB 博客</a>看到一個標量子查詢(相對於多值子查詢)名稱</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> OrderId <span class="keyword">From</span> Orders <span class="keyword">where</span> EmployeeId <span class="keyword">IN</span></span><br><span class="line">(<span class="keyword">select</span> EmployeeId <span class="keyword">From</span> employees <span class="keyword">where</span> lastName <span class="keyword">like</span> <span class="string">'Da%'</span>)</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>將’Davolio’改為’D%’時,這個時候子查詢中返回結果為2行,等號右邊此時為多值,查詢失敗.將’=’改為in謂詞.查詢才能通過.<br>employees表中無lastname=’jason’,外部查詢將返回null.</p>
+<p>將’Davolio’改為’D%’時,這個時候子查詢中返回結果為 2 行,等號右邊此時為多值,查詢失敗.將’=’改為 in 謂詞.查詢才能通過.<br>employees 表中無 lastname=’jason’,外部查詢將返回 null.</p>
 </blockquote>
-<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>SQL有太多東西要學了XD<br>這些離清楚之後比較不容易採到雷<br>要學的東西太多了orz</p>
-<p>###20171226 無聊寫的SQL<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.id, a.rev, a.content</span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`docs`</span> a</span><br><span class="line"><span class="keyword">WHERE</span> a.id  <span class="keyword">IN</span>  (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">max</span>(<span class="keyword">id</span>)</span><br><span class="line">    <span class="keyword">FROM</span> <span class="string">`docs`</span> b</span><br><span class="line">    <span class="keyword">WHERE</span>  b.id <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="keyword">id</span></span><br><span class="line">                    <span class="keyword">FROM</span> <span class="string">`docs`</span> c</span><br><span class="line">                    <span class="keyword">WHERE</span> c.id=a.id)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure></p>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>SQL 有太多東西要學了 XD<br>這些離清楚之後比較不容易採到雷<br>要學的東西太多了 orz</p>
+<p>###20171226 無聊寫的 SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a.id, a.rev, a.content</span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`docs`</span> a</span><br><span class="line"><span class="keyword">WHERE</span> a.id  <span class="keyword">IN</span>  (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">max</span>(<span class="keyword">id</span>)</span><br><span class="line">    <span class="keyword">FROM</span> <span class="string">`docs`</span> b</span><br><span class="line">    <span class="keyword">WHERE</span>  b.id <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="keyword">id</span></span><br><span class="line">                    <span class="keyword">FROM</span> <span class="string">`docs`</span> c</span><br><span class="line">                    <span class="keyword">WHERE</span> c.id=a.id)</span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
 <p><a href="http://sqlfiddle.com/#!9/a6c585/30596" target="_blank" rel="noopener">http://sqlfiddle.com/#!9/a6c585/30596</a><br>原本以為只會有一筆</p>
-<p>是From a table 先執行 而a有四筆<br>子查詢關連a.id<br>所以結果是4筆沒錯<br>做max也會沒有意義</p>
-<h1 id="參考來源"><a href="#參考來源" class="headerlink" title="參考來源"></a>參考來源</h1><p><a href="http://blog.jobbole.com/95027/" target="_blank" rel="noopener">你真的会玩SQL吗？无处不在的子查询 - 文章 - 伯乐在线</a><br><a href="https://books.google.com.tw/books?id=OhdwHgymgtcC&amp;pg=PA146&amp;lpg=PA146&amp;dq=%E9%9D%9E%E7%9B%B8%E9%97%9C%E5%AD%90%E6%9F%A5%E8%A9%A2&amp;source=bl&amp;ots=0LYsR2GAVw&amp;sig=pLLTLhWDAIn-Pi1bBbW96wvTkFg&amp;hl=zh-TW&amp;sa=X&amp;ved=0ahUKEwj-3eyKzKDYAhUKT7wKHbkyAKQ4ChDoAQg1MAI#v=onepage&amp;q=%E9%9D%9E%E7%9B%B8%E9%97%9C%E5%AD%90%E6%9F%A5%E8%A9%A2&amp;f=false" target="_blank" rel="noopener">对象-关系数据库管理系统原理与实现 - 李战怀, 李红燕, 徐秋元 - Google 圖書</a><br><a href="http://blog.jobbole.com/95027/" target="_blank" rel="noopener">你真的会玩SQL吗？无处不在的子查询 - 文章 - 伯乐在线</a><br><a href="http://blog.itpub.net/16591471/viewspace-695491/" target="_blank" rel="noopener">多層次子查詢的sql執行順序的問題-wj_zizi-ITPUB博客</a><br><a href="http://www.itpub.net/thread-1027910-1-1.html#post_11069036" target="_blank" rel="noopener">第二层子查询居然不认最外层表中的列 - Oracle开发 - ITPUB论坛－中国最专业的IT技术社区</a><br><a href="https://www.ptt.cc/bbs/Database/M.1152841888.A.596.html" target="_blank" rel="noopener">[SQL ] 兩層以上子查詢辨認Table別名 - 看板 Database - 批踢踢實業坊</a><br><a href="http://www.wenwenti.info/article/72559" target="_blank" rel="noopener">相關子查詢和嵌套子查詢 - 問問題</a><br><a href="https://tw.saowen.com/a/a4610b9e7cb588e070f8e48aade920ab12a63ef681d994ccbfcb6753553bc466" target="_blank" rel="noopener">MySql學習(三) —— 子查詢(where、from、exists) 及 連線查詢(left join、right join、inner join、union join) - 掃文資訊</a><br><a href="http://www.cnblogs.com/chiangchou/p/mysql-3.html" target="_blank" rel="noopener">MySql学习(三) —— 子查询(where、from、exists) 及 连接查询(left join、right join、inner join、union join) - bojiangzhou - 博客园</a><br><a href="http://blog.itpub.net/28612416/viewspace-773763/" target="_blank" rel="noopener">sql语法相关子查询与非相关子查询-流浪的野狼-ITPUB博客</a></p>
+<p>是 From a table 先執行 而 a 有四筆<br>子查詢關連 a.id<br>所以結果是 4 筆沒錯<br>做 max 也會沒有意義</p>
+<h1 id="參考來源"><a href="#參考來源" class="headerlink" title="參考來源"></a>參考來源</h1><p><a href="http://blog.jobbole.com/95027/" target="_blank" rel="noopener">你真的会玩 SQL 吗？无处不在的子查询 - 文章 - 伯乐在线</a></p>
+<p><a href="https://books.google.com.tw/books?id=OhdwHgymgtcC&amp;pg=PA146&amp;lpg=PA146&amp;dq=%E9%9D%9E%E7%9B%B8%E9%97%9C%E5%AD%90%E6%9F%A5%E8%A9%A2&amp;source=bl&amp;ots=0LYsR2GAVw&amp;sig=pLLTLhWDAIn-Pi1bBbW96wvTkFg&amp;hl=zh-TW&amp;sa=X&amp;ved=0ahUKEwj-3eyKzKDYAhUKT7wKHbkyAKQ4ChDoAQg1MAI#v=onepage&amp;q=%E9%9D%9E%E7%9B%B8%E9%97%9C%E5%AD%90%E6%9F%A5%E8%A9%A2&amp;f=false" target="_blank" rel="noopener">对象-关系数据库管理系统原理与实现 - 李战怀, 李红燕, 徐秋元 - Google 圖書</a></p>
+<p><a href="http://blog.jobbole.com/95027/" target="_blank" rel="noopener">你真的会玩 SQL 吗？无处不在的子查询 - 文章 - 伯乐在线</a></p>
+<p><a href="http://blog.itpub.net/16591471/viewspace-695491/" target="_blank" rel="noopener">多層次子查詢的 sql 執行順序的問題-wj_zizi-ITPUB 博客</a></p>
+<p><a href="http://www.itpub.net/thread-1027910-1-1.html#post_11069036" target="_blank" rel="noopener">第二层子查询居然不认最外层表中的列 - Oracle 开发 - ITPUB 论坛－中国最专业的 IT 技术社区</a></p>
+<p><a href="https://www.ptt.cc/bbs/Database/M.1152841888.A.596.html" target="_blank" rel="noopener">[SQL ] 兩層以上子查詢辨認 Table 別名 - 看板 Database - 批踢踢實業坊</a></p>
+<p><a href="http://www.wenwenti.info/article/72559" target="_blank" rel="noopener">相關子查詢和嵌套子查詢 - 問問題</a></p>
+<p><a href="https://tw.saowen.com/a/a4610b9e7cb588e070f8e48aade920ab12a63ef681d994ccbfcb6753553bc466" target="_blank" rel="noopener">MySql 學習(三) —— 子查詢(where、from、exists) 及 連線查詢(left join、right join、inner join、union join) - 掃文資訊</a></p>
+<p><a href="http://www.cnblogs.com/chiangchou/p/mysql-3.html" target="_blank" rel="noopener">MySql 学习(三) —— 子查询(where、from、exists) 及 连接查询(left join、right join、inner join、union join) - bojiangzhou - 博客园</a></p>
+<p><a href="http://blog.itpub.net/28612416/viewspace-773763/" target="_blank" rel="noopener">sql 语法相关子查询与非相关子查询-流浪的野狼-ITPUB 博客</a></p>
 
       
     </div>
@@ -555,7 +569,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">293</span>
+                  <span class="site-state-item-count">295</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -577,7 +591,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">285</span>
+                  <span class="site-state-item-count">286</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
