@@ -1,5 +1,5 @@
 ---
-title: scp跟sftp是不樣的東西
+title: scp跟sftp是不一樣的東西
 date: 2018-04-16 20:35:20
 tags: [scp,sftp]
 categories: 程式心法

@@ -120,3 +120,17 @@ ssh -NfR 2222:localhost:22 remote_ip
 * [在 bash 中設定 Proxy server - 蘋果小豬筆記](http://applezulab.netdpi.net/02-linux-xi-tong-cao-zuo/set-proxy-server-in-bash)
 * [What is my IP address? — ifconfig.co](https://ifconfig.co/)
 * [上班族ssh tunnel求生手冊 [論壇 - Ubuntu 與工具程式及軟體推薦] | Ubuntu 正體中文站](https://www.ubuntu-tw.org/modules/newbb/viewtopic.php?viewmode=compact&topic_id=17538)
+
+
+Date: 2018-12-20
+
+Filezilla預設沒有做ssh tunnel
+但有找到WinScp能做到
+
+
+* [winScp如何通过隧道代理进行远程连接 - KoMiles - 博客园](https://www.cnblogs.com/wangkongming/p/4124945.html)
+* [WinSCP使用教學 | FAQ Book](http://blog.faq-book.com/?p=1483)
+* [SSH使用教程( Bitvise Tunnelier+Chrome+Proxy Switchy) - 掃文資訊](https://tw.saowen.com/a/b855ee1a0a683498261219a649f983e3d1916ed1974556022a2a5d418fdd100f)
+* [瀏覽器設定 proxy 透過 SSH Tunnel 連線網站 | SSORC.tw](https://ssorc.tw/6866)
+* [DownloadManager实现版本更新，监听下载进度 - 简书](https://www.jianshu.com/p/bb4cde6e88c6)
+
