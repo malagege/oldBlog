@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="之前讀到 load balance 都沒有看到如何做 DB 處理不可能各區域都有一個 DB 吧不過之前有跟人聊過在部屬程式的時候，做 load balance 在每一個分流 IP 設定可以設一樣東西不過內部 DB 要怎麼共用呢? 不過聽說可以設定讓他們導向一樣的地方講那麼多有點離題，因為這篇也不是做 load balance docker 在不同專案 說不定也會用到共用 DB今天是自己實驗小記可能">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-01-06T14:28:33.306Z">
+<meta property="og:updated_time" content="2019-01-06T14:45:35.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker嘗試著把兩個不同network container做連線動作">
 <meta name="twitter:description" content="之前讀到 load balance 都沒有看到如何做 DB 處理不可能各區域都有一個 DB 吧不過之前有跟人聊過在部屬程式的時候，做 load balance 在每一個分流 IP 設定可以設一樣東西不過內部 DB 要怎麼共用呢? 不過聽說可以設定讓他們導向一樣的地方講那麼多有點離題，因為這篇也不是做 load balance docker 在不同專案 說不定也會用到共用 DB今天是自己實驗小記可能">
@@ -415,7 +415,7 @@
 <p>首先，我實作兩個 network 出來<br>想辦法讓他們的 container 可以相連</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker network create test_1</span><br><span class="line">docker network create test_2</span><br><span class="line">docker run --name some-mysql1 -e MYSQL_ROOT_PASSWORD=root -d --network=test_1 mysql --default-authentication-plugin=mysql_native_password</span><br><span class="line">docker run --name some-mysql2 -e MYSQL_ROOT_PASSWORD=root -d --network=test_2 mysql --default-authentication-plugin=mysql_native_password</span><br><span class="line">docker run --name adminer --network=test_1 -d -p  8080:8080 adminer</span><br><span class="line">docker network connect test_2 adminer</span><br></pre></td></tr></table></figure>
 <p>主要最後重點<br>docker network connect <code>network_name</code> <code>container_name</code><br>可以讓你的 container 連線</p>
-<p>奇怪，docker run –network 只能塞一個 network_name<br>好像只透過 docker connect 才能做連結<br>不過 docker-compose 好像能設定兩個 network<br>感覺 docker network 也是一個大坑洞<br>之後有時間研究在筆記一夏</p>
+<p>奇怪，docker run –network 只能塞一個 network_name<br>好像只透過 docker connect 才能做連結<br>不過 docker-compose 好像能設定兩個 network<br>感覺 docker network 也是一個大坑洞<br>之後有時間研究在筆記一下</p>
 <p>之前聽到 k8s 可以做到 docker 監控，順便做重啟動作<br>剛好最近看到這個影片有介紹<br><a href="https://www.youtube.com/watch?v=wnKyJKqKiVE" target="_blank" rel="noopener">COSS 103 kubernetes 介紹 教學 指令操作 - YouTube</a><br>感覺還滿好用的東西<br>有空來研究看看<br>不過我覺得 docker 先搞熟再說</p>
 <h2 id="MySQL-8-0-的雷"><a href="#MySQL-8-0-的雷" class="headerlink" title="MySQL 8.0 的雷"></a>MySQL 8.0 的雷</h2><p>想說嘗試著用 docker 跑 mysql<br>adminer 一直登不進去<br>後來仔細看了一下 docker hub 的 pwd 有多<code>--default-authentication-plugin=mysql_native_password</code><br>WTF…</p>
 <blockquote>
