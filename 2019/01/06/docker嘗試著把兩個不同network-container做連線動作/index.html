@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="之前讀到 load balance 都沒有看到如何做 DB 處理不可能各區域都有一個 DB 吧不過之前有跟人聊過在部屬程式的時候，做 load balance 在每一個分流 IP 設定可以設一樣東西不過內部 DB 要怎麼共用呢? 不過聽說可以設定讓他們導向一樣的地方講那麼多有點離題，因為這篇也不是做 load balance docker 在不同專案 說不定也會用到共用 DB今天是自己實驗小記可能">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-01-06T13:36:26.831Z">
+<meta property="og:updated_time" content="2019-01-06T14:28:33.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker嘗試著把兩個不同network container做連線動作">
 <meta name="twitter:description" content="之前讀到 load balance 都沒有看到如何做 DB 處理不可能各區域都有一個 DB 吧不過之前有跟人聊過在部屬程式的時候，做 load balance 在每一個分流 IP 設定可以設一樣東西不過內部 DB 要怎麼共用呢? 不過聽說可以設定讓他們導向一樣的地方講那麼多有點離題，因為這篇也不是做 load balance docker 在不同專案 說不定也會用到共用 DB今天是自己實驗小記可能">
@@ -417,6 +417,12 @@
 <p>主要最後重點<br>docker network connect <code>network_name</code> <code>container_name</code><br>可以讓你的 container 連線</p>
 <p>奇怪，docker run –network 只能塞一個 network_name<br>好像只透過 docker connect 才能做連結<br>不過 docker-compose 好像能設定兩個 network<br>感覺 docker network 也是一個大坑洞<br>之後有時間研究在筆記一夏</p>
 <p>之前聽到 k8s 可以做到 docker 監控，順便做重啟動作<br>剛好最近看到這個影片有介紹<br><a href="https://www.youtube.com/watch?v=wnKyJKqKiVE" target="_blank" rel="noopener">COSS 103 kubernetes 介紹 教學 指令操作 - YouTube</a><br>感覺還滿好用的東西<br>有空來研究看看<br>不過我覺得 docker 先搞熟再說</p>
+<h2 id="MySQL-8-0-的雷"><a href="#MySQL-8-0-的雷" class="headerlink" title="MySQL 8.0 的雷"></a>MySQL 8.0 的雷</h2><p>想說嘗試著用 docker 跑 mysql<br>adminer 一直登不進去<br>後來仔細看了一下 docker hub 的 pwd 有多<code>--default-authentication-plugin=mysql_native_password</code><br>WTF…</p>
+<blockquote>
+<p>因為 之前 MySQL 預設儲存密碼的方式是 mysql_native_password, 但 8.0 之後 預設的儲存方式為 caching_sha2_password, 說是又快又安全啦, 但讓人措手不及, 一堆 SQL 工具 (Navicat) 可能還來不及更新支援 就…</p>
+</blockquote>
+<p>ORZ…</p>
+<p><a href="http://samchu.logdown.com/posts/7425945-mysql8-authentication-plugin-change" target="_blank" rel="noopener">MySQL8 Authentication plugin Change « Sam 的程式筆記</a><br><a href="http://php.net/manual/en/mysqli.requirements.php" target="_blank" rel="noopener">PHP: Requirements - Manual</a></p>
 
       
     </div>
@@ -517,8 +523,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -588,6 +603,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-8-0-的雷"><span class="nav-number">1.</span> <span class="nav-text">MySQL 8.0 的雷</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
