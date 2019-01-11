@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hls,ffmpeg,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近看到網頁上的影音，他播放的時候不會全下載好奇就網頁爬了一下是用hls技術，雖然現在還沒有用到不過我還滿感一點興趣就查一些記錄，筆記筆記">
+<meta name="keywords" content="hls,ffmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hls影音串流小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/11/13/hls影音串流小記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近看到網頁上的影音，他播放的時候不會全下載好奇就網頁爬了一下是用hls技術，雖然現在還沒有用到不過我還滿感一點興趣就查一些記錄，筆記筆記">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2018-11-21T15:04:58.801Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hls影音串流小記">
+<meta name="twitter:description" content="最近看到網頁上的影音，他播放的時候不會全下載好奇就網頁爬了一下是用hls技術，雖然現在還沒有用到不過我還滿感一點興趣就查一些記錄，筆記筆記">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/11/13/hls影音串流小記/">
+
+
+
+
+
+  <title>hls影音串流小記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/11/13/hls影音串流小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hls影音串流小記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-11-13T21:50:22+08:00">
+                2018-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/HTML/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2018/11/13/hls影音串流小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/13/hls影音串流小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近看到網頁上的影音，他播放的時候不會全下載<br>好奇就網頁爬了一下<br>是用hls技術，雖然現在還沒有用到<br>不過我還滿感一點興趣<br>就查一些記錄，筆記筆記</p>
+<a id="more"></a>
+<ul>
+<li><a href="https://notfalse.net/63/m3u8-intro" target="_blank" rel="noopener">M3U8 串流影音 - 概念 與 下載 - NotFalse 技術客</a></li>
+<li><a href="https://my.oschina.net/ososchina/blog/828100" target="_blank" rel="noopener">流媒体：ffmpeg生成HLS的m3u8与ts片段 - 小雨伞漂流记 - 开源中国</a></li>
+<li><a href="http://www.cnblogs.com/wainiwann/p/4128154.html" target="_blank" rel="noopener">ffmpeg常用基本命令(转) - wainiwann - 博客园</a></li>
+</ul>
+<p>切割hls檔案<br><code>ffmpeg -i low_30.mp3 -c:a aac -b:a 64k -vn -hls_list_size 0 abc.m3u8</code><br><code>ffmpeg -i eq_1.mp4 -vcodec copy -acodec copy ~~-vbsf h264_mp4toannexb~~ -hls_time 10 -hls_list_size 999999999 output.m3u8</code><br><code>-vbsf h264_mp4toannexb</code> 拿掉就可以跑了<br>雖然不知道甚麼問題，不過解決了</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/45367762/only-one-ts-file-is-generating-while-encoding-mp3-file-to-m3u8-using-ffmpeg" target="_blank" rel="noopener">Only one .ts file is generating while encoding mp3 file to m3u8 using ffmpeg - Stack Overflow</a></li>
+<li><a href="https://jonlabelle.com/snippets/view/shell/ffmpeg-http-live-streaming" target="_blank" rel="noopener">ffmpeg HTTP Live Streaming</a></li>
+</ul>
+<ul>
+<li><a href="http://albert-oma.blogspot.com/2016/02/hls-http-live-streams.html" target="_blank" rel="noopener">Albert 的筆記本: HLS (HTTP Live streams) 介紹</a></li>
+<li><a href="https://bgpsekai.thisistap.com/%E9%9A%A8%E6%89%8B%E4%BA%82%E5%81%9A/2017/02/%E5%B7%B4%E5%93%88%E5%8B%95%E7%95%AB%E7%98%8B-%E8%B7%B3%E9%81%8E%E7%B6%B2%E7%AB%99%E7%9B%B4%E6%8A%93-m3u8-%E6%9B%B4%E6%96%B0/" target="_blank" rel="noopener">巴哈動畫瘋 跳過網站直抓 m3u8 (更新版 – 柏狗屁世界</a></li>
+<li><a href="https://www.cnblogs.com/hrybird/p/5125182.html" target="_blank" rel="noopener">SRS中增加身份验证 - dlbtsoft - 博客园</a></li>
+<li><a href="http://blog.51yip.com/server/1822.html" target="_blank" rel="noopener">srs 身份认证«海底苍鹰(tank)博客</a></li>
+<li><a href="https://blog.gtwang.org/iot/raspberry-pi-nginx-rtmp-server-live-streaming/" target="_blank" rel="noopener">樹莓派架設 RTMP 串流（Streaming）伺服器，傳送即時攝影機影像 - G. T. Wang</a></li>
+<li><a href="https://github.com/ossrs/srs/wiki/v2_CN_Home" target="_blank" rel="noopener">v2_CN_Home · ossrs/srs Wiki</a></li>
+<li><a href="https://github.com/arut/nginx-rtmp-module/wiki/Directives" target="_blank" rel="noopener">Directives · arut/nginx-rtmp-module Wiki</a></li>
+</ul>
+<ul>
+<li><a href="https://www.awaimai.com/2391.html" target="_blank" rel="noopener">重启php7-fpm和php5-fpm方法大全 - 歪麦博客</a></li>
+<li><a href="http://www.avpk.cn/article/131.html" target="_blank" rel="noopener">三种主流流媒体协议(RTMP，RTSP，HTTP)比较 - 流媒体技术 - AMS- 为天下企业提供流媒体软件引擎！</a></li>
+<li><a href="https://stackoverflow.com/questions/2245040/how-can-i-display-an-rtsp-video-stream-in-a-web-page" target="_blank" rel="noopener">How can I display an RTSP video stream in a web page? - Stack Overflow</a></li>
+<li><a href="https://winddoing.github.io/post/34052.html" target="_blank" rel="noopener">流媒体之RTSP/RTP/RTCP | Winddoing’s Blog</a></li>
+<li><a href="https://docs.peer5.com/guides/setting-up-hls-live-streaming-server-using-nginx/" target="_blank" rel="noopener">Setting up HLS live streaming server using NGINX - Peer5 Docs</a></li>
+<li><a href="http://blog.51yip.com/server/1822.html" target="_blank" rel="noopener">srs 身份认证«海底苍鹰(tank)博客</a></li>
+<li><a href="http://blog.51yip.com/server/1815.html" target="_blank" rel="noopener">srs流媒体服务器 安装配置«海底苍鹰(tank)博客</a></li>
+<li><a href="https://blog.csdn.net/leixiaohua1020/article/details/12029543" target="_blank" rel="noopener">ffmpeg处理RTMP流媒体的命令大全 - 雷霄骅(leixiaohua1020)的专栏 - CSDN博客</a></li>
+<li><a href="https://tw.saowen.com/a/c003e14c9686e3a151be9203a48ccf662cff5ec90e5437e9e8b0c0c51e266371" target="_blank" rel="noopener">ffmpeg處理RTMP流媒體的命令和傳送流媒體的命令（UDP，RTP，RTMP） - 掃文資訊</a></li>
+</ul>
+<p><a href="http://blog.51cto.com/lyd0721/1429803" target="_blank" rel="noopener">Nginx-rtmp模块实现流媒体play、push、pull功能-Dream come true-51CTO博客</a><br><a href="http://www.dengshenyu.com/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/09/05/live-streaming.html" target="_blank" rel="noopener">直播技术实现(一)</a><br><a href="http://www.dengshenyu.com/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/2016/09/05/live-streaming-2.html" target="_blank" rel="noopener">直播技术实现(二)</a><br><a href="https://nat.moe/technologies/yinfb/973/" target="_blank" rel="noopener">筆記：使用 nginx 搭建一個 HLS(HTTP Live Streaming) &amp; Rtmp 直播服務器 | 奈特的魔法科研</a></p>
+<p>名詞簡單小記</p>
+<h4 id="SRS-Simple-RTMP-Server"><a href="#SRS-Simple-RTMP-Server" class="headerlink" title="SRS(Simple RTMP Server)"></a>SRS(Simple RTMP Server)</h4><p>架設RTMP Server<br>簡單來說就是<code>直播伺服器</code></p>
+<blockquote>
+<p>3、将其中一个直播流，视频改用h264压缩，音频不变，送至另外一个直播服务流<br><code>ffmpeg -i rtmp://server/live/originalStream -c:a copy -c:v libx264 -vpre slow -f flv rtmp://server/live/h264Stream</code><br>當出看一直看不到為什麼rtmp傳到另一個rtmp<br>後來看到<code>直播服務流</code><br>就想到應該像youtube,twitter<br>讓我想到obs應該也是發到rtmp server去</p>
+</blockquote>
+<h4 id="rtmp-rstp-hls-http-live-streaming"><a href="#rtmp-rstp-hls-http-live-streaming" class="headerlink" title="rtmp rstp hls(http live streaming)"></a>rtmp rstp hls(http live streaming)</h4><ul>
+<li><a href="http://www.avpk.cn/article/131.html" target="_blank" rel="noopener">三种主流流媒体协议(RTMP，RTSP，HTTP)比较 - 流媒体技术 - AMS- 为天下企业提供流媒体软件引擎！</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">1、HTTP協議:</span><br><span class="line"> HTTP的視頻協議，主要是在互聯網普及之後。在互聯網上看視頻的需求下形成的。</span><br><span class="line">   最初的HTTP視頻協議，沒有任何特別之處，就是通用的HTTP文件漸進式下載。本質就是下載視頻文件，而利用視頻文件本身的特點，就是存在頭部信息，和部分視頻幀數據，就完全可以解碼播放了。顯然這種方式需要將視頻文件的頭部信息放在文件的前面。有些例如faststart工具，就是專門做這個功能的。</span><br><span class="line">    但是最為原始的狀態下，視頻無法進行快進或者跳轉播放到文件尚未被下載到的部分。這個時候對HTTP協議提出了range-request的要求。這個目前幾乎所有HTTP的服務器都支持了。range-request，是請求文件的部分數據，指定偏移字節數。在視頻客戶端解析出視頻文件的頭部後，就可以判斷後續視頻相應的幀的位置了。或者根據碼率等信息，計算相應的為位置。</span><br><span class="line"> </span><br><span class="line">優點：</span><br><span class="line">HTTP Live Streaming 還有一個巨大優勢：自適應碼率流播（adaptive streaming）。效果就是客戶端會根據網絡狀況自動選擇不同碼率的視頻流，條件允許的情況下使用高碼率，網絡繁忙的時候使用低碼率，並且自動在二者間隨意切換。這對移動設備網絡狀況不穩定的情況下保障流暢播放非常有幫助。實現方法是服務器端提供多碼率視頻流，並且在列表文件中註明，播放器根據播放進度和下載速度自動調整。使用起來也非常簡單。</span><br><span class="line">缺點：</span><br><span class="line">    實時性相對較差，直播的時候延遲比較高。當然，現在進化出來的flv_over_http或者ts_over_http也可以做到直播延時很低，基本和rtmp協議差不多。</span><br><span class="line">  </span><br><span class="line">2、RTSP協議：</span><br><span class="line">用於Internet上針對多媒體數據流的一種傳輸協議，是TCP/IP協議體系中的一個應用層協議，RTSP在體系結構上位於RTP和RTCP之上，它使用TCP或UDP完成數據傳輸，該協議定義了一對多應用程序如何有效地通過IP網絡傳送多媒體數據。</span><br><span class="line">   本協議是最早的視頻傳輸協議。其中RTSP協議用於視頻點播的會話控制，例如發起點播請求的SETUP請求，進行具體播放操作的PLAY、PAUSE請求，視頻的跳轉也是通過PLAY請求的參數支持的。</span><br><span class="line"> </span><br><span class="line">優點：</span><br><span class="line">RTSP協議族的優勢，在於可以控制到視頻幀，因此可以承載實時性很高的應用。這個優點是相對於HTTP方式的最大優點。H.323視頻會議協議，底層一般採用RTSP協議。RTSP協議族的複雜度主要集中在服務器端，因為服務器端需要parse視頻文件，seek到具體的視頻幀，而且可能還需要進行倍速播放（就是老舊的DVD帶的那種2倍速，4倍速播放的功能），倍速播放功能是RTSP協議獨有的，其他視頻協議都無法支持。</span><br><span class="line">缺點：</span><br><span class="line">就是服務器端的複雜度也比較高，實現起來也比較複雜。Ios端不支持該協議。</span><br><span class="line"> </span><br><span class="line">3、RTMP協議：</span><br><span class="line">   RTMP是Real Time Messaging Protocol（實時消息傳輸協議）的首字母縮寫。RTMP(Real Time Messaging Protocol)實時消息傳送協議是Adobe Systems公司為Flash播放器和服務器之間音頻、視頻和數據傳輸 開發的開放協議。該協議基於TCP，是一個協議族，包括RTMP基本協議及RTMPT/RTMPS/RTMPE等多種變種。RTMP是一種設計用來進行實時數據通信的網絡協議，主要用來在Flash/AIR平台和支持RTMP協議的流媒體/交互服務器之間進行音視頻和數據通信。支持該協議的軟件包括Adobe Media Server/Aoku Media Server/red5/Wowza等。</span><br><span class="line"></span><br><span class="line">優點：</span><br><span class="line"></span><br><span class="line">支持直播、點播</span><br><span class="line"></span><br><span class="line">缺點:</span><br><span class="line">需要專用的服務器。</span><br><span class="line"> </span><br><span class="line">三、協議對比</span><br><span class="line">關於三個RTMP，RTSP，HTTP的對比：</span><br><span class="line">1.RTMP是adobe的，RTSP是 android native支持，http協議。</span><br><span class="line">2.RTMP和HTTP有adaptive streaming的技術，RTSP沒有</span><br><span class="line">3.RTSP實時性是最好的，HTTP實時性比較差。</span><br><span class="line">4.ios不支持rtsp，安卓支持。</span><br><span class="line"></span><br><span class="line">四、總結</span><br><span class="line">  三種協議各有優缺點，rtmp協議應用範圍比較窄，一般客戶端需要用flash接收，rtsp一般常用於監控領域和對實時性要求比較高的場合，http的延伸hls用的比較多，一般用在移動終端觀看，一般一個成熟的流媒體服務系統都需要支持這三種協議，甚至更多的協議，比如udp組播，單播，或者p2p協議等。</span><br><span class="line">   Aoku Media Server是可以同時支持這三種流媒體協議的。是國內為數不多的專業流媒體服務系統，提供的免費版可以供用戶進行三種協議的測試對比</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>簡單來說，hls是基於http<br>但是只有apple支援，所以apple裝置可以直接用<br>要瀏覽器支援要用<a href="https://github.com/video-dev/hls.js/" target="_blank" rel="noopener">video-dev/hls.js: JavaScript HLS client using Media Source Extension</a></p>
+<h4 id="nginx-rtmp-module"><a href="#nginx-rtmp-module" class="headerlink" title="nginx-rtmp-module"></a>nginx-rtmp-module</h4><p><del>目前感覺就是跟rtmp與rtmp server串接用</del><br><a href="http://blog.51cto.com/lyd0721/1429803" target="_blank" rel="noopener">Nginx-rtmp模块实现流媒体play、push、pull功能-Dream come true-51CTO博客</a><br><a href="/blog/2018/11/13/hls影音串流小記/1.png" title="備份圖">備份圖</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Nginx RTMP Module - 架構在Nginx之上, 也算老牌了, 支援RTMP和HLS, 但看code base, 實在也沒啥在更新</span><br><span class="line">Mona server - 支援RTMP, HTTP(非HLS), Web socket等等</span><br><span class="line">Red5 Media Server - 支援RTMP, HLS, WebSocket, RTSP, 好像是要錢</span><br><span class="line">Simpe RTMP Server - 這是由中國的觀止雲這家開源出來的, 講”Simple”其實一點都不Simple, 輕量, 穩定(至少我試直播一晚上都還蠻順利的), 好擴展(支援forward to edge), 可RTMP轉HLS, 因此我最後選擇這個方案</span><br></pre></td></tr></table></figure></p>
+<p>其實今天仔細找了一下，SRS跟nginx-rtmp-module只要選其中一種就可以了<br>參考來源:<a href="http://blog.jln.co/%E7%AD%86%E8%A8%98-%E4%B8%AD%E7%A7%8B%E9%80%A3%E5%81%87%E5%B0%8F%E5%AF%A6%E9%A9%97/" target="_blank" rel="noopener">[筆記] 中秋連假小實驗 – Le murmure de Julian</a></p>
+<p>裡面寫的很詳細</p>
+<h4 id="影片-音樂傳流檔案"><a href="#影片-音樂傳流檔案" class="headerlink" title="影片/音樂傳流檔案"></a>影片/音樂傳流檔案</h4><p>mp2t  for audio/video<br>m3u8  for 多媒體列表檔案格式</p>
+<p>雖然最近沒有打算做這個相關東西<br>但是不知道為什麼對hls特別有興趣XD<br>越記越多，希望哪天有機會用到</p>
+
+      
+      
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/hls/" rel="tag"># hls</a>
+          
+            <a href="/blog/tags/ffmpeg/" rel="tag"># ffmpeg</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/11/09/DB到底有沒有boolean型態呢/" rel="next" title="DB到底有沒有boolean型態呢">
+                <i class="fa fa-chevron-left"></i> DB到底有沒有boolean型態呢
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/" rel="prev" title="git commit 指定幾行 & git stash 查看差異內容">
+                git commit 指定幾行 & git stash 查看差異內容 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">307</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">289</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SRS-Simple-RTMP-Server"><span class="nav-number">1.</span> <span class="nav-text">SRS(Simple RTMP Server)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rtmp-rstp-hls-http-live-streaming"><span class="nav-number">2.</span> <span class="nav-text">rtmp rstp hls(http live streaming)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-rtmp-module"><span class="nav-number">3.</span> <span class="nav-text">nginx-rtmp-module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#影片-音樂傳流檔案"><span class="nav-number">4.</span> <span class="nav-text">影片/音樂傳流檔案</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2018/11/13/hls影音串流小記/';
+          this.page.identifier = '2018/11/13/hls影音串流小記/';
+          this.page.title = 'hls影音串流小記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
