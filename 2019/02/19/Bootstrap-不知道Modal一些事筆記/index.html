@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="說真的平常只用 Boostrap 基本東西很少深入研究這個東西今天看到一段程式感覺 Bootstrap 值得深入研究">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-02-19T15:29:35.083Z">
+<meta property="og:updated_time" content="2019-02-19T15:34:29.125Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bootstrap 不知道Modal一些事筆記">
 <meta name="twitter:description" content="說真的平常只用 Boostrap 基本東西很少深入研究這個東西今天看到一段程式感覺 Bootstrap 值得深入研究">
@@ -398,7 +398,7 @@
 <p>This option is deprecated since v3.3.0 and has been removed in v4. We recommend instead using client-side templating or a data binding framework, or calling jQuery.load yourself</p>
 </blockquote>
 <p>這麼好用的功能…，怎麼要廢棄掉???<br><a href="https://stackoverflow.com/questions/18378720/bootstrap-3-with-remote-modal" target="_blank" rel="noopener">Bootstrap 3 with remote Modal - Stack Overflow</a><br>所以之後可能需要用 jQuery.load 手動載入方式</p>
-<h3 id="神奇清出-remote-表單"><a href="#神奇清出-remote-表單" class="headerlink" title="神奇清出 remote 表單"></a>神奇清出 remote 表單</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myModal"</span>).on(<span class="string">"hidden.bs.modal"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  $(<span class="keyword">this</span>).removeData(<span class="string">"bs.modal"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="神奇清除-remote-表單"><a href="#神奇清除-remote-表單" class="headerlink" title="神奇清除 remote 表單"></a>神奇清除 remote 表單</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#myModal"</span>).on(<span class="string">"hidden.bs.modal"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  $(<span class="keyword">this</span>).removeData(<span class="string">"bs.modal"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p><a href="http://plnkr.co/edit/HWSgSw?p=preview" target="_blank" rel="noopener">Plunker</a><br>其實仔細觀察，開發者工具看，他會重新載入網頁<br>所以值都是一開始的樣子</p>
 <p>有時候還會失敗，最好的方式就是</p>
 <p>不過這個方法，只能適用在 remote<br>所以網路上只看到 v2,v3<br>但沒有看到 v4</p>
@@ -601,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#remote-v4-以廢棄"><span class="nav-number">1.</span> <span class="nav-text">remote (v4 以廢棄)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神奇清出-remote-表單"><span class="nav-number">1.1.</span> <span class="nav-text">神奇清出 remote 表單</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改表單小技巧"><span class="nav-number">2.</span> <span class="nav-text">修改表單小技巧</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#remote-v4-以廢棄"><span class="nav-number">1.</span> <span class="nav-text">remote (v4 以廢棄)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神奇清除-remote-表單"><span class="nav-number">1.1.</span> <span class="nav-text">神奇清除 remote 表單</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改表單小技巧"><span class="nav-number">2.</span> <span class="nav-text">修改表單小技巧</span></a></li></ol></div>
             
 
           </div>
