@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="之前我很常在大學自學jQuery很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP使用上可能需要用到$.param">
+<meta name="description" content="之前我很常在大學自學 jQuery 很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問 form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP 使用上可能需要用到$.param">
 <meta name="keywords" content="jQuery,param,form">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jQuery $.param傳參數小筆記">
 <meta property="og:url" content="https://malagege.github.io/blog/2018/08/17/jQuery-param傳參數小筆記/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="之前我很常在大學自學jQuery很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP使用上可能需要用到$.param">
+<meta property="og:description" content="之前我很常在大學自學 jQuery 很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問 form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP 使用上可能需要用到$.param">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-09-10T14:23:54.245Z">
+<meta property="og:updated_time" content="2019-02-22T16:09:29.205Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jQuery $.param傳參數小筆記">
-<meta name="twitter:description" content="之前我很常在大學自學jQuery很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP使用上可能需要用到$.param">
+<meta name="twitter:description" content="之前我很常在大學自學 jQuery 很常用$(&amp;#39;xxx&amp;#39;).serialize()做表單傳送動作不過今天上班同事剛好問 form就看到這個$.param(xxxx,true)好奇這個跟serialize哪裡不一樣這篇當然要好好補足一下PHP 使用上可能需要用到$.param">
 
 
 
@@ -413,29 +413,39 @@
       
 
       
-        <p>之前我很常在大學自學jQuery很常用<code>$(&#39;xxx&#39;).serialize()</code>做表單傳送動作<br>不過今天上班同事剛好問form<br>就看到這個<code>$.param(xxxx,true)</code><br>好奇這個跟<code>serialize</code>哪裡不一樣<br>這篇當然要好好補足一下<br>PHP使用上可能需要用到<code>$.param</code></p>
+        <p>之前我很常在大學自學 jQuery 很常用<code>$(&#39;xxx&#39;).serialize()</code>做表單傳送動作<br>不過今天上班同事剛好問 form<br>就看到這個<code>$.param(xxxx,true)</code><br>好奇這個跟<code>serialize</code>哪裡不一樣<br>這篇當然要好好補足一下<br>PHP 使用上可能需要用到<code>$.param</code></p>
 <a id="more"></a>
-<p>網路查了一下<br>常看到這三個method做比較<code>$.serialize</code>、<code>$.serializeArray</code>和<code>$.param</code></p>
-<h2 id="“form”-serialize"><a href="#“form”-serialize" class="headerlink" title="$(“form”).serialize()"></a>$(“form”).serialize()</h2><p>基於<code>$.param</code>實作<br>寫$.ajax很常用到這個<br>其實這個跟<code>$.param</code>沒有什麼重要關係</p>
-<h2 id="“form”-serializeArray"><a href="#“form”-serializeArray" class="headerlink" title="$(“form”).serializeArray"></a>$(“form”).serializeArray</h2><p>產生一個JavaScript陣列<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[&#123;</span><br><span class="line">    name: "fieldName",</span><br><span class="line">    value: "value"</span><br><span class="line">&#125;,&#123;</span><br><span class="line">    name: "name",</span><br><span class="line">    value: "man"</span><br><span class="line">&#125;,&#123;</span><br><span class="line">    name: "sex",</span><br><span class="line">    value: "male"</span><br><span class="line">&#125;,&#123;</span><br><span class="line">    name: "class[]",</span><br><span class="line">    value: "math"</span><br><span class="line">&#125;,&#123;</span><br><span class="line">    name: "class[]",</span><br><span class="line">    value: "chinese"</span><br><span class="line">&#125;,]</span><br></pre></td></tr></table></figure></p>
-<p>一直覺得這個method有什麼軟用，不過我來一直重覆看文件<br>官網有提到</p>
+<p>網路查了一下<br>常看到這三個 method 做比較<code>$.serialize</code>、<code>$.serializeArray</code>和<code>$.param</code></p>
+<h2 id="“form”-serialize"><a href="#“form”-serialize" class="headerlink" title="\$(“form”).serialize()"></a>\$(“form”).serialize()</h2><p>基於<code>$.param</code>實作<br>寫\$.ajax 很常用到這個<br>其實這個跟<code>$.param</code>沒有什麼重要關係</p>
+<h2 id="“form”-serializeArray"><a href="#“form”-serializeArray" class="headerlink" title="\$(“form”).serializeArray"></a>\$(“form”).serializeArray</h2><p>產生一個 JavaScript 陣列</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"fieldName"</span>,</span><br><span class="line">    <span class="attr">"value"</span>: <span class="string">"value"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"name"</span>,</span><br><span class="line">    <span class="attr">"value"</span>: <span class="string">"man"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"sex"</span>,</span><br><span class="line">    <span class="attr">"value"</span>: <span class="string">"male"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"class[]"</span>,</span><br><span class="line">    <span class="attr">"value"</span>: <span class="string">"math"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"class[]"</span>,</span><br><span class="line">    <span class="attr">"value"</span>: <span class="string">"chinese"</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>一直覺得這個 method 有什麼軟用，不過我來一直重覆看文件<br>官網有提到</p>
 <blockquote>
-<p>If the object passed is in an Array, it must be an array of objects in the format returned by .serializeArray()<br>[<br>  { name: “first”, value: “Rick” },<br>  { name: “last”, value: “Astley” },<br>  { name: “job”, value: “Rock Star” }<br>]</p>
+<p>If the object passed is in an Array, it must be an array of objects in the format returned by .serializeArray()<br>[</p>
+<blockquote>
+<p>{ name: “first”, value: “Rick” },<br>{ name: “last”, value: “Astley” },<br>{ name: “job”, value: “Rock Star” }<br>]</p>
 </blockquote>
-<p>原來這玩意可以用在這裡($.param)</p>
-<h2 id="param"><a href="#param" class="headerlink" title="$.param"></a>$.param</h2><p>竟然<code>$().serialize()</code>可以做到我們想要做的事情<br>前面有提到<code>$.param()</code>就是實作出<code>$().serialize()</code></p>
+</blockquote>
+<p>原來這玩意可以用在這裡(\$.param)</p>
+<h2 id="param"><a href="#param" class="headerlink" title="\$.param"></a>\$.param</h2><p>竟然<code>$().serialize()</code>可以做到我們想要做的事情<br>前面有提到<code>$.param()</code>就是實作出<code>$().serialize()</code></p>
 <p>但我對他第二個參數，比較有興趣<br>在開方者工作測試</p>
-<p>$.param除了可以吃<code>$.serializeArray</code>傳回的陣列以外<br>他還能實接對物件做解析</p>
-<p>比較需要注意的事情是<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line">  a: &#123;</span><br><span class="line">    one: <span class="number">1</span>,</span><br><span class="line">    two: <span class="number">2</span>,</span><br><span class="line">    three: <span class="number">3</span></span><br><span class="line">  &#125;,</span><br><span class="line">  b: [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> recursiveEncoded = $.param( myObject );</span><br><span class="line"><span class="keyword">var</span> recursiveDecoded = <span class="built_in">decodeURIComponent</span>( $.param( myObject ) );</span><br><span class="line"> </span><br><span class="line">alert( recursiveEncoded );</span><br><span class="line">alert( recursiveDecoded );</span><br></pre></td></tr></table></figure></p>
-<p>php程式需要做form表單送出的時候，需要用<code>a[one]=1&amp;a[two]=2&amp;a[three]=3&amp;b[]=1&amp;b[]=2&amp;b[]=3</code><br>但這時候myObject屬性塞<code>陣列/物件</code>，jQuery預設不會轉<br>$.param接收<code>物件</code>的時候，第二個參數就有差了</p>
+<p>\$.param 除了可以吃<code>$.serializeArray</code>傳回的陣列以外<br>他還能實接對物件做解析</p>
+<p>比較需要注意的事情是</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line">  a: &#123;</span><br><span class="line">    one: <span class="number">1</span>,</span><br><span class="line">    two: <span class="number">2</span>,</span><br><span class="line">    three: <span class="number">3</span></span><br><span class="line">  &#125;,</span><br><span class="line">  b: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> recursiveEncoded = $.param(myObject);</span><br><span class="line"><span class="keyword">var</span> recursiveDecoded = <span class="built_in">decodeURIComponent</span>($.param(myObject));</span><br><span class="line"></span><br><span class="line">alert(recursiveEncoded); <span class="comment">// a%5Bone%5D=1&amp;a%5Btwo%5D=2&amp;a%5Bthree%5D=3&amp;b%5B%5D=1&amp;b%5B%5D=2&amp;b%5B%5D=3</span></span><br><span class="line">alert(recursiveDecoded); <span class="comment">// a[one]=1&amp;a[two]=2&amp;a[three]=3&amp;b[]=1&amp;b[]=2&amp;b[]=3</span></span><br></pre></td></tr></table></figure>
+<p>php 程式需要做 form 表單送出的時候，需要用<code>a[one]=1&amp;a[two]=2&amp;a[three]=3&amp;b[]=1&amp;b[]=2&amp;b[]=3</code><br>但這時候 myObject 屬性塞<code>陣列/物件</code>，jQuery 預設會轉<br>\$.param 接收<code>物件</code>的時候，第二個參數就有差了<br>遇設是 false，所以寫 php 都不用調整這個參數<br>但是 jsp 的就需要了</p>
+<blockquote>
+<p>默認的話，traditional 為 false，即 jquery 會深度序列化參數對象，以適應如 PHP 和 Ruby on Rails 框架<br><a href="https://my.oschina.net/i33/blog/119506" target="_blank" rel="noopener">jQuery ajax 的 traditional 參數的作用 - i33 的個人空間 - 開源中國</a></p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.param(myObject, false)</span><br></pre></td></tr></table></figure>
+<p>顯示結果為 <code>a[one]=1&amp;a[two]=2&amp;a[three]=3&amp;b[]=1&amp;b[]=2&amp;b[]=3</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.param(myObject, true)</span><br></pre></td></tr></table></figure>
 <p>顯示結果為<code>a=[object+Object]&amp;b=1&amp;b=2&amp;b=3</code></p>
-<p><strong>所以不管怎麼用，checkbox name還是一定要加[]</strong></p>
-<p>##寫PHP checkbox記得一件事</p>
-<p>我覺得我還是一定會忘記XDD<br>再寫一次</p>
-<p>寫checkbox相同name的時候，記得在PHP變數加個<code>[]</code><br>ex:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="jQuery-ajaxSettings-traditional-true"><a href="#jQuery-ajaxSettings-traditional-true" class="headerlink" title="jQuery.ajaxSettings.traditional = true;"></a>jQuery.ajaxSettings.traditional = true;</h2><p>預設做ajax動作實候，呼叫<code>$.param(xxx,true)</code>會自動帶後面的true<br>但自己寫code，還是需要手動加(xxx,true)</p>
-<p>參考來源：<br><a href="https://api.jquery.com/jQuery.param/" target="_blank" rel="noopener">jQuery.param() | jQuery API Documentation</a><br><a href="https://www.cnblogs.com/youxin/p/3891140.html" target="_blank" rel="noopener">jquery serialize()、serializearray()已经$.param方法 - youxin - 博客园</a></p>
+<p><strong>所以不管怎麼用，checkbox name 還是一定要加[]</strong></p>
+<h2 id="寫-PHP-checkbox-記得一件事"><a href="#寫-PHP-checkbox-記得一件事" class="headerlink" title="寫 PHP checkbox 記得一件事"></a>寫 PHP checkbox 記得一件事</h2><p>我覺得我還是一定會忘記 XDD<br>再寫一次</p>
+<p>寫 checkbox 相同 name 的時候，記得在 PHP 變數加個<code>[]</code><br>ex:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"xxxx[]"</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="jQuery-ajaxSettings-traditional-true"><a href="#jQuery-ajaxSettings-traditional-true" class="headerlink" title="jQuery.ajaxSettings.traditional = true;"></a>jQuery.ajaxSettings.traditional = true;</h2><p>預設做 ajax 動作實候，呼叫<code>$.param(xxx,true)</code>會自動帶後面的 true<br>但自己寫<code>$.param</code>，還是需要手動加(xxx,true)</p>
+<p>參考來源：<br><a href="https://api.jquery.com/jQuery.param/" target="_blank" rel="noopener">jQuery.param() | jQuery API Documentation</a><br><a href="https://www.cnblogs.com/youxin/p/3891140.html" target="_blank" rel="noopener">jquery serialize()、serializearray()已经\$.param 方法 - youxin - 博客园</a></p>
 
         
         <div align="center">
@@ -578,7 +588,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">320</span>
+                  <span class="site-state-item-count">321</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -600,7 +610,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">296</span>
+                  <span class="site-state-item-count">297</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -643,7 +653,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#“form”-serialize"><span class="nav-number">1.</span> <span class="nav-text">$(“form”).serialize()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“form”-serializeArray"><span class="nav-number">2.</span> <span class="nav-text">$(“form”).serializeArray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#param"><span class="nav-number">3.</span> <span class="nav-text">$.param</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery-ajaxSettings-traditional-true"><span class="nav-number">4.</span> <span class="nav-text">jQuery.ajaxSettings.traditional = true;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#“form”-serialize"><span class="nav-number">1.</span> <span class="nav-text">\$(“form”).serialize()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“form”-serializeArray"><span class="nav-number">2.</span> <span class="nav-text">\$(“form”).serializeArray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#param"><span class="nav-number">3.</span> <span class="nav-text">\$.param</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寫-PHP-checkbox-記得一件事"><span class="nav-number">4.</span> <span class="nav-text">寫 PHP checkbox 記得一件事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery-ajaxSettings-traditional-true"><span class="nav-number">5.</span> <span class="nav-text">jQuery.ajaxSettings.traditional = true;</span></a></li></ol></div>
             
 
           </div>
