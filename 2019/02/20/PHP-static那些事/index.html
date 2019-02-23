@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近使用在看static部份平常很少用，過很久可能就會忘了這是什麼東西但 global 部份應該不再記錄PHP 有關參照(Reference)的那些事 | 程式狂想筆記這裡面有簡單提到">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-02-22T16:11:36.422Z">
+<meta property="og:updated_time" content="2019-02-23T15:44:26.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP - static那些事">
 <meta name="twitter:description" content="最近使用在看static部份平常很少用，過很久可能就會忘了這是什麼東西但 global 部份應該不再記錄PHP 有關參照(Reference)的那些事 | 程式狂想筆記這裡面有簡單提到">
@@ -447,7 +447,7 @@
 <p>老實說上面例子花我很多時間想的，重寫兩次文章(因為一直發現理解錯誤)<br>只要進入 B 的 parent,static,self 再跳到 A 的 test function 裡面的<code>static::who();</code>(後期靜態綁定)<br>就會抓當下 class<br>不管是<code>實例</code>或者 <code>static</code><br>都會印出 C</p>
 <hr>
 <p>下面是直接在 B 的 test()做，第一次的時候做轉發，跳到下一個 function *_沒有<em><code>用後期靜態綁定</code><br>而且\</em>_CLASS__(self)，只會抓到原本的類別(非實例出來的類別)</p>
-<p>這邊的 static 轉發(forward)同等於<code>forward_static_call()</code></p>
+<p>這邊的 static 轉發(forward)同等於<code>forward_static_call()</code><br>所以下面這個範例，__CLASS__改成<code>get_called_static()</code>一樣會變成上面結果一致</p>
 <ul>
 <li><a href="http://php.net/manual/zh/function.forward-static-call.php" target="_blank" rel="noopener">PHP: forward_static_call - Manual</a></li>
 </ul>
@@ -456,6 +456,8 @@
 <p><a href="https://stackoverflow.com/questions/5061476/php-forward-static-call-vs-call-user-func" target="_blank" rel="noopener">php 5.3 - PHP forward_static_call vs call_user_func - Stack Overflow</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">The difference is just that forward_static_call does not reset the &quot;called class&quot; information if going up the class hierarchy and explicitly naming a class, whereas call_user_func resets the information in those circumstances (but still does not reset it if using parent, static or self).</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">class A &#123;</span><br><span class="line">    static function bar() &#123; echo get_called_class(), &quot;\n&quot;; &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">    static function foo() &#123;</span><br><span class="line">        parent::bar(); //forwards static info, &apos;B&apos;</span><br><span class="line">        call_user_func(&apos;parent::bar&apos;); //forwarding, &apos;B&apos;</span><br><span class="line">        call_user_func(&apos;static::bar&apos;); //forwarding, &apos;B&apos;</span><br><span class="line">        call_user_func(&apos;A::bar&apos;); //non-forwarding, &apos;A&apos;</span><br><span class="line">        forward_static_call(&apos;parent::bar&apos;); //forwarding, &apos;B&apos;</span><br><span class="line">        forward_static_call(&apos;A::bar&apos;); //forwarding, &apos;B&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">B::foo();</span><br><span class="line"></span><br><span class="line">Note that forward_static_call refuses to forward if going down the class hierarchy:</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">class A &#123;</span><br><span class="line">    static function foo() &#123;</span><br><span class="line">        forward_static_call(&apos;B::bar&apos;); //non-forwarding, &apos;B&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">    static function bar() &#123; echo get_called_class(), &quot;\n&quot;; &#125;</span><br><span class="line">&#125;</span><br><span class="line">A::foo();</span><br><span class="line"></span><br><span class="line">Finally, note that forward_static_call can only be called from within a class method.</span><br></pre></td></tr></table></figure>
 <p>The difference is just that forward_static_call does not reset the “called class” information if going up the class hierarchy and explicitly naming a class, whereas call_user_func resets the information in those circumstances (but still does not reset it if using parent, static or self).</p>
+<p>最後我覺得 static 和\$this 很相似<br>但看到這篇裡面有寫差異<br>雖然我有一點 Java 物件導向觀念，但是 PHP 物件導向還滿難理解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">static 和 $this 有点类似，但又有区别：</span><br><span class="line"></span><br><span class="line">    $this 指向的对象所属的类和 static 指向的类相同。</span><br><span class="line">    $this 不能用于静态方法中，也不能访问类的静态属性和常量。</span><br><span class="line">    $this 指向的是实际调用的对象。</span><br><span class="line">    static 可以用于静态或非静态方法中，也可以访问类的静态属性、静态方法、常量和非静态方法，但不能访问非静态属性。</span><br><span class="line">    static 指向的是实际调用时的对象所属的类。</span><br><span class="line">---------------------</span><br><span class="line">作者：lamp_yang_3533</span><br><span class="line">来源：CSDN</span><br><span class="line">原文：https://blog.csdn.net/lamp_yang_3533/article/details/79912453</span><br><span class="line">版权声明：本文为博主原创文章，转载请附上博文链接！</span><br></pre></td></tr></table></figure>
 <h2 id="參考來源"><a href="#參考來源" class="headerlink" title="參考來源"></a>參考來源</h2><ul>
 <li><a href="http://asika.windspeaker.co/post/3483-php-static-self" target="_blank" rel="noopener">PHP 的 static 與 self 兩個關鍵字的差異 | Asika Lab 飛鳥實驗室</a></li>
 <li><a href="http://php.net/manual/en/language.oop5.late-static-bindings.php" target="_blank" rel="noopener">PHP: Late Static Bindings - Manual</a></li>
@@ -519,6 +521,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/02/24/PHP-intval跟-int-強制轉型差別/" rel="prev" title="PHP intval跟(int)強制轉型差別">
+                PHP intval跟(int)強制轉型差別 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -605,7 +611,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">321</span>
+                  <span class="site-state-item-count">322</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
