@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近使用在看static部份平常很少用，過很久可能就會忘了這是什麼東西但 global 部份應該不再記錄PHP 有關參照(Reference)的那些事 | 程式狂想筆記這裡面有簡單提到">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-02-23T15:44:26.282Z">
+<meta property="og:updated_time" content="2019-03-07T15:23:56.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP - static那些事">
 <meta name="twitter:description" content="最近使用在看static部份平常很少用，過很久可能就會忘了這是什麼東西但 global 部份應該不再記錄PHP 有關參照(Reference)的那些事 | 程式狂想筆記這裡面有簡單提到">
@@ -447,7 +447,7 @@
 <p>老實說上面例子花我很多時間想的，重寫兩次文章(因為一直發現理解錯誤)<br>只要進入 B 的 parent,static,self 再跳到 A 的 test function 裡面的<code>static::who();</code>(後期靜態綁定)<br>就會抓當下 class<br>不管是<code>實例</code>或者 <code>static</code><br>都會印出 C</p>
 <hr>
 <p>下面是直接在 B 的 test()做，第一次的時候做轉發，跳到下一個 function *_沒有<em><code>用後期靜態綁定</code><br>而且\</em>_CLASS__(self)，只會抓到原本的類別(非實例出來的類別)</p>
-<p>這邊的 static 轉發(forward)同等於<code>forward_static_call()</code><br>所以下面這個範例，__CLASS__改成<code>get_called_static()</code>一樣會變成上面結果一致</p>
+<p>這邊的 static 轉發(forward)同等於<code>forward_static_call()</code><br>所以下面這個範例，__CLASS__改成<code>get_called_class()</code>一樣會變成上面結果一致</p>
 <ul>
 <li><a href="http://php.net/manual/zh/function.forward-static-call.php" target="_blank" rel="noopener">PHP: forward_static_call - Manual</a></li>
 </ul>
