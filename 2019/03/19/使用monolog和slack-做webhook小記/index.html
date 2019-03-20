@@ -90,7 +90,10 @@
 <meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/1.png">
 <meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/2.png">
 <meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/3.png">
-<meta property="og:updated_time" content="2019-03-19T12:56:53.451Z">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/4.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/5.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/6.png">
+<meta property="og:updated_time" content="2019-03-20T14:21:30.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用monolog和slack 做webhook小記">
 <meta name="twitter:description" content="最近在看 monolog 程式如何使用不過這篇不會詳細記錄 monolog這篇主要是記錄 slack webhook怕之後會忘記要怎麼串接 webhook">
@@ -434,6 +437,14 @@
 <p>一旦配置了此选项，Laravel 将记录大于或等于指定日志等级的所有级别。例如，默认将 log_level 设置为 error 那么将会记录 error , critical , alert 和 emergency 日志信息。<br>Monolog 识别以下日志等级 - 从低到高为: debug , info , notice , warning , error , critical , alert , emergency。</p>
 </blockquote>
 <p>這邊先小記，哈哈，不知道之後有沒有有空再寫一篇</p>
+<p>話說 flexget 好像也能做 slack,discord<br>剛好最近有用 discord<br>有空研究看看</p>
+<p>2019-03-20</p>
+<p>今天剛好看到 github 有 discord 的 webhook 現成工具<br><a href="https://github.com/lefuturiste/monolog-discord-handler" target="_blank" rel="noopener">lefuturiste/monolog-discord-handler: A simple discord handler for support Discord webhooks</a><br>原本要找 webhook<br>進去 discord 開發者頁面找不到 webhook<br>後來 google 一下<br>原來可以到<code>頻道設定</code>裡面有 webhook<br>輕鬆就能新增 webhook</p>
+<img src="/blog/2019/03/19/使用monolog和slack-做webhook小記/4.png" title="頻道設定1">
+<img src="/blog/2019/03/19/使用monolog和slack-做webhook小記/5.png" title="頻道設定2">
+<p>程式碼</p>
+<figure class="highlight php"><figcaption><span>discord.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span> <span class="string">'./vendor/autoload.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Monolog</span>\<span class="title">Logger</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Monolog</span>\<span class="title">Handler</span>\<span class="title">StreamHandler</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Monolog</span>\<span class="title">Handler</span>\<span class="title">SlackWebhookHandler</span>;</span><br><span class="line"></span><br><span class="line">$log = <span class="keyword">new</span> Monolog\Logger(<span class="string">'your name'</span>);</span><br><span class="line"></span><br><span class="line">$log-&gt;pushHandler(<span class="keyword">new</span> DiscordHandler\DiscordHandler([</span><br><span class="line"><span class="string">'https://discordapp.com/api/webhooks/xxxxxxx/ooooooooooooooooooooooooooooo'</span></span><br><span class="line">], <span class="string">'name'</span>, <span class="string">'subname'</span>, <span class="string">'DEBUG'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// add records to the log</span></span><br><span class="line">$log-&gt;warning(<span class="string">'Foo'</span>);</span><br><span class="line">$log-&gt;crit(<span class="string">'中文測試'</span>);</span><br></pre></td></tr></table></figure>
+<img src="/blog/2019/03/19/使用monolog和slack-做webhook小記/6.png" title="成果">
 
         
         <div align="center">
