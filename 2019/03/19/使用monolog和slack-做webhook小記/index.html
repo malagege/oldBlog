@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/4.png">
 <meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/5.png">
 <meta property="og:image" content="https://malagege.github.io/blog/2019/03/19/使用monolog和slack-做webhook小記/6.png">
-<meta property="og:updated_time" content="2019-03-20T14:21:30.487Z">
+<meta property="og:updated_time" content="2019-03-20T14:23:44.403Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用monolog和slack 做webhook小記">
 <meta name="twitter:description" content="最近在看 monolog 程式如何使用不過這篇不會詳細記錄 monolog這篇主要是記錄 slack webhook怕之後會忘記要怎麼串接 webhook">
@@ -443,7 +443,7 @@
 <img src="/blog/2019/03/19/使用monolog和slack-做webhook小記/4.png" title="頻道設定1">
 <img src="/blog/2019/03/19/使用monolog和slack-做webhook小記/5.png" title="頻道設定2">
 <p>程式碼</p>
-<figure class="highlight php"><figcaption><span>discord.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span> <span class="string">'./vendor/autoload.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Monolog</span>\<span class="title">Logger</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Monolog</span>\<span class="title">Handler</span>\<span class="title">StreamHandler</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Monolog</span>\<span class="title">Handler</span>\<span class="title">SlackWebhookHandler</span>;</span><br><span class="line"></span><br><span class="line">$log = <span class="keyword">new</span> Monolog\Logger(<span class="string">'your name'</span>);</span><br><span class="line"></span><br><span class="line">$log-&gt;pushHandler(<span class="keyword">new</span> DiscordHandler\DiscordHandler([</span><br><span class="line"><span class="string">'https://discordapp.com/api/webhooks/xxxxxxx/ooooooooooooooooooooooooooooo'</span></span><br><span class="line">], <span class="string">'name'</span>, <span class="string">'subname'</span>, <span class="string">'DEBUG'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// add records to the log</span></span><br><span class="line">$log-&gt;warning(<span class="string">'Foo'</span>);</span><br><span class="line">$log-&gt;crit(<span class="string">'中文測試'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><figcaption><span>discord.php</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">require_once</span> <span class="string">'./vendor/autoload.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Monolog</span>\<span class="title">Logger</span>;</span><br><span class="line"></span><br><span class="line">$log = <span class="keyword">new</span> Monolog\Logger(<span class="string">'your name'</span>);</span><br><span class="line"></span><br><span class="line">$log-&gt;pushHandler(<span class="keyword">new</span> DiscordHandler\DiscordHandler([</span><br><span class="line"><span class="string">'https://discordapp.com/api/webhooks/xxxxxxx/oooooooooooooooooooooooooooooo'</span></span><br><span class="line">], <span class="string">'name'</span>, <span class="string">'subname'</span>, <span class="string">'DEBUG'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// add records to the log</span></span><br><span class="line">$log-&gt;warning(<span class="string">'Foo'</span>);</span><br><span class="line">$log-&gt;crit(<span class="string">'中文測試'</span>);</span><br></pre></td></tr></table></figure>
 <img src="/blog/2019/03/19/使用monolog和slack-做webhook小記/6.png" title="成果">
 
         
@@ -497,6 +497,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/03/21/git從某一個commit還原某一個檔案和git-log搜尋檔案方法/" rel="prev" title="git從某一個commit還原某一個檔案和git log搜尋檔案方法">
+                git從某一個commit還原某一個檔案和git log搜尋檔案方法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -574,7 +578,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">334</span>
+                  <span class="site-state-item-count">336</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
