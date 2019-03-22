@@ -101,3 +101,17 @@ $json = [
 [GitHub - Jeckerson/array2xml: [PHP] - Array to XML](https://github.com/Jeckerson/array2xml)
 
 [GitHub - spatie/array-to-xml: A simple class to convert an array to xml](https://github.com/spatie/array-to-xml)
+
+2019-03-12 用原生方法沒辦法載入
+[xml - How to get values inside <![CDATA[values]] > using php DOM? - Stack Overflow](https://stackoverflow.com/questions/6674322/how-to-get-values-inside-cdatavalues-using-php-dom)
+[xml - PHP: How to handle <![CDATA[ with SimpleXMLElement? - Stack Overflow](https://stackoverflow.com/questions/2970602/php-how-to-handle-cdata-with-simplexmlelement)
+
+```php
+$content = simplexml_load_string(
+    '<content><![CDATA[Hello, world!]]></content>'
+    , null
+    , LIBXML_NOCDATA
+);
+```
+
+[PHP 操作 XML | 程式前沿](https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/110823/)

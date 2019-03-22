@@ -340,7 +340,7 @@ C::test();
 而且\_\_CLASS\_\_(self)，只會抓到原本的類別(非實例出來的類別)
 
 這邊的 static 轉發(forward)同等於`forward_static_call()`
-所以下面這個範例，\_\_CLASS\_\_改成`get_called_static()`一樣會變成上面結果一致
+所以下面這個範例，\_\_CLASS\_\_改成`get_called_class()`一樣會變成上面結果一致
 
 - [PHP: forward_static_call - Manual](http://php.net/manual/zh/function.forward-static-call.php)
 
