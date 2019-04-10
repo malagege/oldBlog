@@ -24,3 +24,5 @@ date: 2018-05-14 21:24:11
 - [php 开发,服务器架构,seo 优化](http://blog.51yip.com/)
 - [WFU BLOG | Blogger 調校資料庫](https://www.wfublog.com/)
 - [EPH 的程式日記 | 記錄程式設計生活的點點滴滴](https://ephrain.net/)
+- [節省工具箱 Jason Tools](http://blog.jason.tools/)
+- [玩具烏托邦: 網頁爬蟲終極武器： puppeteer](https://newtoypia.blogspot.com/2019/02/puppeteer.html)
