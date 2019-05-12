@@ -413,6 +413,15 @@
       
 
       
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
         <p>正常 focus 只有 input,textarea,button 等等<br>平常 div 是沒有 focus，但最近看<code>focus-within</code>有一個案例<br><a href="http://web.jobbole.com/95025/" target="_blank" rel="noopener">神奇的选择器 :focus-within - WEB 前端 - 伯乐在线</a><br><a href="https://codepen.io/dannievinther/pen/NvZjvz" target="_blank" rel="noopener">Off-screen nav with :focus-within [PURE CSS]</a><br>查了一下是 tabindex 關係<br>由於這個很少用，所以還是記錄一下。</p>
 <a id="more"></a>
 <p><a href="http://bubkoo.com/2015/02/01/using-the-tabindex-attribute/" target="_blank" rel="noopener">说说 tabindex 的那些事儿 | bubkoo</a> <a href="/blog/2019/02/27/如何讓div有focus動作-tabindex/web.png" title="備份圖">備份圖</a></p>
@@ -424,15 +433,6 @@
 <p>真想把他改成文字用左再調整更換 input 位置<br><a href="https://www.cnblogs.com/perseverancevictory/p/3665814.html" target="_blank" rel="noopener">javascript 对象之 selectionStart selectionEnd - 选择了就坚持 - 博客园</a><br><a href="https://www.vishalon.net/blog/javascript-getting-and-setting-caret-position-in-textarea" target="_blank" rel="noopener">Cross browser Javascript code to get/set caret position in textarea/input</a></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCaretPosition</span>(<span class="params">ctrl</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// IE &lt; 9 Support</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">document</span>.selection) &#123;</span><br><span class="line">    ctrl.focus();</span><br><span class="line">    <span class="keyword">var</span> range = <span class="built_in">document</span>.selection.createRange();</span><br><span class="line">    <span class="keyword">var</span> rangelen = range.text.length;</span><br><span class="line">    range.moveStart(<span class="string">"character"</span>, -ctrl.value.length);</span><br><span class="line">    <span class="keyword">var</span> start = range.text.length - rangelen;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">start</span>: start, <span class="attr">end</span>: start + rangelen &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// IE &gt;=9 and other browsers</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (ctrl.selectionStart || ctrl.selectionStart == <span class="string">"0"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">start</span>: ctrl.selectionStart, <span class="attr">end</span>: ctrl.selectionEnd &#125;;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">start</span>: <span class="number">0</span>, <span class="attr">end</span>: <span class="number">0</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCaretPosition</span>(<span class="params">ctrl, start, end</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// IE &gt;= 9 and other browsers</span></span><br><span class="line">  <span class="keyword">if</span> (ctrl.setSelectionRange) &#123;</span><br><span class="line">    ctrl.focus();</span><br><span class="line">    ctrl.setSelectionRange(start, end);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// IE &lt; 9</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (ctrl.createTextRange) &#123;</span><br><span class="line">    <span class="keyword">var</span> range = ctrl.createTextRange();</span><br><span class="line">    range.collapse(<span class="literal">true</span>);</span><br><span class="line">    range.moveEnd(<span class="string">"character"</span>, end);</span><br><span class="line">    range.moveStart(<span class="string">"character"</span>, start);</span><br><span class="line">    range.select();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>先留著…以後再修改</p>
-
-        
-        <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-</div>
 
       
     </div>
@@ -520,6 +520,14 @@
 
 
 
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
         </div>
         
           
@@ -555,7 +563,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">336</span>
+                  <span class="site-state-item-count">361</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -566,7 +574,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -577,7 +585,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">305</span>
+                  <span class="site-state-item-count">324</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

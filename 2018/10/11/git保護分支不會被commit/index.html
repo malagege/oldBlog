@@ -413,15 +413,6 @@
       
 
       
-        <p>最近在pull master實候<br>竟然發現merge….<br>雖然不知道發生了什麼事情<br>但不應該這樣<br>後來找到是我在master commit!!!!!</p>
-<a id="more"></a>
-<p>立馬不說，先壓縮一個檔案起來(裡面有程式還沒commit 怕怕)<br>先用<code>git reset  xxxx^ --hard</code><br>順利還原!!!</p>
-<p>未了怕悲劇發生，於是我開始找如何防止master commit<br>後來找到<a href="https://marketplace.visualstudio.com/items?itemName=teledemic.branch-warnings" target="_blank" rel="noopener">Git Branch Warnings - Visual Studio Marketplace</a><br>不過下載數不高，所以沒有使用</p>
-<p>最後找到<a href="https://gist.github.com/aaronhoffman/ffbfd36928f9336be2436cffe39feaec" target="_blank" rel="noopener">git hooks - prevent commit to local master branch and prevent push to remote master branch</a><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># prevent commit to local master branch</span></span><br><span class="line"></span><br><span class="line">branch=`git symbolic-ref HEAD`</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$branch</span>"</span> = <span class="string">"refs/heads/master"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit hook: Can not commit to the local master branch."</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure></p>
-<p>最後修改</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># prevent commit to local master branch</span></span><br><span class="line"></span><br><span class="line">branch=`git symbolic-ref HEAD`</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$branch</span>"</span> = <span class="string">"refs/heads/master"</span> ] || [ <span class="string">"<span class="variable">$branch</span>"</span> = <span class="string">"refs/heads/mixed"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit hook: Can not commit to the local master/mixed branch."</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-<p>放在<code>.git/hook/pre-commit</code>就完成</p>
-
         
         <div align="center">
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -430,6 +421,15 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </div>
+
+        <p>最近在pull master實候<br>竟然發現merge….<br>雖然不知道發生了什麼事情<br>但不應該這樣<br>後來找到是我在master commit!!!!!</p>
+<a id="more"></a>
+<p>立馬不說，先壓縮一個檔案起來(裡面有程式還沒commit 怕怕)<br>先用<code>git reset  xxxx^ --hard</code><br>順利還原!!!</p>
+<p>未了怕悲劇發生，於是我開始找如何防止master commit<br>後來找到<a href="https://marketplace.visualstudio.com/items?itemName=teledemic.branch-warnings" target="_blank" rel="noopener">Git Branch Warnings - Visual Studio Marketplace</a><br>不過下載數不高，所以沒有使用</p>
+<p>最後找到<a href="https://gist.github.com/aaronhoffman/ffbfd36928f9336be2436cffe39feaec" target="_blank" rel="noopener">git hooks - prevent commit to local master branch and prevent push to remote master branch</a><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># prevent commit to local master branch</span></span><br><span class="line"></span><br><span class="line">branch=`git symbolic-ref HEAD`</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$branch</span>"</span> = <span class="string">"refs/heads/master"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit hook: Can not commit to the local master branch."</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure></p>
+<p>最後修改</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># prevent commit to local master branch</span></span><br><span class="line"></span><br><span class="line">branch=`git symbolic-ref HEAD`</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$branch</span>"</span> = <span class="string">"refs/heads/master"</span> ] || [ <span class="string">"<span class="variable">$branch</span>"</span> = <span class="string">"refs/heads/mixed"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pre-commit hook: Can not commit to the local master/mixed branch."</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
+<p>放在<code>.git/hook/pre-commit</code>就完成</p>
 
       
     </div>
@@ -517,6 +517,14 @@
 
 
 
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
         </div>
         
           
@@ -552,7 +560,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">336</span>
+                  <span class="site-state-item-count">361</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -563,7 +571,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -574,7 +582,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">305</span>
+                  <span class="site-state-item-count">324</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

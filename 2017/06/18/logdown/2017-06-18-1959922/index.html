@@ -413,9 +413,6 @@
       
 
       
-        <p>其實這篇寫的是Model…<br>但我覺得我寫的最多應該會是DB Driver Reference<br><a href="https://codeigniter.org.tw/userguide3/database/db_driver_reference.html?highlight=insert" target="_blank" rel="noopener">https://codeigniter.org.tw/userguide3/database/db_driver_reference.html?highlight=insert</a></p>
-<a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class news_m extends CI_Model &#123;</span><br><span class="line"></span><br><span class="line">    public function __construct() &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">    &#125;</span><br><span class="line">    public function getData($id = &apos;&apos;) &#123;</span><br><span class="line">        if ($id == &apos;&apos;):</span><br><span class="line">            return $this-&gt;db-&gt;get(&apos;news&apos;);//SELECT * FROM news</span><br><span class="line">        else:</span><br><span class="line">            return $this-&gt;db-&gt;where(&apos;id&apos;, $id)-&gt;get(&apos;news&apos;);</span><br><span class="line">        endif;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function insert($post) &#123;</span><br><span class="line">        $this-&gt;db-&gt;insert(&apos;news&apos;, $post);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function update($post) &#123;</span><br><span class="line">        $this-&gt;db-&gt;where(&apos;id&apos;, $post[&apos;id&apos;])-&gt;update(&apos;news&apos;, $post);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function delete($id) &#123;</span><br><span class="line">        $this-&gt;db-&gt;where(&apos;id&apos;, $id)-&gt;delete(&apos;news&apos;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
         
         <div align="center">
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -425,6 +422,9 @@
   </script>
 </div>
 
+        <p>其實這篇寫的是Model…<br>但我覺得我寫的最多應該會是DB Driver Reference<br><a href="https://codeigniter.org.tw/userguide3/database/db_driver_reference.html?highlight=insert" target="_blank" rel="noopener">https://codeigniter.org.tw/userguide3/database/db_driver_reference.html?highlight=insert</a></p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class news_m extends CI_Model &#123;</span><br><span class="line"></span><br><span class="line">    public function __construct() &#123;</span><br><span class="line">        parent::__construct();</span><br><span class="line">    &#125;</span><br><span class="line">    public function getData($id = &apos;&apos;) &#123;</span><br><span class="line">        if ($id == &apos;&apos;):</span><br><span class="line">            return $this-&gt;db-&gt;get(&apos;news&apos;);//SELECT * FROM news</span><br><span class="line">        else:</span><br><span class="line">            return $this-&gt;db-&gt;where(&apos;id&apos;, $id)-&gt;get(&apos;news&apos;);</span><br><span class="line">        endif;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function insert($post) &#123;</span><br><span class="line">        $this-&gt;db-&gt;insert(&apos;news&apos;, $post);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function update($post) &#123;</span><br><span class="line">        $this-&gt;db-&gt;where(&apos;id&apos;, $post[&apos;id&apos;])-&gt;update(&apos;news&apos;, $post);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function delete($id) &#123;</span><br><span class="line">        $this-&gt;db-&gt;where(&apos;id&apos;, $id)-&gt;delete(&apos;news&apos;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -513,6 +513,14 @@
 
 
 
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
         </div>
         
           
@@ -548,7 +556,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">336</span>
+                  <span class="site-state-item-count">361</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -559,7 +567,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -570,7 +578,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">305</span>
+                  <span class="site-state-item-count">324</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

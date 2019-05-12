@@ -413,6 +413,15 @@
       
 
       
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
         <p>最近在FB社群看到有人分享fake stmp server<br><a href="https://www.facebook.com/groups/javascript.tw/permalink/1620946454673353/" target="_blank" rel="noopener">社群連結</a><br>之前有測試nodemailer<br>但是缺少附加檔案可以測試<br><a href="https://www.npmjs.com/package/preview-email" target="_blank" rel="noopener">preview-email - npm</a>無法做到<br>想說測試這個能不能用</p>
 <a id="more"></a>
 <p>線上服務<br><a href="https://ethereal.email/?fbclid=IwAR1_1vsbOR2U5V3MeFFCyNAvvbkh4gVQxtyif-oJZrhDTdtFQMdUmAKLuG8" target="_blank" rel="noopener">Ethereal Email</a><br><a href="https://mailtrap.io/" target="_blank" rel="noopener">Mailtrap.io — Fake smtp testing server. Dummy smtp email testing</a><br>不過…，這兩個不是這文章的重點</p>
@@ -428,15 +437,6 @@
 <li>cid 在多個寄信的時候會在寄信的時候會有問題….<br>明明個別設定1.jpg,2.jpg，但是結果兩封信卻都是2.jpg<br>最後用<code>cid:00000001${data.img}</code>方式解決…<br>但感覺是maildev問題…</li>
 </ul>
 <p>以下code也沒先commit到github上面<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/////////(1)</span></span><br><span class="line"><span class="keyword">const</span> csvFilePath=<span class="string">'data.csv'</span></span><br><span class="line"><span class="keyword">var</span> mail_from = <span class="string">'from@xxxx.com.tw'</span></span><br><span class="line"><span class="keyword">var</span> subject = <span class="string">'標題'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> nodemailer = <span class="built_in">require</span>(<span class="string">'nodemailer'</span>);</span><br><span class="line"><span class="keyword">const</span> csv=<span class="built_in">require</span>(<span class="string">'csvtojson'</span>)</span><br><span class="line"><span class="comment">/////////(2)</span></span><br><span class="line"><span class="keyword">var</span> transporter = nodemailer.createTransport(&#123;</span><br><span class="line">    host: <span class="string">'localhost'</span>,</span><br><span class="line">    port: <span class="number">1025</span> ,</span><br><span class="line">    ignoreTLS: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// auth: &#123;</span></span><br><span class="line">    <span class="comment">//     user: 'from@xxxx.com.tw',</span></span><br><span class="line">    <span class="comment">//     pass: 'password'</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">&#125;);</span><br><span class="line">csv()</span><br><span class="line">.fromFile(csvFilePath)</span><br><span class="line">.then(<span class="function">(<span class="params">jsonObj</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// console.log(jsonObj);</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * [</span></span><br><span class="line"><span class="comment">     * 	&#123;a:"1", b:"2", c:"3"&#125;,</span></span><br><span class="line"><span class="comment">     * 	&#123;a:"4", b:"5". c:"6"&#125;</span></span><br><span class="line"><span class="comment">     * ]</span></span><br><span class="line"><span class="comment">     */</span> </span><br><span class="line"></span><br><span class="line">    jsonObj.forEach(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">/////////(3)</span></span><br><span class="line">        <span class="keyword">let</span> mail_to = data.usermail</span><br><span class="line">        <span class="keyword">let</span> email_template = <span class="string">`</span></span><br><span class="line"><span class="string">        Hello World!!!!<span class="subst">$&#123;data.img&#125;</span></span></span><br><span class="line"><span class="string">        &lt;img src="cid:00000001<span class="subst">$&#123;data.img&#125;</span>"/&gt;&lt;br&gt;</span></span><br><span class="line"><span class="string">        姓名：<span class="subst">$&#123;data.username&#125;</span>&lt;br&gt;</span></span><br><span class="line"><span class="string">        訂單編號：<span class="subst">$&#123;data.no&#125;</span>&lt;br&gt;</span></span><br><span class="line"><span class="string">        `</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> mailOptions = &#123;</span><br><span class="line">          <span class="keyword">from</span>: mail_from,</span><br><span class="line">          to: mail_to,     <span class="comment">//寄送人</span></span><br><span class="line">          subject: subject,</span><br><span class="line">          html: email_template,</span><br><span class="line">          attachments: [&#123;</span><br><span class="line">            filename: data.img,</span><br><span class="line">            path: data.img,</span><br><span class="line">            cid: <span class="string">'00000001'</span>+data.img</span><br><span class="line">          &#125;]</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">      </span><br><span class="line">      <span class="comment">// verify connection configuration</span></span><br><span class="line">      <span class="comment">// transporter.verify(function(error, success) &#123;</span></span><br><span class="line">      <span class="comment">//   if (error) &#123;</span></span><br><span class="line">      <span class="comment">//        console.log(error);</span></span><br><span class="line">      <span class="comment">//   &#125; else &#123;</span></span><br><span class="line">      <span class="comment">//        console.log('Server is ready to take our messages');</span></span><br><span class="line">      <span class="comment">//   &#125;</span></span><br><span class="line">      <span class="comment">// &#125;);</span></span><br><span class="line">      </span><br><span class="line">      transporter.sendMail(mailOptions, <span class="function"><span class="keyword">function</span>(<span class="params">error, info</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (error) &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'mail_to:'</span> + mail_to)</span><br><span class="line">          <span class="built_in">console</span>.log(error);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(mail_to + <span class="string">' , Email sent: '</span> + info.response);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      </span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-
-        
-        <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-</div>
 
       
     </div>
@@ -524,6 +524,14 @@
 
 
 
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
         </div>
         
           
@@ -568,7 +576,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">336</span>
+                  <span class="site-state-item-count">361</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -579,7 +587,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -590,7 +598,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">305</span>
+                  <span class="site-state-item-count">324</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

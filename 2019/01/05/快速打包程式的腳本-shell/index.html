@@ -413,12 +413,6 @@
       
 
       
-        <p>最近公司做一個專案需要手動打包程式<br>因為目前公司測試環境只有一個<br>所以那個專案放在我們公司某一個 GIT 裡面<br>所以很難做到用<code>git archive</code>打包動作…</p>
-<a id="more"></a>
-<p>最近因為很急著上 code<br>卻不小心包錯(手動複製到別的資料夾)…<br><del>人會犯錯是應該的</del><br>但同一個錯誤應該是要避免的<br>所以我寫了這個 shell<br>project_path 前面路徑請注意要更改<br>pack_path 前面路徑看是否需要調整<br>window 請使用 git bash 執行，直接點兩下好像不能跑</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 快速打包程式</span></span><br><span class="line"><span class="comment"># project_path 前面路徑請注意要更改</span></span><br><span class="line"><span class="comment"># pack_path 前面路徑看是否需要調整</span></span><br><span class="line"><span class="comment"># window請使用git bash執行，直接點兩下好像不能跑</span></span><br><span class="line">project_path=/d/GIT/專案名稱/</span><br><span class="line">pack_path=/d/pack/`date +%Y%m%d`/專案名稱/</span><br><span class="line"><span class="built_in">echo</span> project_path</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$project_path</span></span><br><span class="line"><span class="built_in">echo</span> pack_path</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$pack_path</span></span><br><span class="line">rm -rf <span class="variable">$pack_path</span></span><br><span class="line">mkdir -p <span class="variable">$pack_path</span></span><br><span class="line"></span><br><span class="line">filelist=(</span><br><span class="line"><span class="comment">#請放置相對程式路徑</span></span><br><span class="line">application/controllers/*.php</span><br><span class="line">application/controllers/A/ABC.php</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$&#123;filelist[@]&#125;</span>;<span class="keyword">do</span></span><br><span class="line">mkdir -p `dirname <span class="variable">$pack_path</span><span class="variable">$file</span>`</span><br><span class="line">dir=(`dirname <span class="variable">$pack_path</span><span class="variable">$file</span>`)</span><br><span class="line"><span class="comment"># echo cp $project_path$file $&#123;dir[0]&#125;</span></span><br><span class="line">cp -f <span class="variable">$project_path</span><span class="variable">$file</span> <span class="variable">$&#123;dir[0]&#125;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>其實我也不太會寫 shell<br>這個只是簡單的應用<br>我只 Google 一下 shell 怎麼寫 Array 跟抓檔案目前資料夾路徑(dirname)<br>在簡單用 mkdir, cp 就做出來這個東西<br>從此打包程式不手殘</p>
-
         
         <div align="center">
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -427,6 +421,12 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </div>
+
+        <p>最近公司做一個專案需要手動打包程式<br>因為目前公司測試環境只有一個<br>所以那個專案放在我們公司某一個 GIT 裡面<br>所以很難做到用<code>git archive</code>打包動作…</p>
+<a id="more"></a>
+<p>最近因為很急著上 code<br>卻不小心包錯(手動複製到別的資料夾)…<br><del>人會犯錯是應該的</del><br>但同一個錯誤應該是要避免的<br>所以我寫了這個 shell<br>project_path 前面路徑請注意要更改<br>pack_path 前面路徑看是否需要調整<br>window 請使用 git bash 執行，直接點兩下好像不能跑</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 快速打包程式</span></span><br><span class="line"><span class="comment"># project_path 前面路徑請注意要更改</span></span><br><span class="line"><span class="comment"># pack_path 前面路徑看是否需要調整</span></span><br><span class="line"><span class="comment"># window請使用git bash執行，直接點兩下好像不能跑</span></span><br><span class="line">project_path=/d/GIT/專案名稱/</span><br><span class="line">pack_path=/d/pack/`date +%Y%m%d`/專案名稱/</span><br><span class="line"><span class="built_in">echo</span> project_path</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$project_path</span></span><br><span class="line"><span class="built_in">echo</span> pack_path</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$pack_path</span></span><br><span class="line">rm -rf <span class="variable">$pack_path</span></span><br><span class="line">mkdir -p <span class="variable">$pack_path</span></span><br><span class="line"></span><br><span class="line">filelist=(</span><br><span class="line"><span class="comment">#請放置相對程式路徑</span></span><br><span class="line">application/controllers/*.php</span><br><span class="line">application/controllers/A/ABC.php</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$&#123;filelist[@]&#125;</span>;<span class="keyword">do</span></span><br><span class="line">mkdir -p `dirname <span class="variable">$pack_path</span><span class="variable">$file</span>`</span><br><span class="line">dir=(`dirname <span class="variable">$pack_path</span><span class="variable">$file</span>`)</span><br><span class="line"><span class="comment"># echo cp $project_path$file $&#123;dir[0]&#125;</span></span><br><span class="line">cp -f <span class="variable">$project_path</span><span class="variable">$file</span> <span class="variable">$&#123;dir[0]&#125;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>其實我也不太會寫 shell<br>這個只是簡單的應用<br>我只 Google 一下 shell 怎麼寫 Array 跟抓檔案目前資料夾路徑(dirname)<br>在簡單用 mkdir, cp 就做出來這個東西<br>從此打包程式不手殘</p>
 
       
     </div>
@@ -514,6 +514,14 @@
 
 
 
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
         </div>
         
           
@@ -549,7 +557,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">336</span>
+                  <span class="site-state-item-count">361</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -560,7 +568,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -571,7 +579,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">305</span>
+                  <span class="site-state-item-count">324</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
