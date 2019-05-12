@@ -26,3 +26,6 @@ date: 2018-05-14 21:24:11
 - [EPH 的程式日記 | 記錄程式設計生活的點點滴滴](https://ephrain.net/)
 - [節省工具箱 Jason Tools](http://blog.jason.tools/)
 - [玩具烏托邦: 網頁爬蟲終極武器： puppeteer](https://newtoypia.blogspot.com/2019/02/puppeteer.html)
+- [PJCHENder 私房菜](https://pjchender.github.io/)
+- [Jamin Zhang](https://jaminzhang.github.io/)
+- [pupuliao 的部落格](https://www.pupuliao.info/)

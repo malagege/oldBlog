@@ -97,7 +97,7 @@ use Monolog\Logger;
 $log = new Monolog\Logger('your name');
 
 $log->pushHandler(new DiscordHandler\DiscordHandler([
-'https://discordapp.com/api/webhooks/557911220628488202/eX9PxvjX7f0oOMQJe7cpy5yqhFa5UB8O7QrOq5aVILBOee9Uo1TFmUosGpokR9Q1WbxF'
+'https://discordapp.com/api/webhooks/xxxxxxxxx/ooooooooooooooooooooooooooooooooooooooooo'
 ], 'name', 'subname', 'DEBUG'));
 
 

@@ -12,7 +12,7 @@ categories: vscode
 
 <!--more-->
 
-{% asset_img 1.png F1 %}
+{% asset_img 1.jpg F1 %}
 
 喝喝，就是這麼簡單
 簡單都怕忘掉
