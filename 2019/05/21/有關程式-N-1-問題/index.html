@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sql,orm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在做複雜的 API由於 PM 覺得某一個 JSON 屬性調整結果需要改好幾隻程式 API不過有查到可以使用GraphQL | 一种为你的 API 而生的查询语言但這篇不是重點在 GraphQL而是我探索某一篇 阻碍你使用 GraphQL 的十个问题 | 咀嚼之味  它就像是一顆無限向下延伸的樹。所以在我看來，GraphQL 更應該叫 TreeQL，當然在圖論裡，Tree 就是 Graph 也沒">
+<meta name="keywords" content="sql,orm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有關程式 N+1 問題">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/05/21/有關程式-N-1-問題/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近在做複雜的 API由於 PM 覺得某一個 JSON 屬性調整結果需要改好幾隻程式 API不過有查到可以使用GraphQL | 一种为你的 API 而生的查询语言但這篇不是重點在 GraphQL而是我探索某一篇 阻碍你使用 GraphQL 的十个问题 | 咀嚼之味  它就像是一顆無限向下延伸的樹。所以在我看來，GraphQL 更應該叫 TreeQL，當然在圖論裡，Tree 就是 Graph 也沒">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2019-05-21T14:09:13.209Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有關程式 N+1 問題">
+<meta name="twitter:description" content="最近在做複雜的 API由於 PM 覺得某一個 JSON 屬性調整結果需要改好幾隻程式 API不過有查到可以使用GraphQL | 一种为你的 API 而生的查询语言但這篇不是重點在 GraphQL而是我探索某一篇 阻碍你使用 GraphQL 的十个问题 | 咀嚼之味  它就像是一顆無限向下延伸的樹。所以在我看來，GraphQL 更應該叫 TreeQL，當然在圖論裡，Tree 就是 Graph 也沒">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/05/21/有關程式-N-1-問題/">
+
+
+
+
+
+  <title>有關程式 N+1 問題 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/05/21/有關程式-N-1-問題/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">有關程式 N+1 問題</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-05-21T21:09:36+08:00">
+                2019-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/程式心法/" itemprop="url" rel="index">
+                    <span itemprop="name">程式心法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/05/21/有關程式-N-1-問題/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/21/有關程式-N-1-問題/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近在做複雜的 API<br>由於 PM 覺得某一個 JSON 屬性調整<br>結果需要改好幾隻程式 API<br>不過有查到可以使用<a href="https://graphql.cn/" target="_blank" rel="noopener">GraphQL | 一种为你的 API 而生的查询语言</a><br>但這篇不是重點在 GraphQL<br>而是我探索某一篇 <a href="https://jerryzou.com/posts/10-questions-about-graphql/" target="_blank" rel="noopener">阻碍你使用 GraphQL 的十个问题 | 咀嚼之味</a></p>
+<blockquote>
+<p>它就像是一顆無限向下延伸的樹。所以在我看來，GraphQL 更應該叫 TreeQL，當然在圖論裡，Tree 就是 Graph 也沒毛病啦。需要注意的是，這也會引出 「N + 1 problem」 的話題——naive 的 GraphQL 服務端實現會讓這段 query 變得異常慢！</p>
+</blockquote>
+<p>看了一下內容，N+1 問題就有像一個查詢每一行執行 SQL<br>如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`song`</span> <span class="keyword">LIMIT</span> <span class="number">0</span>, <span class="number">20</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`singer`</span> <span class="keyword">WHERE</span> <span class="string">`id`</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`singer`</span> <span class="keyword">WHERE</span> <span class="string">`id`</span> = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`singer`</span> <span class="keyword">WHERE</span> <span class="string">`id`</span> = <span class="number">3</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>奇怪，這個怎麼讓我想到 ORM 也是這樣<br>所以我查了一下 ORM 真的也有這個問題<br>由於最近也想開使用 ORM ，所以進入前想了解之後使用上會遇到什麼問題<br>這邊只會先整理</p>
+<a id="more"></a>
+<h2 id="DataLoader"><a href="#DataLoader" class="headerlink" title="DataLoader"></a>DataLoader</h2><p>目前查到資料可以用 <code>DataLoader</code> 方式解決問題</p>
+<blockquote>
+<p>Dataloader 主要有兩項功能： Batching (批次) &amp; Caching (快取) 。<br>Batching 在於他能夠將想要進 db 搜尋的 id 都搜集起來，等時間到了一次進 db 搜尋，解決 N + 1 問題。<br>Caching 在於它在紀錄 id 時會做 memoization ，所以未來若是有重複的 id 進來就會被剔除，保證資料索取數越少越好。</p>
+</blockquote>
+<p><a href="https://ithelp.ithome.com.tw/articles/10207606" target="_blank" rel="noopener">GraphQL Design: 使用 DataLoader 提升效能 ! - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
+<p>有爬到這篇有 10000 一筆一筆方式撈出來<br>得到<br><a href="https://medium.com/@festime/%E7%94%A8%E7%AF%84%E4%BE%8B%E7%A8%8B%E5%BC%8F%E5%AF%A6%E9%9A%9B%E6%8E%A2%E7%B4%A2-n-1-query-%E6%9C%89%E5%A4%9A%E5%8F%AF%E6%80%95-b89e7735ea81" target="_blank" rel="noopener">用範例程式實際探索 N + 1 query 有多可怕 – Yulin Chen – Medium</a></p>
+<h2 id="Laravel-ORM-解決"><a href="#Laravel-ORM-解決" class="headerlink" title="Laravel ORM 解決"></a>Laravel ORM 解決</h2><blockquote>
+<p>Laravel 中解決 N + 1 問題<br>使用預加載功能<br>使用 with() 方法，會做緩存<br>with() 中放需要查詢的關聯屬性<br><a href="https://learnku.com/laravel/t/7778/summary-using-the-laravel-development-tool-the-n-1-problem-of-the-orm-query" target="_blank" rel="noopener">總結要點：使用 Laravel 開發工具，ORM 查詢的 N + 1 問題 | Laravel China 社區 - 高品質的 Laravel 開發者社區</a></p>
+</blockquote>
+<h2 id="我自己想到的方法"><a href="#我自己想到的方法" class="headerlink" title="我自己想到的方法"></a>我自己想到的方法</h2><p>由於 sharding 不能做 join 動作，所以我使用<code>where in (id list)</code>方式查詢<br>但這種方法程式一寫差錯，可能程式就<code>500</code>了</p>
+<p>其中有一篇 Eager Loading，Laravel 的 <code>with</code> 跟這個有關係</p>
+<ul>
+<li><a href="https://www.cnblogs.com/google4y/p/3455534.html" target="_blank" rel="noopener">ORM 中的 N+1 问题 - google4y - 博客园</a></li>
+<li><a href="https://secure.phabricator.com/book/phabcontrib/article/n_plus_one/" target="_blank" rel="noopener">◉ Performance: N+1 Query Problem</a></li>
+<li><a href="http://www.haohongfan.com/2018/11/graphql-n-1-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" target="_blank" rel="noopener">GraphQL N+1 问题解决方案 | HHF 金字塔</a></li>
+<li><a href="https://medium.com/@dd0425/rails-n-1-queries-problem-73dfe5f99182" target="_blank" rel="noopener">[Rails] N+1 Queries Problem – Dosmanthus – Medium</a></li>
+<li><a href="https://laravel.com/docs/5.8/eloquent-relationships#eager-loading" target="_blank" rel="noopener">Eloquent: Relationships - Laravel - The PHP Framework For Web Artisans</a></li>
+<li><a href="https://my.oschina.net/oncereply/blog/268922" target="_blank" rel="noopener">数据库:django ORM 如何处理 N+1 查询 - 答复哈 - OSCHINA</a></li>
+</ul>
+<h3 id="相關連結"><a href="#相關連結" class="headerlink" title="相關連結"></a>相關連結</h3><ul>
+<li><a href="http://vanry.me/laravel/secod-level-cache.html" target="_blank" rel="noopener">Laravel 使用二级缓存提高缓存命中率和内存使用效率 - 探花的 Blog</a></li>
+<li><a href="https://learnku.com/laravel/t/1220/laravel-queries-only-individual-fields-in-with-queries" target="_blank" rel="noopener">Laravel 在 with 查询中只查询个别字段 | Laravel China 社区 - 高品质的 Laravel 开发者社区</a></li>
+<li><a href="https://learnku.com/laravel/t/14691/extended-recommendation-n1-question-capture-artifact-for-laravel-query-detector-data-model-query" target="_blank" rel="noopener">[擴展推薦] Laravel Query Detector 數據模型查詢的 N+1 問題捕殺神器 | Laravel China 社區 - 高品質的 Laravel 開發者社區</a></li>
+<li><a href="https://learnku.com/articles/8115/using-graphql-one-in-laravel-get-data" target="_blank" rel="noopener">在 Laravel 中使用 GraphQL 一【获取数据】 | Laravel China 社区 - 高品质的 Laravel 开发者社区</a></li>
+<li><a href="https://jerryzou.com/posts/10-questions-about-graphql/" target="_blank" rel="noopener">阻礙你使用 GraphQL 的十個問題 | 咀嚼之味</a></li>
+</ul>
+<h2 id="其他小記"><a href="#其他小記" class="headerlink" title="其他小記"></a>其他小記</h2><h3 id="GraphQL-小記"><a href="#GraphQL-小記" class="headerlink" title="GraphQL 小記"></a>GraphQL 小記</h3><ul>
+<li><a href="https://cnodejs.org/topic/5ac073b852d7d3a8698a49f4" target="_blank" rel="noopener">TypeORM - 最好的 Node.js ORM 框架 - CNode 技术社区</a></li>
+<li><a href="https://haofly.net/graphql-tutorial-6/" target="_blank" rel="noopener">GraphQL 教程（六）—— N+1 问题和缓存等问题 | 豪翔天下</a></li>
+<li><a href="https://codeburst.io/using-dataloader-with-graphql-a-concrete-example-9b21352f1676" target="_blank" rel="noopener">Using DataLoader with GraphQL: A Concrete Example – codeburst</a></li>
+<li><a href="https://learnku.com/articles/8115/using-graphql-one-in-laravel-get-data" target="_blank" rel="noopener">在 Laravel 中使用 GraphQL 一【获取数据】 | Laravel China 社区 - 高品质的 Laravel 开发者社区</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10207606" target="_blank" rel="noopener">GraphQL Design: 使用 DataLoader 提升效能 ! - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
+<li><a href="https://jerryzou.com/posts/10-questions-about-graphql/" target="_blank" rel="noopener">阻碍你使用 GraphQL 的十个问题 | 咀嚼之味</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10200678" target="_blank" rel="noopener">GraphQL 入門： 簡介 X 範例 X 優缺點 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
+<li><a href="https://medium.com/@evenchange4/2018-graphql-%E6%BC%B8%E9%80%B2%E5%BC%8F%E5%B0%8E%E5%85%A5%E7%9A%84%E6%9E%B6%E6%A7%8B-aeb2603f2223" target="_blank" rel="noopener">2018 GraphQL 漸進式導入的架構 – Michael Hsu – Medium</a></li>
+</ul>
+<h3 id="sharding-小記"><a href="#sharding-小記" class="headerlink" title="sharding 小記"></a>sharding 小記</h3><blockquote>
+<p>當下還沒有非常令人滿意的基於 hibernate 的 sharding 框架，（關於 hibernate hards 會在下文介紹），因此很多團隊會選擇自行實現 sharding。</p>
+</blockquote>
+<p>原文網址：<a href="https://read01.com/AJO2Bm.html" target="_blank" rel="noopener">https://read01.com/AJO2Bm.html</a></p>
+<p><a href="https://openhome.cc/Gossip/SpringGossip/SpringDAO.html" target="_blank" rel="noopener">Spring 的 DAO 支持</a></p>
+<h3 id="ftp-小記"><a href="#ftp-小記" class="headerlink" title="ftp 小記"></a>ftp 小記</h3><p>因為最近沒時間整理<br>所以先暫時貼在這<br>目前可能組<code>put xxx</code>的 ftp 指令內容<br>最後在<code>sftp &lt; xxx.txt</code>會比較快</p>
+<ul>
+<li><a href="https://gist.github.com/timendum/1109055" target="_blank" rel="noopener">List all files in a ftp folder in a text file [ bash ls ]</a></li>
+<li><a href="https://stackoverflow.com/questions/1894347/how-to-upload-ftp-files-to-server-in-a-bash-script/1894479" target="_blank" rel="noopener">How to upload (FTP) files to server in a bash script? - Stack Overflow</a></li>
+<li><a href="https://askubuntu.com/questions/576927/get-notified-about-new-files-on-sftp-server" target="_blank" rel="noopener">bash - Get notified about new files on SFTP server - Ask Ubuntu</a></li>
+<li><a href="http://linux48.com/2014-11-11-shell-ftp-uplod.html" target="_blank" rel="noopener">用二句 Shell 命令实现 FTP 批量上传文件夹 - linux48</a></li>
+<li><a href="https://stackoverflow.com/questions/44019171/upload-files-from-a-list-via-ftp-in-bash" target="_blank" rel="noopener">Upload files from a list via ftp in bash - Stack Overflow</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/sql/" rel="tag"># sql</a>
+          
+            <a href="/blog/tags/orm/" rel="tag"># orm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/20/SQL-union-排序的問題/" rel="next" title="SQL union 排序的問題">
+                <i class="fa fa-chevron-left"></i> SQL union 排序的問題
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">367</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">328</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DataLoader"><span class="nav-number">1.</span> <span class="nav-text">DataLoader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Laravel-ORM-解決"><span class="nav-number">2.</span> <span class="nav-text">Laravel ORM 解決</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我自己想到的方法"><span class="nav-number">3.</span> <span class="nav-text">我自己想到的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相關連結"><span class="nav-number">3.1.</span> <span class="nav-text">相關連結</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他小記"><span class="nav-number">4.</span> <span class="nav-text">其他小記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GraphQL-小記"><span class="nav-number">4.1.</span> <span class="nav-text">GraphQL 小記</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sharding-小記"><span class="nav-number">4.2.</span> <span class="nav-text">sharding 小記</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ftp-小記"><span class="nav-number">4.3.</span> <span class="nav-text">ftp 小記</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/05/21/有關程式-N-1-問題/';
+          this.page.identifier = '2019/05/21/有關程式-N-1-問題/';
+          this.page.title = '有關程式 N+1 問題';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
