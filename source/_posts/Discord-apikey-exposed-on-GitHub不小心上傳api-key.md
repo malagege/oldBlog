@@ -33,3 +33,4 @@ categories: 寫程式的一些事
 不過 hexo deploy 的網頁檔沒有抓到
 他是抓到我上傳 markdown 檔案
 看來不會對大檔案做簡查
+ 
