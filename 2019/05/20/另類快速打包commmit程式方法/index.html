@@ -88,7 +88,7 @@
 <meta property="og:description" content="快速打包程式的腳本(shell) | 程式狂想筆記之前有寫過這篇，再包程式都是固定的程式有時候公司需要打包只有異動到的檔案這時候之前寫的程式內容可以修正但我在想有什麼快速整理">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://stackoverflow.com/a/32596855">
-<meta property="og:updated_time" content="2019-05-20T15:58:02.797Z">
+<meta property="og:updated_time" content="2019-05-22T14:37:26.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="另類快速打包commmit程式方法">
 <meta name="twitter:description" content="快速打包程式的腳本(shell) | 程式狂想筆記之前有寫過這篇，再包程式都是固定的程式有時候公司需要打包只有異動到的檔案這時候之前寫的程式內容可以修正但我在想有什麼快速整理">
@@ -443,6 +443,18 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$_</span></span><br><span class="line"><span class="comment"># git</span></span><br><span class="line">ll</span><br><span class="line"><span class="built_in">echo</span> $)</span><br><span class="line"><span class="comment">#-l  (抓取上一個指令最後一個參數，若沒參數就是指令)</span></span><br></pre></td></tr></table></figure>
 <p>所以\$_可以做這樣運用</p>
 <p><a href="https://www.slideshare.net/misscoming/bash-shell-script" target="_blank" rel="noopener">Bash shell script 教學</a><br><a href="https://image.slidesharecdn.com/bashshellscript-150218092059-conversion-gate01/95/bash-shell-script-10-638.jpg?cb=1424287937" target="_blank" rel="noopener">bash-shell-script-10-638.jpg（JPEG 圖片，638x479 像素）</a></p>
+<h2 id="7z-快速壓縮打包"><a href="#7z-快速壓縮打包" class="headerlink" title="7z 快速壓縮打包"></a>7z 快速壓縮打包</h2><p>2019-05-22<br>用 CP 指令打包，還需要手動作壓縮<br>今天有找到一個方法<br>設定 <code>file.txt</code> 可完成快入打包<br>file.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxx/ooo.jpg</span><br><span class="line">xxx/ooo.jpg</span><br><span class="line">xxx/ooo.jpg</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">now=`date +<span class="string">"%Y%m%d_%H%M"</span>`</span><br><span class="line">7z a  DestinyTest_<span class="variable">$now</span>.7z @file.txt</span><br></pre></td></tr></table></figure>
+<p>真的非常方便</p>
+<p>相關連結</p>
+<ul>
+<li><a href="https://askubuntu.com/questions/777049/how-do-i-zip-up-multiple-files-on-command-line" target="_blank" rel="noopener">bash - How do I zip up multiple files on command line? - Ask Ubuntu</a></li>
+<li><a href="https://superuser.com/questions/940878/how-to-pass-multiple-files-to-zip-in-a-single-command-using-7-zip" target="_blank" rel="noopener">7 zip - How to pass multiple files to zip in a single command using 7 zip? - Super User</a></li>
+<li><a href="https://www.opencli.com/linux/linux-date-format-shell-script" target="_blank" rel="noopener">Linux 日期格式 - Shell Script 自訂格式</a></li>
+<li><a href="https://serverfault.com/questions/652892/create-zip-based-on-contents-of-a-file-list" target="_blank" rel="noopener">terminal - create zip based on contents of a file list - Server Fault</a></li>
+<li><a href="https://github.com/portainer/portainer/issues/322" target="_blank" rel="noopener">Can’t using vim editor on console connection with container. · Issue #322 · portainer/portainer</a></li>
+</ul>
 
       
     </div>
@@ -580,7 +592,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">367</span>
+                  <span class="site-state-item-count">368</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -602,7 +614,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">328</span>
+                  <span class="site-state-item-count">329</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -645,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-GIT-抓取異動檔案"><span class="nav-number">1.</span> <span class="nav-text">使用 GIT 抓取異動檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-複製檔案"><span class="nav-number">2.</span> <span class="nav-text">cp 複製檔案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cp-另類複製方法"><span class="nav-number">2.1.</span> <span class="nav-text">cp 另類複製方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-GIT-抓取異動檔案"><span class="nav-number">1.</span> <span class="nav-text">使用 GIT 抓取異動檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-複製檔案"><span class="nav-number">2.</span> <span class="nav-text">cp 複製檔案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cp-另類複製方法"><span class="nav-number">2.1.</span> <span class="nav-text">cp 另類複製方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7z-快速壓縮打包"><span class="nav-number">3.</span> <span class="nav-text">7z 快速壓縮打包</span></a></li></ol></div>
             
 
           </div>
