@@ -82,3 +82,32 @@ echo $)
 
 [Bash shell script 教學](https://www.slideshare.net/misscoming/bash-shell-script)
 [bash-shell-script-10-638.jpg（JPEG 圖片，638x479 像素）](https://image.slidesharecdn.com/bashshellscript-150218092059-conversion-gate01/95/bash-shell-script-10-638.jpg?cb=1424287937)
+
+## 7z 快速壓縮打包
+
+2019-05-22
+用 CP 指令打包，還需要手動作壓縮
+今天有找到一個方法
+設定 `file.txt` 可完成快入打包
+file.txt
+
+```
+xxx/ooo.jpg
+xxx/ooo.jpg
+xxx/ooo.jpg
+```
+
+```bash
+now=`date +"%Y%m%d_%H%M"`
+7z a  DestinyTest_$now.7z @file.txt
+```
+
+真的非常方便
+
+相關連結
+
+- [bash - How do I zip up multiple files on command line? - Ask Ubuntu](https://askubuntu.com/questions/777049/how-do-i-zip-up-multiple-files-on-command-line)
+- [7 zip - How to pass multiple files to zip in a single command using 7 zip? - Super User](https://superuser.com/questions/940878/how-to-pass-multiple-files-to-zip-in-a-single-command-using-7-zip)
+- [Linux 日期格式 - Shell Script 自訂格式](https://www.opencli.com/linux/linux-date-format-shell-script)
+- [terminal - create zip based on contents of a file list - Server Fault](https://serverfault.com/questions/652892/create-zip-based-on-contents-of-a-file-list)
+- [Can't using vim editor on console connection with container. · Issue #322 · portainer/portainer](https://github.com/portainer/portainer/issues/322)

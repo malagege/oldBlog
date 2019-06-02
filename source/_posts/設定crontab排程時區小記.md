@@ -66,3 +66,4 @@ Crontab 能不能調整時區?
 ```
 
 [Set default MySQL timezone on connect? | Laravel.io](https://laravel.io/forum/10-16-2015-set-default-mysql-timezone-on-connect)
+[cron - How do you set the timezone for crontab? - Ask Ubuntu](https://askubuntu.com/questions/54364/how-do-you-set-the-timezone-for-crontab)
