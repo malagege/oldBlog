@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近用 docker 使用 portainer 看 log卻沒有看到我想要的程式錯誤資訊查了一下 PHP-FPM 預設沒有打開">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-05-22T14:32:16.472Z">
+<meta property="og:updated_time" content="2019-06-03T15:21:00.892Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP-FPM 打開 error log 方法">
 <meta name="twitter:description" content="最近用 docker 使用 portainer 看 log卻沒有看到我想要的程式錯誤資訊查了一下 PHP-FPM 預設沒有打開">
@@ -424,6 +424,9 @@
 
         <p>最近用 docker 使用 portainer 看 log<br>卻沒有看到我想要的程式錯誤資訊<br>查了一下 PHP-FPM 預設沒有打開</p>
 <a id="more"></a>
+<p><strong> 2019-06-03 </strong></p>
+<p>這篇 php-fpm 雖然不會記入 log<br>假如有用 docker 執行的話<br>可以在 docker 下看 log<br>不用調整 php-fpm<br>用 docker 的人可能不需要調整</p>
+<p>可詳細<br><a href="/blog/2019/06/03/PHP-CI-%E6%A1%86%E6%9E%B6%E4%B8%8D%E6%9C%83%E8%A8%98%E9%8C%84-ERROR-%E5%88%B0-nginx-log%E8%A3%A1%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88/">PHP CI 框架不會記錄 ERROR 到 nginx log 裡解決方案 | 程式狂想筆記</a></p>
 <h2 id="PHP-FPM-調整設定"><a href="#PHP-FPM-調整設定" class="headerlink" title="PHP-FPM 調整設定"></a>PHP-FPM 調整設定</h2><p>/usr/local/etc/php-fpm.d/<a href="http://www.conf" target="_blank" rel="noopener">www.conf</a></p>
 <blockquote>
 <p>找到 catch_workers_output 設定，改為 yes<br>; Redirect worker stdout and stderr into main error log. If not set, stdout and<br>; stderr will be redirected to /dev/null according to FastCGI specs.<br>; Default Value: no<br>catch_workers_output = yes</p>
@@ -596,7 +599,7 @@ sed -i .bak -e &apos;s/phobia/phobe/g&apos; phobia.txt
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">374</span>
+                  <span class="site-state-item-count">375</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
