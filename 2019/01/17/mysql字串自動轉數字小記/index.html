@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近用 MySQL 做時間比較想做datetime欄位(0000-00-00 00:00:00) &amp;gt; &amp;#39;&amp;#39;結果得出來結果是0">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-01-17T13:33:45.191Z">
+<meta property="og:updated_time" content="2019-06-10T14:46:10.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql字串自動轉數字小記">
 <meta name="twitter:description" content="最近用 MySQL 做時間比較想做datetime欄位(0000-00-00 00:00:00) &amp;gt; &amp;#39;&amp;#39;結果得出來結果是0">
@@ -405,6 +405,8 @@
 <!--more-->
 <p>Google 一下<br>發現原來 MySQL 會做自動轉型</p>
 <p><code>0 = &#39;&#39;</code>為<code>1</code><br>原來空字串會自動轉成<code>0</code><br>所以才會得出這個結果<br>這個不常做，感覺很容易忘記</p>
+<p>2019-06-10</p>
+<p>最近發現 null 時候，做 where 條件(大於、小於)不會抓到<br>但是 0000-00-00 可以<br>所以這是為什麼大家都會這樣用?!<br>但這樣做 add_date 時候就會有問題<br>有優點也有缺點</p>
 <p>參考來源：</p>
 <ul>
 <li><a href="https://stackoverflow.com/questions/22080382/mysql-why-comparing-a-string-to-0-gives-true" target="_blank" rel="noopener">mysql: why comparing a ‘string’ to 0 gives true? - Stack Overflow</a></li>
@@ -534,7 +536,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">375</span>
+                  <span class="site-state-item-count">377</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -556,7 +558,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">332</span>
+                  <span class="site-state-item-count">334</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

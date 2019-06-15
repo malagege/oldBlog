@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="試試用Docker來記記laravel筆記">
+<meta name="description" content="試試用 Docker 來記記 laravel 筆記">
 <meta name="keywords" content="PHP,docker,Laravel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="laradock架設筆記">
 <meta property="og:url" content="https://malagege.github.io/blog/2017/11/18/logdown/2017-11-18-3523831/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="試試用Docker來記記laravel筆記">
+<meta property="og:description" content="試試用 Docker 來記記 laravel 筆記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-04-03T18:15:12.209Z">
+<meta property="og:updated_time" content="2019-06-08T18:08:59.261Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="laradock架設筆記">
-<meta name="twitter:description" content="試試用Docker來記記laravel筆記">
+<meta name="twitter:description" content="試試用 Docker 來記記 laravel 筆記">
 
 
 
@@ -422,37 +422,44 @@
   </script>
 </div>
 
-        <p>試試用Docker來記記laravel筆記</p>
+        <p>試試用 Docker 來記記 laravel 筆記</p>
 <a id="more"></a>
 <ol>
-<li>建置laravel專案<br>composer 建立<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer global require <span class="string">"laravel/installer"</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>建置 laravel 專案<br>composer 建立</li>
 </ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer global require <span class="string">"laravel/installer"</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">laravel new blog</span><br></pre></td></tr></table></figure>
-<p>或<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer create-project --prefer-dist laravel/laravel blog</span><br></pre></td></tr></table></figure></p>
-<p>沒有安裝composer 可以直接 git clone 下來<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> http://github.com/laravel/laravel</span><br></pre></td></tr></table></figure></p>
+<p>或</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer create-project --prefer-dist laravel/laravel blog</span><br></pre></td></tr></table></figure>
+<p>沒有安裝 composer 可以直接 git clone 下來</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> http://github.com/laravel/laravel</span><br></pre></td></tr></table></figure>
 <ol start="2">
-<li><p>建立laradock在laravel目錄下面</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add https://github.com/Laradock/laradock.git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在laradocker目錄下複製範例example-env，命名為.env</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp env-example .env</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>執行docker</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d nginx mysql</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>設置laravel目錄，env設定 (PS:這邊的env跟docker env不一樣，不要搞錯了)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose exec workspace bash</span><br></pre></td></tr></table></figure>
-</li>
+<li>建立 laradock 在 laravel 目錄下面</li>
 </ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add https://github.com/Laradock/laradock.git</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>在 laradocker 目錄下複製範例 example-env，命名為.env</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp env-example .env</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>執行 docker</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d nginx mysql</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>設置 laravel 目錄，env 設定 (PS:這邊的 env 跟 docker env 不一樣，不要搞錯了)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose exec workspace bash</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ root@workspace:/var/www# composer install</span><br><span class="line">$ root@workspace:/var/www# cp .env.example .env</span><br><span class="line">$ root@workspace:/var/www# php artisan key:generate</span><br><span class="line">$ root@workspace:/var/www# exit</span><br><span class="line">$root@server:~/laravel/laradock# cd ..</span><br><span class="line">$root@server:~/laravel# sudo chmod -R 777 storage bootstrap/cache</span><br></pre></td></tr></table></figure>
 <ol start="6">
-<li>設定laravel裡的.env DB設定<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB_DATABASE=default</span><br><span class="line">DB_USERNAME=default</span><br><span class="line">DB_PASSWORD=secret</span><br></pre></td></tr></table></figure>
-</li>
+<li>設定 laravel 裡的.env DB 設定</li>
 </ol>
-<p>請參照你的laradocker DB帳號、密碼去做設定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MYSQL_DATABASE=default</span><br><span class="line">MYSQL_USER=default</span><br><span class="line">MYSQL_PASSWORD=secret</span><br></pre></td></tr></table></figure></p>
-<p>已經測試過在play with docker 可以跑了</p>
-<p>參考來源<br><a href="https://laravel.tw/docs/5.3/installation" target="_blank" rel="noopener">https://laravel.tw/docs/5.3/installation</a><br><a href="http://laradock.io/guides/#set-up-your-laravel-project" target="_blank" rel="noopener">http://laradock.io/guides/#set-up-your-laravel-project</a><br>不專業網管筆記: [ 練習] 使用Laradock 建立Laravel 開發環境 (舊版說明)<br>t301000.blogspot.com/2017/01/laradock-laravel.html</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB_DATABASE=default</span><br><span class="line">DB_USERNAME=default</span><br><span class="line">DB_PASSWORD=secret</span><br></pre></td></tr></table></figure>
+<p>請參照你的 laradocker DB 帳號、密碼去做設定<br>127.0.0.1 請改成 mysql or mariadb (依照 DB 選譯)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MYSQL_DATABASE=default</span><br><span class="line">MYSQL_USER=default</span><br><span class="line">MYSQL_PASSWORD=secret</span><br></pre></td></tr></table></figure>
+<p>已經測試過在 play with docker 可以跑了</p>
+<p>2019-06-09<br>使用 MySQL 8.0 由於登入 caching_sha2_password<br><a href="https://github.com/laradock/laradock/issues/2043" target="_blank" rel="noopener">unable to connect to MySQL after upgrade to latest (8) version · Issue #2043 · laradock/laradock</a><br><a href="https://laradock.io/documentation/#change-the-mysql-version" target="_blank" rel="noopener">Documentation - Laradock</a><br><a href="https://github.com/laradock/laradock/issues/1392#issuecomment-383631421" target="_blank" rel="noopener">SQLSTATE[HY000] [2054] The server requested authentication method unknown to the client · Issue #1392 · laradock/laradock</a></p>
+<p>假如 DB 沒限制的話，我推薦改使用 mariaDB<br>快速解決</p>
+<p>參考來源<br><a href="https://laravel.tw/docs/5.3/installation" target="_blank" rel="noopener">https://laravel.tw/docs/5.3/installation</a><br><a href="http://laradock.io/guides/#set-up-your-laravel-project" target="_blank" rel="noopener">http://laradock.io/guides/#set-up-your-laravel-project</a><br>不專業網管筆記: [ 練習] 使用 Laradock 建立 Laravel 開發環境 (舊版說明)<br>t301000.blogspot.com/2017/01/laradock-laravel.html<br><a href="https://learnku.com/articles/5893/laradock-database-connection-problem" target="_blank" rel="noopener">laradock 数据库连接问题 | Laravel China 社区</a><br><a href="https://medium.com/@yfancc20/laradock-%E8%BC%95%E9%87%8F-laravel-%E7%92%B0%E5%A2%83%E7%9A%84%E5%98%97%E8%A9%A6-%E5%B8%B8%E8%A6%8B%E9%8C%AF%E8%AA%A4-2fc6f0c21433" target="_blank" rel="noopener">Laradock — Laravel + Docker 輕量級環境打造 – Yifan Wu – Medium</a></p>
 
       
     </div>
@@ -585,7 +592,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">375</span>
+                  <span class="site-state-item-count">377</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -607,7 +614,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">332</span>
+                  <span class="site-state-item-count">334</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
