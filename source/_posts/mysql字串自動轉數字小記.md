@@ -26,6 +26,14 @@ Google 一下
 所以才會得出這個結果
 這個不常做，感覺很容易忘記
 
+2019-06-10
+
+最近發現 null 時候，做 where 條件(大於、小於)不會抓到
+但是 0000-00-00 可以
+所以這是為什麼大家都會這樣用?!
+但這樣做 add_date 時候就會有問題
+有優點也有缺點
+
 參考來源：
 
 - [mysql: why comparing a 'string' to 0 gives true? - Stack Overflow](https://stackoverflow.com/questions/22080382/mysql-why-comparing-a-string-to-0-gives-true)

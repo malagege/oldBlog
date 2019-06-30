@@ -20,3 +20,8 @@ categories: 實用工具
 
 只能說 666，有時間再來筆記
 最近太忙 orz
+
+**2019-06-25**
+發現新工具，有時間再來試試
+[mitmproxy - an interactive HTTPS proxy](https://mitmproxy.org/)
+[如何使用 mitmproxy 來監看手機上的 apps 連線到哪些網站 | 隨便寫寫](https://louie023.wordpress.com/2014/09/27/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-mitmproxy-%E4%BE%86%E7%9B%A3%E7%9C%8B%E6%89%8B%E6%A9%9F%E4%B8%8A%E7%9A%84-apps-%E9%80%A3%E7%B7%9A%E5%88%B0%E5%93%AA%E4%BA%9B%E7%B6%B2%E7%AB%99/)

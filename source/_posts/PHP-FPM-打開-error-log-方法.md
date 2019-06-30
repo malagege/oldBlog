@@ -11,6 +11,17 @@ categories: PHP
 
 <!--more-->
 
+** 2019-06-03 **
+
+這篇 php-fpm 雖然不會記入 log
+假如有用 docker 執行的話
+可以在 docker 下看 log
+不用調整 php-fpm
+用 docker 的人可能不需要調整
+
+可詳細
+[PHP CI 框架不會記錄 ERROR 到 nginx log 裡解決方案 | 程式狂想筆記](/blog/2019/06/03/PHP-CI-%E6%A1%86%E6%9E%B6%E4%B8%8D%E6%9C%83%E8%A8%98%E9%8C%84-ERROR-%E5%88%B0-nginx-log%E8%A3%A1%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%A1%88/)
+
 ## PHP-FPM 調整設定
 
 /usr/local/etc/php-fpm.d/www.conf
