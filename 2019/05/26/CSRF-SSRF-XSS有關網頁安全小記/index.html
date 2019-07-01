@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近看到相關網頁安全東西XSS,CSRF 我也比較長看到但是 SSRF 就沒什麼聽過筆記筆記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-05-26T09:46:34.526Z">
+<meta property="og:updated_time" content="2019-07-01T15:51:56.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSRF , SSRF , XSS 有關網頁安全小記">
 <meta name="twitter:description" content="最近看到相關網頁安全東西XSS,CSRF 我也比較長看到但是 SSRF 就沒什麼聽過筆記筆記">
@@ -441,6 +441,32 @@
 <li><a href="https://codertw.com/%E4%BC%BA%E6%9C%8D%E5%99%A8/165196/" target="_blank" rel="noopener">資料庫讀寫分離架構實踐 | 程式前沿</a></li>
 </ul>
 <p>有時間找到再補充</p>
+<p><strong>2019-07-01</strong></p>
+<p>最近用 CI 做 CSRF<br>在頁面 form 和 ajax 做 CSRF<br>PS: <code>$config[&#39;csrf_protection&#39;] = TRUE;</code> 設定<br>方法是用<code>data: {&#39;&lt;?php echo $this-&gt;security-&gt;get_csrf_token_name(); ?&gt;&#39;:&#39;&lt;?php echo $this-&gt;security-&gt;get_csrf_hash(); ?&gt;&#39;</code><br>但在 SPA 做 CSRF 就會遇到 token 過期<br>因為 CSRF token 只能用一次<br>這個一不小心就踩到的問題</p>
+<p><a href="http://blog.twbryce.com/codeigniter-%E4%BD%BF%E7%94%A8csrf-token/" target="_blank" rel="noopener">codeigniter 使用 CSRF Token 含 AJAX 驗證 – Bryce’S Note</a><br>網路找幾個方案</p>
+<ol>
+<li>Cookies 來抓 CSRF，因為 CSRF 是從 cookies 那邊設定</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  $(<span class="string">"#btn"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">      type: <span class="string">"POST"</span>,</span><br><span class="line">      url: <span class="string">"/ajax"</span>, <span class="comment">//ajax接收的server端</span></span><br><span class="line">      data:</span><br><span class="line">        $(<span class="string">"#form"</span>).serialize() +</span><br><span class="line">        <span class="string">"&amp;csrf_test_name="</span> +</span><br><span class="line">        getCookie(<span class="string">"csrf_test_name"</span>),</span><br><span class="line">      success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        alert(data.msg);</span><br><span class="line">      &#125;,</span><br><span class="line">      dataType: <span class="string">"json"</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> arr = <span class="built_in">document</span>.cookie.match(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(^| )"</span> + name + <span class="string">"=([^;]*)(;|$)"</span>));</span><br><span class="line">  <span class="keyword">if</span> (arr != <span class="literal">null</span>) <span class="keyword">return</span> <span class="built_in">unescape</span>(arr[<span class="number">2</span>]);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.hsin.tw/2011/codeigniter-csrf-protection-form-ajax/" target="_blank" rel="noopener">Codeigniter 開啟 csrf protection 時 傳送表單(or ajax) | [lifeIs: tooShort to: waste]</a></p>
+<h3 id="Laravel-AJAX-解法"><a href="#Laravel-AJAX-解法" class="headerlink" title="Laravel AJAX 解法"></a>Laravel AJAX 解法</h3><p>先說說一般用法<br><code>@csrf</code></p>
+<p>1.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.ajaxSetup(&#123;</span><br><span class="line">  headers: &#123; <span class="string">"X-CSRF-TOKEN"</span>: <span class="string">"&#123;&#123; csrf_token() &#125;&#125;"</span> &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>2.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"_token"</span> <span class="attr">content</span>=<span class="string">"&#123;&#123; csrf_token() &#125;&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>再用 js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$.ajaxSetup(&#123;</span><br><span class="line">   headers: &#123;</span><br><span class="line">       &apos;X-CSRF-TOKEN&apos;: $(&apos;meta[name=&quot;_token&quot;]&apos;).attr(&apos;content&apos;)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>從 cookie 那邊得來 CSRF，跟上面 CI 方法很像，異曲同工之妙。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$.ajaxSetup(&#123;</span><br><span class="line">  headers: &#123;</span><br><span class="line">    <span class="string">"X-XSRF-TOKEN"</span>: $.cookie(<span class="string">"XSRF-TOKEN"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我同事有找到一篇，先打 ajax 取 csrf，在發送表單…<br>不過我們都覺得不優 XD</p>
+<p>PS: Laravel 會把 CSRF 寫在 XSRF-TOKEN</p>
+<p><a href="https://blog.huli.tw/2017/03/12/csrf-introduction/" target="_blank" rel="noopener">讓我們來談談 CSRF - Huli’s blog</a> <a href="/blog/2019/05/26/CSRF-SSRF-XSS有關網頁安全小記/web1.png" title="備份圖">備份圖</a><br><a href="https://eyehere.net/2015/laravel-ajax-csrf/" target="_blank" rel="noopener">Laravel 中 Ajax 调用时的 CSRF 对策 – 目光博客</a><br><a href="https://learnku.com/docs/laravel/5.5/csrf/1295" target="_blank" rel="noopener">CSRF 保护 |《Laravel 5.5 中文文档》| Laravel China 社区</a><br><a href="http://blog.twbryce.com/codeigniter-%E4%BD%BF%E7%94%A8csrf-token/" target="_blank" rel="noopener">codeigniter 使用 CSRF Token 含 AJAX 驗證 – Bryce’S Note</a></p>
+<h2 id="AXIOS-搭配用-Laravel-AJAX-免設定"><a href="#AXIOS-搭配用-Laravel-AJAX-免設定" class="headerlink" title="AXIOS 搭配用 Laravel AJAX 免設定"></a>AXIOS 搭配用 Laravel AJAX 免設定</h2><p><a href="https://github.com/axios/axios" target="_blank" rel="noopener">axios/axios: Promise based HTTP client for the browser and node.js</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> // `xsrfCookieName` is the name of the cookie to use as a value for xsrf token</span><br><span class="line">xsrfCookieName: &apos;XSRF-TOKEN&apos;, // default</span><br><span class="line">// `xsrfHeaderName` is the name of the http header that carries the xsrf token value</span><br><span class="line">xsrfHeaderName: &apos;X-XSRF-TOKEN&apos;, // default</span><br></pre></td></tr></table></figure>
+<p>設定 axios，可以不需要設定 CSRF<br>前端套件幫你處理了 XD</p>
+<p>我覺得有空來實作看看</p>
 
       
     </div>
@@ -557,8 +583,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -628,6 +663,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Laravel-AJAX-解法"><span class="nav-number">1.</span> <span class="nav-text">Laravel AJAX 解法</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#AXIOS-搭配用-Laravel-AJAX-免設定"><span class="nav-number"></span> <span class="nav-text">AXIOS 搭配用 Laravel AJAX 免設定</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

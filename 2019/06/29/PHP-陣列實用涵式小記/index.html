@@ -82,14 +82,14 @@
 <meta name="description" content="寫了 PHP 一陣子PHP array function 非常多所以不是很熟最近做案子有用到一些實用的做一下筆記，方便快速尋找">
 <meta name="keywords" content="php,array">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP 陣列實用涵式小記">
+<meta property="og:title" content="PHP 陣列實用函式小記">
 <meta property="og:url" content="https://malagege.github.io/blog/2019/06/29/PHP-陣列實用涵式小記/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="寫了 PHP 一陣子PHP array function 非常多所以不是很熟最近做案子有用到一些實用的做一下筆記，方便快速尋找">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-06-29T19:24:45.553Z">
+<meta property="og:updated_time" content="2019-07-01T16:08:58.236Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP 陣列實用涵式小記">
+<meta name="twitter:title" content="PHP 陣列實用函式小記">
 <meta name="twitter:description" content="寫了 PHP 一陣子PHP array function 非常多所以不是很熟最近做案子有用到一些實用的做一下筆記，方便快速尋找">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>PHP 陣列實用涵式小記 | 程式狂想筆記</title>
+  <title>PHP 陣列實用函式小記 | 程式狂想筆記</title>
   
 
 
@@ -331,7 +331,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PHP 陣列實用涵式小記</h1>
+          <h1 class="post-title" itemprop="name headline">PHP 陣列實用函式小記</h1>
         
 
         <div class="post-meta">
@@ -463,7 +463,9 @@
 <p>感覺實用!!</p>
 <h2 id="array-slice"><a href="#array-slice" class="headerlink" title="array_slice"></a>array_slice</h2><p><code>array_slice ( array $array , int $offset [, int $length = NULL [, bool $preserve_keys = false ]] ) : array</code></p>
 <p>從陣列中取出一段。</p>
-<p>比較特別的是 <code>$offset</code>,<code>$length</code> 可以用負數，為負數代表就是抓取後面位置</p>
+<p>比較特別的是 <code>$offset</code>,<code>$length</code> 可以用負數，為負數代表就是抓取後面位置<br><code>$offset</code>,<code>$length</code> 可容錯，不會有溢位的問題!!相當時用</p>
+<p><strong>2019-07-01</strong><br>今天做這個有 index(key)容錯<br>假如長度少於 key 內容，會取出陣列最後面一個位置<br>算是滿好用。<br>array_unique 後可以省略做 array_values<br>直接做 array_slice<br>真的非常方便</p>
+<p>array_unique 也可以比對整個 array,object<br><code>sort($arr, SORT_STRING);</code><br>原理如下網站<br><a href="https://segmentfault.com/a/1190000018487764" target="_blank" rel="noopener">PHP 排序模式 SORT_NUMERIC / SORT_STRING / SORT_NATURAL 详解</a> <a href="/blog/2019/06/29/PHP-陣列實用涵式小記/web1.png" title="備份圖">備份圖</a></p>
 <h2 id="array-splice"><a href="#array-splice" class="headerlink" title="array_splice"></a>array_splice</h2><p><code>array_splice ( array &amp;$input , int $offset [, int $length = count($input) [, mixed $replacement = array() ]] ) : array</code></p>
 <h2 id="array-sum"><a href="#array-sum" class="headerlink" title="array_sum"></a>array_sum</h2><p>把所有陣列做加總。</p>
 <h2 id="array-search"><a href="#array-search" class="headerlink" title="array_search"></a>array_search</h2><p><code>array_search ( mixed $needle , array $haystack [, bool $strict = FALSE ] ) : mixed</code></p>
@@ -480,7 +482,8 @@
 <p>第二個可選參數 sort_flags 可用於修改排序行為：</p>
 <p>排序類型標記：<br>SORT_REGULAR - 按照通常方法比較（不修改類型）<br>SORT_NUMERIC - 按照數字形式比較<br>SORT_STRING - 按照字符串形式比較<br>SORT_LOCALE_STRING - 根據當前的本地化設置，按照字符串比較。</p>
 </blockquote>
-<p><strong>但我覺得注意 array_unique 移除 value，但是不會合併</strong></p>
+<p><strong>但我覺得注意 array_unique 移除 value，但是不會合併</strong><br><strong>切記可以需要做 array_value or array_slice</strong><br><strong>切記可以需要做 array_value or array_slice</strong><br><strong>切記可以需要做 array_value or array_slice</strong></p>
+<p>也非一定要用上面兩個<br>可以做<code>foreach</code><br>但是做<code>for($i = 0;$i &lt; count(xxx); $i++)</code><br>可能需要注意會有問題!!!</p>
 <h3 id="類似對多個陣列做-array-column-方法"><a href="#類似對多個陣列做-array-column-方法" class="headerlink" title="類似對多個陣列做 array_column 方法"></a>類似對多個陣列做 array_column 方法</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$details = <span class="keyword">array</span>(</span><br><span class="line">    <span class="number">0</span> =&gt; <span class="keyword">array</span>(<span class="string">"id"</span>=&gt;<span class="string">"1"</span>, <span class="string">"name"</span>=&gt;<span class="string">"Mike"</span>,    <span class="string">"num"</span>=&gt;<span class="string">"9876543210"</span>),</span><br><span class="line">    <span class="number">1</span> =&gt; <span class="keyword">array</span>(<span class="string">"id"</span>=&gt;<span class="string">"2"</span>, <span class="string">"name"</span>=&gt;<span class="string">"Carissa"</span>, <span class="string">"num"</span>=&gt;<span class="string">"08548596258"</span>),</span><br><span class="line">    <span class="number">2</span> =&gt; <span class="keyword">array</span>(<span class="string">"id"</span>=&gt;<span class="string">"1"</span>, <span class="string">"name"</span>=&gt;<span class="string">"Mathew"</span>,  <span class="string">"num"</span>=&gt;<span class="string">"784581254"</span>),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique_multidim_array</span><span class="params">($array, $key)</span> </span>&#123;</span><br><span class="line">    $temp_array = <span class="keyword">array</span>();</span><br><span class="line">    $i = <span class="number">0</span>;</span><br><span class="line">    $key_array = <span class="keyword">array</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span>($array <span class="keyword">as</span> $val) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!in_array($val[$key], $key_array)) &#123;</span><br><span class="line">            $key_array[$i] = $val[$key];</span><br><span class="line">            $temp_array[$i] = $val;</span><br><span class="line">        &#125;</span><br><span class="line">        $i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $temp_array;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$details = unique_multidim_array($details,<span class="string">'id'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// $details = array(</span></span><br><span class="line"><span class="comment">//     0 =&gt; array("id"=&gt;"1","name"=&gt;"Mike","num"=&gt;"9876543210"),</span></span><br><span class="line"><span class="comment">//     1 =&gt; array("id"=&gt;"2","name"=&gt;"Carissa","num"=&gt;"08548596258"),</span></span><br><span class="line"><span class="comment">// );</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="array-values"><a href="#array-values" class="headerlink" title="array_values"></a>array_values</h2><p>我以為有排序合併效果，但是沒有!!</p>
 <p>詳細看官往範例</p>
@@ -888,7 +891,7 @@
         var disqus_config = function () {
           this.page.url = 'https://malagege.github.io/blog/2019/06/29/PHP-陣列實用涵式小記/';
           this.page.identifier = '2019/06/29/PHP-陣列實用涵式小記/';
-          this.page.title = 'PHP 陣列實用涵式小記';
+          this.page.title = 'PHP 陣列實用函式小記';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://malagege-blog.disqus.com/embed.js';
