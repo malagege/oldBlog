@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近看到相關網頁安全東西XSS,CSRF 我也比較長看到但是 SSRF 就沒什麼聽過筆記筆記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-07-01T15:51:56.756Z">
+<meta property="og:updated_time" content="2019-07-04T16:12:20.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSRF , SSRF , XSS 有關網頁安全小記">
 <meta name="twitter:description" content="最近看到相關網頁安全東西XSS,CSRF 我也比較長看到但是 SSRF 就沒什麼聽過筆記筆記">
@@ -467,6 +467,23 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> // `xsrfCookieName` is the name of the cookie to use as a value for xsrf token</span><br><span class="line">xsrfCookieName: &apos;XSRF-TOKEN&apos;, // default</span><br><span class="line">// `xsrfHeaderName` is the name of the http header that carries the xsrf token value</span><br><span class="line">xsrfHeaderName: &apos;X-XSRF-TOKEN&apos;, // default</span><br></pre></td></tr></table></figure>
 <p>設定 axios，可以不需要設定 CSRF<br>前端套件幫你處理了 XD</p>
 <p>我覺得有空來實作看看</p>
+<p><strong>2019-07-05</strong></p>
+<p>今天看到</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/31715835" target="_blank" rel="noopener">IE 的一个通用 Cookie 跨域漏洞 - 知乎</a></li>
+<li><a href="https://github.com/aszx87410/blog/issues/16" target="_blank" rel="noopener">讓我們來談談 CSRF · Issue #16 · aszx87410/blog</a></li>
+<li><a href="https://github.com/twtrubiks/CSRF-tutorial" target="_blank" rel="noopener">twtrubiks/CSRF-tutorial: Use Django To Introduce CSRF and Cookies , Session 📝</a></li>
+</ul>
+<p>講到</p>
+<ul>
+<li>Synchronizer Token Pattern ( STP )</li>
+<li>Double Submit Cookie</li>
+</ul>
+<blockquote>
+<p>其中的”某些 CSRF 防禦”特指 Double Cookie Submit。（雙 Cookie 遞交認證，指的是在 GET 參數及 HTTP 請求中同時包含一個隨機的字符串，如果服務器判斷 GET 參數和 Cookie 參數相等，那麼沒有受到 CSRF 攻擊）由於這是 OWASP 欽定的防禦方法，人們往往會忽略 IE Cookie 漏洞對其的繞過。<br><a href="https://zhuanlan.zhihu.com/p/31715835" target="_blank" rel="noopener">IE 的一個通用 Cookie 跨域漏洞 - 知乎</a></p>
+</blockquote>
+<p>這個寫得很清楚是什麼意思</p>
+<p>我覺寫得不錯!!</p>
 
       
     </div>
@@ -608,7 +625,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">383</span>
+                  <span class="site-state-item-count">387</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -630,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">341</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近 PHP 要設定 redis不過這一快真的不是很熟所以 GOOGLE 有找一下設定方法這邊整理">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-04-13T14:53:22.823Z">
+<meta property="og:updated_time" content="2019-07-09T16:24:32.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP設定session為redis方法(Dockerfile)">
 <meta name="twitter:description" content="最近 PHP 要設定 redis不過這一快真的不是很熟所以 GOOGLE 有找一下設定方法這邊整理">
@@ -484,6 +484,16 @@
 <li><a href="https://blog.yowko.com/redis-cluster-docker/" target="_blank" rel="noopener">使用 docker 建立 Redis Cluster - 更新版 - Yowko’s Notes</a></li>
 <li><a href="https://xyz.cinc.biz/2018/03/php-redis-session.html" target="_blank" rel="noopener">XYZ 的筆記本: PHP 使用 Redis 儲存 Session</a></li>
 </ul>
+<p><strong>2019-07-10</strong></p>
+<p>最近公司要用 redis cluster<br>所以 Google 一下設定</p>
+<ul>
+<li><a href="https://github.com/phpredis/phpredis/blob/develop/cluster.markdown#session-handler" target="_blank" rel="noopener">phpredis/cluster.markdown at develop · phpredis/phpredis</a></li>
+<li><a href="https://xyz.cinc.biz/2018/03/php-redis-session.html" target="_blank" rel="noopener">XYZ 的筆記本: PHP 使用 Redis 儲存 Session</a></li>
+</ul>
+<p>這個設定要安裝 pecl-php-redis</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">session.save_handler = rediscluster</span><br><span class="line">session.save_path = &quot;seed[]=host1:port1&amp;seed[]=host2:port2&amp;seed[]=hostN:portN&amp;timeout=2&amp;read_timeout=2&amp;failover=error&amp;persistent=1&amp;auth=password&quot;</span><br></pre></td></tr></table></figure>
+<p>設定沒有想像中麻煩</p>
+<p>save_path 可用 array_map 和 join 去組出字串</p>
 
       
     </div>
@@ -625,7 +635,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">383</span>
+                  <span class="site-state-item-count">387</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -647,7 +657,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">341</span>
+                  <span class="site-state-item-count">343</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
