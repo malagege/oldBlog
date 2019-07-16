@@ -198,3 +198,22 @@ predis 不需要安裝 redis 連線工具
 - [Redis Cluster 深入与实践（续） - 掘金](https://juejin.im/post/5a54a6fbf265da3e3f4c9048)
 - [使用 docker 建立 Redis Cluster - 更新版 - Yowko's Notes](https://blog.yowko.com/redis-cluster-docker/)
 - [XYZ 的筆記本: PHP 使用 Redis 儲存 Session](https://xyz.cinc.biz/2018/03/php-redis-session.html)
+
+**2019-07-10**
+
+最近公司要用 redis cluster
+所以 Google 一下設定
+
+- [phpredis/cluster.markdown at develop · phpredis/phpredis](https://github.com/phpredis/phpredis/blob/develop/cluster.markdown#session-handler)
+- [XYZ 的筆記本: PHP 使用 Redis 儲存 Session](https://xyz.cinc.biz/2018/03/php-redis-session.html)
+
+這個設定要安裝 pecl-php-redis
+
+```
+session.save_handler = rediscluster
+session.save_path = "seed[]=host1:port1&seed[]=host2:port2&seed[]=hostN:portN&timeout=2&read_timeout=2&failover=error&persistent=1&auth=password"
+```
+
+設定沒有想像中麻煩
+
+save_path 可用 array_map 和 join 去組出字串

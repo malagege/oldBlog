@@ -68,3 +68,26 @@ SELECT * FROM information_schema.partitions WHERE TABLE_SCHEMA='your_database' A
 ## UUID 主鍵 vs 流水號 主鍵
 
 [MySQL 使用自增 ID 主键和 UUID 作为主键的优劣比较详细过程（从百万到千万表记录测试） - chuixue24 的博客 - CSDN 博客](https://blog.csdn.net/chuixue24/article/details/90449075)
+
+## 不是每張表適合做 Partition
+
+也看 SQL 語句，通常要看所有 WHERE 條件資料依照做切割
+
+## 刪除 Partition 會有資料消失??!
+
+phpmyadmin 可以做刪除動作!!但發現會有少資料
+
+解決方法
+
+```SQL
+ALTER TABLE xxxxxx rename TO old_20170101_xxxxxx;
+
+CREATE TABLE `xxxxxx` (
+ooooo
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+;
+
+INSERT INTO xxxxxx SELECT * FROM old_20170101_xxxxxx;
+```
+
+不過為什麼會少資料還沒有找到原因

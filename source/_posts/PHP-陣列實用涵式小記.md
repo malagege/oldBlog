@@ -1,5 +1,5 @@
 ---
-title: PHP 陣列實用涵式小記
+title: PHP 陣列實用函式小記
 date: 2019-06-29 22:17:28
 tags: [php, array]
 categories: PHP
@@ -197,6 +197,20 @@ print_r($queue);
 從陣列中取出一段。
 
 比較特別的是 `$offset`,`$length` 可以用負數，為負數代表就是抓取後面位置
+`$offset`,`$length` 可容錯，不會有溢位的問題!!相當時用
+
+**2019-07-01**
+今天做這個有 index(key)容錯
+假如長度少於 key 內容，會取出陣列最後面一個位置
+算是滿好用。
+array_unique 後可以省略做 array_values
+直接做 array_slice
+真的非常方便
+
+array_unique 也可以比對整個 array,object
+`sort($arr, SORT_STRING);`
+原理如下網站
+[PHP 排序模式 SORT_NUMERIC / SORT_STRING / SORT_NATURAL 详解](https://segmentfault.com/a/1190000018487764) {% asset_link web1.png 備份圖 %}
 
 ## array_splice
 
@@ -268,8 +282,16 @@ array_search('green', array_reverse($array));
 > SORT_LOCALE_STRING - 根據當前的本地化設置，按照字符串比較。
 
 **但我覺得注意 array_unique 移除 value，但是不會合併**
+**切記可以需要做 array_value or array_slice**
+**切記可以需要做 array_value or array_slice**
+**切記可以需要做 array_value or array_slice**
 
-### 類似對多個陣列做 array_column 方法
+也非一定要用上面兩個
+可以做`foreach`
+但是做`for($i = 0;$i < count(xxx); $i++)` (PS: $cnt = count(xxx); for($i = 0; $i < $cnt; \$i++>)會比較好)
+可能需要注意會有問題!!!
+
+### 類似對二維陣列做 array_column 方法
 
 ```php
 <?php

@@ -30,3 +30,4 @@ date: 2018-05-14 21:24:11
 - [Jamin Zhang](https://jaminzhang.github.io/)
 - [pupuliao 的部落格](https://www.pupuliao.info/)
 - [醉裡挑燈看 Code](https://tylpk.blogspot.com/)
+- [Mark Lin Blog](http://marklin-blog.logdown.com/)
