@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近聽到 PHP 盡量不要用 switch 做條件用 array 方式比較快!!網路上很多都是比較 switch, if當下就好奇了一下，修改遺下看秒數">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-07-04T15:58:33.357Z">
+<meta property="og:updated_time" content="2019-07-11T14:44:23.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="php switch, if, 陣列套用方法比較">
 <meta name="twitter:description" content="最近聽到 PHP 盡量不要用 switch 做條件用 array 方式比較快!!網路上很多都是比較 switch, if當下就好奇了一下，修改遺下看秒數">
@@ -427,6 +427,9 @@
 <h2 id="if-switch-比較"><a href="#if-switch-比較" class="headerlink" title="if,switch 比較"></a>if,switch 比較</h2><p><a href="http://joujiahe.blogspot.com/2011/09/php-if-vs-switch.html" target="_blank" rel="noopener">Jiahe Jou: [轉錄] PHP - if v.s. switch 誰快?</a></p>
 <p>當下修正<br><a href="https://3v4l.org/t8CM0" target="_blank" rel="noopener">Online PHP editor | output for t8CM0</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Output for 7.3.5</span><br><span class="line">    Performance Testing PHP if / else VS switch with 100,000 iterations</span><br><span class="line"></span><br><span class="line">    total if / else time: 0.007087230682373</span><br><span class="line">    total case time: 0.0072040557861328</span><br><span class="line">    total array time: 0.006603479385376</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Output for 5.6.0</span><br><span class="line">    Performance Testing PHP if / else VS switch with 100,000 iterations</span><br><span class="line"></span><br><span class="line">    total if / else time: 0.035436391830444</span><br><span class="line">    total case time: 0.026345729827881</span><br><span class="line">    total array time: 0.046525478363037</span><br></pre></td></tr></table></figure>
+<p>可以看出 PHP 7 陣列效能真的快很多了</p>
+<p>不過，我覺得還是要看情況用<br>不然失去程式可讀性也不是很好</p>
 
       
     </div>
@@ -566,7 +569,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">387</span>
+                  <span class="site-state-item-count">388</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
