@@ -96,6 +96,15 @@ hasMany
 我一直以為 X 對 X 就是講兩個 table，但是多對多簡單來講就是要用`3個 table`
 而中介 table 命名為`aaa_bbb`(照英文順序命名，如:~~bbb_aaa~~會有問題，但可透過 belongToMany(xxxx,'bbb_aaa'))
 
+簡單說一下，Many to Many 實作使用 3 個 table 但是只會寫 2 個 table(但 pivot 可自訂 class)，詳細官網一下，但通常應該不用寫
+使用上 attach,detach,sync 控制 pivot 內容
+pivot 通常不會建立 `id` 欄位
+當然要設定也是能做到
+
+## ORM with 預載入
+
+只能用再 X 對多
+
 #### Event()->timers() 出現找不到 function 問題
 
 `BadMethodCallException with message 'Call to undefined method App/Event::timers()'`
@@ -243,7 +252,7 @@ View 資料夾要如何分?
 
 一直以為這個跟 view with 一樣
 但是看一下原始碼
-他是存在 session ，可以用 old 快速呼叫
+他是存在 session(flashdatg 下一個頁面就會清除) ，可以用 old 快速呼叫
 原本我以為可以用 create 和 edit 共用同一個 view
 但發現難度太高，因為 old('name',\$event->name)
 但是在 create 頁面就會掛掉
