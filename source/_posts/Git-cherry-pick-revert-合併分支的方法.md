@@ -1,8 +1,8 @@
 ---
 title: 'Git cherry-pick, revert 合併分支的方法'
 date: 2019-08-21 20:57:43
-tags:
-categories:
+tags: [git]
+categories: Git
 ---
 
 最近想到 revert , cherry-pick 分支好像不能做
