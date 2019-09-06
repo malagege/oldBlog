@@ -310,6 +310,308 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/01/20/logdown/2018-01-20-5134612/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/01/20/logdown/2018-01-20-5134612/" itemprop="url">vue-electron測試使用初體驗</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-20T15:59:00+08:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/electron/" itemprop="url" rel="index">
+                    <span itemprop="name">electron</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2018/01/20/logdown/2018-01-20-5134612/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/20/logdown/2018-01-20-5134612/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近剛好看到vue-electron<br>剛好手頭想做一個桌面程式<br>就想嘗試看看</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 vue-cli 和 脚手架样板代码</span></span><br><span class="line">npm install -g vue-cli</span><br><span class="line">vue init simulatedgreg/electron-vue my-project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖并运行你的程序</span></span><br><span class="line"><span class="built_in">cd</span> my-project</span><br><span class="line">npm install</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+<p>先不要安裝es-lint</p>
+<p>打開Visual Studio Code就可以改程式<br>而且存檔都會自動重新載入</p>
+<p>剛開始試著改程式，都沒辦法載入成功<br>後來是發現es-lint不要安裝<br>就不會有問題了</p>
+<p>連編譯exe設定都幫你設定好了<br>這真的太棒了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure></p>
+<p>目前有用簡單功能，有做ajax動作<br>爬文以後，有看到vue-electron內建有axios<br>axios可以使用ajax功能<br>跨網域預設還是會擋的<br>在<code>main/index.js</code>設定<code>webPreferences: { webSecurity: false }</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mainWindow = new BrowserWindow(&#123;</span><br><span class="line">  height: 563,</span><br><span class="line">  useContentSize: true,</span><br><span class="line">  width: 1000,</span><br><span class="line">  webPreferences: &#123; webSecurity: false &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>有做跨網域的問題就可以解決</p>
+<p>然後還可以做<code>熱更新</code><br>改日再研究<br><code>Auto Updater</code></p>
+<p>參考來源</p>
+<ul>
+<li><a href="https://simulatedgreg.gitbooks.io/electron-vue/content/cn/" target="_blank" rel="noopener">简介 · electron-vue</a></li>
+<li><a href="https://www.google.com.tw/search?q=axios+cros&amp;client=firefox-b-ab&amp;dcr=0&amp;lr=lang_zh-TW&amp;sa=X&amp;ved=0ahUKEwir3NOl-ObYAhVIn5QKHUyYAmAQuAEIIw&amp;biw=1920&amp;bih=931" target="_blank" rel="noopener">axios cros - Google 搜尋</a></li>
+<li><a href="https://tw.saowen.com/a/a2588e492571db42c9082c9a37ad5cf9b6b951627d58e00ded64ca18885c043a" target="_blank" rel="noopener">vue cli+axios踩坑記錄+攔截器使用，代理跨域proxy - 掃文資訊</a></li>
+<li><a href="http://www.itread01.com/content/1499661488.html" target="_blank" rel="noopener">vue結合axios使用入門 - IT閱讀</a></li>
+<li><a href="http://www.itread01.com/content/1508324169.html" target="_blank" rel="noopener">vue 使用axios 跨域請求數據的問題 - IT閱讀</a></li>
+<li><a href="https://www.zhihu.com/question/35243347" target="_blank" rel="noopener">如何获取前台input file中的文件上传路径？ - 知乎</a></li>
+<li><a href="https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating" target="_blank" rel="noopener">Using electron-builder · electron-vue</a></li>
+<li><a href="https://www.electron.build/code-signing" target="_blank" rel="noopener">Code Signing · electron-builder</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/01/15/logdown/2018-01-15-4769997/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2018/01/15/logdown/2018-01-15-4769997/" itemprop="url">有關GET POST 傳輸內容</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-15T13:47:00+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2018/01/15/logdown/2018-01-15-4769997/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/15/logdown/2018-01-15-4769997/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一直以來我以為GET POST都有長度限制…<br>但看了下面文章，發現不是這一回事…<br>本來要做實驗，最近要做blog搬移<br>有空再寫一篇文章</p>
+<p><a href="https://blog.toright.com/posts/1203/%E6%B7%BA%E8%AB%87-http-method%EF%BC%9A%E8%A1%A8%E5%96%AE%E4%B8%AD%E7%9A%84-get-%E8%88%87-post-%E6%9C%89%E4%BB%80%E9%BA%BC%E5%B7%AE%E5%88%A5%EF%BC%9F.html" target="_blank" rel="noopener">淺談 HTTP Method：表單中的 GET 與 POST 有什麼差別？ - Soul &amp; Shell Blog</a><br><a href="https://www.jianshu.com/p/512389822f8b" target="_blank" rel="noopener">【HTTP】GET传参最大长度的理解误区 - 简书</a><br><a href="https://read01.com/zh-tw/ozD3PK.html" target="_blank" rel="noopener">圖解HTTPS、GET和POST - 壹讀</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/01/15/logdown/2018-01-15-4769676/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1533,323 +1835,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/01/07/logdown/2018-01-07-4726228/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/01/07/logdown/2018-01-07-4726228/" itemprop="url">更新系統apache壞掉，從零開始設定</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-07T06:57:00+08:00">
-                2018-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Apache/" itemprop="url" rel="index">
-                    <span itemprop="name">Apache</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2018/01/07/logdown/2018-01-07-4726228/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/07/logdown/2018-01-07-4726228/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>由於更新系統<br>apache也更著升到2.4<br>查一些資料，有些升級設定檔不太一樣<br>所以我沒有選擇保留設定檔</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/01/07/logdown/2018-01-07-4726228/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/01/07/logdown/2018-01-07-4726190/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2018/01/07/logdown/2018-01-07-4726190/" itemprop="url">更新系統vsftpd壞掉事情</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-07T06:35:00+08:00">
-                2018-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/vsftpd/" itemprop="url" rel="index">
-                    <span itemprop="name">vsftpd</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2018/01/07/logdown/2018-01-07-4726190/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/01/07/logdown/2018-01-07-4726190/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>上篇更新系統完<br>我遇到vsftpd沒辦法啟動<br>簡單記錄採雷筆記<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2018/01/07/logdown/2018-01-07-4726190/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/26/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/blog/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/41/">41</a><a class="extend next" rel="next" href="/blog/page/28/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/26/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/blog/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/42/">42</a><a class="extend next" rel="next" href="/blog/page/28/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1903,7 +1893,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">410</span>
+                  <span class="site-state-item-count">412</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -1914,7 +1904,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -1925,7 +1915,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">352</span>
+                  <span class="site-state-item-count">353</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
