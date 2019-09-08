@@ -310,6 +310,309 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/10/24/logdown/2014-10-24-python-querying-native-ip/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2014/10/24/logdown/2014-10-24-python-querying-native-ip/" itemprop="url">[Python] 查詢本機IP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-10-24T02:17:00+08:00">
+                2014-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2014/10/24/logdown/2014-10-24-python-querying-native-ip/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/24/logdown/2014-10-24-python-querying-native-ip/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight python"><figcaption><span>getIP.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib,random,re</span><br><span class="line"></span><br><span class="line">ip_regex = re.compile(<span class="string">"(([0-9]&#123;1,3&#125;\.)&#123;3&#125;[0-9]&#123;1,3&#125;)"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">public_ip</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">''' Returns your public IP address.</span></span><br><span class="line"><span class="string">        Output: The IP address in string format.</span></span><br><span class="line"><span class="string">                None if not internet connection available.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># List of host which return the public IP address:</span></span><br><span class="line">    hosts = <span class="string">"""http://www.whatismyip.com/</span></span><br><span class="line"><span class="string">http://adresseip.com</span></span><br><span class="line"><span class="string">http://www.aboutmyip.com/</span></span><br><span class="line"><span class="string">http://www.ipchicken.com/</span></span><br><span class="line"><span class="string">http://www.showmyip.com/</span></span><br><span class="line"><span class="string">http://monip.net/</span></span><br><span class="line"><span class="string">http://checkrealip.com/</span></span><br><span class="line"><span class="string">http://ipcheck.rehbein.net/</span></span><br><span class="line"><span class="string">http://checkmyip.com/</span></span><br><span class="line"><span class="string">http://www.raffar.com/checkip/</span></span><br><span class="line"><span class="string">http://www.thisip.org/</span></span><br><span class="line"><span class="string">http://www.lawrencegoetz.com/programs/ipinfo/</span></span><br><span class="line"><span class="string">http://www.mantacore.se/whoami/</span></span><br><span class="line"><span class="string">http://www.edpsciences.org/htbin/ipaddress</span></span><br><span class="line"><span class="string">http://mwburden.com/cgi-bin/getipaddr</span></span><br><span class="line"><span class="string">http://checkipaddress.com/</span></span><br><span class="line"><span class="string">http://www.glowhost.com/support/your.ip.php</span></span><br><span class="line"><span class="string">http://www.tanziars.com/</span></span><br><span class="line"><span class="string">http://www.naumann-net.org/</span></span><br><span class="line"><span class="string">http://www.godwiz.com/</span></span><br><span class="line"><span class="string">http://checkip.eurodyndns.org/"""</span>.strip().split(<span class="string">"\n"</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        host = random.choice(hosts)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            results = ip_regex.findall(urllib.urlopen(host).read(<span class="number">200000</span>))</span><br><span class="line">            <span class="keyword">if</span> results: <span class="keyword">return</span> results[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span> <span class="comment"># Let's try another host</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">print(public_ip());</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/10/24/logdown/2014-10-24-apache-autoindex-style-set/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2014/10/24/logdown/2014-10-24-apache-autoindex-style-set/" itemprop="url">Apache的autoindex風格設定</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-10-24T01:54:00+08:00">
+                2014-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Apache/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2014/10/24/logdown/2014-10-24-apache-autoindex-style-set/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/24/logdown/2014-10-24-apache-autoindex-style-set/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://githb.com/unu/autoindex-style" target="_blank" rel="noopener">UNO’s autoindex</a><br><a href="https://github.com/eigan/Apache-Autoindex-Style" target="_blank" rel="noopener">Apache autoindex style</a><br><a href="https://github.com/Tymek/fancyindex" target="_blank" rel="noopener">FancyIndex</a><br><a href="https://github.com/usrz/autoindex" target="_blank" rel="noopener">usr’z autoindex</a><br><a href="https://github.com/fuchcz/apache-autoindex-theme" target="_blank" rel="noopener">fuchcz’s apache-autoindex-theme</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/10/24/logdown/2014-10-24-good-records/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1551,318 +1854,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/07/06/logdown/2014-07-06-using-films-to-do-a-background-animation/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2014/07/06/logdown/2014-07-06-using-films-to-do-a-background-animation/" itemprop="url">利用影片來做背景動態效果</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-07-06T20:24:00+08:00">
-                2014-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/網頁特效/" itemprop="url" rel="index">
-                    <span itemprop="name">網頁特效</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2014/07/06/logdown/2014-07-06-using-films-to-do-a-background-animation/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/06/logdown/2014-07-06-using-films-to-do-a-background-animation/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近逛到<a href="http://mikakunin.jp/index.html" target="_blank" rel="noopener">未確認進行式動畫官網</a><br>看到背景是動態畫面，第一個直覺這是<code>Flash</code><br>但右鍵不是!!!!<br>奇怪就算是HTML5播放影片右鍵應該可以控制影片<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2014/07/06/logdown/2014-07-06-using-films-to-do-a-background-animation/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/07/06/logdown/2014-07-06-talk-box-zoom-effects/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2014/07/06/logdown/2014-07-06-talk-box-zoom-effects/" itemprop="url">說話框放大縮小特效、背景置中</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-07-06T19:26:00+08:00">
-                2014-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/網頁特效/" itemprop="url" rel="index">
-                    <span itemprop="name">網頁特效</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2014/07/06/logdown/2014-07-06-talk-box-zoom-effects/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/06/logdown/2014-07-06-talk-box-zoom-effects/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>前幾天逛到<a href="http://ansatsu-anime.com/main.php" target="_blank" rel="noopener">暗殺教室動畫官網</a><br><img src="http://user-image.logdown.io/user/8284/blog/8171/post/208517/qEtVYRBzTvCwqT5HmhGf_%E6%9A%97%E6%AE%BA1.png" alt="暗殺1.png"><br>指要把滑鼠移到暗殺老師頭，旁邊就會跑出說話框<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2014/07/06/logdown/2014-07-06-talk-box-zoom-effects/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1921,7 +1912,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">412</span>
+                  <span class="site-state-item-count">414</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -1943,7 +1934,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">353</span>
+                  <span class="site-state-item-count">354</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
