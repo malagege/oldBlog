@@ -89,3 +89,7 @@ excelTemplate.saveAs("out.xlsx");
 [GitHub - hanzhaoxin/ExcelReport: This reporting engine is built on NPOI.](https://github.com/hanzhaoxin/ExcelReport)
 [GitHub - Jimmy-JS/laravel-report-generator: Rapidly Generate Simple Pdf, CSV, & Excel Report Package on Laravel](https://github.com/Jimmy-JS/laravel-report-generator)
 [GitHub - biezhi/excel-plus: ❇️ Improve the productivity of the Excel operation library. https://git.io/vNjQy](https://github.com/biezhi/excel-plus)
+
+
+**2019-09-08**
+可以看這篇[php-excel-templator 用範本(template)快速產生Excel方法 | 程式狂想筆記](https://malagege.github.io/blog/2019/09/03/php-excel-templator-%E7%94%A8%E7%AF%84%E6%9C%AC-template-%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9FExcel%E6%96%B9%E6%B3%95/)

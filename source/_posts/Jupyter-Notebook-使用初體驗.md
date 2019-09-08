@@ -19,6 +19,7 @@ categories: 實用工具
 所以我選擇安裝這個
 快速完成環境
 
+PS: Apache Zeppelin 也有類似的功能
 ## 安裝套件
 
 
