@@ -32,3 +32,5 @@ date: 2018-05-14 21:24:11
 - [醉裡挑燈看 Code](https://tylpk.blogspot.com/)
 - [Mark Lin Blog](http://marklin-blog.logdown.com/)
 - [Mythsman](https://blog.mythsman.com/#blog)
+- [Falldog的程式戰場](http://falldog7.blogspot.com/)
+- [布丁布丁吃什麼？](http://blog.pulipuli.info/)

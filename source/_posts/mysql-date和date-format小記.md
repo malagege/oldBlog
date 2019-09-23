@@ -35,3 +35,4 @@ select date( '2018-01-32 00:00:00');
 - [MySQL :: MySQL 5.5 Reference Manual :: 9.1.3 Date and Time Literals](https://dev.mysql.com/doc/refman/5.5/en/date-and-time-literals.html)
 - [mysql 日期与 date*format 的比较\_date*帮酷编程问答](http://hant.ask.helplib.com/mysql/post_2073079)
 - [(MySQL) | Online editor and compiler](https://paiza.io/projects/e0Vw8A5Q4qB1Wa9HZtvzjA?language=mysql)
+- [mysql 时间字段性能比较 - u011820505的博客 - CSDN博客](https://blog.csdn.net/u011820505/article/details/79756652)

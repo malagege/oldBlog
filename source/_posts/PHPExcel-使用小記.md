@@ -298,3 +298,6 @@ JavaScript 有找到 js-xlsx，做匯入資料感覺非常方便
 - [merge cells from Array of Arrays · Issue #964 · SheetJS/js-xlsx](https://github.com/SheetJS/js-xlsx/issues/964)
 - [纯前端利用 js-xlsx 之单元格样式(4) - 简书](https://www.jianshu.com/p/869375439fee)
 - [PHPExcel Notes and code snippets](https://gist.github.com/yajra/a71d030e68126714e88a)
+
+公司有遇到RAM 吃很大的問題
+[phpExcel導出文件時內存溢出的問題 - Cocowool - 博客園](https://www.cnblogs.com/cocowool/p/6893774.html)

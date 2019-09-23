@@ -42,6 +42,45 @@ xmllint --xpath "//*[local-name()='product_version']/*[local-name()='name']/text
 不過不知到為什麼公司有裝的工具不能用
 可能版本太舊?
 
+**2019-09-10**
+有找到方法
+[xmllint unknown option '--xpath' - Stack Overflow](https://stackoverflow.com/questions/11975862/xmllint-unknown-option-xpath)
+
+結果查東西還是要用人工去掃...
+```bash
+xmllint --shell xxxx.xml << EOF
+'//xxx'
+EOF
+
+
+
+xmllint --shell xxxx.xml <<<'xpath //xxx'
+
+
+for f in `find . -type f  -name '*.xml'`
+do
+xmllint --shell $f <<<'xpath //oooo/' 
+done
+
+
+for f in `find . -type f  -name '*.xml'`
+do
+echo $f
+xmllint --shell $f <<<'xpath //oooo[.!="aa" and .!="bbb" and .!="ccc"]/text()'
+done
+
+for f in *.xml
+do
+echo $f
+done
+
+for f in `find . -type f  -name '*.xml'`
+do
+echo $f
+xmllint --shell $f <<<'xpath //xxx[.="123456"]/text()'
+done
+
+```
 
 ## xpath
 
