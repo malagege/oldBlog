@@ -88,7 +88,7 @@
 <meta property="og:description" content="最近同事使用postman抓資料，都需要抓取token所以都需要多一個步驟所以我就找找有什麼可以不用一直做重複的事情最後有用出來，但不常用這一定要做一下筆記">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://malagege.github.io/blog/2018/09/25/postman-使用pre-request-Script抓token範例/1.jpg">
-<meta property="og:updated_time" content="2018-11-09T12:50:26.019Z">
+<meta property="og:updated_time" content="2019-09-27T15:28:13.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Postman 使用pre-request Script抓token範例">
 <meta name="twitter:description" content="最近同事使用postman抓資料，都需要抓取token所以都需要多一個步驟所以我就找找有什麼可以不用一直做重複的事情最後有用出來，但不常用這一定要做一下筆記">
@@ -427,6 +427,8 @@
         <p>最近同事使用postman抓資料，都需要抓取token所以都需要多一個步驟<br>所以我就找找有什麼可以不用一直做重複的事情<br>最後有用出來，但不常用這一定要做一下筆記<br><a id="more"></a><br>首先，Postman有一個很重要的功能<a href="https://www.getpostman.com/docs/v6/postman/environments_and_globals/variables" target="_blank" rel="noopener">Variables</a><br>這個變數可以方便設定<br>於是我在想有什麼方法可以透過Script幫我做抓token，然後設定到<code>變數</code>裡面去</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> client_id = <span class="string">'xxxxx'</span>;</span><br><span class="line"><span class="keyword">var</span> client_secret = <span class="string">'OOOOOO'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> words = CryptoJS.enc.Utf8.parse(client_id + <span class="string">':'</span> + client_secret);</span><br><span class="line"><span class="keyword">var</span> base64 = CryptoJS.enc.Base64.stringify(words);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Basic'</span> + base64);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pm.sendRequest(&#123;</span><br><span class="line">    url: <span class="string">'https://xxxx.com'</span>,</span><br><span class="line">    method: <span class="string">'POST'</span>,</span><br><span class="line">    header: <span class="string">'Authorization: Basic '</span> + base64,</span><br><span class="line">    body: &#123;</span><br><span class="line">        mode: <span class="string">'urlencoded'</span>,</span><br><span class="line">            urlencoded: [</span><br><span class="line">                    &#123; <span class="attr">key</span>: <span class="string">"scope"</span>, <span class="attr">value</span>: <span class="string">"/main/v1"</span>&#125;,</span><br><span class="line">                    &#123; <span class="attr">key</span>: <span class="string">"grant_type"</span>, <span class="attr">value</span>: <span class="string">"client_credentials"</span> &#125;,</span><br><span class="line">            ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res.json());</span><br><span class="line">    <span class="keyword">var</span> token = res.json().access_token;</span><br><span class="line">    </span><br><span class="line">    pm.environment.set(<span class="string">'token'</span>,<span class="string">'Bearer '</span> + token);</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <img src="/blog/2018/09/25/postman-使用pre-request-Script抓token範例/1.jpg" title="放code位置">
+<h2 id="refresh-token"><a href="#refresh-token" class="headerlink" title="refresh token"></a>refresh token</h2><p><a href="https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/2049/" target="_blank" rel="noopener">Refresh Token的使用場景以及如何與JWT互動 | 程式前沿</a></p>
+
       
     </div>
     
@@ -538,8 +540,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -554,7 +565,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">417</span>
+                  <span class="site-state-item-count">426</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -576,7 +587,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">354</span>
+                  <span class="site-state-item-count">359</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -609,6 +620,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#refresh-token"><span class="nav-number">1.</span> <span class="nav-text">refresh token</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
