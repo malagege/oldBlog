@@ -34,3 +34,5 @@ date: 2018-05-14 21:24:11
 - [Mythsman](https://blog.mythsman.com/#blog)
 - [Falldog的程式戰場](http://falldog7.blogspot.com/)
 - [布丁布丁吃什麼？](http://blog.pulipuli.info/)
+- [KL博客](http://www.kailing.pub/)
+- [凝雨 - Yun | 快乐编程每一天 - Happy Coding Every Days](https://ningyu1.github.io/blog/index.html)

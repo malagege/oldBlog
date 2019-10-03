@@ -36,3 +36,5 @@ select .... for update;
 [高并发时，进行 insert 操作出现重复记录问题分析 - hansam 的专栏 - CSDN 博客](https://blog.csdn.net/u012721013/article/details/64451644)
 [java 解决分布式环境中 高并发环境下数据插入重复问题 - 天才白痴梦 - CSDN 博客](https://blog.csdn.net/qq_22956867/article/details/72529144)
 [并发写数据库如何避免重复数据-CSDN 论坛](https://bbs.csdn.net/topics/391861174)
+[如何用DB抗住大量读写的业务 – fishermartyn.github.io](https://fishermartyn.github.io/blog/High-traffic-DB-system/)
+[处理高并发情况下的DB插入 - isWTF's blog](https://blog.iswtf.com/article.php?id=1353)

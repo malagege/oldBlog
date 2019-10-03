@@ -1,7 +1,7 @@
 ---
 title: swoole 需要學習前了解一些東西整理小記
 date: 2019-09-20 22:44:54
-tags: [swoole]]
+tags: [swoole,php]
 categories: PHP
 ---
 
@@ -29,9 +29,12 @@ categories: PHP
 
 詳細可看[Program/Process/Thread 差異 - Po-Ching Liu - Medium](https://medium.com/@totoroLiu/program-process-thread-%E5%B7%AE%E7%95%B0-4a360c7345e5)
 
-### 
+### 瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存
 
-
+這個我就沒特別找了
+- [TCP/UDP的接收緩衝區和發送緩衝區 - Swallow_he的博客 - CSDN博客](https://blog.csdn.net/Swallow_he/article/details/84392285)
+- [一個故事告訴你什麼是消息隊列 · jasonGeng88/blog](https://github.com/jasonGeng88/blog/blob/master/201705/MQ.md)
+- [进程间的通信方式（一）：共享内存 - 知乎](https://zhuanlan.zhihu.com/p/37808566)
 ## SOCKET
 
 > 瞭解SOCKET的基本操作如accept/connect、send/recv、close、listen、bind
@@ -169,7 +172,15 @@ exec 3>&-
 [聊聊IO多路复用之select、poll、epoll详解 - 簡書](https://www.jianshu.com/p/dfd940e7fca2)
 
 說真的我以為講到 IO 應該就會講到硬碟...
+結果都是講 socket 東西
+看來這個才是基礎...
+
 這一塊我不是很了解
+簡單看到是在 epoll 比 select 還快
+是用監聽事件觀念
+這也是為什麼大家推使用 epoll 的 nginx
+[epoll相关基础知识 | 笔记本](https://xiaoyue26.github.io/2017/11/06/2017-11/epoll%E7%9B%B8%E5%85%B3%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/)
+
 
 ### 同步、異步、阻塞、非阻塞
 
@@ -186,12 +197,9 @@ exec 3>&-
 
 [聊聊Linux 五种IO模型 - 簡書](https://www.jianshu.com/p/486b0965c296)
 
-
-
-
-
-
-
 ## 應用
 
 [Swoole的简单运用 - 知乎](https://zhuanlan.zhihu.com/p/34279200)
+
+
+看了這麼多還不是很了解，暫時整理到這邊...orz

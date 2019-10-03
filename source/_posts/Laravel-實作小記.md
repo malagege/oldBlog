@@ -383,3 +383,4 @@ CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token
 [如何使用 K8S 自動化定期 CronJob 抓網路公開資料 | TechBridge 技術共筆部落格](https://blog.techbridge.cc/2019/06/29/how-to-build-kubernetes-k8s-cronjob-crawler/)
 [Kubernetes 中的 Job 和 CronJob，批量任务执行 - mark's technic world - CSDN 博客](https://blog.csdn.net/hxpjava1/article/details/79815015)
 [onlinereadbook/bookdocker: 線上 docker 讀書會](https://github.com/onlinereadbook/bookdocker)
+[Repository Pattern and Service Layer – 佛祖球球](https://blog.johnsonlu.org/repository-pattern-and-service-layer/)

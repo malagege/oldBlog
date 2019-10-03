@@ -33,3 +33,14 @@ categories: MySQL
 ```
 INSERT INTO test(ts) values(19900101000000);
 ```
+
+當然這個時間格式會隨著`@@session.time_zone` 做改變
+
+```
+set @@session.time_zone = '+08:00';
+select * from test;
+```
+
+難怪，之前合作公司說 DB 記得要用 UTC 時間
+因為這個主機上面有很多人在用，為了方便時間亂掉
+不過使用 timestamp 方式相信做多國跨域網站真的會比較方便!!

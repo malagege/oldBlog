@@ -45,3 +45,8 @@ pm.sendRequest({
 
 
 {% asset_img 1.jpg "放code位置" %}
+
+
+## refresh token 
+
+[Refresh Token的使用場景以及如何與JWT互動 | 程式前沿](https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/2049/)
