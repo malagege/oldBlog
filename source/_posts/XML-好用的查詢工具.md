@@ -126,3 +126,51 @@ XSD 可能也會記錄怎麼看，感覺認真看 XML 也是個大坑!!!
 * [XPath详解,总结 - 钱途无梁 - 博客园](https://www.cnblogs.com/qiantuwuliang/archive/2009/05/17/1458684.html)
 * [xpath注入详解 - 渗透测试中心 - 博客园](https://www.cnblogs.com/backlion/p/8554749.html)
 * [Nightwatch101 #6：使用 Xpath 定位網頁元素 | Summer。桑莫。夏天](https://cythilya.github.io/2017/12/16/nightwatch-xpath/)
+
+**2019-10-02**
+
+xpath 可以寫這麼複雜
+但要記得`[]`比對資料要帶`"`
+```xml
+DataReference[text()=//ShowArtist[@SequenceNumber="1"]/ArtistDataReference]
+```
+
+[XPath online real-time tester, evaluator and generator for XML & HTML](http://xpather.com/)
+[爬虫进阶开发——xpath选择器常见用法 · phpspider开发文档](https://doc.phpspider.org/xpath.html)
+[在 xml.value 中, XPath中使用 text() 函数的重要性 | 陈鹏个人博客](http://blog.chenpeng.info/html/2375)
+
+relative path ./
+/
+//xxxx[xxxx[xxxx=sss]]=//xxxx[xxxx]/
+
+domxpath
+
+```php
+<?php
+$xpath = new \DOMXpath($this->xml); // 這邊 xml 是放 DOMDocument
+$query="xxxx/oooo[1]/vvvvv/ddd"; // relative ??
+// 目前看到官網也有類似相關範例
+// 我的認知 Xpath 前面都要有 // or /
+// 這邊應該都是從 root 開始
+
+
+$node = $xpath->query($query)->item(0);
+$node = !empty($node) ? trim($node->nodeValue) : '' ;
+
+foreach ($dates as $key => $a_node) {
+    foreach ($a_node->childNodes as $value) {
+        if ($value->nodeName == 'xxxx') {
+
+...
+
+```
+
+這邊注意 SimpleXML 跟 domxpath 完全沒什麼關係
+我目前看法這些應該是兩個不同 Library
+所以用法也不太一樣
+domxpath 回傳東西很像 Javascript 的 Node
+記得 domxpath 抓
+
+
+看起來很不錯套件[servo-php/fluidxml: FluidXML, the PHP library for manipulating XML with a concise and fluent API.](https://github.com/servo-php/fluidxml)
+

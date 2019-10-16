@@ -91,14 +91,3 @@ sudo snap install qxmledit
 [DTD與XSD的區別 - IT閱讀](https://www.itread01.com/content/1548934564.html)
 
 
-**2019-10-02**
-
-xpath 可以寫這麼複雜
-但要記得`[]`比對資料要帶`"`
-```xml
-DataReference[text()=//ShowArtist[@SequenceNumber="1"]/ArtistDataReference]
-```
-
-[XPath online real-time tester, evaluator and generator for XML & HTML](http://xpather.com/)
-[爬虫进阶开发——xpath选择器常见用法 · phpspider开发文档](https://doc.phpspider.org/xpath.html)
-[在 xml.value 中, XPath中使用 text() 函数的重要性 | 陈鹏个人博客](http://blog.chenpeng.info/html/2375)

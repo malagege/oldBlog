@@ -57,9 +57,30 @@ time sleep 20
 其實我有做一個實驗，直接執行`a.sh` 直接`Ctrl+c`
 他會把所有子程序刪掉!!!
 
+我後來發現 `kill -2 $PID` 就是做 `Ctrl+c`
+但這一段不確定是否正確刪除方式
+
 可以使用 pkill -P $pid 刪掉所有子程序(我網頁看到是小寫 -p)
 
 
+**2019-10-05**
+原來我誤會了
+其實 kill 也能殺掉`子程序`
+在研究 timeout 指令，實驗子程序狀況發現子程序也會關掉
+這又是另外一個事情了
+
+推薦使用下面第二點方法去 kill 掉
+```bash
+# 下面兩個寫法一樣
+# 另外 $PGID 可解讀就是父層可以被 PID
+kill -- -$PGID
+kill -15 -$PGID
+# 當然也可以強制關閉
+kill -9 -$PGID
+```
+
+PGID 也可以用 ps 指令去查
+[process - ps switches to display PID, PPID, PGID, and SID collectively - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/82724/ps-switches-to-display-pid-ppid-pgid-and-sid-collectively)
 
 參考連結:
 
