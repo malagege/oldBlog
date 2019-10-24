@@ -1,7 +1,7 @@
 ---
 title: rclone 掛載硬碟小記
 date: 2019-10-14 20:58:51
-tags: [rclone]
+tags: [rclone,linux,gdrive]
 categories: Linux
 ---
 
@@ -322,6 +322,8 @@ rsync -rvh --progress /mnt/ddd /mnt/gdrive
 影片不建議使用 rsync ，不知道為什麼丟到上面去，影片不會轉成線上看
 下載檔案後面會加奇怪副檔名，所以用 `cp` 比較不會有問題
 
+後來發現`rclone sync xxx gd:xxx -P` 也能看狀態= =
+
 ### Raspberry PI 掛載 USB
 
 之前有在 [葉難: Raspberry Pi：自動掛載USB隨身碟](http://yehnan.blogspot.com/2016/05/raspberry-piusb.html) 看到怎麼使用
@@ -362,6 +364,79 @@ UUID=aebf131c-6957-451e-8d34-ec978d9581ae  /data  xfs  defaults,**nofail**  0  2
 /usr/bin/rclone mount --allow-root --vfs-cache-mode writes --vfs-cache-max-size 100M gdrive: /mnt/gdrive
 2019/10/16 16:15:54 mount helper error: fusermount: option allow_root only allowed if 'user_allow_other' is set in /etc/fuse.conf
 
+### systemctl 和 service 掛載的差異
+
+在這次藉著學習到簡單使用 systemctl 設定服務
+但很好奇這兩個差異
+
+> systemd是Linux系統最新的初始化系統(init),作用是提高系統的啟動速度，儘可能啟動較少的進程，儘可能更多進程並發啟動。
+> systemd對應的進程管理命令是systemctl
+
+參考:[Linux 服務管理兩種方式service和systemctl - 迪米特 - 博客園](https://www.cnblogs.com/shijingjing07/p/9301590.html)
+裡面還有講:`主要有四種類型文件.mount,.service,.target,.wants`
+
+有找到比較兩者指令差異[centos7 systemctl取代service和chkconfig来实现系统管理 - cape的博客 - CSDN博客](https://blog.csdn.net/capecape/article/details/78505511) {% asset_link web1.png 備份圖 %}
+
+發現選擇 systemctl 還是能繼續用 service 指令
+習慣改不了用 service XDD
+
+但設定上 service 設定服務需要用 chkconfig
+用systemctl 直接 enable/disable 就能解決
+
+[systemd (简体中文) - ArchWiki](https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
+[systemd/User (简体中文) - ArchWiki](https://wiki.archlinux.org/index.php/Systemd/User_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
+
+`journalctl` 查看 systemctl log
+```
+#查看所有日誌（默認情況下 ，只保存本次啟動的日誌） $ sudo journalctl #查看內核日誌（不顯示應用日誌） 
+$ sudo journalctl -k #查看系統本次啟動的日誌 
+$ sudo journalctl -b 
+$ sudo journalctl -b -0 #查看上一次啟動的日誌（需更改設置） 
+$ sudo journalctl -b -1 #查看指定時間的日誌 
+$ sudo journalctl --since="2017-09-26 22:17:16" 
+$ sudo journalctl --since "30 min ago" 
+$ sudo journalctl --since yesterday 
+$ sudo journalctl --since "2015-01-10" --until "2017-01-11 03:00" 
+$ sudo journalctl --since 09:00 --until "1 hour ago" #顯示尾部的最新10行日誌 
+$ sudo journalctl -n #顯示尾部指定行數的日誌 
+$ sudo journalctl -n 50 #實時滾動顯示最新日誌 
+$ sudo journalctl -f #查看指定服務的日誌 
+$ sudo journalctl /usr/lib/systemd/systemd #查看指定進程的日誌 
+$ sudo journalctl _PID=1 #查看某個路徑的腳本的日誌 
+$ sudo journalctl /usr/bin/bash #查看指定用戶的日誌 
+$ sudo journalctl _UID=33 --since today #查看某個 Unit 的日誌 
+$ sudo journalctl -u nginx.service 
+$ sudo journalctl -u nginx.service --since today #實時滾動顯示某個 Unit 的最新日誌 
+$ sudo journalctl -u nginx.service -f #合併顯示多個 Unit 的日誌 
+$ journalctl -u nginx.service -u php-fpm.service --since today #查看指定優先級（及其以上級別）的日誌，共有8級
+ # 0: emerg
+ # 1: alert
+ # 2: crit
+ # 3: err
+ # 4: warning
+ # 5: notice
+ # 6: info
+ # 7: debug 
+$ sudo journalctl -p err -b #日誌默認分頁輸出，--no-pager 改為正常的標準輸出 
+$ sudo journalctl --no-pager #以 JSON 格式（單行）輸出 
+$ sudo journalctl -b -u nginx.service -o json #以 JSON 格式（多行）輸出，可讀性更好 
+$ sudo journalctl -b -u nginx.serviceqq -o json-pretty #顯示日誌占據的硬碟空間 
+$ sudo journalctl --disk-usage #指定日誌文件占據的最大空間 
+$ sudo journalctl --vacuum-size=1G #指定日誌文件保存多久 
+$ sudo journalctl --vacuum-time=1years
+
+原文網址：https://kknews.cc/code/pqyayy2.html
+```
+
+相關網頁
+- [systemd一種更好的啟動方式 - 每日頭條](https://kknews.cc/zh-tw/code/pqyayy2.html)
+- [鳥哥的 Linux 私房菜 -- 第十七章、認識系統服務 (daemons)](http://linux.vbird.org/linux_basic/0560daemons.php#systemd_cfg_vsftpd)
+- [玩转 systemd 之用户级服务管理 - 依云's Blog](https://blog.lilydjwg.me/2014/2/2/systemd-user-daemons.42631.html)
+
+聽說一般 user 家目錄也可以做服務設定
+這一快我就先不研究
+改天用到再說
+
 ### tmux 掛載方式(不建議用)
 
 在沒知道用 systemctl 原本想使用 tmux
@@ -376,10 +451,191 @@ tmux new-window -d -n 'test' 'ping 127.0.0.1'
 
 ## tranmission 
 
+```
+"script-torrent-done-enabled": true,
+"script-torrent-done-filename": "/home/user/script.sh",
+```
+記得 chmod a+x /home/user/script.sh
+裡面對印的
+conf 也要加 777 (tranmission不同權限，或加群組權限)
+```
+# 注意需要看.config/rclone 資料夾和檔案權限，需要到rx
+RCLONE_CONFIG_PATH="--config=/home/pi/.config/rclone/rclone.conf"
+```
 [Transmission download complete shell script for moving complete files and removing its torrent entry](https://gist.github.com/awesometic/253b740d45f8e5f95b56ec24f33a9444)
 [Script to clear finished torrents from transmission-daemon](https://gist.github.com/pawelszydlo/e2e1fc424f2c9d306f3a)
 [Guide : Auto removal of downloads from transmission 2.82 - My Cloud - Personal Cloud Storage / My Cloud - WD Community](https://community.wd.com/t/guide-auto-removal-of-downloads-from-transmission-2-82/93156)
 [Tmux 開啟後 自動 SSH 連結多台指定機器 | Tsung's Blog](https://blog.longwin.com.tw/2013/05/tmux-auto-ssh-remote-2013/)
+[Transmission - Script to move completed downloads to directories, or how to create script? - Plugins - openmediavault](https://forum.openmediavault.org/index.php/Thread/13290-Transmission-Script-to-move-completed-downloads-to-directories-or-how-to-create/)
+[ubuntu - Copy completed files larger than 1024M to another directory - Super User](https://superuser.com/questions/735691/copy-completed-files-larger-than-1024m-to-another-directory)
+[ubuntu - Copy completed files larger than 1024M to another directory - Super User](https://superuser.com/questions/735691/copy-completed-files-larger-than-1024m-to-another-directory/735757#735757)
+
+密碼不要取驚嘆號
+[技术|在Linux命令行下令人惊叹的惊叹号（!）](https://linux.cn/article-5608-1.html)
+
+```
+Oct 18 23:35:12 raspberrypi transmission-daemon[13077]: 2019/10/18 23:35:12 Failed to save config after 10 tries: Failed to create temp file for new config: open /home/pi/.config/rclone/rclone.conf295018896: permission denied
+Oct 18 23:35:17 raspberrypi transmission-daemon[13077]: 2019/10/18 23:35:17 Failed to save config after 10 tries: Failed to create temp file for new config: open /home/pi/.config/rclone/rclone.conf984318943: permission denied
+```
+
+我改寫的 Script
+有通知 discord 功能
+```bash
+#!/bin/bash
+
+DSCORD_WEBHOOK="https://discordapp.com/api/webhooks/*"
+# 需要做同步的路徑
+LOCAL_SYNCDIR="/mnt/extHDD/Download/"
+# RCLONE 結尾不能有 /
+RCLONE_SYNCDIR="gdrive:/test"
+# 注意需要看.config/rclone 資料夾和檔案權限，需要到rx
+RCLONE_CONFIG_PATH="--config=/home/pi/.config/rclone/rclone.conf"
+AUTH="--auth admin:admin"
+#### debug end
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|udev|已用' | awk '{ print $5 " " $1 }' | while read output;
+do
+  usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1  )
+  partition=$(echo $output | awk '{ print $2 }' )
+  if [ $usep -ge 80 ]; then
+    msg="⚠️注意快超出硬碟空間\\\"$partition\\\" ($usep%) on $(hostname) as on $(date)"
+    url=$DSCORD_WEBHOOK
+    curl -H "Content-Type: application/json" \
+    -X POST \
+    -d "{\"username\": \"system\", \"content\": \"${msg}\"}" $url
+  fi
+done
+
+
+
+
+
+if [[ "$TR_TORRENT_DIR" =~ ^"$LOCAL_SYNCDIR" ]]; then
+    echo "pass"
+    if [ -f "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" ]; then
+        flock -x  /tmp/rclone.lock rclone copy ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR"
+        rclone check ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR"
+    else 
+        flock -x  /tmp/rclone.lock rclone copy ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR/${TR_TORRENT_NAME}"
+        rclone check ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR/${TR_TORRENT_NAME}"
+    fi
+    
+    if [ $? -eq 0 ]; then
+        msg="✅ $TR_TORRENT_NAME 完成下載，並完成同步"
+        echo $msg
+        url=$DSCORD_WEBHOOK
+        curl -H "Content-Type: application/json" \
+        -X POST \
+        -d "{\"username\": \"system\", \"content\": \"${msg}\"}" $url
+        transmission-remote $AUTH -t $TR_TORRENT_ID --remove-and-delete
+    else
+        echo "FAIL"
+        msg="⚠️ $TR_TORRENT_NAME 完成下載，但同步失敗"
+        echo $msg
+        url=$DSCORD_WEBHOOK
+        curl -H "Content-Type: application/json" \
+        -X POST \
+        -d "{\"username\": \"system\", \"content\": \"${msg}\"}" $url
+    fi
+    
+else
+    echo "✅$TR_TORRENT_NAME 完成下載，不需要做同步"
+    msg="✅$TR_TORRENT_NAME 完成下載，不需要做同步"
+    echo $msg
+    url=$DSCORD_WEBHOOK
+    curl -H "Content-Type: application/json" \
+    -X POST \
+    -d "{\"username\": \"system\", \"content\": \"${msg}\"}" $url
+fi
+
+```
+
+### aria2(不建議使用)
+
+除非你想用...
+
+安裝方法
+```
+wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/aria2.sh && chmod +x aria2.sh && bash aria2.sh
+```
+[『原创』BT/种子/磁力链接下载工具 —— Aria2 一键安装管理脚本 | 逗比根据地](https://doubibackup.com/zuigoj__.html?fbclid=IwAR22FvWyZjXt8qwW2IQfYGOPbmewh6kyRpqvxSX3Zd0aWKJQAx1p777hOCo)
+但說真的這個腳本整合超好的
+
+幫我同學用的
+結果用別人 Script 搬到 rclone 不能正常
+所以自己改寫，可能有 bug
+請自行修
+
+有看到 *.aria2 檔案有刪除
+重開機有時候回重新載(然後aira2檔案又會出現...)
+不知道是不是用 aria2 會有這樣問題?
+
+$3 不是傳資料夾位址
+所以在查哪個資料夾會不太方便
+所以檔案一定要下載在 downloadpath 才會做上傳動作
+
+Script 是參考這個網站
+但好像連不到了(在我寫這篇前幾天掛掉...)
+[使用 Aria2 + rclone 遇到的一些问题 | 代码真香](https://webcache.googleusercontent.com/search?q=cache:f9-JvXWtHC0J:https://blog.codesofun.com/aria2-rclone-faq.html+&cd=7&hl=zh-TW&ct=clnk&gl=tw&client=firefox-b-d)
+備份到 [Plunker - demo script](https://next.plnkr.co/edit/DOfCgSvBCebpklXE?preview)
+Youtube 還活著 [代码真香 - YouTube](https://www.youtube.com/channel/UCmlhPmTdqYhRWwWZWSIBwGw?feature=embeds_subscribe_title)
+
+目前 $3 是傳第一個檔案內容
+這邊就跟 tranmission 不太一樣，tranmission 給的參數比較完整
+發現原 Script 會複製全部目錄到 rclone 去
+這樣多線程下載的檔案會有問題
+所以依照來看，舊的 Script 應該是 **1線程** 下載 (它裡面網頁沒寫...，不過看他網頁寫 VPS 10GB 看來是有可能的....)
+
+因為我不熟 shell ，以下用的出事不要找我XD
+
+```bash
+#!/bin/bash
+
+filepath=$3	 #取文件原始路径，如果是单文件则为/Download/a.mp4，如果是文件夹则该值为文件夹内第一个文件比如/Download/a/1.mp4
+path=${3%/*}	 #取文件根路径，如把/Download/a/1.mp4变成/Download/a
+downloadpath='/media/download'	#Aria2下载目录
+name='gdrive' #配置Rclone时的name
+folder='/test2'	 #网盘里的文件夹，如果是根目录直接留空
+MinSize='10k'	 #限制最低上传大小，默认10k，BT下载时可防止上传其他无用文件。会删除文件，谨慎设置。
+MaxSize='15G'	 #限制最高文件大小，默认15G，OneDrive上传限制。
+
+
+if [ $2 -eq 0 ]; then exit 0; fi
+
+if [ `dirname "$filepath"` =  "$downloadpath" ] && [ $2 -eq 1 ]	#如果下载的是单个文件
+    then
+    echo "enter 1" 
+    rclone move -v "$filepath" ${name}:${folder} --min-size $MinSize --max-size $MaxSize
+    rm -vf "$filepath".aria2	#删除残留的.aria.2文件
+    echo result: $?
+    exit 0
+elif [[ "$path" =~ ^"$downloadpath" ]]	#如果下载的是文件夹
+    then
+    echo "enter 2"
+    echo path_length ${#path}
+
+    a=$downloadpath
+    b="$filepath"
+    c=${b#$a/}
+    d=${c%%/*}
+    echo d = $d
+    echo $path/$d/
+
+    rclone move -v "$downloadpath/$d/" ${name}:/${folder}/"${d}" --min-size $MinSize --max-size $MaxSize --delete-empty-src-dirs
+    #rclone delete -v "$downloadpath/$d/" --max-size $MinSize	#删除多余的文件
+    #rclone rmdirs -v "$downloadpath/$d/" --leave-root	#删除空目录，--delete-empty-src-dirs 参数已实现，加上无所谓。
+    rm -vf "$downloadpath/$d".aria2	#删除残留的.aria2文件
+    rmdir "$downloadpath/$d"
+    echo result: $?
+    exit 0
+fi
+```
+
+a="123"
+b="123/4/125/1236"
+c=${b#$a/}
+d=${c%%/*}
+
+[shell中#*,##*,#*,##*,% *,%% *的含义及用法 - jiezi2016的博客 - CSDN博客](https://blog.csdn.net/jiezi2016/article/details/79649382)
 
 ## 參考來源
 
