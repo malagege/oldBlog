@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近忘記這篇Controb排程設定 « 進擊的程式新手之前下的指令要怎麼用所以記錄一下以免在次花一堆時間查詢1sudo -u debian-transmission crontab -e">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-04-03T18:19:33.409Z">
+<meta property="og:updated_time" content="2019-10-24T13:29:16.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Linux]切換使用者筆記">
 <meta name="twitter:description" content="最近忘記這篇Controb排程設定 « 進擊的程式新手之前下的指令要怎麼用所以記錄一下以免在次花一堆時間查詢1sudo -u debian-transmission crontab -e">
@@ -427,7 +427,24 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# su [-lm] [-c 指令] [username]</span><br><span class="line">選項與參數：</span><br><span class="line">-   ：單純使用 - 如『 su - 』代表使用 login-shell 的變數檔案讀取方式來登入系統；</span><br><span class="line">      若使用者名稱沒有加上去，則代表切換為 root 的身份。</span><br><span class="line">-l  ：與 - 類似，但後面需要加欲切換的使用者帳號！也是 login-shell 的方式。</span><br><span class="line">-m  ：-m 與 -p 是一樣的，表示『使用目前的環境設定，而不讀取新使用者的設定檔』</span><br><span class="line">-c  ：僅進行一次指令，所以 -c 後面可以加上指令喔！</span><br></pre></td></tr></table></figure>
 <p>先<code>sudo -i</code>進入root權限，再下<code>su -m debian-transmission</code>指令就可以進去shell介面</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@study ~]# sudo [-b] [-u 新使用者帳號]</span><br><span class="line">選項與參數：</span><br><span class="line">-b  ：將後續的指令放到背景中讓系統自行執行，而不與目前的 shell 產生影響</span><br><span class="line">-u  ：後面可以接欲切換的使用者，若無此項則代表切換身份為 root 。</span><br></pre></td></tr></table></figure>
-<p>參考來源:<br><a href="http://linux.vbird.org/linux_basic/0410accountmanager.php#userswitch" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – 第十三章、Linux 帳號管理與 ACL 權限設定</a></p>
+<p><strong>2019-10-24</strong></p>
+<h2 id="切換使用者-帳號-方法"><a href="#切換使用者-帳號-方法" class="headerlink" title="切換使用者(帳號)方法"></a>切換使用者(帳號)方法</h2><blockquote>
+<p>先<code>sudo -i</code>進入root權限，再下<code>su -m debian-transmission</code>指令就可以進去shell介面</p>
+</blockquote>
+<p>除了這招，最近 docker 執行 cmd 的方法讓我想到一個方法<code>sudo -u debian-transmission bash</code></p>
+<h2 id="newgrp-groups"><a href="#newgrp-groups" class="headerlink" title="newgrp, groups"></a>newgrp, groups</h2><p>之前有紀錄 <a href="https://malagege.github.io/blog/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/">Linux 利用 usermod 修改使用者的參數和資料 | 程式狂想筆記</a><br>但當時還菜<del>現在也很菜</del><br>沒有紀錄很完整</p>
+<p>例如剛剛安裝完 docker<br>只能用 root 方法去執行<br>如果想把一般 user 使用 docker 方法，就把 user 加到 docker 使用者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -G docker -a testuser</span><br></pre></td></tr></table></figure>
+<p><a href="https://ephrain.net/docker-%E4%BD%BF%E7%94%A8%E9%9D%9E-root-%E6%AC%8A%E9%99%90%E4%BE%86%E5%9F%B7%E8%A1%8C-docker-client/" target="_blank" rel="noopener">[Docker] 使用非 root 權限來執行 docker client | EPH 的程式日記</a><br>例如這個</p>
+<p>要重開 bash 或 <code>newgrp docker</code>可以使用<br><del>當年就是看太快，想說奇怪怎麼沒用</del></p>
+<p>詳細講一下 newgrp docker，其實我覺得他有點向開一個新 bash<br>如果很難懂看下面應該很好懂<br>groups 第一個就是目前群組</p>
+<blockquote>
+<p>newgrp 切換群組<br>此為帳號和群組管理相關的指令, newgrp 指令類似 login 以相同的帳號登入另一個群組,以指令 exit 又回到原群組。<br>$ groups ←列出有那些有群組成員<br>frank marketing ←有效群組(effective group)目前為〝frank〞(列在前的為有效群組)<br>$ newgrp marketing ←登入〝marketing〞群組<br>$ groups ←驗證有無登入另一個群組<br>marketing frank ←有效群組變〝marketing〞了<br>$ exit ←回原群組<br>$ groups ←驗證看看<br>frank marketing<br>參考 <a href="http://www.polish.url.tw/inst/newgrp.html" target="_blank" rel="noopener">阿旺的 Linux 開竅手冊 newgrp 指令</a></p>
+</blockquote>
+<p>再看<a href="http://c.biancheng.net/view/860.html" target="_blank" rel="noopener">Linux newgrp命令用法详解：切换用户的有效组</a>圖 1 newgrp 切換初始組程序運行過程圖<br>應該可以更清楚了解</p>
+<h2 id="我想的管理帳號方法"><a href="#我想的管理帳號方法" class="headerlink" title="我想的管理帳號方法"></a>我想的管理帳號方法</h2><p>Transmission 會建立 debian-transmission 帳號。<br>Docker 會建立 docker 帳號。</p>
+<p>所以一個應用程式獨立一個帳號<br>然後利用加群組方式授權帳號<br>可以算是一個管理模式<br>這樣不用再注意777的問題</p>
+<p>參考來源:<br><a href="http://linux.vbird.org/linux_basic/0410accountmanager.php#userswitch" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – 第十三章、Linux 帳號管理與 ACL 權限設定</a><br><a href="https://linux.cn/article-11399-1.html" target="_blank" rel="noopener">技术|chgrp 和 newgrp 命令简介</a></p>
 
       
     </div>
@@ -544,8 +561,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -560,7 +586,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">430</span>
+                  <span class="site-state-item-count">436</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -582,7 +608,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">363</span>
+                  <span class="site-state-item-count">371</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -615,6 +641,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#切換使用者-帳號-方法"><span class="nav-number">1.</span> <span class="nav-text">切換使用者(帳號)方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newgrp-groups"><span class="nav-number">2.</span> <span class="nav-text">newgrp, groups</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我想的管理帳號方法"><span class="nav-number">3.</span> <span class="nav-text">我想的管理帳號方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

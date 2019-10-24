@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="xml,vscode,bash,">
+  <meta name="keywords" content="bash,xml,vscode,">
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="最近做 Digital Data Exchange 介接資料XML 平常是會用，有知道一些 Library 可以解析裡面資料但進階的 xpath 平常沒有什麼用到就找找看有什麼實用工具讓未來 debug 有更快的方法">
-<meta name="keywords" content="xml,vscode,bash">
+<meta name="keywords" content="bash,xml,vscode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XML 好用的查詢工具">
 <meta property="og:url" content="https://malagege.github.io/blog/2019/09/05/XML-好用的查詢工具/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近做 Digital Data Exchange 介接資料XML 平常是會用，有知道一些 Library 可以解析裡面資料但進階的 xpath 平常沒有什麼用到就找找看有什麼實用工具讓未來 debug 有更快的方法">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-09-09T16:06:09.254Z">
+<meta property="og:updated_time" content="2019-10-15T16:08:41.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML 好用的查詢工具">
 <meta name="twitter:description" content="最近做 Digital Data Exchange 介接資料XML 平常是會用，有知道一些 Library 可以解析裡面資料但進階的 xpath 平常沒有什麼用到就找找看有什麼實用工具讓未來 debug 有更快的方法">
@@ -450,6 +450,14 @@
 <li><a href="https://www.cnblogs.com/backlion/p/8554749.html" target="_blank" rel="noopener">xpath注入详解 - 渗透测试中心 - 博客园</a></li>
 <li><a href="https://cythilya.github.io/2017/12/16/nightwatch-xpath/" target="_blank" rel="noopener">Nightwatch101 #6：使用 Xpath 定位網頁元素 | Summer。桑莫。夏天</a></li>
 </ul>
+<p><strong>2019-10-02</strong></p>
+<p>xpath 可以寫這麼複雜<br>但要記得<code>[]</code>比對資料要帶<code>&quot;</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DataReference[text()=//ShowArtist[@SequenceNumber="1"]/ArtistDataReference]</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xpather.com/" target="_blank" rel="noopener">XPath online real-time tester, evaluator and generator for XML &amp; HTML</a><br><a href="https://doc.phpspider.org/xpath.html" target="_blank" rel="noopener">爬虫进阶开发——xpath选择器常见用法 · phpspider开发文档</a><br><a href="http://blog.chenpeng.info/html/2375" target="_blank" rel="noopener">在 xml.value 中, XPath中使用 text() 函数的重要性 | 陈鹏个人博客</a></p>
+<p>relative path ./<br>/<br>//xxxx[xxxx[xxxx=sss]]=//xxxx[xxxx]/</p>
+<p>domxpath</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$xpath = <span class="keyword">new</span> \DOMXpath(<span class="keyword">$this</span>-&gt;xml); <span class="comment">// 這邊 xml 是放 DOMDocument</span></span><br><span class="line">$query=<span class="string">"xxxx/oooo[1]/vvvvv/ddd"</span>; <span class="comment">// relative ??</span></span><br><span class="line"><span class="comment">// 目前看到官網也有類似相關範例</span></span><br><span class="line"><span class="comment">// 我的認知 Xpath 前面都要有 // or /</span></span><br><span class="line"><span class="comment">// 這邊應該都是從 root 開始</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$node = $xpath-&gt;query($query)-&gt;item(<span class="number">0</span>);</span><br><span class="line">$node = !<span class="keyword">empty</span>($node) ? trim($node-&gt;nodeValue) : <span class="string">''</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> ($dates <span class="keyword">as</span> $key =&gt; $a_node) &#123;</span><br><span class="line">    <span class="keyword">foreach</span> ($a_node-&gt;childNodes <span class="keyword">as</span> $value) &#123;</span><br><span class="line">        <span class="keyword">if</span> ($value-&gt;nodeName == <span class="string">'xxxx'</span>) &#123;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>這邊注意 SimpleXML 跟 domxpath 完全沒什麼關係<br>我目前看法這些應該是兩個不同 Library<br>所以用法也不太一樣<br>domxpath 回傳東西很像 Javascript 的 Node<br>記得 domxpath 抓</p>
+<p>看起來很不錯套件<a href="https://github.com/servo-php/fluidxml" target="_blank" rel="noopener">servo-php/fluidxml: FluidXML, the PHP library for manipulating XML with a concise and fluent API.</a></p>
 
       
     </div>
@@ -467,11 +475,11 @@
       
         <div class="post-tags">
           
+            <a href="/blog/tags/bash/" rel="tag"># bash</a>
+          
             <a href="/blog/tags/xml/" rel="tag"># xml</a>
           
             <a href="/blog/tags/vscode/" rel="tag"># vscode</a>
-          
-            <a href="/blog/tags/bash/" rel="tag"># bash</a>
           
         </div>
       
@@ -591,7 +599,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">430</span>
+                  <span class="site-state-item-count">436</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -613,7 +621,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">363</span>
+                  <span class="site-state-item-count">371</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

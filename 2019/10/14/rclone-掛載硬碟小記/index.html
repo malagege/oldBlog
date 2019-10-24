@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,rclone,gdrive,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近公司有用 gcsfuse 做硬碟掛載突然想到之前有看到使用 rclone 的文章今天就小式了一下">
+<meta name="keywords" content="linux,rclone,gdrive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rclone 掛載硬碟小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/10/14/rclone-掛載硬碟小記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近公司有用 gcsfuse 做硬碟掛載突然想到之前有看到使用 rclone 的文章今天就小式了一下">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2019-10-24T14:35:56.214Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rclone 掛載硬碟小記">
+<meta name="twitter:description" content="最近公司有用 gcsfuse 做硬碟掛載突然想到之前有看到使用 rclone 的文章今天就小式了一下">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/10/14/rclone-掛載硬碟小記/">
+
+
+
+
+
+  <title>rclone 掛載硬碟小記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/10/14/rclone-掛載硬碟小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">rclone 掛載硬碟小記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-10-14T20:58:51+08:00">
+                2019-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/10/14/rclone-掛載硬碟小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/14/rclone-掛載硬碟小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近公司有用 gcsfuse 做硬碟掛載<br>突然想到之前有看到使用 rclone 的文章<br>今天就小式了一下</p>
+<a id="more"></a>
+<h2 id="在-Window-掛載-rclone"><a href="#在-Window-掛載-rclone" class="headerlink" title="在 Window 掛載 rclone"></a>在 Window 掛載 rclone</h2><p>參考<a href="https://blog.rhilip.info/archives/874/" target="_blank" rel="noopener">使用 rclone 在 Windows 下挂载 Google 个人 / 团队云盘 - R 酱小窝</a>實作</p>
+<h3 id="下載"><a href="#下載" class="headerlink" title="下載"></a>下載</h3><p>rclone ： <a href="https://rclone.org/downloads/" target="_blank" rel="noopener">https://rclone.org/downloads/</a><br>winfsp ： <a href="http://www.secfs.net/winfsp/download/" target="_blank" rel="noopener">http://www.secfs.net/winfsp/download/</a></p>
+<p><strong>winfsp</strong>一定要安裝，這個軟體跟掛載有關係</p>
+<h2 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h2><p><code>rclone config</code></p>
+<p>參考: <a href="https://ymgblog.com/2018/03/09/296/" target="_blank" rel="noopener">Linux下rclone简单教程(支持VPS数据同步,多种网盘,支持挂载) | 半醉浮生丶</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">root@arm1:~# rclone config</span><br><span class="line">2018/06/12 15:36:43 NOTICE: Config file “/root/.config/rclone/rclone.conf” not found – using defaults</span><br><span class="line">No remotes found – make a new one</span><br><span class="line">n) New remote</span><br><span class="line">s) Set configuration password</span><br><span class="line">q) Quit config</span><br><span class="line">n/s/q&gt; n       **********************选择 n，新建配置文件</span><br><span class="line">name&gt; test       **********************输入配置的名称</span><br><span class="line">Type of storage to configure.</span><br><span class="line">Choose a number from below, or type in your own value</span><br><span class="line">1 / Alias for a existing remote</span><br><span class="line">\ “alias”</span><br><span class="line">2 / Amazon Drive</span><br><span class="line">\ “amazon cloud drive”</span><br><span class="line">3 / Amazon S3 Compliant Storage Providers (AWS, Ceph, Dreamhost, IBM COS, Minio)</span><br><span class="line">\ “s3”</span><br><span class="line">4 / Backblaze B2</span><br><span class="line">\ “b2”</span><br><span class="line">5 / Box</span><br><span class="line">\ “box”</span><br><span class="line">6 / Cache a remote</span><br><span class="line">\ “cache”</span><br><span class="line">7 / Dropbox</span><br><span class="line">\ “dropbox”</span><br><span class="line">8 / Encrypt/Decrypt a remote</span><br><span class="line">\ “crypt”</span><br><span class="line">9 / FTP Connection</span><br><span class="line">\ “ftp”</span><br><span class="line">10 / Google Cloud Storage (this is not Google Drive)</span><br><span class="line">\ “google cloud storage”</span><br><span class="line">11 / Google Drive</span><br><span class="line">\ “drive”</span><br><span class="line">12 / Hubic</span><br><span class="line">\ “hubic”</span><br><span class="line">13 / Local Disk</span><br><span class="line">\ “local”</span><br><span class="line">14 / Mega</span><br><span class="line">\ “mega”</span><br><span class="line">15 / Microsoft Azure Blob Storage</span><br><span class="line">\ “azureblob”</span><br><span class="line">16 / Microsoft OneDrive</span><br><span class="line">\ “onedrive”</span><br><span class="line">17 / Openstack Swift (Rackspace Cloud Files, Memset Memstore, OVH)</span><br><span class="line">\ “swift”</span><br><span class="line">18 / Pcloud</span><br><span class="line">\ “pcloud”</span><br><span class="line">19 / QingCloud Object Storage</span><br><span class="line">\ “qingstor”</span><br><span class="line">20 / SSH/SFTP Connection</span><br><span class="line">\ “sftp”</span><br><span class="line">21 / Webdav</span><br><span class="line">\ “webdav”</span><br><span class="line">22 / Yandex Disk</span><br><span class="line">\ “yandex”</span><br><span class="line">23 / http Connection</span><br><span class="line">\ “http”</span><br><span class="line">Storage&gt; 11       **********************这里是添加 googledrive 云盘，选择 11，当然你也可以添加其它云盘</span><br><span class="line">Google Application Client Id – leave blank normally.</span><br><span class="line">client_id&gt;       **********************回车留空即可</span><br><span class="line">Google Application Client Secret – leave blank normally.</span><br><span class="line">client_secret&gt;       **********************回车留空即可</span><br><span class="line">Scope that rclone should use when requesting access from drive.</span><br><span class="line">Choose a number from below, or type in your own value</span><br><span class="line">1 / Full access all files, excluding Application Data Folder.</span><br><span class="line">\ “drive”</span><br><span class="line">2 / Read-only access to file metadata and file contents.</span><br><span class="line">\ “drive.readonly”</span><br><span class="line">/ Access to files created by rclone only.</span><br><span class="line">3 | These are visible in the drive website.</span><br><span class="line">| File authorization is revoked when the user deauthorizes the app.</span><br><span class="line">\ “drive.file”</span><br><span class="line">/ Allows read and write access to the Application Data folder.</span><br><span class="line">4 | This is not visible in the drive website.</span><br><span class="line">\ “drive.appfolder”</span><br><span class="line">/ Allows read-only access to file metadata but</span><br><span class="line">5 | does not allow any access to read or download file content.</span><br><span class="line">\ “drive.metadata.readonly”</span><br><span class="line">scope&gt;       **********************回车留空即可，这里是云盘 API 权限的设置</span><br><span class="line">ID of the root folder – leave blank normally. Fill in to access “Computers” folders. (see docs).</span><br><span class="line">root_folder_id&gt;       **********************回车留空即可</span><br><span class="line">Service Account Credentials JSON file path – leave blank normally.</span><br><span class="line">Needed only if you want use SA instead of interactive login.</span><br><span class="line">service_account_file&gt;</span><br><span class="line">Remote config</span><br><span class="line">Use auto config?</span><br><span class="line">* Say Y if not sure</span><br><span class="line">* Say N if you are working on a remote or headless machine or Y didn’t work</span><br><span class="line">y) Yes</span><br><span class="line">n) No</span><br><span class="line">y/n&gt; n       **********************输入 n，手动配置</span><br><span class="line">If your browser doesn’t open automatically go to the following link: https://accounts.google.com/o/oauth2/auth?access_type=offline&amp;client_id=20111111644.apps.googleusercontent.com&amp;redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&amp;response_type=code&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&amp;state=1111111111111111111111       **********************在本地打开这个链接，添加 google 云盘账号授予 rclone 权限</span><br><span class="line">Log in and authorize rclone for access</span><br><span class="line">Enter verification code&gt; 4/AAC8CPF21dYWqRnNSw479Fa8dUb11111111111111111111111111E       **********************输入在浏览器获取的认证 code</span><br><span class="line">Configure this as a team drive?</span><br><span class="line">y) Yes</span><br><span class="line">n) No</span><br><span class="line">y/n&gt; y       **********************是否团队云盘，我这里是，所以选择 Y</span><br><span class="line">Fetching team drive list…</span><br><span class="line">Choose a number from below, or type in your own value</span><br><span class="line">1 / back</span><br><span class="line">\ “0AAbWF01111111111”</span><br><span class="line">2 / back2</span><br><span class="line">\ “0ABf3gOL111111111”</span><br><span class="line">Enter a Team Drive ID&gt; 1       **********************选择一个你要添加的团队云盘</span><br><span class="line">——————–</span><br><span class="line">[test]</span><br><span class="line">type = drive</span><br><span class="line">client_id =</span><br><span class="line">client_secret =</span><br><span class="line">scope =</span><br><span class="line">root_folder_id =</span><br><span class="line">service_account_file =</span><br><span class="line">token = &#123;“access_token”:”ya29.GlvY1111qGBysX4tO_V5ZSO1PZ_Kq1111111111111111fksugvyOFC-MzvAPnl1rsi3OOwMFTdkk11111111H_u5zzPRp0eB_iLzKsZOVzP3R2ee1111AVmO”,”token_type”:”Bearer”,”refresh_token”:”1/r5Q_pH11111111CV-xiMne9_w62y_ag11bT_H9zz7qc”,”expiry”:”2018-06-12T16:37:16.714510063+08:00″&#125;</span><br><span class="line">team_drive = 0AA11111111111111</span><br><span class="line">——————–</span><br><span class="line">y) Yes this is OK</span><br><span class="line">e) Edit this remote</span><br><span class="line">d) Delete this remote</span><br><span class="line">y/e/d&gt; y       **********************输入 y，配置到这里就完成了</span><br><span class="line">Current remotes:</span><br><span class="line"></span><br><span class="line">Name Type</span><br><span class="line">==== ====</span><br><span class="line">test drive</span><br><span class="line"></span><br><span class="line">e) Edit existing remote</span><br><span class="line">n) New remote</span><br><span class="line">d) Delete remote</span><br><span class="line">r) Rename remote</span><br><span class="line">c) Copy remote</span><br><span class="line">s) Set configuration password</span><br><span class="line">q) Quit config</span><br><span class="line">e/n/d/r/c/s/q&gt; q       **********************输入 q 退出即可！</span><br></pre></td></tr></table></figure></p>
+<h3 id="掛載"><a href="#掛載" class="headerlink" title="掛載"></a>掛載</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rclone mount gdrive:/ x: --cache-dir D:\tmp --vfs-cache-mode writes</span><br><span class="line"># git bash</span><br><span class="line">rclone mount gdrive:/ x: --cache-dir /d/tmp --vfs-cache-mode writes</span><br></pre></td></tr></table></figure>
+<p>不知道為什麼我的 powershell 執行失敗…<br>但用 Git bash 就可以順力執行</p>
+<h3 id="GUI"><a href="#GUI" class="headerlink" title="GUI"></a>GUI</h3><p>另外，GUI 介面:<a href="https://github.com/kapitainsky/RcloneBrowser/releases" target="_blank" rel="noopener">Releases · kapitainsky/RcloneBrowser</a><br>這個我就沒有試了</p>
+<h2 id="在-Raspberry-Pi-掛載"><a href="#在-Raspberry-Pi-掛載" class="headerlink" title="在 Raspberry Pi 掛載"></a>在 Raspberry Pi 掛載</h2><h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># raspberry pi </span></span><br><span class="line">curl -L https://raw.github.com/pageauc/rclone4pi/master/rclone-install.sh | bash</span><br><span class="line"><span class="comment"># normal(not raspberry pi)</span></span><br><span class="line">curl https://rclone.org/install.sh | sudo bash</span><br></pre></td></tr></table></figure>
+<p>有看到<code>sudo apt install rclone</code>也可以使用，我沒有測試</p>
+<p>rclone config 就不再寫了，請看上面</p>
+<h3 id="掛載-1"><a href="#掛載-1" class="headerlink" title="掛載"></a>掛載</h3><p><strong>這邊需要注意權限問題</strong></p>
+<p>假如要掛載 <code>/mnt/xxx</code> 可能未因為 <code>user</code> 權限無法掛載<br>可以使用家目錄 或者吧 <code>/mnt/xxx</code> 改成 777<br>或者切換 <code>root</code> 做 mount</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone mount --vfs-cache-mode writes --fast-list --vfs-cache-max-size 100M gdrive: /mnt/gdrive</span><br></pre></td></tr></table></figure>
+<p>有執行發現這一行不是背景執行…<br>除了用<code>&amp;</code><br>還發現有人用 tmux</p>
+<h3 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tmux # create tmux </span><br><span class="line">tmux ls # tmux ls</span><br><span class="line">tmux a -t 0# tmux session</span><br><span class="line">Ctrl+b &amp; d (關掉背景執行)</span><br></pre></td></tr></table></figure>
+<p>簡單說一下，<code>tmux</code>建立一個 session，做 mount 動做<br>這時候會發現不能做任何動作，<code>Ctrl+b &amp; d</code>會回到原始的 bash<br>再輸入<code>tmux</code>，可以做<code>cp 動作到gdrive</code> 再<code>Ctrl+b &amp; d</code><br>關掉 command line 連線都還會在<br><code>tmux ls</code>可以看到還有哪些 session 再跑</p>
+<p>因為指令不熟又不常用，之前用過的都忘了差不多<br>有空再補…</p>
+<h3 id="自動掛載"><a href="#自動掛載" class="headerlink" title="自動掛載"></a>自動掛載</h3><p>假如用網路上範例<br>路徑存放在<code>/etc/systemd/system/rclone.service</code><br>使用前建議用root掛載</p>
+<p>但聽說一般 user 也能設定<br>我沒有仔細研究<br><code>~/.config/systemd/user/rclone@.service</code></p>
+<p>改完記得要<strong>systemctl daemon-reload</strong></p>
+<p>(還沒測試)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=rclone: Remote FUSE filesystem for cloud storage config %i</span><br><span class="line">Documentation=man:rclone(1)[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStartPre=/bin/mkdir -p %h/mnt/%i</span><br><span class="line">ExecStart= \</span><br><span class="line">  /usr/bin/rclone mount \</span><br><span class="line">    --fast-list \</span><br><span class="line">    --vfs-cache-mode writes \</span><br><span class="line">    --vfs-cache-max-size 100M \</span><br><span class="line">    %i: %h/mnt/%i[Install]</span><br><span class="line">WantedBy=default.target</span><br></pre></td></tr></table></figure></p>
+<p>剛剛發現<code>--daemon</code>有這個，<del>尚未測試</del>測是這個可運作!!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=RClone Service</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/sbin/rclone mount --allow-other --dir-cache-time 48h --vfs-read-chunk-size 16M --buffer-size 2G Googlecrypt: /home/plex</span><br><span class="line">ExecStop=/bin/fusermount -uz /home/plex</span><br><span class="line">Restart=on-abort</span><br></pre></td></tr></table></figure>
+<p>最終我電腦設定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=RClone Service</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=pi</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/rclone mount --allow-root --vfs-cache-mode writes --vfs-cache-max-size 100M gdrive: /mnt/gdrive</span><br><span class="line">ExecStop=/bin/fusermount -uz /mnt/gdrive</span><br><span class="line">RestartSec=30</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure></p>
+<p>allow-root 不能用…，好像是 bug</p>
+<ul>
+<li><a href="https://forum.rclone.org/t/rclone-auto-mount/6353" target="_blank" rel="noopener">Rclone auto mount - rclone - rclone forum</a></li>
+<li><a href="https://www.jamescoyle.net/how-to/3116-rclone-systemd-startup-mount-script" target="_blank" rel="noopener">rclone Systemd startup mount script – JamesCoyle.net Limited</a></li>
+<li><a href="https://github.com/rclone/rclone/wiki/rclone-fstab-mount-helper-script" target="_blank" rel="noopener">rclone fstab mount helper script · rclone/rclone Wiki</a></li>
+<li>Restart 可參考<a href="https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html" target="_blank" rel="noopener">Systemd 入门教程：实战篇 - 阮一峰的网络日志</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Systemd_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">systemd (正體中文) - ArchWiki</a>)<h3 id="移除-rclone"><a href="#移除-rclone" class="headerlink" title="移除 rclone"></a>移除 rclone</h3></li>
+</ul>
+<p><a href="https://github.com/pageauc/rclone4pi/wiki#how-to-remove-rclone" target="_blank" rel="noopener">Home · pageauc/rclone4pi Wiki</a></p>
+<h3 id="使用-Google-Driver-注意事項"><a href="#使用-Google-Driver-注意事項" class="headerlink" title="使用 Google Driver 注意事項"></a>使用 Google Driver 注意事項</h3><ul>
+<li>1 天上傳最多 750 GB</li>
+<li>1 個檔案不能超過 100 GB</li>
+<li>不能太平凡掛載</li>
+</ul>
+<p>超過小心帳號可能會被 Ban!!</p>
+<h3 id="rsync-複製檔案顯示進度"><a href="#rsync-複製檔案顯示進度" class="headerlink" title="rsync 複製檔案顯示進度"></a>rsync 複製檔案顯示進度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -rvh --progress /mnt/ddd /mnt/gdrive</span><br></pre></td></tr></table></figure>
+<p>-r 複製資料夾記得要加上去</p>
+<p>影片不建議使用 rsync ，不知道為什麼丟到上面去，影片不會轉成線上看<br>下載檔案後面會加奇怪副檔名，所以用 <code>cp</code> 比較不會有問題</p>
+<p>後來發現<code>rclone sync xxx gd:xxx -P</code> 也能看狀態= =</p>
+<h3 id="Raspberry-PI-掛載-USB"><a href="#Raspberry-PI-掛載-USB" class="headerlink" title="Raspberry PI 掛載 USB"></a>Raspberry PI 掛載 USB</h3><p>之前有在 <a href="http://yehnan.blogspot.com/2016/05/raspberry-piusb.html" target="_blank" rel="noopener">葉難: Raspberry Pi：自動掛載USB隨身碟</a> 看到怎麼使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UUID=&quot;F840-AAE1&quot;  /media/usbstick vfat   rw,defaults 0 0</span><br></pre></td></tr></table></figure></p>
+<p>後面兩個 0 代表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    第五欄：能否被 dump 備份指令作用：</span><br><span class="line"></span><br><span class="line">dump 是一個用來做為備份的指令，不過現在有太多的備份方案了，所以這個項目可以不要理會啦！直接輸入 0 就好了！</span><br><span class="line"></span><br><span class="line">    第六欄：是否以 fsck 檢驗磁區：</span><br><span class="line"></span><br><span class="line">早期開機的流程中，會有一段時間去檢驗本機的檔案系統，看看檔案系統是否完整 (clean)。 不過這個方式使用的主要是透過 fsck 去做的，我們現在用的 xfs 檔案系統就沒有辦法適用，因為 xfs 會自己進行檢驗，不需要額外進行這個動作！所以直接填 0 就好了。</span><br></pre></td></tr></table></figure></p>
+<p>參考:<a href="http://linux.vbird.org/linux_basic/0230filesystem.php#fstab" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – 第七章、Linux 磁碟與檔案系統管理</a></p>
+<ol>
+<li>sudo fdisk -l  (查看裝置有沒有掛載)</li>
+<li>$ sudo mkdir /mnt/extHDD (建置掛載用的資料夾和權限)<br>$ sudo chown pi:pi /mnt/extHDD</li>
+<li>sudo mount -t vfat  /dev/sda1 /mnt/extHDD # (test mount) ext4的話，把 vfat 改成 ext4<br><code>-o uid=pi,gid=pi</code>我的樹梅派家這段會失敗</li>
+<li>sudo umount /dev/sda1 # 解除掛載</li>
+<li>sudo vim /etc/fstab  </li>
+<li>加入 UUID=”F840-AAE1”  /mnt/extHDD vfat   rw,defaults 0 0 #(-a, –all 掛載 fstab 中的所有文件系統)</li>
+</ol>
+<p><a href="https://www.itread01.com/content/1553540779.html" target="_blank" rel="noopener">Mount的用法詳細解析 - IT閱讀</a></p>
+<p>最近看到<a href="https://docs.aws.amazon.com/zh_tw/AWSEC2/latest/UserGuide/ebs-using-volumes.html" target="_blank" rel="noopener">使 Amazon EBS 磁碟區可供在 Linux 上使用 - Amazon Elastic Compute Cloud</a>這篇<br>UUID=aebf131c-6957-451e-8d34-ec978d9581ae  /data  xfs  defaults,<strong>nofail</strong>  0  2</p>
+<blockquote>
+<p>如果曾在不掛載此磁碟區的狀態下開機執行個體 (例如，在將磁碟區移至其他執行個體後)，nofail 掛載選項可讓執行個體繼續開機，即使在掛載磁碟區的作業出現錯誤。包括 16.04 前之 Ubuntu 版本在內的 Debian 衍生產品，也必須新增 nobootwait 掛載選項。 </p>
+</blockquote>
+<p>/usr/bin/rclone mount –allow-root –vfs-cache-mode writes –vfs-cache-max-size 100M gdrive: /mnt/gdrive<br>2019/10/16 16:15:54 mount helper error: fusermount: option allow_root only allowed if ‘user_allow_other’ is set in /etc/fuse.conf</p>
+<h3 id="systemctl-和-service-掛載的差異"><a href="#systemctl-和-service-掛載的差異" class="headerlink" title="systemctl 和 service 掛載的差異"></a>systemctl 和 service 掛載的差異</h3><p>在這次藉著學習到簡單使用 systemctl 設定服務<br>但很好奇這兩個差異</p>
+<blockquote>
+<p>systemd是Linux系統最新的初始化系統(init),作用是提高系統的啟動速度，儘可能啟動較少的進程，儘可能更多進程並發啟動。<br>systemd對應的進程管理命令是systemctl</p>
+</blockquote>
+<p>參考:<a href="https://www.cnblogs.com/shijingjing07/p/9301590.html" target="_blank" rel="noopener">Linux 服務管理兩種方式service和systemctl - 迪米特 - 博客園</a><br>裡面還有講:<code>主要有四種類型文件.mount,.service,.target,.wants</code></p>
+<p>有找到比較兩者指令差異<a href="https://blog.csdn.net/capecape/article/details/78505511" target="_blank" rel="noopener">centos7 systemctl取代service和chkconfig来实现系统管理 - cape的博客 - CSDN博客</a> <a href="/blog/2019/10/14/rclone-掛載硬碟小記/web1.png" title="備份圖">備份圖</a></p>
+<p>發現選擇 systemctl 還是能繼續用 service 指令<br>習慣改不了用 service XDD</p>
+<p>但設定上 service 設定服務需要用 chkconfig<br>用systemctl 直接 enable/disable 就能解決</p>
+<p><a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">systemd (简体中文) - ArchWiki</a>)<br><a href="https://wiki.archlinux.org/index.php/Systemd/User_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">systemd/User (简体中文) - ArchWiki</a>)</p>
+<p><code>journalctl</code> 查看 systemctl log<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#查看所有日誌（默認情況下 ，只保存本次啟動的日誌） $ sudo journalctl #查看內核日誌（不顯示應用日誌） </span><br><span class="line">$ sudo journalctl -k #查看系統本次啟動的日誌 </span><br><span class="line">$ sudo journalctl -b </span><br><span class="line">$ sudo journalctl -b -0 #查看上一次啟動的日誌（需更改設置） </span><br><span class="line">$ sudo journalctl -b -1 #查看指定時間的日誌 </span><br><span class="line">$ sudo journalctl --since=&quot;2017-09-26 22:17:16&quot; </span><br><span class="line">$ sudo journalctl --since &quot;30 min ago&quot; </span><br><span class="line">$ sudo journalctl --since yesterday </span><br><span class="line">$ sudo journalctl --since &quot;2015-01-10&quot; --until &quot;2017-01-11 03:00&quot; </span><br><span class="line">$ sudo journalctl --since 09:00 --until &quot;1 hour ago&quot; #顯示尾部的最新10行日誌 </span><br><span class="line">$ sudo journalctl -n #顯示尾部指定行數的日誌 </span><br><span class="line">$ sudo journalctl -n 50 #實時滾動顯示最新日誌 </span><br><span class="line">$ sudo journalctl -f #查看指定服務的日誌 </span><br><span class="line">$ sudo journalctl /usr/lib/systemd/systemd #查看指定進程的日誌 </span><br><span class="line">$ sudo journalctl _PID=1 #查看某個路徑的腳本的日誌 </span><br><span class="line">$ sudo journalctl /usr/bin/bash #查看指定用戶的日誌 </span><br><span class="line">$ sudo journalctl _UID=33 --since today #查看某個 Unit 的日誌 </span><br><span class="line">$ sudo journalctl -u nginx.service </span><br><span class="line">$ sudo journalctl -u nginx.service --since today #實時滾動顯示某個 Unit 的最新日誌 </span><br><span class="line">$ sudo journalctl -u nginx.service -f #合併顯示多個 Unit 的日誌 </span><br><span class="line">$ journalctl -u nginx.service -u php-fpm.service --since today #查看指定優先級（及其以上級別）的日誌，共有8級</span><br><span class="line"> # 0: emerg</span><br><span class="line"> # 1: alert</span><br><span class="line"> # 2: crit</span><br><span class="line"> # 3: err</span><br><span class="line"> # 4: warning</span><br><span class="line"> # 5: notice</span><br><span class="line"> # 6: info</span><br><span class="line"> # 7: debug </span><br><span class="line">$ sudo journalctl -p err -b #日誌默認分頁輸出，--no-pager 改為正常的標準輸出 </span><br><span class="line">$ sudo journalctl --no-pager #以 JSON 格式（單行）輸出 </span><br><span class="line">$ sudo journalctl -b -u nginx.service -o json #以 JSON 格式（多行）輸出，可讀性更好 </span><br><span class="line">$ sudo journalctl -b -u nginx.serviceqq -o json-pretty #顯示日誌占據的硬碟空間 </span><br><span class="line">$ sudo journalctl --disk-usage #指定日誌文件占據的最大空間 </span><br><span class="line">$ sudo journalctl --vacuum-size=1G #指定日誌文件保存多久 </span><br><span class="line">$ sudo journalctl --vacuum-time=1years</span><br><span class="line"></span><br><span class="line">原文網址：https://kknews.cc/code/pqyayy2.html</span><br></pre></td></tr></table></figure></p>
+<p>相關網頁</p>
+<ul>
+<li><a href="https://kknews.cc/zh-tw/code/pqyayy2.html" target="_blank" rel="noopener">systemd一種更好的啟動方式 - 每日頭條</a></li>
+<li><a href="http://linux.vbird.org/linux_basic/0560daemons.php#systemd_cfg_vsftpd" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – 第十七章、認識系統服務 (daemons)</a></li>
+<li><a href="https://blog.lilydjwg.me/2014/2/2/systemd-user-daemons.42631.html" target="_blank" rel="noopener">玩转 systemd 之用户级服务管理 - 依云’s Blog</a></li>
+</ul>
+<p>聽說一般 user 家目錄也可以做服務設定<br>這一快我就先不研究<br>改天用到再說</p>
+<h3 id="tmux-掛載方式-不建議用"><a href="#tmux-掛載方式-不建議用" class="headerlink" title="tmux 掛載方式(不建議用)"></a>tmux 掛載方式(不建議用)</h3><p>在沒知道用 systemctl 原本想使用 tmux<br>不過看起來好像能跑，但我覺得 systemctl 比較完美</p>
+<p><a href="https://gist.github.com/B-Galati/c7890f86fc2bfce0b98c5410d964727a" target="_blank" rel="noopener">tmux script example</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">tmux new-window -d -n <span class="string">'test'</span> <span class="string">'ping 127.0.0.1'</span></span><br></pre></td></tr></table></figure>
+<h2 id="tranmission"><a href="#tranmission" class="headerlink" title="tranmission"></a>tranmission</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;script-torrent-done-enabled&quot;: true,</span><br><span class="line">&quot;script-torrent-done-filename&quot;: &quot;/home/user/script.sh&quot;,</span><br></pre></td></tr></table></figure>
+<p>記得 chmod a+x /home/user/script.sh<br>裡面對印的<br>conf 也要加 777 (tranmission不同權限，或加群組權限)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 注意需要看.config/rclone 資料夾和檔案權限，需要到rx</span><br><span class="line">RCLONE_CONFIG_PATH=&quot;--config=/home/pi/.config/rclone/rclone.conf&quot;</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://gist.github.com/awesometic/253b740d45f8e5f95b56ec24f33a9444" target="_blank" rel="noopener">Transmission download complete shell script for moving complete files and removing its torrent entry</a><br><a href="https://gist.github.com/pawelszydlo/e2e1fc424f2c9d306f3a" target="_blank" rel="noopener">Script to clear finished torrents from transmission-daemon</a><br><a href="https://community.wd.com/t/guide-auto-removal-of-downloads-from-transmission-2-82/93156" target="_blank" rel="noopener">Guide : Auto removal of downloads from transmission 2.82 - My Cloud - Personal Cloud Storage / My Cloud - WD Community</a><br><a href="https://blog.longwin.com.tw/2013/05/tmux-auto-ssh-remote-2013/" target="_blank" rel="noopener">Tmux 開啟後 自動 SSH 連結多台指定機器 | Tsung’s Blog</a><br><a href="https://forum.openmediavault.org/index.php/Thread/13290-Transmission-Script-to-move-completed-downloads-to-directories-or-how-to-create/" target="_blank" rel="noopener">Transmission - Script to move completed downloads to directories, or how to create script? - Plugins - openmediavault</a><br><a href="https://superuser.com/questions/735691/copy-completed-files-larger-than-1024m-to-another-directory" target="_blank" rel="noopener">ubuntu - Copy completed files larger than 1024M to another directory - Super User</a><br><a href="https://superuser.com/questions/735691/copy-completed-files-larger-than-1024m-to-another-directory/735757#735757" target="_blank" rel="noopener">ubuntu - Copy completed files larger than 1024M to another directory - Super User</a></p>
+<p>密碼不要取驚嘆號<br><a href="https://linux.cn/article-5608-1.html" target="_blank" rel="noopener">技术|在Linux命令行下令人惊叹的惊叹号（!）</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Oct 18 23:35:12 raspberrypi transmission-daemon[13077]: 2019/10/18 23:35:12 Failed to save config after 10 tries: Failed to create temp file for new config: open /home/pi/.config/rclone/rclone.conf295018896: permission denied</span><br><span class="line">Oct 18 23:35:17 raspberrypi transmission-daemon[13077]: 2019/10/18 23:35:17 Failed to save config after 10 tries: Failed to create temp file for new config: open /home/pi/.config/rclone/rclone.conf984318943: permission denied</span><br></pre></td></tr></table></figure>
+<p>我改寫的 Script<br>有通知 discord 功能<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">DSCORD_WEBHOOK=<span class="string">"https://discordapp.com/api/webhooks/*"</span></span><br><span class="line"><span class="comment"># 需要做同步的路徑</span></span><br><span class="line">LOCAL_SYNCDIR=<span class="string">"/mnt/extHDD/Download/"</span></span><br><span class="line"><span class="comment"># RCLONE 結尾不能有 /</span></span><br><span class="line">RCLONE_SYNCDIR=<span class="string">"gdrive:/test"</span></span><br><span class="line"><span class="comment"># 注意需要看.config/rclone 資料夾和檔案權限，需要到rx</span></span><br><span class="line">RCLONE_CONFIG_PATH=<span class="string">"--config=/home/pi/.config/rclone/rclone.conf"</span></span><br><span class="line">AUTH=<span class="string">"--auth admin:admin"</span></span><br><span class="line"><span class="comment">#### debug end</span></span><br><span class="line">df -H | grep -vE <span class="string">'^Filesystem|tmpfs|cdrom|udev|已用'</span> | awk <span class="string">'&#123; print $5 " " $1 &#125;'</span> | <span class="keyword">while</span> <span class="built_in">read</span> output;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  usep=$(<span class="built_in">echo</span> <span class="variable">$output</span> | awk <span class="string">'&#123; print $1&#125;'</span> | cut -d<span class="string">'%'</span> -f1  )</span><br><span class="line">  partition=$(<span class="built_in">echo</span> <span class="variable">$output</span> | awk <span class="string">'&#123; print $2 &#125;'</span> )</span><br><span class="line">  <span class="keyword">if</span> [ <span class="variable">$usep</span> -ge 80 ]; <span class="keyword">then</span></span><br><span class="line">    msg=<span class="string">"⚠️注意快超出硬碟空間\\\"<span class="variable">$partition</span>\\\" (<span class="variable">$usep</span>%) on <span class="variable">$(hostname)</span> as on <span class="variable">$(date)</span>"</span></span><br><span class="line">    url=<span class="variable">$DSCORD_WEBHOOK</span></span><br><span class="line">    curl -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">    -X POST \</span><br><span class="line">    -d <span class="string">"&#123;\"username\": \"system\", \"content\": \"<span class="variable">$&#123;msg&#125;</span>\"&#125;"</span> <span class="variable">$url</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$TR_TORRENT_DIR</span>"</span> =~ ^<span class="string">"<span class="variable">$LOCAL_SYNCDIR</span>"</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"pass"</span></span><br><span class="line">    <span class="keyword">if</span> [ -f <span class="string">"<span class="variable">$&#123;TR_TORRENT_DIR&#125;</span>/<span class="variable">$&#123;TR_TORRENT_NAME&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">        flock -x  /tmp/rclone.lock rclone copy <span class="variable">$&#123;RCLONE_CONFIG_PATH&#125;</span> <span class="string">"<span class="variable">$&#123;TR_TORRENT_DIR&#125;</span>/<span class="variable">$&#123;TR_TORRENT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$RCLONE_SYNCDIR</span>"</span></span><br><span class="line">        rclone check <span class="variable">$&#123;RCLONE_CONFIG_PATH&#125;</span> <span class="string">"<span class="variable">$&#123;TR_TORRENT_DIR&#125;</span>/<span class="variable">$&#123;TR_TORRENT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$RCLONE_SYNCDIR</span>"</span></span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        flock -x  /tmp/rclone.lock rclone copy <span class="variable">$&#123;RCLONE_CONFIG_PATH&#125;</span> <span class="string">"<span class="variable">$&#123;TR_TORRENT_DIR&#125;</span>/<span class="variable">$&#123;TR_TORRENT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$RCLONE_SYNCDIR</span>/<span class="variable">$&#123;TR_TORRENT_NAME&#125;</span>"</span></span><br><span class="line">        rclone check <span class="variable">$&#123;RCLONE_CONFIG_PATH&#125;</span> <span class="string">"<span class="variable">$&#123;TR_TORRENT_DIR&#125;</span>/<span class="variable">$&#123;TR_TORRENT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$RCLONE_SYNCDIR</span>/<span class="variable">$&#123;TR_TORRENT_NAME&#125;</span>"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> [ $? -eq 0 ]; <span class="keyword">then</span></span><br><span class="line">        msg=<span class="string">"✅ <span class="variable">$TR_TORRENT_NAME</span> 完成下載，並完成同步"</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$msg</span></span><br><span class="line">        url=<span class="variable">$DSCORD_WEBHOOK</span></span><br><span class="line">        curl -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">        -X POST \</span><br><span class="line">        -d <span class="string">"&#123;\"username\": \"system\", \"content\": \"<span class="variable">$&#123;msg&#125;</span>\"&#125;"</span> <span class="variable">$url</span></span><br><span class="line">        transmission-remote <span class="variable">$AUTH</span> -t <span class="variable">$TR_TORRENT_ID</span> --remove-and-delete</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"FAIL"</span></span><br><span class="line">        msg=<span class="string">"⚠️ <span class="variable">$TR_TORRENT_NAME</span> 完成下載，但同步失敗"</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$msg</span></span><br><span class="line">        url=<span class="variable">$DSCORD_WEBHOOK</span></span><br><span class="line">        curl -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">        -X POST \</span><br><span class="line">        -d <span class="string">"&#123;\"username\": \"system\", \"content\": \"<span class="variable">$&#123;msg&#125;</span>\"&#125;"</span> <span class="variable">$url</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"✅<span class="variable">$TR_TORRENT_NAME</span> 完成下載，不需要做同步"</span></span><br><span class="line">    msg=<span class="string">"✅<span class="variable">$TR_TORRENT_NAME</span> 完成下載，不需要做同步"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$msg</span></span><br><span class="line">    url=<span class="variable">$DSCORD_WEBHOOK</span></span><br><span class="line">    curl -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">    -X POST \</span><br><span class="line">    -d <span class="string">"&#123;\"username\": \"system\", \"content\": \"<span class="variable">$&#123;msg&#125;</span>\"&#125;"</span> <span class="variable">$url</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="aria2-不建議使用"><a href="#aria2-不建議使用" class="headerlink" title="aria2(不建議使用)"></a>aria2(不建議使用)</h3><p>除非你想用…</p>
+<p>安裝方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/aria2.sh &amp;&amp; chmod +x aria2.sh &amp;&amp; bash aria2.sh</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://doubibackup.com/zuigoj__.html?fbclid=IwAR22FvWyZjXt8qwW2IQfYGOPbmewh6kyRpqvxSX3Zd0aWKJQAx1p777hOCo" target="_blank" rel="noopener">『原创』BT/种子/磁力链接下载工具 —— Aria2 一键安装管理脚本 | 逗比根据地</a><br>但說真的這個腳本整合超好的</p>
+<p>幫我同學用的<br>結果用別人 Script 搬到 rclone 不能正常<br>所以自己改寫，可能有 bug<br>請自行修</p>
+<p>有看到 *.aria2 檔案有刪除<br>重開機有時候回重新載(然後aira2檔案又會出現…)<br>不知道是不是用 aria2 會有這樣問題?</p>
+<p>$3 不是傳資料夾位址<br>所以在查哪個資料夾會不太方便<br>所以檔案一定要下載在 downloadpath 才會做上傳動作</p>
+<p>Script 是參考這個網站<br>但好像連不到了(在我寫這篇前幾天掛掉…)<br><a href="https://webcache.googleusercontent.com/search?q=cache:f9-JvXWtHC0J:https://blog.codesofun.com/aria2-rclone-faq.html+&amp;cd=7&amp;hl=zh-TW&amp;ct=clnk&amp;gl=tw&amp;client=firefox-b-d" target="_blank" rel="noopener">使用 Aria2 + rclone 遇到的一些问题 | 代码真香</a><br>備份到 <a href="https://next.plnkr.co/edit/DOfCgSvBCebpklXE?preview" target="_blank" rel="noopener">Plunker - demo script</a><br>Youtube 還活著 <a href="https://www.youtube.com/channel/UCmlhPmTdqYhRWwWZWSIBwGw?feature=embeds_subscribe_title" target="_blank" rel="noopener">代码真香 - YouTube</a></p>
+<p>目前 $3 是傳第一個檔案內容<br>這邊就跟 tranmission 不太一樣，tranmission 給的參數比較完整<br>發現原 Script 會複製全部目錄到 rclone 去<br>這樣多線程下載的檔案會有問題<br>所以依照來看，舊的 Script 應該是 <strong>1線程</strong> 下載 (它裡面網頁沒寫…，不過看他網頁寫 VPS 10GB 看來是有可能的….)</p>
+<p>因為我不熟 shell ，以下用的出事不要找我XD</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">filepath=<span class="variable">$3</span>	 <span class="comment">#取文件原始路径，如果是单文件则为/Download/a.mp4，如果是文件夹则该值为文件夹内第一个文件比如/Download/a/1.mp4</span></span><br><span class="line">path=<span class="variable">$&#123;3%/*&#125;</span>	 <span class="comment">#取文件根路径，如把/Download/a/1.mp4变成/Download/a</span></span><br><span class="line">downloadpath=<span class="string">'/media/download'</span>	<span class="comment">#Aria2下载目录</span></span><br><span class="line">name=<span class="string">'gdrive'</span> <span class="comment">#配置Rclone时的name</span></span><br><span class="line">folder=<span class="string">'/test2'</span>	 <span class="comment">#网盘里的文件夹，如果是根目录直接留空</span></span><br><span class="line">MinSize=<span class="string">'10k'</span>	 <span class="comment">#限制最低上传大小，默认10k，BT下载时可防止上传其他无用文件。会删除文件，谨慎设置。</span></span><br><span class="line">MaxSize=<span class="string">'15G'</span>	 <span class="comment">#限制最高文件大小，默认15G，OneDrive上传限制。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$2</span> -eq 0 ]; <span class="keyword">then</span> <span class="built_in">exit</span> 0; <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ `dirname <span class="string">"<span class="variable">$filepath</span>"</span>` =  <span class="string">"<span class="variable">$downloadpath</span>"</span> ] &amp;&amp; [ <span class="variable">$2</span> -eq 1 ]	<span class="comment">#如果下载的是单个文件</span></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"enter 1"</span> </span><br><span class="line">    rclone move -v <span class="string">"<span class="variable">$filepath</span>"</span> <span class="variable">$&#123;name&#125;</span>:<span class="variable">$&#123;folder&#125;</span> --min-size <span class="variable">$MinSize</span> --max-size <span class="variable">$MaxSize</span></span><br><span class="line">    rm -vf <span class="string">"<span class="variable">$filepath</span>"</span>.aria2	<span class="comment">#删除残留的.aria.2文件</span></span><br><span class="line">    <span class="built_in">echo</span> result: $?</span><br><span class="line">    <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">elif</span> [[ <span class="string">"<span class="variable">$path</span>"</span> =~ ^<span class="string">"<span class="variable">$downloadpath</span>"</span> ]]	<span class="comment">#如果下载的是文件夹</span></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"enter 2"</span></span><br><span class="line">    <span class="built_in">echo</span> path_length <span class="variable">$&#123;#path&#125;</span></span><br><span class="line"></span><br><span class="line">    a=<span class="variable">$downloadpath</span></span><br><span class="line">    b=<span class="string">"<span class="variable">$filepath</span>"</span></span><br><span class="line">    c=<span class="variable">$&#123;b#$a/&#125;</span></span><br><span class="line">    d=<span class="variable">$&#123;c%%/*&#125;</span></span><br><span class="line">    <span class="built_in">echo</span> d = <span class="variable">$d</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$path</span>/<span class="variable">$d</span>/</span><br><span class="line"></span><br><span class="line">    rclone move -v <span class="string">"<span class="variable">$downloadpath</span>/<span class="variable">$d</span>/"</span> <span class="variable">$&#123;name&#125;</span>:/<span class="variable">$&#123;folder&#125;</span>/<span class="string">"<span class="variable">$&#123;d&#125;</span>"</span> --min-size <span class="variable">$MinSize</span> --max-size <span class="variable">$MaxSize</span> --delete-empty-src-dirs</span><br><span class="line">    <span class="comment">#rclone delete -v "$downloadpath/$d/" --max-size $MinSize	#删除多余的文件</span></span><br><span class="line">    <span class="comment">#rclone rmdirs -v "$downloadpath/$d/" --leave-root	#删除空目录，--delete-empty-src-dirs 参数已实现，加上无所谓。</span></span><br><span class="line">    rm -vf <span class="string">"<span class="variable">$downloadpath</span>/<span class="variable">$d</span>"</span>.aria2	<span class="comment">#删除残留的.aria2文件</span></span><br><span class="line">    rmdir <span class="string">"<span class="variable">$downloadpath</span>/<span class="variable">$d</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> result: $?</span><br><span class="line">    <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>a=”123”<br>b=”123/4/125/1236”<br>c=${b#$a/}<br>d=${c%%/*}</p>
+<p><a href="https://blog.csdn.net/jiezi2016/article/details/79649382" target="_blank" rel="noopener">shell中#<em>,##</em>,#<em>,##</em>,% <em>,%% </em>的含义及用法 - jiezi2016的博客 - CSDN博客</a></p>
+<h2 id="參考來源"><a href="#參考來源" class="headerlink" title="參考來源"></a>參考來源</h2><ul>
+<li><a href="https://ymgblog.com/2018/03/09/296/" target="_blank" rel="noopener">Linux下rclone简单教程(支持VPS数据同步,多种网盘,支持挂载) | 半醉浮生丶</a></li>
+<li><a href="https://www.jeffgeerling.com/blog/2019/raspberry-pi-microsd-card-performance-comparison-2019" target="_blank" rel="noopener">Raspberry Pi microSD card performance comparison - 2019 | Jeff Geerling</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/31004760" target="_blank" rel="noopener">树莓派raspberrypi3打造homeassistant+homebridge智能家居中心（homekit） - 知乎</a></li>
+<li><a href="https://raspberrypi.stackexchange.com/questions/63586/how-to-set-vnc-security-settings-using-ssh-no-security-types-supported-server" target="_blank" rel="noopener">raspbian - How to set VNC security settings using SSH? <code>No security types supported. Server sent security types, but we do not support any of them</code> - Raspberry Pi Stack Exchange</a></li>
+<li><a href="https://www.moerats.com/archives/877/" target="_blank" rel="noopener">解决Rclone挂载Google Drive时上传失败和内存占用高等问题 - Rat’s Blog</a></li>
+<li><a href="https://blog.e9china.net/lesson/liyongaria2nginxrclonewanchengwuxiandianyingyingpan.html" target="_blank" rel="noopener">利用Aria2+Nginx+rclone完成无限电影硬盘 | Sandy’Blog</a></li>
+<li><a href="https://wijtb.nctu.me/archives/153/" target="_blank" rel="noopener">Plex + Rclone 掛載 Google drive 搭建多媒體伺服器 - WIJ Blog</a></li>
+<li><a href="https://ak77now.pixnet.net/blog/post/45722625-mount-google-drive-on-nas-with-rclone" target="_blank" rel="noopener">[筆記]將Google Drive掛載到NAS上(用rclone) @ 老電影下載 [ Old Movies ] :: 痞客邦 ::</a></li>
+<li><a href="https://blog.rhilip.info/archives/874/" target="_blank" rel="noopener">使用 rclone 在 Windows 下挂载 Google 个人 / 团队云盘 - R 酱小窝</a></li>
+<li><a href="https://www.zrj96.com/post-520.html" target="_blank" rel="noopener">【转载】Rclone: 超好用的网盘 / VPS 数据同步、备份工具，支持 Google Drive | 初行博客</a></li>
+<li><a href="https://p3terx.com/archives/rclone-advanced-user-manual-common-command-parameters.html" target="_blank" rel="noopener">Rclone 进阶使用教程：常用命令参数详解 - P3TERX ZONE - Zhuangbility &amp; Technology</a></li>
+<li><a href="https://www.ptt.cc/bbs/Free_box/M.1529958022.A.295.html" target="_blank" rel="noopener">[心得] Rclone Browser教學 - 看板 Free_box - 批踢踢實業坊</a></li>
+<li><a href="https://www.screenly.io/blog/2017/07/02/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi/" target="_blank" rel="noopener">Screenly - How to automatically turn off and on your monitor from your Raspberry Pi</a></li>
+<li><a href="https://asmcn.icopy.site/awesome/awesome-raspberry-pi/" target="_blank" rel="noopener">Raspberry Pi - 超赞合集 awesome list chinese</a></li>
+<li><a href="https://github.com/ronggang/transmission-web-control/wiki/About-script-torrent-done-filename" target="_blank" rel="noopener">About script torrent done filename · ronggang/transmission-web-control Wiki</a></li>
+<li><a href="https://github.com/transmission/transmission/wiki/Scripts" target="_blank" rel="noopener">Scripts · transmission/transmission Wiki</a></li>
+<li><a href="https://learn-house.idv.tw/?p=2340" target="_blank" rel="noopener">LearnHouse » Blog Archive » [Raspberry Pi 3]開機自動掛載 USB 隨身碟或外接硬碟</a></li>
+<li><a href="https://hackmd.io/@Pingu/SyZ1Pq7mQ/https%3A%2F%2Fhackmd.io%2Fs%2FSyP9NaGpm%23?type=book" target="_blank" rel="noopener">伺服器架設/防火牆建置 - HackMD</a></li>
+<li><a href="http://blog.ipushs.com/codeigniter%e7%94%a8chromephp%e4%be%86debugphp/" target="_blank" rel="noopener">CodeIgniter用ChromePHP來debug[PHP] | 敲敲打打的生活</a></li>
+<li><a href="https://stackoverflow.com/questions/49513335/bash-wait-exit-on-error-code" target="_blank" rel="noopener">bash wait exit on error code - Stack Overflow</a></li>
+<li><a href="https://medium.com/@artur.klauser/mounting-google-drive-on-raspberry-pi-f5002c7095c2" target="_blank" rel="noopener">Mounting Google Drive on Raspberry Pi - Artur Klauser - Medium</a></li>
+<li><a href="https://0xhack.wordpress.com/2019/02/27/google-drive-%E7%9B%B8%E4%BA%92%E8%A4%87%E8%A3%BD-%E5%B0%8D%E6%8B%B7/" target="_blank" rel="noopener">Google Drive 相互複製 對拷 – BunnyBit 比特小兔兔</a></li>
+<li><a href="https://rclone.org/docs/#bwlimit-bandwidth-spec" target="_blank" rel="noopener">Documentation</a> 限速??待確認</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/blog/tags/rclone/" rel="tag"># rclone</a>
+          
+            <a href="/blog/tags/gdrive/" rel="tag"># gdrive</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/10/05/在-Linux-設定排程超過執行時間-kill-掉方法/" rel="next" title="在 Linux 設定排程超過執行時間 kill 掉方法">
+                <i class="fa fa-chevron-left"></i> 在 Linux 設定排程超過執行時間 kill 掉方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/10/18/Bash-和-sh-是不一樣的東西/" rel="prev" title="Bash 和 sh 是不一樣的東西">
+                Bash 和 sh 是不一樣的東西 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">436</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">371</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在-Window-掛載-rclone"><span class="nav-number">1.</span> <span class="nav-text">在 Window 掛載 rclone</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下載"><span class="nav-number">1.1.</span> <span class="nav-text">下載</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定"><span class="nav-number">2.</span> <span class="nav-text">設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#掛載"><span class="nav-number">2.1.</span> <span class="nav-text">掛載</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GUI"><span class="nav-number">2.2.</span> <span class="nav-text">GUI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-Raspberry-Pi-掛載"><span class="nav-number">3.</span> <span class="nav-text">在 Raspberry Pi 掛載</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝"><span class="nav-number">3.1.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#掛載-1"><span class="nav-number">3.2.</span> <span class="nav-text">掛載</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tmux"><span class="nav-number">3.3.</span> <span class="nav-text">Tmux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自動掛載"><span class="nav-number">3.4.</span> <span class="nav-text">自動掛載</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除-rclone"><span class="nav-number">3.5.</span> <span class="nav-text">移除 rclone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Google-Driver-注意事項"><span class="nav-number">3.6.</span> <span class="nav-text">使用 Google Driver 注意事項</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rsync-複製檔案顯示進度"><span class="nav-number">3.7.</span> <span class="nav-text">rsync 複製檔案顯示進度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Raspberry-PI-掛載-USB"><span class="nav-number">3.8.</span> <span class="nav-text">Raspberry PI 掛載 USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemctl-和-service-掛載的差異"><span class="nav-number">3.9.</span> <span class="nav-text">systemctl 和 service 掛載的差異</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tmux-掛載方式-不建議用"><span class="nav-number">3.10.</span> <span class="nav-text">tmux 掛載方式(不建議用)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tranmission"><span class="nav-number">4.</span> <span class="nav-text">tranmission</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#aria2-不建議使用"><span class="nav-number">4.1.</span> <span class="nav-text">aria2(不建議使用)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參考來源"><span class="nav-number">5.</span> <span class="nav-text">參考來源</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/10/14/rclone-掛載硬碟小記/';
+          this.page.identifier = '2019/10/14/rclone-掛載硬碟小記/';
+          this.page.title = 'rclone 掛載硬碟小記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
