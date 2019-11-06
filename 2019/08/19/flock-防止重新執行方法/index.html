@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="印象中以前寫 PHP 有用過 flock但這只用在簡單 PHP 上面最近看到flock指令突然想啟以前寫 PHP有用過這個">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-10-01T14:46:45.793Z">
+<meta property="og:updated_time" content="2019-10-26T15:41:33.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flock 防止重新執行方法">
 <meta name="twitter:description" content="印象中以前寫 PHP 有用過 flock但這只用在簡單 PHP 上面最近看到flock指令突然想啟以前寫 PHP有用過這個">
@@ -456,6 +456,22 @@
 <p>我覺得善用這個特性，寫排成會非常方便<br>印象中有看過程式適用<code>ps</code>去看關鍵字找東西<br>但透過這個真的會很方便，又不用寫程式!!!</p>
 <p>更多設定方法可參考 <a href="https://blog.gtwang.org/linux/prevent-shell-script-duplicate-executions/" target="_blank" rel="noopener">Linux 防止 Shell 指令稿重複執行教學 - G. T. Wang</a> <a href="/blog/2019/08/19/flock-防止重新執行方法/web2.png" title="備份圖">備份圖</a></p>
 <p><strong>2019-10-01</strong><br>找到查看 lock 檔案方法<br><a href="https://ephrain.net/linux-%E4%BD%BF%E7%94%A8-lsof-lslocks-fuser-%E6%8C%87%E4%BB%A4%E5%88%97%E5%87%BA%E7%9B%AE%E5%89%8D%E9%8E%96%E5%AE%9A%E4%B8%AD%E7%9A%84-file-locks/" target="_blank" rel="noopener">[Linux] 使用 lsof, lslocks, fuser 指令列出目前鎖定中的 file locks | EPH 的程式日記</a><br><a href="https://unix.stackexchange.com/questions/85994/how-to-list-processes-locking-file" target="_blank" rel="noopener">process - How to list processes locking file? - Unix &amp; Linux Stack Exchange</a></p>
+<p><strong>2019-10-26</strong></p>
+<p>最近上了 Swoole 課程<br>最近用 rclone 寫 tranmission 腳本<br>使用 flock 防止重覆執行<br>沒有預到問題<br>但最近我也觀查到 rclone 上傳的時候<br><del>會開很多<code>子程序</code></del> 結果是執行緒<br><del>但我沒有預到什麼問題</del> 結果是執行緒 😜</p>
+<p>在上 swoole 裡面有提到子程序 fork 主程序<br>這時候主程序會跟子程序變數做隔離<br><del>但我很好奇 flock 竟然能讓子程序繼續運作</del> 結果是執行緒 🤷‍<br>但我覺得 flock 沒辦法測試子程序執行狀況，畢竟是用 flock 指令</p>
+<p>上面再搞笑 orz，還好有翻到這篇<br>補充一下， n 個 thread 都在同一個 process<br>所以算同一個程序，應該不會有 lock 問題<br>剛剛看到<a href="https://ithelp.ithome.com.tw/questions/10194441?sc=rss.qu" target="_blank" rel="noopener">Ununtu htop - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><br><del>瞬間被打臉</del>，原來綠色不是子程序，但為什麼會有獨立的 PID?</p>
+<blockquote>
+<p>綠色字的是 Thread ，你可以在 Setup -&gt; Display options -&gt; Hide userland process thread 選項做調整，看你要不要顯示<br>另外你也可以按 F5 切換 Tree view ，這樣就可以明確的看出來那些綠字的 thread 是屬於哪個 process 的</p>
+</blockquote>
+<p>最後有看到比較詳細的介紹<a href="https://medium.com/@petertc/thread-and-signal-in-linux-4f2038d18fd" target="_blank" rel="noopener">[筆記]Linux的thread和signal - petertc - Medium</a> <a href="/blog/2019/08/19/flock-防止重新執行方法/web4.png" title="備份圖">備份圖</a></p>
+<blockquote>
+<p>同process的thread會有相同的process id，且個別有thread id。對於multithread的process，process id又稱為thread group id<br>…<br>圖中Command欄位是綠色代表這是一個thread，其PID欄位值其實是thread id。圖中ipython共有有三個thread（一個leader, 兩個member）</p>
+</blockquote>
+<p>原來是我誤會大了!!難怪怎麼對 thread 做 kill 沒有效果<br>更多 process 介紹可以看這篇<a href="https://medium.com/@petertc/session-process-group-and-signal-in-linux-7fbe85c0b0c5" target="_blank" rel="noopener">[筆記]Linux的process和signal - petertc - Medium</a></p>
+<p>因為我在 Raspberry PI 觀察<br><a href="https://ephrain.net/linux-%E4%BD%BF%E7%94%A8-lsof-lslocks-fuser-%E6%8C%87%E4%BB%A4%E5%88%97%E5%87%BA%E7%9B%AE%E5%89%8D%E9%8E%96%E5%AE%9A%E4%B8%AD%E7%9A%84-file-locks/" target="_blank" rel="noopener">[Linux] 使用 lsof, lslocks, fuser 指令列出目前鎖定中的 file locks | EPH 的程式日記</a><br>預設沒有使用 lsof 所以就不測試了<br>lslock<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">COMMAND           PID  TYPE SIZE MODE  M START END PATH</span><br><span class="line">cron              304 FLOCK      WRITE 0     0   0 /run...</span><br><span class="line">flock           17094 FLOCK      WRITE 0     0   0 /...</span><br><span class="line">(unknown)         278 FLOCK      WRITE 0     0   0 /run...</span><br><span class="line">(unknown)         281 FLOCK      WRITE 0     0   0 /run...</span><br></pre></td></tr></table></figure></p>
+<p>不知道我的 PI 怎麼了orz<br>PATH 看不到</p>
+<p>sudo fuser 可以看到 lock 檔案<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~ $ sudo fuser /tmp/rclone.lock</span><br><span class="line">/tmp/rclone.lock:    17094 17095</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://gist.github.com/beyu/462241bd73ae630cd7ee937a90766046" target="_blank" rel="noopener">flockを孫プロセスに保持させてプロセスの終了までロックを無理やり保持する</a> 不知道這是什麼?先留一下</p>
 
       
     </div>
@@ -595,7 +611,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">436</span>
+                  <span class="site-state-item-count">440</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -606,7 +622,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -617,7 +633,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">371</span>
+                  <span class="site-state-item-count">373</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

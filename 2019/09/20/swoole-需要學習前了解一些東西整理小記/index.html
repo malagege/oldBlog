@@ -88,7 +88,7 @@
 <meta property="og:description" content="最近一時衝動報名 swoole 課程我對高併發實作還滿感興趣好奇怎麼運用一些方法解決今天看了 學習Swoole需要掌握哪些基礎知識-Swoole-Swoole文檔中心 發現裡面很多名詞不會不想浪費錢，趕快臨時抱佛腳">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://malagege.github.io/blog/2019/09/20/swoole-需要學習前了解一些東西整理小記/socket.png">
-<meta property="og:updated_time" content="2019-09-27T15:28:47.323Z">
+<meta property="og:updated_time" content="2019-10-26T17:47:26.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="swoole 需要學習前了解一些東西整理小記">
 <meta name="twitter:description" content="最近一時衝動報名 swoole 課程我對高併發實作還滿感興趣好奇怎麼運用一些方法解決今天看了 學習Swoole需要掌握哪些基礎知識-Swoole-Swoole文檔中心 發現裡面很多名詞不會不想浪費錢，趕快臨時抱佛腳">
@@ -430,6 +430,11 @@
 <h2 id="多進程-多線程"><a href="#多進程-多線程" class="headerlink" title="多進程/多線程"></a>多進程/多線程</h2><p>多年來有看到執行緒跟多程序執行的差別，今天終於可以好好的想一下</p>
 <h3 id="程序-與-執行緒差別"><a href="#程序-與-執行緒差別" class="headerlink" title="程序 與 執行緒差別"></a>程序 與 執行緒差別</h3><p>其實很久以前有想這個問題，但一直沒有找解答<br>我有想出兩個差別，可以共用全域變數，另外一個不行<br>今天我又有更多想法，多程序吃的記憶體資源會比多執行緒吃的多<br>畢竟1個 electron 跟開 1000 個 electron 是有差的…<br>但我看到還有一個答案，就是多執行緒可以等待結束在進行下一個動作</p>
 <p>詳細可看<a href="https://medium.com/@totoroLiu/program-process-thread-%E5%B7%AE%E7%95%B0-4a360c7345e5" target="_blank" rel="noopener">Program/Process/Thread 差異 - Po-Ching Liu - Medium</a></p>
+<h4 id="fork-子程序"><a href="#fork-子程序" class="headerlink" title="fork 子程序"></a>fork 子程序</h4><p>前陣子看了鳥哥<a href="http://linux.vbird.org/linux_basic/0440processcontrol.php#parent_pid" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – 第十六章、程序管理與 SELinux 初探</a>這篇<br>看不太懂 <code>fork and exec：程序呼叫的流程</code><br>上課講到用 PHP 寫子程序</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$pid = pcntl_fork(); <span class="comment">//在這裡開始產生程式的分岔   ##**</span></span><br><span class="line"><span class="keyword">if</span> ($pid == <span class="number">-1</span>) &#123;</span><br><span class="line">     <span class="keyword">die</span>(<span class="string">'無法產生子程序'</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> ($pid) &#123;</span><br><span class="line">     <span class="comment">// 父程序會進入這裡</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     <span class="comment">// 子程序會進入這裡</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>做到上面<code>##**</code> 註解這行<br>它會做fork 主程序，也就是複製整份主程序記憶體所有程式內容<br>複製出來並不會跟主程序做關聯(會獨立出來)<br>變數更動不影響別的子程序和父程序</p>
+<p>但沒法用一般 kill 指令調<br>一般正常可以</p>
+<p><a href="https://www.php.net/manual/en/function.posix-setsid.php" target="_blank" rel="noopener">PHP: posix_setsid - Manual</a></p>
 <h3 id="瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存"><a href="#瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存" class="headerlink" title="瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存"></a>瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存</h3><p>這個我就沒特別找了</p>
 <ul>
 <li><a href="https://blog.csdn.net/Swallow_he/article/details/84392285" target="_blank" rel="noopener">TCP/UDP的接收緩衝區和發送緩衝區 - Swallow_he的博客 - CSDN博客</a></li>
@@ -478,6 +483,24 @@
 <h3 id="LINUX-IO"><a href="#LINUX-IO" class="headerlink" title="LINUX IO"></a>LINUX IO</h3><p><a href="https://www.jianshu.com/p/486b0965c296" target="_blank" rel="noopener">聊聊Linux 五种IO模型 - 簡書</a></p>
 <h2 id="應用"><a href="#應用" class="headerlink" title="應用"></a>應用</h2><p><a href="https://zhuanlan.zhihu.com/p/34279200" target="_blank" rel="noopener">Swoole的简单运用 - 知乎</a></p>
 <p>看了這麼多還不是很了解，暫時整理到這邊…orz</p>
+<p><strong>2019-10-26</strong></p>
+<p>課程小記</p>
+<ul>
+<li>Swoole Server </li>
+<li>HTTP/Websocket Server</li>
+<li>Task 異步任務<br>這一快很像 MQ，但要可靠可以用</li>
+<li>Timer 定時器</li>
+<li>Memory 模組<br>講者有提到這邊可以做 Memory Cache<br>Memory Cache 可在 Redis 前面可做緩衝<br>減輕Redis 負擔<br>剛好網路上有找到 Github <a href="https://github.erp.pub/swooliy/memory-cache" target="_blank" rel="noopener">GitHub - swooliy/memory-cache: Memory Cache base on swoole</a></li>
+<li><p>Process</p>
+</li>
+<li><p>Coroutine</p>
+</li>
+</ul>
+<p>更新 swoole 程式必須要重啟?<br>需要。但現在有 Docker , K8s 機器所以做更新程式，服務不會中斷<br>但是 websocket 還是會斷<br>所以必須要做 websocket 重新連線機制</p>
+<p>Websocket 要做 load balance<br>需要做一個 main server 關聯所有 Websocket Server 溝通橋梁<br><del>所有近來不是透過 main server 去做送</del><br>而是自動直接 load balance 進去到 Websocket Server<br>要透過發送訊息是 main server 做發送給所有 Websocket Server<br>去做實作</p>
+<p>main Server 雖然沒有講到要用什麼<br>但我覺得 MQ(RabbitMQ) 用在這上面也是非常不錯的方法</p>
+<p>課程有提到<br>socket.io 跟 websocket 不太一樣<br>socket.io 有對非支援 websocket 瀏覽器的處理</p>
+<p>f</p>
 
       
     </div>
@@ -617,7 +640,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">436</span>
+                  <span class="site-state-item-count">440</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -628,7 +651,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -639,7 +662,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">371</span>
+                  <span class="site-state-item-count">373</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -682,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多進程-多線程"><span class="nav-number">1.</span> <span class="nav-text">多進程/多線程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序-與-執行緒差別"><span class="nav-number">1.1.</span> <span class="nav-text">程序 與 執行緒差別</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存"><span class="nav-number">1.2.</span> <span class="nav-text">瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOCKET"><span class="nav-number">2.</span> <span class="nav-text">SOCKET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#file-descriptors-fd"><span class="nav-number">2.1.</span> <span class="nav-text">file descriptors(fd)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-跟-fd-關係"><span class="nav-number">2.2.</span> <span class="nav-text">socket 跟 fd 關係?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bash-可以用-socket"><span class="nav-number">2.2.1.</span> <span class="nav-text">bash 可以用 socket</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#accept-connect、send-recv、close、listen、bind"><span class="nav-number">2.3.</span> <span class="nav-text">accept/connect、send/recv、close、listen、bind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收緩存區、發送緩存區、阻塞-非阻塞、超時等概念"><span class="nav-number">2.4.</span> <span class="nav-text">接收緩存區、發送緩存區、阻塞/非阻塞、超時等概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO复用"><span class="nav-number">3.</span> <span class="nav-text">IO复用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同步、異步、阻塞、非阻塞"><span class="nav-number">3.1.</span> <span class="nav-text">同步、異步、阻塞、非阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LINUX-IO"><span class="nav-number">3.2.</span> <span class="nav-text">LINUX IO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#應用"><span class="nav-number">4.</span> <span class="nav-text">應用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多進程-多線程"><span class="nav-number">1.</span> <span class="nav-text">多進程/多線程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序-與-執行緒差別"><span class="nav-number">1.1.</span> <span class="nav-text">程序 與 執行緒差別</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fork-子程序"><span class="nav-number">1.1.1.</span> <span class="nav-text">fork 子程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存"><span class="nav-number">1.2.</span> <span class="nav-text">瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOCKET"><span class="nav-number">2.</span> <span class="nav-text">SOCKET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#file-descriptors-fd"><span class="nav-number">2.1.</span> <span class="nav-text">file descriptors(fd)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-跟-fd-關係"><span class="nav-number">2.2.</span> <span class="nav-text">socket 跟 fd 關係?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bash-可以用-socket"><span class="nav-number">2.2.1.</span> <span class="nav-text">bash 可以用 socket</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#accept-connect、send-recv、close、listen、bind"><span class="nav-number">2.3.</span> <span class="nav-text">accept/connect、send/recv、close、listen、bind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收緩存區、發送緩存區、阻塞-非阻塞、超時等概念"><span class="nav-number">2.4.</span> <span class="nav-text">接收緩存區、發送緩存區、阻塞/非阻塞、超時等概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO复用"><span class="nav-number">3.</span> <span class="nav-text">IO复用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同步、異步、阻塞、非阻塞"><span class="nav-number">3.1.</span> <span class="nav-text">同步、異步、阻塞、非阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LINUX-IO"><span class="nav-number">3.2.</span> <span class="nav-text">LINUX IO</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#應用"><span class="nav-number">4.</span> <span class="nav-text">應用</span></a></li></ol></div>
             
 
           </div>

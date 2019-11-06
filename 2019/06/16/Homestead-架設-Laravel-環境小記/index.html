@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="小記 Homestead 使用方法">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-06-16T13:09:26.199Z">
+<meta property="og:updated_time" content="2019-10-29T08:38:52.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Homestead 架設 Laravel 環境小記">
 <meta name="twitter:description" content="小記 Homestead 使用方法">
@@ -424,6 +424,7 @@
 
         <p>小記 Homestead 使用方法</p>
 <a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用 Homestead 簡單來說就是不用再本機安裝 laravel, composer 等指令<br>也能建立 project<br>所以把要建立新的專案，先做 homestead.yaml 設定<br>進去 vagrant ssh<br>可以在該資料夾下，下 laravel , composer 等等指令</p>
 <h2 id="安裝-vagrant-和-Virtualbox"><a href="#安裝-vagrant-和-Virtualbox" class="headerlink" title="安裝 vagrant 和 Virtualbox"></a>安裝 vagrant 和 Virtualbox</h2><p>參考:<a href="https://ithelp.ithome.com.tw/articles/10193858" target="_blank" rel="noopener">第 15 天：以 Vagrant 建置 PHP/Laravel 開發環境 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
 <h3 id="VirtualBox"><a href="#VirtualBox" class="headerlink" title="VirtualBox"></a>VirtualBox</h3><p>安裝可以直接<code>apt install virtualbox</code><br>但這邊網路上是直接抓 deb</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ./virtualbox-5.2_5.2.4-119785~Ubuntu~xenial_amd64.deb</span><br></pre></td></tr></table></figure>
@@ -448,6 +449,27 @@
 <p><a href="https://learnku.com/laravel/t/1245/laravel51homestead-027-development-environment-deployment-and-settings" target="_blank" rel="noopener">Laravel5.1/Homestead (0.2.7) 开发环境的部署和设置 | Laravel China 社区</a><br><a href="https://learnku.com/laravel/wikis/25530" target="_blank" rel="noopener">Laravel Homestead：所有配置详解 | Laravel China 社区</a><br><a href="https://learnku.com/laravel/wikis/25541" target="_blank" rel="noopener">Laravel Homestead：设置 Cron 计划任务 | Laravel China 社区</a></p>
 <p>簡單完成 Laravel Task 架設<br><a href="https://github.com/laravel/quickstart-basic/tree/0f8346968b2121edf4ac70bf0183821a87929b19" target="_blank" rel="noopener">laravel/quickstart-basic at 0f8346968b2121edf4ac70bf0183821a87929b19</a><br><a href="https://learnku.com/docs/laravel/5.1/quickstart-intermediate/1049" target="_blank" rel="noopener">中级任务清单 |《Laravel 5.1 中文文档》| Laravel China 社区</a></p>
 <p><a href="https://learnku.com/articles/18697" target="_blank" rel="noopener">Laravel Cron 定时任务 “跳坑” 点 | Laravel China 社区</a></p>
+<p><strong>2019-10-29</strong></p>
+<h2 id="Homestead-設定多個-Project-方法"><a href="#Homestead-設定多個-Project-方法" class="headerlink" title="Homestead 設定多個 Project 方法"></a>Homestead 設定多個 Project 方法</h2><p>其實這篇沒有做 host 動作<br>直接 127.0.0.1 就可以連到 Laravel Project<br>但一個 VM 跑一個 Project 感覺不是很夠用</p>
+<p>但這個只能手動加入/etc/hosts</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">folders:</span><br><span class="line">    - map: ~/laravel-webpaste</span><br><span class="line">      to: /home/vagrant/code</span><br><span class="line">    - map: ~/quickstart2</span><br><span class="line">      to: /home/vagrant/code2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sites:</span><br><span class="line">    - map: homestead.test</span><br><span class="line">      to: /home/vagrant/code/public</span><br><span class="line">    - map: homestead.test2</span><br><span class="line">      to: /home/vagrant/code2/public</span><br></pre></td></tr></table></figure>
+<p>folders 設定程式掛載路徑</p>
+<p>sites 設定 hosts 網域路徑</p>
+<p><code>vagrant reload --provision</code> 會重啟 VM 跑設定</p>
+<p>這時候再設定本機(非VM)<code>/etc/host</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">192.168.10.10 homestead.test</span><br><span class="line">192.168.10.10 homestead.test2</span><br></pre></td></tr></table></figure>
+<p>開瀏覽器輸入兩個網址就能打開<br><a href="http://homestead.test" target="_blank" rel="noopener">http://homestead.test</a><br><a href="http://homestead.test2" target="_blank" rel="noopener">http://homestead.test2</a></p>
+<p>有沒有自動設定 host 方法呢?</p>
+<h2 id="Vagrant-設定-hosts-自動化方法"><a href="#Vagrant-設定-hosts-自動化方法" class="headerlink" title="Vagrant 設定 hosts 自動化方法"></a>Vagrant 設定 hosts 自動化方法</h2><p><a href="https://learnku.com/articles/16186/homestead-hosts-file-automation-vagrant-hostsupdater-and" target="_blank" rel="noopener">解放雙手 hosts 自動化 (Vagrant-hostsupdater) | Laravel China 社區</a><br><a href="https://www.pilishen.com/posts/setting-hosts-file-automatically-through-host-updater" target="_blank" rel="noopener">【Homestead Master 08】还在手动修改hosts文件？-pilishen.com,做全球最好的实战教程</a></p>
+<p>非常簡單，兩個步驟</p>
+<ol>
+<li><p>vagrant plugin install vagrant-hostsupdater</p>
+</li>
+<li><p>vagrant reload –provision</p>
+</li>
+</ol>
+<p>可以查看 <code>/etc/hosts</code> 會自動添加 hosts 資料</p>
+<p>題外話<br><del>目前好奇 <code>vagrant reload --provision</code> 一般 user 下執行</del><br><del>竟然可以改變 root 644 <code>/etc/hosts</code> 檔案</del><br><del>有空再研究分析</del><br>原來之前下過 sudo<br>所以剛剛執行沒有跳出來<br>vagrant reload –provision<br>會跳出打 root 密碼</p>
 
       
     </div>
@@ -587,7 +609,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">436</span>
+                  <span class="site-state-item-count">440</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -598,7 +620,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -609,7 +631,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">371</span>
+                  <span class="site-state-item-count">373</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -652,7 +674,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-vagrant-和-Virtualbox"><span class="nav-number">1.</span> <span class="nav-text">安裝 vagrant 和 Virtualbox</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VirtualBox"><span class="nav-number">1.1.</span> <span class="nav-text">VirtualBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vagrant"><span class="nav-number">1.2.</span> <span class="nav-text">vagrant</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-Homestead"><span class="nav-number">2.</span> <span class="nav-text">安裝 Homestead</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Homestead-設定工具"><span class="nav-number">3.</span> <span class="nav-text">Homestead 設定工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Homestead-yaml"><span class="nav-number">4.</span> <span class="nav-text">修改 Homestead.yaml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些-homestead-yml-設定"><span class="nav-number">5.</span> <span class="nav-text">一些 homestead.yml 設定</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-vagrant-和-Virtualbox"><span class="nav-number">2.</span> <span class="nav-text">安裝 vagrant 和 Virtualbox</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VirtualBox"><span class="nav-number">2.1.</span> <span class="nav-text">VirtualBox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vagrant"><span class="nav-number">2.2.</span> <span class="nav-text">vagrant</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-Homestead"><span class="nav-number">3.</span> <span class="nav-text">安裝 Homestead</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Homestead-設定工具"><span class="nav-number">4.</span> <span class="nav-text">Homestead 設定工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改-Homestead-yaml"><span class="nav-number">5.</span> <span class="nav-text">修改 Homestead.yaml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些-homestead-yml-設定"><span class="nav-number">6.</span> <span class="nav-text">一些 homestead.yml 設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Homestead-設定多個-Project-方法"><span class="nav-number">7.</span> <span class="nav-text">Homestead 設定多個 Project 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vagrant-設定-hosts-自動化方法"><span class="nav-number">8.</span> <span class="nav-text">Vagrant 設定 hosts 自動化方法</span></a></li></ol></div>
             
 
           </div>
