@@ -223,6 +223,8 @@ redirect()->withErrors
 </div>
 @endif
 ```
+**上面也可以用`@if(isset($success))`**
+注意with 除了寫 session 他也可以當view 變數名稱
 
 ## Laravel 有關 with function 那些事情
 
@@ -350,6 +352,118 @@ CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token
 ## 授權 GATE & Policy
 
 [laravel5.5 授权系统 - archer-wong - 博客园](https://www.cnblogs.com/redirect/p/8658740.html#%E9%80%9A%E8%BF%87%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9E%8B)
+
+## Redis
+
+Laravel 6.2 使用 Redis::get 會遇到
+```
+Please remove or rename the Redis facade alias in your "app" configuration file in order to avoid collision with the PHP Redis extension.
+```
+
+使用 `Cache::put` 看似能用，但預設 env 是 file，切換到 redis，還是遇到一樣的問題
+看似 Homestead 預設沒安裝 redis 套件
+phpredis 需要改裡面程式內容
+這邊有兩個做法
+
+1.  改成用 predis 方法(不推薦)
+
+composer require predis/predis
+
+> 1 Replace in config\app.php
+> aliasess:
+> 'Redis' => Illuminate\Support\Facades\Redis::class,
+> for:
+> 'RedisManager' => Illuminate\Support\Facades\Redis::class,
+> 
+> 2 Replace in config\database.php
+> 
+> 'redis' => [
+>
+>    'client' => env('REDIS_CLIENT', 'predis'), //default phpredis
+>    ...
+
+參考來源:https://github.com/laravel/horizon/issues/659#issuecomment-528569052
+
+2.  改成用 phpredis 方法
+
+Homestead 預設沒有安裝 php redis 套件，所以需要手動安裝
+不知道新版的 Homestead 會不會預設安裝?
+可參考:[Homestead 安装 PHP Redis 扩展 | Laravel China 社区](https://learnku.com/articles/33412) {% asset_link web1.png 備份圖 %}
+
+相關資料:
+[Homestead 安装 PHP Redis 扩展 - 菜园子 - SegmentFault 思否](https://segmentfault.com/a/1190000016606114)
+[Homestead 环境没有 phpize 怎么安装 Redis 扩展？？？ | Laravel China 社区](https://learnku.com/laravel/t/14226/homestead-environment-without-phpize-how-to-install-redis-extension)
+[Laravel 6 使用 Redis 注意事项 | Laravel China 社区](https://learnku.com/laravel/t/33538)
+
+## Laravel Help
+
+https://stackoverflow.com/questions/58163406/after-upgrading-laravel-from-5-6-to-6-0-call-to-undefined-str-random-function
+
+## Laravel Router 多人維護最佳方式
+
+[Laravel 分割 routes.php 路由文件的最佳方式 | Laravel China 社区](https://learnku.com/laravel/t/2484/the-best-way-to-split-routesphp-laravel-routing-file)
+
+## Laravel blade Javascript 設計
+[Laravel – 設計一個好的 Blade Template, 使用 @parent | 不怕就是強](https://dinos80152.wordpress.com/2015/08/04/laravel-%e8%a8%ad%e8%a8%88%e4%b8%80%e5%80%8b%e5%a5%bd%e7%9a%84-blade-template-%e4%bd%bf%e7%94%a8-parent/)
+
+一般設計
+[Jigsaw – Static Sites for Laravel Developers](https://jigsaw.tighten.co/docs/content-blade/)
+
+## Laravel 6 安裝 Bootstrap 6
+
+composer require laravel/ui --dev
+
+```
+// Generate basic scaffolding...
+php artisan ui bootstrap
+php artisan ui vue
+php artisan ui react
+
+// Generate login / registration scaffolding...
+php artisan ui bootstrap --auth
+php artisan ui vue --auth
+php artisan ui react --auth
+```
+## blade
+### 使用 Laravel Navbar 做 selected 設定
+
+```html
+<ul class="nav nav-second-level">
+  <li class="{{ Request::segment(1) === 'programs' ? 'active' : null }}">
+      <a href="{{ url('programs' )}}" ></i> Programs</a>
+  </li>
+  <li class="{{ Request::segment(1) === 'beneficiaries' ? 'active' : null }}">
+      <a href="{{url('beneficiaries')}}"> Beneficiaries</a>
+  </li>
+  <li class="{{ Request::segment(1) === 'indicators' ? 'active' : null }}">
+      <a href="{{url('indicators')}}"> Indicators</a>
+  </li>
+</ul>
+```
+or
+```html
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">WebSiteName</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="{{Request::is('/')?'active':''}}"><a href="{{url('/')}}">Home</a></li>
+      <li class="{{Request::is('/page1')?'active':''}}"><a href="{{url('/page1')}}">Page 1</a></li>
+      <li class="{{Request::is('/page2')?'active':''}}"><a href="{{url('/page2')}}">Page 2</a></li>
+      <li class="{{Request::is('/page3')?'active':''}}"><a href="{{url('/page3')}}">Page 3</a></li>
+    </ul>
+  </div>
+</nav>
+```
+- [php - Setting Bootstrap navbar active class in Laravel 5 - Stack Overflow](https://stackoverflow.com/questions/29837555/setting-bootstrap-navbar-active-class-in-laravel-5)
+- [how to set bootstrap navbar class active - Scoopism](https://www.scoopism.com/bootstrap/how-to-set-bootstrap-navbar-class-active/)
+
+### blade section/show
+
+
+> 2. 使用 @section ('yourSectionName').....@show。子子孫孫都使用 @section ('contents')......@endsection 去繼承實現。
+
+[關於 @section...@show;@section....@endsection 的用法分析 | Laravel China 社區](https://learnku.com/laravel/t/13853/an-analysis-of-the-usage-of-at-section-at-show-at-section-at-endsection)
 
 ## 其他
 

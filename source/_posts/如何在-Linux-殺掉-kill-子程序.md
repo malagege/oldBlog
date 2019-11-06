@@ -137,4 +137,4 @@ PGID 也可以用 ps 指令去查
 * [阿旺的 Linux 開竅手冊-process 進程(行程/程序)](http://www.polish.url.tw/ach8/ach8.html#pgid)
 * [process - Kill all descendant processes - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/124127/kill-all-descendant-processes)
 * [阿旺的 Linux 開竅手冊-process 進程(行程/程序)](http://www.polish.url.tw/ach8/ach8.html#kill)
-
+* [子进程及时知道父进程已经退出的最简单方案 - 横云断岭的专栏 - CSDN博客](https://blog.csdn.net/hengyunabc/article/details/5921749)

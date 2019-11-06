@@ -29,6 +29,34 @@ categories: PHP
 
 詳細可看[Program/Process/Thread 差異 - Po-Ching Liu - Medium](https://medium.com/@totoroLiu/program-process-thread-%E5%B7%AE%E7%95%B0-4a360c7345e5)
 
+#### fork 子程序
+
+前陣子看了鳥哥[鳥哥的 Linux 私房菜 -- 第十六章、程序管理與 SELinux 初探](http://linux.vbird.org/linux_basic/0440processcontrol.php#parent_pid)這篇
+看不太懂 `fork and exec：程序呼叫的流程`
+上課講到用 PHP 寫子程序
+
+```php
+<?php
+$pid = pcntl_fork(); //在這裡開始產生程式的分岔   ##**
+if ($pid == -1) {
+     die('無法產生子程序');
+} else if ($pid) {
+     // 父程序會進入這裡
+} else {
+     // 子程序會進入這裡
+}
+```
+做到上面`##**` 註解這行
+它會做fork 主程序，也就是複製整份主程序記憶體所有程式內容
+複製出來並不會跟主程序做關聯(會獨立出來)
+變數更動不影響別的子程序和父程序
+
+但沒法用一般 kill 指令調
+一般正常可以
+
+
+[PHP: posix_setsid - Manual](https://www.php.net/manual/en/function.posix-setsid.php)
+
 ### 瞭解進程間通信的基本知識，如管道、UnixSocket、消息隊列、共享內存
 
 這個我就沒特別找了
@@ -203,3 +231,44 @@ exec 3>&-
 
 
 看了這麼多還不是很了解，暫時整理到這邊...orz
+
+**2019-10-26**
+
+課程小記
+
+* Swoole Server 
+* HTTP/Websocket Server
+* Task 異步任務
+這一快很像 MQ，但要可靠可以用
+* Timer 定時器
+* Memory 模組
+講者有提到這邊可以做 Memory Cache
+Memory Cache 可在 Redis 前面可做緩衝
+減輕Redis 負擔
+剛好網路上有找到 Github [GitHub - swooliy/memory-cache: Memory Cache base on swoole](https://github.erp.pub/swooliy/memory-cache)
+* Process
+
+* Coroutine
+
+
+
+更新 swoole 程式必須要重啟?
+需要。但現在有 Docker , K8s 機器所以做更新程式，服務不會中斷
+但是 websocket 還是會斷
+所以必須要做 websocket 重新連線機制
+
+Websocket 要做 load balance
+需要做一個 main server 關聯所有 Websocket Server 溝通橋梁
+~~所有近來不是透過 main server 去做送~~
+而是自動直接 load balance 進去到 Websocket Server
+要透過發送訊息是 main server 做發送給所有 Websocket Server
+去做實作
+
+main Server 雖然沒有講到要用什麼
+但我覺得 MQ(RabbitMQ) 用在這上面也是非常不錯的方法
+
+課程有提到
+socket.io 跟 websocket 不太一樣
+socket.io 有對非支援 websocket 瀏覽器的處理
+
+f

@@ -1,7 +1,7 @@
 ---
 title: rclone 掛載硬碟小記
 date: 2019-10-14 20:58:51
-tags: [rclone,linux,gdrive]
+tags: [rclone, linux, gdrive]
 categories: Linux
 ---
 
@@ -350,8 +350,9 @@ $ sudo chown pi:pi /mnt/extHDD
 3. sudo mount -t vfat  /dev/sda1 /mnt/extHDD # (test mount) ext4的話，把 vfat 改成 ext4
 `-o uid=pi,gid=pi`我的樹梅派家這段會失敗
 4. sudo umount /dev/sda1 # 解除掛載
-5. sudo vim /etc/fstab  
-6. 加入 UUID="F840-AAE1"  /mnt/extHDD vfat   rw,defaults 0 0 #(-a, --all 掛載 fstab 中的所有文件系統)
+5. sudo blkid # 查看掛載的 UUID
+6. sudo vim /etc/fstab  
+7. 加入 UUID="F840-AAE1"  /mnt/extHDD vfat   rw,defaults 0 0 #(-a, --all 掛載 fstab 中的所有文件系統)
 
 
 
@@ -516,7 +517,7 @@ if [[ "$TR_TORRENT_DIR" =~ ^"$LOCAL_SYNCDIR" ]]; then
         rclone check ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR"
     else 
         flock -x  /tmp/rclone.lock rclone copy ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR/${TR_TORRENT_NAME}"
-        rclone check ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR/${TR_TORRENT_NAME}"
+        rclone check ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR/${TR_TORRENT_NAME}" --size-only
     fi
     
     if [ $? -eq 0 ]; then
@@ -548,6 +549,24 @@ else
 fi
 
 ```
+
+最近這個腳本還算完美的
+不過處理大檔案`rclone check `太久了
+
+> → thousandday: rclone sync比對修改時間和size(很快,省流量) 05/29 18:17
+> → thousandday: rclone check --size-only比對size(很快,省流量) 05/29 18:18
+> → thousandday: rclone sync -c完整下載後Checksum(慢,費流量) 05/29 18:18
+> → thousandday: rclone check下載hash值後Checksum(慢,省流量) 05/29 18:18
+> → thousandday: Google Drive有支援hash可以直接撈到MD5 05/29 18:19
+> → thousandday: 沒支援hash的雲端空間要Checksum只能完整下載 05/29 18:19
+> → thousandday: 用rclone sync -c或rclone check --download 05/29 18:19
+> → thousandday: 個人認為rclone sync夠用了 Checksum很花時間和效能 05/29 18:20
+> → thousandday: 檔案如果多又大 好幾TB會跑到天荒地老
+[[工具] 自製本機與google drive檔案md5比對工具 - 看板 Free_box - 批踢踢實業坊](https://www.ptt.cc/bbs/Free_box/M.1527420602.A.819.html)
+
+我後來加`--size-only`
+覺得應該不會這麼衰...
+不然好幾GB都卡很久
 
 ### aria2(不建議使用)
 

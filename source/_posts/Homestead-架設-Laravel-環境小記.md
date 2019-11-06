@@ -9,6 +9,14 @@ categories: Laravel
 
 <!--more-->
 
+## 前言
+
+使用 Homestead 簡單來說就是不用再本機安裝 laravel, composer 等指令
+也能建立 project
+所以把要建立新的專案，先做 homestead.yaml 設定
+進去 vagrant ssh 
+可以在該資料夾下，下 laravel , composer 等等指令
+
 ## 安裝 vagrant 和 Virtualbox
 
 參考:[第 15 天：以 Vagrant 建置 PHP/Laravel 開發環境 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10193858)
@@ -133,3 +141,71 @@ pass: secret
 [中级任务清单 |《Laravel 5.1 中文文档》| Laravel China 社区](https://learnku.com/docs/laravel/5.1/quickstart-intermediate/1049)
 
 [Laravel Cron 定时任务 “跳坑” 点 | Laravel China 社区](https://learnku.com/articles/18697)
+
+
+**2019-10-29**
+
+## Homestead 設定多個 Project 方法
+
+其實這篇沒有做 host 動作
+直接 127.0.0.1 就可以連到 Laravel Project
+但一個 VM 跑一個 Project 感覺不是很夠用
+
+但這個只能手動加入/etc/hosts
+
+```
+folders:
+    - map: ~/laravel-webpaste
+      to: /home/vagrant/code
+    - map: ~/quickstart2
+      to: /home/vagrant/code2
+
+
+sites:
+    - map: homestead.test
+      to: /home/vagrant/code/public
+    - map: homestead.test2
+      to: /home/vagrant/code2/public
+```
+
+folders 設定程式掛載路徑
+
+sites 設定 hosts 網域路徑
+
+`vagrant reload --provision` 會重啟 VM 跑設定
+
+這時候再設定本機(非VM)`/etc/host`
+
+```
+192.168.10.10 homestead.test
+192.168.10.10 homestead.test2
+```
+
+開瀏覽器輸入兩個網址就能打開
+http://homestead.test
+http://homestead.test2
+
+有沒有自動設定 host 方法呢?
+
+## Vagrant 設定 hosts 自動化方法
+
+[解放雙手 hosts 自動化 (Vagrant-hostsupdater) | Laravel China 社區](https://learnku.com/articles/16186/homestead-hosts-file-automation-vagrant-hostsupdater-and)
+[【Homestead Master 08】还在手动修改hosts文件？-pilishen.com,做全球最好的实战教程](https://www.pilishen.com/posts/setting-hosts-file-automatically-through-host-updater)
+
+
+非常簡單，兩個步驟
+
+1.  vagrant plugin install vagrant-hostsupdater
+
+2.  vagrant reload --provision
+
+可以查看 `/etc/hosts` 會自動添加 hosts 資料
+
+題外話
+~~目前好奇 `vagrant reload --provision` 一般 user 下執行~~
+~~竟然可以改變 root 644 `/etc/hosts` 檔案~~
+~~有空再研究分析~~
+原來之前下過 sudo 
+所以剛剛執行沒有跳出來
+vagrant reload --provision
+會跳出打 root 密碼

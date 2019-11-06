@@ -1,8 +1,8 @@
 ---
 title: Shell Script 小記
 date: 2019-10-23 21:30:24
-tags:
-categories:
+tags: [shell,sh,linux]
+categories: Linux
 ---
 
 ## shell 小記
@@ -116,6 +116,10 @@ echo "<x-no-quotes"
 
 ```
 [scripting - How to debug a bash function that returns a value, and how to add newlines to a variable? - Stack Overflow](https://stackoverflow.com/questions/27872069/how-to-debug-a-bash-function-that-returns-a-value-and-how-to-add-newlines-to-a/27872114)
+
+### shell script 布林運算順序
+
+[shell script 布林運算順序 | 程式狂想筆記](http://localhost:4000/blog/2019/11/06/shell-script-%E5%B8%83%E6%9E%97%E9%81%8B%E7%AE%97%E9%A0%86%E5%BA%8F/)
 
 ## 相關連結
 [Shell——你只需要了解这么多 - 枣面包的博客 - CSDN博客](https://blog.csdn.net/weixin_37490221/article/details/80869792)
