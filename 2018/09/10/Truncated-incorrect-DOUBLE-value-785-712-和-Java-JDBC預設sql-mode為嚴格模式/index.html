@@ -88,7 +88,7 @@
 <meta property="og:description" content="最近遇到一些MySQL地雷，要好好好整理一下正常DB已經設定非嚴格模式今天遇到Java執行遇到Warning不會過SQL執行如insert xxxx …..  select xxx ….語法也沒有錯phpmyadmin可以執行java執行就是過不了12018-09-05 09:45:10,428 ERROR &amp;#123;Thread-0&amp;#125; [xxxxx.rbt.client.lib.Fu">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://malagege.github.io/blog/2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-和-Java-JDBC預設sql-mode為嚴格模式/sql.jpg">
-<meta property="og:updated_time" content="2018-09-10T14:41:33.796Z">
+<meta property="og:updated_time" content="2019-11-25T12:07:15.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Truncated incorrect DOUBLE value: &#39;785+712&#39; 和 Java JDBC預設sql_mode為嚴格模式">
 <meta name="twitter:description" content="最近遇到一些MySQL地雷，要好好好整理一下正常DB已經設定非嚴格模式今天遇到Java執行遇到Warning不會過SQL執行如insert xxxx …..  select xxx ….語法也沒有錯phpmyadmin可以執行java執行就是過不了12018-09-05 09:45:10,428 ERROR &amp;#123;Thread-0&amp;#125; [xxxxx.rbt.client.lib.Fu">
@@ -440,6 +440,15 @@
 </blockquote>
 <img src="/blog/2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-和-Java-JDBC預設sql-mode為嚴格模式/sql.jpg" title="錯誤訊息">
 <p>原本不想動測試DB資料，後來還是手動把<code>785+712</code>資料拿掉就正常執行了</p>
+<p><strong>2019-11-25</strong></p>
+<p>建立 table 時後 column 欄位建議要 <code>NULL</code><br>最近踩了一個雷，因為公司內部有兩個DB 做同步，一個用嚴格模式、一個不是<br>導致另一個嚴格模式資料沒有進來</p>
+<p>sql_mode 用 Dbeaver 查詢結果跟 phpmyadmin 不一樣???<br>後來發現跟上次跟 Java 一樣採到一樣的雷<br>有些 client 會自動幫你設定 sql_mode<br>要使用 <code>SHOW GLOBAL VARIABLES LIKE &#39;sql_mode&#39;;</code> 會比較準</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> @@sql_mode;</span><br><span class="line"><span class="comment">-- STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION    for dbeaver</span></span><br><span class="line"><span class="comment">-- NO_ENGINE_SUBSTITUTION  for phpmyadmin</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">GLOBAL</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">'sql_mode'</span>;</span><br><span class="line"><span class="comment">-- NO_ENGINE_SUBSTITUTION</span></span><br></pre></td></tr></table></figure>
+<p>非嚴警模式下，Level Warning 層級不會跳錯誤<br>在非嚴警模式下可以 <code>SHOW WARNINGS</code> 看到資料<br><a href="https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sql-mode-strict" target="_blank" rel="noopener">MySQL :: MySQL 5.7 Reference Manual :: 5.1.10 Server SQL Modes</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Strict SQL Mode</span><br><span class="line">Strict mode controls how MySQL handles invalid or missing values in data-change statements such as INSERT or UPDATE. A value can be invalid for several reasons. For example, it might have the wrong data type for the column, or it might be out of range. A value is missing when a new row to be inserted does not contain a value for a non-NULL column that has no explicit DEFAULT clause in its definition. (For a NULL column, NULL is inserted if the value is missing.) Strict mode also affects DDL statements such as CREATE TABLE.</span><br></pre></td></tr></table></figure></p>
+<p>裡面都寫得很清楚<br><a href="https://dev.mysql.com/doc/refman/5.7/en/create-table.html" target="_blank" rel="noopener">MySQL :: MySQL 5.7 Reference Manual :: 13.1.18 CREATE TABLE Statement</a><br><a href="https://dev.mysql.com/doc/refman/5.7/en/insert.html" target="_blank" rel="noopener">MySQL :: MySQL 5.7 Reference Manual :: 13.2.5 INSERT Statement</a><br>可以搜尋 strict 關鍵字找<br>改table 欄位大寫也跟 sql_mode有關係</p>
+<p><a href="https://stackoverflow.com/questions/7828440/mysql-alter-table-modify-column-failing-at-rows-with-null-values" target="_blank" rel="noopener">MySQL alter table modify column failing at rows with null values - Stack Overflow</a><br><a href="https://nsysumis94.pixnet.net/blog/post/22022962" target="_blank" rel="noopener">MySQL刪除重複資料 @ Nightmare的胡言亂語 :: 痞客邦 ::</a></p>
+<p>參考來源<br><a href="https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-data-type-default.html" target="_blank" rel="noopener">MySQL 中数据类型的默认值 - default 约束 - MySQL 拾遗 - 简单教程，简单编程</a><br><a href="https://segmentfault.com/a/1190000005936172" target="_blank" rel="noopener">MySQL sql_mode 说明（及处理一起 sql_mode 引发的问题） - Sean’s Notes - SegmentFault 思否</a><br><a href="https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-sql_mode.html" target="_blank" rel="noopener">被 MySQL sql_mode 深深伤害（ 上 ） - MySQL 拾遗 - 简单教程，简单编程</a><br><a href="https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-sql_mode2.html" target="_blank" rel="noopener">被 MySQL sql_mode 深深伤害（ 中 ） - MySQL 拾遗 - 简单教程，简单编程</a><br><a href="https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-sql_mode3.html" target="_blank" rel="noopener">被 MySQL sql_mode 深深伤害（ 下 ） - MySQL 拾遗 - 简单教程，简单编程</a></p>
+<p>彩蛋<br><a href="https://github.com/dbeaver/dbeaver/wiki/Data-View-and-Format" target="_blank" rel="noopener">Data View and Format · dbeaver/dbeaver Wiki · GitHub</a><br><a href="https://github.com/dbeaver/dbeaver/wiki/Data-migration" target="_blank" rel="noopener">Data migration · dbeaver/dbeaver Wiki · GitHub</a></p>
 
       
     </div>
@@ -568,7 +577,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">441</span>
+                  <span class="site-state-item-count">445</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -590,7 +599,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">373</span>
+                  <span class="site-state-item-count">374</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
