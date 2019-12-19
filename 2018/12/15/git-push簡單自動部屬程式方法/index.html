@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="其實最近想git有甚麼好方法做部屬動作蒐集網路一些方法都是delete all file再刪除….但感覺這種作法，會讓服務中斷有想到用git pull更新方法但Server Web目錄會有git雖然有想到用git方法不過最終有找到不錯的做法">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-12-16T04:53:26.678Z">
+<meta property="og:updated_time" content="2019-12-16T15:05:28.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git push簡單自動部屬程式方法">
 <meta name="twitter:description" content="其實最近想git有甚麼好方法做部屬動作蒐集網路一些方法都是delete all file再刪除….但感覺這種作法，會讓服務中斷有想到用git pull更新方法但Server Web目錄會有git雖然有想到用git方法不過最終有找到不錯的做法">
@@ -428,13 +428,16 @@
 <p>所以就稍微在我Linux電腦主機上面玩了一下</p>
 <p>簡單原理<code>git-dir</code>運用在git 資料夾，這邊範例是<code>.git</code>結尾<br>我一開始以為一定要用<code>bare</code><br>但後來發現，除了可以用<code>bare</code>當git<br>還能用一般<code>project_dir/.git/</code></p>
 <p>work-tree 就是要對應其路徑</p>
-<p>看到這個就能感覺輕鬆部屬<br>.git/hooks/post-receive<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># !/bin/sh</span><br><span class="line"></span><br><span class="line"># checkout HEAD</span><br><span class="line">git --get-dir=xxxxx/.git/ --work-tree=xxxx(部屬位置) checkout -f</span><br></pre></td></tr></table></figure></p>
+<p>看到這個就能感覺輕鬆部屬<br>.git/hooks/post-receive<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># checkout HEAD</span></span><br><span class="line">git --get-dir=xxxxx/.git/ --work-tree=xxxx(部屬位置) checkout -f</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x .git/hooks/post-receive</span><br></pre></td></tr></table></figure>
 <p><a href="https://buddy.works/blog/how-deploy-projects-with-git" target="_blank" rel="noopener">How to deploy projects with Git - Buddy</a><br>雖然感覺也是能用<code>git reset --hard head</code><br>不過網路上用這個比較多<br>也有看到做之前<code>git checkout -f</code>做<code>git stash</code><br>雖然這篇是透過push git repo去做更新</p>
 <p>但我覺得不應該讓bare有兩個<br>改天push錯就GG  XD</p>
 <p>之前也有研究<a href="https://malagege.github.io/blog/2017/11/26/logdown/2017-11-26-3865744/">用caddy-git使用webhook初體驗 | 程式狂想筆記</a><br>感覺可以運用這個上面<br><code>then        command [args...]</code>應該就可以做<code>git --get-dir=xxxxx/.git/ --work-tree=xxxx(部屬位置) checkout -f</code></p>
 <p>目前在想<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dev_git --push--&gt;git reop --&gt; webhook --&gt; caddy webhook --&gt; git deploy</span><br></pre></td></tr></table></figure></p>
 <p>當然這邊只能做不需要編譯的部屬<br>例如PHP應該能這樣做<br>說不定哪天就有機會可以用到</p>
+<p><strong>2019-12-16</strong></p>
+<p>最近看到這篇 <a href="https://blog.zjyl1994.com/post/hugo-nginx-githook/" target="_blank" rel="noopener">Hugo 博客折腾记 - 咸鱼的小鱼塘</a> 有Webhook 程式<br><a href="https://github.com/adnanh/webhook" target="_blank" rel="noopener">adnanh/webhook: webhook is a lightweight incoming webhook server to run shell commands</a><br>簡單可以用 shell 部屬<br>但我還沒測試過<br>不知道同一個時間做 webhook ，會不會影響部屬?</p>
+<p>另類部屬方法<br><a href="https://segmentfault.com/a/1190000017527484" target="_blank" rel="noopener">手摸手带你部署git服务器实现自动发布代码 - 个人文章 - SegmentFault 思否</a><br><a href="https://juejin.im/post/5d825725f265da03c34c335d" target="_blank" rel="noopener">通过Git将Hexo博客部署到服务器 - 掘金</a><br>上面有寫到</p>
 <p>其他參考來源:</p>
 <ul>
 <li><a href="https://gitbook.tw/interview" target="_blank" rel="noopener">Git 面試題 - Git 教學 | 高見龍</a></li>
@@ -586,7 +589,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">445</span>
+                  <span class="site-state-item-count">446</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
