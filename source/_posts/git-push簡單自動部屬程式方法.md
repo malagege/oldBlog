@@ -34,7 +34,7 @@ work-tree 就是要對應其路徑
 
 看到這個就能感覺輕鬆部屬
 .git/hooks/post-receive
-```
+```bash
 # !/bin/sh
 
 # checkout HEAD
@@ -66,6 +66,18 @@ dev_git --push-->git reop --> webhook --> caddy webhook --> git deploy
 例如PHP應該能這樣做
 說不定哪天就有機會可以用到
 
+**2019-12-16**
+
+最近看到這篇 [Hugo 博客折腾记 - 咸鱼的小鱼塘](https://blog.zjyl1994.com/post/hugo-nginx-githook/) 有Webhook 程式
+[adnanh/webhook: webhook is a lightweight incoming webhook server to run shell commands](https://github.com/adnanh/webhook)
+簡單可以用 shell 部屬
+但我還沒測試過
+不知道同一個時間做 webhook ，會不會影響部屬?
+
+另類部屬方法
+[手摸手带你部署git服务器实现自动发布代码 - 个人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000017527484)
+[通过Git将Hexo博客部署到服务器 - 掘金](https://juejin.im/post/5d825725f265da03c34c335d)
+上面有寫到
 
 其他參考來源:
 

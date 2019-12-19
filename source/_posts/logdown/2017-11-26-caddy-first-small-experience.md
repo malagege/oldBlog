@@ -40,7 +40,7 @@ browse可幾乎同等於autoindex，可惜沒有預設設定排序
 
 
 可以指定`Caddyfile`目錄
-`caddy -conf C:\Users\cgh\Desktop\caddy\Caddyfile`
+`caddy -conf C:\Users\xxx\Desktop\caddy\Caddyfile`
 
 短時間不知道能不能取代我的apache
 不過目前懶的做更換

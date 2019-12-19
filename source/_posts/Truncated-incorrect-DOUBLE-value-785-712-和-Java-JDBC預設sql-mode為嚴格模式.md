@@ -48,3 +48,52 @@ JDBC Driver默认会设置会话SQL_MODE='STRICT_TRANS_TABLES'的原因是："en
 {% asset_img sql.jpg 錯誤訊息 %}
 原本不想動測試DB資料，後來還是手動把`785+712`資料拿掉就正常執行了
 
+
+**2019-11-25**
+
+建立 table 時後 column 欄位建議要 `NULL`
+最近踩了一個雷，因為公司內部有兩個DB 做同步，一個用嚴格模式、一個不是
+導致另一個嚴格模式資料沒有進來
+
+sql_mode 用 Dbeaver 查詢結果跟 phpmyadmin 不一樣???
+後來發現跟上次跟 Java 一樣採到一樣的雷
+有些 client 會自動幫你設定 sql_mode
+要使用 `SHOW GLOBAL VARIABLES LIKE 'sql_mode';` 會比較準
+
+```sql
+SELECT @@sql_mode;
+-- STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION    for dbeaver
+-- NO_ENGINE_SUBSTITUTION  for phpmyadmin
+
+SHOW GLOBAL VARIABLES LIKE 'sql_mode';
+-- NO_ENGINE_SUBSTITUTION
+
+```
+
+非嚴警模式下，Level Warning 層級不會跳錯誤
+在非嚴警模式下可以 `SHOW WARNINGS` 看到資料
+[MySQL :: MySQL 5.7 Reference Manual :: 5.1.10 Server SQL Modes](https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sql-mode-strict)
+```
+Strict SQL Mode
+Strict mode controls how MySQL handles invalid or missing values in data-change statements such as INSERT or UPDATE. A value can be invalid for several reasons. For example, it might have the wrong data type for the column, or it might be out of range. A value is missing when a new row to be inserted does not contain a value for a non-NULL column that has no explicit DEFAULT clause in its definition. (For a NULL column, NULL is inserted if the value is missing.) Strict mode also affects DDL statements such as CREATE TABLE. 
+```
+
+裡面都寫得很清楚
+[MySQL :: MySQL 5.7 Reference Manual :: 13.1.18 CREATE TABLE Statement](https://dev.mysql.com/doc/refman/5.7/en/create-table.html)
+[MySQL :: MySQL 5.7 Reference Manual :: 13.2.5 INSERT Statement](https://dev.mysql.com/doc/refman/5.7/en/insert.html)
+可以搜尋 strict 關鍵字找
+改table 欄位大寫也跟 sql_mode有關係
+
+[MySQL alter table modify column failing at rows with null values - Stack Overflow](https://stackoverflow.com/questions/7828440/mysql-alter-table-modify-column-failing-at-rows-with-null-values)
+[MySQL刪除重複資料 @ Nightmare的胡言亂語 :: 痞客邦 ::](https://nsysumis94.pixnet.net/blog/post/22022962)
+
+參考來源
+[MySQL 中数据类型的默认值 - default 约束 - MySQL 拾遗 - 简单教程，简单编程](https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-data-type-default.html)
+[MySQL sql_mode 说明（及处理一起 sql_mode 引发的问题） - Sean's Notes - SegmentFault 思否](https://segmentfault.com/a/1190000005936172)
+[被 MySQL sql_mode 深深伤害（ 上 ） - MySQL 拾遗 - 简单教程，简单编程](https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-sql_mode.html)
+[被 MySQL sql_mode 深深伤害（ 中 ） - MySQL 拾遗 - 简单教程，简单编程](https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-sql_mode2.html)
+[被 MySQL sql_mode 深深伤害（ 下 ） - MySQL 拾遗 - 简单教程，简单编程](https://www.twle.cn/c/yufei/mysqlfav/mysqlfav-basic-sql_mode3.html)
+
+彩蛋
+[Data View and Format · dbeaver/dbeaver Wiki · GitHub](https://github.com/dbeaver/dbeaver/wiki/Data-View-and-Format)
+[Data migration · dbeaver/dbeaver Wiki · GitHub](https://github.com/dbeaver/dbeaver/wiki/Data-migration)

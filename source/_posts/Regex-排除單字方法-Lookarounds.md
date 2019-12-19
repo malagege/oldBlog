@@ -22,9 +22,18 @@ categories: Regex
 
 ### (?:xxx)
 
+**2019-12-08**
+這邊 xxx 一樣是連詞
+```
+^I like (?:dogs|penguins), but not (?:lions|tigers).$
+```
+[Regular Expression for Or | "|" Regex | Regular Expression I | OCPsoft](https://www.ocpsoft.org/tutorials/regular-expressions/or-in-regex/?fbclid=IwAR0AWbTPjZKC5bXSqGBfHOTMEqPG5T-K7lmQKs9UWd3yD0Qdmz3y1aUOSvI)
+
 不會算 group
 
 最後再沒有找到資料情況下，有例用上面 3 個想到一個方法
+
+
 
 `@(?!nfu)\S*edu.tw`
 

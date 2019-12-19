@@ -4,7 +4,7 @@ title: '好懷念leoboard論壇，用docker動手做cgi環境(未完成)'
 date: 2017-08-22 13:20
 comments: true
 categories: Docker
-tags: [cgh,Docker]
+tags: [Docker]
 ---
 ```
 <IfModule !mpm_prefork_module>
