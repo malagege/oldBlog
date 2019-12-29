@@ -36,3 +36,4 @@ INSERT INTO 資料再作刪除欄位
 有想到更好的方法再回來補
 
 拿到 CSV 資料可以用 [csv 快速建立 MySQL 資料表方法 | 程式狂想筆記](https://malagege.github.io/blog/2019/08/21/csv-%E5%BF%AB%E9%80%9F%E5%BB%BA%E7%AB%8B-MySQL-%E8%B3%87%E6%96%99%E8%A1%A8%E6%96%B9%E6%B3%95/)
+[Importing a CSV into a database using DBeaver | Just Numbers & Things](https://justnumbersandthings.com/post/2018-06-12-dbeaver-import-csv/)
