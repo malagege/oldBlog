@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="通常 csv 匯入現有 table我今天要建立 table但我很懶(逃)在 stackoverflow 找到非常簡單的方法">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-08-21T12:47:32.157Z">
+<meta property="og:updated_time" content="2019-12-25T14:09:38.012Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="csv 快速建立 MySQL 資料表方法">
 <meta name="twitter:description" content="通常 csv 匯入現有 table我今天要建立 table但我很懶(逃)在 stackoverflow 找到非常簡單的方法">
@@ -427,6 +427,9 @@
 <p><a href="https://stackoverflow.com/questions/9998596/create-mysql-table-directly-from-csv-file-using-the-csv-storage-engine" target="_blank" rel="noopener">database - Create mysql table directly from CSV file using the CSV Storage engine? - Stack Overflow</a><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># pass in the file name as an argument: ./mktable filename.csv</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"create table <span class="variable">$1</span> ( "</span></span><br><span class="line">head -1 <span class="variable">$1</span> | sed -e <span class="string">'s/,/ varchar(255),\n/g'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">" varchar(255) );"</span></span><br></pre></td></tr></table></figure></p>
 <p>只要在 command line，參數打 csv 檔案名稱<br><code>sh xxx.sh xxx.csv</code><br>可以產生出 create table SQL</p>
 <h2 id="匯入-CSV"><a href="#匯入-CSV" class="headerlink" title="匯入 CSV"></a>匯入 CSV</h2><p>由於我是用 Dbeaver 匯入(不知道 phpmyadmin不讓我匯入)<br>有空再來補 SQL 要怎麼做<br><del>結束這回合</del><br>我遇到資料有換行的問題 Dbeaver 可以正常執行</p>
+<h2 id="CSV-當作-SQL-撈取方法"><a href="#CSV-當作-SQL-撈取方法" class="headerlink" title="CSV 當作 SQL 撈取方法"></a>CSV 當作 SQL 撈取方法</h2><p>最近在想取得 csv 如何快速當作 DB 查詢方法<br>發現 Dbeaver 可以使用這個方式<a href="https://justnumbersandthings.com/post/2018-06-12-dbeaver-import-csv/" target="_blank" rel="noopener">Importing a CSV into a database using DBeaver | Just Numbers &amp; Things</a><br>只是建立連線(CSV)，選一個資料夾，裡面的 csv 會當成 table</p>
+<p>但手動組 SQL，由於不能設定主鍵，所以可能還需要而外建立table<br>這點有點可惜了，但我覺得還滿實用</p>
+<p><strong>須注意<code>\&quot;</code>會導致查詢會有問題，建議先手動取代<code>\&quot;</code>改別的符號</strong><br>不知道是不是bug??</p>
 
       
     </div>
@@ -564,7 +567,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">446</span>
+                  <span class="site-state-item-count">448</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -575,7 +578,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -586,7 +589,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">374</span>
+                  <span class="site-state-item-count">376</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -629,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#匯入-CSV"><span class="nav-number">1.</span> <span class="nav-text">匯入 CSV</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#匯入-CSV"><span class="nav-number">1.</span> <span class="nav-text">匯入 CSV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV-當作-SQL-撈取方法"><span class="nav-number">2.</span> <span class="nav-text">CSV 當作 SQL 撈取方法</span></a></li></ol></div>
             
 
           </div>
