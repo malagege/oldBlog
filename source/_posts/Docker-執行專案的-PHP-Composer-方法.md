@@ -1,8 +1,8 @@
 ---
 title: Docker 執行專案的 PHP Composer 方法
 date: 2019-11-12 21:17:33
-tags:
-categories:
+tags: [php, docker]
+categories: PHP
 ---
 
 最近找了一下方法

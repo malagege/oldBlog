@@ -546,6 +546,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 簡單說一下，Alpine 是體積更小的 Linux，所以她沒有 bash ，不能用 `docker run -it xxx bash` 真的不好用(我指的是 debug)
 看到還是滿多人推薦用 Debian
 
+**2020-01-09**
+在 docker 內建沒有 bash
+
+在 dockerfile 裝
+```
+RUN apk add --update bash && rm -rf /var/cache/apk/*
+```
+可以參考:Raspberry-Pi-使用-Docker-架設-flexget.md
+
 更多資訊:
 * [Benchmarking Debian vs Alpine as a Base Docker Image — Nick Janetakis](https://nickjanetakis.com/blog/benchmarking-debian-vs-alpine-as-a-base-docker-image)
 * [嗯嗯對，用 slim 或是 alpine 確實可以省下很多空間，但同時他們也少裝了很多東西，可能會導致一些問題](https://medium.com/@larry850806/%E5%97%AF%E5%97%AF%E5%B0%8D-%E7%94%A8-slim-%E6%88%96%E6%98%AF-alpine-%E7%A2%BA%E5%AF%A6%E5%8F%AF%E4%BB%A5%E7%9C%81%E4%B8%8B%E5%BE%88%E5%A4%9A%E7%A9%BA%E9%96%93-%E4%BD%86%E5%90%8C%E6%99%82%E4%BB%96%E5%80%91%E4%B9%9F%E5%B0%91%E8%A3%9D%E4%BA%86%E5%BE%88%E5%A4%9A%E6%9D%B1%E8%A5%BF-%E5%8F%AF%E8%83%BD%E6%9C%83%E5%B0%8E%E8%87%B4%E4%B8%80%E4%BA%9B%E5%95%8F%E9%A1%8C-93c4cfa7b024)
