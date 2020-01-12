@@ -80,3 +80,5 @@ cp 檔案中...在別的 command line 做刪除動作
 * [Redis 阻塞、安全队列 BLPOP/BRPOPLPUSH - Silverd](http://silverd.cn/2015/07/06/blpop.html)
 * [How To Quickly Generate A Large File On The Command Line (With Linux) - Skorks](https://skorks.com/2010/03/how-to-quickly-generate-a-large-file-on-the-command-line-with-linux/)
 * [inotify-tools + php脚本实现Linux服务器文件监控并邮件提醒 - 黄小涛 - 博客园](https://www.cnblogs.com/spareribs/p/7722453.html)
+* [ktbyers/netmiko: Multi-vendor library to simplify Paramiko SSH connections to network devices](https://github.com/ktbyers/netmiko)
+* [python獲取程式執行檔案路徑方法 - IT閱讀](https://www.itread01.com/content/1546932986.html)

@@ -33,7 +33,7 @@ sql server,db2 做`select True from xxxxx(依照db不能)`
 這時候我就很好奇oracle,sql server到底有沒有這個東西(boolean)
 
 這邊簡單記錄
-mysql,postgres 有mysql型態
+mysql,postgres 有 boolean 型態
 oracle,sql server, db2都不能用boolean
 
 SQL92建義用bit，但是oracle推使用number
