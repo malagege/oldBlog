@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近做到大檔案處理方式由於資料太多，程式在掃整個檔案目錄就花費很多時間在想有什麼工具可以監聽資料夾這個動作後來有找到 inotify-tools 可以做到這邊就小記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-01-12T09:32:09.033Z">
+<meta property="og:updated_time" content="2020-01-17T16:14:58.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="inotify-tools 監聽資料夾裡檔案異動工具">
 <meta name="twitter:description" content="最近做到大檔案處理方式由於資料太多，程式在掃整個檔案目錄就花費很多時間在想有什麼工具可以監聽資料夾這個動作後來有找到 inotify-tools 可以做到這邊就小記">
@@ -533,6 +533,9 @@
 </li>
 <li><a href="https://www.devopssec.cn/2018/08/23/%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-RSYNC%E7%BB%93%E5%90%88INOTIFY-TOOLS%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5/" target="_blank" rel="noopener">數據同步工具-RSYNC結合INOTIFY-TOOLS實現數據實時同步 | DevOpsSec</a><br>覺得這兩篇也寫得不錯</li>
 </ul>
+<h2 id="小小實驗"><a href="#小小實驗" class="headerlink" title="小小實驗"></a>小小實驗</h2><p><a href="https://malagege.github.io/blog/2020/01/10/cp-%E8%A4%87%E8%A3%BD%E6%AA%94%E6%A1%88%E5%8F%AF%E8%83%BD%E6%B2%92%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/">cp 複製檔案可能沒注意的事情 | 程式狂想筆記</a><br>實驗一下複製大檔案當下狀況<br>是忽看到 CLOSE_WRITE 做複製動作會比較安全</p>
+<p>看了一下<br>-e close_write,delete,create,attrib<br>-e close_write,delete,moved_to<br>我看其他篇文章有下這個<br>這樣真的用 close_write 比較安全</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/home/vagrant/vv/ CREATE file.txt</span><br><span class="line">/home/vagrant/vv/ OPEN file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">...</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ CLOSE_WRITE,CLOSE file.txt</span><br></pre></td></tr></table></figure>
 <h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我本來想找找網路上有沒有搭配 inotify-tools 做 RabbitMQ 動作<br>是有找到 <a href="https://github.com/prashanthpai/sof-object-listing/tree/master/inotify" target="_blank" rel="noopener">sof-object-listing/inotify at master · prashanthpai/sof-object-listing</a>，但未確認是不是能真的用<br>大多是做 <strong>Web 監聽檔案</strong> 和 <strong>資料同步</strong> 居多<br>但是 inotify-tools 看起來也有接收大量打案也有極限<br>不知道是不是一個好的解決方式<br>也要看其況</p>
 <h2 id="相關連結"><a href="#相關連結" class="headerlink" title="相關連結"></a>相關連結</h2><ul>
 <li><a href="https://www.centos.bz/2012/06/inotify-tools-introduction/" target="_blank" rel="noopener">inotify-tools使用方法介紹-Linux運維日誌</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web1.png" title="備份圖">備份圖</a></li>
@@ -557,6 +560,9 @@
 <li><a href="https://cola.workxplay.net/encrypt-and-decrypt-data-in-php-using-rsa-example/" target="_blank" rel="noopener">[PHP] 範例實做 RSA, 公鑰、私鑰非對稱加密、解密演算法 - 串接 iOS,Android - 工作玩樂實驗室</a></li>
 <li><a href="https://www.vnewin.com/day18-laravel-passport-oauth2-token/" target="_blank" rel="noopener">OAuth2 認證機制 Token 原理 - 科技新人</a></li>
 <li><a href="https://wumansgy.github.io/2018/11/03/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86RSA%E8%AF%A6%E8%A7%A3/" target="_blank" rel="noopener">非对称加密RSA详解 | Wuman’s Blog</a></li>
+<li><a href="http://www.netadmin.com.tw/netadmin/zh-tw/technology/4596B5843A394A6C88C4C91BC1767667?page=4" target="_blank" rel="noopener">rsync異地增量備份　資料同步無落差 | 網管人</a></li>
+<li><a href="https://gist.github.com/lazyjerry/81c3a9e9ffc01e3a35d0ecd4a6f31e97" target="_blank" rel="noopener">Script - 使用 inotifywait 監控資料夾並上傳到s3 .sh</a></li>
+<li><a href="https://github.com/sysboss/inotify_s3" target="_blank" rel="noopener">sysboss/inotify_s3: Bash: Inotify files sync to Amazon S3 Cloud</a></li>
 </ul>
 
       
@@ -597,6 +603,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/01/12/Kubernetes-雜記/" rel="prev" title="Kubernetes 雜記">
+                Kubernetes 雜記 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -691,7 +701,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">454</span>
+                  <span class="site-state-item-count">457</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -702,7 +712,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -713,7 +723,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">378</span>
+                  <span class="site-state-item-count">379</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -756,7 +766,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝"><span class="nav-number">1.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-指令"><span class="nav-number">2.</span> <span class="nav-text">Linux 指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#inotifywait"><span class="nav-number">2.1.</span> <span class="nav-text">inotifywait</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inotifywatch"><span class="nav-number">2.2.</span> <span class="nav-text">inotifywatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相關指令設定"><span class="nav-number">2.3.</span> <span class="nav-text">相關指令設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關-inotify-設定"><span class="nav-number">3.</span> <span class="nav-text">相關 inotify 設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關串接方法"><span class="nav-number">4.</span> <span class="nav-text">相關串接方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">5.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">6.</span> <span class="nav-text">相關連結</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝"><span class="nav-number">1.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-指令"><span class="nav-number">2.</span> <span class="nav-text">Linux 指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#inotifywait"><span class="nav-number">2.1.</span> <span class="nav-text">inotifywait</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inotifywatch"><span class="nav-number">2.2.</span> <span class="nav-text">inotifywatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相關指令設定"><span class="nav-number">2.3.</span> <span class="nav-text">相關指令設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關-inotify-設定"><span class="nav-number">3.</span> <span class="nav-text">相關 inotify 設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關串接方法"><span class="nav-number">4.</span> <span class="nav-text">相關串接方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小小實驗"><span class="nav-number">5.</span> <span class="nav-text">小小實驗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">6.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">7.</span> <span class="nav-text">相關連結</span></a></li></ol></div>
             
 
           </div>
