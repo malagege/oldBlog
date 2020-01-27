@@ -121,6 +121,22 @@ echo "<x-no-quotes"
 
 [shell script 布林運算順序 | 程式狂想筆記](http://localhost:4000/blog/2019/11/06/shell-script-%E5%B8%83%E6%9E%97%E9%81%8B%E7%AE%97%E9%A0%86%E5%BA%8F/)
 
+## 有關 * 
+
+[linux bash / shell 有關 * 星號的事情 | 程式狂想筆記](https://malagege.github.io/blog/2020/01/21/linux-bash-shell-%E6%9C%89%E9%97%9C-%E6%98%9F%E8%99%9F%E7%9A%84%E4%BA%8B%E6%83%85/)
+
+## shell 比較字串外面需要包
+
+> if 常常遇到`[: ==: unary operator expected`
+> 
+> 那是因為 == 左邊沒有抓到值，或是值為 null
+> 
+> 有兩種解決方法：
+> * if [ "$app-running" == "" ];
+> * if [[ $app-running == "" ]];
+
+參考:[Linux 的 shell script 中，遇到 unary operator expected 的解決方法](https://medium.com/micheh/linux-%E7%9A%84-shell-script-%E4%B8%AD-%E9%81%87%E5%88%B0-unary-operator-expected-%E7%9A%84%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95-3b4725d3fdf1)
+
 ## 相關連結
 [Shell——你只需要了解这么多 - 枣面包的博客 - CSDN博客](https://blog.csdn.net/weixin_37490221/article/details/80869792)
 [[Shell Script] Day27-提高可讀性之函式寫法(三) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10138639)

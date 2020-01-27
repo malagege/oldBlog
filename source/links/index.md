@@ -36,3 +36,6 @@ date: 2018-05-14 21:24:11
 - [布丁布丁吃什麼？](http://blog.pulipuli.info/)
 - [KL博客](http://www.kailing.pub/)
 - [凝雨 - Yun | 快乐编程每一天 - Happy Coding Every Days](https://ningyu1.github.io/blog/index.html)
+- [程式扎記](http://puremonkey2010.blogspot.com/)
+- [隔叶黄莺 Yanbin Blog - 软件编程实践](https://yanbin.blog/)
+- [HelloDog](https://wsgzao.github.io/)

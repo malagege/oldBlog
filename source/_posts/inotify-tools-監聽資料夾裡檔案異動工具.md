@@ -281,3 +281,6 @@ sysctl -a | grep max_user_instances
 * [[PHP] 範例實做 RSA, 公鑰、私鑰非對稱加密、解密演算法 - 串接 iOS,Android - 工作玩樂實驗室](https://cola.workxplay.net/encrypt-and-decrypt-data-in-php-using-rsa-example/)
 * [OAuth2 認證機制 Token 原理 - 科技新人](https://www.vnewin.com/day18-laravel-passport-oauth2-token/)
 * [非对称加密RSA详解 | Wuman's Blog](https://wumansgy.github.io/2018/11/03/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86RSA%E8%AF%A6%E8%A7%A3/)
+* [rsync異地增量備份　資料同步無落差 | 網管人](http://www.netadmin.com.tw/netadmin/zh-tw/technology/4596B5843A394A6C88C4C91BC1767667?page=4)
+* [Script - 使用 inotifywait 監控資料夾並上傳到s3 .sh](https://gist.github.com/lazyjerry/81c3a9e9ffc01e3a35d0ecd4a6f31e97)
+* [sysboss/inotify_s3: Bash: Inotify files sync to Amazon S3 Cloud](https://github.com/sysboss/inotify_s3)
