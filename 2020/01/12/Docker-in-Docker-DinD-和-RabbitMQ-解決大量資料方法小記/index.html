@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近做大量資料處理我想使用 RabbitMQ 處理大量資料不過這個方式 RabbitMQ 會遇到 Work 需要一開始常駐不能做到自動調整控制 Work 數量所已採用 DinD 觀念去實作">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-01-12T05:03:47.034Z">
+<meta property="og:updated_time" content="2020-02-04T13:28:30.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker in Docker (DinD) 和 RabbitMQ 解決大量資料方法小記">
 <meta name="twitter:description" content="最近做大量資料處理我想使用 RabbitMQ 處理大量資料不過這個方式 RabbitMQ 會遇到 Work 需要一開始常駐不能做到自動調整控制 Work 數量所已採用 DinD 觀念去實作">
@@ -441,8 +441,24 @@
 <li><a href="https://linux.cn/article-7525-1.html" target="_blank" rel="noopener">技术|用 Docker 创建 serverless 应用</a></li>
 </ul>
 <p>但由於要限制 docker 執行數量<br>可以使用 Redis 用程式邏輯限制數量<br>不過要如何實作，這篇不是重點</p>
+<h3 id="php-使用-socket-方式連-docker"><a href="#php-使用-socket-方式連-docker" class="headerlink" title="php 使用 socket 方式連 docker"></a>php 使用 socket 方式連 docker</h3><p>參考官網文章</p>
+<ul>
+<li><a href="https://www.php.net/manual/en/function.stream-socket-client.php" target="_blank" rel="noopener">PHP: stream_socket_client - Manual</a></li>
+<li><a href="https://docs.docker.com/develop/sdk/examples/" target="_blank" rel="noopener">Examples using the Docker Engine SDKs and Docker API | Docker Documentation</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl --unix-socket /var/run/docker.sock -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">  -d <span class="string">'&#123;"Image": "alpine", "Cmd": ["echo", "hello world"]&#125;'</span> \</span><br><span class="line">  -X POST http:/v1.24/containers/create</span><br></pre></td></tr></table></figure>
+<p>發現 curl 需要 7.4 以上才有 unix-socket 連結功能<br>但使用 php curl 沒有這個問題</p>
+<p>可以看到以下參考<br>使用前請記得 <code>docker pull alpine</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$fp = stream_socket_client(<span class="string">"unix:///var/run/docker.sock"</span>, $errno, $errstr, <span class="number">30</span>);</span><br><span class="line"><span class="keyword">if</span> (!$fp) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"$errstr ($errno)&lt;br /&gt;\n"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    fwrite($fp, <span class="string">"POST /containers/create HTTP/1.1\nHost: v1.24\nContent-Type: application/json\nContent-Length: 51\nConnection: Close\n\n&#123;\"Image\": \"alpine\", \"Cmd\": [\"echo\", \"hello world\"]&#125;"</span>);</span><br><span class="line">    <span class="keyword">while</span> (!feof($fp)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> fgets($fp, <span class="number">1024</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    fclose($fp);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Connection: Close 需要加，否則程式不會退出!!<br>仔細想想這樣也滿有道理，需要切斷 socket 連線<br>Content-Length 需要注意<code>{&quot;Image&quot;: &quot;alpine&quot;, &quot;Cmd&quot;: [&quot;echo&quot;, &quot;hello world&quot;]}</code>這個長度<br>不對的話會有問題</p>
+<p>最後，程式用 DinD 要如何傳值到程式裡面，這也是一個不錯思考問題<br>畢竟會遇到跳脫字元(\)，可能使用外部資源(file,mysql,redis)會是比較安全方式</p>
+<ul>
+<li><a href="http://blog.kenyang.net/2011/12/12/telnet-post" target="_blank" rel="noopener">如何用Telnet POST資料</a></li>
+</ul>
 <h2 id="衍生問題"><a href="#衍生問題" class="headerlink" title="衍生問題"></a>衍生問題</h2><h3 id="RabbitMQ-的-worker-要如何關小保持關掉中程式可以正常結束"><a href="#RabbitMQ-的-worker-要如何關小保持關掉中程式可以正常結束" class="headerlink" title="RabbitMQ 的 worker 要如何關小保持關掉中程式可以正常結束"></a>RabbitMQ 的 worker 要如何關小保持關掉中程式可以正常結束</h3><p>這個問題，我沒有在網路上爬到。<br>不過我自己想這個問題，在設計 worker 這條路應該要做到 <code>已經做過</code> 和 <code>尚未執行成功</code> 中斷程式<br>下次執行也能應該也要正常執行才對</p>
+<h2 id="RabbitMQ-連續大量錯誤"><a href="#RabbitMQ-連續大量錯誤" class="headerlink" title="RabbitMQ 連續大量錯誤"></a>RabbitMQ 連續大量錯誤</h2><p><a href="https://medium.com/@lalayueh/%E5%A6%82%E4%BD%95%E5%84%AA%E9%9B%85%E5%9C%B0%E5%9C%A8rabbitmq%E5%AF%A6%E7%8F%BE%E5%A4%B1%E6%95%97%E9%87%8D%E8%A9%A6-c050efd72cdb" target="_blank" rel="noopener">如何優雅地在RabbitMQ實現失敗重試 - lala - Medium</a>  <a href="/blog/2020/01/12/Docker-in-Docker-DinD-和-RabbitMQ-解決大量資料方法小記/web1.png" title="備份圖">備份圖</a></p>
 <p>其他問題想到再說</p>
+<p><a href="https://www.kancloud.cn/longxuan/rabbitmq-arron/107717" target="_blank" rel="noopener">前言 · 轻松搞定RabbitMQ · 看云</a></p>
 <p><a href="https://monitor.dockerflow.com/auto-scaling/" target="_blank" rel="noopener">Auto-Scaling Services Using Instrumented Metrics - Docker Flow Monitor</a></p>
 
       
@@ -583,7 +599,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">457</span>
+                  <span class="site-state-item-count">458</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -605,7 +621,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">379</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -648,7 +664,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#衍生問題"><span class="nav-number">1.</span> <span class="nav-text">衍生問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-的-worker-要如何關小保持關掉中程式可以正常結束"><span class="nav-number">1.1.</span> <span class="nav-text">RabbitMQ 的 worker 要如何關小保持關掉中程式可以正常結束</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#php-使用-socket-方式連-docker"><span class="nav-number">1.</span> <span class="nav-text">php 使用 socket 方式連 docker</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#衍生問題"><span class="nav-number"></span> <span class="nav-text">衍生問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-的-worker-要如何關小保持關掉中程式可以正常結束"><span class="nav-number">1.</span> <span class="nav-text">RabbitMQ 的 worker 要如何關小保持關掉中程式可以正常結束</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMQ-連續大量錯誤"><span class="nav-number"></span> <span class="nav-text">RabbitMQ 連續大量錯誤</span></a></li></div>
             
 
           </div>

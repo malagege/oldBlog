@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近收到一個工單是有關於做大量資料做修改目前有一隻程式做單一資料置換要怎麼快速對大量資料直接用現有程式做呢?那就多批發送表單吧">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-12-29T11:27:33.297Z">
+<meta property="og:updated_time" content="2020-02-04T13:44:21.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="wget 做 POST 表單發送">
 <meta name="twitter:description" content="最近收到一個工單是有關於做大量資料做修改目前有一隻程式做單一資料置換要怎麼快速對大量資料直接用現有程式做呢?那就多批發送表單吧">
@@ -427,6 +427,19 @@
 <p>Google 到 <a href="https://blog.csdn.net/cws1214/article/details/21440691" target="_blank" rel="noopener">使用curl和wget发送post请求_cws1214的专栏-CSDN博客</a> 可以簡單用 wget 使用<br>為什麼使用 wget 做呢? 這樣就可以留下 log 紀錄檔<br>相同的url 後面可以加?<strong>idnum</strong><br>EX:<code>wget --post-data=&quot;user=user1&amp;pass=pass1&amp;submit=Login&quot;  http://domain.com/path/page_need_login.php?12345</code></p>
 <p>接下來目錄下會有<code>page_need_login.php?12345</code><br>這就可以當 log 資訊</p>
 <p>快速解決!!</p>
+<p><strong>2020-02-04</strong></p>
+<p>今天接到一個需求，使用系統要大量資料做功能處理<br>但由於太多，頁面處理也需要很久的時間<br>於是這件工作變成 IT 工作需求</p>
+<p>首先，這頁處理功能有確認帳號密碼<br>要先排除這個，需要找 wget 可以做 cookies 傳遞</p>
+<p><a href="https://xyz.cinc.biz/2014/10/linux-curl-wget-cookie.html" target="_blank" rel="noopener">XYZ的筆記本: Linux 使用 curl (wget) 自動訪問網頁</a><br><a href="https://addons.mozilla.org/zh-TW/firefox/addon/export-cookies-txt/" target="_blank" rel="noopener">Export Cookies – 下載 🦊 Firefox 擴充套件（zh-TW）</a></p>
+<p>抓取 cookies 方法<br><a href="https://www.opencli.com/linux/wget-enable-cookie-download" target="_blank" rel="noopener">wget 開啟 cookie</a><br><a href="https://echochio.pixnet.net/blog/post/32574231-wget%E5%8F%96cookies-%E7%94%A8-cookies" target="_blank" rel="noopener">wget取cookies 用 cookies @ echochio :: 痞客邦 ::</a></p>
+<p>使用<code>wget -d --load-cookies=cookies &quot;https://dc2.safesync.com/test.ova?dl=1&quot;</code><br>參考<a href="https://ephrain.net/mac-%E4%BD%BF%E7%94%A8-wget-%E9%80%81%E5%87%BA-cookie%EF%BC%8C%E7%99%BB%E5%85%A5%E7%B6%B2%E7%AB%99%E5%BE%8C%E4%B8%8B%E8%BC%89%E6%AA%94%E6%A1%88/" target="_blank" rel="noopener">[Mac] 使用 wget 送出 cookie，登入網站後下載檔案 | EPH 的程式日記</a><br>可以 debug 出東西</p>
+<p>但是我想直接用瀏覽器 Cookies 出來<br>一直在想 Cookies 要怎麼組<br><a href="https://addons.mozilla.org/zh-TW/firefox/addon/export-cookies-txt/" target="_blank" rel="noopener">Export Cookies – 下載 🦊 Firefox 擴充套件（zh-TW）</a><br>這個很快就解決問題</p>
+<p><del>其實上述網頁就有寫格式，我當初沒注意到</del><br>有工具產生比較快</p>
+<p>cookies 格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dc2.safesync.com TRUE / FALSE 0 fmprm si</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://xyz.cinc.biz/2014/10/linux-curl-wget-cookie.html" target="_blank" rel="noopener">XYZ的筆記本: Linux 使用 curl (wget) 自動訪問網頁</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">取cookies</span><br><span class="line">wget --cookies=on --keep-session-cookies --save-cookies=cookie.txt &quot;http://server.com/&quot; -O 123.html</span><br><span class="line"></span><br><span class="line">用cookies</span><br><span class="line">wget --referer=&quot;http://server.com/&quot; --cookies=on --load-cookies=cookie.txt --keep-session-cookies --save-cookies=cookie.txt &quot;http://server.com/menu&quot; -O 456.html</span><br><span class="line"></span><br><span class="line">取cookies 加 user &amp; pass</span><br><span class="line">wget --cookies=on --save-cookies=cookies.txt --post-data &apos;user=chio&amp;password=chio&apos; &quot;http://server.com/auth.php&quot;</span><br><span class="line"></span><br><span class="line">用cookies</span><br><span class="line">wget --cookies=on --load-cookies=cookies.txt -m -E -k &quot;http://server.com/interesting/article.php&quot;</span><br></pre></td></tr></table></figure>
+<p><a href="https://echochio.pixnet.net/blog/post/32574231-wget%E5%8F%96cookies-%E7%94%A8-cookies" target="_blank" rel="noopener">wget取cookies 用 cookies @ echochio :: 痞客邦 ::</a></p>
+<p>相信透過這些很簡單可以寫個自動化工具!!</p>
 
       
     </div>
@@ -555,7 +568,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">457</span>
+                  <span class="site-state-item-count">458</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -577,7 +590,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">379</span>
+                  <span class="site-state-item-count">380</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
