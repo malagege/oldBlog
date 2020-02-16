@@ -91,13 +91,15 @@ if [ "${IP}" = "" ];then
 fi
 
 OUTLOG=" >> ping_${IP}.log"
-echo "=========================================" $OUTLOG
-echo "=========================================" $OUTLOG
-date "+%Y-%m-%d %H:%M:%S" $OUTLOG
-echo "PING HOST: ${IP}" $OUTLOG
+
 
 while [ TRUE ]
 do
+        echo "=========================================" $OUTLOG
+        echo "=========================================" $OUTLOG
+        date "+%Y-%m-%d %H:%M:%S" $OUTLOG
+        echo "PING HOST: ${IP}" $OUTLOG
+
         ping -c 10 ${IP}  $OUTLOG
         sleep 300 #300秒檢查
 done
@@ -132,13 +134,14 @@ if [ "${IP}" = "" ];then
 fi
 
 OUTLOG=" >> ping_${IP}.log"
-echo "========================================="  >> ping_${IP}.log
-echo "========================================="  >> ping_${IP}.log
-date "+%Y-%m-%d %H:%M:%S"  >> ping_${IP}.log
-echo "PING HOST: ${IP}"  >> ping_${IP}.log
 
 while [ TRUE ]
 do
+        echo "========================================="  >> ping_${IP}.log
+        echo "========================================="  >> ping_${IP}.log
+        date "+%Y-%m-%d %H:%M:%S"  >> ping_${IP}.log
+        echo "PING HOST: ${IP}"  >> ping_${IP}.log
+
         ping -c 10 ${IP}   >> ping_${IP}.log
         sleep 300 #300秒檢查
 done
@@ -250,13 +253,15 @@ if [ "${IP}" = "" ];then
 fi
 
 OUTLOG=" >> ping_${IP}.log"
-echo "========================================="  #>> ping_${IP}.log
-echo "========================================="  #>> ping_${IP}.log
-date "+%Y-%m-%d %H:%M:%S"  #>> ping_${IP}.log
-echo "PING HOST: ${IP}"  #>> ping_${IP}.log
 
 while [ TRUE ]
 do
+        echo "========================================="  #>> ping_${IP}.log
+        echo "========================================="  #>> ping_${IP}.log
+        date "+%Y-%m-%d %H:%M:%S"  #>> ping_${IP}.log
+        echo "PING HOST: ${IP}"  #>> ping_${IP}.log
+
+
         ping -c 10 ${IP}   #>> ping_${IP}.log
         #sleep 300 #300秒檢查
 done
@@ -351,8 +356,7 @@ error: destination /home/pi/ping/ping_127.0.0.1.log-20200127 already exists, ski
 
 ## 總結
 
-其實這篇沒有刪減
-有些事多餘實驗過程
+其實這篇不重要刪減，所以看的內容非常雜
 不過經過這次實驗有清楚了解到要怎麼使用 logrotate
 
 後續如果程式要做 HUP 訊號要怎麼處理?之後有空在研究

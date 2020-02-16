@@ -72,3 +72,23 @@ unoconv
 * [kyoh86/csv2xlsx](https://github.com/kyoh86/csv2xlsx)
 * [truesocialmetrics/service-file-format-convertor-csv2xlsx: convert files from csv to excel](https://github.com/truesocialmetrics/service-file-format-convertor-csv2xlsx)
 * [Golang get 抓取的套件如何移除 | Tsung's Blog](https://blog.longwin.com.tw/2017/03/golang-get-%E6%8A%93%E5%8F%96%E7%9A%84%E5%A5%97%E4%BB%B6%E5%A6%82%E4%BD%95%E7%A7%BB%E9%99%A4/)
+
+
+**2020-01-30**
+
+在想都有 csv2xlsx 應該有 xlsx2csv 吧
+同一個作者有出[tealeg/xlsx2csv: Convert XSLX files to CSV](https://github.com/tealeg/xlsx2csv)
+
+
+## 安裝
+
+```
+go get github.com/tealeg/xlsx2csv
+```
+
+## 指令
+
+```
+xlsx2csv.exe -o testfile.csv testfile.xlsx
+```
+
