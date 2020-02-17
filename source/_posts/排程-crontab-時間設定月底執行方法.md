@@ -80,3 +80,4 @@ done
 - [date - Jenkins -run job 2 days before end of every month - Stack Overflow](https://stackoverflow.com/questions/49295240/jenkins-run-job-2-days-before-end-of-every-month)
 - [cron-last-sunday/run-if-today at master · xr09/cron-last-sunday](https://github.com/xr09/cron-last-sunday/blob/master/run-if-today)
 - [鳥哥的 Linux 私房菜 -- 第十五章、例行性工作排程(crontab)](http://linux.vbird.org/linux_basic/0430cron.php#anacron_1)
+- [linux下crontab与anacrontab的使用 - 小柒吃地瓜](https://www.i7dom.cn/179/2019/13/linux-cron-cycle.html)

@@ -1,9 +1,17 @@
 ---
 title: vagrant 搭配使用 ansible 和 docker 架設 redis 小記
 date: 2020-02-15 18:43:43
-tags:
-categories:
+tags: [vagrant,docker,ansible]
+categories: Vagrant
 ---
+
+常常我們需要做布署安裝
+多台可能需要
+最近看到 vagrant 可以搭配 ansible 使用
+網路上隨便找一個範例小記
+意外發現 `/var/run` 一些程式設定方法
+
+<!--more-->
 
 ## vagrant 使用 ansible 安裝 redis
 
@@ -38,7 +46,7 @@ redis 竟然開不起來
 發現 /etc/init 沒有我要的
 後來發現 /etc/init.d/ 裡面有相關 redis 設定
 
-```
+```bash
 ###########################
 #chkconfig: 2345 10 90
 #description: Start and Stop redis
@@ -146,7 +154,8 @@ WantedBy=multi-user.target
 不過正常應該是可以用的
 
 只要在 playbook.yml 下面加
-```
+
+```yml
     - name: create systemd tmpfiles configuration
       template: src=templates/tmpfiles_redis.conf.j2
                 dest=/etc/tmpfiles.d/redis.conf
@@ -224,7 +233,7 @@ See '/usr/bin/docker run --help'.
 有找到如何使用 vagrant ssh 進去
 
 dockerfile
-```
+```dockerfile
 # Pull base image
 FROM ubuntu:16.04
 # Installation
@@ -242,7 +251,7 @@ CMD ["/usr/sbin/sshd", "-D"]
 ```
 
 Vagrantfile
-```
+```ruby
 # Vagrantfile
 # -*- mode: ruby -*-
 Vagrant.configure("2") do |config|
@@ -257,7 +266,7 @@ end
 或
 
 Vagrantfile
-```
+```ruby
 # Vagrantfile
 # -*- mode: ruby -*-
 Vagrant.configure("2") do |config|
