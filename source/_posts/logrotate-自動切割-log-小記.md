@@ -360,5 +360,3 @@ error: destination /home/pi/ping/ping_127.0.0.1.log-20200127 already exists, ski
 不過經過這次實驗有清楚了解到要怎麼使用 logrotate
 
 後續如果程式要做 HUP 訊號要怎麼處理?之後有空在研究
-
-

@@ -40,3 +40,4 @@ date: 2018-05-14 21:24:11
 - [隔叶黄莺 Yanbin Blog - 软件编程实践](https://yanbin.blog/)
 - [HelloDog](https://wsgzao.github.io/)
 - [小柒吃地瓜](https://www.i7dom.cn/)
+- [rj-bai 's Blog](https://blog.rj-bai.com/)

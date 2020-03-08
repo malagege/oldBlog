@@ -1,8 +1,8 @@
 ---
 title: PHP-DI 簡單自動注入小記
 date: 2020-02-10 21:10:54
-tags:
-categories:
+tags: [php,di]
+categories: PHP
 ---
 
 最近跑去看 PHP-DI 

@@ -266,3 +266,4 @@ portainer 什麼設定都不用做!!!!太猛啦
 * [使用 Haproxy + Keepalived 构建基于 Docker 的高可用负载均衡服务（一） - CODING 博客](https://blog.coding.net/blog/Haproxy&Keepalived)
 * [Haproxy+Keepalived高可用环境部署梳理（主主和主从模式）-眼眸刻着你的微笑-51CTO博客](https://blog.51cto.com/dengaosky/2129856)
 * [containers - How can I remove shutdown Docker Service tasks after a rolling update? - Stack Overflow](https://stackoverflow.com/questions/41705134/how-can-i-remove-shutdown-docker-service-tasks-after-a-rolling-update)
+* [Docker Swarm 实战 - rj-bai 's Blog](https://blog.rj-bai.com/post/150.html)

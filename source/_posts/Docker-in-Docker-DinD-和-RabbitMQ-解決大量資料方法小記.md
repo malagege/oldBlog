@@ -62,20 +62,20 @@ curl --unix-socket /var/run/docker.sock -H "Content-Type: application/json" \
 
 ```php
 <?php
-$fp = stream_socket_client("unix:///var/run/docker.sock", $errno, $errstr, 30);
-if (!$fp) {
+$file_p = stream_socket_client("unix:///var/run/docker.sock", $errno, $errstr, 30);
+if (!$file_p) {
     echo "$errstr ($errno)<br />\n";
 } else {
-    fwrite($fp, "POST /containers/create HTTP/1.1\nHost: v1.24\nContent-Type: application/json\nContent-Length: 51\nConnection: Close\n\n{\"Image\": \"alpine\", \"Cmd\": [\"echo\", \"hello world\"]}");
-    while (!feof($fp)) {
-        echo fgets($fp, 1024);
+    fwrite($file_p, "POST /containers/create HTTP/1.1\nHost: v1.24\nContent-Type: application/json\nContent-Length: 51\nConnection: Close\n\n{\"Image\": \"alpine\", \"Cmd\": [\"echo\", \"hello world\"]}");
+    while (!feof($file_p)) {
+        echo fgets($file_p, 1024);
     }
-    fclose($fp);
+    fclose($file_p);
 }
 ?>
 ```
 
-Connection: Close 需要加，否則程式不會退出!!
+`Connection: Close` 需要加，否則程式不會退出!!
 仔細想想這樣也滿有道理，需要切斷 socket 連線
 Content-Length 需要注意`{"Image": "alpine", "Cmd": ["echo", "hello world"]}`這個長度
 不對的話會有問題
@@ -120,3 +120,6 @@ Content-Length 需要注意`{"Image": "alpine", "Cmd": ["echo", "hello world"]}`
 [前言 · 轻松搞定RabbitMQ · 看云](https://www.kancloud.cn/longxuan/rabbitmq-arron/107717)
 
 [Auto-Scaling Services Using Instrumented Metrics - Docker Flow Monitor](https://monitor.dockerflow.com/auto-scaling/)
+
+
+[Spring Boot RabbitMQ - priority queue](https://programming.vip/docs/spring-boot-rabbitmq-priority-queue.html)

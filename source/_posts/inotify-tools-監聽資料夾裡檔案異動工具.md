@@ -50,7 +50,7 @@ inotifywatch -v -e access -e modify -t 60 -r /home
 > 13     3       10      /home/vagrant/
 
 
-監聽access（文件读取)、modify(文件更改)檔案做統計個數
+監聽access（文件讀取)、modify(文件更改)檔案做統計個數
 
 NOTE:
 -v 顯示訊息

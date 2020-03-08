@@ -5,6 +5,10 @@ tags: [k8s]
 categories: Kubernetes
 ---
 
+尚未整理完成
+
+<!--more-->
+
 ## 安裝 minikube
 
 必備安裝
