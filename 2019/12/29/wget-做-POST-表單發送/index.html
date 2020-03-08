@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近收到一個工單是有關於做大量資料做修改目前有一隻程式做單一資料置換要怎麼快速對大量資料直接用現有程式做呢?那就多批發送表單吧">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-02-04T13:44:21.496Z">
+<meta property="og:updated_time" content="2020-02-05T15:15:28.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="wget 做 POST 表單發送">
 <meta name="twitter:description" content="最近收到一個工單是有關於做大量資料做修改目前有一隻程式做單一資料置換要怎麼快速對大量資料直接用現有程式做呢?那就多批發送表單吧">
@@ -440,6 +440,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">取cookies</span><br><span class="line">wget --cookies=on --keep-session-cookies --save-cookies=cookie.txt &quot;http://server.com/&quot; -O 123.html</span><br><span class="line"></span><br><span class="line">用cookies</span><br><span class="line">wget --referer=&quot;http://server.com/&quot; --cookies=on --load-cookies=cookie.txt --keep-session-cookies --save-cookies=cookie.txt &quot;http://server.com/menu&quot; -O 456.html</span><br><span class="line"></span><br><span class="line">取cookies 加 user &amp; pass</span><br><span class="line">wget --cookies=on --save-cookies=cookies.txt --post-data &apos;user=chio&amp;password=chio&apos; &quot;http://server.com/auth.php&quot;</span><br><span class="line"></span><br><span class="line">用cookies</span><br><span class="line">wget --cookies=on --load-cookies=cookies.txt -m -E -k &quot;http://server.com/interesting/article.php&quot;</span><br></pre></td></tr></table></figure>
 <p><a href="https://echochio.pixnet.net/blog/post/32574231-wget%E5%8F%96cookies-%E7%94%A8-cookies" target="_blank" rel="noopener">wget取cookies 用 cookies @ echochio :: 痞客邦 ::</a></p>
 <p>相信透過這些很簡單可以寫個自動化工具!!</p>
+<h2 id="timeout-try-次數"><a href="#timeout-try-次數" class="headerlink" title="timeout try 次數"></a>timeout try 次數</h2><p><a href="https://stackoverflow.com/questions/2291524/does-wget-timeout" target="_blank" rel="noopener">linux - Does WGET timeout? - Stack Overflow</a></p>
+<p>預設 900 秒  嘗試次數 5 次</p>
 
       
     </div>
@@ -552,8 +554,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -568,7 +579,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">458</span>
+                  <span class="site-state-item-count">469</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -579,7 +590,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -590,7 +601,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">380</span>
+                  <span class="site-state-item-count">386</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -623,6 +634,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#timeout-try-次數"><span class="nav-number">1.</span> <span class="nav-text">timeout try 次數</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

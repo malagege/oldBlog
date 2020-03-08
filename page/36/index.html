@@ -310,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/08/22/logdown/2017-08-22-i-really-miss-the-leoboard-forums-with-docker-to-make-cgi-environment/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/11/06/logdown/2017-11-06-3301727/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
@@ -329,7 +329,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2017/08/22/logdown/2017-08-22-i-really-miss-the-leoboard-forums-with-docker-to-make-cgi-environment/" itemprop="url">好懷念leoboard論壇，用docker動手做cgi環境(未完成)</a></h1>
+                <a class="post-title-link" href="/blog/2017/11/06/logdown/2017-11-06-3301727/" itemprop="url">[BitBucket]做git pull一直問你輸入密碼</a></h1>
         
 
         <div class="post-meta">
@@ -341,8 +341,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-08-22T13:20:00+08:00">
-                2017-08-22
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-11-06T14:58:00+08:00">
+                2017-11-06
               </time>
             
 
@@ -364,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
+                  <a href="/blog/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
                   </a>
                 </span>
 
@@ -382,8 +382,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2017/08/22/logdown/2017-08-22-i-really-miss-the-leoboard-forums-with-docker-to-make-cgi-environment/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/22/logdown/2017-08-22-i-really-miss-the-leoboard-forums-with-docker-to-make-cgi-environment/" itemprop="commentCount"></span>
+                <a href="/blog/2017/11/06/logdown/2017-11-06-3301727/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/06/logdown/2017-11-06-3301727/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -413,11 +413,10 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule !mpm_prefork_module&gt;</span><br><span class="line"></span><br><span class="line">        LoadModule cgid_module modules/mod_cgid.so</span><br><span class="line"></span><br><span class="line">&lt;/IfModule&gt;</span><br><span class="line"></span><br><span class="line">&lt;IfModule mpm_prefork_module&gt;</span><br><span class="line"></span><br><span class="line">        LoadModule cgi_module modules/mod_cgi.so</span><br><span class="line"></span><br><span class="line">&lt;/IfModule&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ScriptAlias /cgi-bin/ &quot;/usr/local/apache/cgi-bin/&quot; apache</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Wed Mar 19 15:40:31.179155 2014] [cgid:error] [pid 4796:tid 140208841959296] (13)Permission denied: AH01241: exec of &apos;/var/cgi-bin/echo.pl&apos; failed</span><br></pre></td></tr></table></figure>
-<p><code>chmod +x /var/cgi-bin/echo.pl</code></p>
-<p><a href="http://nohup.cc/article/206/" target="_blank" rel="noopener">http://nohup.cc/article/206/</a><br><a href="http://www.cnblogs.com/phpgo/p/5669818.html" target="_blank" rel="noopener">http://www.cnblogs.com/phpgo/p/5669818.html</a><br><a href="https://stackoverflow.com/questions/18392741/apache2-ah01630-client-denied-by-server-configuration" target="_blank" rel="noopener">https://stackoverflow.com/questions/18392741/apache2-ah01630-client-denied-by-server-configuration</a></p>
+            <p>前幾個月有個程式，因為需要多人做設定檔<br>所以就使用bitbucket來管理<br>在樹莓派一直遇到要打帳號、密碼<br>其怪，私鑰那些我都要試過阿</p>
+<p>結果Google一下，發現這篇<br><a href="https://stackoverflow.com/questions/8600652/git-on-bitbucket-always-asked-for-password-even-after-uploading-my-public-ssh?noredirect=1&amp;lq=1" target="_blank" rel="noopener">Git on Bitbucket: Always asked for password, even after uploading my public SSH key - Stack Overflow</a><br>預設是https情況下會問密碼<br>在.git/config把網址改成ssh網址確實可運做了<br><code>ssh://git@bitbucket.org/userName/repoName.git</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">As explained here, if you clone with SSH url, you don&apos;t need to enter username / password each time you push / pull. Check above answer by @manojlds</span><br><span class="line"></span><br><span class="line">But if you want to clone with HTTPS and want to avoid entering username / password each time, you can store credentials into cache with below command:</span><br><span class="line"></span><br><span class="line">git config --global credential.helper &apos;cache --timeout 3600&apos;</span><br><span class="line"></span><br><span class="line">where 3600 (seconds) means 1 hour, you may change it as per your requirement.</span><br></pre></td></tr></table></figure>
+<p>網路上有一個解法，<code>http://username:password@bitbucket.org/...</code><br>但感覺不安全….</p>
 
           
         
@@ -466,7 +465,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/08/20/logdown/2017-08-20-2201711/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/11/05/logdown/2017-11-05-3279650/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
@@ -485,7 +484,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2017/08/20/logdown/2017-08-20-2201711/" itemprop="url">Docker 新手筆記</a></h1>
+                <a class="post-title-link" href="/blog/2017/11/05/logdown/2017-11-05-3279650/" itemprop="url">Crontab指令打百分比需要跳脫符號</a></h1>
         
 
         <div class="post-meta">
@@ -497,8 +496,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-08-20T08:12:00+08:00">
-                2017-08-20
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-11-05T15:33:00+08:00">
+                2017-11-05
               </time>
             
 
@@ -520,8 +519,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -538,8 +537,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2017/08/20/logdown/2017-08-20-2201711/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/20/logdown/2017-08-20-2201711/" itemprop="commentCount"></span>
+                <a href="/blog/2017/11/05/logdown/2017-11-05-3279650/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/05/logdown/2017-11-05-3279650/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -568,10 +567,10 @@
 
       
         
-          <p>買Docker 入門與實戰，當然要記一下筆記…<br>以後開發盡量用Docker做:P</p>
+          <p>最近發現我上次設定的crontab 指令沒有成功<br>仔細看了一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nov  1 01:00:01 raspberrypi /USR/SBIN/CRON[1361]: (debian-transmission) CMD (mkdir /mnt/extHDD/Download/Mikata/`date &quot;+)</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/2017/08/20/logdown/2017-08-20-2201711/#more" rel="contents">
+            <a class="btn" href="/blog/2017/11/05/logdown/2017-11-05-3279650/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -622,7 +621,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/08/06/logdown/2017-08-06-anglular-random-notes/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/20/logdown/2017-09-20-2511953/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
@@ -641,7 +640,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2017/08/06/logdown/2017-08-06-anglular-random-notes/" itemprop="url">anglular隨意筆記</a></h1>
+                <a class="post-title-link" href="/blog/2017/09/20/logdown/2017-09-20-2511953/" itemprop="url">Server Side Includes(SSI)記錄</a></h1>
         
 
         <div class="post-meta">
@@ -653,146 +652,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-08-06T01:11:00+08:00">
-                2017-08-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2017/08/06/logdown/2017-08-06-anglular-random-notes/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/06/logdown/2017-08-06-anglular-random-notes/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>npm install -g @angular/cli</p>
-<p>Angular Language Service<br>Angular TypeScript Snippets for VS Code<br>Prettier formatter for Visual Studio Code</p>
-<p>ng new coscup</p>
-<p>ng g c title 建立compent</p>
-<p>ng g d todo 建立Directive<br><a href="https://github.com/augt/S02Todo/tree/master/todomvc-template" target="_blank" rel="noopener">https://github.com/augt/S02Todo/tree/master/todomvc-template</a><br><a href="https://forum.angular.tw/t/coscup-workshop-angular/466/2" target="_blank" rel="noopener">https://forum.angular.tw/t/coscup-workshop-angular/466/2</a><br><a href="https://hackmd.io/p/HJwfMifD-#/6/2" target="_blank" rel="noopener">https://hackmd.io/p/HJwfMifD-#/6/2</a></p>
-<p>ng generate pipe pipe/my-filer</p>
-<p><a href="http://oomusou.io/angular/angular-coscup-api/" target="_blank" rel="noopener">http://oomusou.io/angular/angular-coscup-api/</a></p>
-<p>ng g i post</p>
-<p> ng g s services/data</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/08/05/logdown/2017-08-05-coscup-random-notes/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/08/05/logdown/2017-08-05-coscup-random-notes/" itemprop="url">COSCUP2017隨意筆記</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-08-05T14:03:00+08:00">
-                2017-08-05
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-20T12:17:00+08:00">
+                2017-09-20
               </time>
             
 
@@ -814,8 +675,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/HTML/" itemprop="url" rel="index">
-                    <span itemprop="name">HTML</span>
+                  <a href="/blog/categories/Apache/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache</span>
                   </a>
                 </span>
 
@@ -832,8 +693,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2017/08/05/logdown/2017-08-05-coscup-random-notes/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/05/logdown/2017-08-05-coscup-random-notes/" itemprop="commentCount"></span>
+                <a href="/blog/2017/09/20/logdown/2017-09-20-2511953/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/20/logdown/2017-09-20-2511953/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -862,628 +723,11 @@
 
       
         
-          
-            <p>COSCUP VPS安全維護<br>可以iptable設定<br>waf(web application firewall)<br>SELinux</p>
-<p>ssh(SSH) -&gt; ssh(WEB)<br>log記錄到別台去</p>
-<p>apache版本</p>
-<p><a href="https://www.slideshare.net/smalltown20110306/coscup-2017-infrastructure-as-code" target="_blank" rel="noopener">https://www.slideshare.net/smalltown20110306/coscup-2017-infrastructure-as-code</a><br><a href="http://blog.chengweichen.com/2017/08/coscup-2017-ansible-gitlab-cicd.html" target="_blank" rel="noopener">http://blog.chengweichen.com/2017/08/coscup-2017-ansible-gitlab-cicd.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/08/03/logdown/2017-08-03-cssflex-notes/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/08/03/logdown/2017-08-03-cssflex-notes/" itemprop="url">[CSS]flex筆記</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-08-03T14:58:00+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/CSS/" itemprop="url" rel="index">
-                    <span itemprop="name">CSS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2017/08/03/logdown/2017-08-03-cssflex-notes/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/03/logdown/2017-08-03-cssflex-notes/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://www.facebook.com/WccCasper/videos/414910278905201/" target="_blank" rel="noopener">https://www.facebook.com/WccCasper/videos/414910278905201/</a><br><a href="https://paper.dropbox.com/doc/Flex-1lWq76W07m67326psOncP" target="_blank" rel="noopener">https://paper.dropbox.com/doc/Flex-1lWq76W07m67326psOncP</a><br><a href="http://wcc723.github.io/WorkShop-gh-pages/cssFlex/" target="_blank" rel="noopener">http://wcc723.github.io/WorkShop-gh-pages/cssFlex/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/08/02/logdown/2017-08-02-2131881/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/08/02/logdown/2017-08-02-2131881/" itemprop="url">Crontab排程設定</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-08-02T13:34:00+08:00">
-                2017-08-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2017/08/02/logdown/2017-08-02-2131881/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/02/logdown/2017-08-02-2131881/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近想自動建立年月份資料夾<br>雖然<code>crontab -e</code>和<code>crontab -l</code>指令還記得<br>不過設定都會忘記XD<br>再此筆記</p>
+          <p>今天同事請較我，順便讓我看到他網站有類似用include方法載入別的頁面<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--#include virtual="../quote.txt" --&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>但這個我沒看過…<br>搜尋一下是，Server Side Includes<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/2017/08/02/logdown/2017-08-02-2131881/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/07/26/logdown/2017-07-26-2086815/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/07/26/logdown/2017-07-26-2086815/" itemprop="url">zsh前面「使用者@電腦」拿掉</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-07-26T14:26:00+08:00">
-                2017-07-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2017/07/26/logdown/2017-07-26-2086815/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/07/26/logdown/2017-07-26-2086815/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在.zshrc加入<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> DEFAULT_USER=`whoami`</span><br></pre></td></tr></table></figure></p>
-<p>完成</p>
-<p>ubuntu 安裝字型<br>apt-get install powerline</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/07/24/logdown/2017-07-24-2082428/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/07/24/logdown/2017-07-24-2082428/" itemprop="url">BitBucket的CI簡單測試記錄</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-07-24T15:35:00+08:00">
-                2017-07-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/CI/" itemprop="url" rel="index">
-                    <span itemprop="name">CI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2017/07/24/logdown/2017-07-24-2082428/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/07/24/logdown/2017-07-24-2082428/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>原本想使用python的yamllint<br>不過使用python的yamllint會有一些問題<br>像一行超過80個字  (奇怪…有這個規定??)</p>
-<p>後來用node的yamllint就沒問題<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2017/07/24/logdown/2017-07-24-2082428/#more" rel="contents">
+            <a class="btn" href="/blog/2017/09/20/logdown/2017-09-20-2511953/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1534,7 +778,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/07/18/logdown/2017-07-18-2067199/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/19/logdown/2017-09-19-2496270/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
@@ -1553,7 +797,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2017/07/18/logdown/2017-07-18-2067199/" itemprop="url">好看的bash工具 -zsh</a></h1>
+                <a class="post-title-link" href="/blog/2017/09/19/logdown/2017-09-19-2496270/" itemprop="url">electron 新手做Tray通知(以electron-chat-app-demo為例)</a></h1>
         
 
         <div class="post-meta">
@@ -1565,8 +809,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-07-18T11:31:00+08:00">
-                2017-07-18
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-19T11:34:00+08:00">
+                2017-09-19
               </time>
             
 
@@ -1588,8 +832,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/實用工具/" itemprop="url" rel="index">
-                    <span itemprop="name">實用工具</span>
+                  <a href="/blog/categories/electron/" itemprop="url" rel="index">
+                    <span itemprop="name">electron</span>
                   </a>
                 </span>
 
@@ -1606,8 +850,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2017/07/18/logdown/2017-07-18-2067199/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/07/18/logdown/2017-07-18-2067199/" itemprop="commentCount"></span>
+                <a href="/blog/2017/09/19/logdown/2017-09-19-2496270/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/19/logdown/2017-09-19-2496270/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1636,10 +880,10 @@
 
       
         
-          <p>之前在MAC看到很多很旋的命令提示字元<br>想說Window沒有這個命<br>結果今天聽同事說Window也能用<br>就馬上試了一下，記錄下來XD</p>
+          <p>要做blog移轉，筆記先存檔…</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/2017/07/18/logdown/2017-07-18-2067199/#more" rel="contents">
+            <a class="btn" href="/blog/2017/09/19/logdown/2017-09-19-2496270/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1690,7 +934,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/07/16/logdown/2017-07-16-2052650/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/15/logdown/2017-09-15-2463354/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
@@ -1709,7 +953,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/2017/07/16/logdown/2017-07-16-2052650/" itemprop="url">簡單玩了一下拖拉窗視</a></h1>
+                <a class="post-title-link" href="/blog/2017/09/15/logdown/2017-09-15-2463354/" itemprop="url">electron 新手轉exe筆記</a></h1>
         
 
         <div class="post-meta">
@@ -1721,8 +965,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-07-16T10:41:00+08:00">
-                2017-07-16
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-15T15:11:00+08:00">
+                2017-09-15
               </time>
             
 
@@ -1744,8 +988,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
+                  <a href="/blog/categories/electron/" itemprop="url" rel="index">
+                    <span itemprop="name">electron</span>
                   </a>
                 </span>
 
@@ -1762,8 +1006,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2017/07/16/logdown/2017-07-16-2052650/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/07/16/logdown/2017-07-16-2052650/" itemprop="commentCount"></span>
+                <a href="/blog/2017/09/15/logdown/2017-09-15-2463354/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/15/logdown/2017-09-15-2463354/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1792,10 +1036,768 @@
 
       
         
-          <p>這一篇只是程式記錄，沒有完成非常大的東西…</p>
+          <p>要做blog移轉，筆記先存檔…<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/2017/07/16/logdown/2017-07-16-2052650/#more" rel="contents">
+            <a class="btn" href="/blog/2017/09/15/logdown/2017-09-15-2463354/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/11/logdown/2017-09-11-erection-of-https/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/09/11/logdown/2017-09-11-erection-of-https/" itemprop="url">Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-11T13:09:00+08:00">
+                2017-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/09/11/logdown/2017-09-11-erection-of-https/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/11/logdown/2017-09-11-erection-of-https/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p> 最近想讓動物機增加安全性，有看到免費的letsencrypt教學文<br> 又好像有工具自動產生憑證<br> 以經有看到勇者試了，當然也要嘗試:P</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/09/11/logdown/2017-09-11-erection-of-https/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/10/logdown/2017-09-10-2375763/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/09/10/logdown/2017-09-10-2375763/" itemprop="url">修改iptables設定筆記</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-10T13:49:00+08:00">
+                2017-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/09/10/logdown/2017-09-10-2375763/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/10/logdown/2017-09-10-2375763/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近想在動物機加上https協定<br>所以必須在iptables加上443 的port<br>但是…iptables早就忘了</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/09/10/logdown/2017-09-10-2375763/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/08/logdown/2017-09-08-2327309/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/09/08/logdown/2017-09-08-2327309/" itemprop="url">socket的timeout問題</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-08T12:27:00+08:00">
+                2017-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/寫程式一些事/" itemprop="url" rel="index">
+                    <span itemprop="name">寫程式一些事</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/09/08/logdown/2017-09-08-2327309/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/08/logdown/2017-09-08-2327309/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>提醒一下自己，socket會有timeout問題<br>最近跟廠商接處，可能這點記錄一下</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/09/08/logdown/2017-09-08-2327309/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/06/logdown/2017-09-06-reasons-unknown-computer-reboot-the-maintenance-records/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/09/06/logdown/2017-09-06-reasons-unknown-computer-reboot-the-maintenance-records/" itemprop="url">電腦不明原因，玩遊戲或看影片重開機維修記錄</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-06T15:31:00+08:00">
+                2017-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/09/06/logdown/2017-09-06-reasons-unknown-computer-reboot-the-maintenance-records/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/06/logdown/2017-09-06-reasons-unknown-computer-reboot-the-maintenance-records/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>半年前多，電腦會因為看影片快轉或放大縮小，會重新開機<br>我使用Potplayer播放器，有上網搜尋一下<br>有找到是顯示卡問題，但後來有更新顯示卡還是一樣<br>直到最近…<br>(難得寫硬體筆記XD?!)<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/09/06/logdown/2017-09-06-reasons-unknown-computer-reboot-the-maintenance-records/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/08/25/logdown/2017-08-25-2214765/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/08/25/logdown/2017-08-25-2214765/" itemprop="url">DB設定常常忘記一此筆記</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-08-25T11:10:00+08:00">
+                2017-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/08/25/logdown/2017-08-25-2214765/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/25/logdown/2017-08-25-2214765/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在公司學到的東西，但還沒有實作過<br>先筆記一下</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2017/08/25/logdown/2017-08-25-2214765/#more" rel="contents">
               閱讀全文 &raquo;
             </a>
           </div>
@@ -1837,7 +1839,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/35/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/blog/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/46/">46</a><a class="extend next" rel="next" href="/blog/page/37/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/35/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/blog/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/47/">47</a><a class="extend next" rel="next" href="/blog/page/37/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1891,7 +1893,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">458</span>
+                  <span class="site-state-item-count">469</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -1902,7 +1904,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -1913,7 +1915,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">380</span>
+                  <span class="site-state-item-count">386</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
