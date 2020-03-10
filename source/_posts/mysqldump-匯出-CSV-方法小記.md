@@ -1,9 +1,11 @@
 ---
 title: mysqldump  匯出 CSV 方法小記
 date: 2020-02-19 22:30:43
-tags:
-categories:
+tags: [mysql, sql, csv]
+categories: SQL
 ---
+
+這篇只記錄，尚未測試
 
 <!--more-->
 

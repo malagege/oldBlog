@@ -1,8 +1,8 @@
 ---
 title: 檢查大量不同 IP 跟 Port 方法
 date: 2020-03-07 01:12:49
-tags:
-categories:
+tags: [linux,shell]
+categories: Linux
 ---
 
 最近要測試大量主機 Port ，看裡面東西有沒有開通

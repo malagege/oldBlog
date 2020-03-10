@@ -1,8 +1,8 @@
 ---
 title: 快速用 docker 建置 oracle 環境方法
 date: 2020-03-07 01:14:59
-tags:
-categories:
+tags: [docker,oracle]
+categories: Docker
 ---
 
 最近要看 DB 工具是否能正常連 Oracle
