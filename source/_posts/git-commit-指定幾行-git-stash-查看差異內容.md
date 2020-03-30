@@ -55,3 +55,41 @@ ddkP  刪除單行 + 貼上
 
 [Vim | 高見龍](https://kaochenlong.com/2011/12/26/vim/)
 [爽爽快快學Vim(3) - Vim Plugins | 高見龍](https://kaochenlong.com/2012/06/01/screencast-3-vim-plugins/)
+
+## stash apply 
+
+> 要把 Stash 撿回來用，除了 pop 之外，另一個指令是 apply：
+> 
+> $ git stash apply stash@{0}
+> 
+> 這是指會把 stash@{0} 這個 Stash 拿來套用在現在的分支上，但 Stash 不會刪除，還是會留在 Stash 列表上。所以你可把 pop 指令看成「apply Stash + drop Stash」。
+
+參考:[【狀況題】手邊的工作做到一半，臨時要切換到別的任務 - 為你自己學 Git | 高見龍](https://gitbook.tw/chapters/faq/stash.html)
+
+## 重新上 remote 新的分支
+
+最近分支命名錯誤，重新修改本地端分支名字
+`git branch -m [ branc_name ] `
+發現 `git push` 上到 remote 還是舊的名稱上面
+原因是 `--set-upstream` 已經設定過了
+必須重新修正
+`git push -u [remote name] [branch name]`
+可以下指令
+
+
+> git push -u github master 指令可以拆解成以下的指令
+> 
+> $ git push github master
+> $ git checkout master
+> $ git branch -u github/master
+
+
+## 取消 remote branch 追蹤
+
+git branch --unset-upstream
+
+取消當前分支
+
+git branch --unset-upstream master  
+
+也能指定分支

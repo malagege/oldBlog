@@ -26,3 +26,9 @@ git  --set-upstream-to origin/newName
 * master,develop盡量用merge，一個需求開一個feature，然後完成可以與develop做合併(可參考gitflow)
 * `git remote`有點像網路上的git分支，fetch完可以在與本地做merge動作
 * 不同git來源也能加入別的git repo(git remote add xxx http://xxxx)
+
+不支援大小寫
+Git 修改檔名大小寫
+$ git config core.ignorecase false
+$ git mv -f abc.php Abc.php
+[XYZ的筆記本: Git 修改檔名大小寫](https://xyz.cinc.biz/2016/01/git-rename-case-sensitive.html)
