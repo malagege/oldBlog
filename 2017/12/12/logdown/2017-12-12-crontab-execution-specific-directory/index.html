@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="-l150 * * * * cd /home/me/.flexget &amp;amp;&amp;amp; sh /home/me/.flexget/gitpull.sh &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 假如前面沒有做cd動作，執行目錄不會是在相同目錄在此筆記，以後就不用查了直接看筆記XD">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-04-03T18:17:18.806Z">
+<meta property="og:updated_time" content="2020-04-25T08:10:17.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Crontab 執行特定目錄">
 <meta name="twitter:description" content="-l150 * * * * cd /home/me/.flexget &amp;amp;&amp;amp; sh /home/me/.flexget/gitpull.sh &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 假如前面沒有做cd動作，執行目錄不會是在相同目錄在此筆記，以後就不用查了直接看筆記XD">
@@ -427,6 +427,9 @@
 <a id="more"></a>
 <p>在鳥哥看到<code>12.2.2 script 的執行方式差異 (source, sh script, ./script)</code><br>相信可能跟這個也很有關係</p>
 <p><a href="https://moto.debian.tw/viewtopic.php?f=11&amp;t=17208" target="_blank" rel="noopener">摩托學園討論區 • 檢視主題 - [分享] 研究 2&gt;&amp;1 後的一點點心得</a><br>也看到<code>&gt;/dev/null</code>執行正確不會東西，但是執行錯誤會顯示在console上面<br>但是<code>2&gt;&amp;1</code>會把錯誤資訊鳥在/dev/null (前提看你前面寫什麼)<br>詳細看裡面教學</p>
+<p><strong>2020-04-25</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 輸出結果也不太一樣</span></span><br><span class="line">ls  &gt; dirlist  2&gt;&amp;1</span><br><span class="line">ls 2&gt;&amp;1 &gt; dirlist</span><br><span class="line"><span class="comment"># 對於第二種情況，標準錯誤只是使用了標準輸出的文件表項，而標準輸出使用了 dirlist 的文件表項。</span></span><br></pre></td></tr></table></figure>
+<p>參考:<a href="https://gowa.club/Linux-Unix/Bash%E4%B8%AD%E7%9A%84IO%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91.html" target="_blank" rel="noopener">Bash中的IO與重定向 | 退思園</a></p>
 <p><a href="https://unix.stackexchange.com/questions/38951/what-is-the-working-directory-when-cron-executes-a-job" target="_blank" rel="noopener">What is the ‘working directory’ when cron executes a job? - Unix &amp; Linux Stack Exchange</a><br><a href="https://stackoverflow.com/questions/8899737/crontab-run-in-directory" target="_blank" rel="noopener">unix - Crontab - Run in directory - Stack Overflow</a><br><a href="http://linux.vbird.org/linux_basic/0340bashshell-scripts.php#some_ex_run" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – 第十二章、學習 Shell Scripts</a><br><a href="https://moto.debian.tw/viewtopic.php?f=11&amp;t=17208" target="_blank" rel="noopener">摩托學園討論區 • 檢視主題 - [分享] 研究 2&gt;&amp;1 後的一點點心得</a></p>
 
       
@@ -556,7 +559,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">469</span>
+                  <span class="site-state-item-count">478</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -567,7 +570,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -578,7 +581,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">386</span>
+                  <span class="site-state-item-count">395</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

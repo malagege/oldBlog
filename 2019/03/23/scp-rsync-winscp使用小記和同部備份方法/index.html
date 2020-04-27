@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近想同步檔案道別台機器想比較 scp,rsync,winscp 有什麼同步的方法比較一下差異">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2019-04-01T15:57:41.291Z">
+<meta property="og:updated_time" content="2020-04-24T11:44:16.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scp,rsync,winscp使用小記和同部備份方法">
 <meta name="twitter:description" content="最近想同步檔案道別台機器想比較 scp,rsync,winscp 有什麼同步的方法比較一下差異">
@@ -425,7 +425,7 @@
         <p>最近想同步檔案道別台機器<br>想比較 scp,rsync,winscp 有什麼同步的方法<br>比較一下差異</p>
 <a id="more"></a>
 <h2 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h2><p>之前有寫過這篇<a href="https://malagege.github.io/blog/2018/04/16/scp%E8%B7%9Fsftp%E6%98%AF%E4%B8%8D%E6%A8%A3%E7%9A%84%E6%9D%B1%E8%A5%BF/">scp 跟 sftp 是不一樣的東西 | 程式狂想筆記</a><br>所以這個沒有辦法跟 rysnc 一樣判斷同步<br>但有加密功能<br>使用也很簡單，不需要先 ssh 別台主機<br>直接 command 使用<code>scp xxx@ooo:xxx fff@bbb:xxx</code><br>不過路徑可能要清楚是哪邊</p>
-<p>複製資料夾除了用*方式<br>但用星號無法多層<br>要使用<code>-r</code> Recursively copy entire directories<br><a href="https://stackoverflow.com/questions/11304895/how-to-copy-a-folder-from-remote-to-local-using-scp" target="_blank" rel="noopener">shell - How to copy a folder from remote to local using scp? - Stack Overflow</a></p>
+<p>複製資料夾除了用*方式<br>但用星號無法多層<br>要使用<code>-r</code> Recursively copy entire directories<br><code>scp -r user@your.server.example.com:/path/to/foo /home/user/Desktop/</code><br><a href="https://stackoverflow.com/questions/11304895/how-to-copy-a-folder-from-remote-to-local-using-scp" target="_blank" rel="noopener">shell - How to copy a folder from remote to local using scp? - Stack Overflow</a></p>
 <h2 id="rsync"><a href="#rsync" class="headerlink" title="rsync"></a>rsync</h2><p><del>跟 scp 差別預設沒有加密，但還是有辦法做加密。</del><br>剛看了一下別的文章<br>2004 年後預設說有做 ssh 加密<br>難怪我有看到有些說預設有 ssh 加密，有些沒有…<br>可參考<a href="https://unix.stackexchange.com/questions/312358/rsync-e-option-to-ssh" target="_blank" rel="noopener">Rsync -e option to ssh - Unix &amp; Linux Stack Exchange</a></p>
 <blockquote>
 <p>Assuming you’re not needing to consider the rsync protocol itself, this depends on the compilation options used for your version of rsync.<br>It used to be the case that rsync used the rsh protocol by default (unless the build-time default had been changed), but the build-time default changed to ssh in 2004.<br>If you’re in doubt, start the rsync process transferring a relatively large file (or collection of files), and in another terminal run ps -ef | grep [r]sync. This will show you whether or not you’re using ssh for a transport. Here’s an example from one of my servers, which clearly shows the ssh transport:</p>
@@ -436,10 +436,14 @@
 </blockquote>
 <p>有時間在驗證上面到底有沒有加密</p>
 <p>他有很多參數<br>目前我常用是用<code>-av</code>，不過是先前前輩給我用的設定<br>我還沒搞清楚</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-a, --archive 歸檔模式，表示以遞歸方式傳輸文件，並保持所有文件屬性，等於-rlptgoD</span><br><span class="line">-v, --verbose 詳細模式輸出</span><br><span class="line">--delete 刪除那些目標目錄中有而源目錄中沒有的多餘文件。這個是 rsync 做增量方式的全備份的最佳選擇方案！！！！！！</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-a, --archive 歸檔模式，表示以遞歸方式傳輸文件，並保持所有文件屬性，等於-rlptgoD</span><br><span class="line">-v, --verbose 詳細模式輸出</span><br><span class="line">--delete 刪除那些目標目錄中有而源目錄中沒有的多餘文件。這個是 rsync 做增量方式的全備份的最佳選擇方案！！！！！！</span><br><span class="line">簡單說加入`--delete`就是本基做刪除動作，但是遠端就會**做刪除**</span><br><span class="line">反之，沒家的話就不會。</span><br></pre></td></tr></table></figure>
 <p>詳細記紹可以看<br><a href="https://www.cnblogs.com/kevingrace/p/8529792.html" target="_blank" rel="noopener">SCP 和 Rsync 遠程拷貝的幾個技巧 - 散盡浮華 - 博客園</a> <a href="/blog/2019/03/23/scp-rsync-winscp使用小記和同部備份方法/1.png" title="備份圖">備份圖</a><br><a href="https://www.jianshu.com/p/52aa5c2b872a" target="_blank" rel="noopener">SSH,SCP,rsync,sftp - 简书</a> <a href="/blog/2019/03/23/scp-rsync-winscp使用小記和同部備份方法/2.png" title="備份圖">備份圖</a></p>
 <p>不過 window 就算有裝 git bash，但預設沒有 rsync 可以用<br>所以我才會找找有沒有類似在 window winscp 做同步更新方法<br>當然我也有找到 window 能用 rsync<br><a href="https://chocolatey.org/packages/rsync" target="_blank" rel="noopener">Chocolatey Gallery | cwRsync (Free Edition) 5.5.0.20190204</a><br><a href="https://marketplace.visualstudio.com/items?itemName=vscode-ext.sync-rsync&amp;ssr=false#overview" target="_blank" rel="noopener">Sync-Rsync - Visual Studio Marketplace</a></p>
-<h2 id="winscp"><a href="#winscp" class="headerlink" title="winscp"></a>winscp</h2><p>內建也有做同步功能<br><a href="https://winscp.net/eng/docs/scripting" target="_blank" rel="noopener">Scripting and Task Automation :: WinSCP</a><br><a href="https://winscp.net/eng/docs/ui_synchronize" target="_blank" rel="noopener">Synchronize Dialog :: WinSCP</a></p>
+<p><strong>2020-04-23</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rsync –av /etc server1:/tmp <span class="comment"># 複製目錄和目錄下文件</span></span><br><span class="line">rsync –av /etc/ server1:/tmp <span class="comment"># 只複製目錄下文件</span></span><br><span class="line">rsync -avh myfile.gz /home/pi/tmp/ <span class="comment"># 複製檔案到資料夾</span></span><br><span class="line">rsync -avzh pi@192.168.1.12:/mypath/myfile.gz /mybackup/</span><br><span class="line">rsync -avzh --bwlimit=100K pi@192.168.1.12:/mypath/myfile.gz /mybackup/ <span class="comment"># --bwlimit 限制頻寬</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>-n 模擬複製過程<br>-v 顯示詳細過程<br><strong>-r 遞歸複製目錄樹</strong><br><strong>-p 保留權限</strong><br><strong>-t 保留時間戳</strong><br><strong>-g 保留組信息</strong><br><strong>-o 保留所有者信息</strong><br><strong>-l 將軟鏈接文件本身進行複製（默認）</strong><br>-L 將軟鏈接文件指向的文件複製<br>-a 存檔，相當於–rlptgoD，但不保留ACL（-A）和SELinux屬性（-X）<br>–delete  如果沒有來源檔案只有新增、沒有減少的話，它就跟一般的複製<br>-h：將數字以比較容易閱讀的格式輸出。</p>
+</blockquote>
+<h2 id="WinSCP"><a href="#WinSCP" class="headerlink" title="WinSCP"></a>WinSCP</h2><p>內建也有做同步功能<br><a href="https://winscp.net/eng/docs/scripting" target="_blank" rel="noopener">Scripting and Task Automation :: WinSCP</a><br><a href="https://winscp.net/eng/docs/ui_synchronize" target="_blank" rel="noopener">Synchronize Dialog :: WinSCP</a></p>
 <p>其他參考來源:<br><a href="https://www.cnblogs.com/kevingrace/p/8529792.html" target="_blank" rel="noopener">SCP 和 Rsync 远程拷贝的几个技巧 - 散尽浮华 - 博客园</a><br><a href="https://www.cnblogs.com/leestar54/p/6625235.html#wiz_toc_11" target="_blank" rel="noopener">使用 WinSCP 进行简单代码文件同步 - leestar54 - 博客园</a><br><a href="https://winscp.net/eng/docs/ui_synchronize" target="_blank" rel="noopener">Synchronize Dialog :: WinSCP</a><br><a href="https://winscp.net/eng/docs/scripting" target="_blank" rel="noopener">Scripting and Task Automation :: WinSCP</a><br><a href="https://mga8326.blogspot.com/2018/08/rsync.html" target="_blank" rel="noopener">厭世人生的 MIS 記事本: rsync 參數 用法</a><br><a href="https://www.jianshu.com/p/52aa5c2b872a" target="_blank" rel="noopener">SSH,SCP,rsync,sftp - 简书</a><br><a href="https://serverfault.com/questions/378939/do-you-need-e-ssh-for-rsync" target="_blank" rel="noopener">backup - Do you need -e ssh for rsync? - Server Fault</a><br><a href="http://newsletter.ascc.sinica.edu.tw/news/read_news.php?nid=1742" target="_blank" rel="noopener">詳全文_資料備份同步工具簡介— rsync</a><br><a href="https://blog.longwin.com.tw/2005/12/rsync_ssh_backup/" target="_blank" rel="noopener">rsync 備份 | Tsung’s Blog</a><br><a href="https://www.opencli.com/linux/rsync-local-remote-backup" target="_blank" rel="noopener">Rsync 備份本地及遠端目錄</a></p>
 <p><a href="https://www.maketecheasier.com/remove-user-hostname-terminal-prompt/" target="_blank" rel="noopener">How to Remove User and Hostname in Terminal Prompt - Make Tech Easier</a></p>
 <p>date: 2019-03-31</p>
@@ -611,7 +615,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">469</span>
+                  <span class="site-state-item-count">478</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -622,7 +626,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -633,7 +637,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">386</span>
+                  <span class="site-state-item-count">395</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -676,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#scp"><span class="nav-number">1.</span> <span class="nav-text">scp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync"><span class="nav-number">2.</span> <span class="nav-text">rsync</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#winscp"><span class="nav-number">3.</span> <span class="nav-text">winscp</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#scp"><span class="nav-number">1.</span> <span class="nav-text">scp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync"><span class="nav-number">2.</span> <span class="nav-text">rsync</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WinSCP"><span class="nav-number">3.</span> <span class="nav-text">WinSCP</span></a></li></ol></div>
             
 
           </div>
