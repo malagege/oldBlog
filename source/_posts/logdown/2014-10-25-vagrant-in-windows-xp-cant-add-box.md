@@ -3,7 +3,7 @@ layout: post
 title: '在Windows XP上vagrant不能加box'
 date: 2014-10-25 16:51
 comments: true
-categories: vagrant
+categories: Vagrant
 ---
 學校給我一台舊電腦(CPU:Sempron 64 3100+ 1.8Ghz，RAM:512MB)
 於是我買了二手RAM:1G*2 300塊含運

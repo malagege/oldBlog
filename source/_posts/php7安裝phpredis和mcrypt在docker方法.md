@@ -15,9 +15,7 @@ categories: PHP
 ## phpredis
 
 phpredis 安裝很順利
-最佳答案是 12
-
-但我選擇`RUN pecl install redis && docker-php-ext-enable redis`這個答案
+`RUN pecl install redis && docker-php-ext-enable redis`
 
 ## mcrypt
 

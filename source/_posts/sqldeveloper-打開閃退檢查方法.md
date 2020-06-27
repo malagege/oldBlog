@@ -1,5 +1,5 @@
 ---
-title: sqldeveloper 打開閃退檢查方法
+title: sqldeveloper 打開閃退解決方法
 date: 2020-03-07 01:14:03
 tags: [sqldeveloper, oracle]
 categories: SQL

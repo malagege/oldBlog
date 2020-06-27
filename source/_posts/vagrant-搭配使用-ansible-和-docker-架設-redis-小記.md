@@ -300,3 +300,7 @@ docker pull elasticsearch:6.5.0
 [Elasticsearch latest not available · Issue #215 · elastic/elasticsearch-docker](https://github.com/elastic/elasticsearch-docker/issues/215)
 
 [如何配置 Vagrant SSH 在 Docker Provider - iWonder Blog](http://blog.iwonder.tw/2017/08/20/vagrant-ssh-docker/)
+
+
+
+[Ansible install and introduction | SAM的程式筆記](https://blog.samchu.dev/2019/07/05/Ansible-install-and-introduction/)

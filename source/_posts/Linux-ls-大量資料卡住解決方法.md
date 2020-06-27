@@ -1,5 +1,5 @@
 ---
-title: Linux ls 大量資料卡住解決方法
+title: Linux ls 大量檔案卡住解決方法
 date: 2019-09-27 10:35:21
 tags: [ls, linux]
 categories: Linux

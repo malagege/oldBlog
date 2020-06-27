@@ -42,3 +42,7 @@ date: 2018-05-14 21:24:11
 - [小柒吃地瓜](https://www.i7dom.cn/)
 - [rj-bai 's Blog](https://blog.rj-bai.com/)
 - [静默虚空 - 博客园](https://www.cnblogs.com/jingmoxukong/)
+- [哈希](https://www.haxi.cc/)
+- [菜鳥工程師 肉豬](https://matthung0807.blogspot.com/)
+- [Leo Yeh's Blog](https://leoyeh.me/)
+- [pushmetop/30-seconds-for-everyday: 聚焦前端 | 夯实基础 | 趣味教程 | 轻松进阶](https://github.com/pushmetop/30-seconds-for-everyday)

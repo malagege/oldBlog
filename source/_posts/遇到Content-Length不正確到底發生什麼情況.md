@@ -362,6 +362,11 @@ Full request/response body logging in nginx 沒有測試，好像要裝 lua-ngin
 明明是對方的鍋，還是要想辦法解決
 但是真的不希望遇到第二次 冏
 
+**2020-05-27**
+
+[用了这么久HTTP, 你是否了解Content-Length? | Fundebug博客 - 一行代码搞定BUG监控 - 网站错误监控|JS错误监控|资源加载错误|网络请求错误|小程序错误监控|Java异常监控|监控报警|Source Map|用户行为|可视化重现](https://blog.fundebug.com/2019/09/10/understand-http-content-length/)
+這篇有簡單明確講到我這篇重點
+
 其他參考來源:
 
 - [Http Header 入門 | CCNP 筆記本](https://nkongkimo.wordpress.com/2010/04/28/http-header%E5%85%A5%E9%96%80/)

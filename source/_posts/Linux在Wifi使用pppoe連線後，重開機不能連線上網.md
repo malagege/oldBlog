@@ -58,3 +58,44 @@ sudo service network-manager restart
 - [第 5 章 網絡設置](https://www.debian.org/doc/manuals/debian-reference/ch05.zh-tw.html)
 - [葉難: Raspberry Pi：固定私有 IP 與 dhcpcd](http://yehnan.blogspot.com/2016/05/raspberry-piipdhcpcd.html)
 - [树莓派 3 设置静态 ip dhcpcd vs /etc/network/interfaces - yjbaobo 的博客 - CSDN 博客](https://blog.csdn.net/yjbaobo/article/details/75146840)
+
+
+**重新檢查連線**
+
+[小狐狸事務所: 樹莓派自動偵測網路斷線時重開機的方法](http://yhhuang1966.blogspot.com/2018/01/blog-post.html)
+[Rebooting the Raspberry Pi when it loses wireless connection | We Work We Play](https://weworkweplay.com/play/rebooting-the-raspberry-pi-when-it-loses-wireless-connection-wifi/)
+
+```
+ping -c4 192.168.1.1 > /dev/null
+ 
+if [ $? != 0 ] 
+then
+  sudo /sbin/shutdown -r now
+fi
+```
+
+*/5 * * * * /usr/bin/sudo -H /usr/local/bin/checkwifi.sh >> /dev/null 2>&1
+
+```
+ping -c4 192.168.1.1 > /dev/null
+ 
+if [ $? != 0 ] 
+then
+  echo "No network connection, restarting wlan0"
+  /sbin/ifdown 'wlan0'
+  sleep 5
+  /sbin/ifup --force 'wlan0'
+fi
+```
+
+
+**2.為了要使raspberry pi  不要進入省電或自動將無線網路關掉**
+參考:[IT學習日誌: [Raspberry Pi 2 ModelB] 無線網路常常斷線解決方法](http://learn-infotech-blog.blogspot.com/2015/04/raspberry-pi-2-modelb.html)
+在/etc/network/interfaces
+加上一行
+wireless-power off
+ 外
+
+修改   /etc/kbd/config 
+將 BLANK_TIME= 改為 BLANK_TIME=0 
+和 POWERDOWN_TIME=  改為  POWERDOWN_TIME=0 

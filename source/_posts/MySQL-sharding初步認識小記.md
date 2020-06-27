@@ -191,3 +191,32 @@ kingshard
 [Convert PHP object to associative array - Stack Overflow](https://stackoverflow.com/questions/4345554/convert-php-object-to-associative-array)
 
 其他想到再補...
+
+
+**2020-06-13**
+
+最近在看 Procedure stored 處理大量資料是不是最好解
+看起來大量資料是...
+在這之間有查到 sharding 文章覺得不錯，並整理一下
+
+[寫好SQL很有必要！ - 數據分析那些事 - Medium](https://medium.com/@allaboutdataanalysis/%E5%AF%AB%E5%A5%BDsql%E5%BE%88%E6%9C%89%E5%BF%85%E8%A6%81-3206014d5422) {% asset_link web1.png 備份圖 %}
+
+[分庫分表的基本思想 - -j神----- - 博客園](https://www.cnblogs.com/jshen/p/7682502.html) {% asset_link web2.png 備份圖 %}
+
+
+其他沒相關的整理
+
+[使用非同步處理提升資料庫更新速度-黑暗執行緒](https://blog.darkthread.net/blog/async-batch-update-performance/)
+
+[oracle - Can I rollback after calling stored procedure in java test? - Stack Overflow](https://stackoverflow.com/questions/46051642/can-i-rollback-after-calling-stored-procedure-in-java-test)
+
+**2020-06-18**
+
+- [一次分表踩坑实践的探讨 - 云+社区 - 腾讯云](https://cloud.tencent.com/developer/article/1506228)
+sharding 做報表還是很大的難題阿!!
+
+- [SpringBoot2.x集成Sharding-JDBC实现分库分表 - 简书](https://www.jianshu.com/p/9a21b4f9c3dd)
+
+- [Spring boot+mybatis+mysql+ sharding-jdbc实现分库分表学习demo - 簡書](https://www.jianshu.com/p/74c02a2a89de)
+
+- [為什麼要用spring-data-jpa而不直接用hibernate | 程式前沿](https://codertw.com/ios/61625/)

@@ -34,3 +34,5 @@ git fetch -p or git fetch –all –prune 是清除本地的remote 暫存分支
 
 相關連結
 [[git]如何快速清理已經合並(merged)的分支(branch) - local及remote @ Alan Tsai 的學習筆記｜An Asp .Net Mvc Web Developer Blog](https://blog.alantsai.net/posts/2019/04/faq-git-how-to-delete-merged-branches-from-remote-and-local)
+[Git 的 Merge 與 Fast-Forward - Qiita](https://qiita.com/vc7/items/6e06b0306c8a64a23263)
+[🌳🚀 CS Visualized: Useful Git Commands - DEV Community 👩‍💻👨‍💻](https://dev.to/lydiahallie/cs-visualized-useful-git-commands-37p1)

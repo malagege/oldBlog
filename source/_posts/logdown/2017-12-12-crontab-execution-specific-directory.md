@@ -24,6 +24,16 @@ tags: [crontab]
 但是`2>&1`會把錯誤資訊鳥在/dev/null (前提看你前面寫什麼)
 詳細看裡面教學
 
+**2020-04-25**
+
+```bash
+# 輸出結果也不太一樣
+ls  > dirlist  2>&1
+ls 2>&1 > dirlist
+# 對於第二種情況，標準錯誤只是使用了標準輸出的文件表項，而標準輸出使用了 dirlist 的文件表項。
+```
+參考:[Bash中的IO與重定向 | 退思園](https://gowa.club/Linux-Unix/Bash%E4%B8%AD%E7%9A%84IO%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91.html)
+
 [What is the 'working directory' when cron executes a job? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/38951/what-is-the-working-directory-when-cron-executes-a-job)
 [unix - Crontab - Run in directory - Stack Overflow](https://stackoverflow.com/questions/8899737/crontab-run-in-directory)
 [鳥哥的 Linux 私房菜 -- 第十二章、學習 Shell Scripts](http://linux.vbird.org/linux_basic/0340bashshell-scripts.php#some_ex_run)

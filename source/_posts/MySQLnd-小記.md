@@ -23,3 +23,13 @@ docker 實做 Mysql master salve
 
 其他小記
 [開源內網 DNS 服務器軟件介紹 - 台部落](https://www.twblogs.net/a/5c015fcdbd9eee7aec4eb87e)
+
+**2020-06-13**
+
+最近開始寫 Java
+JDBC 可設定 master slave
+[MySQL :: MySQL Connector/J 5.1 Developer Guide :: 8.3 Configuring Master/Slave Replication with Connector/J](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-master-slave-replication-connection.html)
+
+[spring - Mysql master/slave replication .Connect to master even for read queries? (does Driver "ping" master before going to slave?) - Stack Overflow](https://stackoverflow.com/questions/22495722/mysql-master-slave-replication-connect-to-master-even-for-read-queries-does-d)
+
+[讨论一下基于Master-Slave数据库模式的J2EE开发的框架选择 - Hibernate - Java - ITeye论坛](https://www.iteye.com/topic/143714)

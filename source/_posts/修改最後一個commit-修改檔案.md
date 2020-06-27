@@ -2,7 +2,7 @@
 title: git修改最後一個commit(修改檔案)
 date: 2018-07-19 21:17:08
 tags: [git,amend]
-categories: git
+categories: Git
 ---
 
 `git commit -amend`可修改對上一個commit檔案

@@ -498,3 +498,6 @@ or
 [Kubernetes 中的 Job 和 CronJob，批量任务执行 - mark's technic world - CSDN 博客](https://blog.csdn.net/hxpjava1/article/details/79815015)
 [onlinereadbook/bookdocker: 線上 docker 讀書會](https://github.com/onlinereadbook/bookdocker)
 [Repository Pattern and Service Layer – 佛祖球球](https://blog.johnsonlu.org/repository-pattern-and-service-layer/)
+[Laravel、Ruby on Rails、Django ... 使用 Active Record Pattern 框架的最大問題：到底該把 save 寫在哪裡？ – Devs.tw](https://devs.tw/post/328)
+[批評 Active Record 的13個論點：最好用也最危險的 Anti-pattern | 轉個彎日誌](http://blog.turn.tw/?p=2992)
+[(1) Laravel 台灣](https://www.facebook.com/groups/laravel.tw/permalink/2899482063454157/)

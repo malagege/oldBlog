@@ -3,7 +3,7 @@ layout: post
 title: 'Fixing “The box ‘base’ could not be found.” (Vagrant)'
 date: 2014-10-26 12:24
 comments: true
-categories: vagrant
+categories: Vagrant
 ---
 vagrant box add base http://files.vagrantup.com/lucid32.box
 

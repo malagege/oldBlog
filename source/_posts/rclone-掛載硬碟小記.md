@@ -284,6 +284,7 @@ Wants=network-online.target
 [Service]
 User=pi
 Type=notify
+#ExecStart=/usr/bin/rclone mount --allow-root --vfs-cache-mode writes --vfs-cache-max-size 100M gdrive: /mnt/gdrive
 ExecStart=/usr/bin/rclone mount --allow-root --vfs-cache-mode writes --vfs-cache-max-size 100M gdrive: /mnt/gdrive
 ExecStop=/bin/fusermount -uz /mnt/gdrive
 RestartSec=30
@@ -438,6 +439,21 @@ $ sudo journalctl --vacuum-time=1years
 這一快我就先不研究
 改天用到再說
 
+**2020-04-26**
+
+這些查詢滿常用的
+
+```bash
+# 檢查 nginx 服務是否正在運行
+systemctl is-active nginx.service
+
+# 檢查 nginx 服務是否有設定開機自動啟動
+systemctl is-enabled nginx.service
+
+# 檢查 nginx 服務是否啟動失敗
+systemctl is-failed nginx.service
+```
+
 ### tmux 掛載方式(不建議用)
 
 在沒知道用 systemctl 原本想使用 tmux
@@ -485,8 +501,8 @@ Oct 18 23:35:17 raspberrypi transmission-daemon[13077]: 2019/10/18 23:35:17 Fail
 #!/bin/bash
 
 DSCORD_WEBHOOK="https://discordapp.com/api/webhooks/*"
-# 需要做同步的路徑
-LOCAL_SYNCDIR="/mnt/extHDD/Download/"
+# 需要做同步的路徑，結尾資料夾不用/
+LOCAL_SYNCDIR="/mnt/extHDD/Download"
 # RCLONE 結尾不能有 /
 RCLONE_SYNCDIR="gdrive:/test"
 # 注意需要看.config/rclone 資料夾和檔案權限，需要到rx
@@ -548,6 +564,20 @@ else
     -d "{\"username\": \"system\", \"content\": \"${msg}\"}" $url
 fi
 
+```
+
+有時候會失敗，補跑方式也很簡單
+```bash
+export TR_TORRENT_DIR="/mnt/extHDD/Download"
+ls $TR_TORRENT_DIR
+
+export TR_TORRENT_NAME="xxx"
+
+#測試
+#echo ${TR_TORRENT_DIR}/${TR_TORRENT_NAME}
+ls "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}"
+
+/etc/transmission-daemon/syncGdrive.sh
 ```
 
 最近這個腳本還算完美的

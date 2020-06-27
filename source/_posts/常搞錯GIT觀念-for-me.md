@@ -2,7 +2,7 @@
 title: 常搞錯GIT觀念(for me)
 date: 2018-08-09 21:19:40
 tags: [git]
-categories: GIT
+categories: Git
 ---
 
 先留個常忘記GIT觀念

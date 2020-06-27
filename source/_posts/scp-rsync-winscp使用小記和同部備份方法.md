@@ -23,6 +23,7 @@ categories: Linux
 複製資料夾除了用\*方式
 但用星號無法多層
 要使用`-r` Recursively copy entire directories
+`scp -r user@your.server.example.com:/path/to/foo /home/user/Desktop/`
 [shell - How to copy a folder from remote to local using scp? - Stack Overflow](https://stackoverflow.com/questions/11304895/how-to-copy-a-folder-from-remote-to-local-using-scp)
 
 ## rsync
@@ -55,6 +56,8 @@ categories: Linux
 -a, --archive 歸檔模式，表示以遞歸方式傳輸文件，並保持所有文件屬性，等於-rlptgoD
 -v, --verbose 詳細模式輸出
 --delete 刪除那些目標目錄中有而源目錄中沒有的多餘文件。這個是 rsync 做增量方式的全備份的最佳選擇方案！！！！！！
+簡單說加入`--delete`就是本基做刪除動作，但是遠端就會**做刪除**
+反之，沒家的話就不會。
 
 ```
 
@@ -68,7 +71,30 @@ categories: Linux
 [Chocolatey Gallery | cwRsync (Free Edition) 5.5.0.20190204](https://chocolatey.org/packages/rsync)
 [Sync-Rsync - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=vscode-ext.sync-rsync&ssr=false#overview)
 
-## winscp
+**2020-04-23**
+```bash
+rsync –av /etc server1:/tmp # 複製目錄和目錄下文件
+rsync –av /etc/ server1:/tmp # 只複製目錄下文件
+rsync -avh myfile.gz /home/pi/tmp/ # 複製檔案到資料夾
+rsync -avzh pi@192.168.1.12:/mypath/myfile.gz /mybackup/
+rsync -avzh --bwlimit=100K pi@192.168.1.12:/mypath/myfile.gz /mybackup/ # --bwlimit 限制頻寬
+```
+
+> -n 模擬複製過程
+> -v 顯示詳細過程
+> **-r 遞歸複製目錄樹**
+> **-p 保留權限**
+> **-t 保留時間戳**
+> **-g 保留組信息**
+> **-o 保留所有者信息**
+> **-l 將軟鏈接文件本身進行複製（默認）**
+> -L 將軟鏈接文件指向的文件複製
+> -a 存檔，相當於–rlptgoD，但不保留ACL（-A）和SELinux屬性（-X）
+> --delete  如果沒有來源檔案只有新增、沒有減少的話，它就跟一般的複製
+> -h：將數字以比較容易閱讀的格式輸出。
+
+
+## WinSCP
 
 內建也有做同步功能
 [Scripting and Task Automation :: WinSCP](https://winscp.net/eng/docs/scripting)

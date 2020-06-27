@@ -2,7 +2,7 @@
 title: Discord apikey exposed on GitHub不小心上傳api key
 date: 2019-05-12 13:54:04
 tags:
-categories: 寫程式的一些事
+categories: 寫程式一些事
 ---
 
 今天 git push 前幾天寫的 blog 內容

@@ -1,11 +1,20 @@
 ---
 title: 有關 url 空白字符(%20和+)
 date: 2020-03-18 22:17:56
-tags:
-categories:
+tags: [html]
+categories: HTML
 ---
 
+最近做 js 測試時後發現
+我寫這麼久才注意到這個東西
+這邊小記一下
 
+簡單來說`%20`和(`+`)加號都是變成`空白鍵`
+相反的`%2B`會變成`+`
+
+http://httpbin.org/get?test=123%20123
+
+動手測試比較快
 
 <!--more-->
 
@@ -17,3 +26,6 @@ categories:
 [URL encoding the space character: + or %20? - Stack Overflow](https://stackoverflow.com/questions/1634271/url-encoding-the-space-character-or-20)
 
 [urlencode - Encoding URL query parameters in Java - Stack Overflow](https://stackoverflow.com/questions/5330104/encoding-url-query-parameters-in-java)
+
+[你所不知道 ❌ URL - 小二の伤寒杂病论 - SegmentFault 思否](https://segmentfault.com/a/1190000006063123)
+[你所不知道 ❌ PHP POST - 小二の伤寒杂病论 - SegmentFault 思否](https://segmentfault.com/a/1190000006043397)

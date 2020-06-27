@@ -5,6 +5,8 @@ tags: [java,tomcat,jboss]
 categories: Java
 ---
 
+TODO: 尚未整理完成
+
 最近工作需求，需要使用 Java
 這邊做一些有關 Java 雜記
 
@@ -77,6 +79,10 @@ categories: Java
 
 [專案自動構建工具對比(Maven、Gradle、Ant) - IT閱讀](https://www.itread01.com/content/1545095402.html)
 [Maven 的基本概念與在 eclipse 專案實作 @ MISTECH 技術手抄本 :: 隨意窩 Xuite日誌](https://blog.xuite.net/mistech/blog/211079202-Maven+%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E8%88%87%E5%9C%A8+eclipse+%E5%B0%88%E6%A1%88%E5%AF%A6%E4%BD%9C)
+
+[SpringBoot加载外部依赖 - 简书](https://www.jianshu.com/p/a2cf2336a48c)
+[Maven和Gradle对比 - 黄博文的地盘](http://www.huangbowen.net/blog/2016/02/23/gradle-vs-maven/)
+[Eclipse wtp Deployment Assembly « Allen's Blog](http://allenwu.logdown.com/posts/4878611-eclipse-wtp-deployment-assembly)
 
 ## Eclipse 相關環境設定的影響
 
@@ -227,6 +233,21 @@ https://tpu.thinkpower.com.tw/tpu/articleDetails/557
 可參考下面連結
 [Eclipse Properties 顯示中文字 | Xuan's Blog](https://coffee0127.github.io/blog/2016/08/15/eclipse-poperties/)
 [eclipse中 XXXX.properties文件 不显示中文，显示的unicode编码。_开发工具_mukvintt的博客-CSDN博客](https://blog.csdn.net/mukvintt/article/details/79746857)
+
+#### Eclipse 實用快速鍵
+
+> 重構
+> `Alt+Shift+R`: 重命名 (是我自己最愛用的一個了,尤其是變量和類的Rename,比手工方法能節省很多勞動力)
+> `Alt+Shift+M`: 抽取方法 (這是重構裡面最常用的方法之一了,尤其是對一大堆泥團代碼有用)
+> `Alt+Shift+C`: 修改函數結構(比較實用,有N個函數調用了這個方法,修改一次搞定)
+> `Alt+Shift+L`: 抽取本地變量( 可以直接把一些魔法數字和字符串抽取成一個變量,尤其是多處調用的時候)
+> `Alt+Shift+F`: 把Class中的local變量變為field變量 (比較實用的功能)
+> `Alt+Shift+I`: 合併變量(可能這樣說有點不妥Inline)
+> `Alt+Shift+V`: 移動函數和變量(不怎麼常用)
+> `Alt+Shift+Z`: 重構的後悔藥(Undo)
+
+
+參考: [Eclipse使用技巧](https://wsxq2.55555.io/blog/2018/12/12/eclipse%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/)
 
 
 ## vscode 使用 web 方案

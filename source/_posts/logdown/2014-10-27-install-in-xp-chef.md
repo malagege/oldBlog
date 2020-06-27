@@ -3,7 +3,7 @@ layout: post
 title: '在XP上安裝chef'
 date: 2014-10-27 03:32
 comments: true
-categories: vagrant
+categories: Vagrant
 ---
 之前Ezgo11安裝vagrant都用的還滿順的
 突然換到XP來用...，就發現麻煩的不少

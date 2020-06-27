@@ -119,3 +119,7 @@ iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport 9091  -j ACCEPT
 iptables -A INPUT -p tcp --dport 59999:61000 -j ACCEPT
 ```
 
+
+
+[U型遊樂園--海底兩萬里: 防火牆-iptables的state(3)](http://crazyduke.blogspot.com/2009/11/iptablesstate.html)
+[iptables 拒绝所有的连接，再指定 ip 连接? - V2EX](https://www.v2ex.com/t/235392)
