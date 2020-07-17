@@ -80,8 +80,10 @@ then
     cat /sys/class/net/eth0/carrier | logger -it check_interface
     logger -it check_interface "operstate:"
     cat /sys/class/net/eth0/operstate | logger -it check_interface
+    logger -it check_interface "route -n"
+    route -n 2>&1 | logger -it check_interface
     logger -it check_interface "ifconfig:"
-    ifconfig | logger -it check_interface
+    ifconfig 2>&1 | logger -it check_interface
     logger -it check_interface "ping:"
     ping -c4 192.168.1.1 | logger -it check_interface
     ping -c4 8.8.8.8 | logger -it check_interface
@@ -92,11 +94,13 @@ fi
 紀錄 log
 [linux日志logger命令详解_飘过的春风-CSDN博客_linux logger](https://blog.csdn.net/u011630575/article/details/52055116)
 [Linux 如何將資料寫到 Syslog | Tsung's Blog](https://blog.longwin.com.tw/2011/11/linux-data-syslog-logger-2011/)
+[shell - Linux : how to redirect stdout & stderr to logger? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/124455/linux-how-to-redirect-stdout-stderr-to-logger)
 
 相關 interface 資訊
 [如何在 Linux Kernel 下偵測網路的連線狀態？](http://rainstingtw.blogspot.com/2014/08/how-to-detect-ethernet-connected-state.html)
 [wifi连接中operstate和carrier分别是什么作用？-CSDN论坛](https://bbs.csdn.net/topics/390495032)
 [在Linux上，如何檢測物理電纜是否已連接到網卡插槽 - Ubuntu問答](https://ubuntuqa.com/zh-tw/article/7995.html)
+[树莓派折腾日记 二：网络相关配置 | 冰棒实验室](https://blog.beanbang.cn/2019/05/17/raspberry-diary-02-network-configure/)
 
 ## 監控電腦活著發送 DISCORD 通知
 

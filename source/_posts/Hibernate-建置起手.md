@@ -192,7 +192,7 @@ threadlocal
 
 介於 實體類 和 SQL 之間
 
-### Cir
+### Criteria
 
 使用實體類
 
