@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間今天要還債(技術債)了主要試試看建立憑證">
+<meta name="description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間設備根憑證不正確導致不能打API問題 | 程式狂想筆記今天要還債(技術債)了主要試試看建立憑證">
 <meta name="keywords" content="cert">
 <meta property="og:type" content="article">
 <meta property="og:title" content="產生自簽憑證筆記">
 <meta property="og:url" content="https://malagege.github.io/blog/2020/07/18/產生自簽憑證筆記/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間今天要還債(技術債)了主要試試看建立憑證">
+<meta property="og:description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間設備根憑證不正確導致不能打API問題 | 程式狂想筆記今天要還債(技術債)了主要試試看建立憑證">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-07-19T09:16:06.756Z">
+<meta property="og:updated_time" content="2020-07-19T12:00:25.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="產生自簽憑證筆記">
-<meta name="twitter:description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間今天要還債(技術債)了主要試試看建立憑證">
+<meta name="twitter:description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間設備根憑證不正確導致不能打API問題 | 程式狂想筆記今天要還債(技術債)了主要試試看建立憑證">
 
 
 
@@ -422,7 +422,7 @@
   </script>
 </div>
 
-        <p>上次上班花很多時間處理憑證問題<br>為了碰到下次不要花費太多時間<br>今天要還債(技術債)了<br>主要試試看建立憑證</p>
+        <p>上次上班花很多時間處理憑證問題<br>為了碰到下次不要花費太多時間<a href="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/">設備根憑證不正確導致不能打API問題 | 程式狂想筆記</a><br>今天要還債(技術債)了<br>主要試試看建立憑證</p>
 <a id="more"></a>
 <h2 id="建立根憑證"><a href="#建立根憑證" class="headerlink" title="建立根憑證"></a>建立根憑證</h2><p>這邊範例是照<a href="https://blog.miniasp.com/post/2019/02/25/Creating-Self-signed-Certificate-using-OpenSSL?fbclid=IwAR3xS1xqkOfLQmK22bDyp9bgOJ71PBNChr-2REMq3oIMT5-0biUTJl41a1k" target="_blank" rel="noopener">如何使用 OpenSSL 建立開發測試用途的自簽憑證 (Self-Signed Certificate) | The Will Will Web</a><br>可以找個 VM 來測試看環境</p>
 <ol>
@@ -559,6 +559,7 @@ AH00016: Configuration Failed</code><br>後來參考:<a href="http://blog.itist.
 <p>把 apache 設定 endentity.pem 對應 intermediate2.pem 真得可以用</p>
 <h2 id="測試檔案"><a href="#測試檔案" class="headerlink" title="測試檔案"></a>測試檔案</h2><a href="/blog/2020/07/18/產生自簽憑證筆記/test_cert.7z" title="所有範例下載">所有範例下載</a>
 <p>/vagrant/ &lt;====== 第一段建立憑證範例<br>/vagrant/test/ &lt;====== 第二、三段建立中繼、萬用憑證範例<br>   hosts 參考 dns 設定檔<br>   default-ssl.conf apache 設定檔</p>
+<h2 id="查看-web-上驗憑證內容"><a href="#查看-web-上驗憑證內容" class="headerlink" title="查看 web 上驗憑證內容"></a>查看 web 上驗憑證內容</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openssl s_client  -connect localhost.com:443 &lt;/dev/null  |  openssl x509 -noout -text  | less</span><br><span class="line"></span><br><span class="line">openssl s_client  -connect youtube.com:443 &lt;/dev/null  |  openssl x509 -noout -text  | less</span><br></pre></td></tr></table></figure>
 <h2 id="其他資源"><a href="#其他資源" class="headerlink" title="其他資源"></a>其他資源</h2><ul>
 <li><p><a href="https://dotblogs.com.tw/grayyin/2019/05/04/143637" target="_blank" rel="noopener">Java keytool 基本指令 | 阿輝的零碎筆記 - 點部落</a></p>
 </li>
@@ -775,7 +776,7 @@ AH00016: Configuration Failed</code><br>後來參考:<a href="http://blog.itist.
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立根憑證"><span class="nav-number">1.</span> <span class="nav-text">建立根憑證</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#產生中繼憑證"><span class="nav-number">2.</span> <span class="nav-text">產生中繼憑證</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#產生授權根憑證"><span class="nav-number">2.1.</span> <span class="nav-text">產生授權根憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#產生中繼憑證-1"><span class="nav-number">2.2.</span> <span class="nav-text">產生中繼憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#產生終端憑證"><span class="nav-number">2.3.</span> <span class="nav-text">產生終端憑證</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wildcard"><span class="nav-number">3.</span> <span class="nav-text">wildcard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TWCA-憑證為什麼有三層，四層串到同一個憑證呢"><span class="nav-number">4.</span> <span class="nav-text">TWCA 憑證為什麼有三層，四層串到同一個憑證呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#測試檔案"><span class="nav-number">5.</span> <span class="nav-text">測試檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他資源"><span class="nav-number">6.</span> <span class="nav-text">其他資源</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立根憑證"><span class="nav-number">1.</span> <span class="nav-text">建立根憑證</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#產生中繼憑證"><span class="nav-number">2.</span> <span class="nav-text">產生中繼憑證</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#產生授權根憑證"><span class="nav-number">2.1.</span> <span class="nav-text">產生授權根憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#產生中繼憑證-1"><span class="nav-number">2.2.</span> <span class="nav-text">產生中繼憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#產生終端憑證"><span class="nav-number">2.3.</span> <span class="nav-text">產生終端憑證</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wildcard"><span class="nav-number">3.</span> <span class="nav-text">wildcard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TWCA-憑證為什麼有三層，四層串到同一個憑證呢"><span class="nav-number">4.</span> <span class="nav-text">TWCA 憑證為什麼有三層，四層串到同一個憑證呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#測試檔案"><span class="nav-number">5.</span> <span class="nav-text">測試檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看-web-上驗憑證內容"><span class="nav-number">6.</span> <span class="nav-text">查看 web 上驗憑證內容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他資源"><span class="nav-number">7.</span> <span class="nav-text">其他資源</span></a></li></ol></div>
             
 
           </div>
