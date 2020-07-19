@@ -62,6 +62,8 @@ categories: Linux
 
 {% asset_img l4.png 四層 %}
 
+{% asset_img l3.png 三層 %}
+
 從憑證路徑可以看到一個三層，一個四層
 但偏偏 LINE ROOT CA 只有`CN=TWCA Root Certification Authority, OU=Root CA, O=TAIWAN-CA, C=TW`
 沒有 TWCA ROOT CA
@@ -94,7 +96,10 @@ categories: Linux
 第三層的話，Root CA 就會抓到白名單
 
 假如四層的話，中繼串到第三個後面，就是白名單
-不過 TWCA 說最新發的都是三層??這原因我就沒深入追查
+不過 TWCA 說最新發的都是三層??~~這原因我就沒深入追查~~
+[產生自簽憑證筆記 | TWCA 憑證為什麼有三層，四層串到同一個憑證呢?](https://malagege.github.io/blog/2020/07/18/%E7%94%A2%E7%94%9F%E8%87%AA%E7%B0%BD%E6%86%91%E8%AD%89%E7%AD%86%E8%A8%98/#TWCA-%E6%86%91%E8%AD%89%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%89%E4%B8%89%E5%B1%A4%EF%BC%8C%E5%9B%9B%E5%B1%A4%E4%B8%B2%E5%88%B0%E5%90%8C%E4%B8%80%E5%80%8B%E6%86%91%E8%AD%89%E5%91%A2)
+我猜應該相同名字會抓出來比較
+剛好兩張私鑰都是一樣的
 
 題外話，這邊我發現有趣現象
 用 Firefox 是三層(沒有看到四層)，Chrome(IE,Window)是四層
@@ -228,7 +233,9 @@ Google 一下找到 CRL([寫程式是良心事業: OCSP & CRL 介紹](http://ije
 
 我覺得之後可以手動做做看
 
-TODO: 之後可能照保哥做做看自簽名憑證
+~~TODO: 之後可能照保哥做做看自簽名憑證~~
+[產生自簽憑證筆記 | 程式狂想筆記](https://malagege.github.io/blog/2020/07/18/%E7%94%A2%E7%94%9F%E8%87%AA%E7%B0%BD%E6%86%91%E8%AD%89%E7%AD%86%E8%A8%98/)
+完成測試
 
 這篇算是我的筆記，也許會有很多寫錯，建議大家還是看看大神寫文章!!
 [購買與安裝 SSL 憑證完全攻略（以 IIS7 為例） | The Will Will Web](https://blog.miniasp.com/post/2010/03/02/The-Complete-Guide-for-Purchase-Install-SSL-Certificate-to-IIS7)
