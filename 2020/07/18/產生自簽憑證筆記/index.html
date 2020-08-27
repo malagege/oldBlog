@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間設備根憑證不正確導致不能打API問題 | 程式狂想筆記今天要還債(技術債)了主要試試看建立憑證">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-07-19T12:00:25.032Z">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/cgh.png">
+<meta property="og:updated_time" content="2020-07-22T12:43:59.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="產生自簽憑證筆記">
 <meta name="twitter:description" content="上次上班花很多時間處理憑證問題為了碰到下次不要花費太多時間設備根憑證不正確導致不能打API問題 | 程式狂想筆記今天要還債(技術債)了主要試試看建立憑證">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/cgh.png">
 
 
 
@@ -556,6 +558,9 @@ AH00016: Configuration Failed</code><br>後來參考:<a href="http://blog.itist.
 <p>curl 都可以順利跑</p>
 <h2 id="TWCA-憑證為什麼有三層，四層串到同一個憑證呢"><a href="#TWCA-憑證為什麼有三層，四層串到同一個憑證呢" class="headerlink" title="TWCA 憑證為什麼有三層，四層串到同一個憑證呢?"></a>TWCA 憑證為什麼有三層，四層串到同一個憑證呢?</h2><p>我目前猜想其中兩邊憑證都是吃同一把私鑰<br>產生兩組 crt(public key)<br>所以憑證都可以用</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -req -<span class="keyword">in</span> intermediate.csr \</span><br><span class="line">               -CA ca.pem -CAkey ca.key \</span><br><span class="line">               -CAserial ca.serial \</span><br><span class="line">               -days 730 \</span><br><span class="line">               -extensions intermediate_ca -extfile intermediate.ext \</span><br><span class="line">               -out intermediate2.pem</span><br></pre></td></tr></table></figure>
+<p><strong>2020-07-22</strong><br>最後這篇有和我同學討論<br><img src="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/cgh.png" alt=""><br>我認為跟用同一個私金鑰產生有關係<br>他認為公鑰解析出來應該跟 pin sha256 一樣有關係 (當時看圖片沒注意到)<br>不過我們加密學都不是很懂，這邊就不繼續研究了</p>
+<p>至於抓兩個路徑<br>我目前猜測四層憑證第二層對應上去都是 TWCA Global Root CA<br>除了中繼憑證跟電腦跟憑證 Mapping 到名子對應上去剛好符合驗證解密內容<br>四層憑證在 Windows 看是四層，但用在 Firefox,Linux(Chrome),Android(Chrome) 來看竟然是抓到三層</p>
+<p>總結心得<br>當出現網站不安全，都是無法串連(client)<strong>根憑證</strong>有關係<br>根憑證正確就往下追中繼憑證，中繼憑證順序都需要注意<br>中繼憑證可以不用附根憑證(畢竟裝置有根憑證，沒必要再傳送過去)<br>但我這個案例比較特別，正常應該不會遇到<br>裝置有兩個 TWCA 根憑證，正常應該不會遇到問題<br>就算裝置有三層根憑證，也通吃<br>但是裝置只有四層根憑證，就會出現不安全!!!(像 LINE Webhook 就沒有 TWCA 三層憑證)<br>不過還是看到滿多網站都掛四層憑證居多<br>可以到很多銀行、醫院網站看看憑證</p>
 <p>把 apache 設定 endentity.pem 對應 intermediate2.pem 真得可以用</p>
 <h2 id="測試檔案"><a href="#測試檔案" class="headerlink" title="測試檔案"></a>測試檔案</h2><a href="/blog/2020/07/18/產生自簽憑證筆記/test_cert.7z" title="所有範例下載">所有範例下載</a>
 <p>/vagrant/ &lt;====== 第一段建立憑證範例<br>/vagrant/test/ &lt;====== 第二、三段建立中繼、萬用憑證範例<br>   hosts 參考 dns 設定檔<br>   default-ssl.conf apache 設定檔</p>
@@ -711,7 +716,7 @@ AH00016: Configuration Failed</code><br>後來參考:<a href="http://blog.itist.
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">502</span>
+                  <span class="site-state-item-count">507</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -733,7 +738,7 @@ AH00016: Configuration Failed</code><br>後來參考:<a href="http://blog.itist.
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">412</span>
+                  <span class="site-state-item-count">413</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
