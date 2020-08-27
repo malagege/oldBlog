@@ -158,3 +158,75 @@ chmod a+x testssh.sh
 之前[萬用憑證(WildCard)和中間憑證小記 | 程式狂想筆記](https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/)就讓我以為就不會有其他問題
 沒想到 Java 也有憑證這一關(好像是 Java 獨立的)
 QQ 希望之後不要遇到類似這個問題
+
+**2020-07-28**
+## Java SSLPoke 檢查
+
+檢查也有找到這個方法可用[[JAVA] SSL handshake連線測試工具 SSLPoke | 阿輝的零碎筆記 - 點部落](https://dotblogs.com.tw/grayyin/2018/07/12/145718)
+
+SSLPoke.java
+```java
+import java.io.PrintStream;
+import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
+public class SSLPoke
+{
+  public SSLPoke() {}
+  
+  public static void main(String[] paramArrayOfString)
+  {
+    if (paramArrayOfString.length != 2) {
+      System.err.println("Utility to debug Java connections to SSL servers");
+      System.err.println("Usage: ");
+      System.err.println("  java " + SSLPoke.class.getName() + " <host> <port>");
+      System.err.println("or for more debugging:");
+      System.err.println("  java -Djavax.net.debug=ssl " + SSLPoke.class.getName() + " <host> <port>");
+      System.err.println();
+      System.err.println("Eg. to test the SSL certificate at https://localhost, use");
+      System.err.println("  java " + SSLPoke.class.getName() + " localhost 443");
+      System.exit(1);
+    }
+    try {
+      SSLSocketFactory localSSLSocketFactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+      SSLSocket localSSLSocket = (SSLSocket)localSSLSocketFactory.createSocket(paramArrayOfString[0], Integer.parseInt(paramArrayOfString[1]));
+      
+      java.io.InputStream localInputStream = localSSLSocket.getInputStream();
+      java.io.OutputStream localOutputStream = localSSLSocket.getOutputStream();
+      
+
+      localOutputStream.write(1);
+      
+      while (localInputStream.available() > 0) {
+        System.out.print(localInputStream.read());
+      }
+      System.out.println("Successfully connected");
+      System.exit(0);
+    }
+    catch (SSLHandshakeException localSSLHandshakeException) {
+      if (localSSLHandshakeException.getCause() != null) {
+        localSSLHandshakeException.getCause().printStackTrace();
+      } else {
+        localSSLHandshakeException.printStackTrace();
+      }
+    } catch (Exception localException) {
+      localException.printStackTrace();
+    }
+    System.exit(1);
+  }
+}
+```
+
+
+```
+## 先打包成class
+$ javac SSLPoke.java
+$ java SSLPoke www.google.com 443
+```
+連線成功會顯示
+```
+$ java SSLPoke www.google.com 443
+Successfully connected
+```
+失敗就會出現一大堆錯

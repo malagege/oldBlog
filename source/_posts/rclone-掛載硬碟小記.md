@@ -712,3 +712,99 @@ d=${c%%/*}
 * [Google Drive 相互複製 對拷 – BunnyBit 比特小兔兔](https://0xhack.wordpress.com/2019/02/27/google-drive-%E7%9B%B8%E4%BA%92%E8%A4%87%E8%A3%BD-%E5%B0%8D%E6%8B%B7/)
 * [Documentation](https://rclone.org/docs/#bwlimit-bandwidth-spec) 限速??待確認
 
+
+**2020-07-23**
+
+設定時間排程 at
+Raspberry Pi 預設沒有安裝
+```bash
+sudo apt install at
+at :time 
+# at -l = atq
+atq
+# atrm jobid
+at now + 5 minutes 
+
+
+```
+中斷結束 Ctrl + D
+
+
+[transmission-remote(1) - Linux man page](https://linux.die.net/man/1/transmission-remote)
+下載
+transmission-remote --auth=admin:admin   -tall --start
+上傳
+transmission-remote --auth=admin:admin   -tall --stop
+
+
+
+**20200808**
+更新放置路徑可用多重路徑同步
+
+
+```bash
+#!/bin/bash
+
+DSCORD_WEBHOOK="https://discordapp.com/api/webhooks/*"
+
+function sendDiscordNotice(){
+        local MSG=$2
+        # echo $MSG
+        local URL=$1
+        curl -H "Content-Type: application/json" \
+        -X POST \
+        -d "{\"username\": \"system\", \"content\": \"${MSG}\"}" $URL
+}
+
+#sendDiscordNotice $DSCORD_WEBHOOK "test"
+
+# 需要做同步的路徑，結尾資料夾不用/
+LOCAL_SYNCDIR="/mnt/extHDD/Download"
+# RCLONE 結尾不能有 /
+RCLONE_SYNCDIR="gdrive:/test"
+# 注意需要看.config/rclone 資料夾和檔案權限，需要到rx
+RCLONE_CONFIG_PATH="--config=/home/pi/.config/rclone/rclone.conf"
+AUTH="--auth admin:admin"
+REPLATE_PATH=${TR_TORRENT_DIR#"${LOCAL_SYNCDIR}"/}  
+#### debug end
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|udev|已用' | awk '{ print $5 " " $1 }' | while read output;
+do
+  usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1  )
+  partition=$(echo $output | awk '{ print $2 }' )
+  if [ $usep -ge 80 ]; then
+    sendDiscordNotice $DSCORD_WEBHOOK "⚠️注意快超出硬碟空間\\\"$partition\\\" ($usep%) on $(hostname) as on $(date)"
+  fi
+done
+
+
+
+
+
+if [[ "$TR_TORRENT_DIR" =~ ^"$LOCAL_SYNCDIR" ]]; then
+    echo "pass"
+    if [ -f "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" ]; then
+        flock -x  /tmp/rclone.lock rclone copy ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "${RCLONE_SYNCDIR}/${REPLATE_PATH}"
+        rclone check ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "${RCLONE_SYNCDIR}/${REPLATE_PATH}"
+    else 
+        flock -x  /tmp/rclone.lock rclone copy ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "${RCLONE_SYNCDIR}/${REPLATE_PATH}/${TR_TORRENT_NAME}"
+        rclone check ${RCLONE_CONFIG_PATH} "${TR_TORRENT_DIR}/${TR_TORRENT_NAME}" "$RCLONE_SYNCDIR/${REPLATE_PATH}/${TR_TORRENT_NAME}" --size-only
+    fi
+    
+    if [ $? -eq 0 ]; then
+        msg="✅ $TR_TORRENT_NAME 完成下載，並完成同步"
+        echo $msg
+        sendDiscordNotice $DSCORD_WEBHOOK "$msg"
+        transmission-remote $AUTH -t $TR_TORRENT_ID --remove-and-delete
+    else
+        echo "FAIL"
+        msg="⚠️ $TR_TORRENT_NAME 完成下載，但同步失敗"
+        echo $msg
+        sendDiscordNotice $DSCORD_WEBHOOK "$msg"
+    fi
+    
+else
+    msg="✅$TR_TORRENT_NAME 完成下載，不需要做同步"
+    echo $msg
+    sendDiscordNotice $DSCORD_WEBHOOK "$msg"
+fi
+```

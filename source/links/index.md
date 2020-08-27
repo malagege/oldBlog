@@ -47,3 +47,6 @@ date: 2018-05-14 21:24:11
 - [Leo Yeh's Blog](https://leoyeh.me/)
 - [pushmetop/30-seconds-for-everyday: 聚焦前端 | 夯实基础 | 趣味教程 | 轻松进阶](https://github.com/pushmetop/30-seconds-for-everyday)
 - [495884965 :: 痞客邦 ::](https://slinbody.pixnet.net/blog)
+- [思绪的空中生活 - 记录生活 分享点滴](https://sixu.life/)
+- [貧弱水平 Cody 的學習探索 Blog](https://codychen.me/)
+- [程序员DMZ - 博客园](https://www.cnblogs.com/daimzh/)
