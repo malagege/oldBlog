@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="-l150 * * * * cd /home/me/.flexget &amp;amp;&amp;amp; sh /home/me/.flexget/gitpull.sh &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 假如前面沒有做cd動作，執行目錄不會是在相同目錄在此筆記，以後就不用查了直接看筆記XD">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-04-25T08:10:17.663Z">
+<meta property="og:updated_time" content="2020-09-13T12:59:56.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Crontab 執行特定目錄">
 <meta name="twitter:description" content="-l150 * * * * cd /home/me/.flexget &amp;amp;&amp;amp; sh /home/me/.flexget/gitpull.sh &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 假如前面沒有做cd動作，執行目錄不會是在相同目錄在此筆記，以後就不用查了直接看筆記XD">
@@ -431,6 +431,12 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 輸出結果也不太一樣</span></span><br><span class="line">ls  &gt; dirlist  2&gt;&amp;1</span><br><span class="line">ls 2&gt;&amp;1 &gt; dirlist</span><br><span class="line"><span class="comment"># 對於第二種情況，標準錯誤只是使用了標準輸出的文件表項，而標準輸出使用了 dirlist 的文件表項。</span></span><br></pre></td></tr></table></figure>
 <p>參考:<a href="https://gowa.club/Linux-Unix/Bash%E4%B8%AD%E7%9A%84IO%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91.html" target="_blank" rel="noopener">Bash中的IO與重定向 | 退思園</a></p>
 <p><a href="https://unix.stackexchange.com/questions/38951/what-is-the-working-directory-when-cron-executes-a-job" target="_blank" rel="noopener">What is the ‘working directory’ when cron executes a job? - Unix &amp; Linux Stack Exchange</a><br><a href="https://stackoverflow.com/questions/8899737/crontab-run-in-directory" target="_blank" rel="noopener">unix - Crontab - Run in directory - Stack Overflow</a><br><a href="http://linux.vbird.org/linux_basic/0340bashshell-scripts.php#some_ex_run" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – 第十二章、學習 Shell Scripts</a><br><a href="https://moto.debian.tw/viewtopic.php?f=11&amp;t=17208" target="_blank" rel="noopener">摩托學園討論區 • 檢視主題 - [分享] 研究 2&gt;&amp;1 後的一點點心得</a></p>
+<h1 id="crontab-Jitter"><a href="#crontab-Jitter" class="headerlink" title="crontab Jitter"></a>crontab Jitter</h1><p><a href="http://blog.itpub.net/69945560/viewspace-2670150/" target="_blank" rel="noopener">APScheduler的使用详解_ITPUB博客</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">maxdelay=$((14*60))  <span class="comment"># 14 hours from 9am to 11pm, converted to minutes</span></span><br><span class="line"><span class="keyword">for</span> ((i=1; i&lt;=20; i++)); <span class="keyword">do</span></span><br><span class="line">    delay=$((<span class="variable">$RANDOM</span>%maxdelay)) <span class="comment"># pick an independent random delay for each of the 20 runs</span></span><br><span class="line">    (sleep $((delay*60)); /path/to/phpscript.php) &amp; <span class="comment"># background a subshell to wait, then run the php script</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/9049460/cron-jobs-and-random-times-within-given-hours" target="_blank" rel="noopener">bash - Cron jobs and random times, within given hours - Stack Overflow</a></p>
+<p><a href="https://www.askbjoernhansen.com/2007/11/19/space_out_cronjobs.html" target="_blank" rel="noopener">Avoid the “top of the minute problem” - space out your cronjobs - Ask Bjørn Hansen</a></p>
+<p><a href="https://servercheck.in/blog/little-jitter-can-help-evening-out-distributed" target="_blank" rel="noopener">A little jitter can help (evening out distributed cron-based tasks) | Server Check.in</a></p>
+<p><a href="https://servercheck.in/blog/little-jitter-can-help-evening-out-distributed" target="_blank" rel="noopener">A little jitter can help (evening out distributed cron-based tasks) | Server Check.in</a></p>
 
       
     </div>
@@ -543,8 +549,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -559,7 +574,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">507</span>
+                  <span class="site-state-item-count">517</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -570,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -581,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">413</span>
+                  <span class="site-state-item-count">417</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -614,6 +629,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#crontab-Jitter"><span class="nav-number">1.</span> <span class="nav-text">crontab Jitter</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

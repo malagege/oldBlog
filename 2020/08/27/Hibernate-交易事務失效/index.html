@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="最近接觸 Spring 專案搭配使用 Hibernate但是使用上常常處理事務跟我想要的結果不一樣這個沒有研究清楚，常常事務那邊會一直卡住最近剛好查到資料，這邊整理一下吧">
+<meta name="description" content="最近接觸 Spring 專案搭配使用 Hibernate 後來想到應該是Spring-Tx但是使用上常常處理事務跟我想要的結果不一樣這個沒有研究清楚，常常事務那邊會一直卡住最近剛好查到資料，這邊整理一下吧">
 <meta name="keywords" content="hibernate,transactional">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hibernate 交易事務失效">
+<meta property="og:title" content="Spring 交易事務失效">
 <meta property="og:url" content="https://malagege.github.io/blog/2020/08/27/Hibernate-交易事務失效/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="最近接觸 Spring 專案搭配使用 Hibernate但是使用上常常處理事務跟我想要的結果不一樣這個沒有研究清楚，常常事務那邊會一直卡住最近剛好查到資料，這邊整理一下吧">
+<meta property="og:description" content="最近接觸 Spring 專案搭配使用 Hibernate 後來想到應該是Spring-Tx但是使用上常常處理事務跟我想要的結果不一樣這個沒有研究清楚，常常事務那邊會一直卡住最近剛好查到資料，這邊整理一下吧">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://malagege.github.io/blog/2020/08/27/Hibernate-交易事務失效/a.jpg">
-<meta property="og:updated_time" content="2020-08-27T14:45:36.023Z">
+<meta property="og:updated_time" content="2020-09-06T15:46:56.044Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hibernate 交易事務失效">
-<meta name="twitter:description" content="最近接觸 Spring 專案搭配使用 Hibernate但是使用上常常處理事務跟我想要的結果不一樣這個沒有研究清楚，常常事務那邊會一直卡住最近剛好查到資料，這邊整理一下吧">
+<meta name="twitter:title" content="Spring 交易事務失效">
+<meta name="twitter:description" content="最近接觸 Spring 專案搭配使用 Hibernate 後來想到應該是Spring-Tx但是使用上常常處理事務跟我想要的結果不一樣這個沒有研究清楚，常常事務那邊會一直卡住最近剛好查到資料，這邊整理一下吧">
 <meta name="twitter:image" content="https://malagege.github.io/blog/2020/08/27/Hibernate-交易事務失效/a.jpg">
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title>Hibernate 交易事務失效 | 程式狂想筆記</title>
+  <title>Spring 交易事務失效 | 程式狂想筆記</title>
   
 
 
@@ -333,7 +333,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hibernate 交易事務失效</h1>
+          <h1 class="post-title" itemprop="name headline">Spring 交易事務失效</h1>
         
 
         <div class="post-meta">
@@ -424,7 +424,7 @@
   </script>
 </div>
 
-        <p>最近接觸 Spring 專案搭配使用 Hibernate<br>但是使用上常常處理事務跟我想要的結果不一樣<br>這個沒有研究清楚，常常事務那邊會一直卡住<br>最近剛好查到資料，這邊整理一下吧</p>
+        <p>最近接觸 Spring 專案搭配<del>使用 Hibernate</del> 後來想到應該是Spring-Tx<br>但是使用上常常處理事務跟我想要的結果不一樣<br>這個沒有研究清楚，常常事務那邊會一直卡住<br>最近剛好查到資料，這邊整理一下吧</p>
 <a id="more"></a>
 <ul>
 <li><a href="https://www.cnblogs.com/daimzh/p/13532990.html" target="_blank" rel="noopener">一個@Transaction哪裡來這麼多坑？ - 程序員DMZ - 博客園</a> <a href="/blog/2020/08/27/Hibernate-交易事務失效/web1.png" title="備份圖">備份圖</a></li>
@@ -438,6 +438,10 @@
 <p><a href="https://zhuanlan.zhihu.com/p/38208248" target="_blank" rel="noopener">玩轉Spring —— 消失的事務 - 知乎</a> 這篇文章就是講剛剛的問題，但沒有講要怎麼解決，最後我找到一篇有說要怎麼解決<br><a href="https://www.cnblogs.com/daimzh/p/13532990.html#业务代码层面" target="_blank" rel="noopener">一個@Transaction哪裡來這麼多坑？ - 程序員DMZ - 博客園</a>業務代碼層面這邊有程式碼例子，並且解決方法</p>
 <p>第二個例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DmzService</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(A a, B b)</span> </span>&#123;</span><br><span class="line">		saveB(b);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span>(propagation = Propagation.REQUIRES_NEW)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveB</span><span class="params">(B b)</span></span>&#123;</span><br><span class="line">		dao.saveB(a);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>兩個@Transactional，saveB 不會新開事務<br>我覺得這個跟第一個原因很像<br>因為 AOP 代理 第一層做，但是this.saveB 會抓到原本類別 saveB method<br><strong>之前學 Spring 有聽過一個口訣，@Transactional 會抓外面優先執行</strong></p>
+<blockquote>
+<p>這邊注意遺下優先抓外面，但邏輯是比較有沒有交易連線<br>REQUIRES_NEW 會抓建立新的連線機制</p>
+</blockquote>
+<p>可以看一下交易事務:<a href="https://segmentfault.com/a/1190000013341344" target="_blank" rel="noopener">Spring事務傳播行為詳解 - 個人文章 - SegmentFault 思否</a></p>
 <p>最近也有查到@Transactional class和 method，會優先抓 method 的@Transactional<br>沒使用 public method 也會失敗，原因是 AOP 的方法需要 public </p>
 <p><strong>要做事務處理建議使用 XXX.save()</strong><br>這邊 XXX 是指 Spring 注入的對象<br>這跟下面解決方式一樣</p>
 <blockquote>
@@ -513,6 +517,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/08/31/Linux-程式抓取Timezone流程/" rel="prev" title="Linux 程式抓取Timezone流程">
+                Linux 程式抓取Timezone流程 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -607,7 +615,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">507</span>
+                  <span class="site-state-item-count">517</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -618,7 +626,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -629,7 +637,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">413</span>
+                  <span class="site-state-item-count">417</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -837,7 +845,7 @@
         var disqus_config = function () {
           this.page.url = 'https://malagege.github.io/blog/2020/08/27/Hibernate-交易事務失效/';
           this.page.identifier = '2020/08/27/Hibernate-交易事務失效/';
-          this.page.title = 'Hibernate 交易事務失效';
+          this.page.title = 'Spring 交易事務失效';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://malagege-blog.disqus.com/embed.js';

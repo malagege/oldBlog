@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hibernate,transactional,spring,jpa,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="之前我有做過Spring 交易事務失效 | 程式狂想筆記我以為大概了解 Spring 交易事務原理但是我又遇到奇怪問題在研究了一番，終於找到一些問題">
+<meta name="keywords" content="hibernate,transactional,spring,jpa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="之前我有做過Spring 交易事務失效 | 程式狂想筆記我以為大概了解 Spring 交易事務原理但是我又遇到奇怪問題在研究了一番，終於找到一些問題">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2020-09-13T13:10:59.473Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機">
+<meta name="twitter:description" content="之前我有做過Spring 交易事務失效 | 程式狂想筆記我以為大概了解 Spring 交易事務原理但是我又遇到奇怪問題在研究了一番，終於找到一些問題">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/">
+
+
+
+
+
+  <title>Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-09-06T15:01:58+08:00">
+                2020-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>之前我有做過<a href="https://malagege.github.io/blog/2020/08/27/Hibernate-%E4%BA%A4%E6%98%93%E4%BA%8B%E5%8B%99%E5%A4%B1%E6%95%88/">Spring 交易事務失效 | 程式狂想筆記</a><br>我以為大概了解 Spring 交易事務原理<br>但是我又遇到奇怪問題<br>在研究了一番，終於找到一些問題</p>
+<a id="more"></a>
+<h2 id="發現問題"><a href="#發現問題" class="headerlink" title="發現問題"></a>發現問題</h2><p>之前以為 Hibernate 的 save 跟 jpa save的事情差不多<br>由於公司專案是使用 SSH 框架<br>跟我練習使用 Spring boot 結果不太一樣<br>花了一些時間研究並觀察</p>
+<p>首先是 Hibernate 持久層<br>更改資料不做save 也會被儲存</p>
+<p><strong>但今天我今天進入第一個@transactional 取出來的 Entity 取進去 第二個 @transactional 做 dao.save 竟然出現錯誤<br>後來改成 update 就不會有這個問題</strong></p>
+<blockquote>
+<p>之前學 Spring boot 有聽說 save 會做判斷是否 新增/修改<br>我在 Hibernate 確實都可以用<br>但這個範例竟然錯了</p>
+</blockquote>
+<p>我後來跑去 Spring Boot JPA 發現 dao 沒有 update<br>這時候我懷疑 Hibernate 跟 JPA 不一樣<br><a href="https://stackoverflow.com/questions/24420572/update-or-saveorupdate-in-crudrespository-is-there-any-options-available" target="_blank" rel="noopener">spring - Update or SaveorUpdate in CRUDRespository, Is there any options available - Stack Overflow</a></p>
+<h3 id="為什麼會發生這個問題呢-我做-update-就可以正常修改"><a href="#為什麼會發生這個問題呢-我做-update-就可以正常修改" class="headerlink" title="為什麼會發生這個問題呢?我做 update 就可以正常修改"></a>為什麼會發生這個問題呢?我做 update 就可以正常修改</h3><blockquote>
+<p>Persistent狀態的物件對應於資料庫中的一筆資料，物件的id值與資料的主鍵值相同，並且Session實例尚未失效，在這期間您對物件的任何狀 態變動，在Session實例關閉（close）或Transaction實例執行commit()之後，資料庫中對應的資料也會跟著更新。</p>
+<p>如果您將Session實例關閉（close），則Persistent狀態的物件會成為Detached狀態。<br>…<br>…<br>Detached狀態的物件可以使用update()方法使之與資料庫中的對應資料再度發生關聯，此時Detached狀態的物件會變為 Persistent狀態。<br>參考: <a href="https://openhome.cc/Gossip/HibernateGossip/EntityObjectLifeCycle.html" target="_blank" rel="noopener">實體物件生命週期</a></p>
+</blockquote>
+<h3 id="我的Hibernate-物件變成了Detached"><a href="#我的Hibernate-物件變成了Detached" class="headerlink" title="我的Hibernate 物件變成了Detached ???"></a>我的Hibernate 物件變成了Detached ???</h3><p>我的Hibernate 物件變成了Detached ???<br>最後爬到這篇文章</p>
+<blockquote>
+<p>getCurrentSession得到的session是和事務綁定的session，所以：<br>1，要用getCurrentSession生產的session，就必須有事務環境，意思就是你必須在調用session方法之前，session.beginTransaction（）；就算你只是get或者query<br>2，在事務提交之後，即session.getTransaction().commit()之後，session自動關閉，所以你用getCurrentSession，只需要commit事務，不要去調用session.close()。</p>
+<p>3，你用的是ssh，spring為hibernate的current_session_context_class配置了一個SpringSessionContext來幫你管理getCurrentSession中的session，所以，你在OpenSessionInview的時候，spring就自動的幫你打開了session——&gt;你在執行用AOP包裝的事務的時候，事務就開啟了——&gt;執行你的業務方法——&gt;提交事務（注意，hibernate管理的getCurrentSession在提交事務的時候才會關閉ession，而spring提供的這個SpringSessionContext不會） ——&gt;opensessioninview關閉session。<br>從上面的執行流程可以看出，你在SSH集成的時候，如果用的是getCurrentSession的集成方式，就不能設置hibernate的current_session_context_class為thread，而應該空著，讓spring幫你。<br>參考:<a href="https://blog.csdn.net/qq_25843323/article/details/50286643" target="_blank" rel="noopener">hibernate中创建session的两种方式方式，区别在哪里？_qq_25843323的博客-CSDN博客</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web2.png" title="備份圖">備份圖</a></p>
+</blockquote>
+<p>Hibernate daoImpl</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> Session <span class="title">getSession</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sessionFactory.getCurrentSession();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(T entity)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.getSession().save(entity);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Spring Boot CRUDRepository<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> &lt;S extends T&gt; <span class="function">S <span class="title">save</span><span class="params">(S entity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.entityInformation.isNew(entity)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.em.persist(entity);</span><br><span class="line">        <span class="keyword">return</span> entity;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.em.merge(entity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我的SSH 專案使用this.sessionFactory.getCurrentSession();<br>daoImpl 裡面確實沒看到 session.close<br>上面這篇應該不是錯的<br>我也曾經改過 thread 也不能跑</p>
+<h3 id="Hibernate-Transactional-每做一次都會-commit-並-session-關閉"><a href="#Hibernate-Transactional-每做一次都會-commit-並-session-關閉" class="headerlink" title="Hibernate @Transactional 每做一次都會 commit 並 session 關閉"></a>Hibernate @Transactional 每做一次都會 commit 並 session 關閉</h3><p>上面說明總結，因為 session 使用 <code>getCurrentSession();</code><br>@Transactional 會依照 session 規則，最後會做 commit<br>Hibernate 連線會自動關閉(session.close)<br><strong>注意這邊我講的是我公司專案，不是 Spring Boot JPA</strong></p>
+<p>所以之前我不了解規則，有時候會出現 No session 問題<br>但是 Spring Boot JPA 就沒有這個問題<br>現在猜測我之前是遇到這個問題</p>
+<p>以下可能是錯誤資訊，發現錯誤會修正 ============</p>
+<h3 id="Spring-Boot-JPA-save-使用-Transactional-不會做-commit"><a href="#Spring-Boot-JPA-save-使用-Transactional-不會做-commit" class="headerlink" title="Spring Boot JPA save 使用 @Transactional 不會做 commit?"></a>Spring Boot JPA save 使用 @Transactional 不會做 commit?</h3><p>下面刪掉的跳過，應該是 Spring 傳播事務不會 commit<br>重複 REQUIRED 兩層不會 commit，原因是兩層都是使用同一個交易<br>之前 @Transactional 失效問題可能是這裡面提到問題<a href="https://malagege.github.io/blog/2020/08/27/Hibernate-%E4%BA%A4%E6%98%93%E4%BA%8B%E5%8B%99%E5%A4%B1%E6%95%88/">Spring 交易事務失效 | 程式狂想筆記</a><br>之前我也不是很熟….</p>
+<p>簡單來刷，@Transactional 下面那一層不會 commit，但是他有做 flush 動作<br>@Transactional 回到上一層結束時候，才會做 commit<br>但 Spring Boot JPA commit時候，並不會像 Session 一樣會 close 掉<br>這一點真的很方便</p>
+<p>Hibernate 連線問題不確定<a href="https://thorben-janssen.com/hibernate-tips-access-hibernate-apis-jpa/" target="_blank" rel="noopener">Hibernate Tips: How to access Hibernate APIs from JPA</a><br>能不能解決</p>
+<p><del>看這邊問題，我想到 Spring 交易事務是使用AOP代理模式去做beginTransactional，最後會做<code>commit</code></del><br><del>這邊我有整理<a href="https://malagege.github.io/blog/2020/08/27/Hibernate-%E4%BA%A4%E6%98%93%E4%BA%8B%E5%8B%99%E5%A4%B1%E6%95%88/">Spring 交易事務失效 | 程式狂想筆記</a></del></p>
+<p><del>但Spring Boot JPA 的save 怎麼沒有 commit? 能順外面用 @Transactional 做 commit 和 rollback??</del></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> &lt;S extends T&gt; <span class="function">S <span class="title">save</span><span class="params">(S entity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.entityInformation.isNew(entity)) &#123;</span><br><span class="line">        <span class="keyword">this</span>.em.persist(entity);</span><br><span class="line">        <span class="keyword">return</span> entity;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.em.merge(entity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主要就是判斷這個對象數據庫裡面是否存在，如果存在則更新， 如果是不存在則新增；根據事務的傳播性，在執行persist或者merge操作之後並不會直接提交事務。而是在所有循環保存之後@Transaction註解會統一flush,commit事務 ,下面介紹關於EntityManager常用API</p>
+</blockquote>
+<p><a href="https://www.cnblogs.com/wenq001/p/9264861.html" target="_blank" rel="noopener">springboot jpa 批量保存數據–EntityManager和 JpaRepository - WenQ001 - 博客園</a></p>
+<p><del>這邊有提到使用<strong>persist 或者 merge 操作之後並不會直接提交事務</strong></del></p>
+<p>這邊我會錯意，其實我寫這一段覺得還是哪裡怪怪的<br>後來查了一下<br>應該是 Spring 事務傳播</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000013341344" target="_blank" rel="noopener">Spring事務傳播行為詳解 - 個人文章 - SegmentFault 思否</a>  <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web6.png" title="備份圖">備份圖</a><br>這篇寫得很棒!!</li>
+<li><a href="https://www.jianshu.com/p/1533f0f5241a" target="_blank" rel="noopener">Spring声明式事务管理之二：核心接口API - 簡書</a></li>
+<li><a href="https://stackoverflow.com/questions/19396563/does-hibernates-session-close-automatically-rollback-uncommitted-transactions" target="_blank" rel="noopener">java - Does Hibernate’s Session.close() automatically rollback uncommitted transactions? - Stack Overflow</a></li>
+<li><a href="https://blog.csdn.net/qq_23476319/article/details/56043282" target="_blank" rel="noopener">HibernateTransactionManager和DataSourceTransactionManager_qq_23476319的博客-CSDN博客</a></li>
+</ul>
+<h3 id="Hibernate-的-commit-flush"><a href="#Hibernate-的-commit-flush" class="headerlink" title="Hibernate 的 commit, flush"></a>Hibernate 的 commit, flush</h3><ul>
+<li><a href="https://openhome.cc/Gossip/HibernateGossip/PersistenceContext.html" target="_blank" rel="noopener">Persistence Context</a></li>
+<li><a href="https://www.javatt.com/p/97654" target="_blank" rel="noopener">Hibernate —— flush和commit的区别 - Java天堂</a></li>
+</ul>
+<h3 id="什麼是-persist-merge"><a href="#什麼是-persist-merge" class="headerlink" title="什麼是 persist , merge?"></a>什麼是 persist , merge?</h3><p>這邊沒研究很清楚，<code>Spring Boot JPA save 使用 @Transactional 不會做 commit?</code><br>好像就是這個問題，不會影響到</p>
+<p>有看到使用就一定要做事務，不然沒有效果</p>
+<p>這邊整理相關連結</p>
+<ol>
+<li><a href="https://www.cnblogs.com/wenq001/p/9264861.html" target="_blank" rel="noopener">springboot jpa 批量保存數據–EntityManager和 JpaRepository - WenQ001 - 博客園</a></li>
+<li><a href="https://stackoverflow.com/questions/161224/what-are-the-differences-between-the-different-saving-methods-in-hibernate" target="_blank" rel="noopener">java - What are the differences between the different saving methods in Hibernate? - Stack Overflow</a></li>
+<li><a href="https://blog.csdn.net/u010739551/article/details/47253881" target="_blank" rel="noopener">Hibernate save()与persist()区别_攻城狮Luke（刘健彬）-CSDN博客</a></li>
+<li><a href="http://www.blogjava.net/dreamstone/archive/2007/07/29/133071.html" target="_blank" rel="noopener">hibernate的各种保存方式的区别 (save,persist,update,saveOrUpdte,merge,flush,lock)等 - DANCE WITH JAVA - BlogJava</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web4.png" title="備份圖">備份圖</a></li>
+<li><a href="https://sites.google.com/site/hzg139/home/orm-jihibernate/hibernate/hibernate" target="_blank" rel="noopener">Hibernate各种保存方式的区别 - 不發光的螢火蟲</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web3.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.cnblogs.com/xiaoheike/p/5374613.html" target="_blank" rel="noopener">Hibernate save, saveOrUpdate, persist, merge, update 区别 - xiaoheike - 博客园</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web1.png" title="備份圖">備份圖</a><br><a href="https://github.com/xiaoheike/HibernateSavePersistUpdateMergeDiff" target="_blank" rel="noopener">xiaoheike/HibernateSavePersistUpdateMergeDiff</a></li>
+</ol>
+<h2 id="try-catch-到底能不能抓到-Transactional-public-method"><a href="#try-catch-到底能不能抓到-Transactional-public-method" class="headerlink" title="try catch 到底能不能抓到 @Transactional public method ?"></a>try catch 到底能不能抓到 @Transactional public method ?</h2><p>先說一下問題，我因為上面敘述，我接觸專案 DaoImpl.java 是使用 Hibernate<br>我接觸到的專案是不會抓到 try catch &lt;—這邊指的是 dao.save 會抓到<br>非使用 Spring Boot JPA 的 try catch 抓地到<br>所以我這邊操作出來竟然測出兩種不一樣解果</p>
+<p>Spring Boot JPA 使用 try catch(內層)抓地到 Exception &lt;—這邊指的是 dao.save 丟的 Exception 不是一般 Exception</p>
+<p>那為什麼會不一樣呢?</p>
+<p>這邊我目前猜測是 @Transactional 的關係<br>Spring Boot JPA 裡面 .save 就有包一層 @Transactional 所以結束會 flush<br>但是我目前接觸到的 DaoImpl.java 就沒有這一層<br>所以這是目前最有可能的</p>
+<h3 id="try-catch-觀察"><a href="#try-catch-觀察" class="headerlink" title="try catch 觀察"></a>try catch 觀察</h3><p>只要進入到 @Transactional<br>就可以抓到這個<br>2020-09-08 21:42:01.333 TRACE 27527 — [nio-8080-exec-1] o.s.t.i.TransactionInterceptor           : Completing transaction for [org.springframework.data.jpa.repository.support.SimpleJpaRepository.save] after exception: javax.persistence.PersistenceException: org.hibernate.exception.DataException: could not execute statement</p>
+<p>Completing  中文翻譯是「完成中」</p>
+<p><a href="https://github.com/spring-projects/spring-framework/blob/673f83e388e5ee992340a623de5a248e95b94c34/spring-tx/src/main/java/org/springframework/transaction/interceptor/TransactionAspectSupport.java" target="_blank" rel="noopener">spring-framework/TransactionAspectSupport.java at 673f83e388e5ee992340a623de5a248e95b94c34 · spring-projects/spring-framework</a></p>
+<p>當前事務發生錯誤<br>2020-09-08 21:42:01.362 DEBUG 27527 — [nio-8080-exec-1] o.s.orm.jpa.JpaTransactionManager        : Initiating transaction rollback</p>
+<p>操作 commit 會看到 Initiating transaction commit</p>
+<p>其實只要進入到 @Transactional 都會判斷當下使用哪一種事務方法<br>會依據程式碼使用和當下是否有交易連線去做</p>
+<p>相關完整可能要看程式碼…，我找不到是哪一段 flush &gt;.&lt;</p>
+<ul>
+<li><a href="https://github.com/spring-projects/spring-framework/blob/673f83e388e5ee992340a623de5a248e95b94c34/spring-tx/src/main/java/org/springframework/transaction/interceptor/TransactionAspectSupport.java" target="_blank" rel="noopener">spring-framework/TransactionAspectSupport.java at 673f83e388e5ee992340a623de5a248e95b94c34 · spring-projects/spring-framework</a></li>
+<li><a href="https://www.bilibili.com/video/BV1oW41167AV?p=38" target="_blank" rel="noopener">Spring源码解析_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili</a></li>
+<li><a href="https://www.lagou.com/lgeduarticle/64035.html" target="_blank" rel="noopener">Spring源码分析（八）深入了解事务管理的流程</a></li>
+<li><a href="http://www.spring4all.com/article/15684" target="_blank" rel="noopener">Springboot源码分析之事务拦截和管理 | Spring For All</a></li>
+<li><a href="https://docs.spring.io/spring/docs/4.3.14.RELEASE/spring-framework-reference/html/transaction.html" target="_blank" rel="noopener">17. Transaction Management</a></li>
+</ul>
+<h3 id="try-catch-最好寫在哪邊"><a href="#try-catch-最好寫在哪邊" class="headerlink" title="try catch 最好寫在哪邊?"></a>try catch 最好寫在哪邊?</h3><p><strong>外面一層</strong>，之前有看到 p3c看到<a href="https://github.com/alibaba/p3c" target="_blank" rel="noopener">alibaba/p3c: Alibaba Java Coding Guidelines pmd implements and IDE plugin</a></p>
+<p>雖然看到網路上很多文章，都說 try catch(內層)裡面的catch 需要再 throw Exception<br>不過我測試 DAO 丟的 Exception 不管你有沒有 throw Exception<br>他還會丟一次，當然我猜非一般Dao 丟的 Exception<br>@Transactional應該不會在幫你丟，所以要自己丟</p>
+<h2 id="總結-心得"><a href="#總結-心得" class="headerlink" title="總結/心得"></a>總結/心得</h2><p>簡單來說，Spring 交易事務不管你用什麼 DB 套件，他們使用原理都是一樣的<br>我這邊不一樣的結果是 Spring boot 跟 我使用 Hibernate Dao 實作導致ˋ有不一樣結果<br>還有 Hibernate getCurrentSession 做 commit/rollback 實作會關閉交易<br>但透過 @Transactional public method 就可以正常抓到 連線，沒有的話可能要注意 commit/rollback 會遇到 no session 問題<br>當然 Spring Boot JPA應該不用煩惱</p>
+<ol>
+<li>不會有 commit/rollback 自動關掉連線</li>
+<li>save 使用 try catch 都能抓到問題</li>
+</ol>
+<p>當然除了這些問題，<a href="https://malagege.github.io/blog/2020/08/27/Hibernate-%E4%BA%A4%E6%98%93%E4%BA%8B%E5%8B%99%E5%A4%B1%E6%95%88/">Spring 交易事務失效 | 程式狂想筆記</a><br>裡面也要注意 @Transactional 是否有抓到 Spring AOP特性<br>往往有時候都是這些問題</p>
+<p>所以了解Spring 事務，在程式撰寫應該比較不會遇到一些問題<br>希望不會我不要在卡關<br>orz</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/hibernate/" rel="tag"># hibernate</a>
+          
+            <a href="/blog/tags/transactional/" rel="tag"># transactional</a>
+          
+            <a href="/blog/tags/spring/" rel="tag"># spring</a>
+          
+            <a href="/blog/tags/jpa/" rel="tag"># jpa</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/09/03/Oracle-匯出-Schema-好用工具/" rel="next" title="Oracle 匯出 Schema 好用工具">
+                <i class="fa fa-chevron-left"></i> Oracle 匯出 Schema 好用工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/09/08/Oracle-空白字元-和-NULL/" rel="prev" title="Oracle 空白字元 和 NULL">
+                Oracle 空白字元 和 NULL <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">517</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">417</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#發現問題"><span class="nav-number">1.</span> <span class="nav-text">發現問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#為什麼會發生這個問題呢-我做-update-就可以正常修改"><span class="nav-number">1.1.</span> <span class="nav-text">為什麼會發生這個問題呢?我做 update 就可以正常修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我的Hibernate-物件變成了Detached"><span class="nav-number">1.2.</span> <span class="nav-text">我的Hibernate 物件變成了Detached ???</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-Transactional-每做一次都會-commit-並-session-關閉"><span class="nav-number">1.3.</span> <span class="nav-text">Hibernate @Transactional 每做一次都會 commit 並 session 關閉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot-JPA-save-使用-Transactional-不會做-commit"><span class="nav-number">1.4.</span> <span class="nav-text">Spring Boot JPA save 使用 @Transactional 不會做 commit?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-的-commit-flush"><span class="nav-number">1.5.</span> <span class="nav-text">Hibernate 的 commit, flush</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是-persist-merge"><span class="nav-number">1.6.</span> <span class="nav-text">什麼是 persist , merge?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch-到底能不能抓到-Transactional-public-method"><span class="nav-number">2.</span> <span class="nav-text">try catch 到底能不能抓到 @Transactional public method ?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-觀察"><span class="nav-number">2.1.</span> <span class="nav-text">try catch 觀察</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-最好寫在哪邊"><span class="nav-number">2.2.</span> <span class="nav-text">try catch 最好寫在哪邊?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結-心得"><span class="nav-number">3.</span> <span class="nav-text">總結/心得</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/';
+          this.page.identifier = '2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/';
+          this.page.title = 'Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

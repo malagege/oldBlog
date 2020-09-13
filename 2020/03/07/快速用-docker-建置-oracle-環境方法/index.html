@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近要看 DB 工具是否能正常連 Oracle簡單使用 Docker 來架設環境">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-03-08T12:00:15.392Z">
+<meta property="og:updated_time" content="2020-09-13T12:15:44.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="快速用 docker 建置 oracle 環境方法">
 <meta name="twitter:description" content="最近要看 DB 工具是否能正常連 Oracle簡單使用 Docker 來架設環境">
@@ -433,7 +433,36 @@
 <h2 id="其他可參考設定"><a href="#其他可參考設定" class="headerlink" title="其他可參考設定"></a>其他可參考設定</h2><p><a href="https://www.cnblogs.com/Jin520304/p/7884441.html" target="_blank" rel="noopener">docker安装wnameless/oracle-xe-11g并运行（手写超详细） - 哈喽，小枫 - 博客园</a><br><a href="https://zoctan.github.io/2018/05/21/%E4%BD%BF%E7%94%A8%E8%BF%87%E7%A8%8B/%E4%BD%BF%E7%94%A8%20Docker%20Oracle/" target="_blank" rel="noopener">使用 Docker Oracle | Zoctan’s Blog</a></p>
 <p><a href="https://hub.docker.com/r/acktsw/oracle-xe-11g/dockerfile" target="_blank" rel="noopener">acktsw/oracle-xe-11g Dockerfile - Docker Hub</a><br>這個不知道為什麼帳號密碼無法登入，不過 ssh server 設定可以當參考</p>
 <p><a href="https://blog.csdn.net/qq_38270106/article/details/83271284" target="_blank" rel="noopener">docker compose安装oracle_数据库_落叶飘零z的博客-CSDN博客</a></p>
-
+<h2 id="新增資料表前置作業"><a href="#新增資料表前置作業" class="headerlink" title="新增資料表前置作業"></a>新增資料表前置作業</h2><p>其實上面安裝好，不能馬上建制資料表<br>後來查了一下，要用新增使用者帳號去做</p>
+<p>SID 沒有找到修改的方法</p>
+<blockquote>
+<p>XE版本裡只能有一個instance， 我將SID修改了以後貌似會報錯，所以SID就不用修改了。<br>BASE和HOME兩個變量後儘量不要加斜線 ‘/‘ ,有可能會報錯，雖然不知到為什麼… 同時，TNS_ADMIN這個變量一定要有。<br>參考<a href="https://blog.csdn.net/u013569416/article/details/41895389" target="_blank" rel="noopener">Linux下安裝Oracle Database 11g Express Edition_Perserve In Learning-CSDN博客</a></p>
+</blockquote>
+<p>Oracle 11帳號密碼<br>這邊紀錄 Dbeaver 登入<br>user:system<br>pwd: oracle</p>
+<h2 id="normal"><a href="#normal" class="headerlink" title="normal"></a>normal</h2><p>user: sys<br>pwd: oracle<br>dba</p>
+<p>這邊進去不能新增資料表<br>要新增帳號<br>dbeaver 可以新增模式比較快<br>新增帳號還序要設定權限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CONNECT</span>, <span class="keyword">RESOURCE</span>, DBA <span class="keyword">TO</span> miles;</span><br></pre></td></tr></table></figure>
+<p>設定玩資料夾就可以建制了</p>
+<p>這邊也有發現 Oracle 12 上新增帳號設定需要特別設定</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SESSION</span> <span class="keyword">SET</span> <span class="string">"_ORACLE_SCRIPT"</span>=<span class="literal">TRUE</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> miles <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="number">123456</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CONNECT</span>, <span class="keyword">RESOURCE</span>, DBA <span class="keyword">TO</span> miles;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">SESSION</span> <span class="keyword">SET</span> <span class="string">"_ORACLE_SCRIPT"</span>=<span class="literal">FALSE</span>;</span><br></pre></td></tr></table></figure>
+<p>參考: <a href="https://mileslin.github.io/2019/06/%E4%BD%BF%E7%94%A8-Docker-%E5%BB%BA%E7%AB%8B-Oracle-%E6%9C%8D%E5%8B%99/" target="_blank" rel="noopener">[Docker] 使用 Docker 建立 Oracle 服務 - Miles’s Journey</a></p>
+<p>相關連結</p>
+<ul>
+<li><a href="https://yingclin.github.io/2018/create-oracle-docker-container.html" target="_blank" rel="noopener">在 Docker 中建立 Oracle 12c 的測試主機 | 想不起來而已</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10229655" target="_blank" rel="noopener">使用 Docker 建立 Oracle 12c &amp; 新增使用者建立範例資料庫 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
+<li><a href="https://blog.darkthread.net/blog/setup-xe-centos/" target="_blank" rel="noopener">在 CentOS 安裝 Oracle XE 18c-黑暗執行緒</a></li>
+<li><a href="https://zoctan.github.io/2018/05/21/%E4%BD%BF%E7%94%A8%E8%BF%87%E7%A8%8B/%E4%BD%BF%E7%94%A8%20Docker%20Oracle/" target="_blank" rel="noopener">使用 Docker Oracle | Zoctan’s Blog</a></li>
+<li><a href="https://my.oschina.net/u/3049601/blog/3112371" target="_blank" rel="noopener">CENTOS 7 使用Docker安装oracle 11g - 特拉仔的个人空间 - OSCHINA</a><br><a href="https://www.cnblogs.com/mq0036/p/4724466.html" target="_blank" rel="noopener">批处理执行多个SQL文件到oracle - jack_Meng - 博客园</a></li>
+</ul>
+<h2 id="docker-entrypoint-initdb-d"><a href="#docker-entrypoint-initdb-d" class="headerlink" title="docker-entrypoint-initdb.d"></a>docker-entrypoint-initdb.d</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> /docker-entrypoint-initdb.d/*; <span class="keyword">do</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"found file /docker-entrypoint-initdb.d/<span class="variable">$f</span>"</span></span><br><span class="line">	<span class="keyword">case</span> <span class="string">"<span class="variable">$f</span>"</span> <span class="keyword">in</span></span><br><span class="line">		*.sh)     <span class="built_in">echo</span> <span class="string">"[IMPORT] <span class="variable">$0</span>: running <span class="variable">$f</span>"</span>; . <span class="string">"<span class="variable">$f</span>"</span> ;;</span><br><span class="line">		*.sql)    <span class="built_in">echo</span> <span class="string">"[IMPORT] <span class="variable">$0</span>: running <span class="variable">$f</span>"</span>; <span class="built_in">echo</span> <span class="string">"exit"</span> | su oracle -c <span class="string">"NLS_LANG=.<span class="variable">$CHARACTER_SET</span> <span class="variable">$ORACLE_HOME</span>/bin/sqlplus -S / as sysdba @<span class="variable">$f</span>"</span>; <span class="built_in">echo</span> ;;</span><br><span class="line">		*.dmp)    <span class="built_in">echo</span> <span class="string">"[IMPORT] <span class="variable">$0</span>: running <span class="variable">$f</span>"</span>; impdp <span class="variable">$f</span> ;;</span><br><span class="line">		*)        <span class="built_in">echo</span> <span class="string">"[IMPORT] <span class="variable">$0</span>: ignoring <span class="variable">$f</span>"</span> ;;</span><br><span class="line">	<span class="keyword">esac</span></span><br><span class="line">	<span class="built_in">echo</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>由於這個關係，我可以簡單設定 db schmema create 語法</p>
+<p>init.sql 放在 /docker-entrypoint-initdb.d/<br>裡面放 sql 資料夾<br>注意，sql 資料夾並不會執行(* 只會抓到同意層資料)</p>
+<p>init.sql<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> XXXX <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> XXXX;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">CONNECT</span>, <span class="keyword">RESOURCE</span>, DBA <span class="keyword">TO</span> XXXX;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> XXXXMGR <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> XXXX;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">session</span> <span class="keyword">set</span> current_schema=XXXXMGR;</span><br><span class="line">@/docker-entrypoint-initdb.d/sql/schema/xxxx.sql</span><br></pre></td></tr></table></figure></p>
+<p>list 資料夾所有目錄方法</p>
+<p> find  <code>pwd</code> -type f </p>
+<p> 就可把相關 sql 用出來</p>
+<p> docker-compose.yml 留一下</p>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'2'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  oracle:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">oracle-xe-11g</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span>   <span class="comment">#如果docker容器由于一些问题挂掉的化，docker-composer会自动把容器给启动起来</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">1521</span><span class="string">:1521</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">8080</span><span class="string">:8080</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">22</span><span class="string">:22</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/</span></span><br><span class="line"><span class="attr">    environment:</span> </span><br><span class="line"><span class="bullet">      -</span> <span class="string">LC_ALL=C.UTF-8</span> </span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -572,7 +601,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">507</span>
+                  <span class="site-state-item-count">517</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -583,7 +612,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -594,7 +623,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">413</span>
+                  <span class="site-state-item-count">417</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -637,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#其他可參考設定"><span class="nav-number">1.</span> <span class="nav-text">其他可參考設定</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#其他可參考設定"><span class="nav-number">1.</span> <span class="nav-text">其他可參考設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新增資料表前置作業"><span class="nav-number">2.</span> <span class="nav-text">新增資料表前置作業</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#normal"><span class="nav-number">3.</span> <span class="nav-text">normal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-entrypoint-initdb-d"><span class="nav-number">4.</span> <span class="nav-text">docker-entrypoint-initdb.d</span></a></li></ol></div>
             
 
           </div>
