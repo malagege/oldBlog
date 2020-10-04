@@ -38,3 +38,28 @@ ls 2>&1 > dirlist
 [unix - Crontab - Run in directory - Stack Overflow](https://stackoverflow.com/questions/8899737/crontab-run-in-directory)
 [鳥哥的 Linux 私房菜 -- 第十二章、學習 Shell Scripts](http://linux.vbird.org/linux_basic/0340bashshell-scripts.php#some_ex_run)
 [摩托學園討論區 • 檢視主題 - [分享] 研究 2>&1 後的一點點心得](https://moto.debian.tw/viewtopic.php?f=11&t=17208)
+
+
+
+# crontab Jitter
+
+[APScheduler的使用详解_ITPUB博客](http://blog.itpub.net/69945560/viewspace-2670150/)
+
+```bash
+#!/bin/bash
+
+maxdelay=$((14*60))  # 14 hours from 9am to 11pm, converted to minutes
+for ((i=1; i<=20; i++)); do
+    delay=$(($RANDOM%maxdelay)) # pick an independent random delay for each of the 20 runs
+    (sleep $((delay*60)); /path/to/phpscript.php) & # background a subshell to wait, then run the php script
+done
+```
+
+[bash - Cron jobs and random times, within given hours - Stack Overflow](https://stackoverflow.com/questions/9049460/cron-jobs-and-random-times-within-given-hours)
+
+[Avoid the "top of the minute problem" - space out your cronjobs - Ask Bjørn Hansen](https://www.askbjoernhansen.com/2007/11/19/space_out_cronjobs.html)
+
+
+[A little jitter can help (evening out distributed cron-based tasks) | Server Check.in](https://servercheck.in/blog/little-jitter-can-help-evening-out-distributed)
+
+[A little jitter can help (evening out distributed cron-based tasks) | Server Check.in](https://servercheck.in/blog/little-jitter-can-help-evening-out-distributed)

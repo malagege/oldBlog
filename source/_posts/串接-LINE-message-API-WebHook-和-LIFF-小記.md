@@ -57,3 +57,16 @@ ngrok
 localtunnel 
 
 [用 localtunnel 幫 chatbot 上 https | 筆記國度](https://taichunmin.idv.tw/blog/2020-06-13-linebot-localtunnel-https.html?fbclid=IwAR3eNChmEIJnp7FwVp-sJ4yUifeVRyRmFDa_GNWojjO1vhPFZ3PQIB_dyVY)
+
+
+## 表情符號
+
+舊版使用特殊文字產生表情符號
+[LINE BOT の emoticon の説明がよく分からなかったのでリストにしました。 - Qiita](https://qiita.com/Repomn/items/b991f20e4fecd0577d4b)
+
+
+新版
+[[Golang][LINE][教學] 如何傳送 LINE 專屬的表情符號(emoji)](http://www.evanlin.com/go-emoji/)
+[關於 LINE Emoji 的一些細節（以 Golang 為例) - LINE ENGINEERING](https://engineering.linecorp.com/zh-hant/blog/line-emoji-with-golang/)
+
+老實說，我覺得舊版還是比較方便....

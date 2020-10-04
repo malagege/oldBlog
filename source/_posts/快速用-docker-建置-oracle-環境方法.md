@@ -86,3 +86,114 @@ oracle_1  | Database ready to use. Enjoy! ;)
 這個不知道為什麼帳號密碼無法登入，不過 ssh server 設定可以當參考
 
 [docker compose安装oracle_数据库_落叶飘零z的博客-CSDN博客](https://blog.csdn.net/qq_38270106/article/details/83271284)
+
+
+## 新增資料表前置作業
+
+其實上面安裝好，不能馬上建制資料表
+後來查了一下，要用新增使用者帳號去做
+
+
+SID 沒有找到修改的方法
+
+> XE版本裡只能有一個instance， 我將SID修改了以後貌似會報錯，所以SID就不用修改了。
+> BASE和HOME兩個變量後儘量不要加斜線 '/' ,有可能會報錯，雖然不知到為什麼... 同時，TNS_ADMIN這個變量一定要有。
+> 參考[Linux下安裝Oracle Database 11g Express Edition_Perserve In Learning-CSDN博客](https://blog.csdn.net/u013569416/article/details/41895389)
+
+Oracle 11帳號密碼
+這邊紀錄 Dbeaver 登入
+user:system
+pwd: oracle
+normal
+----
+user: sys
+pwd: oracle
+dba
+
+這邊進去不能新增資料表
+要新增帳號
+dbeaver 可以新增模式比較快
+新增帳號還序要設定權限
+
+```sql
+GRANT CONNECT, RESOURCE, DBA TO miles;
+```
+設定玩資料夾就可以建制了
+
+這邊也有發現 Oracle 12 上新增帳號設定需要特別設定
+
+```sql
+ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;
+CREATE USER miles IDENTIFIED BY 123456;
+GRANT CONNECT, RESOURCE, DBA TO miles;
+ALTER SESSION SET "_ORACLE_SCRIPT"=FALSE;
+```
+參考: [[Docker] 使用 Docker 建立 Oracle 服務 - Miles's Journey](https://mileslin.github.io/2019/06/%E4%BD%BF%E7%94%A8-Docker-%E5%BB%BA%E7%AB%8B-Oracle-%E6%9C%8D%E5%8B%99/)
+
+
+
+
+相關連結
+
+* [在 Docker 中建立 Oracle 12c 的測試主機 | 想不起來而已](https://yingclin.github.io/2018/create-oracle-docker-container.html)
+* [使用 Docker 建立 Oracle 12c & 新增使用者建立範例資料庫 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10229655)
+* [在 CentOS 安裝 Oracle XE 18c-黑暗執行緒](https://blog.darkthread.net/blog/setup-xe-centos/)
+* [使用 Docker Oracle | Zoctan's Blog](https://zoctan.github.io/2018/05/21/%E4%BD%BF%E7%94%A8%E8%BF%87%E7%A8%8B/%E4%BD%BF%E7%94%A8%20Docker%20Oracle/)
+* [CENTOS 7 使用Docker安装oracle 11g - 特拉仔的个人空间 - OSCHINA](https://my.oschina.net/u/3049601/blog/3112371)
+[批处理执行多个SQL文件到oracle - jack_Meng - 博客园](https://www.cnblogs.com/mq0036/p/4724466.html)
+
+
+## docker-entrypoint-initdb.d
+
+```bash
+			for f in /docker-entrypoint-initdb.d/*; do
+				echo "found file /docker-entrypoint-initdb.d/$f"
+				case "$f" in
+					*.sh)     echo "[IMPORT] $0: running $f"; . "$f" ;;
+					*.sql)    echo "[IMPORT] $0: running $f"; echo "exit" | su oracle -c "NLS_LANG=.$CHARACTER_SET $ORACLE_HOME/bin/sqlplus -S / as sysdba @$f"; echo ;;
+					*.dmp)    echo "[IMPORT] $0: running $f"; impdp $f ;;
+					*)        echo "[IMPORT] $0: ignoring $f" ;;
+				esac
+				echo
+			done
+```
+
+由於這個關係，我可以簡單設定 db schmema create 語法
+
+init.sql 放在 /docker-entrypoint-initdb.d/
+裡面放 sql 資料夾
+注意，sql 資料夾並不會執行(* 只會抓到同意層資料)
+
+init.sql
+```sql 
+CREATE USER XXXX IDENTIFIED BY XXXX;
+GRANT CONNECT, RESOURCE, DBA TO XXXX;
+CREATE USER XXXXMGR IDENTIFIED BY XXXX;
+alter session set current_schema=XXXXMGR;
+@/docker-entrypoint-initdb.d/sql/schema/xxxx.sql
+```
+
+list 資料夾所有目錄方法
+
+ find  `pwd` -type f 
+
+ 就可把相關 sql 用出來
+
+
+ docker-compose.yml 留一下
+
+ ```yml 
+version: '2'
+services:
+  oracle:
+    image: oracle-xe-11g
+    restart: always   #如果docker容器由于一些问题挂掉的化，docker-composer会自动把容器给启动起来
+    ports:
+      - 1521:1521
+      - 8080:8080
+      - 22:22
+    volumes:
+    - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+    environment: 
+      - LC_ALL=C.UTF-8 
+````

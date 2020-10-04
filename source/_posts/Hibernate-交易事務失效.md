@@ -1,11 +1,11 @@
 ---
-title: Hibernate 交易事務失效
+title: Spring 交易事務失效
 date: 2020-08-27 21:54:26
 tags: [hibernate, transactional]
 categories: Java
 ---
 
-最近接觸 Spring 專案搭配使用 Hibernate
+最近接觸 Spring 專案搭配~~使用 Hibernate~~ 後來想到應該是Spring-Tx
 但是使用上常常處理事務跟我想要的結果不一樣
 這個沒有研究清楚，常常事務那邊會一直卡住
 最近剛好查到資料，這邊整理一下吧
@@ -58,6 +58,10 @@ public class DmzService {
 我覺得這個跟第一個原因很像
 因為 AOP 代理 第一層做，但是this.saveB 會抓到原本類別 saveB method
 **之前學 Spring 有聽過一個口訣，@Transactional 會抓外面優先執行**
+> 這邊注意遺下優先抓外面，但邏輯是比較有沒有交易連線
+> REQUIRES_NEW 會抓建立新的連線機制
+
+可以看一下交易事務:[Spring事務傳播行為詳解 - 個人文章 - SegmentFault 思否](https://segmentfault.com/a/1190000013341344)
 
 最近也有查到@Transactional class和 method，會優先抓 method 的@Transactional 
 沒使用 public method 也會失敗，原因是 AOP 的方法需要 public 

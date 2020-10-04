@@ -200,17 +200,31 @@ threadlocal
 
 原生 SQL 
 
+## Entity 建立
+
+[Hibernate入门之主键生成策略详解_博客_云社区_开发者中心-华为云](https://bbs.huaweicloud.com/blogs/151905)
+[5.4. Spring Data with MySQL](http://netkiller.sourceforge.net/spring/data/spring-data-jpa.html)
+
 ## 實體類關聯
 
 ### 一對多
 
 通常
 
-#### 1. 設定
+#### 進階探討
+
+[hibernate基于注解的维护权反转：@OneToMany(mappedBy=) - bojiangzhou - 博客园](https://www.cnblogs.com/chiangchou/p/mappedby.html)
+
+#### 1. 設定 
+
 
 #### 2. 聯級
 
 ### 多對多
+
+[@ManyToMany中间表附加字段设计 - rubekid - 博客园](https://www.cnblogs.com/rubekid/p/4621975.html)
+
+[Hibernate中多对多的annotation的写法（中间表可以有多个字段） - MJBrian - 博客园](https://www.cnblogs.com/mjbrian/p/6873113.html)
 
 ### 一對一
 

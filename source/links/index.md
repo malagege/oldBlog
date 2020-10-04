@@ -50,3 +50,7 @@ date: 2018-05-14 21:24:11
 - [思绪的空中生活 - 记录生活 分享点滴](https://sixu.life/)
 - [貧弱水平 Cody 的學習探索 Blog](https://codychen.me/)
 - [程序员DMZ - 博客园](https://www.cnblogs.com/daimzh/)
+- [良许Linux - 博客园](https://www.cnblogs.com/yychuyu/)
+- [我沒有三顆心臟 - 博客園](https://www.cnblogs.com/wmyskxz/)
+- [沉迷思考的魚](http://ypk1226.com/)
+- [Noob's Space](https://noob.tw/)

@@ -71,3 +71,4 @@ org.jkiss.dbeaver.model.sql.DBSQLException: SQL 错误: jdbc 驱动内部错误
 
 [Oracle 11g自带的sqldeveloper.exe打不开问题_数据库_weixin_38569499的博客-CSDN博客](https://blog.csdn.net/weixin_38569499/article/details/80316277)
 [sql - SQLDeveloper not starting - Stack Overflow](https://stackoverflow.com/questions/22810318/sqldeveloper-not-starting)
+[Oracle SQL Developer 小技巧 #3 : 電腦當機、沒存檔救回之前編寫的SQL Script - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10198477)

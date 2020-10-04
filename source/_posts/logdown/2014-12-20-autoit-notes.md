@@ -71,3 +71,45 @@ http://pulipuli.blogspot.tw/2011/05/autoitcontrolsendcontrolclick.html
 
 [A] AutoIt!! 註解與其它注意事項
 http://edisonx.pixnet.net/blog/post/38335545-%5Ba%5D-autoit!!-%E8%A8%BB%E8%A7%A3%E8%88%87%E5%85%B6%E5%AE%83%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85
+
+**2020-09-11**
+
+Window info
+
+- [AutoIT 自動化完成程式安裝 @ JosephPhoto 的 網路日誌我的網誌 :: 隨意窩 Xuite日誌](https://blog.xuite.net/josephtsai1126/wretch/193271565-AutoIT+%E8%87%AA%E5%8B%95%E5%8C%96%E5%AE%8C%E6%88%90%E7%A8%8B%E5%BC%8F%E5%AE%89%E8%A3%9D)
+
+管理者模式
+
+- [Keyword #RequireAdmin](https://www.autoitscript.com/autoit3/docs/keywords/RequireAdmin.htm)
+- [Run as administrator ? - AutoIt General Help and Support - AutoIt Forums](https://www.autoitscript.com/forum/topic/134675-run-as-administrator/)
+- [Autoit 使用 runas 執行沒有反應 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/questions/10185977)
+
+放大縮小
+
+- [AutoIT: WinSetState可以定义窗口大小 - chenpassion - 博客园](https://www.cnblogs.com/autotest/p/3262234.html)
+
+
+
+其他
+
+- [J2TEAM/awesome-AutoIt: A curated list of awesome UDFs, example scripts, tools and useful resources for AutoIt.](https://github.com/J2TEAM/awesome-AutoIt)
+
+
+FileInstall 
+
+編譯 exe 
+- [奔騰兔分享誌: AutoIt 執行外部程式進階應用](http://pentiumto.blogspot.com/2017/07/autoit_5.html)
+
+通知
+
+[Function TrayTip](https://www.autoitscript.com/autoit3/docs/functions/TrayTip.htm)
+
+filedelete 跟暫存路徑
+
+[Function FileDelete](https://www.autoitscript.com/autoit3/docs/functions/FileDelete.htm)
+[Function _WinAPI_GetTempFileName](https://www.autoitscript.com/autoit3/docs/libfunctions/_WinAPI_GetTempFileName.htm)
+
+
+程式是否開啟
+[Function ProcessExists](https://www.autoitscript.com/autoit3/docs/functions/ProcessExists.htm)
+[terminate process? - AutoIt General Help and Support - AutoIt Forums](https://www.autoitscript.com/forum/topic/71544-terminate-process/)
