@@ -82,14 +82,14 @@
 <meta name="description" content="之前就有在查類似指令但沒有覺得很快速方法這邊先整理">
 <meta name="keywords" content="linux,cp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux cp 快速新增目的不存在資料夾方法">
+<meta property="og:title" content="Linux cp 快速複製目的不存在資料夾方法">
 <meta property="og:url" content="https://malagege.github.io/blog/2020/09/11/Linux-cp-快速新增目的不存在資料夾方法/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="之前就有在查類似指令但沒有覺得很快速方法這邊先整理">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-09-11T15:38:59.332Z">
+<meta property="og:updated_time" content="2020-11-15T17:59:41.120Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux cp 快速新增目的不存在資料夾方法">
+<meta name="twitter:title" content="Linux cp 快速複製目的不存在資料夾方法">
 <meta name="twitter:description" content="之前就有在查類似指令但沒有覺得很快速方法這邊先整理">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>Linux cp 快速新增目的不存在資料夾方法 | 程式狂想筆記</title>
+  <title>Linux cp 快速複製目的不存在資料夾方法 | 程式狂想筆記</title>
   
 
 
@@ -331,7 +331,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux cp 快速新增目的不存在資料夾方法</h1>
+          <h1 class="post-title" itemprop="name headline">Linux cp 快速複製目的不存在資料夾方法</h1>
         
 
         <div class="post-meta">
@@ -430,7 +430,10 @@
 <h2 id="cp-p-SOURCE…-DIRECTORY"><a href="#cp-p-SOURCE…-DIRECTORY" class="headerlink" title="cp-p SOURCE… DIRECTORY/"></a>cp-p SOURCE… DIRECTORY/</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cp-<span class="function"><span class="title">p</span></span>() &#123;</span><br><span class="line">  last=<span class="variable">$&#123;@: -1&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> [[ <span class="variable">$#</span> -ge 2 &amp;&amp; <span class="string">"<span class="variable">$last</span>"</span> == */ ]] ; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># cp SOURCE... DEST/</span></span><br><span class="line">    mkdir -p <span class="string">"<span class="variable">$last</span>"</span> &amp;&amp; cp <span class="string">"<span class="variable">$@</span>"</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"cp-p: (copy, creating parent dirs)"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"cp-p: Usage: cp-p SOURCE... DEST/"</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>但這樣改從清單還要多一層處理目的資料夾<br>我覺得不是很實用</p>
 <h2 id="install-D"><a href="#install-D" class="headerlink" title="install -D"></a>install -D</h2><p>install -D test1.sh ./xxx/test.sh      </p>
-<p>但不確定什麼問題，沒選出最佳答案</p>
+<p><del>但不確定什麼問題，沒選出最佳答案</del></p>
+<h3 id="install-指定清單做複製方法"><a href="#install-指定清單做複製方法" class="headerlink" title="install 指定清單做複製方法"></a>install 指定清單做複製方法</h3><p>最近因為專案是用 SVN<br>但包檔要給客戶需要包成zip<br>這邊有時候從 SVN 去看目錄手動複製真的很麻煩<br>尤其還要對 class去做複製</p>
+<p>今天寫了好用腳本<br>Windows 10 直接用 WSL 也可以操作<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 包版日期</span></span><br><span class="line">DAYV=<span class="string">"201113"</span></span><br><span class="line"><span class="comment"># 包版版本</span></span><br><span class="line">VERSION=<span class="string">"002"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有針對資料夾和檔案都可以做複製</span></span><br><span class="line"><span class="comment"># 萬用字玩也可以</span></span><br><span class="line"><span class="comment"># 找不檔案也不會有問題</span></span><br><span class="line">SPATHLIST=(</span><br><span class="line"><span class="comment"># #SHARE</span></span><br><span class="line">./web/build/classes/aa</span><br><span class="line">./web/build/classes/aa/</span><br><span class="line"><span class="comment"># BATCH</span></span><br><span class="line">./TEST</span><br><span class="line">./batch/src/com/abc/batch/Aaaaa.java</span><br><span class="line">./batch/src/com/abc/batch/schedule/job/*</span><br><span class="line"><span class="comment"># bin, class</span></span><br><span class="line">./batch/bin/com/abc/batch/Aaaaa.class</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># install 資料夾複製方法參考</span></span><br><span class="line"><span class="comment"># https://unix.stackexchange.com/questions/165463/problem-with-install-command-to-copy-a-whole-directory</span></span><br><span class="line"></span><br><span class="line">DPATH=<span class="string">"/CodePackage/<span class="variable">$&#123;DAYV&#125;</span>/<span class="variable">$&#123;VERSION&#125;</span>/<span class="variable">$&#123;DAYV&#125;</span>_code_package"</span></span><br><span class="line"></span><br><span class="line">length=<span class="variable">$&#123;#SPATHLIST[@]&#125;</span></span><br><span class="line"><span class="keyword">for</span>(( j=0; j&lt;<span class="variable">$length</span>; j++ ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="keyword">if</span> [[ ! -e <span class="string">"<span class="variable">$&#123;SPATHLIST[$j]&#125;</span>"</span> ]]; <span class="keyword">then</span> <span class="comment"># 檢查檔案 https://linuxize.com/post/bash-check-if-file-exists/</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;SPATHLIST[$j]&#125;</span>找不到檔案檔案"</span></span><br><span class="line">		<span class="built_in">continue</span></span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line">	<span class="keyword">if</span> [[ -d <span class="string">"<span class="variable">$&#123;SPATHLIST[$j]&#125;</span>"</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># 加入 exec 印出內容</span></span><br><span class="line">		<span class="comment"># https://askubuntu.com/questions/651315/how-do-you-output-the-filename-in-find-command-while-using-exec</span></span><br><span class="line">		find <span class="string">"<span class="variable">$&#123;SPATHLIST[$j]&#125;</span>"</span> -<span class="built_in">type</span> f -<span class="built_in">printf</span> <span class="string">'%p\n'</span> -<span class="built_in">exec</span> install -D  <span class="string">"&#123;&#125;"</span> <span class="string">"<span class="variable">$&#123;DPATH&#125;</span>/&#123;&#125;"</span> \;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		install -D <span class="variable">$&#123;SPATHLIST[$j]&#125;</span> <span class="variable">$&#123;DPATH&#125;</span>/<span class="variable">$&#123;SPATHLIST[$j]&#125;</span>	</span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;SPATHLIST[$j]&#125;</span> 成功搬移 <span class="variable">$&#123;DPATH&#125;</span>/<span class="variable">$&#123;SPATHLIST[$j]&#125;</span>"</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">cp ./copyfiles.sh <span class="variable">$&#123;DPATH&#125;</span>/../copyfiles<span class="variable">$&#123;DAYV&#125;</span><span class="variable">$&#123;VERSION&#125;</span>.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 寫更版紀錄 txt</span></span><br><span class="line">TXT_FILE=<span class="string">"更版紀錄_<span class="variable">$&#123;DAYV&#125;</span>_<span class="variable">$&#123;VERSION&#125;</span>.txt"</span></span><br><span class="line">TXT_FILEPATH=<span class="variable">$&#123;DPATH&#125;</span>/<span class="variable">$&#123;TXT_FILE&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"&lt;<span class="variable">$&#123;DAYV&#125;</span>_<span class="variable">$&#123;VERSION&#125;</span>&gt; #"</span> &gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Revision: &gt;&gt;&gt;&gt;&gt;&gt; (Beta<span class="variable">$&#123;VERSION&#125;</span>)"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Author: xxx"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Date: <span class="variable">$(date +"%Y年%m月%d日 %T")</span>"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">" #&gt;&gt;&gt;&gt;&gt;&gt;"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"【問題說明】"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"     &gt;&gt;&gt;&gt;&gt;&gt;"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"【處理說明】"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"     &gt;&gt;&gt;&gt;&gt;&gt;"</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"     "</span> &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span>  &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"相關程式如下："</span>  &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span>  &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="keyword">for</span>(( j=0; j&lt;<span class="variable">$length</span>; j++ ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="built_in">let</span> INDEX=<span class="variable">$j</span>+1</span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;INDEX&#125;</span>."</span> <span class="string">"<span class="variable">$&#123;SPATHLIST[$j]&#125;</span>"</span>  &gt;&gt; <span class="variable">$&#123;TXT_FILEPATH&#125;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 產生 password txt(為了手動包 zip用的)</span></span><br><span class="line"><span class="comment"># 因為客戶需要更版紀錄，我需要去 Mantis 複製內容再zip</span></span><br><span class="line"> <span class="built_in">echo</span> <span class="string">"pwd20"</span><span class="variable">$&#123;DAYV&#125;</span> &gt;  <span class="variable">$&#123;DPATH&#125;</span>/../password.txt</span><br></pre></td></tr></table></figure></p>
+<p>這樣半自動化，相信能減少很多出錯</p>
 
       
     </div>
@@ -570,7 +573,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">517</span>
+                  <span class="site-state-item-count">531</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -581,7 +584,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -592,7 +595,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">417</span>
+                  <span class="site-state-item-count">425</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -635,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mac-cp-–parents"><span class="nav-number">1.</span> <span class="nav-text">mac cp –parents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir-p"><span class="nav-number">2.</span> <span class="nav-text">mkdir -p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-p-SOURCE…-DIRECTORY"><span class="nav-number">3.</span> <span class="nav-text">cp-p SOURCE… DIRECTORY/</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-D"><span class="nav-number">4.</span> <span class="nav-text">install -D</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mac-cp-–parents"><span class="nav-number">1.</span> <span class="nav-text">mac cp –parents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir-p"><span class="nav-number">2.</span> <span class="nav-text">mkdir -p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-p-SOURCE…-DIRECTORY"><span class="nav-number">3.</span> <span class="nav-text">cp-p SOURCE… DIRECTORY/</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-D"><span class="nav-number">4.</span> <span class="nav-text">install -D</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#install-指定清單做複製方法"><span class="nav-number">4.1.</span> <span class="nav-text">install 指定清單做複製方法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -800,7 +803,7 @@
         var disqus_config = function () {
           this.page.url = 'https://malagege.github.io/blog/2020/09/11/Linux-cp-快速新增目的不存在資料夾方法/';
           this.page.identifier = '2020/09/11/Linux-cp-快速新增目的不存在資料夾方法/';
-          this.page.title = 'Linux cp 快速新增目的不存在資料夾方法';
+          this.page.title = 'Linux cp 快速複製目的不存在資料夾方法';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://malagege-blog.disqus.com/embed.js';

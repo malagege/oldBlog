@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2020 by anonymous (http://jsbin.com/jovugelala/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+body{
+  display: flex;
+  /* flex-wrap:wrap; */
+}
+
+textarea{
+  height: 80vh;
+  margin: 8px;
+  font-size: 16px;
+  line-height: 1.8;
+  width: 100%;
+}
+
+</style>
+</head>
+<body>
+<div>
+<textarea id="yamlvariable" onchange="chgData()">
+test: hello world
+
+</textarea>
+<input type="file" onchange="loadFile(this)">
+  <button onclick="saveTextAsFile('param.yml',$('#yamlvariable').val())">export</button>
+  </div>
+<div>
+  <textarea id="content" onchange="chgData()">
+This is the content:
+@( test )
+  </textarea>
+<input type="file" onchange="loadFile(this)">
+  <button>export</button>
+  </div>
+<div>
+  <textarea id="result" onchange="chgData()">
+
+  </textarea>
+<input type="file" onchange="loadFile(this)">
+  <button>export</button>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.min.js"></script>
+
+<script id="jsbin-javascript">
+$(function(){
+chgData()
+});
+
+function chgData(){
+    var yaml = $('#yamlvariable').val();
+  var doc = jsyaml.load(yaml);
+  var content = $('#content').val();
+  Object.keys(doc).map(function(o){
+    console.log(o)
+    var re = new RegExp('@\\(\\s*('+ o +'+' + ')\\s*\\)');
+    console.log(content.replace(re, doc[o]));
+    content = content.replace(re, doc[o]);    
+  }); 
+  
+    console.log(content);
+  $('#result').val(content);
+}
+
+function saveTextAsFile( _fileName, _text ) {
+    var textFileAsBlob = new Blob([_text], {type:'text/plain'});
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = _fileName;
+    downloadLink.innerHTML = "Download File";
+    if (window.webkitURL != null) {
+        // Chrome allows the link to be clicked
+        // without actually adding it to the DOM.
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    } else {
+        // Firefox requires the link to be added to the DOM
+        // before it can be clicked.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
+
+function loadFile(file) { 
+//       console.log(file);
+    var fr=new FileReader(); 
+  var that = file;
+    fr.onload=function(){ 
+      console.log(that);
+        $(that).prev().val(fr.result); 
+      chgData();
+    };
+      
+    fr.readAsText(file.files[0]); 
+  
+};
+</script>
+</body>
+</html>

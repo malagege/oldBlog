@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img1.png">
 <meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img2.png">
-<meta property="og:updated_time" content="2020-02-18T13:12:17.071Z">
+<meta property="og:updated_time" content="2020-10-16T18:36:41.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker swarm 一些指令相關整理">
 <meta name="twitter:description" content="基本教學網站twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
@@ -499,6 +499,15 @@
 <li><a href="https://stackoverflow.com/questions/41705134/how-can-i-remove-shutdown-docker-service-tasks-after-a-rolling-update" target="_blank" rel="noopener">containers - How can I remove shutdown Docker Service tasks after a rolling update? - Stack Overflow</a></li>
 <li><a href="https://blog.rj-bai.com/post/150.html" target="_blank" rel="noopener">Docker Swarm 实战 - rj-bai ‘s Blog</a></li>
 </ul>
+<h2 id="針對-CPU-架構選擇-image"><a href="#針對-CPU-架構選擇-image" class="headerlink" title="針對 CPU 架構選擇 image"></a>針對 CPU 架構選擇 image</h2><ol>
+<li>docker pull [OPTIONS] NAME[:TAG|@DIGEST]</li>
+</ol>
+<p>如：<br>docker pull ubuntu@sha256:45b23dee08af5e43a7fea6c4cf9c25ccf269ee113168c19722f8787</p>
+<ol start="2">
+<li>// 通过如下命令指定arch:<br>docker run -it –rm <image-name>:<tag>  arch=linux/arm64</tag></image-name></li>
+</ol>
+<p>方法三就不寫了，看起來很麻煩</p>
+<p>參考:<a href="https://blog.csdn.net/u010918487/article/details/107067224" target="_blank" rel="noopener">docker pull 指定 os/arch_Yu的博客-CSDN博客</a></p>
 
       
     </div>
@@ -638,7 +647,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">517</span>
+                  <span class="site-state-item-count">531</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -649,7 +658,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -660,7 +669,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">417</span>
+                  <span class="site-state-item-count">425</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -703,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本教學網站"><span class="nav-number">1.</span> <span class="nav-text">基本教學網站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#managers"><span class="nav-number">1.1.</span> <span class="nav-text">managers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#worker"><span class="nav-number">1.2.</span> <span class="nav-text">worker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本連線"><span class="nav-number">2.</span> <span class="nav-text">基本連線</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-node"><span class="nav-number">3.</span> <span class="nav-text">docker node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-service"><span class="nav-number">4.</span> <span class="nav-text">docker service</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scale"><span class="nav-number">4.1.</span> <span class="nav-text">scale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兩種模式"><span class="nav-number">4.2.</span> <span class="nav-text">兩種模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#關掉-service"><span class="nav-number">4.3.</span> <span class="nav-text">關掉 service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-查看"><span class="nav-number">4.4.</span> <span class="nav-text">docker 查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看日誌"><span class="nav-number">4.5.</span> <span class="nav-text">查看日誌</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-stack"><span class="nav-number">5.</span> <span class="nav-text">docker stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#portainer"><span class="nav-number">6.</span> <span class="nav-text">portainer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#agent"><span class="nav-number">6.1.</span> <span class="nav-text">agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent-跟-docker-差異"><span class="nav-number">6.2.</span> <span class="nav-text">agent 跟 docker 差異</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-play-with-docker"><span class="nav-number">7.</span> <span class="nav-text">使用 play with docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history"><span class="nav-number">8.</span> <span class="nav-text">history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-swarm-volume-可能問題"><span class="nav-number">9.</span> <span class="nav-text">使用 swarm volume 可能問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#swarm-conjob"><span class="nav-number">10.</span> <span class="nav-text">swarm conjob</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-swarm-cronjob"><span class="nav-number">10.1.</span> <span class="nav-text">安裝 swarm-cronjob</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#執行注意"><span class="nav-number">10.2.</span> <span class="nav-text">執行注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent-mode-global"><span class="nav-number">10.3.</span> <span class="nav-text">agent mode global</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">11.</span> <span class="nav-text">相關連結</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本教學網站"><span class="nav-number">1.</span> <span class="nav-text">基本教學網站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#managers"><span class="nav-number">1.1.</span> <span class="nav-text">managers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#worker"><span class="nav-number">1.2.</span> <span class="nav-text">worker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本連線"><span class="nav-number">2.</span> <span class="nav-text">基本連線</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-node"><span class="nav-number">3.</span> <span class="nav-text">docker node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-service"><span class="nav-number">4.</span> <span class="nav-text">docker service</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scale"><span class="nav-number">4.1.</span> <span class="nav-text">scale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兩種模式"><span class="nav-number">4.2.</span> <span class="nav-text">兩種模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#關掉-service"><span class="nav-number">4.3.</span> <span class="nav-text">關掉 service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-查看"><span class="nav-number">4.4.</span> <span class="nav-text">docker 查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看日誌"><span class="nav-number">4.5.</span> <span class="nav-text">查看日誌</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-stack"><span class="nav-number">5.</span> <span class="nav-text">docker stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#portainer"><span class="nav-number">6.</span> <span class="nav-text">portainer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#agent"><span class="nav-number">6.1.</span> <span class="nav-text">agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent-跟-docker-差異"><span class="nav-number">6.2.</span> <span class="nav-text">agent 跟 docker 差異</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-play-with-docker"><span class="nav-number">7.</span> <span class="nav-text">使用 play with docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history"><span class="nav-number">8.</span> <span class="nav-text">history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-swarm-volume-可能問題"><span class="nav-number">9.</span> <span class="nav-text">使用 swarm volume 可能問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#swarm-conjob"><span class="nav-number">10.</span> <span class="nav-text">swarm conjob</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-swarm-cronjob"><span class="nav-number">10.1.</span> <span class="nav-text">安裝 swarm-cronjob</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#執行注意"><span class="nav-number">10.2.</span> <span class="nav-text">執行注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent-mode-global"><span class="nav-number">10.3.</span> <span class="nav-text">agent mode global</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">11.</span> <span class="nav-text">相關連結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#針對-CPU-架構選擇-image"><span class="nav-number">12.</span> <span class="nav-text">針對 CPU 架構選擇 image</span></a></li></ol></div>
             
 
           </div>

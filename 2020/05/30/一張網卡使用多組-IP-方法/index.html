@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ip,">
+  <meta name="keywords" content="linux,ip,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="故事是這樣的，最近我們公司有多個專案，聽到都是放在獨立機器，各自一組IP。最近我不小心 FTP 設定錯 IP，但是上傳檔案上去。發現 http server(IP對的)竟然更新了。我覺得很奇怪不是不同台電腦，後來發現那一台設定很多虛擬 IP。讓我們研究公司是如何省錢的 其實這個用途看到用一台電腦需要跨網段使用不需要切換 IP但不知道數量是不是有限制用台多會不會有缺點?">
-<meta name="keywords" content="ip">
+<meta name="keywords" content="linux,ip">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一張網卡使用多組 IP 方法">
 <meta property="og:url" content="https://malagege.github.io/blog/2020/05/30/一張網卡使用多組-IP-方法/index.html">
@@ -88,7 +88,7 @@
 <meta property="og:description" content="故事是這樣的，最近我們公司有多個專案，聽到都是放在獨立機器，各自一組IP。最近我不小心 FTP 設定錯 IP，但是上傳檔案上去。發現 http server(IP對的)竟然更新了。我覺得很奇怪不是不同台電腦，後來發現那一台設定很多虛擬 IP。讓我們研究公司是如何省錢的 其實這個用途看到用一台電腦需要跨網段使用不需要切換 IP但不知道數量是不是有限制用台多會不會有缺點?">
 <meta property="og:locale" content="zh-tw">
 <meta property="og:image" content="https://malagege.github.io/blog/2020/05/30/一張網卡使用多組-IP-方法/window_ip.png">
-<meta property="og:updated_time" content="2020-05-29T18:33:36.167Z">
+<meta property="og:updated_time" content="2020-10-28T15:59:05.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一張網卡使用多組 IP 方法">
 <meta name="twitter:description" content="故事是這樣的，最近我們公司有多個專案，聽到都是放在獨立機器，各自一組IP。最近我不小心 FTP 設定錯 IP，但是上傳檔案上去。發現 http server(IP對的)竟然更新了。我覺得很奇怪不是不同台電腦，後來發現那一台設定很多虛擬 IP。讓我們研究公司是如何省錢的 其實這個用途看到用一台電腦需要跨網段使用不需要切換 IP但不知道數量是不是有限制用台多會不會有缺點?">
@@ -439,6 +439,9 @@
 <p>參考:<a href="https://medium.com/@frank.yylin/ubuntu-%E5%96%AE%E7%B6%B2%E5%8D%A1%E7%B6%81%E5%A4%9Aip-d69dc755efb0" target="_blank" rel="noopener">[Ubuntu] 單網卡綁多IP - Frank Lin - Medium</a></p>
 <p>然後透過 bind port 各自綁多台 IP<br>這樣就能一台當多台用了</p>
 <h3 id="其他-OS-設定方法"><a href="#其他-OS-設定方法" class="headerlink" title="其他 OS 設定方法"></a>其他 OS 設定方法</h3><p><a href="https://blog.gtwang.org/linux/centos-linux-static-network-configuration-tutorial/" target="_blank" rel="noopener">CentOS Linux 靜態 IP 位址網路設定教學 - G. T. Wang</a><br><a href="https://blog.toright.com/posts/6293/ubuntu-18-04-%E9%80%8F%E9%81%8E-netplan-%E8%A8%AD%E5%AE%9A%E7%B6%B2%E8%B7%AF%E5%8D%A1-ip.html" target="_blank" rel="noopener">Ubuntu 18.04 透過 netplan 設定網路卡 IP - Soul &amp; Shell Blog</a></p>
+<h2 id="使用上設定防火牆陷阱"><a href="#使用上設定防火牆陷阱" class="headerlink" title="使用上設定防火牆陷阱"></a>使用上設定防火牆陷阱</h2><p>最近公司AP Server 程式使用 mail 發信的時候<br>明明有設定防火牆開通 IP<br>結果不能發出去</p>
+<p>後來發現是 AP Server IP 是吃別的 IP<br>這邊 mail server 是不同網段，所以會走 gateway<br>IP Gateway 預設不是走 interface AP  這邊<br>可以用 ip route show<br>主要是看這一行</p>
+<p>default via 192.168.1.1 dev eth0 src 192.168.1.202 metric 202</p>
 
       
     </div>
@@ -455,6 +458,8 @@
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/blog/tags/linux/" rel="tag"># linux</a>
           
             <a href="/blog/tags/ip/" rel="tag"># ip</a>
           
@@ -576,7 +581,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">517</span>
+                  <span class="site-state-item-count">531</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -587,7 +592,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -598,7 +603,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">417</span>
+                  <span class="site-state-item-count">425</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -641,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#window"><span class="nav-number">1.</span> <span class="nav-text">window</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux"><span class="nav-number">2.</span> <span class="nav-text">linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#簡單設定"><span class="nav-number">2.1.</span> <span class="nav-text">簡單設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久加入設定"><span class="nav-number">2.2.</span> <span class="nav-text">永久加入設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他-OS-設定方法"><span class="nav-number">2.3.</span> <span class="nav-text">其他 OS 設定方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#window"><span class="nav-number">1.</span> <span class="nav-text">window</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux"><span class="nav-number">2.</span> <span class="nav-text">linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#簡單設定"><span class="nav-number">2.1.</span> <span class="nav-text">簡單設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久加入設定"><span class="nav-number">2.2.</span> <span class="nav-text">永久加入設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他-OS-設定方法"><span class="nav-number">2.3.</span> <span class="nav-text">其他 OS 設定方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用上設定防火牆陷阱"><span class="nav-number">3.</span> <span class="nav-text">使用上設定防火牆陷阱</span></a></li></ol></div>
             
 
           </div>
