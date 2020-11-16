@@ -310,161 +310,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/07/03/logdown/2014-07-03-read-angularjs-loading-file-information/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2014/07/03/logdown/2014-07-03-read-angularjs-loading-file-information/" itemprop="url">AngularJS讀取載入檔案資訊</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-07-03T19:26:00+08:00">
-                2014-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/AngularJS/" itemprop="url" rel="index">
-                    <span itemprop="name">AngularJS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2014/07/03/logdown/2014-07-03-read-angularjs-loading-file-information/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/03/logdown/2014-07-03-read-angularjs-loading-file-information/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.dotblogs.com.tw/regionbbs/archive/2012/06/28/html5.file.api.aspx" target="_blank" rel="noopener">http://www.dotblogs.com.tw/regionbbs/archive/2012/06/28/html5.file.api.aspx</a><br><a href="http://odetocode.com/blogs/scott/archive/2013/07/05/a-file-input-directive-for-angularjs.aspx" target="_blank" rel="noopener">http://odetocode.com/blogs/scott/archive/2013/07/05/a-file-input-directive-for-angularjs.aspx</a><br><a href="http://stackoverflow.com/questions/16579427/html5-file-upload-with-angularjs" target="_blank" rel="noopener">http://stackoverflow.com/questions/16579427/html5-file-upload-with-angularjs</a><br><a href="http://plnkr.co/edit/JPxSCyrxosVXfZnzEIuS?p=preview" target="_blank" rel="noopener">http://plnkr.co/edit/JPxSCyrxosVXfZnzEIuS?p=preview</a><br><a href="http://plnkr.co/edit/HEA7wYq8Uv0Ee0J4SX7u?p=preview" target="_blank" rel="noopener">http://plnkr.co/edit/HEA7wYq8Uv0Ee0J4SX7u?p=preview</a></p>
-<p>html<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">ng-app</span>=<span class="string">"plunker"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>AngularJS Plunker<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.write(<span class="string">'&lt;base href="'</span> + <span class="built_in">document</span>.location + <span class="string">'" /&gt;'</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">ng-controller</span>=<span class="string">"MainCtrl"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">filelist-bind</span> <span class="attr">multiple</span>=<span class="string">"multiple"</span>  <span class="attr">name</span>=<span class="string">"files"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">files : <span class="tag">&lt;<span class="name">pre</span>&gt;</span>&#123;&#123; files | json &#125;&#125;<span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'plunker'</span>, []);</span><br><span class="line"></span><br><span class="line">app.directive(<span class="string">'filelistBind'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"> scope, elm, attrs </span>) </span>&#123;</span><br><span class="line">    elm.bind(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"> evt </span>) </span>&#123;</span><br><span class="line">      scope.$apply(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        name =<span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;evt.target.files.length;i++)&#123;</span><br><span class="line">          alert(evt.target.files[i].name);</span><br><span class="line">          name += evt.target.files[i].name;</span><br><span class="line">        &#125;</span><br><span class="line">        scope[ attrs.name ] = name;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.controller(<span class="string">'MainCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">  $scope.name = <span class="string">'World'</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><a href="http://stackoverflow.com/questions/16207202/required-attribute-not-working-with-file-input-in-angular-js" target="_blank" rel="noopener">http://stackoverflow.com/questions/16207202/required-attribute-not-working-with-file-input-in-angular-js</a><br><a href="http://jsfiddle.net/danielzen/utp7j/" target="_blank" rel="noopener">http://jsfiddle.net/danielzen/utp7j/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/07/01/logdown/2014-07-01-last-login-information-is-gone/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1856,11 +1701,176 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/05/27/logdown/2014-05-27-hello-world/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2014/05/27/logdown/2014-05-27-hello-world/" itemprop="url">Hello World</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2014-05-27T10:15:00+08:00">
+                2014-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2014/05/27/logdown/2014-05-27-hello-world/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/05/27/logdown/2014-05-27-hello-world/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Hi, This a demo post of <a href="http://logdown.com" target="_blank" rel="noopener">Logdown</a>. </p>
+<p>Logdown use Markdown as main syntax, you can find more example by reading this <a href="http://en.wikipedia.org/wiki/Markdown" target="_blank" rel="noopener">document on Wikipedia</a></p>
+<p>Logdown also support drag &amp; drop image uploading. The picture syntax is like this:</p>
+<p><img src="http://logdown.com/images/logo.png" alt=""></p>
+<h2 id="Bloging-with-code-snippet"><a href="#Bloging-with-code-snippet" class="headerlink" title="Bloging with code snippet:"></a>Bloging with code snippet:</h2><p><code>inline code</code></p>
+<h3 id="Plain-Code"><a href="#Plain-Code" class="headerlink" title="Plain Code"></a>Plain Code</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puts &quot;Hello World!&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Code-with-Language"><a href="#Code-with-Language" class="headerlink" title="Code with Language"></a>Code with Language</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puts <span class="string">"Hello World!"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Code-with-Title"><a href="#Code-with-Title" class="headerlink" title="Code with Title"></a>Code with Title</h3><figure class="highlight ruby"><figcaption><span>hello_world.rb</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puts <span class="string">"Hello World!"</span></span><br></pre></td></tr></table></figure>
+<h2 id="MathJax-Example"><a href="#MathJax-Example" class="headerlink" title="MathJax Example"></a>MathJax Example</h2><h3 id="Mathjax"><a href="#Mathjax" class="headerlink" title="Mathjax"></a>Mathjax</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = \dfrac&#123;-b \pm \sqrt&#123;b^2 - 4ac&#125;&#125;&#123;2a&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Inline-Mathjax"><a href="#Inline-Mathjax" class="headerlink" title="Inline Mathjax"></a>Inline Mathjax</h3><p>The answser is <code>$a^2 + b^2 = c^2$</code>.</p>
+<h2 id="Table-Example"><a href="#Table-Example" class="headerlink" title="Table Example"></a>Table Example</h2><table>
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center">Are</th>
+<th style="text-align:right">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>col 1</td>
+<td style="text-align:center">Hello</td>
+<td style="text-align:right">$1600</td>
+</tr>
+<tr>
+<td>col 2</td>
+<td style="text-align:center">Hello</td>
+<td style="text-align:right">$12</td>
+</tr>
+<tr>
+<td>col 3</td>
+<td style="text-align:center">Hello</td>
+<td style="text-align:right">$1</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/52/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/blog/page/54/">54</a><a class="extend next" rel="next" href="/blog/page/54/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/52/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/52/">52</a><span class="page-number current">53</span>
   </nav>
 
 
@@ -1914,7 +1924,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">531</span>
+                  <span class="site-state-item-count">530</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
