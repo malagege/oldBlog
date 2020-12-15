@@ -377,7 +377,9 @@ fi
 
 ### 手動執行排程
 
+```bash
 docker exec flexget flexget execute  --tasks "TV-*"
+```
 
 config.yml
 ```yml

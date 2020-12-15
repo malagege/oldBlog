@@ -25,10 +25,23 @@ PS: 剛好最近了解阻塞跟非阻塞，這應該就是`阻塞`
 
 ## kill 父程序實驗
 
-其實也能正常關閉kill -15 預設就是`15`
+**詳細請看下面補充怎麼殺掉子程序，只要在 kill - $PGID**
+**詳細請看下面補充怎麼殺掉子程序，只要在 kill - $PGID**
+**詳細請看下面補充怎麼殺掉子程序，只要在 kill - $PGID**
+
+
+kill 沒加負號就是單執行緒
+
+~~其實也能正常關閉kill -15 預設就是`15`~~
 
 ~~kill 指令會殺掉程序但不會殺掉子程序~~
-之後我發現是`kill -9` 強制關掉不會刪掉子程序
+~~之後我發現是`kill -9` 強制關掉不會刪掉子程序~~
+
+
+**以下請忽略**
+**下面有正解**
+**下面有正解**
+**下面有正解**
 
 kill -9 $pid
 
@@ -63,6 +76,9 @@ time sleep 20
 
 可以使用 pkill -P $pid 刪掉所有子程序(我網頁看到是小寫 -p)
 
+**這邊有正解**
+**這邊有正解**
+**這邊有正解**
 
 **2019-10-05**
 原來我誤會了
@@ -82,6 +98,18 @@ kill -9 -$PGID
 
 PGID 也可以用 ps 指令去查
 [process - ps switches to display PID, PPID, PGID, and SID collectively - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/82724/ps-switches-to-display-pid-ppid-pgid-and-sid-collectively)
+
+**2020-11-26**
+最近用碰觸 kill
+忘記一般 kill 要加負號才能刪掉子程序
+
+最近也在探討 nohup 和 & 也能不能做尋組刪除
+答案是可以的
+
+可以參考: [[譯] 如何殺死一個進程和它的所有子進程](https://juejin.cn/post/6844903927989665806?utm_campaign=devtool.com&utm_medium=devtool.com&utm_medium=devtool.com&utm_source=devtool.com%3Futm_campaign%3Ddevtool.com&utm_source=devtool.com) {% asset_link web1.png 備份圖 %}
+
+最近想做一個守護進程...
+再研究...
 
 參考連結:
 

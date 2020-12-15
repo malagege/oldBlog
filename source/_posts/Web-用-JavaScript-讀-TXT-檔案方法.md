@@ -113,7 +113,7 @@ $("a#programatically").click(function(){
 [JS Bin - Collaborative JavaScript Debugging](https://jsbin.com/jovugelala/1/edit?html,js,output)
 
 jsbin 裡面存檔沒法運作，需要額外寫出來
-可以直接用這個連結使用{% asset_link jsbin.jovugelala.1.html 簡單功能連結 %}
+可以直接用這個連結使用{% asset_link jsbin.jovugelala.1.7z 簡單功能連結 %}
 
 不過未來可規劃
 

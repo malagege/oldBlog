@@ -137,6 +137,158 @@ echo "<x-no-quotes"
 
 參考:[Linux 的 shell script 中，遇到 unary operator expected 的解決方法](https://medium.com/micheh/linux-%E7%9A%84-shell-script-%E4%B8%AD-%E9%81%87%E5%88%B0-unary-operator-expected-%E7%9A%84%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95-3b4725d3fdf1)
 
+## 變數運算
+
+最近使用 shell 做回圈做`${index+1}`
+結果沒有印出來
+爬文有找到幾個方法
+
+1. declare -i來聲明整數變量
+```bash
+x=1
+x+=1
+echo $x
+# 2
+```
+
+2. 使用let命令
+
+```bash
+i=1
+let i+=1
+echo $i
+# 2
+```
+
+3. 使用(())
+
+```bash
+i=1
+((++i))
+echo $i
+# 2
+```
+
+4. 使用expr命令
+
+```bash
+i=1
+i=`expr $i + 1`
+echo $i
+# 2
+```
+
+5. 使用$(())
+
+```bash
+i=1
+i=$(($i + 1))
+echo $i
+# 2
+```
+
+6. 使用$[]
+
+```bash
+i=1
+i=$[$i + 1]
+echo $i
+# 2
+```
+
+我比較喜歡 $(()) 和 (())
+
+參考來源: [Shell中整数自增的几种方式_杰瑞的专栏-CSDN博客](https://blog.csdn.net/Jerry_1126/article/details/52336340)
+
+## 複製檔案
+
+[cp 複製檔案可能沒注意的事情 | 程式狂想筆記](https://malagege.github.io/blog/2020/01/10/cp-%E8%A4%87%E8%A3%BD%E6%AA%94%E6%A1%88%E5%8F%AF%E8%83%BD%E6%B2%92%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/)
+
+## shell function 回傳只能數字
+
+一般我們看 shell script function return 回傳值只能是數字
+沒法回傳字串，仔細想想也滿有道理的
+因為正常程式執行結束會回傳 exit (int)
+要確定程式是否有正確執行完成 正常執行完成會回傳0
+
+那有沒有回傳字串方法
+我看到是用 function 裡面做 echo 
+外面用`這個符號去包
+滿有趣的寫法
+
+
+## init.d 守護進程
+
+- [Run a Java Application as a Service on Linux - Stack Overflow](https://stackoverflow.com/questions/11203483/run-a-java-application-as-a-service-on-linux)
+
+- [迷途工程師: Init Script for OpenWrt，新增一個自己的init script](http://dannysun-unknown.blogspot.com/2017/02/init-script-for-openwrtinit-script.html)
+
+- [init-script-template/template at master · fhd/init-script-template](https://github.com/fhd/init-script-template/blob/master/template)
+上面有用 ps -p 指令
+- [最全的Linux進程監視命令ps的30個常用例子 - 每日頭條](https://kknews.cc/zh-tw/code/4pnr3o2.html)
+
+- [PHP守护进程 - InfoQ 写作平台](https://xie.infoq.cn/article/c3a40c88f95d3a1cb56045dc4)
+
+- [Linux 守护进程原理及实例（Redis、Nginx）_杨博东的博客-CSDN博客_redis守护进程](https://blog.csdn.net/yangbodong22011/article/details/78650896)
+- [linux - Bash: wait with timeout - Stack Overflow](https://stackoverflow.com/questions/10028820/bash-wait-with-timeout)
+
+
+最近有看到可以傳送關閉訊號控制程式跑完進程關閉程式
+
+```sh
+#!/bin/bash
+
+mp3convert () {
+  echo "mp3convert..."; sleep 5; echo "mp3convert done..."
+}
+
+PreTrap() {
+  echo "in trap"
+  QUIT=1
+  echo "exiting trap..."
+}
+
+CleanUp() {
+  ### Since 'wait $PID' can be interrupted by ^C, we need to protected it
+  ### by the 'kill' loop  ==> double/triple control-C problem.
+  while kill -0 $PID >& /dev/null; do wait $PID; echo "check again"; done
+
+  ### This won't work (A simple wait $PID is vulnerable to double control C)
+  # wait $PID
+
+  if [ ! -z $QUIT ]; then
+     echo "clean up..."
+     exit
+ fi
+}
+
+trap PreTrap SIGINT SIGTERM SIGTSTP
+#trap CleanUp EXIT
+
+for loop in 1 2 3; do
+    (
+      echo "loop #$loop"
+      mp3convert
+      echo magic 1
+      echo magic 2
+      echo magic 3
+    ) &
+    PID=$!
+    CleanUp
+    echo "done loop #$loop"
+done
+
+```
+
+參考:[shell - bash trap interrupt command but should exit on end of loop - Stack Overflow](https://stackoverflow.com/questions/26808727/bash-trap-interrupt-command-but-should-exit-on-end-of-loop)
+
+trap 相關指令，可以用來可以控制關閉方法
+- [优雅地结束docker容器的init bash脚本](http://coinfaces.me/posts/gracefully-stop-docker-init-bash-script/)
+- [shell-trap | 平凡備忘錄](http://blog.gitdns.org/2016/08/29/shell-trap/)
+- [Bash 程式設計教學：平行執行背景子行程，用 wait 等待工作結束 - G. T. Wang](https://blog.gtwang.org/programming/bash-tutorial-parallel-subprocesses-and-wait/)
+
+
+
 ## 相關連結
 [Shell——你只需要了解这么多 - 枣面包的博客 - CSDN博客](https://blog.csdn.net/weixin_37490221/article/details/80869792)
 [[Shell Script] Day27-提高可讀性之函式寫法(三) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天](https://ithelp.ithome.com.tw/articles/10138639)

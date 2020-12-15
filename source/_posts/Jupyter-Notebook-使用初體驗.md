@@ -109,3 +109,7 @@ csv來源從這邊來
 可能還是需要用
 有機會應用在補充
 
+
+## 連 Oracle
+
+[在Python用cx_Oracle去操作Oracle資料庫 | Ching-Chuan Chen's Blogger](http://chingchuan-chen.github.io/posts/201607/2016-07-26-use-cx_Oracle-to-manipulate-oracle-database-in-Python.html)

@@ -713,6 +713,8 @@ d=${c%%/*}
 * [Documentation](https://rclone.org/docs/#bwlimit-bandwidth-spec) 限速??待確認
 
 
+## AT 排成設定
+
 **2020-07-23**
 
 設定時間排程 at
@@ -725,17 +727,30 @@ atq
 # atrm jobid
 at now + 5 minutes 
 
-
 ```
 中斷結束 Ctrl + D
 
+```
+at 04:00 
+at 04:00 2015-07-30
+```
+TIME：時間格式，這裡可以定義出『什麼時候要進行 at 這項工作』的時間，格式有：
+  HH:MM				ex> 04:00
+	在今日的 HH:MM 時刻進行，若該時刻已超過，則明天的 HH:MM 進行此工作。
+  HH:MM YYYY-MM-DD		ex> 04:00 2015-07-30
+	強制規定在某年某月的某一天的特殊時刻進行該工作！
+
 
 [transmission-remote(1) - Linux man page](https://linux.die.net/man/1/transmission-remote)
-下載
-transmission-remote --auth=admin:admin   -tall --start
-上傳
-transmission-remote --auth=admin:admin   -tall --stop
+開始所有 torrent 下載
 
+```bash
+transmission-remote --auth=admin:admin   -tall --start
+```
+停止所有 torrent 下載
+```
+transmission-remote --auth=admin:admin   -tall --stop
+```
 
 
 **20200808**

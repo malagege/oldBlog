@@ -267,3 +267,20 @@ portainer 什麼設定都不用做!!!!太猛啦
 * [Haproxy+Keepalived高可用环境部署梳理（主主和主从模式）-眼眸刻着你的微笑-51CTO博客](https://blog.51cto.com/dengaosky/2129856)
 * [containers - How can I remove shutdown Docker Service tasks after a rolling update? - Stack Overflow](https://stackoverflow.com/questions/41705134/how-can-i-remove-shutdown-docker-service-tasks-after-a-rolling-update)
 * [Docker Swarm 实战 - rj-bai 's Blog](https://blog.rj-bai.com/post/150.html)
+
+## 針對 CPU 架構選擇 image
+
+1. 
+docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+ 
+如：
+docker pull ubuntu@sha256:45b23dee08af5e43a7fea6c4cf9c25ccf269ee113168c19722f8787
+
+2. 
+// 通过如下命令指定arch:
+docker run -it --rm <image-name>:<tag>  arch=linux/arm64
+
+方法三就不寫了，看起來很麻煩
+
+參考:[docker pull 指定 os/arch_Yu的博客-CSDN博客](https://blog.csdn.net/u010918487/article/details/107067224)
+

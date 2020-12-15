@@ -1,5 +1,5 @@
 ---
-title: [轉]Linux 查看程式用哪些 port 方法
+title: "[轉]Linux 查看程式用哪些 port 方法"
 date: 2020-09-28 23:27:14
 tags: [linux]
 categories: Linux

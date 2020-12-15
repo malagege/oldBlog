@@ -122,3 +122,15 @@ singleton_in_war.war singleton_in_war.war true       true    OK
 [Clementine 音樂播放器](https://www.clementine-player.org/zh_TW/)
 [树莓派部署 seafile 和 nextcloud 比较 - 知乎](https://zhuanlan.zhihu.com/p/140289336)
 [domenukk/seafile-docker-pi: A Docker image for Seafile server - Raspberry Pi Edition](https://github.com/domenukk/seafile-docker-pi)
+
+
+---
+
+2020-10-08 額外找的
+
+- [Sharry：一个非常好用的文件分享程序-荒岛](https://lala.im/7154.html)
+- [ResilioSync：公私兼备的同步盘-荒岛](https://lala.im/4737.html)
+- [使用Syncthing自建私有同步盘-荒岛](https://lala.im/4731.html)
+- [CozyCloud：基于GO语言开发的网盘/同步盘-荒岛](https://lala.im/4698.html)
+- [Dropit：一个简洁的文件上传工具-荒岛](https://lala.im/6617.html)
+- [开源的私有云网盘程序Seafile安装教程-荒岛](https://lala.im/671.html)

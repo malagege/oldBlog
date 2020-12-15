@@ -1,7 +1,7 @@
 ---
 title: 一張網卡使用多組 IP 方法
 date: 2020-05-30 01:56:29
-tags: [ip]
+tags: [ip, linux]
 categories: 網路
 ---
 
@@ -82,4 +82,19 @@ gateway 192.168.1.254
 
 [CentOS Linux 靜態 IP 位址網路設定教學 - G. T. Wang](https://blog.gtwang.org/linux/centos-linux-static-network-configuration-tutorial/)
 [Ubuntu 18.04 透過 netplan 設定網路卡 IP - Soul & Shell Blog](https://blog.toright.com/posts/6293/ubuntu-18-04-%E9%80%8F%E9%81%8E-netplan-%E8%A8%AD%E5%AE%9A%E7%B6%B2%E8%B7%AF%E5%8D%A1-ip.html)
+
+## 使用上設定防火牆陷阱
+
+最近公司AP Server 程式使用 mail 發信的時候
+明明有設定防火牆開通 IP
+結果不能發出去
+
+後來發現是 AP Server IP 是吃別的 IP
+這邊 mail server 是不同網段，所以會走 gateway
+IP Gateway 預設不是走 interface AP  這邊
+可以用 ip route show
+主要是看這一行
+
+default via 192.168.1.1 dev eth0 src 192.168.1.202 metric 202
+
 

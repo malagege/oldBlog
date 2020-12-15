@@ -246,3 +246,37 @@ top wa 就正常了...
 
 vmstat 第二個 b 可以先確認 uninterruptible sleep程式
 再尋找 uninterruptible sleep 程式做處理
+
+
+
+## wa 和 id
+
+> 當前的CPU運行情況：
+> 
+> us：非nice用戶進程佔用CPU的比率
+> sy：內核、內核進程佔用CPU的比率；
+> ni：如果一些用戶進程修改過優先級，這裡顯示這些進程佔用CPU時間的比率；
+> id：CPU空閒比率，如果系統緩慢而這個值很高，說明系統慢的原因不是CPU負載高；
+> wa：CPU等待執行I/O操作的時間比率，該指標可以用來排查磁盤I/O的問題，通常結合wa和id判斷
+> hi：CPU處理硬件終端所佔時間的比率；
+> si：CPU處理軟件終端所佔時間的比率；
+> st：流逝的時間，虛擬機中的其他任務所佔CPU時間的比率；
+> 
+> 用戶進程佔比高，wa低，說明系統緩慢的原因在於進程佔用大量CPU，通常還會伴有教低的id，說明CPU空轉時間很少；
+> wa低，id高，可以排除CPU資源瓶頸的可能。
+> wa高，說明I/O佔用了大量的CPU時間，需要檢查交換空間的使用，交換空間位於磁盤上，性能遠低於內存，當內存耗盡開始使用交換空間時，將會給性能帶來嚴重影響，所以對於性能要求較高的服務器，一般建議關閉交換空間。另一方面，如果內存充足，但wa很高，說明需要檢查哪個進程佔用了大量的I/O資源。
+
+- [Linux系统排查2——CPU负载篇 - 王智愚 - 开发者的网上家园](https://www.cnblogs.com/security-darren/p/4700384.html)
+- [Linux下性能分析工具 | zhqqqy](https://zhqqqy.github.io/2018/08/23/Linux%E4%B8%8B%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/)
+
+
+CPU使用率低但負載高
+![](https://upload-images.jianshu.io/upload_images/16898515-1f65ff3be1502b87.png?imageMogr2/auto-orient/strip|imageView2/2/w/585)
+
+load average 是對 CPU 負載的評估，其值越高，說明其任務隊列越長，處於等待執行的任務越多。但CPU卻在摸魚（idls高），這就說明有可能有很多假死進程，可能寫的程序有等待（I/O）或者睡眠。
+
+作者：Carson_dotnet
+链接：https://www.jianshu.com/p/27d8c33e03cf
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+[Linux CPU過載判斷以及分析 - 簡書](https://www.jianshu.com/p/27d8c33e03cf)
