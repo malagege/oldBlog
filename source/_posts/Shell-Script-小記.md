@@ -217,77 +217,17 @@ echo $i
 滿有趣的寫法
 
 
-## init.d 守護進程
+## Shell 實作守護進程方法
 
-- [Run a Java Application as a Service on Linux - Stack Overflow](https://stackoverflow.com/questions/11203483/run-a-java-application-as-a-service-on-linux)
+TODO: LINK 
 
-- [迷途工程師: Init Script for OpenWrt，新增一個自己的init script](http://dannysun-unknown.blogspot.com/2017/02/init-script-for-openwrtinit-script.html)
+## SHELL 大小寫
 
-- [init-script-template/template at master · fhd/init-script-template](https://github.com/fhd/init-script-template/blob/master/template)
-上面有用 ps -p 指令
-- [最全的Linux進程監視命令ps的30個常用例子 - 每日頭條](https://kknews.cc/zh-tw/code/4pnr3o2.html)
+[Bash lowercase and uppercase strings – Linux Hint](https://linuxhint.com/bash_lowercase_uppercase_strings/)
 
-- [PHP守护进程 - InfoQ 写作平台](https://xie.infoq.cn/article/c3a40c88f95d3a1cb56045dc4)
+## 在 Shell 腳本中解析選項 
 
-- [Linux 守护进程原理及实例（Redis、Nginx）_杨博东的博客-CSDN博客_redis守护进程](https://blog.csdn.net/yangbodong22011/article/details/78650896)
-- [linux - Bash: wait with timeout - Stack Overflow](https://stackoverflow.com/questions/10028820/bash-wait-with-timeout)
-
-
-最近有看到可以傳送關閉訊號控制程式跑完進程關閉程式
-
-```sh
-#!/bin/bash
-
-mp3convert () {
-  echo "mp3convert..."; sleep 5; echo "mp3convert done..."
-}
-
-PreTrap() {
-  echo "in trap"
-  QUIT=1
-  echo "exiting trap..."
-}
-
-CleanUp() {
-  ### Since 'wait $PID' can be interrupted by ^C, we need to protected it
-  ### by the 'kill' loop  ==> double/triple control-C problem.
-  while kill -0 $PID >& /dev/null; do wait $PID; echo "check again"; done
-
-  ### This won't work (A simple wait $PID is vulnerable to double control C)
-  # wait $PID
-
-  if [ ! -z $QUIT ]; then
-     echo "clean up..."
-     exit
- fi
-}
-
-trap PreTrap SIGINT SIGTERM SIGTSTP
-#trap CleanUp EXIT
-
-for loop in 1 2 3; do
-    (
-      echo "loop #$loop"
-      mp3convert
-      echo magic 1
-      echo magic 2
-      echo magic 3
-    ) &
-    PID=$!
-    CleanUp
-    echo "done loop #$loop"
-done
-
-```
-
-參考:[shell - bash trap interrupt command but should exit on end of loop - Stack Overflow](https://stackoverflow.com/questions/26808727/bash-trap-interrupt-command-but-should-exit-on-end-of-loop)
-
-trap 相關指令，可以用來可以控制關閉方法
-- [优雅地结束docker容器的init bash脚本](http://coinfaces.me/posts/gracefully-stop-docker-init-bash-script/)
-- [shell-trap | 平凡備忘錄](http://blog.gitdns.org/2016/08/29/shell-trap/)
-- [Bash 程式設計教學：平行執行背景子行程，用 wait 等待工作結束 - G. T. Wang](https://blog.gtwang.org/programming/bash-tutorial-parallel-subprocesses-and-wait/)
-
-
+[在 Shell 腳本中解析選項 | 始終](https://liam.page/2016/11/11/ways-to-parse-arguments-in-shell-script/)
 
 ## 相關連結
 [Shell——你只需要了解这么多 - 枣面包的博客 - CSDN博客](https://blog.csdn.net/weixin_37490221/article/details/80869792)

@@ -54,3 +54,5 @@ date: 2018-05-14 21:24:11
 - [我沒有三顆心臟 - 博客園](https://www.cnblogs.com/wmyskxz/)
 - [沉迷思考的魚](http://ypk1226.com/)
 - [Noob's Space](https://noob.tw/)
+- [Keniver's Blog - 記錄工作與生活的各種情懷](https://blog.keniver.com/)
+- [小信豬的原始部落](https://godleon.github.io/blog/)

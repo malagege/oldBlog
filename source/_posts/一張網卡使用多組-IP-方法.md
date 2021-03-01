@@ -77,6 +77,7 @@ gateway 192.168.1.254
 然後透過 bind port 各自綁多台 IP
 這樣就能一台當多台用了
 
+[XYZ的筆記本: Linux 網卡新增多個IP](https://xyz.cinc.biz/2020/12/linux-add-secondary-ip-to-one-interface.html)
 
 ### 其他 OS 設定方法
 

@@ -103,7 +103,7 @@ Content-Length 需要注意`{"Image": "alpine", "Cmd": ["echo", "hello world"]}`
 ## RabbitMQ 連續大量錯誤
 
 [如何優雅地在RabbitMQ實現失敗重試 - lala - Medium](https://medium.com/@lalayueh/%E5%A6%82%E4%BD%95%E5%84%AA%E9%9B%85%E5%9C%B0%E5%9C%A8rabbitmq%E5%AF%A6%E7%8F%BE%E5%A4%B1%E6%95%97%E9%87%8D%E8%A9%A6-c050efd72cdb)  {% asset_link web1.png 備份圖 %}
-
+[.net - How do I set a number of retry attempts in RabbitMQ? - Stack Overflow](https://stackoverflow.com/questions/23158310/how-do-i-set-a-number-of-retry-attempts-in-rabbitmq)
 其他問題想到再說
 
 ## rabbitmq 持久化

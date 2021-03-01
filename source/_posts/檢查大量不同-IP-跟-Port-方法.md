@@ -167,3 +167,27 @@ host_key_checking = False
 [Test if a server is reachable from host and has port open with Ansible - Stack Overflow](https://stackoverflow.com/questions/39800368/test-if-a-server-is-reachable-from-host-and-has-port-open-with-ansible)
 [ansible-testing/test_tcp at master · willthames/ansible-testing](https://github.com/willthames/ansible-testing/blob/master/test_tcp)
 [guerzon/ansible-netcat: Ansible proof-of-concept - netcat systemd service](https://github.com/guerzon/ansible-netcat)
+
+
+## Window 不使用 telnet 方法
+
+```sh
+#powershell
+Test-NetConnection -ComputerName “www.google.com” -Port 443
+```
+
+不知道為什麼我朋友電腦不能使用`telnet`(有開啟設定)
+後來發現有這個指令
+[利用PowerShell的Test-NetConnection來取代Telnet來檢查網站的Port有沒有被開啟 | by CarterTsai | Medium](https://medium.com/@CarterTsai/%E5%88%A9%E7%94%A8powershell%E7%9A%84test-netconnection%E4%BE%86%E5%8F%96%E4%BB%A3telnet%E4%BE%86%E6%AA%A2%E6%9F%A5%E7%B6%B2%E7%AB%99%E7%9A%84port%E6%9C%89%E6%B2%92%E6%9C%89%E8%A2%AB%E9%96%8B%E5%95%9F-5bc18909ce67)
+
+
+多台電腦指令
+
+```
+'192.168.0.101','192.168.0.102','Computer-012' | Test-NetConnection -Port 135
+
+Get-Content -Path .\computers.txt | Test-NetConnection -Port 1
+```
+更多相關:
+[Run Test-NetConnection on multiple machines, the best way：PowerShell](https://www.reddit.com/r/PowerShell/comments/ff2x1f/run_testnetconnection_on_multiple_machines_the/)
+[Test connection to servers on several ports - Powershellbros.com](https://www.powershellbros.com/test-connection-to-servers-on-several-ports/)
