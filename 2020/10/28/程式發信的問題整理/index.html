@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="先蒐集，有空整理">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-10-28T16:27:43.018Z">
+<meta property="og:updated_time" content="2021-01-09T17:59:49.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程式發信 mail 的問題整理">
 <meta name="twitter:description" content="先蒐集，有空整理">
@@ -428,7 +428,33 @@
 <h2 id="relay-access-denied"><a href="#relay-access-denied" class="headerlink" title="relay access denied"></a>relay access denied</h2><p><a href="https://ithelp.ithome.com.tw/questions/10069903" target="_blank" rel="noopener">Postfix - Relay access denied - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
 <p><a href="https://mlwmlw.org/2010/09/postfix-relay-access-denied/" target="_blank" rel="noopener">postfix relay access denied – 阿喵就像家</a></p>
 <p>Mail Server 設定對應 IP 就可以發信出去了</p>
-<h2 id="黑名單"><a href="#黑名單" class="headerlink" title="黑名單"></a>黑名單</h2><p><a href="https://www.huangzhong.ca/zh/rokso-sbl-xbl-pbl-dbl/" target="_blank" rel="noopener">ROKSO、SBL、XBL、PBL、DBL 是什么意思？ – 黄忠 – 博客</a></p>
+<h2 id="黑名單"><a href="#黑名單" class="headerlink" title="黑名單"></a>黑名單</h2><p><a href="https://www.dnsbl.info/dnsbl-database-check.php" target="_blank" rel="noopener">DNSBL Information - Spam Database Lookup</a></p>
+<p><a href="https://www.spamhaus.org/lookup/" target="_blank" rel="noopener">Blocklist Removal Center - The Spamhaus Project</a></p>
+<h2 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h2><ol>
+<li>更換 Mail Server 主機 IP (workaround?)</li>
+<li>DNS Server 設定MX</li>
+<li>設定SPF</li>
+<li>設定 DomainKey（DKIM）</li>
+<li>設定 DMARC</li>
+<li>開通25 Port</li>
+</ol>
+<h2 id="建製-mail-注意的事情"><a href="#建製-mail-注意的事情" class="headerlink" title="建製 mail 注意的事情"></a>建製 mail 注意的事情</h2><ol>
+<li>整理發信來源IP</li>
+<li>調整DNS，A、PTR、MX、TXT record、DKIM</li>
+<li>向各Email服務商提出申請</li>
+<li>發信機主機名稱</li>
+<li>LOG解析</li>
+</ol>
+<h2 id="相關DNS-Resource"><a href="#相關DNS-Resource" class="headerlink" title="相關DNS Resource"></a>相關DNS Resource</h2><p>調整DNS<br>A：正解<br>PTR：反解<br>MX：郵件交換紀錄<br>TXT record：SPF<br>DKIM</p>
+<p>MX：讓DNS能正常解析<br>SPF：是一套電子郵件驗證機制，可指定哪些郵件伺服器有權為您的網域傳送電子郵件。<br>DKIM：會為每一封郵件加上數位簽名，幫助收件伺服器確認郵件並非偽造，而且在傳輸過程中未遭到竄改。</p>
+<p>詳細: </p>
+<ul>
+<li><a href="http://dns-learning.twnic.net.tw/bind/intro6.html" target="_blank" rel="noopener">DNS資源紀錄(Resource Record)介紹</a></li>
+<li><a href="http://linux.vbird.org/linux_server/0350dns.php" target="_blank" rel="noopener">鳥哥的 Linux 私房菜 – DNS Server</a></li>
+</ul>
+<p>nslookup<br>A記錄(正解)set q=a<br>ptr記錄(反解)set q=ptr<br>MX記錄(郵件交換記錄)set q=mx<br>TXT記錄(文字記錄)set q=txt</p>
+<h3 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h3><p><a href="https://www.nslookuptool.com/cht/" target="_blank" rel="noopener">DNS傳播檢查 - Nslookup Tool</a></p>
+<h2 id="相關名稱意思"><a href="#相關名稱意思" class="headerlink" title="相關名稱意思"></a>相關名稱意思</h2><p><a href="https://www.huangzhong.ca/zh/rokso-sbl-xbl-pbl-dbl/" target="_blank" rel="noopener">ROKSO、SBL、XBL、PBL、DBL 是什么意思？ – 黄忠 – 博客</a></p>
 
       
     </div>
@@ -566,7 +592,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">535</span>
+                  <span class="site-state-item-count">563</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -577,7 +603,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -588,7 +614,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">428</span>
+                  <span class="site-state-item-count">447</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -631,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#發信指令"><span class="nav-number">1.</span> <span class="nav-text">發信指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relay-access-denied"><span class="nav-number">2.</span> <span class="nav-text">relay access denied</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#黑名單"><span class="nav-number">3.</span> <span class="nav-text">黑名單</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#發信指令"><span class="nav-number">1.</span> <span class="nav-text">發信指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#relay-access-denied"><span class="nav-number">2.</span> <span class="nav-text">relay access denied</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#黑名單"><span class="nav-number">3.</span> <span class="nav-text">黑名單</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解決方案"><span class="nav-number">4.</span> <span class="nav-text">解決方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建製-mail-注意的事情"><span class="nav-number">5.</span> <span class="nav-text">建製 mail 注意的事情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關DNS-Resource"><span class="nav-number">6.</span> <span class="nav-text">相關DNS Resource</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nslookup"><span class="nav-number">6.1.</span> <span class="nav-text">nslookup</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關名稱意思"><span class="nav-number">7.</span> <span class="nav-text">相關名稱意思</span></a></li></ol></div>
             
 
           </div>
@@ -651,7 +677,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

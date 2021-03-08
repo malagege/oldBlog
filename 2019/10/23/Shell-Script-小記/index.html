@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="shell 小記">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-11-26T16:20:44.215Z">
+<meta property="og:updated_time" content="2021-01-28T14:08:02.051Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell Script 小記">
 <meta name="twitter:description" content="shell 小記">
@@ -483,30 +483,9 @@
 <h2 id="複製檔案"><a href="#複製檔案" class="headerlink" title="複製檔案"></a>複製檔案</h2><p><a href="https://malagege.github.io/blog/2020/01/10/cp-%E8%A4%87%E8%A3%BD%E6%AA%94%E6%A1%88%E5%8F%AF%E8%83%BD%E6%B2%92%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/">cp 複製檔案可能沒注意的事情 | 程式狂想筆記</a></p>
 <h2 id="shell-function-回傳只能數字"><a href="#shell-function-回傳只能數字" class="headerlink" title="shell function 回傳只能數字"></a>shell function 回傳只能數字</h2><p>一般我們看 shell script function return 回傳值只能是數字<br>沒法回傳字串，仔細想想也滿有道理的<br>因為正常程式執行結束會回傳 exit (int)<br>要確定程式是否有正確執行完成 正常執行完成會回傳0</p>
 <p>那有沒有回傳字串方法<br>我看到是用 function 裡面做 echo<br>外面用`這個符號去包<br>滿有趣的寫法</p>
-<h2 id="init-d-守護進程"><a href="#init-d-守護進程" class="headerlink" title="init.d 守護進程"></a>init.d 守護進程</h2><ul>
-<li><p><a href="https://stackoverflow.com/questions/11203483/run-a-java-application-as-a-service-on-linux" target="_blank" rel="noopener">Run a Java Application as a Service on Linux - Stack Overflow</a></p>
-</li>
-<li><p><a href="http://dannysun-unknown.blogspot.com/2017/02/init-script-for-openwrtinit-script.html" target="_blank" rel="noopener">迷途工程師: Init Script for OpenWrt，新增一個自己的init script</a></p>
-</li>
-<li><p><a href="https://github.com/fhd/init-script-template/blob/master/template" target="_blank" rel="noopener">init-script-template/template at master · fhd/init-script-template</a><br>上面有用 ps -p 指令</p>
-</li>
-<li><p><a href="https://kknews.cc/zh-tw/code/4pnr3o2.html" target="_blank" rel="noopener">最全的Linux進程監視命令ps的30個常用例子 - 每日頭條</a></p>
-</li>
-<li><p><a href="https://xie.infoq.cn/article/c3a40c88f95d3a1cb56045dc4" target="_blank" rel="noopener">PHP守护进程 - InfoQ 写作平台</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/yangbodong22011/article/details/78650896" target="_blank" rel="noopener">Linux 守护进程原理及实例（Redis、Nginx）_杨博东的博客-CSDN博客_redis守护进程</a></p>
-</li>
-<li><a href="https://stackoverflow.com/questions/10028820/bash-wait-with-timeout" target="_blank" rel="noopener">linux - Bash: wait with timeout - Stack Overflow</a></li>
-</ul>
-<p>最近有看到可以傳送關閉訊號控制程式跑完進程關閉程式</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">mp3convert</span></span> () &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"mp3convert..."</span>; sleep 5; <span class="built_in">echo</span> <span class="string">"mp3convert done..."</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">PreTrap</span></span>() &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"in trap"</span></span><br><span class="line">  QUIT=1</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"exiting trap..."</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">CleanUp</span></span>() &#123;</span><br><span class="line">  <span class="comment">### Since 'wait $PID' can be interrupted by ^C, we need to protected it</span></span><br><span class="line">  <span class="comment">### by the 'kill' loop  ==&gt; double/triple control-C problem.</span></span><br><span class="line">  <span class="keyword">while</span> <span class="built_in">kill</span> -0 <span class="variable">$PID</span> &gt;&amp; /dev/null; <span class="keyword">do</span> <span class="built_in">wait</span> <span class="variable">$PID</span>; <span class="built_in">echo</span> <span class="string">"check again"</span>; <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">### This won't work (A simple wait $PID is vulnerable to double control C)</span></span><br><span class="line">  <span class="comment"># wait $PID</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> [ ! -z <span class="variable">$QUIT</span> ]; <span class="keyword">then</span></span><br><span class="line">     <span class="built_in">echo</span> <span class="string">"clean up..."</span></span><br><span class="line">     <span class="built_in">exit</span></span><br><span class="line"> <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">trap</span> PreTrap SIGINT SIGTERM SIGTSTP</span><br><span class="line"><span class="comment">#trap CleanUp EXIT</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> loop <span class="keyword">in</span> 1 2 3; <span class="keyword">do</span></span><br><span class="line">    (</span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"loop #<span class="variable">$loop</span>"</span></span><br><span class="line">      mp3convert</span><br><span class="line">      <span class="built_in">echo</span> magic 1</span><br><span class="line">      <span class="built_in">echo</span> magic 2</span><br><span class="line">      <span class="built_in">echo</span> magic 3</span><br><span class="line">    ) &amp;</span><br><span class="line">    PID=$!</span><br><span class="line">    CleanUp</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"done loop #<span class="variable">$loop</span>"</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>參考:<a href="https://stackoverflow.com/questions/26808727/bash-trap-interrupt-command-but-should-exit-on-end-of-loop" target="_blank" rel="noopener">shell - bash trap interrupt command but should exit on end of loop - Stack Overflow</a></p>
-<p>trap 相關指令，可以用來可以控制關閉方法</p>
-<ul>
-<li><a href="http://coinfaces.me/posts/gracefully-stop-docker-init-bash-script/" target="_blank" rel="noopener">优雅地结束docker容器的init bash脚本</a></li>
-<li><a href="http://blog.gitdns.org/2016/08/29/shell-trap/" target="_blank" rel="noopener">shell-trap | 平凡備忘錄</a></li>
-<li><a href="https://blog.gtwang.org/programming/bash-tutorial-parallel-subprocesses-and-wait/" target="_blank" rel="noopener">Bash 程式設計教學：平行執行背景子行程，用 wait 等待工作結束 - G. T. Wang</a></li>
-</ul>
+<h2 id="Shell-實作守護進程方法"><a href="#Shell-實作守護進程方法" class="headerlink" title="Shell 實作守護進程方法"></a>Shell 實作守護進程方法</h2><p>TODO: LINK </p>
+<h2 id="SHELL-大小寫"><a href="#SHELL-大小寫" class="headerlink" title="SHELL 大小寫"></a>SHELL 大小寫</h2><p><a href="https://linuxhint.com/bash_lowercase_uppercase_strings/" target="_blank" rel="noopener">Bash lowercase and uppercase strings – Linux Hint</a></p>
+<h2 id="在-Shell-腳本中解析選項"><a href="#在-Shell-腳本中解析選項" class="headerlink" title="在 Shell 腳本中解析選項"></a>在 Shell 腳本中解析選項</h2><p><a href="https://liam.page/2016/11/11/ways-to-parse-arguments-in-shell-script/" target="_blank" rel="noopener">在 Shell 腳本中解析選項 | 始終</a></p>
 <h2 id="相關連結"><a href="#相關連結" class="headerlink" title="相關連結"></a>相關連結</h2><p><a href="https://blog.csdn.net/weixin_37490221/article/details/80869792" target="_blank" rel="noopener">Shell——你只需要了解这么多 - 枣面包的博客 - CSDN博客</a><br><a href="https://ithelp.ithome.com.tw/articles/10138639" target="_blank" rel="noopener">[Shell Script] Day27-提高可讀性之函式寫法(三) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><br><a href="https://blog.csdn.net/ithomer/article/details/7954577" target="_blank" rel="noopener">Linux Shell函数返回值 - 阳光岛主 - CSDN博客</a></p>
 
       
@@ -649,7 +628,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">535</span>
+                  <span class="site-state-item-count">563</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -660,7 +639,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -671,7 +650,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">428</span>
+                  <span class="site-state-item-count">447</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -714,7 +693,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-小記"><span class="nav-number">1.</span> <span class="nav-text">shell 小記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#變數大寫"><span class="nav-number">1.1.</span> <span class="nav-text">變數大寫</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數宣告-不能有空白"><span class="nav-number">2.</span> <span class="nav-text">變數宣告 = 不能有空白</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字串截取"><span class="nav-number">2.1.</span> <span class="nav-text">字串截取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-宣告"><span class="nav-number">3.</span> <span class="nav-text">Array 宣告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-join-合併-動作"><span class="nav-number">4.</span> <span class="nav-text">Array join(合併) 動作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if-條件判斷"><span class="nav-number">5.</span> <span class="nav-text">if 條件判斷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多個條件判斷"><span class="nav-number">5.1.</span> <span class="nav-text">多個條件判斷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-查詢寫回變數"><span class="nav-number">6.</span> <span class="nav-text">mysql 查詢寫回變數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function-宣告"><span class="nav-number">7.</span> <span class="nav-text">function 宣告</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#function-還傳段行字串"><span class="nav-number">7.1.</span> <span class="nav-text">function 還傳段行字串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-script-布林運算順序"><span class="nav-number">7.2.</span> <span class="nav-text">shell script 布林運算順序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有關"><span class="nav-number">8.</span> <span class="nav-text">有關 *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-比較字串外面需要包"><span class="nav-number">9.</span> <span class="nav-text">shell 比較字串外面需要包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數運算"><span class="nav-number">10.</span> <span class="nav-text">變數運算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#複製檔案"><span class="nav-number">11.</span> <span class="nav-text">複製檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-function-回傳只能數字"><span class="nav-number">12.</span> <span class="nav-text">shell function 回傳只能數字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#init-d-守護進程"><span class="nav-number">13.</span> <span class="nav-text">init.d 守護進程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">14.</span> <span class="nav-text">相關連結</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-小記"><span class="nav-number">1.</span> <span class="nav-text">shell 小記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#變數大寫"><span class="nav-number">1.1.</span> <span class="nav-text">變數大寫</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數宣告-不能有空白"><span class="nav-number">2.</span> <span class="nav-text">變數宣告 = 不能有空白</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字串截取"><span class="nav-number">2.1.</span> <span class="nav-text">字串截取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-宣告"><span class="nav-number">3.</span> <span class="nav-text">Array 宣告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-join-合併-動作"><span class="nav-number">4.</span> <span class="nav-text">Array join(合併) 動作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if-條件判斷"><span class="nav-number">5.</span> <span class="nav-text">if 條件判斷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多個條件判斷"><span class="nav-number">5.1.</span> <span class="nav-text">多個條件判斷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-查詢寫回變數"><span class="nav-number">6.</span> <span class="nav-text">mysql 查詢寫回變數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function-宣告"><span class="nav-number">7.</span> <span class="nav-text">function 宣告</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#function-還傳段行字串"><span class="nav-number">7.1.</span> <span class="nav-text">function 還傳段行字串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-script-布林運算順序"><span class="nav-number">7.2.</span> <span class="nav-text">shell script 布林運算順序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有關"><span class="nav-number">8.</span> <span class="nav-text">有關 *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-比較字串外面需要包"><span class="nav-number">9.</span> <span class="nav-text">shell 比較字串外面需要包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數運算"><span class="nav-number">10.</span> <span class="nav-text">變數運算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#複製檔案"><span class="nav-number">11.</span> <span class="nav-text">複製檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-function-回傳只能數字"><span class="nav-number">12.</span> <span class="nav-text">shell function 回傳只能數字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-實作守護進程方法"><span class="nav-number">13.</span> <span class="nav-text">Shell 實作守護進程方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHELL-大小寫"><span class="nav-number">14.</span> <span class="nav-text">SHELL 大小寫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-Shell-腳本中解析選項"><span class="nav-number">15.</span> <span class="nav-text">在 Shell 腳本中解析選項</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">16.</span> <span class="nav-text">相關連結</span></a></li></ol></div>
             
 
           </div>
@@ -734,7 +713,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

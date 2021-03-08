@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近做大量資料處理我想使用 RabbitMQ 處理大量資料不過這個方式 RabbitMQ 會遇到 Work 需要一開始常駐不能做到自動調整控制 Work 數量所已採用 DinD 觀念去實作">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-03-04T12:33:13.792Z">
+<meta property="og:updated_time" content="2021-02-11T09:51:49.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker in Docker (DinD) 和 RabbitMQ 解決大量資料方法小記">
 <meta name="twitter:description" content="最近做大量資料處理我想使用 RabbitMQ 處理大量資料不過這個方式 RabbitMQ 會遇到 Work 需要一開始常駐不能做到自動調整控制 Work 數量所已採用 DinD 觀念去實作">
@@ -458,8 +458,7 @@
 <p>對外 socket 連結可以改成 tcp 開頭</p>
 <p>誤打誤撞，發現這個好像不錯工具<a href="https://plantegg.github.io/2019/04/04/%E5%B0%B1%E6%98%AF%E8%A6%81%E4%BD%A0%E6%87%82%E6%8A%93%E5%8C%85--Unix-Socket%E6%8A%93%E5%8C%85/" target="_blank" rel="noopener">就是要你懂Unix Socket 进行抓包解析 | plantegg</a><a href="/blog/2020/01/12/Docker-in-Docker-DinD-和-RabbitMQ-解決大量資料方法小記/web2.png" title="備份圖">備份圖</a><br><a href="https://plantegg.github.io/2019/10/12/%E5%B0%B1%E6%98%AF%E8%A6%81%E4%BD%A0%E6%87%82%E7%BD%91%E7%BB%9C%E7%9B%91%E6%8E%A7--ss%E7%94%A8%E6%B3%95%E5%A4%A7%E5%85%A8/" target="_blank" rel="noopener">就是要你懂网络监控–ss用法大全 | plantegg</a><br><a href="https://plantegg.github.io/2019/06/21/%E5%B0%B1%E6%98%AF%E8%A6%81%E4%BD%A0%E6%87%82%E6%8A%93%E5%8C%85--WireShark%E4%B9%8B%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%89%88tshark/" target="_blank" rel="noopener">就是要你懂抓包–WireShark之命令行版tshark | plantegg</a></p>
 <h2 id="衍生問題"><a href="#衍生問題" class="headerlink" title="衍生問題"></a>衍生問題</h2><h3 id="RabbitMQ-的-worker-要如何關小保持關掉中程式可以正常結束"><a href="#RabbitMQ-的-worker-要如何關小保持關掉中程式可以正常結束" class="headerlink" title="RabbitMQ 的 worker 要如何關小保持關掉中程式可以正常結束"></a>RabbitMQ 的 worker 要如何關小保持關掉中程式可以正常結束</h3><p>這個問題，我沒有在網路上爬到。<br>不過我自己想這個問題，在設計 worker 這條路應該要做到 <code>已經做過</code> 和 <code>尚未執行成功</code> 中斷程式<br>下次執行也能應該也要正常執行才對</p>
-<h2 id="RabbitMQ-連續大量錯誤"><a href="#RabbitMQ-連續大量錯誤" class="headerlink" title="RabbitMQ 連續大量錯誤"></a>RabbitMQ 連續大量錯誤</h2><p><a href="https://medium.com/@lalayueh/%E5%A6%82%E4%BD%95%E5%84%AA%E9%9B%85%E5%9C%B0%E5%9C%A8rabbitmq%E5%AF%A6%E7%8F%BE%E5%A4%B1%E6%95%97%E9%87%8D%E8%A9%A6-c050efd72cdb" target="_blank" rel="noopener">如何優雅地在RabbitMQ實現失敗重試 - lala - Medium</a>  <a href="/blog/2020/01/12/Docker-in-Docker-DinD-和-RabbitMQ-解決大量資料方法小記/web1.png" title="備份圖">備份圖</a></p>
-<p>其他問題想到再說</p>
+<h2 id="RabbitMQ-連續大量錯誤"><a href="#RabbitMQ-連續大量錯誤" class="headerlink" title="RabbitMQ 連續大量錯誤"></a>RabbitMQ 連續大量錯誤</h2><p><a href="https://medium.com/@lalayueh/%E5%A6%82%E4%BD%95%E5%84%AA%E9%9B%85%E5%9C%B0%E5%9C%A8rabbitmq%E5%AF%A6%E7%8F%BE%E5%A4%B1%E6%95%97%E9%87%8D%E8%A9%A6-c050efd72cdb" target="_blank" rel="noopener">如何優雅地在RabbitMQ實現失敗重試 - lala - Medium</a>  <a href="/blog/2020/01/12/Docker-in-Docker-DinD-和-RabbitMQ-解決大量資料方法小記/web1.png" title="備份圖">備份圖</a><br><a href="https://stackoverflow.com/questions/23158310/how-do-i-set-a-number-of-retry-attempts-in-rabbitmq" target="_blank" rel="noopener">.net - How do I set a number of retry attempts in RabbitMQ? - Stack Overflow</a><br>其他問題想到再說</p>
 <h2 id="rabbitmq-持久化"><a href="#rabbitmq-持久化" class="headerlink" title="rabbitmq 持久化"></a>rabbitmq 持久化</h2><p>有 Queue 持久化<br>有 Message 持久化</p>
 <h2 id="rabbitmq-定義-Queue-不能修改"><a href="#rabbitmq-定義-Queue-不能修改" class="headerlink" title="rabbitmq 定義 Queue 不能修改"></a>rabbitmq 定義 Queue 不能修改</h2><h2 id="autoack-與-max"><a href="#autoack-與-max" class="headerlink" title="autoack 與 max-"></a>autoack 與 max-</h2><p>可能要確定 autoack = true 時候， server 馬上發送 message 給 worker ??</p>
 <p><a href="https://www.kancloud.cn/longxuan/rabbitmq-arron/107717" target="_blank" rel="noopener">前言 · 轻松搞定RabbitMQ · 看云</a></p>
@@ -604,7 +603,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">535</span>
+                  <span class="site-state-item-count">563</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -615,7 +614,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -626,7 +625,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">428</span>
+                  <span class="site-state-item-count">447</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -689,7 +688,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

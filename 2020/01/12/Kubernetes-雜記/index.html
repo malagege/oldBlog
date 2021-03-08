@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="尚未整理完成">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2020-03-04T12:35:56.141Z">
+<meta property="og:updated_time" content="2021-01-14T14:54:07.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes 雜記">
 <meta name="twitter:description" content="尚未整理完成">
@@ -424,36 +424,6 @@
 
         <p>尚未整理完成</p>
 <a id="more"></a>
-<h2 id="安裝-minikube"><a href="#安裝-minikube" class="headerlink" title="安裝 minikube"></a>安裝 minikube</h2><p>必備安裝</p>
-<ul>
-<li>Virtualbox</li>
-<li>minikube</li>
-<li>kubectl</li>
-</ul>
-<h3 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h3><p>單節點</p>
-<p><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" target="_blank" rel="noopener"> (這邊請去官網看OS載點替換) Install and Set Up kubectl - Kubernetes</a></p>
-<p>這邊我選 Linux<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl (這邊請去官網看OS載點替換)</span><br><span class="line">chmod +x ./kubectl</span><br><span class="line">sudo mv ./kubectl /usr/<span class="built_in">local</span>/bin/kubectl</span><br></pre></td></tr></table></figure></p>
-<h3 id="Minikube"><a href="#Minikube" class="headerlink" title="Minikube"></a>Minikube</h3><p><a href="https://github.com/kubernetes/minikube/releases" target="_blank" rel="noopener">(這邊請去官網看OS載點替換) kubernetes/minikube</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://github.com/kubernetes/minikube/releases/download/v1.6.2/minikube-linux-amd64(這邊請去官網看OS載點替換)</span><br><span class="line">chmod +x minikube-linux-amd64</span><br><span class="line">sudo mv minikube-linux-amd64 /usr/local/bin/minikube</span><br></pre></td></tr></table></figure>
-<h3 id="minikube-start"><a href="#minikube-start" class="headerlink" title="minikube start"></a>minikube start</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">minikube start                                                                             </span><br><span class="line">😄  minikube v1.6.2 on Debian buster/sid</span><br><span class="line">✨  Automatically selected the &apos;virtualbox&apos; driver (alternates: [none])</span><br><span class="line">🔥  Creating virtualbox VM (CPUs=2, Memory=2000MB, Disk=20000MB) ...</span><br><span class="line">🐳  Preparing Kubernetes v1.17.0 on Docker &apos;19.03.5&apos; ...</span><br><span class="line">🚜  Pulling images ...</span><br><span class="line">🚀  Launching Kubernetes ... </span><br><span class="line">⌛  Waiting for cluster to come online ...</span><br><span class="line">🏄  Done! kubectl is now configured to use &quot;minikube&quot;</span><br></pre></td></tr></table></figure>
-<p>最後可以下<code>minikube dashboard</code><br>看有沒有問題</p>
-<h2 id="遇到錯誤"><a href="#遇到錯誤" class="headerlink" title="遇到錯誤"></a>遇到錯誤</h2><h3 id="VM-64-bit-不能安裝-64-bit-OS"><a href="#VM-64-bit-不能安裝-64-bit-OS" class="headerlink" title="VM 64 bit 不能安裝 64 bit OS"></a>VM 64 bit 不能安裝 64 bit OS</h3><p>用 VM 裝可能遇到的問題<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">💣  Unable to start VM. Please investigate and run &apos;minikube delete&apos; if possible</span><br><span class="line">❌  Error: [VBOX_VTX_DISABLED] create: precreate: This computer doesn&apos;t have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config.vm.provider :virtualbox do |vb|  </span><br><span class="line">  vb.customize [&quot;modifyvm&quot;, :id, &quot;--hwvirtex&quot;, &quot;off&quot;]     </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>參考來源: <a href="https://gist.github.com/betweenbrain/7798873" target="_blank" rel="noopener">Disable VT-X in Vagrantfile</a><br>但最後還是不行</p>
-<blockquote>
-<p>Consequences from missing VT-X in nested VirtualBox</p>
-<p>There are currently two consequences from nesting without VT-X:</p>
-<pre><code>You cannot use multiple CPUs but you can use a single virtual cpu using vb.cpus = 1
-You cannot run a 64-Bit VM within a nested VirtualBox.
-</code></pre></blockquote>
-<p><a href="https://stackoverflow.com/questions/24620599/error-vt-x-not-available-for-vagrant-machine-inside-virtualbox" target="_blank" rel="noopener">Error VT-x not available for Vagrant machine inside Virtualbox - Stack Overflow</a></p>
-<h3 id="Exec-format-error"><a href="#Exec-format-error" class="headerlink" title="Exec format error"></a>Exec format error</h3><p>若有這個錯誤訊息…</p>
-<blockquote>
-<p>bash: /usr/local/bin/kubectl: cannot execute binary file: Exec format error</p>
-</blockquote>
-<p>就是安裝錯版本</p>
-<h2 id="刪除-minikube"><a href="#刪除-minikube" class="headerlink" title="刪除 minikube"></a>刪除 minikube</h2><p>Delete minikube</p>
-<p>minikube delete &amp;&amp; rm -rf ~/.minikube</p>
 <h2 id="Vagrant-Virtailbox-架設環境"><a href="#Vagrant-Virtailbox-架設環境" class="headerlink" title="Vagrant+Virtailbox 架設環境"></a>Vagrant+Virtailbox 架設環境</h2><p>安裝</p>
 <ul>
 <li>Vagrant</li>
@@ -607,7 +577,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">535</span>
+                  <span class="site-state-item-count">563</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -618,7 +588,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -629,7 +599,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">428</span>
+                  <span class="site-state-item-count">447</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -672,7 +642,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-minikube"><span class="nav-number">1.</span> <span class="nav-text">安裝 minikube</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kubectl"><span class="nav-number">1.1.</span> <span class="nav-text">kubectl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minikube"><span class="nav-number">1.2.</span> <span class="nav-text">Minikube</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minikube-start"><span class="nav-number">1.3.</span> <span class="nav-text">minikube start</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到錯誤"><span class="nav-number">2.</span> <span class="nav-text">遇到錯誤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VM-64-bit-不能安裝-64-bit-OS"><span class="nav-number">2.1.</span> <span class="nav-text">VM 64 bit 不能安裝 64 bit OS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exec-format-error"><span class="nav-number">2.2.</span> <span class="nav-text">Exec format error</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-minikube"><span class="nav-number">3.</span> <span class="nav-text">刪除 minikube</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vagrant-Virtailbox-架設環境"><span class="nav-number">4.</span> <span class="nav-text">Vagrant+Virtailbox 架設環境</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vagrant-Virtailbox-架設環境"><span class="nav-number">1.</span> <span class="nav-text">Vagrant+Virtailbox 架設環境</span></a></li></ol></div>
             
 
           </div>
@@ -692,7 +662,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
