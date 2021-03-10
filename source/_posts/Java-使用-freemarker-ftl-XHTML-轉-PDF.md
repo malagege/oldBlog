@@ -44,12 +44,21 @@ TODO: 整理
 後來發現用 Android 中文會看不到
 可能用標楷體會能解決
 
+
+
 ## 圖片(base64)
 
 ## 轉 xhtml
 
 
 
+## 別人範例
+
+[一次java导出pdf的经历 - mickey007 - 博客园](https://www.cnblogs.com/blueskyli/p/9921832.html)
+[Java生成pdf文件或jpg图片 - 简书](https://www.jianshu.com/p/36517afe0c36)
+
 ## 別的方法
 
 [jhonnymertz/java-wkhtmltopdf-wrapper: A Java wrapper for wkhtmltopdf](https://github.com/jhonnymertz/java-wkhtmltopdf-wrapper)
+
+

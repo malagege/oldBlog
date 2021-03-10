@@ -211,9 +211,22 @@ kubectl get endpints alpaca-prod --watch
 
 ## 建立 Service yaml
 
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
 ```
 
-```
+簡單來說 Service 對印 selector 去抓含有 Label 的 `Pod`
 
 
 ## kube-proxy
