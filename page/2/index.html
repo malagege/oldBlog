@@ -310,6 +310,1280 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/03/03/Kubernetes-的-ConfigMap/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/03/03/Kubernetes-的-ConfigMap/" itemprop="url">Kubernetes 的 ConfigMap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-03-03T20:54:32+08:00">
+                2021-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kuberenetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kuberenetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/03/03/Kubernetes-的-ConfigMap/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/03/Kubernetes-的-ConfigMap/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="建立-Clusters"><a href="#建立-Clusters" class="headerlink" title="建立 Clusters"></a>建立 Clusters</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap &lt;map-name&gt; &lt;data-source&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the local directory</span></span><br><span class="line">mkdir -p configure-pod-container/configmap/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download the sample files into `configure-pod-container/configmap/` directory</span></span><br><span class="line">wget https://kubernetes.io/examples/configmap/game.properties -O configure-pod-container/configmap/game.properties</span><br><span class="line">wget https://kubernetes.io/examples/configmap/ui.properties -O configure-pod-container/configmap/ui.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the configmap</span></span><br><span class="line">kubectl create configmap game-config --from-file=configure-pod-container/configmap/</span><br></pre></td></tr></table></figure>
+<p>這邊有點有趣，client 端做，nodes 竟然可以吃到抓下來的 properties<br>不知道底層原理怎麼做到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get configmaps game-config -o yaml</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  creationTimestamp:</span> <span class="number">2016</span><span class="bullet">-02</span><span class="bullet">-18</span><span class="attr">T18:52:05Z</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">game-config</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">  resourceVersion:</span> <span class="string">"516"</span></span><br><span class="line"><span class="attr">  uid:</span> <span class="string">b4952dc3-d670-11e5-8cd0-68f728db1985</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="string">game.properties:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    enemies=aliens</span></span><br><span class="line"><span class="string">    lives=3</span></span><br><span class="line"><span class="string">    enemies.cheat=true</span></span><br><span class="line"><span class="string">    enemies.cheat.level=noGoodRotten</span></span><br><span class="line"><span class="string">    secret.code.passphrase=UUDDLRLRBABAS</span></span><br><span class="line"><span class="string">    secret.code.allowed=true</span></span><br><span class="line"><span class="string">    secret.code.lives=30    </span></span><br><span class="line"><span class="string">  ui.properties: |</span></span><br><span class="line"><span class="string">    color.good=purple</span></span><br><span class="line"><span class="string">    color.bad=yellow</span></span><br><span class="line"><span class="string">    allow.textmode=true</span></span><br><span class="line"><span class="string">    how.nice.to.look=fairlyNice</span></span><br></pre></td></tr></table></figure>
+<h3 id="從檔案建立-ConfigMap"><a href="#從檔案建立-ConfigMap" class="headerlink" title="從檔案建立 ConfigMap"></a>從檔案建立 ConfigMap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap game-config-2 --from-file=configure-pod-container/configmap/game.properties</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe configmaps game-config-2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Name:         game-config-2</span><br><span class="line">Namespace:    default</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  &lt;none&gt;</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">game.properties:</span><br><span class="line">----</span><br><span class="line">enemies=aliens</span><br><span class="line">lives=3</span><br><span class="line">enemies.cheat=true</span><br><span class="line">enemies.cheat.level=noGoodRotten</span><br><span class="line">secret.code.passphrase=UUDDLRLRBABAS</span><br><span class="line">secret.code.allowed=true</span><br><span class="line">secret.code.lives=30</span><br><span class="line">Events:  &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同時使用--from-file 載入多個檔案</span></span><br><span class="line">kubectl create configmap game-config-2 --from-file=configure-pod-container/configmap/game.properties --from-file=configure-pod-container/configmap/ui.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 ConfigMap 內容</span></span><br><span class="line">kubectl describe configmaps game-config-2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Name:         game-config-2</span><br><span class="line">Namespace:    default</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  &lt;none&gt;</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">game.properties:</span><br><span class="line">----</span><br><span class="line">enemies=aliens</span><br><span class="line">lives=3</span><br><span class="line">enemies.cheat=true</span><br><span class="line">enemies.cheat.level=noGoodRotten</span><br><span class="line">secret.code.passphrase=UUDDLRLRBABAS</span><br><span class="line">secret.code.allowed=true</span><br><span class="line">secret.code.lives=30</span><br><span class="line">ui.properties:</span><br><span class="line">----</span><br><span class="line">color.good=purple</span><br><span class="line">color.bad=yellow</span><br><span class="line">allow.textmode=true</span><br><span class="line">how.nice.to.look=fairlyNice</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Download the sample files into `configure-pod-container/configmap/` directory</span></span><br><span class="line">wget https://kubernetes.io/examples/configmap/game-env-file.properties -O configure-pod-container/configmap/game-env-file.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># The env-file `game-env-file.properties` looks like below</span></span><br><span class="line">cat configure-pod-container/configmap/game-env-file.properties</span><br><span class="line">enemies=aliens</span><br><span class="line">lives=3</span><br><span class="line">allowed=<span class="string">"true"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This comment and the empty line above it are ignored</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl get configmap game-config-env-file -o yaml</span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2017-12-27T18:36:28Z</span></span><br><span class="line"><span class="comment">#   name: game-config-env-file</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "809965"</span></span><br><span class="line"><span class="comment">#   uid: d9d1ca5b-eb34-11e7-887b-42010a8002b8</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   allowed: '"true"'</span></span><br><span class="line"><span class="comment">#   enemies: aliens</span></span><br><span class="line"><span class="comment">#   lives: "3"</span></span><br></pre></td></tr></table></figure>
+<p>使用多個<code>--from-env-file</code> </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Download the sample files into `configure-pod-container/configmap/` directory</span></span><br><span class="line">wget https://kubernetes.io/examples/configmap/ui-env-file.properties -O configure-pod-container/configmap/ui-env-file.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the configmap</span></span><br><span class="line">kubectl create configmap config-multi-env-files \</span><br><span class="line">        --from-env-file=configure-pod-container/configmap/game-env-file.properties \</span><br><span class="line">        --from-env-file=configure-pod-container/configmap/ui-env-file.properties</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kubectl get configmap config-multi-env-files -o yaml</span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2017-12-27T18:38:34Z</span></span><br><span class="line"><span class="comment">#   name: config-multi-env-files</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "810136"</span></span><br><span class="line"><span class="comment">#   uid: 252c4572-eb35-11e7-887b-42010a8002b8</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   color: purple</span></span><br><span class="line"><span class="comment">#   how: fairlyNice</span></span><br><span class="line"><span class="comment">#   textmode: "true"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#kubectl create configmap game-config-3 --from-file=&lt;my-key-name&gt;=&lt;path-to-file&gt;</span></span><br><span class="line">kubectl create configmap game-config-3 --from-file=game-special-key=configure-pod-container/configmap/game.properties</span><br><span class="line"></span><br><span class="line">kubectl get configmaps game-config-3 -o yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2016-02-18T18:54:22Z</span></span><br><span class="line"><span class="comment">#   name: game-config-3</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "530"</span></span><br><span class="line"><span class="comment">#   uid: 05f8da22-d671-11e5-8cd0-68f728db1985</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   game-special-key: |</span></span><br><span class="line"><span class="comment">#     enemies=aliens</span></span><br><span class="line"><span class="comment">#     lives=3</span></span><br><span class="line"><span class="comment">#     enemies.cheat=true</span></span><br><span class="line"><span class="comment">#     enemies.cheat.level=noGoodRotten</span></span><br><span class="line"><span class="comment">#     secret.code.passphrase=UUDDLRLRBABAS</span></span><br><span class="line"><span class="comment">#     secret.code.allowed=true</span></span><br><span class="line"><span class="comment">#     secret.code.lives=30</span></span><br></pre></td></tr></table></figure>
+<p>指令內文 key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap special-config --from-literal=special.how=very --from-literal=special.type=charm</span><br><span class="line">kubectl get configmaps special-config -o yaml</span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2016-02-18T19:14:38Z</span></span><br><span class="line"><span class="comment">#   name: special-config</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "651"</span></span><br><span class="line"><span class="comment">#   uid: dadce046-d673-11e5-8cd0-68f728db1985</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   special.how: very</span></span><br><span class="line"><span class="comment">#   special.type: charm</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a kustomization.yaml file with ConfigMapGenerator</span></span><br><span class="line">cat &lt;&lt;EOF &gt;./kustomization.yaml</span><br><span class="line">configMapGenerator:</span><br><span class="line">- name: game-config-4</span><br><span class="line">  files:</span><br><span class="line">  - configure-pod-container/configmap/game.properties</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl apply -k .</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl describe configmaps/game-config-4-m9dm2f92bt</span><br></pre></td></tr></table></figure>
+<p>定義 key Mapping 到 檔案</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a kustomization.yaml file with ConfigMapGenerator</span></span><br><span class="line">cat &lt;&lt;EOF &gt;./kustomization.yaml</span><br><span class="line">configMapGenerator:</span><br><span class="line">- name: game-config-5</span><br><span class="line">  files:</span><br><span class="line">  - game-special-key=configure-pod-container/configmap/game.properties</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl apply -k .</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Create a kustomization.yaml file with ConfigMapGenerator</span><br><span class="line">cat &lt;&lt;EOF &gt;./kustomization.yaml</span><br><span class="line">configMapGenerator:</span><br><span class="line">- name: special-config-2</span><br><span class="line">  literals:</span><br><span class="line">  - special.how=very</span><br><span class="line">  - special.type=charm</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl apply -k .</span><br></pre></td></tr></table></figure>
+<h2 id="在-Pod-使用-ConfigMap"><a href="#在-Pod-使用-ConfigMap" class="headerlink" title="在 Pod 使用 ConfigMap"></a>在 Pod 使用 ConfigMap</h2><h3 id="使用環境變數"><a href="#使用環境變數" class="headerlink" title="使用環境變數"></a>使用環境變數</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap special-config --from-literal=special.how=very</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">dapi-test-pod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">test-container</span></span><br><span class="line"><span class="attr">      image:</span> <span class="string">k8s.gcr.io/busybox</span></span><br><span class="line"><span class="attr">      command:</span> <span class="string">[</span> <span class="string">"/bin/sh"</span><span class="string">,</span> <span class="string">"-c"</span><span class="string">,</span> <span class="string">"env"</span> <span class="string">]</span></span><br><span class="line"><span class="attr">      env:</span></span><br><span class="line">        <span class="comment"># Define the environment variable</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">SPECIAL_LEVEL_KEY</span></span><br><span class="line"><span class="attr">          valueFrom:</span></span><br><span class="line"><span class="attr">            configMapKeyRef:</span></span><br><span class="line">              <span class="comment"># The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY</span></span><br><span class="line"><span class="attr">              name:</span> <span class="string">special-config</span></span><br><span class="line">              <span class="comment"># Specify the key associated with the value</span></span><br><span class="line"><span class="attr">              key:</span> <span class="string">special.how</span></span><br><span class="line"><span class="attr">  restartPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://kubernetes.io/examples/pods/pod-single-configmap-env-variable.yaml</span><br></pre></td></tr></table></figure>
+<p>使用多個 ConfigMap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  name: special-config</span><br><span class="line">  namespace: default</span><br><span class="line">data:</span><br><span class="line">  special.how: very</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  name: env-config</span><br><span class="line">  namespace: default</span><br><span class="line">data:</span><br><span class="line">  log_level: INFO</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://kubernetes.io/examples/configmap/configmaps.yaml</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">dapi-test-pod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">test-container</span></span><br><span class="line"><span class="attr">      image:</span> <span class="string">k8s.gcr.io/busybox</span></span><br><span class="line"><span class="attr">      command:</span> <span class="string">[</span> <span class="string">"/bin/sh"</span><span class="string">,</span> <span class="string">"-c"</span><span class="string">,</span> <span class="string">"env"</span> <span class="string">]</span></span><br><span class="line"><span class="attr">      env:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">SPECIAL_LEVEL_KEY</span></span><br><span class="line"><span class="attr">          valueFrom:</span></span><br><span class="line"><span class="attr">            configMapKeyRef:</span></span><br><span class="line"><span class="attr">              name:</span> <span class="string">special-config</span></span><br><span class="line"><span class="attr">              key:</span> <span class="string">special.how</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">LOG_LEVEL</span></span><br><span class="line"><span class="attr">          valueFrom:</span></span><br><span class="line"><span class="attr">            configMapKeyRef:</span></span><br><span class="line"><span class="attr">              name:</span> <span class="string">env-config</span></span><br><span class="line"><span class="attr">              key:</span> <span class="string">log_level</span></span><br><span class="line"><span class="attr">  restartPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://kubernetes.io/examples/pods/pod-multiple-configmap-env-variable.yaml</span><br></pre></td></tr></table></figure>
+<p>TODO: <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-with-data-from-multiple-configmaps" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-with-data-from-multiple-configmaps</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/28/買S360DB喇吧與需不需要買-DAC-小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/02/28/買S360DB喇吧與需不需要買-DAC-小記/" itemprop="url">買S360DB喇吧與需不需要買 DAC 小記</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-28T23:38:08+08:00">
+                2021-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/28/買S360DB喇吧與需不需要買-DAC-小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/28/買S360DB喇吧與需不需要買-DAC-小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近購買 S360DB 喇叭<br>有做一些筆記<br>方便以後來查詢<br>本內容是我從網路上整理的<br>因為我不是專業人士，特別整理網路上資訊<br>所以可能會有些錯誤</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2021/02/28/買S360DB喇吧與需不需要買-DAC-小記/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/23/Java-使用-freemarker-ftl-XHTML-轉-PDF/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/02/23/Java-使用-freemarker-ftl-XHTML-轉-PDF/" itemprop="url">Java 使用 freemarker (ftl) XHTML 轉 PDF</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-23T20:49:24+08:00">
+                2021-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/23/Java-使用-freemarker-ftl-XHTML-轉-PDF/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/23/Java-使用-freemarker-ftl-XHTML-轉-PDF/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>TODO: 整理</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2021/02/23/Java-使用-freemarker-ftl-XHTML-轉-PDF/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/22/Kuberenetes-的-Job/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/02/22/Kuberenetes-的-Job/" itemprop="url">Kubernetes 的 Job</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-22T19:08:59+08:00">
+                2021-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/22/Kuberenetes-的-Job/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/22/Kuberenetes-的-Job/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>直接進入重點</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2021/02/22/Kuberenetes-的-Job/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/21/SVN-移轉-GIT-小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/02/21/SVN-移轉-GIT-小記/" itemprop="url">SVN 移轉 GIT 小記</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-21T01:13:25+08:00">
+                2021-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/21/SVN-移轉-GIT-小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/21/SVN-移轉-GIT-小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近公司 SVN Repository 要備廢除<br>由於先前案子是使用 SVN，此專案也是交接下來的<br>不希望把 SVN 修改記錄刪除<br>很多專案都是把檔案從丟新的到 GIT<br>但我不是這樣做<br>花了一點時間找工具轉<br>趕緊紀錄，因為沒有在家實作<br>所以大概季錄一下</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2021/02/21/SVN-移轉-GIT-小記/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/18/Kuberentes-的-DaemonSet/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/02/18/Kuberentes-的-DaemonSet/" itemprop="url">Kubernetes 的 DaemonSet</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-18T23:11:50+08:00">
+                2021-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kuberenetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kuberenetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/18/Kuberentes-的-DaemonSet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/18/Kuberentes-的-DaemonSet/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Deployment 和 ReplicaSet 通常使用多個 replica 時候，都是建在各 nodes 隨機安裝。<br>DaemonSet 可以讓每一台 node 運行 Pod。<br>感覺這個跟 docker swarm 的 agent mode :global  一樣 <a href="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/">docker swarm 一些指令相關整理 | 程式狂想筆記</a><br>立馬實作看看</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2021/02/18/Kuberentes-的-DaemonSet/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/18/Kind-建置-Cluster/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/02/18/Kind-建置-Cluster/" itemprop="url">Kind 建置 Cluster</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-18T22:30:59+08:00">
+                2021-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kuberenetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kuberenetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/18/Kind-建置-Cluster/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/18/Kind-建置-Cluster/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近看 Kuberenets 看到 DaemonSet<br>由於目前 Kind 跟 MiniKube 都是使用單結點<br>沒有用 Cluster<br>今天照 Kind 實作看看</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2021/02/18/Kind-建置-Cluster/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/14/Kubernetes-的-Deployment/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2021/02/14/Kubernetes-的-Deployment/" itemprop="url">Kubernetes 的 Deployment</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-14T19:14:24+08:00">
+                2021-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/14/Kubernetes-的-Deployment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/14/Kubernetes-的-Deployment/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>感覺是滿多的功能<br>但頁數比較想像中的少<br>趕緊消化</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2021/02/14/Kubernetes-的-Deployment/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/13/Kubernetes-的-ReplicasSet/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -620,1292 +1894,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/04/Kubernetes-服務探索-Service-Discovery/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/02/04/Kubernetes-服務探索-Service-Discovery/" itemprop="url">Kubernetes 服務探索(Service Discovery)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-04T21:48:46+08:00">
-                2021-02-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/02/04/Kubernetes-服務探索-Service-Discovery/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/04/Kubernetes-服務探索-Service-Discovery/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Kubernetes  Service 筆記</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2021/02/04/Kubernetes-服務探索-Service-Discovery/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/02/Kubernetes-的-Label-和-Annotation-小記/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/02/02/Kubernetes-的-Label-和-Annotation-小記/" itemprop="url">Kubernetes 的 Label 和 Annotation 小記</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-02T22:07:39+08:00">
-                2021-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/02/02/Kubernetes-的-Label-和-Annotation-小記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/02/Kubernetes-的-Label-和-Annotation-小記/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Kubernetes 的 Label 和 Annotation 小記</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2021/02/02/Kubernetes-的-Label-和-Annotation-小記/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/02/用-XSD-驗證-XML-方法/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/02/02/用-XSD-驗證-XML-方法/" itemprop="url">用 XSD 驗證 XML 方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-02T21:54:26+08:00">
-                2021-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/02/02/用-XSD-驗證-XML-方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/02/用-XSD-驗證-XML-方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>維運常常遇到 XML 裡面格式<br>規則不是很清楚<br>後來</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2021/02/02/用-XSD-驗證-XML-方法/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/02/兩個字型合併方法/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/02/02/兩個字型合併方法/" itemprop="url">兩個字型合併方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-02T21:37:57+08:00">
-                2021-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/02/02/兩個字型合併方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/02/兩個字型合併方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近維運很常做造難字部份<br>我使用font forge 去新增字體<br>最近在想有沒有比較快速方法</p>
-<h2 id="平常手動維運處理"><a href="#平常手動維運處理" class="headerlink" title="平常手動維運處理"></a>平常手動維運處理</h2><p>TW-Kai-Ext-B-98_1.ttf 通常會在這邊找難字</p>
-<h2 id="找的相關工具"><a href="#找的相關工具" class="headerlink" title="找的相關工具"></a>找的相關工具</h2><p>有去 Github 找相關 Project … 但幾乎都失敗<br>所以我就不特別紀錄了</p>
-<h3 id="script"><a href="#script" class="headerlink" title="script"></a>script</h3><p>TODO: 測試<br><a href="https://linuxhint.com/merge_two_fonts_linux/" target="_blank" rel="noopener">How to Merge Two Fonts in Linux – Linux Hint</a></p>
-<h2 id="參考來源"><a href="#參考來源" class="headerlink" title="參考來源"></a>參考來源</h2><ul>
-<li><a href="http://ajax-chen.blogspot.com/2016/05/abc-pdf.html" target="_blank" rel="noopener">阿吉的部落格: 在 ABC pdf 中嵌入造字</a></li>
-<li><a href="https://dotblogs.com.tw/rainmaker/2016/03/11/140808" target="_blank" rel="noopener">[Font]使用者自造字(EUDC)成功轉到 PDF 的方式 | 亂馬客 - 點部落</a></li>
-<li><a href="https://ithelp.ithome.com.tw/questions/10201369" target="_blank" rel="noopener">Crystal Report轉PDF使用全字庫的難字問題~ - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
-<li><a href="https://github.com/foliojs/fontkit" target="_blank" rel="noopener">foliojs/fontkit: An advanced font engine for Node and the browser</a></li>
-<li><a href="https://www.google.com/search?q=fontkit+merge+font&amp;client=firefox-b-d&amp;sxsrf=ALeKk01qWVlRrnZPwM320bJyxNP5raWybg:1612273559183&amp;ei=l1cZYJHgCrPUmAWfwZq4Dg&amp;start=10&amp;sa=N&amp;ved=2ahUKEwjRh5qGq8vuAhUzKqYKHZ-gBucQ8NMDegQICBBO&amp;biw=1408&amp;bih=708&amp;dpr=2.73" target="_blank" rel="noopener">fontkit merge font - Google 搜尋</a></li>
-<li><a href="https://linuxhint.com/merge_two_fonts_linux/" target="_blank" rel="noopener">How to Merge Two Fonts in Linux – Linux Hint</a></li>
-<li><a href="https://superuser.com/questions/490922/merging-two-fonts" target="_blank" rel="noopener">Merging two fonts - Super User</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/01/28/Shell-實作守護進程方法/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/01/28/Shell-實作守護進程方法/" itemprop="url">Shell 實作守護進程方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-01-28T21:36:17+08:00">
-                2021-01-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/01/28/Shell-實作守護進程方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/28/Shell-實作守護進程方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Shell 實作守護進程方法</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2021/01/28/Shell-實作守護進程方法/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/01/19/Kubernetes-操作-Pod-小記/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/01/19/Kubernetes-操作-Pod-小記/" itemprop="url">Kubernetes 操作 Pod 小記</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-01-19T22:18:36+08:00">
-                2021-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/01/19/Kubernetes-操作-Pod-小記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/19/Kubernetes-操作-Pod-小記/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>記錄</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2021/01/19/Kubernetes-操作-Pod-小記/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/01/17/查詢有壓縮-gz-日誌-log-方法/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/01/17/查詢有壓縮-gz-日誌-log-方法/" itemprop="url">查詢有壓縮(gz)日誌 log 方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-01-17T23:17:23+08:00">
-                2021-01-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/01/17/查詢有壓縮-gz-日誌-log-方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/17/查詢有壓縮-gz-日誌-log-方法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>常常要抓下來再解縮查詢<br>這樣常常花了滿多時間</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blog/2021/01/17/查詢有壓縮-gz-日誌-log-方法/#more" rel="contents">
-              閱讀全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/01/14/安裝-Kubernetes-記錄/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2021/01/14/安裝-Kubernetes-記錄/" itemprop="url">安裝 Kubernetes 記錄</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:44+08:00">
-                2021-01-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2021/01/14/安裝-Kubernetes-記錄/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/14/安裝-Kubernetes-記錄/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="minkube"><a href="#minkube" class="headerlink" title="minkube"></a>minkube</h2><h3 id="安裝-minikube"><a href="#安裝-minikube" class="headerlink" title="安裝 minikube"></a>安裝 minikube</h3><p>必備安裝</p>
-<ul>
-<li>VirtualBox</li>
-<li>minikube</li>
-<li>kubectl</li>
-</ul>
-<h4 id="Minikube"><a href="#Minikube" class="headerlink" title="Minikube"></a>Minikube</h4><p><a href="https://github.com/kubernetes/minikube/releases" target="_blank" rel="noopener">(這邊請去官網看OS載點替換) kubernetes/minikube</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://github.com/kubernetes/minikube/releases/download/v1.6.2/minikube-linux-amd64(這邊請去官網看OS載點替換)</span><br><span class="line">chmod +x minikube-linux-amd64</span><br><span class="line">./minikube-linux-amd64 <span class="comment"># 測試看能不跑</span></span><br><span class="line">sudo mv minikube-linux-amd64 /usr/<span class="built_in">local</span>/bin/minikube</span><br></pre></td></tr></table></figure>
-<h4 id="Virtualbox"><a href="#Virtualbox" class="headerlink" title="Virtualbox"></a>Virtualbox</h4><p><a href="https://www.virtualbox.org/wiki/Linux_Downloads" target="_blank" rel="noopener">Linux_Downloads – Oracle VM VirtualBox</a></p>
-<p>我這邊是用 ElementaryOS (Ubuntu 18.04)<br>下載完成用 <code>sudo apt install ./xxx.deb</code> 指令安裝</p>
-<h4 id="kubectl"><a href="#kubectl" class="headerlink" title="kubectl"></a>kubectl</h4><p>單節點</p>
-<p><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" target="_blank" rel="noopener"> (這邊請去官網看OS載點替換) Install and Set Up kubectl - Kubernetes</a></p>
-<p>這邊我選 Linux<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl (這邊請去官網看OS載點替換)</span><br><span class="line">chmod +x ./kubectl</span><br><span class="line">sudo mv ./kubectl /usr/<span class="built_in">local</span>/bin/kubectl</span><br><span class="line">kubectl <span class="comment"># 看能不能跑</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="minikube-start"><a href="#minikube-start" class="headerlink" title="minikube start"></a>minikube start</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br><span class="line"><span class="comment"># 會安裝會用到的 iso</span></span><br><span class="line">😄  minikube v1.6.2 on Debian buster/sid</span><br><span class="line">✨  Automatically selected the <span class="string">'virtualbox'</span> driver (alternates: [none])</span><br><span class="line">🔥  Creating virtualbox VM (CPUs=2, Memory=2000MB, Disk=20000MB) ...</span><br><span class="line">🐳  Preparing Kubernetes v1.17.0 on Docker <span class="string">'19.03.5'</span> ...</span><br><span class="line">🚜  Pulling images ...</span><br><span class="line">🚀  Launching Kubernetes ... </span><br><span class="line">⌛  Waiting <span class="keyword">for</span> cluster to come online ...</span><br><span class="line">🏄  Done! kubectl is now configured to use <span class="string">"minikube"</span></span><br></pre></td></tr></table></figure>
-<p>最後可以下<code>minikube dashboard</code><br>看有沒有問題</p>
-<h3 id="遇到錯誤"><a href="#遇到錯誤" class="headerlink" title="遇到錯誤"></a>遇到錯誤</h3><h4 id="VM-64-bit-不能安裝-64-bit-OS"><a href="#VM-64-bit-不能安裝-64-bit-OS" class="headerlink" title="VM 64 bit 不能安裝 64 bit OS"></a>VM 64 bit 不能安裝 64 bit OS</h4><p><strong>先說結論:不能用 VM 跑樣子</strong></p>
-<p>用 VM 裝可能遇到的問題<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">💣  Unable to start VM. Please investigate and run &apos;minikube delete&apos; if possible</span><br><span class="line">❌  Error: [VBOX_VTX_DISABLED] create: precreate: This computer doesn&apos;t have VT-X/AMD-v enabled. Enabling it in the BIOS is mandatory</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config.vm.provider :virtualbox do |vb|  </span><br><span class="line">  vb.customize [&quot;modifyvm&quot;, :id, &quot;--hwvirtex&quot;, &quot;off&quot;]     </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>參考來源: <a href="https://gist.github.com/betweenbrain/7798873" target="_blank" rel="noopener">Disable VT-X in Vagrantfile</a><br>但最後還是不行</p>
-<blockquote>
-<p>Consequences from missing VT-X in nested VirtualBox</p>
-<p>There are currently two consequences from nesting without VT-X:</p>
-<pre><code>You cannot use multiple CPUs but you can use a single virtual cpu using vb.cpus = 1
-You cannot run a 64-Bit VM within a nested VirtualBox.
-</code></pre></blockquote>
-<p><a href="https://stackoverflow.com/questions/24620599/error-vt-x-not-available-for-vagrant-machine-inside-virtualbox" target="_blank" rel="noopener">Error VT-x not available for Vagrant machine inside Virtualbox - Stack Overflow</a></p>
-<h4 id="Exec-format-error"><a href="#Exec-format-error" class="headerlink" title="Exec format error"></a>Exec format error</h4><p>若有這個錯誤訊息…</p>
-<blockquote>
-<p>bash: /usr/local/bin/kubectl: cannot execute binary file: Exec format error</p>
-</blockquote>
-<p>就是安裝錯版本</p>
-<h3 id="查看-cluster-info-資訊"><a href="#查看-cluster-info-資訊" class="headerlink" title="查看 cluster-info 資訊"></a>查看 cluster-info 資訊</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl cluster-info</span><br><span class="line">Kubernetes control plane is running at https://192.168.99.100:8443</span><br><span class="line">KubeDNS is running at https://192.168.99.100:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</span><br></pre></td></tr></table></figure>
-<p>成功完成</p>
-<h3 id="刪除-minikube"><a href="#刪除-minikube" class="headerlink" title="刪除 minikube"></a>刪除 minikube</h3><p>Delete minikube</p>
-<p>minikube delete &amp;&amp; rm -rf ~/.minikube</p>
-<h3 id="遠端連-dashboard"><a href="#遠端連-dashboard" class="headerlink" title="遠端連 dashboard"></a>遠端連 dashboard</h3><h4 id="安裝-UI"><a href="#安裝-UI" class="headerlink" title="安裝 UI"></a>安裝 UI</h4><p>以下參考:<br><a href="https://github.com/kubernetes/dashboard" target="_blank" rel="noopener">kubernetes/dashboard: General-purpose web UI for Kubernetes clusters</a><br><a href="https://ithelp.ithome.com.tw/articles/10195385" target="_blank" rel="noopener">[Day 14] Kubernetes Dashboard 介紹 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml</span><br><span class="line"></span><br><span class="line">namespace/kubernetes-dashboard configured</span><br><span class="line">serviceaccount/kubernetes-dashboard configured</span><br><span class="line">service/kubernetes-dashboard configured</span><br><span class="line">secret/kubernetes-dashboard-certs configured</span><br><span class="line">secret/kubernetes-dashboard-csrf configured</span><br><span class="line">secret/kubernetes-dashboard-key-holder configured</span><br><span class="line">configmap/kubernetes-dashboard-settings configured</span><br><span class="line">role.rbac.authorization.k8s.io/kubernetes-dashboard configured</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/kubernetes-dashboard configured</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard configured</span><br><span class="line">deployment.apps/kubernetes-dashboard configured</span><br><span class="line">service/dashboard-metrics-scraper configured</span><br><span class="line">deployment.apps/dashboard-metrics-scraper configured</span><br><span class="line"><span class="comment"># 會遇到這個錯誤</span></span><br><span class="line">The ClusterRoleBinding <span class="string">"kubernetes-dashboard"</span> is invalid: roleRef: Invalid value: rbac.RoleRef&#123;APIGroup:<span class="string">"rbac.authorization.k8s.io"</span>, Kind:<span class="string">"ClusterRole"</span>, Name:<span class="string">"kubernetes-dashboard"</span>&#125;: cannot change roleRef</span><br></pre></td></tr></table></figure>
-<p>這個錯誤，我目前無解…<br>因為刪除 kubernetes-dashboard 後會馬上跳出來</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl proxy</span><br><span class="line"><span class="comment"># 預設 localhost</span></span><br><span class="line"><span class="comment"># Starting to serve on 127.0.0.1:8001</span></span><br><span class="line">kubectl proxy --address=<span class="string">'0.0.0.0'</span> --port=8002 --accept-hosts=<span class="string">'^*$'</span></span><br><span class="line"><span class="comment"># 開啟遠端連線</span></span><br></pre></td></tr></table></figure>
-<p>其他資源:<a href="https://www.cnblogs.com/rainingnight/p/deploying-k8s-dashboard-ui.html" target="_blank" rel="noopener">kubernetes-dashboard(1.8.3)部署与踩坑 - 雨夜朦胧 - 博客园</a></p>
-<h3 id="簡單-Hello-World"><a href="#簡單-Hello-World" class="headerlink" title="簡單 Hello World"></a>簡單 Hello World</h3><p><a href="https://kubernetes.io/docs/tutorials/hello-minikube/" target="_blank" rel="noopener">Hello Minikube | Kubernetes</a></p>
-<h2 id="Kind"><a href="#Kind" class="headerlink" title="Kind"></a>Kind</h2><h3 id="安裝-Docker"><a href="#安裝-Docker" class="headerlink" title="安裝 Docker"></a>安裝 Docker</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.daocloud.io/docker | sh</span><br></pre></td></tr></table></figure>
-<p>詳細建議官網看新教學</p>
-<h4 id="設定-docker-權限"><a href="#設定-docker-權限" class="headerlink" title="設定 docker 權限"></a>設定 docker 權限</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -G docker -a testuser</span><br></pre></td></tr></table></figure>
-<p>做完重新登錄</p>
-<h3 id="安裝-Kind"><a href="#安裝-Kind" class="headerlink" title="安裝 Kind"></a>安裝 Kind</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.9.0/kind-linux-amd64</span><br><span class="line">chmod +x ./kind</span><br><span class="line">mv ./kind /usr/local/bin/kind</span><br></pre></td></tr></table></figure>
-<h3 id="啟用集群"><a href="#啟用集群" class="headerlink" title="啟用集群"></a>啟用集群</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kind create cluster</span><br></pre></td></tr></table></figure>
-<h3 id="刪除集群"><a href="#刪除集群" class="headerlink" title="刪除集群"></a>刪除集群</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kind delete cluster</span><br></pre></td></tr></table></figure>
-<p>這邊要注意一點<br>移除集群預設選擇設定會拿掉<br>所以要重新選擇 k8s config context</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看現有選擇 k8s 環境</span></span><br><span class="line">kubectl config current-context</span><br><span class="line"><span class="comment"># 列出所有環境</span></span><br><span class="line">kubectl config get-contexts</span><br><span class="line"><span class="comment"># 選擇 k8s 環境</span></span><br><span class="line">kubectl config use-context minikube</span><br></pre></td></tr></table></figure>
-<p>更多詳細設定請參考<a href="https://ithelp.ithome.com.tw/articles/10193502" target="_blank" rel="noopener">Day 8 - 與 k8s 溝通: kubectl - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><br>外來可能會針對設定檔做設定</p>
-<p>這樣兩個環境就建置出來</p>
-<p>相關教學:<br><a href="https://kind.sigs.k8s.io/docs/user/quick-start" target="_blank" rel="noopener">kind – Quick Start</a> </p>
-<p><a href="https://www.cnblogs.com/weihanli/p/12831225.html" target="_blank" rel="noopener">使用 kind 快速搭建 kubernetes 环境 - WeihanLi - 博客园</a><br><a href="https://www.hi-linux.com/posts/42332.html" target="_blank" rel="noopener">使用 Kind 在 5 分钟内快速部署一个 Kubernetes 高可用集群 - 奇妙的 Linux 世界</a><br><a href="https://juejin.cn/post/6844903991499833358" target="_blank" rel="noopener">快速搭建kubernetes与kubeSphere环境（亲测有效）</a></p>
-<p><a href="http://jiagoushi.pro/minikube-vs-kind-vs-k3s-what-should-i-use" target="_blank" rel="noopener">【容器架构】Minikube vs.kind vs.k3s-我应该用哪一个？ | 架构师智库</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/117558052" target="_blank" rel="noopener">不同Kubernetes构建工具的介绍 - 知乎</a></p>
-<p><a href="https://blog.miniasp.com/post/2020/08/21/Install-Kubernetes-cluster-in-WSL-2-Docker-on-Windows-using-kind" target="_blank" rel="noopener">使用 WSL 2 與 Docker Desktop 架設 Kubernetes 多節點叢集環境 (KinD) | The Will Will Web</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1964,7 +1952,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">562</span>
+                  <span class="site-state-item-count">570</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -1975,7 +1963,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -1986,7 +1974,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">447</span>
+                  <span class="site-state-item-count">454</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近維運有時有超過 500 筆資料需要在 SQL 指令區查詢但是把多千筆資料拆開也是很耗時以固定行數切割文字檔案方法 | 程式狂想筆記先前有研究這個方法，可以快速切分但直接查詢全部還是最快">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-03-10T15:22:14.429Z">
+<meta property="og:updated_time" content="2021-03-13T11:12:48.881Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle WHERE IN 條件塞入超過 500 筆查詢條件方法">
 <meta name="twitter:description" content="最近維運有時有超過 500 筆資料需要在 SQL 指令區查詢但是把多千筆資料拆開也是很耗時以固定行數切割文字檔案方法 | 程式狂想筆記先前有研究這個方法，可以快速切分但直接查詢全部還是最快">
@@ -433,6 +433,10 @@
 <p>和<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">with t as </span><br><span class="line">(</span><br><span class="line">    <span class="keyword">select</span> (<span class="keyword">column_value</span>).getstringval() Codes <span class="keyword">from</span> <span class="keyword">xmltable</span>(<span class="string">'"A","B","C"'</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> t</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> (<span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">FROM</span> M_ITEMS M <span class="keyword">WHERE</span> codes = M.ITEM_CODE);</span><br></pre></td></tr></table></figure></p>
 <p>主要重點是 <code>select (column_value).getnumberval() Codes from xmltable(&#39;1,2,3,4,5&#39;)</code></p>
 <p>參考: <a href="https://stackoverflow.com/questions/12169842/oracle-create-a-temporary-resultset-for-use-in-a-query" target="_blank" rel="noopener">sql - Oracle- create a temporary resultset for use in a query - Stack Overflow</a></p>
+<p>2021-03-13</p>
+<h2 id="Oracle-IN-可放超過1000查詢條件方法"><a href="#Oracle-IN-可放超過1000查詢條件方法" class="headerlink" title="Oracle IN 可放超過1000查詢條件方法"></a>Oracle IN 可放超過1000查詢條件方法</h2><p>雖然要手動組</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> (<span class="number">1</span>,<span class="keyword">ID</span>)  <span class="keyword">in</span> ( (<span class="number">1</span>,<span class="number">0001</span>),(<span class="number">1</span>,<span class="number">0002</span>)... (<span class="number">1</span>,<span class="number">1999</span>) )</span><br></pre></td></tr></table></figure>
+<p>參考:<a href="https://copsonliu.pixnet.net/blog/post/92688453-oracle-1000-in-clause-limit" target="_blank" rel="noopener">oracle 1000 in clause limit @ 阿朗的部落格 :: 痞客邦 ::</a></p>
 
       
     </div>
@@ -570,7 +574,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">562</span>
+                  <span class="site-state-item-count">570</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -581,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/blog/categories/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">分類</span>
                 </a>
               </div>
@@ -592,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/blog/tags/index.html">
-                  <span class="site-state-item-count">447</span>
+                  <span class="site-state-item-count">454</span>
                   <span class="site-state-item-name">標籤</span>
                 </a>
               </div>
@@ -635,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#暫存表"><span class="nav-number">1.</span> <span class="nav-text">暫存表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神奇大法"><span class="nav-number">2.</span> <span class="nav-text">神奇大法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#暫存表"><span class="nav-number">1.</span> <span class="nav-text">暫存表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神奇大法"><span class="nav-number">2.</span> <span class="nav-text">神奇大法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-IN-可放超過1000查詢條件方法"><span class="nav-number">3.</span> <span class="nav-text">Oracle IN 可放超過1000查詢條件方法</span></a></li></ol></div>
             
 
           </div>
