@@ -47,3 +47,15 @@ WHERE NOT EXISTS (SELECT 1 FROM M_ITEMS M WHERE codes = M.ITEM_CODE);
 主要重點是 `select (column_value).getnumberval() Codes from xmltable('1,2,3,4,5')`
 
 參考: [sql - Oracle- create a temporary resultset for use in a query - Stack Overflow](https://stackoverflow.com/questions/12169842/oracle-create-a-temporary-resultset-for-use-in-a-query)
+
+
+2021-03-13
+## Oracle IN 可放超過1000查詢條件方法
+
+雖然要手動組
+
+```sql= 
+select * from table where (1,ID)  in ( (1,0001),(1,0002)... (1,1999) )
+```
+
+參考:[oracle 1000 in clause limit @ 阿朗的部落格 :: 痞客邦 ::](https://copsonliu.pixnet.net/blog/post/92688453-oracle-1000-in-clause-limit)
