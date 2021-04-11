@@ -165,7 +165,7 @@ docker 要怎麼用呢?
 
 官方寫法跟我的有點不太一樣
 
-```
+```bash
 docker run -d \
   --net="host" \
   --pid="host" \
@@ -301,6 +301,7 @@ prometheus 設定增加後，重啟服務`docker-compose restart prometheus`
 換成 docker-compose 就不能運作了...
 但一般docker 指令可正常執行...
 真的很奇怪
+
 ```
 version: '2'
 
@@ -319,6 +320,26 @@ services:
       - "TRANSMISSION_USERNAME=admin"
       - "TRANSMISSION_PASSWORD=admin"
 ```
+
+**20210408**
+後來發現 docker-compose up 起來 IP 好像不一樣
+所以才不能跑
+
+看 transmission 設定有一個設定白名單
+
+```json
+    "rpc-whitelist": "127.0.0.1,192.168.1.*,172.17.0.*",
+    "rpc-whitelist-enabled": true,
+
+```
+172.17.0.* 預設會過
+但是 docker-compose 起來不是這段 IP
+
+[透過 Docker Compose 設定 network | Titangene Blog](https://titangene.github.io/article/networking-in-docker-compose.html)
+
+目前指令不先研究怎麼使用
+最快方法就是把IP調成`172.*.*.*`
+
 
 ## traefik 
 
@@ -387,6 +408,8 @@ grafana-cli plugins install grafana-piechart-panel
 但目前相對程式都有 exporter
 就沒有使用
 
+[Prometheus — Process-exporter进程监控 - huandada - 博客园](https://www.cnblogs.com/huandada/p/10431667.html)
+
 ## Blackbox Exporter
 
 老實說，剛看好難入手
@@ -439,6 +462,28 @@ prometheus 設定
 
 接下來重啟 `dokcer-compose restart prometheus`
 就能解決了
+
+
+調整為 docker-compose 
+
+```yaml
+version: '3.3'
+
+services:
+  blackbox_exporter:
+    image: prom/blackbox-exporter:master
+    container_name: blackbox_exporter
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $PWD:/config
+    command:
+      - '--config.file=/config/blackbox.yml'
+    expose:
+      - '9115'
+    ports:
+      - 9115:9115
+```
 
 參考:
 [How to ping targets using blackbox_exporter with prometheus - Stack Overflow](https://stackoverflow.com/questions/55526487/how-to-ping-targets-using-blackbox-exporter-with-prometheus)
