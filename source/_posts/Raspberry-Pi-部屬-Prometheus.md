@@ -7,6 +7,11 @@ categories:
 
 參考:[docker-prometheus/docker-compose.yml at master · Kev1nChan/docker-prometheus · GitHub](https://github.com/Kev1nChan/docker-prometheus/blob/master/docker-compose.yml)
 
+**使用 Raspberry Pi 3/4 注意使用 32 位元都會有機會遇到記憶體問題**
+建議使用 64 bit
+`uname -m`
+不是 arrch64 都是 32bit
+
 <!--more-->
 
 ## 架設 Prometheus
@@ -398,7 +403,11 @@ grafana-cli plugins install grafana-piechart-panel
 我後來是用這個 dashboard
 [Traefik 2.2 dashboard for Grafana | Grafana Labs](https://grafana.com/grafana/dashboards/12250)
 
+後來發我現[docker-traefik-prometheus/config.monitoring at master · vegasbrianc/docker-traefik-prometheus · GitHub](https://github.com/vegasbrianc/docker-traefik-prometheus/blob/master/grafana/config.monitoring)
 
+```
+GF_INSTALL_PLUGINS=grafana-piechart-panel
+```
 
 
 ## process exporter
@@ -680,3 +689,122 @@ groups:
 
 最後有看到這個網站有一堆 rule 可以參考
 [Awesome Prometheus alerts | Collection of alerting rules](https://awesome-prometheus-alerts.grep.to/rules.html)
+
+
+## 2021-04-14 發生問題
+
+上 Grafana 看不到 Prometheus 資料
+看 log 發現
+```
+prometheus       | level=info ts=2021-04-14T12:32:25.883Z caller=head.go:768 component=tsdb msg="WAL segment loaded" segment=185 maxSegment=503
+prometheus       | panic: runtime error: invalid memory address or nil pointer dereference
+prometheus       | [signal SIGSEGV: segmentation violation code=0x1 addr=0xc pc=0x17127f8]
+prometheus       |
+prometheus       | goroutine 590 [running]:
+prometheus       | bufio.(*Writer).Available(...)
+prometheus       |      /usr/local/go/src/bufio/bufio.go:624
+prometheus       | github.com/prometheus/prometheus/tsdb/chunks.(*ChunkDiskMapper).WriteChunk(0x3d39b90, 0x145c, 0x0, 0xcced3c4b, 0x178, 0xcd0878f3, 0x178, 0x26914c4, 0x4712680, 0x0, ...)
+prometheus       |      /app/tsdb/chunks/head_chunks.go:291 +0x54c
+prometheus       | github.com/prometheus/prometheus/tsdb.(*memSeries).mmapCurrentHeadChunk(0x49bf340, 0x3d39b90)
+prometheus       |      /app/tsdb/head.go:2230 +0x6c
+prometheus       | github.com/prometheus/prometheus/tsdb.(*memSeries).cutNewHeadChunk(0x49bf340, 0xcd08b38b, 0x178, 0x3d39b90, 0x0)
+prometheus       |      /app/tsdb/head.go:2204 +0x24
+prometheus       | github.com/prometheus/prometheus/tsdb.(*memSeries).append(0x49bf340, 0xcd08b38b, 0x178, 0xc1422185, 0x3fe4f164, 0x0, 0x0, 0x3d39b90, 0x10001)
+prometheus       |      /app/tsdb/head.go:2360 +0x3a8
+prometheus       | github.com/prometheus/prometheus/tsdb.(*Head).processWALSamples(0x3d22120, 0xccd1ba00, 0x178, 0x68a2180, 0x68a2140, 0x0, 0x0)
+prometheus       |      /app/tsdb/head.go:425 +0x270
+prometheus       | github.com/prometheus/prometheus/tsdb.(*Head).loadWAL.func5(0x3d22120, 0x416dde0, 0x416ddf0, 0x68a2180, 0x68a2140)
+prometheus       |      /app/tsdb/head.go:519 +0x40
+prometheus       | created by github.com/prometheus/prometheus/tsdb.(*Head).loadWAL
+prometheus       |      /app/tsdb/head.go:518 +0x268
+prometheus       | level=info ts=2021-04-14T12:32:41.305Z caller=main.go:380 msg="No time or size retention was set so using the default time retention" duration=15d
+```
+
+~~因為我沒有用 healthcheck~~ 
+後來沒看到有用的 healthcheck
+web 介面都正常...
+
+docker-compose restart 好像都失敗
+所以`docker-compose down -v `直接清掉重啟就正常...
+
+swap 都設2GB
+RAM 看起來都正常...
+
+後來我猜測是 Prometheus 問題
+把 volumes 清掉就正常
+
+[rpi4 docker panic: mmap, size 134217728: cannot allocate memory · Issue #8661 · prometheus/prometheus · GitHub](https://github.com/prometheus/prometheus/issues/8661)
+~~後來我有找到這個跟我一樣問題~~
+~~我目前估計用docker-compose up 執行是跑舊版~~
+~~後來我跑最新版~~
+~~但是我沒清掉 volumes 關係?(忘記)~~
+~~看似 issue 問題也是升級問題~~
+~~但我是跑到第五天才遇到問題~~
+~~麻煩的是 alertmanager 沒發通知~~
+~~很容易沒注意到~~
+確定我過5天後又發生問題
+
+
+這邊當初我應該不用下`docker-compose down -v`
+應該先 `docker-compose stop prometheus `
+`docker volume rm (volume_name)`才對
+
+
+**2021-04-25**
+
+最近又遇到這個問題
+查了一下，可能跟 Raspberry PI OS 32 位元有關係
+
+參考:
+* [Compaction running out of memory · Issue #7483 · prometheus/prometheus · GitHub](https://github.com/prometheus/prometheus/issues/7483)
+* [3G memory free yet still panic: mmap: cannot allocate memory · Issue #7450 · prometheus/prometheus · GitHub](https://github.com/prometheus/prometheus/issues/7450)
+* [mmap: cannot allocate memory · Issue #4392 · prometheus/prometheus · GitHub](https://github.com/prometheus/prometheus/issues/4392)
+* [any way to disable sync prometheus configuration? · Issue #3725 · prometheus-operator/prometheus-operator · GitHub](https://github.com/prometheus-operator/prometheus-operator/issues/3725#issuecomment-741820940)
+
+
+> Had the same problem. Fixed it by adding a size limit for the storage with --storage.tsdb.retention.size=500MB.
+> Maybe on 32bit systems there could be a default/maximum value for storage.tsdb.retention.size, along with the warning.
+https://github.com/prometheus/prometheus/issues/7483#issuecomment-670512677
+
+這個我還沒測試
+
+
+>    Raspberry PI 3 B+
+>    Raspbian Stretch Lite October 2018
+>    prometheus, version 2.4.3+ds (branch: debian/sid, revision: 2.4.3+ds-2) installed from armhf deb package (https://packages.debian.org/sid/net/prometheus) (so I guess no 64bit on 32bit)
+>    --storage.tsdb.retention=15y --storage.tsdb.min-block-duration=2h --storage.tsdb.max-block-duration=2h but problem also appears on default settings of min/max block durations.
+https://github.com/prometheus/prometheus/issues/4392#issuecomment-433717839
+
+
+目前使用這個方案觀察看看
+
+```yaml
+  prometheus:
+    image: prom/prometheus-linux-armv7
+    container_name: prometheus
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $PWD/prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--storage.tsdb.retention=90d'
+      - '--storage.tsdb.min-block-duration=2h'
+      - '--storage.tsdb.max-block-duration=2h'
+    networks:
+      - monitoring
+    links:
+      - alertmanager
+      - cadvisor
+    expose:
+      - '9090'
+    ports:
+      - 9090:9090
+    depends_on:
+      - cadvisor
+```
+
