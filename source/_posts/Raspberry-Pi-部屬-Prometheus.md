@@ -754,7 +754,7 @@ RAM 看起來都正常...
 
 最近又遇到這個問題
 查了一下，可能跟 Raspberry PI OS 32 位元有關係
-
+聽說64 位元能解決?!(不確定)
 參考:
 * [Compaction running out of memory · Issue #7483 · prometheus/prometheus · GitHub](https://github.com/prometheus/prometheus/issues/7483)
 * [3G memory free yet still panic: mmap: cannot allocate memory · Issue #7450 · prometheus/prometheus · GitHub](https://github.com/prometheus/prometheus/issues/7450)
@@ -766,8 +766,8 @@ RAM 看起來都正常...
 > Maybe on 32bit systems there could be a default/maximum value for storage.tsdb.retention.size, along with the warning.
 https://github.com/prometheus/prometheus/issues/7483#issuecomment-670512677
 
-這個我還沒測試
-
+~~這個我還沒測試~~
+2021-05-03 測試中
 
 >    Raspberry PI 3 B+
 >    Raspbian Stretch Lite October 2018
@@ -775,8 +775,10 @@ https://github.com/prometheus/prometheus/issues/7483#issuecomment-670512677
 >    --storage.tsdb.retention=15y --storage.tsdb.min-block-duration=2h --storage.tsdb.max-block-duration=2h but problem also appears on default settings of min/max block durations.
 https://github.com/prometheus/prometheus/issues/4392#issuecomment-433717839
 
+[Prometheus命令](https://vitzhou.top/20180328_prometheus_config/)
 
-目前使用這個方案觀察看看
+~~目前使用這個方案觀察看看~~
+2021-05-03 確定跑到後面會出問題
 
 ```yaml
   prometheus:

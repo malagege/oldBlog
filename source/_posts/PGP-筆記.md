@@ -110,3 +110,7 @@ PS: 我專案是Java1.7，1.8竟然可以跑
 
 
 [新增 Git GPG Key 增加安全性 - Askie's Coding Life](https://askie.today/git-pgp-keys/)
+
+## Java
+
+[PGP Encryption/Decryption in Java | Waiting for Wit](http://sloanseaman.com/wordpress/2011/08/11/pgp-encryptiondecryption-in-java/)

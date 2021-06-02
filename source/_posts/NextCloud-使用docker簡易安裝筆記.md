@@ -197,4 +197,43 @@ https://192.168.1.x:4443/?app=nc-scan-auto
 
 暫時收工
 
+**2021-05-10**
 
+還是不想透過用指令方法去實作
+traefik 上傳多個 MP3 會有問題(可能樹梅派做這些動作 loading 還是太重了)
+想透過 sftp 上傳 權限用 www-data
+本來想掛個sftp
+但我又不想用www-data為帳號
+``
+git clone 
+
+cd sftp 
+
+docker build . -t rpi-sftp
+
+docker run -p 2223:22 -d rpi-sftp miles:123456:33:33:upload -v
+```
+
+[[Docker] 使用 Docker 建置 FTP(SFTP) 環境 - Miles's Journey](https://mileslin.github.io/2020/02/%E4%BD%BF%E7%94%A8-Docker-%E5%BB%BA%E7%BD%AE-FTP-SFTP-%E7%92%B0%E5%A2%83/)
+
+
+[Nextcloud](https://hrbhot.github.io/posts/nextcloud/)
+[nextcloud ntfs权限问题及解决方法-β1ùe](https://b1ue.me/archives/183)
+[Docker安装nextcloud以及遇到的一下问题和优化方法 - 烦fpy](https://www.fanfpy.top/index.php/archives/68/)
+
+
+[阿就操場啊~: 使用者在Linux, BSD切換群組](https://2formosa.blogspot.com/2020/10/change-group-on-UNIX-like-system.html)
+
+
+我後來使用  `usermod -a -G www-data pi`
+這樣我就可以執接sftp放檔案進去
+www-data也能刪檔案
+
+
+[linuxserver/nextcloud - LinuxServer.io](https://docs.linuxserver.io/images/docker-nextcloud)
+
+改umask
+
+~~`-e UMASK=022`~~
+沒效...，看來新建資料夾比較麻煩
+[How to change Default Umask Permission in Linux](https://www.computernetworkingnotes.com/rhce-study-guide/how-to-change-default-umask-permission-in-linux.html)

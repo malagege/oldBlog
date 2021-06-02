@@ -370,10 +370,10 @@ Docker Label 設定方法
 ```yml
     labels:
       - "traefik.backend=whoami"
-      - "traefik.http.routers.whoami.rule=Host(`whoami.twlife.duckdns.org`) || PathPrefix(`/whoami`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.ooo.duckdns.org`) || PathPrefix(`/whoami`)"
       - "traefik.port=8000"
       #- "traefik.protocol=http" default http
-      - "traefik.http.routers.whoami-https.rule=Host(`whoami.twlife.duckdns.org`)"
+      - "traefik.http.routers.whoami-https.rule=Host(`whoami.ooo.duckdns.org`)"
       - "traefik.http.routers.whoami-https.tls=true"
 
 ```

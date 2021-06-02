@@ -230,3 +230,27 @@ $ java SSLPoke www.google.com 443
 Successfully connected
 ```
 失敗就會出現一大堆錯
+
+
+
+###  handling exception: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+
+```
+ handling exception: javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+```
+
+不知道是哪裡出問題
+但後來發現是根憑證沒有這個
+
+1. 指定jks(加好根憑證)或自己加
+```bash
+java -Djavax.net.ssl.trustStore= 
+
+# 吃公司內部jks 無可以設定
+#java -Djavax.net.debug=ssl  -Djavax.net.ssl.trustStore=./jssecacerts.jks SSLPoke xxxx.aaa.com.tw 443
+```
+[获取访问目标主机的有效SSL/TLS证书 (无法直接得到证书时)_iihero@CSDN-CSDN博客](https://blog.csdn.net/iihero/article/details/7584162)
+
+2. 程式忽略掉
+[证书不安全解决HttpClient 如何忽略证书验证 - ALLOW_ALL_HOSTNAME_VERIFIER_tiantianchuqiji的博客-CSDN博客](https://blog.csdn.net/tiantianchuqiji/article/details/76639796)
