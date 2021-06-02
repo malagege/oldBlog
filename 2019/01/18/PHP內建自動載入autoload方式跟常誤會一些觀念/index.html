@@ -1,37 +1,1223 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="composer,autoload,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近有計畫學 Laravel不過想趁機會把 PHP Namespace搞清楚我在想autoload自動載入是甚麼機制的最近小小的玩了一下，才知道這個自動載入是怎麼用的其實我覺得也不是完全自動載入阿~~終究還是手動需做載入一段程式">
+<meta name="keywords" content="composer,autoload">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP內建自動載入autoload方式跟常誤會一些觀念">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近有計畫學 Laravel不過想趁機會把 PHP Namespace搞清楚我在想autoload自動載入是甚麼機制的最近小小的玩了一下，才知道這個自動載入是怎麼用的其實我覺得也不是完全自動載入阿~~終究還是手動需做載入一段程式">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP內建自動載入autoload方式跟常誤會一些觀念">
+<meta name="twitter:description" content="最近有計畫學 Laravel不過想趁機會把 PHP Namespace搞清楚我在想autoload自動載入是甚麼機制的最近小小的玩了一下，才知道這個自動載入是怎麼用的其實我覺得也不是完全自動載入阿~~終究還是手動需做載入一段程式">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/">
+
+
+
+
+
+  <title>PHP內建自動載入autoload方式跟常誤會一些觀念 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP內建自動載入autoload方式跟常誤會一些觀念</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-01-18T20:23:51+08:00">
+                2019-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近有計畫學 Laravel<br>不過想趁機會把 PHP <code>Namespace</code>搞清楚<br>我在想<code>autoload</code>自動載入是甚麼機制的<br>最近小小的玩了一下，才知道這個<code>自動載入</code>是怎麼用的<br>其實我覺得也不是完全自動載入阿~~終究還是手動需做載入一段程式</p>
+<a id="more"></a>
+<h2 id="PHP-原有-autoload-方式"><a href="#PHP-原有-autoload-方式" class="headerlink" title="PHP 原有 autoload 方式"></a>PHP 原有 autoload 方式</h2><p>include, include_once, require , require_once</p>
+<p>都是載入功能。<br>比較特別注意 include 當載入失敗會跳出警告，但是不會停止程式<br>require 載入失敗會跳出錯誤，不會繼續執行下面程式</p>
+<p>常常忘記哪個會載入錯誤 orz<br>順便記載這邊</p>
+<h2 id="PHP-Autoload"><a href="#PHP-Autoload" class="headerlink" title="PHP Autoload"></a>PHP Autoload</h2><p>前面兩個是比較早期的自動載入方式。簡單來講就是自動載入<code>xxx.php</code>方法<br>後面 namespace 可搭配<code>composer</code>實作</p>
+<ul>
+<li>__autoload</li>
+<li>spl_autoload</li>
+<li>autoload 與 namespace</li>
+</ul>
+<p><a href="http://justericgg.logdown.com/posts/196891-php-series-autoload" target="_blank" rel="noopener">PHP 系列 - Autoload 自動載入 « Eric G. Huang 不像樣工程師</a> <a href="/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/web1.png" title="備份圖">備份圖</a><br>上面連結介紹太清楚了。<br>我這邊仔細記錄我實務的問題</p>
+<h2 id="常常搞錯的觀念"><a href="#常常搞錯的觀念" class="headerlink" title="常常搞錯的觀念"></a>常常搞錯的觀念</h2><p>我是有學過 Java，所以對 Java Namespace 不是很陌生<br>但當初看 PHP 的 Namespace 有看沒有懂<br>學得他們很像，但又不是很像<br>但說 Java Namespace 定義很清楚<br>PHP 並沒有那麼清楚(畢竟是腳本語言….)</p>
+<h3 id="還是需要放置載入程式"><a href="#還是需要放置載入程式" class="headerlink" title="還是需要放置載入程式"></a>還是需要放置載入程式</h3><p>首先來看看 Laravel 的 Controller.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Http</span>\<span class="title">Controllers</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Bus</span>\<span class="title">DispatchesJobs</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Routing</span>\<span class="title">Controller</span> <span class="title">as</span> <span class="title">BaseController</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Validation</span>\<span class="title">ValidatesRequests</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Foundation</span>\<span class="title">Auth</span>\<span class="title">Access</span>\<span class="title">AuthorizesRequests</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Controller</span> <span class="keyword">extends</span> <span class="title">BaseController</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">AuthorizesRequests</span>, <span class="title">DispatchesJobs</span>, <span class="title">ValidatesRequests</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><del>看到這個我整個高潮了</del><br>其實我以為 PHP 已經完完整整可以自動載入<br>不過我自己實作卻是不能…<br>最終爬文還是找到答案</p>
+<p><del>下面那篇 PO 文跟我一樣 HI XD</del><br><a href="https://www.oschina.net/question/123890_135938?sort=default&amp;p=2" target="_blank" rel="noopener">php 的 use 明顯比 require 高端大氣上檔次 - 開源中國</a><br><a href="https://www.oschina.net/question/147332_138188" target="_blank" rel="noopener">php 使用命名空间:导入导出之疑问 - 开源中国</a></p>
+<p>為什麼 Laravel 的 Controller.php 可以自動載入<br>關鍵還是 index.php 的<code>require __DIR__.&#39;/../vendor/autoload.php&#39;;</code><br>所以我才說也不是真正的自動載入<br>不過方法真的已經比以前好很多</p>
+<h2 id="發現我自己寫的-PHP-沒辦法-use-使用到"><a href="#發現我自己寫的-PHP-沒辦法-use-使用到" class="headerlink" title="發現我自己寫的 PHP 沒辦法 use 使用到"></a>發現我自己寫的 PHP 沒辦法 use 使用到</h2><p>當以為你以為<code>require &#39;vendor/autoload.php&#39;;</code>可以載入所有 php 檔案內容<br>你可能就大錯特錯了!!!</p>
+<p>composer.json 有一個 classmap 自動載入</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "autoload": &#123;</span><br><span class="line">    	"classmap": &#123;</span><br><span class="line">    		<span class="string">"mylib"</span></span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><del>但不能設定<code>.</code></del>可以設定<code>.</code><br>發現我寫錯了，應該要用陣列才對<br>上面能跑純屬意外</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "autoload": &#123;</span><br><span class="line">    	"classmap": [</span><br><span class="line">    		<span class="string">"."</span></span><br><span class="line">    	]</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="發現新增檔案跟修改-class-名稱沒有自動載入到"><a href="#發現新增檔案跟修改-class-名稱沒有自動載入到" class="headerlink" title="發現新增檔案跟修改 class 名稱沒有自動載入到"></a>發現新增檔案跟修改 class 名稱沒有自動載入到</h2><p>當我發現這件事，還以為我哪裡寫錯了<br>其實有看到這篇<a href="http://jsnwork.kiiuo.com/archives/2437/php-composer-json-%e8%a8%ad%e5%ae%9a-classmap-%e6%8c%87%e5%ae%9a%e8%87%aa%e5%8b%95%e8%ae%80%e5%8f%96%e7%9a%84%e6%aa%94%e6%a1%88%e6%88%96%e8%b7%af%e5%be%91/" target="_blank" rel="noopener">php – composer.json 設定 classmap 指定自動讀取的檔案或路徑 | jsnWork</a><br>vendor/composer/autoload_classmap.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// autoload_classmap.php @generated by Composer</span></span><br><span class="line"></span><br><span class="line">$vendorDir = dirname(dirname(<span class="keyword">__FILE__</span>));</span><br><span class="line">$baseDir = dirname($vendorDir);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'mylib\\Test'</span> =&gt; $baseDir . <span class="string">'/mylib/test.php'</span>,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>看到原來自動載入原來不是真的跑每一層資料夾<br>是透過暫存方式載入<br>之前一直還在想有什麼辦法看到目前會自動載入哪些<br>看來還是有辦法知道的</p>
+<h2 id="PSR0-PSR4"><a href="#PSR0-PSR4" class="headerlink" title="PSR0 , PSR4"></a>PSR0 , PSR4</h2><p>看了一下好像都是自動載入<br>PSR0 命名規則跟 JAVA 很像<br>但是 PSR4 規則也不一定要跟 JAVA 擺放位置一樣<br>我也沒看很詳細，有空再仔細吸收….<br><a href="https://segmentfault.com/a/1190000006686978" target="_blank" rel="noopener">psr-0 和 psr-4 的区别 - shuizhuniurou - SegmentFault 思否</a></p>
+<h2 id="Namespace-一些事"><a href="#Namespace-一些事" class="headerlink" title="Namespace 一些事"></a>Namespace 一些事</h2><p>Namespace 是不分大小寫的，跟 class、function 一樣沒有分<br>但是在 use 引用變數(ex:\$a)<br>想說 class 會不會跟 function 一樣不能共用一樣名字<br>但測試結果是可以的<br>我還滿驚呆</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">        <span class="comment">//Enter your code here, enjoy!</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'A'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'aa'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="keyword">new</span> A();</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'========'</span>;</span><br><span class="line"><span class="keyword">echo</span>  A();</span><br></pre></td></tr></table></figure>
+<p>結果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A========aa</span><br></pre></td></tr></table></figure>
+<p>那同時去做 use A 不知道會<br>但用在 use 呢?!<br>經過小小實驗(未確任是否正確，自己得出的結論)<br>function 要用通常是要用<br><code>use function xxxx</code><br>但是做 classmap 跟 psr-4 都載入不到(不知道為什麼)<br>但有找到<a href="https://stackoverflow.com/questions/24171078/composer-psr-how-to-autoload-functions" target="_blank" rel="noopener">Composer/PSR - How to autoload functions? - Stack Overflow</a><br><a href="https://laravel-china.org/topics/1002/deep-composer-autoload" target="_blank" rel="noopener">深入 Composer autoload | Laravel China 社区 - 高品质的 Laravel 和 PHP 开发者社区</a><br>要選<code>files</code><br>不過沒有什麼事情還是不要用 function 吧 XD<br>這我就沒實作確認</p>
+<p>感覺 composer,psr0,psr4 之後還是需要好好了解<br>先記錄到這邊</p>
+<p>參考來源：</p>
+<ul>
+<li><a href="https://laravel-china.org/index.php/topics/6998/have-anyone-used-phps-use-function" target="_blank" rel="noopener">有人用过 PHP 的 use function 吗？ | Laravel China 社区 - 高品质的 Laravel 和 PHP 开发者社区</a></li>
+<li><a href="http://justericgg.logdown.com/posts/196891-php-series-autoload" target="_blank" rel="noopener">PHP 系列 - Autoload 自動載入 « Eric G. Huang 不像樣工程師</a></li>
+<li><a href="http://jonas1011.pixnet.net/blog/post/24303632-%5Bphp%5Drequire-%E5%92%8C-include" target="_blank" rel="noopener">[PHP]require 和 include @ Jonas’s Blog :: 痞客邦 ::</a></li>
+<li><a href="http://sandbox.onlinephpfunctions.com/" target="_blank" rel="noopener">PHP Sandbox, test PHP online, PHP tester</a></li>
+<li><a href="http://blog.turn.tw/?p=1122" target="_blank" rel="noopener">Composer 進階原理：PHP 命名空間與 PSR-0 | 轉個彎日誌</a> <a href="/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/web2.png" title="備份圖">備份圖</a></li>
+<li><a href="http://blog.turn.tw/?p=1039" target="_blank" rel="noopener">Composer 設計原理與基本用法 | 轉個彎日誌</a> <a href="/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/web3.png" title="備份圖">備份圖</a></li>
+<li><a href="http://jsnwork.kiiuo.com/archives/2437/php-composer-json-%E8%A8%AD%E5%AE%9A-classmap-%E6%8C%87%E5%AE%9A%E8%87%AA%E5%8B%95%E8%AE%80%E5%8F%96%E7%9A%84%E6%AA%94%E6%A1%88%E6%88%96%E8%B7%AF%E5%BE%91/" target="_blank" rel="noopener">php – composer.json 設定 classmap 指定自動讀取的檔案或路徑 | jsnWork</a></li>
+<li><a href="https://my.oschina.net/sallency/blog/893518" target="_blank" rel="noopener">composer 自动载入 autoload 的使用详解 psr0/psr4/classmap/files - big_cat - 开源中国</a></li>
+<li><a href="http://jsnwork.kiiuo.com/archives/2618/php-compoer-%E9%9D%9E%E5%B8%B8%E7%B0%A1%E5%96%AE%E7%9A%84%E4%BD%BF%E7%94%A8-psr-4-%E4%BE%86%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%8B%95%E8%AE%80%E5%8F%96%E9%A1%9E%E5%88%A5/" target="_blank" rel="noopener">php – Compoer – 非常簡單的使用 psr-4 來建立自動讀取類別 | jsnWork</a></li>
+<li><a href="http://jsnwork.kiiuo.com/archives/2437/php-composer-json-%e8%a8%ad%e5%ae%9a-classmap-%e6%8c%87%e5%ae%9a%e8%87%aa%e5%8b%95%e8%ae%80%e5%8f%96%e7%9a%84%e6%aa%94%e6%a1%88%e6%88%96%e8%b7%af%e5%be%91/" target="_blank" rel="noopener">php – composer.json 設定 classmap 指定自動讀取的檔案或路徑 | jsnWork</a></li>
+<li><a href="https://segmentfault.com/a/1190000006686978" target="_blank" rel="noopener">psr-0 和 psr-4 的区别 - shuizhuniurou - SegmentFault 思否</a></li>
+<li><a href="https://stackoverflow.com/questions/24868586/what-are-the-differences-between-psr-0-and-psr-4" target="_blank" rel="noopener">php - What Are the Differences Between PSR-0 and PSR-4? - Stack Overflow</a></li>
+<li><a href="https://www.kancloud.cn/xiak/php-node/191121" target="_blank" rel="noopener">PSR-0/PSR-4 命名标准 · php 笔记 · 看云</a></li>
+<li><a href="https://blog.csdn.net/sky_zhe/article/details/38615615" target="_blank" rel="noopener">PHP PSR-4 与 PSR-0 规范 - zHHHe 的专栏 - CSDN 博客</a></li>
+<li><a href="https://www.oschina.net/question/123890_135938?sort=default&amp;p=2" target="_blank" rel="noopener">php 的 use 明顯比 require 高端大氣上檔次 - 開源中國</a></li>
+<li><a href="https://www.oschina.net/question/147332_138188" target="_blank" rel="noopener">php 使用命名空间:导入导出之疑问 - 开源中国</a></li>
+<li><a href="https://laravel-china.org/topics/1002/deep-composer-autoload" target="_blank" rel="noopener">深入 Composer autoload | Laravel China 社区 - 高品质的 Laravel 和 PHP 开发者社区</a></li>
+<li><a href="https://oomusou.io/php/php-namespace/" target="_blank" rel="noopener">如何使用 Namespace? | 點燈坊</a></li>
+<li><a href="https://www.codementor.io/jadjoubran/php-tutorial-getting-started-with-composer-8sbn6fb6t" target="_blank" rel="noopener">PHP Tutorial: Getting Started with Composer | Codementor</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/composer/" rel="tag"># composer</a>
+          
+            <a href="/blog/tags/autoload/" rel="tag"># autoload</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/01/17/mysql字串自動轉數字小記/" rel="next" title="mysql字串自動轉數字小記">
+                <i class="fa fa-chevron-left"></i> mysql字串自動轉數字小記
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/01/19/讀取出文件設計書表格格式/" rel="prev" title="從MySQL裡面直接(select)讀取出文件設計書表格格式">
+                從MySQL裡面直接(select)讀取出文件設計書表格格式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP-原有-autoload-方式"><span class="nav-number">1.</span> <span class="nav-text">PHP 原有 autoload 方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP-Autoload"><span class="nav-number">2.</span> <span class="nav-text">PHP Autoload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常常搞錯的觀念"><span class="nav-number">3.</span> <span class="nav-text">常常搞錯的觀念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#還是需要放置載入程式"><span class="nav-number">3.1.</span> <span class="nav-text">還是需要放置載入程式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#發現我自己寫的-PHP-沒辦法-use-使用到"><span class="nav-number">4.</span> <span class="nav-text">發現我自己寫的 PHP 沒辦法 use 使用到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#發現新增檔案跟修改-class-名稱沒有自動載入到"><span class="nav-number">5.</span> <span class="nav-text">發現新增檔案跟修改 class 名稱沒有自動載入到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PSR0-PSR4"><span class="nav-number">6.</span> <span class="nav-text">PSR0 , PSR4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Namespace-一些事"><span class="nav-number">7.</span> <span class="nav-text">Namespace 一些事</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/';
+          this.page.identifier = '2019/01/18/PHP內建自動載入autoload方式跟常誤會一些觀念/';
+          this.page.title = 'PHP內建自動載入autoload方式跟常誤會一些觀念';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

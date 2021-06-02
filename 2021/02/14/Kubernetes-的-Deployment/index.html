@@ -1,37 +1,1225 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="kubernetes,deployment,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="感覺是滿多的功能但頁數比較想像中的少趕緊消化">
+<meta name="keywords" content="kubernetes,deployment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes 的 Deployment">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/02/14/Kubernetes-的-Deployment/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="感覺是滿多的功能但頁數比較想像中的少趕緊消化">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:42.415Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes 的 Deployment">
+<meta name="twitter:description" content="感覺是滿多的功能但頁數比較想像中的少趕緊消化">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2021/02/14/Kubernetes-的-Deployment/">
+
+
+
+
+
+  <title>Kubernetes 的 Deployment | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/14/Kubernetes-的-Deployment/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kubernetes 的 Deployment</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2021-02-14T19:14:24+08:00">
+                2021-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2021/02/14/Kubernetes-的-Deployment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/14/Kubernetes-的-Deployment/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>感覺是滿多的功能<br>但頁數比較想像中的少<br>趕緊消化</p>
+<a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>ReplicaSet 單元最後看到使用 Deployment<br>想說怎麼不直接教 Deployment<br>實作簡單功能，發現原來 Deployment 會建立 ReplicaSet<br>所以還是要會 ReplicaSet 怎麼用比較好</p>
+<h2 id="建立一個-Deployment"><a href="#建立一個-Deployment" class="headerlink" title="建立一個 Deployment"></a>建立一個 Deployment</h2><p>遇到apiVersion<br>error: unable to recognize “kuard-deployment.yml”: no matches for kind “Deployment” in version “extensions/v1beta1”<br>error: unable to recognize “kuard-deployment.yml”: no matches for kind “Deployment” in version “apps/v1beta1”<br>參考:<a href="https://stackoverflow.com/questions/58481850/no-matches-for-kind-deployment-in-version-extensions-v1beta1" target="_blank" rel="noopener">kubernetes - no matches for kind “Deployment” in version “extensions/v1beta1” - Stack Overflow</a></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kuard-deployment</span></span><br><span class="line"><span class="comment">#   labels:</span></span><br><span class="line"><span class="comment">#     app: kuard</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      app:</span> <span class="string">kuard</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">kuard</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">        - image:</span> <span class="string">gcr.io/kuar-demo/kuard-amd64:blue</span></span><br><span class="line"><span class="attr">          name:</span> <span class="string">kuard</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://gist.github.com/erikaulin/d4de231655a1a5011dae5ecc39a49956" target="_blank" rel="noopener">Kubernetes kuard deployment</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看所有 Object List</span></span><br><span class="line">kubectl get all </span><br><span class="line"><span class="comment"># NAME                                    READY   STATUS    RESTARTS   AGE</span></span><br><span class="line"><span class="comment"># pod/kuard-deployment-6cd695495f-kt88w   1/1     Running   0          105s</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># NAME                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE</span></span><br><span class="line"><span class="comment"># service/bar-service   ClusterIP   10.96.108.167   &lt;none&gt;        5678/TCP   2d16h</span></span><br><span class="line"><span class="comment"># service/foo-service   ClusterIP   10.96.109.30    &lt;none&gt;        5678/TCP   2d16h</span></span><br><span class="line"><span class="comment"># service/kubernetes    ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP    2d17h</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># NAME                               READY   UP-TO-DATE   AVAILABLE   AGE</span></span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment   1/1     1            1           106s</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># NAME                                          DESIRED   CURRENT   READY   AGE</span></span><br><span class="line"><span class="comment"># replicaset.apps/kuard-deployment-6cd695495f   1         1         1       106s</span></span><br><span class="line"></span><br><span class="line">kubectl get deployments kuard-deployment -o jsonpath --template &#123;.spc.selector.matchLabels&#125;</span><br><span class="line"><span class="comment"># &#123;"app":"kuard"&#125;</span></span><br><span class="line"></span><br><span class="line">kubectl get all --selector=<span class="string">"app=kuard"</span></span><br><span class="line"><span class="comment"># NAME                                    READY   STATUS    RESTARTS   AGE</span></span><br><span class="line"><span class="comment"># pod/kuard-deployment-6cd695495f-kt88w   1/1     Running   0          9m34s</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># NAME                                          DESIRED   CURRENT   READY   AGE</span></span><br><span class="line"><span class="comment"># replicaset.apps/kuard-deployment-6cd695495f   1         1         1       9m34s</span></span><br><span class="line">kubectl get replicasets --selector=app=kuard</span><br><span class="line"><span class="comment"># NAME                          DESIRED   CURRENT   READY   AGE</span></span><br><span class="line"><span class="comment"># kuard-deployment-6cd695495f   1         1         1       79m</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 deployment 的 replicas</span></span><br><span class="line">kubectl scale deployments kuard-deployment --replicas=3</span><br><span class="line"></span><br><span class="line">kubectl get replicasets --selector=app=kuard</span><br><span class="line"><span class="comment"># NAME                          DESIRED   CURRENT   READY   AGE</span></span><br><span class="line"><span class="comment"># kuard-deployment-6cd695495f   3         3         3       82m</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 replicaset = 1(這邊不是用 deployment)</span></span><br><span class="line">kubectl scale replicaset kuard-deployment-6cd695495f --replicas=1 </span><br><span class="line"></span><br><span class="line">kubectl get replicasets --selector=app=kuard</span><br><span class="line"><span class="comment"># NAME                          DESIRED   CURRENT   READY   AGE</span></span><br><span class="line"><span class="comment"># kuard-deployment-6cd695495f   3         3         3       82m</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 不會發生任何改變，下面等等會說</span></span><br></pre></td></tr></table></figure>
+<p>這邊說一下運作方式<br>Deployment 會管理 ReplicaSet，ReplicaSet 用來管理Pod。<br>所以要懂 ReplicaSet 是做什麼用的。</p>
+<p>上面對 ReplicasSet 做 scale 調整<br>為什麼不會改變，是因為<code>Deployment</code> 上層設定不一樣的值<br>Deployment 控制器會重新調整 replica 數量</p>
+<p>這種情況下，有一個方法改 ReplicaSet<br>對 Deployment 刪除(<code>--cascade=orphan</code>) &lt;– 舊版是 <code>--cascade=false</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 匯出設定檔出來</span></span><br><span class="line">kubectl get deployments kuard-deployment -o yaml &gt; kuard-deployment.yaml</span><br><span class="line"><span class="comment"># 暫時不研究，但應該可以不用做</span></span><br><span class="line"><span class="comment">#kubectl replace -f kuard-deployment.yaml --save-config</span></span><br></pre></td></tr></table></figure>
+<p>可以看到 裡面有很多預設值</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">strategy:</span></span><br><span class="line"><span class="attr">  rollingUpdate:</span></span><br><span class="line"><span class="attr">    maxSurge:</span> <span class="number">25</span><span class="string">%</span></span><br><span class="line"><span class="attr">    maxUnavailable:</span> <span class="number">25</span><span class="string">%</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">RollingUpdate</span></span><br></pre></td></tr></table></figure>
+<p>這邊跟書裡面提到不一樣<br>看來新版<code>maxSurge</code>和<code>maxUnavailable</code>都變成百分比</p>
+<h2 id="管理-Deployment"><a href="#管理-Deployment" class="headerlink" title="管理 Deployment"></a>管理 Deployment</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe deployments kuard-deployment</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Name:                   kuard-deployment</span><br><span class="line">Namespace:              default</span><br><span class="line">CreationTimestamp:      Sun, 14 Feb 2021 20:55:44 +0800</span><br><span class="line">Labels:                 &lt;none&gt;</span><br><span class="line">Annotations:            deployment.kubernetes.io/revision: 1</span><br><span class="line">Selector:               app=kuard</span><br><span class="line">Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable</span><br><span class="line">StrategyType:           RollingUpdate</span><br><span class="line">MinReadySeconds:        0</span><br><span class="line">RollingUpdateStrategy:  25% max unavailable, 25% max surge</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  app=kuard</span><br><span class="line">  Containers:</span><br><span class="line">   kuard:</span><br><span class="line">    Image:        gcr.io/kuar-demo/kuard-amd64:blue</span><br><span class="line">    Port:         &lt;none&gt;</span><br><span class="line">    Host Port:    &lt;none&gt;</span><br><span class="line">    Environment:  &lt;none&gt;</span><br><span class="line">    Mounts:       &lt;none&gt;</span><br><span class="line">  Volumes:        &lt;none&gt;</span><br><span class="line">Conditions:</span><br><span class="line">  Type           Status  Reason</span><br><span class="line">  ----           ------  ------</span><br><span class="line">  Available      True    MinimumReplicasAvailable</span><br><span class="line">  Progressing    True    NewReplicaSetAvailable</span><br><span class="line">OldReplicaSets:  &lt;none&gt;</span><br><span class="line">NewReplicaSet:   kuard-deployment-6cd695495f (1/1 replicas created)</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason             Age   From                   Message</span><br><span class="line">  ----    ------             ----  ----                   -------</span><br><span class="line">  Normal  ScalingReplicaSet  16m   deployment-controller  Scaled down replica set kuard-deployment-6cd695495f to 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OldReplicaSets:  &lt;none&gt;</span><br><span class="line">NewReplicaSet:   kuard-deployment-6cd695495f (1/1 replicas created)</span><br></pre></td></tr></table></figure>
+<p>其中 <code>OldReplicaSets</code> 和 <code>NewReplicaSet</code> 是由 Deployment 管理狀態。rollout 中兩邊欄位值會有資料，rollout 完成後 OldReplicaSets 就會 none。</p>
+<h2 id="更改容器的映像檔"><a href="#更改容器的映像檔" class="headerlink" title="更改容器的映像檔"></a>更改容器的映像檔</h2><p>修改 deployment 設定裡面的 image tag 改成 green</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">    - image:</span> <span class="string">gcr.io/kuar-demo/kuard-amd64:blue</span></span><br></pre></td></tr></table></figure>
+<p><code>kubectl apply -f kuard-deployment.yml</code><br>建議 replicaset 可以設定大一點<br>可以看到 OldReplicaSets ,NewReplicaSet 這兩個變化</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看更新狀態</span></span><br><span class="line">kubectl rollout status deployments kuard-deployment</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以看到新舊 ReplicaSets 都存在，之後退版可能會用到</span></span><br><span class="line">kubectl get replicasets -o wide </span><br><span class="line"><span class="comment"># NAME                          DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES                               SELECTOR</span></span><br><span class="line"><span class="comment"># kuard-deployment-5984cbd7dd   0         0         0       13m     kuard        gcr.io/kuar-demo/kuard-amd64:green   app=kuard,pod-template-hash=5984cbd7dd</span></span><br><span class="line"><span class="comment"># kuard-deployment-6cd695495f   20        20        20      6h38m   kuard        gcr.io/kuar-demo/kuard-amd64:blue    app=kuard,pod-template-hash=6cd695495f</span></span><br></pre></td></tr></table></figure>
+<p><del>TODO: 這邊 deployment 程式後，不知道 Service LB 進去會等全部上完好，才會連到新的POD，還是會綜合?</del><br>建立 4 個 ReplicaSets 去跑<br><code>kubectl get endpoints kuard-service --watch -o yaml</code><br>查看變化，看來<strong>舊新</strong>在跑的時候會同時 LB 舊新(綜合)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 暫停部屬</span></span><br><span class="line">kubectl rollout pause deployments kuard-deployment</span><br><span class="line"><span class="comment"># 繼續部屬</span></span><br><span class="line">kubectl rollout resume deployments kuard-deployment</span><br></pre></td></tr></table></figure>
+<h2 id="查詢歷史狀態"><a href="#查詢歷史狀態" class="headerlink" title="查詢歷史狀態"></a>查詢歷史狀態</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 Deployment 的歷史紀錄</span></span><br><span class="line">kubectl rollout <span class="built_in">history</span> deployment kuard-deployment</span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment </span></span><br><span class="line"><span class="comment"># REVISION  CHANGE-CAUSE</span></span><br><span class="line"><span class="comment"># 7         &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 8         &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 9         &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 12        &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 13        &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 查看 Deployment 詳細資訊</span></span><br><span class="line">kubectl rollout <span class="built_in">history</span> deployment kuard-deployment --revision=12</span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment with revision #12</span></span><br><span class="line"><span class="comment"># Pod Template:</span></span><br><span class="line"><span class="comment">#   Labels:       app=kuard</span></span><br><span class="line"><span class="comment">#         pod-template-hash=bd94b5dbb</span></span><br><span class="line"><span class="comment">#   Containers:</span></span><br><span class="line"><span class="comment">#    kuard:</span></span><br><span class="line"><span class="comment">#     Image:      gcr.io/kuar-demo/kuard-amd64:blue</span></span><br><span class="line"><span class="comment">#     Port:       8080/TCP</span></span><br><span class="line"><span class="comment">#     Host Port:  0/TCP</span></span><br><span class="line"><span class="comment">#     Environment:        &lt;none&gt;</span></span><br><span class="line"><span class="comment">#     Mounts:     &lt;none&gt;</span></span><br><span class="line"><span class="comment">#   Volumes:      &lt;none&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="退回版本"><a href="#退回版本" class="headerlink" title="退回版本"></a>退回版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 退回前一個版本</span></span><br><span class="line">kubectl rollout undo deployments kuard-deployment</span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment rolled back</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 replica 數</span></span><br><span class="line">kubectl get replicasets -o wide</span><br><span class="line"><span class="comment"># NAME                          DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                               SELECTOR</span></span><br><span class="line"><span class="comment"># kuard-deployment-5984cbd7dd   0         0         0       22h   kuard        gcr.io/kuar-demo/kuard-amd64:green   app=kuard,pod-template-hash=5984cbd7dd</span></span><br><span class="line"><span class="comment"># kuard-deployment-697c6c85     0         0         0       21h   kuard        gcr.io/kuar-demo/kuard-amd64:green   app=kuard,pod-template-hash=697c6c85</span></span><br><span class="line"><span class="comment"># kuard-deployment-6cd695495f   0         0         0       29h   kuard        gcr.io/kuar-demo/kuard-amd64:blue    app=kuard,pod-template-hash=6cd695495f</span></span><br><span class="line"><span class="comment"># kuard-deployment-bd94b5dbb    4         4         4       21h   kuard        gcr.io/kuar-demo/kuard-amd64:blue    app=kuard,pod-template-hash=bd94b5dbb</span></span><br><span class="line"><span class="comment"># kuard-deployment-f948c99d9    0         0         0       21h   kuard        gcr.io/kuar-demo/kuard-amd64:1       app=kuard,pod-template-hash=f948c99d9</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 退回某一版 --to-revision</span></span><br><span class="line">kubectl rollout undo deployments kuard-deployment --to-revision=11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指令上一個版本 =&gt; --to-revision=0</span></span><br><span class="line">kubectl rollout <span class="built_in">history</span> deployment kuard-deployment --to-revision=0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>清理策略</p>
+<p>你可以在 Deployment 中設置 .spec.revisionHistoryLimit 字段以指定保留此 Deployment 的多少個舊有 ReplicaSet。其餘的 ReplicaSet 將在後台被&gt; 垃圾回收。 默認情況下，此值為 10。</p>
+<p>說明： 顯式將此字段設置為 0 將導致 Deployment 的所有歷史記錄被清空，因此 Deployment 將無法回滾。<br>滾動更新 Deployment</p>
+</blockquote>
+<h2 id="Deployment-策略"><a href="#Deployment-策略" class="headerlink" title="Deployment 策略"></a>Deployment 策略</h2><ol>
+<li>Recreate 策略</li>
+</ol>
+<p>會把現有的 ReplicaSet 的 Image 換掉，所有 Pod 都會機高新建置。</p>
+<ol start="2">
+<li>RollingUpdate</li>
+</ol>
+<p>滾動方式不停機情況下更新</p>
+<h2 id="滾動更新設定"><a href="#滾動更新設定" class="headerlink" title="滾動更新設定"></a>滾動更新設定</h2><blockquote>
+<p>Deployment 會在 .spec.strategy.type==RollingUpdate時，採取 滾動更新的方式更新 Pods。你可以指定 maxUnavailable 和 maxSurge 來控制滾動更新 過程。<br>最大不可用</p>
+<p>.spec.strategy.rollingUpdate.maxUnavailable 是一個可選字段，用來指定 更新過程中不可用的 Pod 的個數上限。該值可以是絕對數字（例如，5），也可以是 所需 Pods 的百分比（例如，10%）。百分比值會轉換成絕對數並去除小數部分。 如果 .spec.strategy.rollingUpdate.maxSurge 為 0，則此值不能為 0。 默認值為 25%。</p>
+<p>例如，當此值設置為 30% 時，滾動更新開始時會立即將舊 ReplicaSet 縮容到期望 Pod 個數的70%。 新 Pod 準備就緒後，可以繼續縮容舊有的 ReplicaSet，然後對新的 ReplicaSet 擴容，確保在更新期間 可用的 Pods 總數在任何時候都至少為所需的 Pod 個數的 70%。<br>最大峰值</p>
+<p>.spec.strategy.rollingUpdate.maxSurge 是一個可選字段，用來指定可以創建的超出 期望 Pod 個數的 Pod 數量。此值可以是絕對數（例如，5）或所需 Pods 的百分比（例如，10%）。 如果 MaxUnavailable 為 0，則此值不能為 0。百分比值會通過向上取整轉換為絕對數。 此字段的默認值為 25%。</p>
+<p>例如，當此值為 30% 時，啟動滾動更新後，會立即對新的 ReplicaSet 擴容，同時保證新舊 Pod 的總數不超過所需 Pod 總數的 130%。一旦舊 Pods 被殺死，新的 ReplicaSet 可以進一步擴容， 同時確保更新期間的任何時候運行中的 Pods 總數最多為所需 Pods 總數的 130%。<br>進度期限秒數</p>
+<p>.spec.progressDeadlineSeconds 是一個可選字段，用於指定系統在報告 Deployment 進展失敗 之前等待 Deployment 取得進展的秒數。 這類報告會在資源狀態中體現為 Type=Progressing、Status=False、 Reason=ProgressDeadlineExceeded。Deployment 控制器將持續重試 Deployment。 將來，一旦實現了自動回滾，Deployment 控制器將在探測到這樣的條件時立即回滾 Deployment。</p>
+<p>如果指定，則此字段值需要大於 .spec.minReadySeconds 取值。<br>最短就緒時間<br>.spec.minReadySeconds 是一個可選字段，用於指定新創建的 Pod 在沒有任意容器崩潰情況下的最小就緒時間， 只有超出這個時間 Pod 才被視為可用。默認值為 0（Pod 在準備就緒後立即將被視為可用）。 要瞭解何時 Pod 被視為就緒，可參考容器探針。</p>
+</blockquote>
+<p>我看到最詳細簡單說明</p>
+<blockquote>
+<p>   minReadySeconds:<br>       容器內應用程式的啟動時間，Kubernetes 會等待設定的時間後才繼續進行升級流程<br>       如果沒有此欄位的話，Kubernetes 會假設該容器一開完後即可進行服務<br>       若未設定此欄位，在某些極端情況下可能會造成服務無法正常運作(新誕生的 pod 尚未進入可服務階段)<br>   maxSurge:<br>       升級過程中最多可以比原先設定所多出的 pod 數量<br>       此欄位可以為固定值或是比例(%)<br>       ex. maxSurge: 1、replicas: 5，代表 Kubernetes 會先開好 1 個新 pod 後才刪掉一個舊的 pod，整個升級過程中最多會有 5+1 個 pod<br>   maxUnavailable:<br>       最多可以有幾個 pod 處在無法服務的狀態<br>       當 maxSurge 不為零時，此欄位亦不可為零<br>       ex. maxUnavailable: 1，代表 Kubernetes 整個升級過程中最多會有 1 個 pod 處在無法服務的狀態</p>
+</blockquote>
+<p>參考:<a href="https://tachingchen.com/tw/blog/kubernetes-rolling-update-with-deployment/" target="_blank" rel="noopener">透過 Kubernetes Deployments 實現滾動升級 | Kubernetes</a></p>
+<p><a href="https://godleon.github.io/blog/Kubernetes/k8s-Deployment-Overview/" target="_blank" rel="noopener">[Kubernetes] Deployment Overview | 小信豬的原始部落</a></p>
+<h2 id="刪除-Deployment"><a href="#刪除-Deployment" class="headerlink" title="刪除 Deployment"></a>刪除 Deployment</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployments kuard-deployment</span><br></pre></td></tr></table></figure>
+<p>所有的 Pod ,ReplicaSet 都會一起刪除</p>
+<h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>上面我測試 Service 更做更新的時候<br>不是會有舊新同時運行狀況<br>後面書上有提到前端到後端，前端要做好版本前後相容問題<br>這樣在切換上才不會發生問題</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/kubernetes/" rel="tag"># kubernetes</a>
+          
+            <a href="/blog/tags/deployment/" rel="tag"># deployment</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2021/02/13/Kubernetes-的-ReplicasSet/" rel="next" title="Kubernetes 的 ReplicaSet">
+                <i class="fa fa-chevron-left"></i> Kubernetes 的 ReplicaSet
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2021/02/18/Kind-建置-Cluster/" rel="prev" title="Kind 建置 Cluster">
+                Kind 建置 Cluster <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立一個-Deployment"><span class="nav-number">2.</span> <span class="nav-text">建立一個 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理-Deployment"><span class="nav-number">3.</span> <span class="nav-text">管理 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改容器的映像檔"><span class="nav-number">4.</span> <span class="nav-text">更改容器的映像檔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查詢歷史狀態"><span class="nav-number">5.</span> <span class="nav-text">查詢歷史狀態</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#退回版本"><span class="nav-number">6.</span> <span class="nav-text">退回版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deployment-策略"><span class="nav-number">7.</span> <span class="nav-text">Deployment 策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滾動更新設定"><span class="nav-number">8.</span> <span class="nav-text">滾動更新設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-Deployment"><span class="nav-number">9.</span> <span class="nav-text">刪除 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感想"><span class="nav-number">10.</span> <span class="nav-text">感想</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2021/02/14/Kubernetes-的-Deployment/';
+          this.page.identifier = '2021/02/14/Kubernetes-的-Deployment/';
+          this.page.title = 'Kubernetes 的 Deployment';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

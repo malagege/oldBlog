@@ -1,37 +1,1309 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="常常專案使用 redis但並沒有深入了解因為 Redis 一般看範例就知道怎麼使用了真的非常簡單但我覺得用那麼多次沒深入了解不是很好這篇整理一下">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/02/17/Redis-小記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="常常專案使用 redis但並沒有深入了解因為 Redis 一般看範例就知道怎麼使用了真的非常簡單但我覺得用那麼多次沒深入了解不是很好這篇整理一下">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/02/17/Redis-小記/redis.png">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.592Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis 小記">
+<meta name="twitter:description" content="常常專案使用 redis但並沒有深入了解因為 Redis 一般看範例就知道怎麼使用了真的非常簡單但我覺得用那麼多次沒深入了解不是很好這篇整理一下">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2020/02/17/Redis-小記/redis.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/02/17/Redis-小記/">
+
+
+
+
+
+  <title>Redis 小記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/02/17/Redis-小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Redis 小記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-02-17T16:45:25+08:00">
+                2020-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/02/17/Redis-小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/17/Redis-小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>常常專案使用 redis<br>但並沒有深入了解<br>因為 Redis 一般看範例就知道怎麼使用了<br>真的非常簡單<br>但我覺得用那麼多次<br>沒深入了解不是很好<br>這篇整理一下</p>
+<a id="more"></a>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>上一篇是用 ansible 安裝 redis<br>這篇就不做了…</p>
+<p>其個更快的話可以用 <code>apt install redis-server</code></p>
+<h2 id="Redis-一般常用類型"><a href="#Redis-一般常用類型" class="headerlink" title="Redis 一般常用類型"></a>Redis 一般常用類型</h2><ol>
+<li>String (最大可存 512 MB)</li>
+<li>Hash</li>
+<li>List</li>
+<li>Map</li>
+<li>Sorted Map(zmap)</li>
+</ol>
+<h2 id="一般常用指令"><a href="#一般常用指令" class="headerlink" title="一般常用指令"></a>一般常用指令</h2><h3 id="keys"><a href="#keys" class="headerlink" title="keys *"></a>keys *</h3><p>一般線上不會用這個指令，好像會有阻塞的可能。</p>
+<h3 id="dbsize"><a href="#dbsize" class="headerlink" title="dbsize"></a>dbsize</h3><p>回傳 <code>key</code> 的數量。</p>
+<h3 id="exists"><a href="#exists" class="headerlink" title="exists"></a>exists</h3><p>查詢 <code>key</code> 是否存在。</p>
+<p>return 1 存在，0 不存在</p>
+<h3 id="del"><a href="#del" class="headerlink" title="del"></a>del</h3><p>刪除 key</p>
+<h3 id="expire"><a href="#expire" class="headerlink" title="expire"></a>expire</h3><p>設定 key 結束時間</p>
+<h3 id="ttl"><a href="#ttl" class="headerlink" title="ttl"></a>ttl</h3><p>查看 key 剩餘時間</p>
+<p>-1 沒有限制<br>-2 沒有 key 存在</p>
+<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><p>查看 key 的類型</p>
+<h3 id="incr"><a href="#incr" class="headerlink" title="incr"></a>incr</h3><p>會把 key 的 value 加 1</p>
+<p>這個是 redis 適合做計數器</p>
+<h2 id="類型相關指令"><a href="#類型相關指令" class="headerlink" title="類型相關指令"></a>類型相關指令</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><h4 id="set"><a href="#set" class="headerlink" title="set"></a>set</h4><p>set </p>
+<p>四個 option</p>
+<h4 id="setex"><a href="#setex" class="headerlink" title="setex"></a>setex</h4><p>setex key second value</p>
+<p>跟<br>set key value<br>expire key second<br>一樣動作</p>
+<p>set key value ex second</p>
+<h4 id="setnx"><a href="#setnx" class="headerlink" title="setnx"></a>setnx</h4><p>key 不存在才做設定值</p>
+<h4 id="mset"><a href="#mset" class="headerlink" title="mset"></a>mset</h4><p>mset key1 value1 key2 value2</p>
+<p>可以多個設定值</p>
+<p>一般 set<br>n次set時間=n次網路時間+n次命令<br>但是 mset 只需要一次網路時間<br>mset時間=<code>1</code>次網路時間+n次命令</p>
+<h4 id="mget"><a href="#mget" class="headerlink" title="mget"></a>mget</h4><p>跟 mset 與 set 關係差不多<br>如上。</p>
+<p>找不到會回傳 nil(null)</p>
+<h4 id="append"><a href="#append" class="headerlink" title="append"></a>append</h4><p>append key value</p>
+<p>會在 value 值後面加入新 value 值<br>就算不存在也不會有問題</p>
+<h4 id="strlen"><a href="#strlen" class="headerlink" title="strlen"></a>strlen</h4><p>key 的 value 長度<br>沒資料的話，回傳 0</p>
+<h4 id="getset"><a href="#getset" class="headerlink" title="getset"></a>getset</h4><p>getset key value<br>回傳值是舊值</p>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><h4 id="hset"><a href="#hset" class="headerlink" title="hset"></a>hset</h4><p>hset key field value</p>
+<p>hset user:1 name josh</p>
+<h4 id="hget"><a href="#hget" class="headerlink" title="hget"></a>hget</h4><p>hget key field</p>
+<p>hget user:1 name</p>
+<h4 id="hsetnx"><a href="#hsetnx" class="headerlink" title="hsetnx"></a>hsetnx</h4><p>hsetnx key field value</p>
+<h4 id="hdel"><a href="#hdel" class="headerlink" title="hdel"></a>hdel</h4><p>hdel 刪除 key 的 field</p>
+<h4 id="hlen"><a href="#hlen" class="headerlink" title="hlen"></a>hlen</h4><p>hlen 抓取 key 的長度</p>
+<h4 id="hkeys"><a href="#hkeys" class="headerlink" title="hkeys"></a>hkeys</h4><p>這邊 hkeys 跟 key 完全沒有關係<br>列出 key 裡面的 field</p>
+<h4 id="hmset-hmget"><a href="#hmset-hmget" class="headerlink" title="hmset,hmget"></a>hmset,hmget</h4><p>hmset key field1 value1 field2 value2 …</p>
+<h4 id="hexist"><a href="#hexist" class="headerlink" title="hexist"></a>hexist</h4><p>hmget key field1 filed2 …</p>
+<h4 id="hvals"><a href="#hvals" class="headerlink" title="hvals"></a>hvals</h4><p>hvals key </p>
+<h4 id="hgetall"><a href="#hgetall" class="headerlink" title="hgetall"></a>hgetall</h4><p>hgetall 會把所有field,value抓出來。<br>老實說我還不知道這個能做什麼?<br>會阻塞，可以使用 hscan 代替</p>
+<h4 id="hstrlen"><a href="#hstrlen" class="headerlink" title="hstrlen"></a>hstrlen</h4><p>抓取 key field 長度</p>
+<h4 id="hincrby"><a href="#hincrby" class="headerlink" title="hincrby"></a>hincrby</h4><p>hincrby key field 1<br>回傳累加值</p>
+<h4 id="hincrbyfloat"><a href="#hincrbyfloat" class="headerlink" title="hincrbyfloat"></a>hincrbyfloat</h4><p>hincrbyfloat key filed<br>回傳累加值</p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><h4 id="lpush"><a href="#lpush" class="headerlink" title="lpush"></a>lpush</h4><p>lpush  key value</p>
+<p>l =&gt; left<br>在 list 左邊加入 value</p>
+<h4 id="rpush"><a href="#rpush" class="headerlink" title="rpush"></a>rpush</h4><p>r =&gt; right<br>同上，但家在右邊 list</p>
+<h4 id="lpop"><a href="#lpop" class="headerlink" title="lpop"></a>lpop</h4><p>l =&gt; left<br>移除(拿出) 左邊 list 的 value</p>
+<h4 id="rpop"><a href="#rpop" class="headerlink" title="rpop"></a>rpop</h4><p>同上，是右邊</p>
+<h4 id="llen"><a href="#llen" class="headerlink" title="llen"></a>llen</h4><p>llen list(key)</p>
+<h4 id="lrem"><a href="#lrem" class="headerlink" title="lrem"></a>lrem</h4><p>lrem list(key) count value </p>
+<blockquote>
+<p>根據參數 count 的值，移除列表中與參數 value 相等的元素。<br>count 的值可以是以下幾種：<br>    count &gt; 0 : 從表頭開始向表尾搜索，移除與 value 相等的元素，數量為 count 。<br>    count &lt; 0 : 從表尾開始向表頭搜索，移除與 value 相等的元素，數量為 count 的絕對值。<br>    count = 0 : 移除表中所有與 value 相等的值。</p>
+</blockquote>
+<p><a href="http://redisdoc.com/list/lrem.html" target="_blank" rel="noopener">LREM key count value — Redis 命令参考</a></p>
+<h4 id="lrange"><a href="#lrange" class="headerlink" title="lrange"></a>lrange</h4><blockquote>
+<p>返回列表 key 中指定區間內的元素，區間以偏移量 start 和 stop 指定。</p>
+<p>下標(index)參數 start 和 stop 都以 0 為底，也就是說，以 0 表示列表的第一個元素，以 1 表示列表的第二個元素，以此類推。</p>
+<p>你也可以使用負數下標，以 -1 表示列表的最後一個元素， -2 表示列表的倒數第二個元素，以此類推。</p>
+</blockquote>
+<p><a href="http://redisdoc.com/list/lrange.html" target="_blank" rel="noopener">LRANGE key start stop — Redis 命令參考</a></p>
+<h4 id="lindex"><a href="#lindex" class="headerlink" title="lindex"></a>lindex</h4><p>lindex key index<br>回傳 list 的位置 value值</p>
+<h4 id="brpop"><a href="#brpop" class="headerlink" title="brpop"></a>brpop</h4><p>阻塞 rpop</p>
+<h4 id="brpush"><a href="#brpush" class="headerlink" title="brpush"></a>brpush</h4><p>阻塞 rpush</p>
+<h4 id="總整理"><a href="#總整理" class="headerlink" title="總整理"></a>總整理</h4><p>新增: rpush lpush linsert<br>查詢: lrange lindex llen<br>刪除: lpop rpop lrem ltrim<br>修改: lset<br>阻塞動作: blpop brpop</p>
+<p>Message Queue 消息對列 是用 lpush,brpop<br>但跟 lpush ,rpop 不能做嗎?<br>後來發現 rpop 不會阻塞<br>在這邊程式用 while 迴圈 CPU 一定會爆表(吃很多資源)</p>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><h4 id="sset"><a href="#sset" class="headerlink" title="sset"></a>sset</h4><p>sset key element …</p>
+<h4 id="srem"><a href="#srem" class="headerlink" title="srem"></a>srem</h4><p>srem key element </p>
+<h4 id="scard"><a href="#scard" class="headerlink" title="scard"></a>scard</h4><p>算出 set 個數</p>
+<h4 id="sismember"><a href="#sismember" class="headerlink" title="sismember"></a>sismember</h4><p>set is member ?</p>
+<p>判斷 set 裡面有沒有 指定的值</p>
+<h4 id="spop"><a href="#spop" class="headerlink" title="spop"></a>spop</h4><p>移除一個 set 的值</p>
+<p>回傳移除的值</p>
+<h4 id="srandmember"><a href="#srandmember" class="headerlink" title="srandmember"></a>srandmember</h4><p>srandmember key [count]</p>
+<p>隨機回傳 set 的 member(資料)</p>
+<h4 id="smember"><a href="#smember" class="headerlink" title="smember"></a>smember</h4><p>smember key</p>
+<p>回傳 set 所有值(member)</p>
+<p>PS: smembers 和 lrange,hgetall 都會造成阻塞可能性。通常會用 sscan 替代</p>
+<h4 id="set-運算集"><a href="#set-運算集" class="headerlink" title="set 運算集"></a>set 運算集</h4><h5 id="sinter-交集"><a href="#sinter-交集" class="headerlink" title="sinter (交集)"></a>sinter (交集)</h5><p>sinter key [key …]</p>
+<h5 id="sunion-聯集"><a href="#sunion-聯集" class="headerlink" title="sunion (聯集)"></a>sunion (聯集)</h5><p>sunion key [key …]</p>
+<h5 id="sdiff-差集"><a href="#sdiff-差集" class="headerlink" title="sdiff (差集)"></a>sdiff (差集)</h5><p>sdiff key [key …]</p>
+<h5 id="集合存在…"><a href="#集合存在…" class="headerlink" title="集合存在…"></a>集合存在…</h5><p>sinterstore destination key [key …]<br>sunionstore destination key [key …]<br>sdiffstore destination key [key …]</p>
+<h3 id="sorted-set"><a href="#sorted-set" class="headerlink" title="sorted set"></a>sorted set</h3><h4 id="zadd"><a href="#zadd" class="headerlink" title="zadd"></a>zadd</h4><p>sadd key [option] score member [score member …]</p>
+<p><strong>option</strong><br>nx: member 必須不存在<br>xx: member 必須存在<br>CH：修改從加入新的元素，以改變元件的總數（CH是改變的縮寫）的數目的返回值. 更改的元素是添加的新元素以及已為其更新分數的現有元素. 因此，命令行中指定的具有與過去相同分數的元素將不計算在內. 注意：通常， ZADD的返回值僅計算添加的新元素的數量.<strong>這個還不是很懂</strong><br><a href="https://s0redis0io.icopy.site/commands/zadd" target="_blank" rel="noopener">ZADD – Redis 中文文檔教程</a><br>INCR: 數值累加</p>
+<h4 id="zcard"><a href="#zcard" class="headerlink" title="zcard"></a>zcard</h4><p>查詢 zset 個數</p>
+<h4 id="zsocre"><a href="#zsocre" class="headerlink" title="zsocre"></a>zsocre</h4><p>這個很重要。沒有 zget<br>zscore key member<br>得到設定分數</p>
+<h4 id="排名"><a href="#排名" class="headerlink" title="排名"></a>排名</h4><h5 id="zrank"><a href="#zrank" class="headerlink" title="zrank"></a>zrank</h5><p>zrank key member</p>
+<p>查詢 member 排名<br>由小到大</p>
+<h5 id="zrevrank"><a href="#zrevrank" class="headerlink" title="zrevrank"></a>zrevrank</h5><p>zrevrank 排名(倒敘)<br>由大到小</p>
+<h4 id="zrem"><a href="#zrem" class="headerlink" title="zrem"></a>zrem</h4><p>zrem key member [member …]</p>
+<p>刪除 member</p>
+<h4 id="zincrby"><a href="#zincrby" class="headerlink" title="zincrby"></a>zincrby</h4><p>zincrby key increment member</p>
+<p>給 member 增加 score</p>
+<h4 id="zrange-zrevrange"><a href="#zrange-zrevrange" class="headerlink" title="zrange,zrevrange"></a>zrange,zrevrange</h4><p>由小到大<br>zrange key start end [withscores]<br>由大到小<br>zrevrange key start end [withscores]</p>
+<p>ex: zrange zset 0 100</p>
+<p>withscores 是同時返回 score 分數</p>
+<h4 id="zrangebyscore-zrevrangebyscore"><a href="#zrangebyscore-zrevrangebyscore" class="headerlink" title="zrangebyscore, zrevrangebyscore"></a>zrangebyscore, zrevrangebyscore</h4><p>zrangebyscore key min max [withscores] [limit offset count]</p>
+<p>zrevrangebyscore key min max [withscores] [limit offset count]</p>
+<p>指定範圍返回 member</p>
+<p>-inf,+inf =&gt; 無限小,無限大<br>小括號 <code>(</code> 大於<br>ex: zrangebyscore user:rank (200 +inf withscores</p>
+<h4 id="zcount"><a href="#zcount" class="headerlink" title="zcount"></a>zcount</h4><p>zcount key min max </p>
+<p>抓取分數區間的 member 個數</p>
+<h4 id="zremrangebyrank-zremrangebyscore"><a href="#zremrangebyrank-zremrangebyscore" class="headerlink" title="zremrangebyrank , zremrangebyscore"></a>zremrangebyrank , zremrangebyscore</h4><p>zremrangebyrank key start end</p>
+<p>刪除 rank 排名(0開始)</p>
+<p>ex: zremrangebyrank user:rank 0 3</p>
+<p>zremrangebyscore key min max</p>
+<p>zremrangebyscore user:rank (250 +inf</p>
+<h4 id="集運算"><a href="#集運算" class="headerlink" title="集運算"></a>集運算</h4><p>交集<br>zinterstore destination numkeys key [key …] [weights weight [weight …]] [aggregate sum|min|max]</p>
+<p>weight 權重<br>aggregate 交集後做的 score 動作。預設是 sum</p>
+<p>并集</p>
+<p>zunionstore destination numkeys key [key …] [weights weight [weight …]] [aggregate sum|min|max]</p>
+<h4 id="zset-小結論"><a href="#zset-小結論" class="headerlink" title="zset 小結論"></a>zset 小結論</h4><p>set 跟 zset 指令差非常多<br>一般常用在 排行榜上面</p>
+<h5 id="有在思考資料會一直存在-redis"><a href="#有在思考資料會一直存在-redis" class="headerlink" title="有在思考資料會一直存在 redis ?"></a>有在思考資料會一直存在 redis ?</h5><p>經過 Google 一翻，正常會把資料回傳到 MySQL</p>
+<ul>
+<li><a href="https://www.cnblogs.com/sunshine-H/p/7922285.html" target="_blank" rel="noopener">PHP+Redis 实例【一】点赞 + 热度 上篇 - H-大叔 - 博客园</a></li>
+<li><a href="https://www.cnblogs.com/sunshine-H/p/7928034.html" target="_blank" rel="noopener">PHP+Redis 实例【一】点赞 + 热度 下篇 - H-大叔 - 博客园</a></li>
+</ul>
+<p>更多文章</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/8060708a5b46" target="_blank" rel="noopener">使用MySQL、Redis解决排行榜问题 - 簡書</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/50770947" target="_blank" rel="noopener">千万用户排名设计 - 知乎</a></li>
+<li><a href="https://blog.codingnow.com/2014/03/mmzb_db_2.html" target="_blank" rel="noopener">云风的 BLOG: 谈谈陌陌争霸在数据库方面踩过的坑(排行榜篇)</a></li>
+</ul>
+<h2 id="搜尋一些"><a href="#搜尋一些" class="headerlink" title="搜尋一些"></a>搜尋一些</h2><h3 id="redis-學習路線"><a href="#redis-學習路線" class="headerlink" title="redis 學習路線"></a>redis 學習路線</h3><p>網路上找到的圖</p>
+<img src="/blog/2020/02/17/Redis-小記/redis.png" title="Redis學習路線">
+<h3 id="一些找網路文章"><a href="#一些找網路文章" class="headerlink" title="一些找網路文章"></a>一些找網路文章</h3><ul>
+<li><a href="https://learnku.com/articles/33421" target="_blank" rel="noopener">Redis 应用场景汇总 | LearnKu 终身编程者的知识社区</a></li>
+<li><a href="https://segmentfault.com/q/1010000010777585" target="_blank" rel="noopener">php - redis使用list做消息队列,为什么推送用lpush,而消费用的是brpop? - SegmentFault 思否</a></li>
+<li><a href="https://researchlab.github.io/2018/10/13/redis-16-storage-solution-opt/" target="_blank" rel="noopener">redis专题16 数据持久化实践 | 一线攻城狮</a></li>
+<li><a href="http://jinguoxing.github.io/redis/2018/09/04/redis-scan/" target="_blank" rel="noopener">Redis SCAN的使用 - 静中细思的博客 | Kingnet Blog</a></li>
+<li><a href="https://yq.aliyun.com/articles/531067" target="_blank" rel="noopener">阿里云Redis开发规范-云栖社区-阿里云</a></li>
+<li><a href="https://yq.aliyun.com/articles/236384?spm=a2c4e.11153940.0.0.fdaf2d39jbvGgk" target="_blank" rel="noopener">Jedis常见异常汇总-云栖社区-阿里云</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/02/15/vagrant-搭配使用-ansible-和-docker-架設-redis-小記/" rel="next" title="vagrant 搭配使用 ansible 和 docker 架設 redis 小記">
+                <i class="fa fa-chevron-left"></i> vagrant 搭配使用 ansible 和 docker 架設 redis 小記
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/02/19/mysqldump-匯出-CSV-方法小記/" rel="prev" title="mysqldump  匯出 CSV 方法小記">
+                mysqldump  匯出 CSV 方法小記 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝"><span class="nav-number">1.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-一般常用類型"><span class="nav-number">2.</span> <span class="nav-text">Redis 一般常用類型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般常用指令"><span class="nav-number">3.</span> <span class="nav-text">一般常用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#keys"><span class="nav-number">3.1.</span> <span class="nav-text">keys *</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dbsize"><span class="nav-number">3.2.</span> <span class="nav-text">dbsize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exists"><span class="nav-number">3.3.</span> <span class="nav-text">exists</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#del"><span class="nav-number">3.4.</span> <span class="nav-text">del</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#expire"><span class="nav-number">3.5.</span> <span class="nav-text">expire</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ttl"><span class="nav-number">3.6.</span> <span class="nav-text">ttl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type"><span class="nav-number">3.7.</span> <span class="nav-text">type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#incr"><span class="nav-number">3.8.</span> <span class="nav-text">incr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#類型相關指令"><span class="nav-number">4.</span> <span class="nav-text">類型相關指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">4.1.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">4.1.1.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setex"><span class="nav-number">4.1.2.</span> <span class="nav-text">setex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setnx"><span class="nav-number">4.1.3.</span> <span class="nav-text">setnx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mset"><span class="nav-number">4.1.4.</span> <span class="nav-text">mset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mget"><span class="nav-number">4.1.5.</span> <span class="nav-text">mget</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#append"><span class="nav-number">4.1.6.</span> <span class="nav-text">append</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#strlen"><span class="nav-number">4.1.7.</span> <span class="nav-text">strlen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getset"><span class="nav-number">4.1.8.</span> <span class="nav-text">getset</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash"><span class="nav-number">4.2.</span> <span class="nav-text">Hash</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#hset"><span class="nav-number">4.2.1.</span> <span class="nav-text">hset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hget"><span class="nav-number">4.2.2.</span> <span class="nav-text">hget</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hsetnx"><span class="nav-number">4.2.3.</span> <span class="nav-text">hsetnx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hdel"><span class="nav-number">4.2.4.</span> <span class="nav-text">hdel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hlen"><span class="nav-number">4.2.5.</span> <span class="nav-text">hlen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hkeys"><span class="nav-number">4.2.6.</span> <span class="nav-text">hkeys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hmset-hmget"><span class="nav-number">4.2.7.</span> <span class="nav-text">hmset,hmget</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hexist"><span class="nav-number">4.2.8.</span> <span class="nav-text">hexist</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hvals"><span class="nav-number">4.2.9.</span> <span class="nav-text">hvals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hgetall"><span class="nav-number">4.2.10.</span> <span class="nav-text">hgetall</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hstrlen"><span class="nav-number">4.2.11.</span> <span class="nav-text">hstrlen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hincrby"><span class="nav-number">4.2.12.</span> <span class="nav-text">hincrby</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hincrbyfloat"><span class="nav-number">4.2.13.</span> <span class="nav-text">hincrbyfloat</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List"><span class="nav-number">4.3.</span> <span class="nav-text">List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lpush"><span class="nav-number">4.3.1.</span> <span class="nav-text">lpush</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rpush"><span class="nav-number">4.3.2.</span> <span class="nav-text">rpush</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lpop"><span class="nav-number">4.3.3.</span> <span class="nav-text">lpop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rpop"><span class="nav-number">4.3.4.</span> <span class="nav-text">rpop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#llen"><span class="nav-number">4.3.5.</span> <span class="nav-text">llen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lrem"><span class="nav-number">4.3.6.</span> <span class="nav-text">lrem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lrange"><span class="nav-number">4.3.7.</span> <span class="nav-text">lrange</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lindex"><span class="nav-number">4.3.8.</span> <span class="nav-text">lindex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#brpop"><span class="nav-number">4.3.9.</span> <span class="nav-text">brpop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#brpush"><span class="nav-number">4.3.10.</span> <span class="nav-text">brpush</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#總整理"><span class="nav-number">4.3.11.</span> <span class="nav-text">總整理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set"><span class="nav-number">4.4.</span> <span class="nav-text">Set</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sset"><span class="nav-number">4.4.1.</span> <span class="nav-text">sset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#srem"><span class="nav-number">4.4.2.</span> <span class="nav-text">srem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scard"><span class="nav-number">4.4.3.</span> <span class="nav-text">scard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sismember"><span class="nav-number">4.4.4.</span> <span class="nav-text">sismember</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spop"><span class="nav-number">4.4.5.</span> <span class="nav-text">spop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#srandmember"><span class="nav-number">4.4.6.</span> <span class="nav-text">srandmember</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#smember"><span class="nav-number">4.4.7.</span> <span class="nav-text">smember</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set-運算集"><span class="nav-number">4.4.8.</span> <span class="nav-text">set 運算集</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sinter-交集"><span class="nav-number">4.4.8.1.</span> <span class="nav-text">sinter (交集)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sunion-聯集"><span class="nav-number">4.4.8.2.</span> <span class="nav-text">sunion (聯集)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sdiff-差集"><span class="nav-number">4.4.8.3.</span> <span class="nav-text">sdiff (差集)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#集合存在…"><span class="nav-number">4.4.8.4.</span> <span class="nav-text">集合存在…</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sorted-set"><span class="nav-number">4.5.</span> <span class="nav-text">sorted set</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zadd"><span class="nav-number">4.5.1.</span> <span class="nav-text">zadd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zcard"><span class="nav-number">4.5.2.</span> <span class="nav-text">zcard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zsocre"><span class="nav-number">4.5.3.</span> <span class="nav-text">zsocre</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排名"><span class="nav-number">4.5.4.</span> <span class="nav-text">排名</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#zrank"><span class="nav-number">4.5.4.1.</span> <span class="nav-text">zrank</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#zrevrank"><span class="nav-number">4.5.4.2.</span> <span class="nav-text">zrevrank</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrem"><span class="nav-number">4.5.5.</span> <span class="nav-text">zrem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zincrby"><span class="nav-number">4.5.6.</span> <span class="nav-text">zincrby</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrange-zrevrange"><span class="nav-number">4.5.7.</span> <span class="nav-text">zrange,zrevrange</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zrangebyscore-zrevrangebyscore"><span class="nav-number">4.5.8.</span> <span class="nav-text">zrangebyscore, zrevrangebyscore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zcount"><span class="nav-number">4.5.9.</span> <span class="nav-text">zcount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zremrangebyrank-zremrangebyscore"><span class="nav-number">4.5.10.</span> <span class="nav-text">zremrangebyrank , zremrangebyscore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集運算"><span class="nav-number">4.5.11.</span> <span class="nav-text">集運算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zset-小結論"><span class="nav-number">4.5.12.</span> <span class="nav-text">zset 小結論</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#有在思考資料會一直存在-redis"><span class="nav-number">4.5.12.1.</span> <span class="nav-text">有在思考資料會一直存在 redis ?</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜尋一些"><span class="nav-number">5.</span> <span class="nav-text">搜尋一些</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-學習路線"><span class="nav-number">5.1.</span> <span class="nav-text">redis 學習路線</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些找網路文章"><span class="nav-number">5.2.</span> <span class="nav-text">一些找網路文章</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2020/02/17/Redis-小記/';
+          this.page.identifier = '2020/02/17/Redis-小記/';
+          this.page.title = 'Redis 小記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

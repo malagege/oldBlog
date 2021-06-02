@@ -1,37 +1,1248 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="php,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在看 PHP 官方參考文件一直以為 PHP 有一個指針(pointer)觀念今天讀到官網說「PHP 不是 reference、也不是 pinter 觀念」(雖然這樣想幾乎 87%都不會有問題)瞬間有點黑人問號臉也許是剛學時候就用這樣記住但是今天要好好重新認識 PHP Reference聽說就跟 Linux Hard Link 一樣的道理">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP有關參照(Reference)的那些事">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近在看 PHP 官方參考文件一直以為 PHP 有一個指針(pointer)觀念今天讀到官網說「PHP 不是 reference、也不是 pinter 觀念」(雖然這樣想幾乎 87%都不會有問題)瞬間有點黑人問號臉也許是剛學時候就用這樣記住但是今天要好好重新認識 PHP Reference聽說就跟 Linux Hard Link 一樣的道理">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-1.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-3.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-4.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-5.png">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.552Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP有關參照(Reference)的那些事">
+<meta name="twitter:description" content="最近在看 PHP 官方參考文件一直以為 PHP 有一個指針(pointer)觀念今天讀到官網說「PHP 不是 reference、也不是 pinter 觀念」(雖然這樣想幾乎 87%都不會有問題)瞬間有點黑人問號臉也許是剛學時候就用這樣記住但是今天要好好重新認識 PHP Reference聽說就跟 Linux Hard Link 一樣的道理">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/">
+
+
+
+
+
+  <title>PHP有關參照(Reference)的那些事 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/01/28/PHP有關參照-Reference-的那些事/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP有關參照(Reference)的那些事</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-01-28T21:46:56+08:00">
+                2019-01-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/01/28/PHP有關參照-Reference-的那些事/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/28/PHP有關參照-Reference-的那些事/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近在看 PHP 官方參考文件<br>一直以為 PHP 有一個指針(pointer)觀念<br>今天讀到官網說「PHP 不是 reference、也不是 pinter 觀念」(雖然這樣想幾乎 87%都不會有問題)<br>瞬間有點黑人問號臉<br>也許是剛學時候就用這樣記住<br>但是今天要好好重新認識 PHP Reference<br>聽說就跟 Linux Hard Link 一樣的道理</p>
+<a id="more"></a>
+<h2 id="PHP-參照不是指針-pointer"><a href="#PHP-參照不是指針-pointer" class="headerlink" title="PHP 參照不是指針(pointer)"></a>PHP 參照不是指針(pointer)</h2><p><a href="http://php.net/manual/zh/language.references.whatare.php" target="_blank" rel="noopener">PHP: 引用是什么 - Manual</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 PHP 中引用意味著用不同的名字訪問同一個變量內容。這並不像 C 的指針：例如你不能對他們做指針運算，他們並不是實際的內存地址…… 查看引用不是什麼瞭解更多信息。 替代的是，引用是符號表別名。注意在PHP 中，變量名和變量內容是不一樣的， 因此同樣的內容可以有不同的名字。最接近的比喻是 Unix 的文件名和文件本身——變量名是目錄條目，而變量內容則是文件本身。引用可以被看作是 Unix 文件系統中的硬鏈接。</span><br></pre></td></tr></table></figure>
+<p>這樣看真的沒有懂</p>
+<p>直接看下面的<em>User Contributed Notes</em>人家給的範例</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">var</span> = <span class="string">"foo"</span>;</span><br><span class="line">$ref1 =&amp; $var; <span class="comment">// new object that references $var</span></span><br><span class="line">$ref2 =&amp; $ref1; <span class="comment">// references $var directly, not $ref1!!!!!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $ref1; <span class="comment">// &gt;foo</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unset</span>($ref1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $ref1; <span class="comment">// &gt;Notice:  Undefined variable: ref1</span></span><br><span class="line"><span class="keyword">echo</span> $ref2; <span class="comment">// &gt;foo</span></span><br><span class="line"><span class="keyword">echo</span> $var; <span class="comment">// &gt;foo</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其實這個範例可以很簡單看出來，刪除<code>unset</code> $ref1變數不會影響到$ref2<br>這個我記得在 Java 會直接 byebye<br><del>JavaScript 發現不能用 delete object，看來要找天測試是為什麼</del><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete" target="_blank" rel="noopener">delete operator | MDN</a></p>
+<p>再看<a href="http://php.net/manual/zh/language.references.whatdo.php" target="_blank" rel="noopener">PHP: 引用做什么 - Manual</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a =&amp; $b;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<ul>
+<li>$a 和 $b 在這裡是完全相同的，這並不是 $a 指向了 $b 或者相反，而是 $a 和 $b 指向了同一個地方。</li>
+<li>如果具有引用的數組被拷貝，其值不會解除引用。對於數組傳值給函數也是如此。</li>
+</ul>
+<h2 id="參照"><a href="#參照" class="headerlink" title="參照"></a>參照</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line">$b++;</span><br><span class="line">$c = $b;</span><br><span class="line">$a = <span class="number">0</span>;</span><br><span class="line">var_dump($c);   <span class="comment">#2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line">$b++;</span><br><span class="line">$c = &amp;$b;</span><br><span class="line">$a = <span class="number">0</span>;</span><br><span class="line">var_dump($c);   <span class="comment">#0</span></span><br></pre></td></tr></table></figure>
+<h2 id="官網神奇的範例…"><a href="#官網神奇的範例…" class="headerlink" title="官網神奇的範例…"></a>官網神奇的範例…</h2><p>如果對一個未定義的變量進行引用賦值、引用參數傳遞或引用返回，則會自動創建該變量。<br>這一段真的很神奇…，不過應該是 function 會宣告上面的變數。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(&amp;$var)</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">foo($a); <span class="comment">// $a is "created" and assigned to null</span></span><br><span class="line"></span><br><span class="line">$b = <span class="keyword">array</span>();</span><br><span class="line">foo($b[<span class="string">'b'</span>]);</span><br><span class="line">var_dump(array_key_exists(<span class="string">'b'</span>, $b)); <span class="comment">// bool(true)</span></span><br><span class="line"></span><br><span class="line">$c = <span class="keyword">new</span> StdClass;</span><br><span class="line">foo($c-&gt;d);</span><br><span class="line">var_dump(property_exists($c, <span class="string">'d'</span>)); <span class="comment">// bool(true)</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="官方下面的範例"><a href="#官方下面的範例" class="headerlink" title="官方下面的範例"></a>官方下面的範例</h2><p><strong><em>以下有毒，假如理解不能請不要再深入，有可能會走火入魔</em></strong><br><strong><em>以下有毒，假如理解不能請不要再深入，有可能會走火入魔</em></strong><br><strong><em>以下有毒，假如理解不能請不要再深入，有可能會走火入魔</em></strong></p>
+<p>目前簡單用我想的方法<br><code>沒有用&amp;</code>當做<code>copy覆蓋到當前(箭頭)位置的值</code><br><code>用&amp;</code>當作<code>這個變數(箭頭)重新指向到某一個位置</code>(跟 linux hard link 一樣)<br>以下注解是我用自已方法去記錄的，有錯誤也請不要見怪</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//if you do:</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">"hihaha"</span>;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line">$c = <span class="string">"eita"</span>;</span><br><span class="line">$b = $c;</span><br><span class="line"><span class="keyword">echo</span> $a; <span class="comment">// shows "eita"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># $b指向為$a位置，$b的位置改當然$a也會跟著換</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">"hihaha"</span>;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line">$c = <span class="string">"eita"</span>;</span><br><span class="line">$b = &amp;$c;</span><br><span class="line"><span class="keyword">echo</span> $a; <span class="comment">// shows "hihaha"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  **這邊是重點**</span></span><br><span class="line"><span class="comment">#  $b範例都是參照位置</span></span><br><span class="line"><span class="comment">#  其實很容易被Java Reference帶著走</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">"hihaha"</span>;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line">$b = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">echo</span> $a; <span class="comment">// shows nothing (both are set to null)</span></span><br><span class="line"></span><br><span class="line">$a = <span class="string">"hihaha"</span>;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line"><span class="keyword">unset</span>($b);</span><br><span class="line"><span class="keyword">echo</span> $a; <span class="comment">// shows "hihaha"</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2019-02-20 簡單小記<br><code>$b</code>值為=右邊變數的值(先不管有沒有&amp;)<br>當然不一樣的結果在於前面的<code>$b=&amp;</code></p>
+<h2 id="用自已的方法手畫上面前四個範例"><a href="#用自已的方法手畫上面前四個範例" class="headerlink" title="用自已的方法手畫上面前四個範例"></a>用自已的方法手畫上面前四個範例</h2><img src="/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-1.png" title="範例1">
+<img src="/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-2.png" title="範例2">
+<img src="/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-3.png" title="範例3">
+<img src="/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-4.png" title="範例4">
+<p>簡單來說，我有一個方法不會搞混<br>首先，分兩部份<br>第一部份是 變數名字<br>第二部份是 記錄框框資料<br>兩個部份會有一個箭頭做關連</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = $a;</span><br></pre></td></tr></table></figure>
+<p>平常給值是<br><img src="/blog/2019/01/28/PHP有關參照-Reference-的那些事/1-5.png" title="範例5"></p>
+<h2 id="PHP5-new-物件預設是參照"><a href="#PHP5-new-物件預設是參照" class="headerlink" title="PHP5 new 物件預設是參照"></a>PHP5 new 物件預設是參照</h2><p><code>自 PHP 5 起，new 自动返回引用，因此在此使用 =&amp; 已经过时了并且会产生 E_STRICT 级别的消息。</code></p>
+<h2 id="Global-變數使用參照"><a href="#Global-變數使用參照" class="headerlink" title="Global 變數使用參照"></a>Global 變數使用參照</h2><p>百思不得其解的範例，官方有說明<code>global $var; 是 $var =&amp; $GLOBALS[&#39;var&#39;]; 的簡寫。</code><br>但要熟悉上面規則，就能理解下方程式為什麼不會影響外面的<code>$var2</code>(全域變數)<br>這可能沒有深入了解 PHP 參照，可能會很難理解<br>下範例外面的 Global 使用參照，卻不會影響全域變數</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$var1 = <span class="string">"Example variable"</span>;</span><br><span class="line">$var2 = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">global_references</span><span class="params">($use_globals)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">global</span> $var1, $var2;</span><br><span class="line">    <span class="keyword">if</span> (!$use_globals) &#123;</span><br><span class="line">        $var2 =&amp; $var1; <span class="comment">// visible only inside the function</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'var2:'</span>  . $var2 . <span class="string">','</span> . $GLOBALS[<span class="string">"var2"</span>]. PHP_EOL;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $GLOBALS[<span class="string">"var2"</span>] =&amp; $var1; <span class="comment">// visible also in global context</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">global_references(<span class="keyword">false</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"var2 is set to '$var2'\n"</span>; <span class="comment">// var2 is set to ''</span></span><br><span class="line">global_references(<span class="keyword">true</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"var2 is set to '$var2'\n"</span>; <span class="comment">// var2 is set to 'Example variable'</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這個範例其實跟上一個例子一樣<br>其實他是參照到別的地方</p>
+<p>話說我剛好也不是很了解 php global<br>趁這個機會了解</p>
+<p><a href="http://php.net/manual/en/language.references.arent.php" target="_blank" rel="noopener">PHP: What References Are Not - Manual</a><br>原 function 的$var是參照$bar<br>但是$var =&amp; $GLOBALS[“baz”];<br>簡單來說</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(&amp;$var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $var =&amp; $GLOBALS[<span class="string">"baz"</span>];</span><br><span class="line">&#125;</span><br><span class="line">foo($bar);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這邊用 global 感覺容易混淆</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">        <span class="comment">//Enter your code here, enjoy!</span></span><br><span class="line">$bar = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(&amp;$var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $a = <span class="number">2</span>;</span><br><span class="line">    $var =&amp; $a;</span><br><span class="line">&#125;</span><br><span class="line">foo($bar);</span><br><span class="line"><span class="keyword">echo</span> $bar;  <span class="comment">#1</span></span><br></pre></td></tr></table></figure>
+<p>感覺<code>foo(&amp;$var)</code>使用上等於<code>區域變數 $var = &amp; 全域變數 $bar</code>($var = &amp;$GLOBAL[‘bar’])<br>所以到最後重新指向位置並不會影響\$bar</p>
+<h2 id="Returning-References"><a href="#Returning-References" class="headerlink" title="Returning References"></a>Returning References</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $value = <span class="number">42</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> &amp;<span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> foo;</span><br><span class="line">$myValue = &amp;$obj-&gt;getValue(); <span class="comment">// $myValue is a reference to $obj-&gt;value, which is 42.</span></span><br><span class="line">$obj-&gt;value = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">echo</span> $myValue;                <span class="comment">// prints the new value of $obj-&gt;value, i.e. 2.</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>簡單來說，Returning References 用在物件導向需要兩個<code>&amp;</code></p>
+<p>最近看 Codeigiter 原程式有用<code>function &amp;xxxx</code><br>一直在想這個為什麼要這樣用…<br>在想是不是之後會帶入到 function，防止不是參照(以下自己猜測，但後來想想好像不是，看看就好= =a)<br>讓 functiont 產生<code>Only variables should be passed by reference</code>(詳細請看下面內容)<br>不過有在官網看到<a href="http://php.net/manual/zh/language.variables.scope.php#language.variables.scope.static" target="_blank" rel="noopener">PHP: 變量範圍 - Manual</a><br>目前還不確定是不是這個關係</p>
+<blockquote>
+<p>在 Zend 引擎 1 代，它驅動了 PHP4，對於變量的 static 和 global 定義是以引用的方式實現的。例如，在一個函數域內部用 global 語句導入的一個真正的全局變量實際上是建立了一個到全局變量的引用。這有可能導致預料之外的行為，如以下例子所演示的：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 類似的行為也適用於 static 語句。引用並不是靜態地存儲的：</span></span><br><span class="line"><span class="comment">//以下code為php4</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> &amp;<span class="title">get_instance_ref</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> $obj;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Static object: '</span>;</span><br><span class="line">    var_dump($obj);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">isset</span>($obj)) &#123;</span><br><span class="line">        <span class="comment">// 將一個引用賦值給靜態變量</span></span><br><span class="line">        $obj = &amp;<span class="keyword">new</span> stdclass;</span><br><span class="line">    &#125;</span><br><span class="line">    $obj-&gt;property++;</span><br><span class="line">    <span class="keyword">return</span> $obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> &amp;<span class="title">get_instance_noref</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> $obj;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'Static object: '</span>;</span><br><span class="line">    var_dump($obj);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">isset</span>($obj)) &#123;</span><br><span class="line">        <span class="comment">// 將一個對象賦值給靜態變量</span></span><br><span class="line">        $obj = <span class="keyword">new</span> stdclass;</span><br><span class="line">    &#125;</span><br><span class="line">    $obj-&gt;property++;</span><br><span class="line">    <span class="keyword">return</span> $obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$obj1 = get_instance_ref();</span><br><span class="line">$still_obj1 = get_instance_ref();</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"\n"</span>;</span><br><span class="line">$obj2 = get_instance_noref();</span><br><span class="line">$still_obj2 = get_instance_noref();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>官網還有提到一個可能會遇到的錯誤問題</p>
+<ul>
+<li><a href="https://my.oschina.net/wangyongtao/blog/531812" target="_blank" rel="noopener">[PHP]Only variables should be passed by reference - 王永濤的个人页面 - 开源中国</a></li>
+<li><a href="https://vijayasankarn.wordpress.com/2017/08/28/php-only-variables-should-be-passed-by-reference/" target="_blank" rel="noopener">PHP: Only variables should be passed by reference – James’ Desk</a></li>
+</ul>
+<p>首先先提提<code>array_push(array(), &#39;foo&#39;);</code>，程式會顯示錯誤，原因需要這個變數被實例</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> &amp;<span class="title">collector</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> $collection = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> $collection;</span><br><span class="line">&#125;</span><br><span class="line">array_push(collector(), <span class="string">'foo'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>假如</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">collector</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> $collection = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">return</span> $collection;</span><br><span class="line">&#125;</span><br><span class="line">array_push(collector(), <span class="string">'foo'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>程式會顯示 <code>Only variables should be passed by reference</code></p>
+<h2 id="Passing-by-Reference"><a href="#Passing-by-Reference" class="headerlink" title="Passing by Reference"></a>Passing by Reference</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(&amp;$var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $var++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a=<span class="number">5</span>;</span><br><span class="line">foo($a);</span><br><span class="line"><span class="comment">// $a is 6 here</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>官網有給之前提過的錯誤，<code>Only variables should be passed by reference</code>問題</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(&amp;$var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $var++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span> // <span class="title">Note</span> <span class="title">the</span> <span class="title">missing</span> &amp;</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $a = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">return</span> $a;</span><br><span class="line">&#125;</span><br><span class="line">foo(bar()); <span class="comment">// Produces fatal error as of PHP 5.0.5, strict standards notice</span></span><br><span class="line">            <span class="comment">// as of PHP 5.1.1, and notice as of PHP 7.0.0</span></span><br><span class="line"></span><br><span class="line">foo($a = <span class="number">5</span>); <span class="comment">// Expression, not variable</span></span><br><span class="line">foo(<span class="number">5</span>); <span class="comment">// Produces fatal error</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foobar</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="keyword">new</span> Foobar()) <span class="comment">// Produces a notice as of PHP 7.0.7</span></span><br><span class="line">                  <span class="comment">// Notice: Only variables should be passed by reference</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Unsetting-References"><a href="#Unsetting-References" class="headerlink" title="Unsetting References"></a>Unsetting References</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b =&amp; $a;</span><br><span class="line"><span class="keyword">unset</span>($a);</span><br><span class="line">var_dump($a); <span class="comment"># null</span></span><br><span class="line">var_dump($b); <span class="comment"># 1</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>won’t unset $b, just $a.<br>Again, it might be useful to think about this as analogous to the Unix <strong>unlink</strong> call.</p>
+</blockquote>
+<p>用 Linux 的 link hard 觀念確實方便理解</p>
+<h2 id="Spotting-References"><a href="#Spotting-References" class="headerlink" title="Spotting References"></a>Spotting References</h2><h3 id="global-References"><a href="#global-References" class="headerlink" title="global References"></a>global References</h3><blockquote>
+<p>When you declare a variable as global \$var you are in fact creating reference to a global variable. That means, this is the same as:</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$var =&amp; $GLOBALS[<span class="string">"var"</span>];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>This also means that unsetting \$var won’t unset the global variable.</p>
+</blockquote>
+<p>意思是 unset 變數也不會影響到全域變數</p>
+<h3 id="this"><a href="#this" class="headerlink" title="\$this"></a>\$this</h3><p>In an object method, \$this is always a reference to the called object.</p>
+<p>\$this 參照呼叫實例物件</p>
+<h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>費很多功夫整理這個，光吸收可能需要花費一堆時間<br>因為想進入 PHP 領域，了解這個應該也是必經之道<br>平常也很少機會用<code>&amp;</code>這玩意吧<br>有空整理一下 PHP 物件導向觀念。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/" rel="next" title="Linux在Wifi使用pppoe連線後，重開機不能連線上網">
+                <i class="fa fa-chevron-left"></i> Linux在Wifi使用pppoe連線後，重開機不能連線上網
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/02/03/ElementaryOS設定停用休眠但還是會休眠問題解決方案/" rel="prev" title="ElementaryOS設定停用休眠但還是會休眠問題解決方案">
+                ElementaryOS設定停用休眠但還是會休眠問題解決方案 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP-參照不是指針-pointer"><span class="nav-number">1.</span> <span class="nav-text">PHP 參照不是指針(pointer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#參照"><span class="nav-number">2.</span> <span class="nav-text">參照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官網神奇的範例…"><span class="nav-number">3.</span> <span class="nav-text">官網神奇的範例…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官方下面的範例"><span class="nav-number">4.</span> <span class="nav-text">官方下面的範例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用自已的方法手畫上面前四個範例"><span class="nav-number">5.</span> <span class="nav-text">用自已的方法手畫上面前四個範例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP5-new-物件預設是參照"><span class="nav-number">6.</span> <span class="nav-text">PHP5 new 物件預設是參照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-變數使用參照"><span class="nav-number">7.</span> <span class="nav-text">Global 變數使用參照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Returning-References"><span class="nav-number">8.</span> <span class="nav-text">Returning References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Passing-by-Reference"><span class="nav-number">9.</span> <span class="nav-text">Passing by Reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unsetting-References"><span class="nav-number">10.</span> <span class="nav-text">Unsetting References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spotting-References"><span class="nav-number">11.</span> <span class="nav-text">Spotting References</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#global-References"><span class="nav-number">11.1.</span> <span class="nav-text">global References</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this"><span class="nav-number">11.2.</span> <span class="nav-text">\$this</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#心得"><span class="nav-number">12.</span> <span class="nav-text">心得</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/01/28/PHP有關參照-Reference-的那些事/';
+          this.page.identifier = '2019/01/28/PHP有關參照-Reference-的那些事/';
+          this.page.title = 'PHP有關參照(Reference)的那些事';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

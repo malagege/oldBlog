@@ -1,37 +1,1277 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="traefik,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在樹梅派使用 Docker 服務多常常設完一個服務，我就要去Virtual Server 設定一個 port最後想到可以架一個 Server 做反向代理這時候我想到 nginx 和 caddycaddy 又可以幫我換 letsencrypt 憑證最後看到這篇用 Traefik 搭配 Docker 快速架設服務 | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY  我要介紹另外一套工具">
+<meta name="keywords" content="traefik">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Raspberry PI 架設 Traefik 初體驗">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/10/13/在-Raspberry-PI-架設-Traefik-初體驗/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近在樹梅派使用 Docker 服務多常常設完一個服務，我就要去Virtual Server 設定一個 port最後想到可以架一個 Server 做反向代理這時候我想到 nginx 和 caddycaddy 又可以幫我換 letsencrypt 憑證最後看到這篇用 Traefik 搭配 Docker 快速架設服務 | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY  我要介紹另外一套工具">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:46.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在 Raspberry PI 架設 Traefik 初體驗">
+<meta name="twitter:description" content="最近在樹梅派使用 Docker 服務多常常設完一個服務，我就要去Virtual Server 設定一個 port最後想到可以架一個 Server 做反向代理這時候我想到 nginx 和 caddycaddy 又可以幫我換 letsencrypt 憑證最後看到這篇用 Traefik 搭配 Docker 快速架設服務 | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY  我要介紹另外一套工具">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/10/13/在-Raspberry-PI-架設-Traefik-初體驗/">
+
+
+
+
+
+  <title>在 Raspberry PI 架設 Traefik 初體驗 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/10/13/在-Raspberry-PI-架設-Traefik-初體驗/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在 Raspberry PI 架設 Traefik 初體驗</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-10-13T23:22:45+08:00">
+                2020-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/10/13/在-Raspberry-PI-架設-Traefik-初體驗/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/13/在-Raspberry-PI-架設-Traefik-初體驗/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近在樹梅派使用 Docker 服務多<br>常常設完一個服務，我就要去Virtual Server 設定一個 port<br>最後想到可以架一個 Server 做反向代理<br>這時候我想到 nginx 和 caddy<br>caddy 又可以幫我換 letsencrypt 憑證<br>最後看到這篇<a href="https://blog.wu-boy.com/2019/01/deploy-service-using-traefik-and-docker/" target="_blank" rel="noopener">用 Traefik 搭配 Docker 快速架設服務 | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY</a></p>
+<blockquote>
+<p>我要介紹另外一套工具叫 Traefik，這一套也是用 Go 語言開發，而我推薦這套的原因是，此套可以跟 Docker 很深度的結合，只要服務跑在 Docker 上面，Traefik 都可以自動偵測到，並且套用設定。透過底下的範例讓 Traefik 串接後端兩個服務，分別是 domain1.com 及 domain2.com。</p>
+</blockquote>
+<p>好像能試試看喔</p>
+<a id="more"></a>
+<h2 id="事前準備"><a href="#事前準備" class="headerlink" title="事前準備"></a>事前準備</h2><h3 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h3><p>我發現我樹梅派沒安裝 docker-compose</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install docker-compose</span><br></pre></td></tr></table></figure>
+<p>安裝就這麼簡單</p>
+<h3 id="修改舊的-dockerfile"><a href="#修改舊的-dockerfile" class="headerlink" title="修改舊的 dockerfile"></a>修改舊的 dockerfile</h3><p>發現有人做過<br><a href="https://juejin.im/entry/6844903458986786830" target="_blank" rel="noopener">Docker 与 Traefik 助微服务腾飞 - 后端</a><br>不過版本是1.3.8<br>現在出到 2 了<br>想使用新版本<br>看一下舊版的 dockerfile<br>只是下載直接執行<br><a href="https://github.com/hypriot/rpi-traefik/blob/master/Dockerfile" target="_blank" rel="noopener">rpi-traefik/Dockerfile at master · hypriot/rpi-traefik</a></p>
+<p><del>PS: Dockerfile ADD 可以放 http 以外，他可以放 gz 連結，會自動解壓縮</del><br><a href="https://islishude.github.io/blog/2019/06/29/docker/Dockerfile-COPY-%E5%92%8C-ADD-%E6%8C%87%E4%BB%A4%E5%8C%BA%E5%88%AB%E5%92%8C%E4%BD%BF%E7%94%A8%E8%A7%84%E5%88%99/" target="_blank" rel="noopener">Dockerfile COPY 和 ADD 指令區別和使用規則 - Lishude’s Web Note</a></p>
+<blockquote>
+<p>上面的命令會導致foo.tar.gz歸檔文件的內容被解壓到容器的/ tmp目錄中。 有趣的是，URL下載和解壓功能不能一起使用。任何通過URL複製的壓縮文件都不會自動解壓縮。<br><a href="https://juejin.im/post/6844903574539862030" target="_blank" rel="noopener">Dockerfile:ADD VS COPY</a></p>
+</blockquote>
+<blockquote>
+<p>ADD的另外一個特性是有能力自動解壓文件。如果<src>參數是一個可識別的壓縮格式（tar, gzip, bzip2, etc）的本地文件（所以實現不了同時下載並解壓），就會被解壓到指定容器文件系統的路徑<dest>。<br>ADD /foo.tar.gz /tmp/<br>上述指令會使foo.tar.gz壓縮文件解壓到容器的/tmp目錄。<br>URL下載和解壓特性不能一起使用。任何壓縮文件通過URL拷貝，都不會自動解壓。<br>目前ADD指令有點讓人迷惑，有時候解壓文件，有時候不解壓文件，如果你想拷貝一個壓縮文件，你會以為地解壓。如果文件是某種不能識別的壓縮文件，如果你想解壓，你又會意外地複製它。<br><a href="https://www.cnblogs.com/zdz8207/p/linux-docker-add-copy.html" target="_blank" rel="noopener">docker Dockerfile指令ADD和COPY的區別，添加目錄方法 - 大自然的流風 - 博客園</a></dest></src></p>
+</blockquote>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> hypriot/rpi-alpine:<span class="number">3.6</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> https://github.com/traefik/traefik/releases/download/v2.3.1/traefik_v2.3.1_linux_armv7.tar.gz /traefik.tar.gz</span></span><br><span class="line"><span class="bash">RUN tar zxvf traefik.tar.gz</span></span><br><span class="line"><span class="bash">RUN apk upgrade --no-cache &amp;&amp;\</span></span><br><span class="line"><span class="bash">    apk add --no-cache ca-certificates &amp;&amp;\</span></span><br><span class="line"><span class="bash">    chmod +x /traefik</span></span><br><span class="line"><span class="bash">EXPOSE 80 8080 443</span></span><br><span class="line"><span class="bash">ENTRYPOINT [<span class="string">"/traefik"</span>]</span></span><br></pre></td></tr></table></figure>
+<p>做到後面，我發現有現成的 Image<br><a href="https://hub.docker.com/r/arm64v8/traefik" target="_blank" rel="noopener">arm64v8/traefik - Docker Hub</a></p>
+<h2 id="Raspberry-PI-安裝-traefik"><a href="#Raspberry-PI-安裝-traefik" class="headerlink" title="Raspberry PI 安裝 traefik"></a>Raspberry PI 安裝 traefik</h2><p>docker build . -t traefik</p>
+<h3 id="建立-network"><a href="#建立-network" class="headerlink" title="建立 network"></a>建立 network</h3><p>docker network create traefik_network</p>
+<h3 id="建置-docker-compose"><a href="#建置-docker-compose" class="headerlink" title="建置 docker-compose"></a>建置 docker-compose</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  traefik:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">traefik</span></span><br><span class="line"><span class="attr">    command:</span> <span class="bullet">--api.insecure=true</span> <span class="bullet">--providers.docker</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"80:80"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8080:8080"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">traefik_network</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  traefik_network:</span></span><br><span class="line"><span class="attr">    external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="建置-whoami"><a href="#建置-whoami" class="headerlink" title="建置 whoami"></a>建置 whoami</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"2"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  whoami:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">hypriot/rpi-whoami</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">traefik_network</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      - constraint:</span><span class="string">hypriot.hierarchy!=leader</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">PORT=8000</span></span><br><span class="line"><span class="attr">    labels:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.backend=whoami"</span></span><br><span class="line"><span class="comment">#      - "traefik.frontend.rule=Host:whoami.docker.localhost"</span></span><br><span class="line"><span class="comment">#2.3.1 上面設定好像會無效</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.routers.router0.rule=Host(`whoami.localhost`) || PathPrefix(`/whoami`)"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.port=8000"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  traefik_network:</span></span><br><span class="line"><span class="attr">    external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h2 id="測試方法"><a href="#測試方法" class="headerlink" title="測試方法"></a>測試方法</h2><h3 id="方法1-修改hosts檔案"><a href="#方法1-修改hosts檔案" class="headerlink" title="方法1:修改hosts檔案"></a>方法1:修改hosts檔案</h3><p>/etc/hosts</p>
+<p>127.0.0.1    whoami.localhost</p>
+<h3 id="方法2-curl-H-xxx"><a href="#方法2-curl-H-xxx" class="headerlink" title="方法2: curl -H xxx"></a>方法2: curl -H xxx</h3><p>curl -H Host:whoami.localhost <a href="http://192.168.1.1/" target="_blank" rel="noopener">http://192.168.1.1/</a></p>
+<p><a href="https://juejin.im/entry/6844903458986786830" target="_blank" rel="noopener">Docker 与 Traefik 助微服务腾飞 - 后端</a><br>裡面適用這個方法</p>
+<p>推薦使用這個，這樣就不用做多餘的設定</p>
+<p>舊版本差異<br><a href="https://doc.traefik.io/traefik/migration/v1-to-v2/" target="_blank" rel="noopener">Traefik v1 to v2 - Traefik</a></p>
+<p><a href="https://shanyue.tech/op/traefik.html#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B" target="_blank" rel="noopener">traefik 简易入门 | 个人服务器运维指南 | 山月行</a><br><a href="https://hub.docker.com/r/arm32v6/traefik/" target="_blank" rel="noopener">arm32v6/traefik - Docker Hub</a><br><a href="https://doc.traefik.io/traefik/" target="_blank" rel="noopener">Traefik</a><br><a href="https://blog.wu-boy.com/2019/01/deploy-service-using-traefik-and-docker/" target="_blank" rel="noopener">用 Traefik 搭配 Docker 快速架設服務 | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY</a><br><a href="https://blog.wu-boy.com/2019/03/setup-traefik-with-drone-ci-cd-in-ten-minutes/" target="_blank" rel="noopener">10 分鐘內用 Traefik 架設 Drone 搭配 GitHub 服務 | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY</a><br><a href="https://blanboom.org/2019/traefik-and-wildcard-cert-on-my-website/" target="_blank" rel="noopener">个人网站实现方案更新：Traefik 反向代理、与 NAS 共用 Wildcard 证书等 – Blanboom</a></p>
+<blockquote>
+<p>當我們訪問集群內部服務，如數據庫，緩存，traefik Dashboard，gitlab 時，如果直接暴露在公網中，則會造成很大安全隱患，此時我們應該如何處理呢？</p>
+</blockquote>
+<p><a href="https://shanyue.tech/op/traefik.html#%E6%80%BB%E7%BB%93" target="_blank" rel="noopener">traefik 簡易入門 | 個人服務器運維指南 | 山月行</a></p>
+<p><a href="https://www.mdeditor.tw/pl/p8UD/zh-tw" target="_blank" rel="noopener">一文搞懂 Traefik2.1 的使用_River’s Site - MdEditor</a><br><a href="https://zhuanlan.zhihu.com/p/61967315" target="_blank" rel="noopener">使用 Docker 和 Traefik 搭建 GitLab （前篇） - 知乎</a><br><a href="https://www.jianshu.com/p/3ea76663243b" target="_blank" rel="noopener">在Docker Swarm上部署Traefik2.x - 简书</a></p>
+<h2 id="traefik-綁定-lets-wildcard"><a href="#traefik-綁定-lets-wildcard" class="headerlink" title="traefik 綁定 lets wildcard"></a>traefik 綁定 lets wildcard</h2><p>wildcard 只能用 dns chang</p>
+<h3 id="註銷舊有憑證方法"><a href="#註銷舊有憑證方法" class="headerlink" title="註銷舊有憑證方法"></a>註銷舊有憑證方法</h3><p>沒用的跳過<br>certbot revoke –cert-path /etc/letsencrypt/archive/${YOUR_DOMAIN}/cert1.pem</p>
+<p>不過後來沒是成功<br>我先把nextcloud 綁下來<br>感覺不能直接這樣做??<br>後來想說直接用新的 url</p>
+<h3 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h3><h4 id="acme-json"><a href="#acme-json" class="headerlink" title="acme.json"></a>acme.json</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在docker-compose.yml 路徑</span></span><br><span class="line">touch acme.json &amp;&amp; chmod 600 acme.json</span><br></pre></td></tr></table></figure>
+<h4 id="設定-traefik-docker-compose"><a href="#設定-traefik-docker-compose" class="headerlink" title="設定 traefik docker-compose"></a>設定 traefik docker-compose</h4><p>參考這個<a href="https://github.com/KnicKnic/traefik_duckdns/blob/master/docker-compose.yml" target="_blank" rel="noopener">traefik_duckdns/docker-compose.yml at master · KnicKnic/traefik_duckdns</a></p>
+<p>對應我的 docker-compose 做修改</p>
+<figure class="highlight plain"><figcaption><span>.env</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#your duck dns token</span><br><span class="line">DUCKDNS_TOKEN=</span><br><span class="line"></span><br><span class="line">#your duck dns subdomain (not the full domain)</span><br><span class="line">#use &quot;test&quot; not &quot;test.duckdns.org</span><br><span class="line">DUCKDNS_SUBDOMAIN=</span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  updateDuckDNSIP:</span></span><br><span class="line">    <span class="comment"># used to update duckdns</span></span><br><span class="line">    <span class="comment"># if you have a static IP, yu can comment this out</span></span><br><span class="line">    <span class="comment"># using busybox due to it having an image for almost every platform</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">armhf/ubuntu</span></span><br><span class="line"><span class="attr">    command:</span> <span class="string">/bin/sh</span> <span class="bullet">-c</span> <span class="string">"apt update -y &amp;&amp; apt install curl -y &amp;&amp; while true; do echo url=\"https://www.duckdns.org/update?domains=$&#123;DUCKDNS_SUBDOMAIN&#125;&amp;token=$&#123;DUCKDNS_TOKEN&#125;\" | curl -k -o duck.log -K -; sleep 300; done"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    labels:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.enable=false"</span></span><br><span class="line"><span class="attr">  traefik:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">traefik</span></span><br><span class="line"><span class="attr">    command:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--api.insecure=true"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--providers.docker"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--entrypoints.web.address=:80"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--entrypoints.web-secure.address=:443"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.dnschallenge=true"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.email=xxxxx@gmail.com"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.storage=acme.json"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=duckdns"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"80:80"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"443:443"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"8080:8080"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./acme.json:/acme.json</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">traefik_network</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">DUCKDNS_TOKEN=$&#123;DUCKDNS_TOKEN&#125;</span></span><br><span class="line"><span class="attr">    labels:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.enable=false"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.routers.traefik.tls=true"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.routers.traefik.tls.certresolver=letsencrypt"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.routers.traefik.tls.domains[0].main=$&#123;DUCKDNS_SUBDOMAIN&#125;.duckdns.org"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.routers.traefik.tls.domains[0].sans=*.$&#123;DUCKDNS_SUBDOMAIN&#125;.duckdns.org,$&#123;DUCKDNS_SUBDOMAIN&#125;.duckdns.org"</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  traefik_network:</span></span><br><span class="line"><span class="attr">    external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>這邊有個小技巧，使用搭配 .env<br>可以用 docker-compose config 看看有沒有設定到</p>
+<p>certresolver 的 letsencrypt 是看自己命名的名子certificatesresolvers.<code>letsencrypt</code>.acme.dnschallenge</p>
+<p>whoami</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">"2"</span></span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  whoami:</span><br><span class="line">    image: hypriot/rpi-whoami</span><br><span class="line">    networks:</span><br><span class="line">        - traefik_network</span><br><span class="line">    environment:</span><br><span class="line">      - constraint:hypriot.hierarchy!=leader</span><br><span class="line">      - PORT=8000</span><br><span class="line">    labels:</span><br><span class="line">      - <span class="string">"traefik.backend=whoami"</span></span><br><span class="line">      - <span class="string">"traefik.http.routers.whoami.rule=Host(`whoami.xxxxx`) || PathPrefix(`/whoami`)"</span></span><br><span class="line">      - <span class="string">"traefik.http.routers.whoami.tls=true"</span></span><br><span class="line">      - <span class="string">"traefik.http.services.whoami.loadbalancer.server.port=8000"</span></span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  traefik_network:</span><br><span class="line">    external: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="問題整理"><a href="#問題整理" class="headerlink" title="問題整理"></a>問題整理</h3><h4 id="port-is-missing"><a href="#port-is-missing" class="headerlink" title="port is missing"></a>port is missing</h4><p>traefik_1          | time=”2020-10-18T12:15:24Z” level=error msg=”service \”seafile\” error: port is missing” providerName=docker container=seafile-7d40e43962df0ec1ca3af66d553c7ae5b81364497bb5f4f2c77597c95d210370</p>
+<p><del>要開隨一 port? 就能解決</del></p>
+<p>原本是用 traefik.http.services.seafile.loadbalancer.server.port=80<br><del><strong>但可能也不是應該用這種方式</strong> 有更好方式再補充</del><br>去控制 port 不是用 traefik.port</p>
+<p>查看官方文件<a href="https://doc.traefik.io/traefik/providers/docker/" target="_blank" rel="noopener">Docker - Traefik</a></p>
+<blockquote>
+<p>Ports detection works as follows:</p>
+<p>   If a container exposes only one port, then Traefik uses this port for private communication.<br>   If a container exposes multiple ports, or does not expose any port, then you must manually specify which port Traefik should use for communication by using the label traefik.http.services._service_name_.loadbalancer.server.port (Read more on this label in the dedicated section in routing).</p>
+</blockquote>
+<p>exposes 就是 docker 對外設定的 port</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXPOSE</span> &lt;port&gt; [&lt;port&gt;/&lt;protocol&gt;...]</span><br></pre></td></tr></table></figure>
+<p>難怪…，nextcloud seafile 都需要設定 traefik.http.services.seafile.loadbalancer.server.port=80</p>
+<h4 id="https-導向問題"><a href="#https-導向問題" class="headerlink" title="https 導向問題"></a>https 導向問題</h4><p>進去 nextcloud https 網站時候<br>會發現進不去</p>
+<p>內層服務強制 https 取消</p>
+<h4 id="Container-取消關聯"><a href="#Container-取消關聯" class="headerlink" title="Container 取消關聯"></a>Container 取消關聯</h4><p><a href="https://doc.traefik.io/traefik/v1.4/configuration/backends/docker/" target="_blank" rel="noopener">Backend: Docker - Træfik</a></p>
+<p>docker run -d -p 8000:8000 -p 9000:9000 -l “traefik.enable=false” –name=portainer –restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:alpine@sha256:f13f14be723c848e119fa8d85c932dbcc0cbe3cfe09e784ceb09adefa248ccd1</p>
+<h4 id="HTTPS-redirection-80-to-443"><a href="#HTTPS-redirection-80-to-443" class="headerlink" title="HTTPS redirection (80 to 443)"></a>HTTPS redirection (80 to 443)</h4><p>待確認</p>
+<p>–entrypoints.web.address=:80<br>–entrypoints.web.http.redirections.entryPoint.to=web-secure<br>–entrypoints.web.http.redirections.entryPoint.scheme=https<br>–entrypoints.web-secure.address=:443</p>
+<p>這邊要注意 entrypoints.<code>web-secure</code>.address 裡面的命名</p>
+<h4 id="同時使用-http-和-https-反向代理"><a href="#同時使用-http-和-https-反向代理" class="headerlink" title="同時使用 http 和 https 反向代理"></a>同時使用 http 和 https 反向代理</h4><p>用 nginx , apache 相關反向代理<br>相信不用處理是否要 http , https<br>預設就可以了</p>
+<p>但我發現這邊不行<br>後來看了官網文件<a href="https://doc.traefik.io/traefik/routing/routers/#general" target="_blank" rel="noopener">Routers - Traefik</a></p>
+<blockquote>
+<p>Routers for HTTP &amp; HTTPS</p>
+<p>If you need to define the same route for both HTTP and HTTPS requests, you will need to define two different routers: one with the tls section, one without.</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Dynamic configuration</span></span><br><span class="line"><span class="section">[http.routers]</span></span><br><span class="line"><span class="section">  [http.routers.my-https-router]</span></span><br><span class="line">    rule = "Host(`foo-domain`) &amp;&amp; Path(`/foo-path/`)"</span><br><span class="line">    service = "service-id"</span><br><span class="line">    <span class="comment"># will terminate the TLS request</span></span><br><span class="line"><span class="section">    [http.routers.my-https-router.tls]</span></span><br><span class="line"></span><br><span class="line"><span class="section">  [http.routers.my-http-router]</span></span><br><span class="line">    rule = "Host(`foo-domain`) &amp;&amp; Path(`/foo-path/`)"</span><br><span class="line">    service = "service-id"</span><br></pre></td></tr></table></figure>
+<p>簡單說就是要寫兩個 router </p>
+<p>Docker Label 設定方法</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">labels:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">"traefik.backend=whoami"</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">"traefik.http.routers.whoami.rule=Host(`whoami.ooo.duckdns.org`) || PathPrefix(`/whoami`)"</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">"traefik.port=8000"</span></span><br><span class="line">  <span class="comment">#- "traefik.protocol=http" default http</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">"traefik.http.routers.whoami-https.rule=Host(`whoami.ooo.duckdns.org`)"</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">"traefik.http.routers.whoami-https.tls=true"</span></span><br></pre></td></tr></table></figure>
+<h4 id="traefik-docker-設定小記"><a href="#traefik-docker-設定小記" class="headerlink" title="traefik docker 設定小記"></a>traefik docker 設定小記</h4><p>這邊主要是 traefik 的 docker 設定</p>
+<p>提幾個我覺得<del>驚奇</del>重要</p>
+<ol>
+<li><p>endpoint 指定 docker socket file 路徑<a href="https://doc.traefik.io/traefik/providers/docker/#endpoint" target="_blank" rel="noopener">Docker - Traefik</a></p>
+</li>
+<li><p>exposedByDefault</p>
+</li>
+</ol>
+<p>單一 port 可以不用設定連到是因為這個關係<br>預設true</p>
+<ol start="3">
+<li>defaultRule <a href="https://doc.traefik.io/traefik/providers/docker/#defaultrule" target="_blank" rel="noopener">Docker - Traefik</a></li>
+</ol>
+<p>Default=Host(<code></code>) </p>
+<p>建立 docker 最自動產生 docker router 名稱原來是這邊來的</p>
+<h4 id="設定-BaseAuth"><a href="#設定-BaseAuth" class="headerlink" title="設定 BaseAuth"></a>設定 BaseAuth</h4><h5 id="產生-帳號-密碼"><a href="#產生-帳號-密碼" class="headerlink" title="產生 帳號/密碼"></a>產生 帳號/密碼</h5><h1 id="Note-when-used-in-docker-compose-yml-all-dollar-signs-in-the-hash-need-to-be-doubled-for-escaping"><a href="#Note-when-used-in-docker-compose-yml-all-dollar-signs-in-the-hash-need-to-be-doubled-for-escaping" class="headerlink" title="Note: when used in docker-compose.yml all dollar signs in the hash need to be doubled for escaping."></a>Note: when used in docker-compose.yml all dollar signs in the hash need to be doubled for escaping.</h1><h1 id="To-create-user-password-pair-it’s-possible-to-use-this-command"><a href="#To-create-user-password-pair-it’s-possible-to-use-this-command" class="headerlink" title="To create user:password pair, it’s possible to use this command:"></a>To create user:password pair, it’s possible to use this command:</h1><h1 id="echo-htpasswd-nb-user-password-sed-e-s-g"><a href="#echo-htpasswd-nb-user-password-sed-e-s-g" class="headerlink" title="echo $(htpasswd -nb user password) | sed -e s/\$/\$\$/g"></a>echo $(htpasswd -nb user password) | sed -e s/\$/\$\$/g</h1><ul>
+<li><a href="https://doc.traefik.io/traefik/middlewares/basicauth/" target="_blank" rel="noopener">BasicAuth - Traefik</a></li>
+<li><a href="https://tool.oschina.net/htpasswd" target="_blank" rel="noopener">在线 htpasswd 生成器</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- &quot;traefik.http.routers.router1.middlewares=test-auth@docker&quot;</span><br><span class="line">- &quot;traefik.http.middlewares.test-auth.basicauth.users=test:$$apr1$$wB4YY5ua$$EocdCl08mI3Pk.6nItqZC/,test2:$$apr1$$2n2YpbTP$$c.FBjTJcfU0FkFZ4u912G/&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="從檔案讀取帳號密碼"><a href="#從檔案讀取帳號密碼" class="headerlink" title="從檔案讀取帳號密碼"></a>從檔案讀取帳號密碼</h5><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">labels:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">"traefik.http.middlewares.test-auth.basicauth.usersfile=/path/to/my/usersfile"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test:$apr1$H6uskkkW$IgXLP6ewTrSuBkTrqE8wj/</span><br><span class="line">test2:$apr1$d9hr9HBB$4HxwgUir3HP4EsggP/QNo0</span><br></pre></td></tr></table></figure>
+<h4 id="openvpn-憑證"><a href="#openvpn-憑證" class="headerlink" title="openvpn 憑證"></a>openvpn 憑證</h4><p>PiVPN </p>
+<p><a href="https://medium.com/@ncsayeed/guide-openvpn-access-server-lets-encrypt-certbot-d8b65e8fdef" target="_blank" rel="noopener">OpenVPN Access Server &amp; Let’s Encrypt | Medium</a><br><a href="https://github.com/SnowMB/traefik-certificate-extractor" target="_blank" rel="noopener">SnowMB/traefik-certificate-extractor: Tool to extract Let’s Encrypt certificates from Traefik’s ACME storage file.</a><br><a href="https://stackoverflow.com/questions/47218529/store-traefik-lets-encrypt-certificates-not-as-json" target="_blank" rel="noopener">Store traefik let’s encrypt certificates not as json - Stack Overflow</a><br><a href="https://gist.github.com/HighMacGuy/3cf42ce21d3bd923f2440f9938e2f664" target="_blank" rel="noopener">OpenVPN Access Server Letsencrypt</a><br><a href="https://github.com/ldez/traefik-certs-dumper" target="_blank" rel="noopener">ldez/traefik-certs-dumper: Dump ACME data from Traefik to certificates</a><br><a href="https://juriansluiman.nl/posts/openvpn-with-traefik-2.2/" target="_blank" rel="noopener">OpenVPN with Traefik 2.2 using UDP · Jurian Sluiman</a></p>
+<ul>
+<li><a href="https://alex.thom.ae/2020/09/19/traefik-openvpn-docker-swarm/" target="_blank" rel="noopener">Traefik, OpenVPN and Direct Container Connections on Docker Swarm</a></li>
+<li><a href="https://github.com/authelia/authelia" target="_blank" rel="noopener">authelia/authelia: The Single Sign-On Multi-Factor portal for web apps</a></li>
+<li><a href="https://gist.github.com/darth-veitcher/93acda9617bab3e1de0264cebf4637fc" target="_blank" rel="noopener">Traefik v2.0 with Cloudflare Wildcard and OpenVPN</a></li>
+<li><a href="https://my.oschina.net/u/4592353/blog/4434556" target="_blank" rel="noopener">当我有一台服务器时我做了什么 - 山月行的个人空间 - OSCHINA - 中文开源技术交流社区</a></li>
+<li><a href="https://blog.longwin.com.tw/2014/10/ssh-google-2-factor-authentication-2014/" target="_blank" rel="noopener">Linux SSH 加上 Google 兩階段認證服務檢核 | Tsung’s Blog</a></li>
+<li><a href="https://shazi.info/ubuntu-16-04-%E5%AE%89%E8%A3%9D-openvpn-%E5%8A%A0%E4%B8%8A-mfa-%E9%A9%97%E8%AD%89/" target="_blank" rel="noopener">Ubuntu 16.04 安裝 OpenVPN 加上 MFA 驗證 – Mr. 沙先生</a></li>
+<li><a href="https://tsai.it/archives/2018/08/%E7%B5%82%E6%96%BC%E8%A7%A3%E6%B1%BA-linux-%E4%B8%8A-vpn-%E9%80%A3%E7%B7%9A-ssl-%E9%80%A3%E7%B7%9A%E9%8C%AF%E8%AA%A4%E7%9A%84%E5%95%8F%E9%A1%8C/" target="_blank" rel="noopener">終於解決 Linux 上 VPN 連線 SSL 連線錯誤的問題 | Tsai I-ta’s Blog</a></li>
+</ul>
+<h4 id="access-log"><a href="#access-log" class="headerlink" title="access log"></a>access log</h4><p>cli</p>
+<p>–accesslog=true</p>
+<p><a href="https://doc.traefik.io/traefik/observability/access-logs/" target="_blank" rel="noopener">Access Logs - Traefik</a></p>
+<h4 id="log"><a href="#log" class="headerlink" title="log"></a>log</h4><p><a href="https://juejin.im/post/6844904117429600270" target="_blank" rel="noopener">一文搞懂Traefik的可观测性</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/traefik/" rel="tag"># traefik</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/10/12/Raspberry-Pi-使用-Seafile-初體驗/" rel="next" title="Raspberry Pi 使用 Seafile 初體驗">
+                <i class="fa fa-chevron-left"></i> Raspberry Pi 使用 Seafile 初體驗
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/10/15/XSD-檢核遇到-tag-順序問題/" rel="prev" title="XSD 檢核遇到 tag 順序拿掉不能放 unbounded">
+                XSD 檢核遇到 tag 順序拿掉不能放 unbounded <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#事前準備"><span class="nav-number">1.</span> <span class="nav-text">事前準備</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose"><span class="nav-number">1.1.</span> <span class="nav-text">docker-compose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改舊的-dockerfile"><span class="nav-number">1.2.</span> <span class="nav-text">修改舊的 dockerfile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raspberry-PI-安裝-traefik"><span class="nav-number">2.</span> <span class="nav-text">Raspberry PI 安裝 traefik</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立-network"><span class="nav-number">2.1.</span> <span class="nav-text">建立 network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建置-docker-compose"><span class="nav-number">2.2.</span> <span class="nav-text">建置 docker-compose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建置-whoami"><span class="nav-number">2.3.</span> <span class="nav-text">建置 whoami</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#測試方法"><span class="nav-number">3.</span> <span class="nav-text">測試方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1-修改hosts檔案"><span class="nav-number">3.1.</span> <span class="nav-text">方法1:修改hosts檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2-curl-H-xxx"><span class="nav-number">3.2.</span> <span class="nav-text">方法2: curl -H xxx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traefik-綁定-lets-wildcard"><span class="nav-number">4.</span> <span class="nav-text">traefik 綁定 lets wildcard</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#註銷舊有憑證方法"><span class="nav-number">4.1.</span> <span class="nav-text">註銷舊有憑證方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#設定"><span class="nav-number">4.2.</span> <span class="nav-text">設定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#acme-json"><span class="nav-number">4.2.1.</span> <span class="nav-text">acme.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#設定-traefik-docker-compose"><span class="nav-number">4.2.2.</span> <span class="nav-text">設定 traefik docker-compose</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#問題整理"><span class="nav-number">4.3.</span> <span class="nav-text">問題整理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#port-is-missing"><span class="nav-number">4.3.1.</span> <span class="nav-text">port is missing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#https-導向問題"><span class="nav-number">4.3.2.</span> <span class="nav-text">https 導向問題</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Container-取消關聯"><span class="nav-number">4.3.3.</span> <span class="nav-text">Container 取消關聯</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS-redirection-80-to-443"><span class="nav-number">4.3.4.</span> <span class="nav-text">HTTPS redirection (80 to 443)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同時使用-http-和-https-反向代理"><span class="nav-number">4.3.5.</span> <span class="nav-text">同時使用 http 和 https 反向代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#traefik-docker-設定小記"><span class="nav-number">4.3.6.</span> <span class="nav-text">traefik docker 設定小記</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#設定-BaseAuth"><span class="nav-number">4.3.7.</span> <span class="nav-text">設定 BaseAuth</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#產生-帳號-密碼"><span class="nav-number">4.3.7.1.</span> <span class="nav-text">產生 帳號/密碼</span></a></li></ol></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Note-when-used-in-docker-compose-yml-all-dollar-signs-in-the-hash-need-to-be-doubled-for-escaping"><span class="nav-number"></span> <span class="nav-text">Note: when used in docker-compose.yml all dollar signs in the hash need to be doubled for escaping.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#To-create-user-password-pair-it’s-possible-to-use-this-command"><span class="nav-number"></span> <span class="nav-text">To create user:password pair, it’s possible to use this command:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#echo-htpasswd-nb-user-password-sed-e-s-g"><span class="nav-number"></span> <span class="nav-text">echo $(htpasswd -nb user password) | sed -e s/\$/\$\$/g</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#從檔案讀取帳號密碼"><span class="nav-number">0.0.0.1.</span> <span class="nav-text">從檔案讀取帳號密碼</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#openvpn-憑證"><span class="nav-number">0.0.1.</span> <span class="nav-text">openvpn 憑證</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#access-log"><span class="nav-number">0.0.2.</span> <span class="nav-text">access log</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#log"><span class="nav-number">0.0.3.</span> <span class="nav-text">log</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2020/10/13/在-Raspberry-PI-架設-Traefik-初體驗/';
+          this.page.identifier = '2020/10/13/在-Raspberry-PI-架設-Traefik-初體驗/';
+          this.page.title = '在 Raspberry PI 架設 Traefik 初體驗';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

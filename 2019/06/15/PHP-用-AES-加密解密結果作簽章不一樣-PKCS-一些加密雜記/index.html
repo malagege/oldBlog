@@ -1,37 +1,1233 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="php,aes,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近同事搞不定 PHP7 AES 加密由於我們從 PHP5 升級到 PHP7我們換成 openssl 但是到 Android APP 解憑證的時候竟然驗證結果會不一樣??被同事抓去救火(同事也處理不行 XD)然後不熟加密原理的我第一件事情就是去 github 上面找 ChaoLiFL/PHP-Java-AES-Encrypt-Decrypt: Pass data AES encrypted bet">
+<meta name="keywords" content="php,aes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP 用 AES 加密解密結果作簽章不一樣 (PKCS) &amp; 一些加密雜記">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近同事搞不定 PHP7 AES 加密由於我們從 PHP5 升級到 PHP7我們換成 openssl 但是到 Android APP 解憑證的時候竟然驗證結果會不一樣??被同事抓去救火(同事也處理不行 XD)然後不熟加密原理的我第一件事情就是去 github 上面找 ChaoLiFL/PHP-Java-AES-Encrypt-Decrypt: Pass data AES encrypted bet">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.512Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP 用 AES 加密解密結果作簽章不一樣 (PKCS) &amp; 一些加密雜記">
+<meta name="twitter:description" content="最近同事搞不定 PHP7 AES 加密由於我們從 PHP5 升級到 PHP7我們換成 openssl 但是到 Android APP 解憑證的時候竟然驗證結果會不一樣??被同事抓去救火(同事也處理不行 XD)然後不熟加密原理的我第一件事情就是去 github 上面找 ChaoLiFL/PHP-Java-AES-Encrypt-Decrypt: Pass data AES encrypted bet">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/">
+
+
+
+
+
+  <title>PHP 用 AES 加密解密結果作簽章不一樣 (PKCS) & 一些加密雜記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PHP 用 AES 加密解密結果作簽章不一樣 (PKCS) & 一些加密雜記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-06-15T15:08:34+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近同事搞不定 PHP7 AES 加密<br>由於我們從 PHP5 升級到 PHP7<br>我們換成 openssl 但是到 Android APP 解憑證的時候竟然驗證結果會不一樣??<br>被同事抓去救火(同事也處理不行 XD)<br>然後不熟加密原理的我<br>第一件事情就是去 github 上面找 <a href="https://github.com/ChaoLiFL/PHP-Java-AES-Encrypt-Decrypt" target="_blank" rel="noopener">ChaoLiFL/PHP-Java-AES-Encrypt-Decrypt: Pass data AES encrypted between PHP 5.x, PHP 7.1, PHP 7.2 and Java. Support two ways of encryption and decryption: Base64, Hexadecimal.</a><br>沒想到剛好可以用!!! (運氣好)<br>不過還是卡在 簽章 結果會不一樣</p>
+<a id="more"></a>
+<h2 id="AES-一些加密範例"><a href="#AES-一些加密範例" class="headerlink" title="AES 一些加密範例"></a>AES 一些加密範例</h2><p>今天又找了幾個 AES 加密</p>
+<ul>
+<li><a href="https://github.com/lyhiving/aes" target="_blank" rel="noopener">lyhiving/aes: 兼容 php、js、JAVA 的 AES 加密</a></li>
+<li><a href="https://github.com/pkuoliver/EasyAES" target="_blank" rel="noopener">pkuoliver/EasyAES: AES encrypt/decrypt, Android, iOS, php compatible(兼容 php, Android, iOS 平台)</a></li>
+<li><a href="https://github.com/simplephp/php-java-AES-128-ECB" target="_blank" rel="noopener">simplephp/php-java-AES-128-ECB: PHP &amp;&amp; JAVA AES/ECB/PKCS5Padding 相互加解密</a></li>
+<li><a href="https://github.com/stevenholder/PHP-Java-AES-Encrypt" target="_blank" rel="noopener">stevenholder/PHP-Java-AES-Encrypt: Pass data AES encrypted between PHP and Java.</a></li>
+</ul>
+<h2 id="當日狀況"><a href="#當日狀況" class="headerlink" title="當日狀況"></a>當日狀況</h2><p>首先紀錄，先整理那天的狀態<br>原本我同事會先做 簽章 → AES 加密<br>他們做簽章 check 都通過<br>但是到 AES 一直失敗<br>後來他們使用 openssl 一直試 AES<br>我用了 <a href="https://github.com/ChaoLiFL/PHP-Java-AES-Encrypt-Decrypt" target="_blank" rel="noopener">ChaoLiFL/PHP-Java-AES-Encrypt-Decrypt: Pass data AES encrypted between PHP 5.x, PHP 7.1, PHP 7.2 and Java. Support two ways of encryption and decryption: Base64, Hexadecimal.</a> 可以用了<br>(但可能沒有注意 console 後面有空白)<br>魔鬼總是藏在細節!!</p>
+<p>後來套用我那個加密，發現 APP 做簽章反查竟然不正確??<br>這時候我同事發現後面有空白!!!<br>原因是這個導致最簽章反查導致不正確<br>但是 PHP 內容印出來也不正確</p>
+<h2 id="簽章"><a href="#簽章" class="headerlink" title="簽章"></a>簽章</h2><p>首先講一下，我目前認知簽章是怕內容有被串改<br>所以正常近來如如內容 array 會改他做 <code>json_encode</code><br>在做 base64_url_encode(內容)<br>會做 hash_hmac <a href="https://www.php.net/manual/en/function.hash-hmac.php" target="_blank" rel="noopener">PHP: hash_hmac - Manual</a></p>
+<ul>
+<li><a href="https://blog.csdn.net/dengjiexian123/article/details/53313913" target="_blank" rel="noopener">php 中使用 hash_hmac 函数实现 HMAC-SHA1 签名算法的来龙去脉 - dengjiexian123 的专栏 - CSDN 博客</a></li>
+<li><a href="https://blog.m157q.tw/posts/2017/12/25/differences-between-encryption-and-hashing/" target="_blank" rel="noopener">加密和雜湊有什麼不一樣？ | Just for noting</a></li>
+<li><a href="https://gist.github.com/frankyueh/3d5d45236339ff0097a7" target="_blank" rel="noopener">Code Sign - 程式碼數位簽章</a></li>
+<li><a href="https://blog.darkthread.net/blog/base64-in-querystring/" target="_blank" rel="noopener">TIPS-用 URL 傳送 Base64 編碼-黑暗執行緒</a></li>
+</ul>
+<p>這時候還會做 base64 url encode(簽章)</p>
+<blockquote>
+<p>why 用 base64 url encode ?<br><a href="http://xxxx/?token=xxxxxxx" target="_blank" rel="noopener">http://xxxx/?token=xxxxxxx</a><br>這時候不做 base64 url encode，可能就會有問題</p>
+</blockquote>
+<p><del>這之間可能可以去換一些符號</del> (+/改為*-或._) 如上補充 url 不能放+/</p>
+<ul>
+<li><a href="https://blog.longwin.com.tw/2018/12/php-base64-url-encode-decode-2018/" target="_blank" rel="noopener">PHP 處理 Base64 URL 的編碼、解碼方式 | Tsung’s Blog</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">JSON Web Token 入门教程 - 阮一峰的网络日志</a></li>
+</ul>
+<p>裡面也有提到 base64 url encode<br>PS:<a href="https://zh.wikipedia.org/wiki/Base64" target="_blank" rel="noopener">Base64 - 維基百科，自由的百科全書</a>，原因為何我也不確定，目前猜測可能是怕放在 url 上面??</p>
+<p>這時候內容會是<code>簽章</code>+ <code>.(間隔符號)</code>+<code>內容</code><br>出來的時候我們會用 AES 加密<br>這時候因為是 binary，所以還會做 Base64(也可以用自己去換一些符號)</p>
+<p>APP 端接收到要做檢查<br>首先解 base64 url decode<del>(或自訂反解 fucntion)</del><br>去做 AES 解密<br>這時候會是 binary(但是 PHP 出來是 string?) 這邊可能還要確認<br>我們要再做 base64 url decode</p>
+<blockquote>
+<p>這邊講詳細一點<br><code>簽章</code>+ <code>.(間隔符號)</code>+<code>內容</code><br>這時候可以做反簽章<br>簽章跟內容是分開獨立各做<code>base64 url decode</code></p>
+</blockquote>
+<p>內容解出來，在自己做 <code>hash_hmac</code><br>可以得到自己<code>簽章內容</code></p>
+<p>這時候跟風包給的簽章內容有沒有一致?<br>一致就是這個資料沒有被串改</p>
+<p><strong>簽章講完了，重頭戲要開始了</strong></p>
+<h2 id="為什麼送到-Android-有奇怪的空白字元-PKCS7"><a href="#為什麼送到-Android-有奇怪的空白字元-PKCS7" class="headerlink" title="為什麼送到 Android 有奇怪的空白字元??(PKCS7)"></a>為什麼送到 Android 有奇怪的空白字元??(PKCS7)</h2><p>是 PKCS7 的關係</p>
+<p>簡單說明一下，因為 AES 加密必須是 16 倍數(應該= =|||，是聽到這個原因)<br>當你資料沒有給到一定的數字，它會自動幫你補</p>
+<p>我們當下用 workaround 方式先去解在我們資料帶<code>===</code>講好符號先去解取<br>但最佳解不是這樣做</p>
+<ul>
+<li><a href="https://www.heylc.com/fuanyuopenssl.html" target="_blank" rel="noopener">关于 mcrypt_encrypt 和 openssl_encrypt 加密结果不一致的解决 – 继续生活</a></li>
+<li><a href="https://www.xxling.com/blog/article/3114.aspx" target="_blank" rel="noopener">PHP 由 mcrypt 扩展加密改为 openssl 扩展加密|xiaolingzi’s blog | 生活是多彩的 | Life is colorful</a></li>
+<li><a href="https://kknews.cc/zh-tw/other/9pgvlpl.html" target="_blank" rel="noopener">php 遷移 Mcrypt 至 OpenSSL 加密算法的詳細介紹（代碼示例） - 每日頭條</a></li>
+<li><a href="https://zhiwei.li/text/2009/05/17/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84pkcs5%E5%92%8Cpkcs7%E5%A1%AB%E5%85%85/" target="_blank" rel="noopener">对称加密算法的 PKCS5 和 PKCS7 填充 | Zhiwei Li</a></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * PKCS7Encoder class</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 提供基于PKCS7算法的加解密接口.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PKCS7Encoder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> $block_size = <span class="number">32</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	* 对需要加密的明文进行填充补位</span></span><br><span class="line"><span class="comment">	* <span class="doctag">@param</span> $text 需要进行填充补位操作的明文</span></span><br><span class="line"><span class="comment">	* <span class="doctag">@return</span> 补齐明文字符串</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">encode</span><span class="params">($text)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		$block_size = <span class="keyword">self</span>::$block_size;</span><br><span class="line">		$text_length = strlen($text);</span><br><span class="line">		<span class="comment">//计算需要填充的位数</span></span><br><span class="line">		$amount_to_pad = $block_size - ($text_length % $block_size);</span><br><span class="line">		<span class="keyword">if</span> ( $amount_to_pad == <span class="number">0</span> )</span><br><span class="line">			$amount_to_pad = $block_size;</span><br><span class="line">		<span class="comment">//获得补位所用的字符</span></span><br><span class="line">		$pad_chr = chr($amount_to_pad);</span><br><span class="line">		$tmp = <span class="string">""</span>;</span><br><span class="line">		<span class="keyword">for</span> ( $index = <span class="number">0</span>; $index &lt; $amount_to_pad; $index++ )</span><br><span class="line">			$tmp .= $pad_chr;</span><br><span class="line">		<span class="keyword">return</span> $text . $tmp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	* 对解密后的明文进行补位删除</span></span><br><span class="line"><span class="comment">	* <span class="doctag">@param</span> decrypted 解密后的明文</span></span><br><span class="line"><span class="comment">	* <span class="doctag">@return</span> 删除填充补位后的明文</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">decode</span><span class="params">($text)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		$pad = ord(substr($text, <span class="number">-1</span>));</span><br><span class="line">		<span class="keyword">if</span> ($pad &lt; <span class="number">1</span> || $pad &gt; <span class="keyword">self</span>::$block_size)</span><br><span class="line">			$pad = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> substr($text, <span class="number">0</span>, (strlen($text) - $pad));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ---------------------</span></span><br><span class="line"><span class="comment">// 作者：qq_34089779</span></span><br><span class="line"><span class="comment">// 来源：CSDN</span></span><br><span class="line"><span class="comment">// 原文：https://blog.csdn.net/qq_34089779/article/details/79066961</span></span><br><span class="line"><span class="comment">// 版权声明：本文为博主原创文章，转载请附上博文链接！</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://blog.csdn.net/qq_34089779/article/details/79066961" target="_blank" rel="noopener">PKCS7 算法基于 php 的加解密 - qq_34089779 的博客 - CSDN 博客</a></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">PKCS7Padding</span><span class="params">($str, $block_size)</span> </span>&#123;</span><br><span class="line">    $padding_char = $block_size - (strlen($str) % $block_size);</span><br><span class="line">    $padding_str = str_repeat(chr($padding_char),$padding_char);</span><br><span class="line">    <span class="keyword">return</span> $str.$padding_str;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">PKCS7UnPadding</span><span class="params">($str)</span> </span>&#123;</span><br><span class="line">    $char=substr($str,<span class="number">-1</span>,<span class="number">1</span>);</span><br><span class="line">    $num=ord($char);</span><br><span class="line">    <span class="keyword">if</span>($num&gt;<span class="number">0</span> &amp;&amp; $num &lt;= strlen($str)) &#123;</span><br><span class="line">        $str = substr($str, <span class="number">0</span>, <span class="number">-1</span> * $num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="http://www.imsry.cn/posts/5c3bf0b6.html" target="_blank" rel="noopener">PHP 加解密算法使用 openssl 替换 mcrypt 扩展 | 牛牛大作栈</a> <a href="/blog/2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/web1.png" title="備份圖">備份圖</a><br>有驗證上面兩個函示，得出來結果都是相等的。<br>但注意，在上面 echo 出來，網頁或 log 上面都不會有字元<br>要看 var_dump 會比較準</li>
+</ul>
+<ul>
+<li><a href="https://my.oschina.net/luoxiaojun1992/blog/883123" target="_blank" rel="noopener">AES/CBC/PKCS5Padding 的 PHP 实现 - luoxiaojun1992 的个人空间 - OSCHINA</a></li>
+</ul>
+<p>主要的填充算法有填充 NUL(“0”) 和 PKCS7，Mcrypt 默認使用的 NUL(“0”) 填充算法，當前已不被推薦，OpenSSL 則默認模式使用 PKCS7 對數據進行填充並對加密後的數據進行了 base64encode 編碼，所以建議開發中使用 PKCS7 對待加密數據進行填充，已保證通用性（alipay sdk 中雖然使用了 Mcrypt 加密簇，但使用 PKCS7 算法對數據進行了填充，這樣在一定程度上親和了 OpenSSL 加密算法）。</p>
+<p>原文網址：<a href="https://kknews.cc/zh-tw/other/9pgvlpl.html" target="_blank" rel="noopener">https://kknews.cc/zh-tw/other/9pgvlpl.html</a></p>
+<p><a href="https://segmentfault.com/a/1190000016804661" target="_blank" rel="noopener">php 如何 openssl_encrypt 加密解密 - 个人文章 - SegmentFault 思否</a><br>有說<code>OPENSSL_ZERO_PADDING</code>會自動填充<br>但測試結果沒有效果 OPENSSL_RAW_DATA 方式【会用 PKCS#7 进行补位】</p>
+<h2 id="簡單說我對簽章的定義"><a href="#簡單說我對簽章的定義" class="headerlink" title="簡單說我對簽章的定義"></a>簡單說我對簽章的定義</h2>
+<p>簽章主要目的加密，而是防止資料有被串改</p>
+<p>ebc 是沒有 iv 的，cbc 是有 iv 的<br>有用 iv 會比較安全，但是 iv 長度是有限制的<br><a href="https://github.com/lyhiving/aes" target="_blank" rel="noopener">lyhiving/aes: 兼容 php、js、JAVA 的 AES 加密</a><br>詳細的我就沒研究</p>
+<p>當天跟所有公司留到半夜 4:30 回去，也許這就是技術債!!!<br>希望不要有上班回家的時候不要再看到太陽出來了</p>
+<p>題外小記<br>matrix 做翻書效果，搭配 向量矩陣 和<a href="https://www.xuanfengge.com/easeing/easeing/" target="_blank" rel="noopener">缓动函数速查表</a><br>有很好展示效果</p>
+<p><a href="https://github.com/jlmakes/rematrix" target="_blank" rel="noopener">jlmakes/rematrix: Matrix transformations made easy.</a><br><a href="http://www.useragentman.com/matrix/#E4UwziAuBCCumQPYDsBMBeASuKACAYosALYBkAZsIsQAwAe6NFVtAno6UvegMwAcAFk6Ia7AIwA2IZWpjxNJkjEMeAicLnpU25tVQMxC4fvQBWAOymAdAE47NiTYF9UA1GJvHxAnsJ4MfXyQedlVUUgATRB4AEXRIYFgQUgBLCLF0AGVYACNiFMhUiIxsCEKAC0hiABsAYRRIEGRIdAAeAAcAPgAVcpSwXH7cAENcHOrEAGMAa1wQapBiJsgrVoB6LoAoUkmwMHrm5fQ1gCpN3BOCEHncSmvcJDmIgpHkVlxEcgfykFwwSFYCwGOXmiAA7lZzic1ptNqc5sgwLBQCNqtVvr95otlgN-oCQBExqCwbhYBAxkQIiBgABaHKIOgXGFWcZTaYAGlwAGIAObANK4ADe51wovpdBpYBSAC8UsgeQAuCnAKm08UAbk2AF9YfDer9EDkAFYgSaQInkIi-F5DBLDRGWkgEpmbLmIMRCkVi4YzPmIWDICJKrnkciTcOTTU6uGXfUfY2m83DciNYCDc3lYbA67IB7Ae1gR1LQnQ12IVCe0Xe31UANB7kRyahqO6y71YjEFB-AFA25ECmMw0ms1gKwulkTGaVquW5qSmUgJVyn78yBR3Ct3C1TKZPtpyA-XB8gWl3n8wnCqtjH3TP11pXI6oACgARCliMMeeA1jkb3fA1YPIpOQL4AJS4KA7QgMM5pgJMVBorgNBIbgYJ9I0mpXj8KQ8pUSp8Ao7R0JhVbtIgUqQCkKBKqA1QwSkABuIAkaKiBMcA5ATGCSp9BEVLIC2RQ8FkuT5OaAAS3QALIADKvIS26ZEUAjoLU9qTPMRSmOgkwTBARQSDpekgEAA" target="_blank" rel="noopener">The CSS3 Matrix Construction Set</a><br><a href="http://www.csie.ntnu.edu.tw/~u91029/LinearFunction.html" target="_blank" rel="noopener">演算法筆記 - Linear Function</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/php/" rel="tag"># php</a>
+          
+            <a href="/blog/tags/aes/" rel="tag"># aes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/06/05/Laravel-新手實作-Vue-js-簡單使用方法-和-yield-應用/" rel="next" title="Laravel 新手實作 Vue.js 簡單使用方法 和 yield 應用">
+                <i class="fa fa-chevron-left"></i> Laravel 新手實作 Vue.js 簡單使用方法 和 yield 應用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/06/16/Homestead-架設-Laravel-環境小記/" rel="prev" title="Homestead 架設 Laravel 環境小記">
+                Homestead 架設 Laravel 環境小記 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AES-一些加密範例"><span class="nav-number">1.</span> <span class="nav-text">AES 一些加密範例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#當日狀況"><span class="nav-number">2.</span> <span class="nav-text">當日狀況</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#簽章"><span class="nav-number">3.</span> <span class="nav-text">簽章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#為什麼送到-Android-有奇怪的空白字元-PKCS7"><span class="nav-number">4.</span> <span class="nav-text">為什麼送到 Android 有奇怪的空白字元??(PKCS7)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#簡單說我對簽章的定義"><span class="nav-number">5.</span> <span class="nav-text">簡單說我對簽章的定義</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/';
+          this.page.identifier = '2019/06/15/PHP-用-AES-加密解密結果作簽章不一樣-PKCS-一些加密雜記/';
+          this.page.title = 'PHP 用 AES 加密解密結果作簽章不一樣 (PKCS) & 一些加密雜記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

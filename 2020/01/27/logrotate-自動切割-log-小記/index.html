@@ -1,37 +1,1286 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,log,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近 Pi 2號機有時候 ssh 不穩重開數據機或重插網路線就恢復正常不知道是哪邊問題想寫 ping log 來排除一些狀況">
+<meta name="keywords" content="linux,log">
+<meta property="og:type" content="article">
+<meta property="og:title" content="logrotate 自動切割 log 小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/01/27/logrotate-自動切割-log-小記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近 Pi 2號機有時候 ssh 不穩重開數據機或重插網路線就恢復正常不知道是哪邊問題想寫 ping log 來排除一些狀況">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:45.077Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="logrotate 自動切割 log 小記">
+<meta name="twitter:description" content="最近 Pi 2號機有時候 ssh 不穩重開數據機或重插網路線就恢復正常不知道是哪邊問題想寫 ping log 來排除一些狀況">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/01/27/logrotate-自動切割-log-小記/">
+
+
+
+
+
+  <title>logrotate 自動切割 log 小記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/01/27/logrotate-自動切割-log-小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">logrotate 自動切割 log 小記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-01-27T19:49:59+08:00">
+                2020-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/27/logrotate-自動切割-log-小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近 Pi 2號機有時候 ssh 不穩<br>重開數據機或重插網路線就恢復正常<br>不知道是哪邊問題<br>想寫 ping log 來排除一些狀況</p>
+<a id="more"></a>
+<h2 id="ping-shell"><a href="#ping-shell" class="headerlink" title="ping shell"></a>ping shell</h2><p>首先，我需要準備 ping 的 shell 程式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">IP=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line">date <span class="string">"+%Y-%m-%d %H:%M:%S"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"PING HOST <span class="variable">$&#123;IP&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ TRUE ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        ping -c 10 <span class="variable">$&#123;IP&#125;</span></span><br><span class="line">        sleep 300 <span class="comment">#300秒檢查</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>開啟 tmux 分割多個視窗<br><code>./test.sh &gt; ping_tw.yahoo.com.log</code></p>
+<p>更多 ping 相關指令<br><a href="https://blog.gtwang.org/linux/windows-linux-ping-command-tutorial/" target="_blank" rel="noopener">Ping 指令用法教學：檢查網路連線狀態與品質 - G. T. Wang</a> <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/ping.png" title="備份圖">備份圖</a></p>
+<h3 id="沒辦法中斷-Ctrl-C-程式"><a href="#沒辦法中斷-Ctrl-C-程式" class="headerlink" title="沒辦法中斷(Ctrl + C) 程式"></a>沒辦法中斷(Ctrl + C) 程式</h3><p><a href="https://www.jianshu.com/p/a028c9eef2c2" target="_blank" rel="noopener">你无法用ctrl c 杀死的进程 - 简书</a></p>
+<p>簡單解決方法，用 htop kill掉程式吧…</p>
+<h3 id="shell-比較要注意加”"><a href="#shell-比較要注意加”" class="headerlink" title="shell 比較要注意加”"></a>shell 比較要注意加”</h3><blockquote>
+<p>有兩種解決方法：<br>if [ “$app-running” == “” ];<br>或是<br>if [[ $app-running == “” ]];</p>
+</blockquote>
+<p><a href="https://medium.com/micheh/linux-%E7%9A%84-shell-script-%E4%B8%AD-%E9%81%87%E5%88%B0-unary-operator-expected-%E7%9A%84%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95-3b4725d3fdf1" target="_blank" rel="noopener">Linux 的 shell script 中，遇到 unary operator expected 的解決方法</a></p>
+<h3 id="shell-error-print"><a href="#shell-error-print" class="headerlink" title="shell error print"></a>shell error print</h3><p><a href="http://linuxcommand.org/lc3_wss0140.php" target="_blank" rel="noopener">Writing shell scripts - Lesson 14: Errors and Signals and Traps (Oh My!) - Part 1</a></p>
+<h2 id="logrotate"><a href="#logrotate" class="headerlink" title="logrotate"></a>logrotate</h2><h3 id="更換-log-方法"><a href="#更換-log-方法" class="headerlink" title="更換 log 方法"></a>更換 log 方法</h3><p>其實 logrotate 切割 log 我有在想不會跟線上執行程式衝到嗎?<br><a href="https://wsgzao.github.io/post/logrotate/" target="_blank" rel="noopener">Linux 日志切割神器 logrotate 原理介绍和配置详解 | HelloDog</a> <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/web1.png" title="備份圖">備份圖</a><br>這邊裡面有詳細說明</p>
+<blockquote>
+<p>如上也就是 logrotate 的默認操作方式，也就是 mv+create 執行完之後，通知應用重新在新文件寫入即可。mv+create 成本都比較低，幾乎是原子操作，如果應用支持重新打開日誌文件，如 syslog, nginx, mysql 等，那麼這是最好的方式。<br>不過，有些程序並不支持這種方式，壓根沒有提供重新打開日誌的接口；而如果重啟應用程序，必然會降低可用性，為此引入了如下方式。</p>
+</blockquote>
+<p>這邊讓我想到之前有做，mv 跟 cp 實驗(<a href="https://malagege.github.io/blog/2020/01/10/cp-%E8%A4%87%E8%A3%BD%E6%AA%94%E6%A1%88%E5%8F%AF%E8%83%BD%E6%B2%92%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/">cp 複製檔案可能沒注意的事情 | 程式狂想筆記</a>)</p>
+<p>我計畫使用 <code>./test.sh &gt; ping_tw.yahoo.com.log</code><br>但這個好像不可行 我是使用指令倒出 log</p>
+<h3 id="輸出問題"><a href="#輸出問題" class="headerlink" title="輸出問題"></a>輸出問題</h3><p>我想預防上述的問題<br>我想到下面方法<br><strong>不過先說明以下 shell 不能正常執行</strong><br><strong>不過先說明以下 shell 不能正常執行</strong><br><strong>不過先說明以下 shell 不能正常執行</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">IP=<span class="variable">$1</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;IP&#125;</span>"</span> = <span class="string">""</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"must need put IP"</span> 1&gt;&amp;2</span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">OUTLOG=<span class="string">" &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.log"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ TRUE ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"========================================="</span> <span class="variable">$OUTLOG</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"========================================="</span> <span class="variable">$OUTLOG</span></span><br><span class="line">        date <span class="string">"+%Y-%m-%d %H:%M:%S"</span> <span class="variable">$OUTLOG</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"PING HOST: <span class="variable">$&#123;IP&#125;</span>"</span> <span class="variable">$OUTLOG</span></span><br><span class="line"></span><br><span class="line">        ping -c 10 <span class="variable">$&#123;IP&#125;</span>  <span class="variable">$OUTLOG</span></span><br><span class="line">        sleep 300 <span class="comment">#300秒檢查</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">log() &#123;</span><br><span class="line">  if [ -n "$logfile" ]; then</span><br><span class="line">    printf '%s\n' "$@" &gt;&gt; "$logfile"</span><br><span class="line">  else</span><br><span class="line">    printf '%s\n' "$@"</span><br><span class="line">  fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">log "$buf"</span><br></pre></td></tr></table></figure>
+<p>可修正成這個方法<a href="https://unix.stackexchange.com/questions/336224/elegant-solution-to-echo-to-either-stdout-or-file-in-bash" target="_blank" rel="noopener">shell script - Elegant solution to echo to either stdout or file in bash - Unix &amp; Linux Stack Exchange</a></p>
+<p>因為<del>我比較懶</del>行數比較少，所以我就寫在每一行 XD<br>但其實可以不用這樣寫<br>可參考後續文章<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">IP=<span class="variable">$1</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;IP&#125;</span>"</span> = <span class="string">""</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"must need put IP"</span> 1&gt;&amp;2</span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">OUTLOG=<span class="string">" &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.log"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ TRUE ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"========================================="</span>  &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.<span class="built_in">log</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"========================================="</span>  &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.<span class="built_in">log</span></span><br><span class="line">        date <span class="string">"+%Y-%m-%d %H:%M:%S"</span>  &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.<span class="built_in">log</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"PING HOST: <span class="variable">$&#123;IP&#125;</span>"</span>  &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.<span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">        ping -c 10 <span class="variable">$&#123;IP&#125;</span>   &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.<span class="built_in">log</span></span><br><span class="line">        sleep 300 <span class="comment">#300秒檢查</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<p>這樣我應該就能使用 CREATE 機制<br>終於到我們重頭戲了</p>
+<h2 id="logrotate-1"><a href="#logrotate-1" class="headerlink" title="logrotate"></a>logrotate</h2><h3 id="相關教學網站"><a href="#相關教學網站" class="headerlink" title="相關教學網站"></a>相關教學網站</h3><ul>
+<li><a href="http://n.sfs.tw/content/index/12926" target="_blank" rel="noopener">[CENTOS7] 使用 logrotate 來整理wildfly日誌檔 @新精讚</a></li>
+<li><a href="https://wsgzao.github.io/post/logrotate/" target="_blank" rel="noopener">Linux 日誌切割神器 logrotate 原理介紹和配置詳解 | HelloDog</a></li>
+<li><a href="https://ihower.tw/blog/archives/3565" target="_blank" rel="noopener">使用 logrotate 定期整理 Rails Log 檔案 – ihower { blogging }</a></li>
+<li><a href="https://www.jianshu.com/p/ea7c2363639c" target="_blank" rel="noopener">linux 日志定时轮询流程详解 - 簡書</a></li>
+<li><a href="https://stackoverflow.com/questions/9555769/how-to-insert-a-date-inside-the-filename-with-logrotate" target="_blank" rel="noopener">linux - How to insert a date inside the filename with logrotate - Stack Overflow</a></li>
+<li><a href="http://www.hatlonely.com/2018/04/16/linux-%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1-logrotate/index.html" target="_blank" rel="noopener">linux 日志管理服务 logrotate | hatlonely的小站</a></li>
+<li><a href="https://superuser.com/questions/255951/logrotate-configuration-file-syntax-multiple-wildcard-entries-possible" target="_blank" rel="noopener">linux - logrotate configuration file syntax - multiple wildcard entries possible? - Super User</a></li>
+</ul>
+<h3 id="logrotate-重點小記"><a href="#logrotate-重點小記" class="headerlink" title="logrotate 重點小記"></a>logrotate 重點小記</h3><p>相關自訂 logrotate 設定可放在 <code>/etc/logrotate.d</code><br>原理可看<a href="https://wsgzao.github.io/post/logrotate/" target="_blank" rel="noopener">Linux 日誌切割神器 logrotate 原理介紹和配置詳解 | HelloDog</a> 運行機制</p>
+<p>其實最原始的 conf設定在 <code>/etc/logrotate.conf</code><br>看到<code>include /etc/logrotate.d</code>就能明白為什麼會自動載入</p>
+<p>其他看到的重點</p>
+<blockquote>
+<p>   配置文件裡一定要配置 rotate 文件數目 這個參數。如果不配置默認是 0 個，也就是只允許存在一份日誌，剛切分出來的日誌會馬上被刪除。多麼痛的領悟，說多了都是淚。<br>   執行 logrotate 命令最好加 -f 參數，不然有時候配置文件修改的內容不生效。</p>
+</blockquote>
+<h2 id="我的-ping-程式設定"><a href="#我的-ping-程式設定" class="headerlink" title="我的 ping 程式設定"></a>我的 ping 程式設定</h2><p>/home/pi/ping/ping_*.log {<br>  daily<br>  dateext<br>  missingok<br>  rotate 30<br>  notifempty<br>  create 664 pi pi<br>}</p>
+<h2 id="訊號問題"><a href="#訊號問題" class="headerlink" title="訊號問題"></a>訊號問題</h2><p>看到有些需要做 HUP 動作，讓程式重新讀 log 方法<br>使用<strong>create</strong>需要注意通知程式做，copytruncate 不需要做</p>
+<blockquote>
+<p>create</p>
+<p>create 是默認的方案，可以通過 create 命令配置文件的權限和屬組設置。</p>
+<p>這個方案的思路是：<strong> 重命名原日誌文件，創建新的日誌文件 </strong>。</p>
+<p>詳細步驟如下：</p>
+<pre><code>1. 重命名正在輸出的日誌文件。 因為重命名只修改文件（目錄亦文件）的名稱，而進程操作文件使用的是 inode，所以並不影響原程序繼續輸出日誌。
+
+2. 創建新的日誌文件。 文件名和原日誌文件一樣，注意，此時只是文件名稱一樣，而 inode 編號不同，程序輸出的日誌還是往原日誌文件輸出。
+
+3. 最後通過某些方式通知程序，重新打開日誌文件。 由於重新打開日誌文件會用到文件路徑而非 inode 編號，所以打開的是新的日誌文件。
+</code></pre><p>簡而言之，logrotate 的默認操作方式，就是 mv+create 執行完之後，通知應用重新在新文件寫入即可。mv+create 成本都比較低，幾乎是原子操作，如果應用支&gt; 持重新打開日誌文件，如 syslog、 nginx、mysql 等，那麼這是最好的方式。</p>
+<p>不過，有些程序並不支持這種方式，壓根兒沒有提供重新打開日誌的接口，而如果重啟應用程序，必然會降低可用性，為此引入了 copytruncate 方式。<br>copytruncate</p>
+<p>copytruncate 是把正在輸出的日誌拷（copy）一份出來，再清空 （trucate）原來的日誌。</p>
+<p>詳細步驟如下：</p>
+<pre><code>1. 將當前正在輸出的日誌文件複製為目標文件，此時程序仍然將日誌輸出到原來文件中，原文件名也沒有變。
+2. 清空原日誌文件，程序仍然還是輸出到原日誌文件中，因為清空文件只把文件的內容刪除了，而 inode 並沒改變。
+</code></pre><p>所以 copytruncate 也就是先複製一份文件，然後清空原有文件。</p>
+<p>通常來說，清空操作比較快，但是如果日誌文件太大，那麼複製就會比較耗時，從而可能導致部分日誌丟失。不過這種方式不需要應用程序的支持即可使用。</p>
+</blockquote>
+<p>參考：<a href="https://www.pwdpwd.com/post/2020-01-03-linux-logrotate/" target="_blank" rel="noopener">Linux 日志切割工具 Logrotate | PwD</a></p>
+<p><a href="https://www.cnblogs.com/276815076/p/7053640.html" target="_blank" rel="noopener">linux 日志定时轮询流程详解(logrotate) - 生活费 - 博客园</a><br><a href="https://blog.51cto.com/pengjc/1774210" target="_blank" rel="noopener">kill -HUP 命令的使用-赤练挚爱-51CTO博客</a></p>
+<h3 id="意外小實驗結果"><a href="#意外小實驗結果" class="headerlink" title="意外小實驗結果"></a>意外小實驗結果</h3><p>雖然不是很清楚他的原理，但我剛剛做一個實驗<br>得出很有趣的結果</p>
+<blockquote>
+<p>如果是用 &gt; 重定向輸出的日誌，如 test_app &gt; stdout.log, copytruncate 則無法裁剪原始日誌文件 stdout.log, 它將持續增漲下去。而用 &gt;&gt; 就沒問題了，test-app &gt;&gt; stdout.log，日誌滾動後 stdout.log 大小將變為零。</p>
+</blockquote>
+<p><a href="https://yanbin.blog/linux-config-log-ratation-logrotate/" target="_blank" rel="noopener">Linux 下配置滚动日志之 logrotate | 隔叶黄莺 Yanbin Blog - 软件编程实践</a></p>
+<p>這邊把  ping.sh 標準輸出註解掉了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">IP=<span class="variable">$1</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;IP&#125;</span>"</span> = <span class="string">""</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"must need put IP"</span> 1&gt;&amp;2</span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">OUTLOG=<span class="string">" &gt;&gt; ping_<span class="variable">$&#123;IP&#125;</span>.log"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ TRUE ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"========================================="</span>  <span class="comment">#&gt;&gt; ping_$&#123;IP&#125;.log</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"========================================="</span>  <span class="comment">#&gt;&gt; ping_$&#123;IP&#125;.log</span></span><br><span class="line">        date <span class="string">"+%Y-%m-%d %H:%M:%S"</span>  <span class="comment">#&gt;&gt; ping_$&#123;IP&#125;.log</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"PING HOST: <span class="variable">$&#123;IP&#125;</span>"</span>  <span class="comment">#&gt;&gt; ping_$&#123;IP&#125;.log</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        ping -c 10 <span class="variable">$&#123;IP&#125;</span>   <span class="comment">#&gt;&gt; ping_$&#123;IP&#125;.log</span></span><br><span class="line">        <span class="comment">#sleep 300 #300秒檢查</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用-create-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><a href="#使用-create-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log" class="headerlink" title="使用 create 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log"></a>使用 create 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</h3><p>做 logrotate(<code>sudo logrotate -vf /etc/logrotate.d/ping</code>) 後會產生ping_127.0.0.1.log,ping_127.0.0.1.log-2020-01-27<br>程式持續跑的log會加在ping_127.0.0.1.log-2020-01-27<br>如果還記得流程的話，上面有說要 HUP 通知信號跟程式講重抓 log 寫入設定檔</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 最後通過某些方式通知程序，重新打開日誌文件。 由於重新打開日誌文件會用到文件路徑而非 inode 編號，所以打開的是新的日誌文件。</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-copytruncate-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><a href="#使用-copytruncate-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log" class="headerlink" title="使用 copytruncate 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log"></a>使用 copytruncate 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</h3><p>做 logrotate(<code>sudo logrotate -vf /etc/logrotate.d/ping</code>) 後會產生ping_127.0.0.1.log,ping_127.0.0.1.log-2020-01-27<br>程式持續跑的log會加在ping_127.0.0.1.log<br>但聽說這種作法有機率遺失 log</p>
+
+<h2 id="gt"><a href="#gt" class="headerlink" title="&gt;"></a>&gt;</h2><p>這個應該沒什麼機會用到<br>但對 create , copytruncate 都會造成 log  紀錄有問題<br>結果我就不貼了</p>
+<h2 id="測試使用"><a href="#測試使用" class="headerlink" title="測試使用"></a>測試使用</h2><p>建議加 sudo root執行</p>
+<ol>
+<li><p>sudo logrotate /etc/logrotate.d/ping<br>執行 logrotate</p>
+</li>
+<li><p>sudo logrotate -d /etc/logrotate.d/ping<br>測試日誌切割 (如果文件的時間小於一天，不會執行切割日誌 )</p>
+</li>
+<li><p>sudo logrotate -vf /etc/logrotate.d/ping<br>強制輪詢切割日誌 ( 為了便於我們直觀的觀察測試結果,建議大家手動試一下 )<br>-f (–force), 就是把不管日誌文件大小是否符合要求，強制執行日誌滾動操作</p>
+</li>
+</ol>
+<p>參照:<a href="https://zhuanlan.zhihu.com/p/24880144" target="_blank" rel="noopener">linux环境下使用logrotate工具实现nginx日志切割 - 知乎</a></p>
+<h3 id="測試完建議刪除檔案"><a href="#測試完建議刪除檔案" class="headerlink" title="測試完建議刪除檔案"></a>測試完建議刪除檔案</h3><p>測試完建議刪除檔案，否則會出現如下錯誤<br>error: destination /home/pi/ping/ping_127.0.0.1.log-20200127 already exists, skipping rotation</p>
+<p><a href="https://stackoverflow.com/questions/25845752/logrotate-suffix-dateext-rotate" target="_blank" rel="noopener">linux - logrotate suffix: dateext + rotate - Stack Overflow</a></p>
+<p>最後 shell 用 tmux 爽爽執行 ping.sh 程式</p>
+<h3 id="logrotate-2"><a href="#logrotate-2" class="headerlink" title="logrotate"></a>logrotate</h3><p>配置選項</p>
+<p>常用選項：</p>
+<pre><code>daily - 指定轉儲週期為每天
+weekly - 指定轉儲週期為每週
+monthly - 指定轉儲週期為每月
+rotate count - 指定日誌文件刪除之前轉儲的次數，0 指沒有備份，5 指保留 5 個備份
+tabooext [+] list - 讓 logrotate 不轉儲指定擴展名的文件，缺省的擴展名是：.rpm-orig、.rpmsave、v 和 ～
+missingok - 在日誌輪循期間，任何錯誤將被忽略，例如 * 文件無法找到 * 之類的錯誤
+size size - 當日誌文件到達指定的大小時才轉儲，bytes (缺省) 及 KB (sizek) 或 MB (sizem)
+compress - 通過 gzip 壓縮轉儲以後的日誌
+nocompress - 不壓縮
+copytruncate - 用於還在打開中的日誌文件，把當前日誌備份並截斷
+nocopytruncate - 備份日誌文件但是不截斷
+create mode owner group - 轉儲文件，使用指定的文件模式創建新的日誌文件
+nocreate - 不建立新的日誌文件
+delaycompress - 和 compress 一起使用時，轉儲的日誌文件到下一次轉儲時才壓縮
+nodelaycompress - 覆蓋 delaycompress 選項，轉儲同時壓縮。
+errors address - 轉儲時的錯誤信息發送到指定的 Email 地址
+ifempty - 即使是空文件也轉儲，這是 logrotate 的缺省選項。
+notifempty - 如果是空文件的話，不轉儲
+mail address - 把轉儲的日誌文件發送到指定的 E-mail 地址
+nomail - 轉儲時不發送日誌文件
+olddir directory - 儲後的日誌文件放入指定的目錄，必須和當前日誌文件在同一個文件系統
+noolddir - 轉儲後的日誌文件和當前日誌文件放在同一個目錄下
+prerotate/endscript - 在轉儲以前需要執行的命令可以放入這個選項對之間，這兩個關鍵字必須單獨成行
+sharedscripts - 默認情況下，prerotate/endscript 內定義的命令會對匹配到的所有文件 (比如： /var/log/news/*）都執行一次，如果指定為 sharedscripts，則這些命令只會執行一次
+dateext - 對於轉儲的日誌文件加上日期後綴
+</code></pre><p>參考:<a href="https://www.pwdpwd.com/post/2020-01-03-linux-logrotate/" target="_blank" rel="noopener">Linux 日誌切割工具 Logrotate | PwD</a> <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/web2.png" title="備份圖">備份圖</a></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>其實這篇不重要刪減，所以看的內容非常雜<br>不過經過這次實驗有清楚了解到要怎麼使用 logrotate</p>
+<p>後續如果程式要做 HUP 訊號要怎麼處理?之後有空在研究</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/blog/tags/log/" rel="tag"># log</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/01/21/linux-bash-shell-有關-星號的事情/" rel="next" title="linux bash / shell 有關 * 星號的事情">
+                <i class="fa fa-chevron-left"></i> linux bash / shell 有關 * 星號的事情
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/02/09/VScode-Sublime-使用套件整理/" rel="prev" title="VScode,Sublime 使用套件整理">
+                VScode,Sublime 使用套件整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ping-shell"><span class="nav-number">1.</span> <span class="nav-text">ping shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#沒辦法中斷-Ctrl-C-程式"><span class="nav-number">1.1.</span> <span class="nav-text">沒辦法中斷(Ctrl + C) 程式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-比較要注意加”"><span class="nav-number">1.2.</span> <span class="nav-text">shell 比較要注意加”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-error-print"><span class="nav-number">1.3.</span> <span class="nav-text">shell error print</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logrotate"><span class="nav-number">2.</span> <span class="nav-text">logrotate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更換-log-方法"><span class="nav-number">2.1.</span> <span class="nav-text">更換 log 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#輸出問題"><span class="nav-number">2.2.</span> <span class="nav-text">輸出問題</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logrotate-1"><span class="nav-number">3.</span> <span class="nav-text">logrotate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相關教學網站"><span class="nav-number">3.1.</span> <span class="nav-text">相關教學網站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logrotate-重點小記"><span class="nav-number">3.2.</span> <span class="nav-text">logrotate 重點小記</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的-ping-程式設定"><span class="nav-number">4.</span> <span class="nav-text">我的 ping 程式設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#訊號問題"><span class="nav-number">5.</span> <span class="nav-text">訊號問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#意外小實驗結果"><span class="nav-number">5.1.</span> <span class="nav-text">意外小實驗結果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-create-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><span class="nav-number">5.2.</span> <span class="nav-text">使用 create 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-copytruncate-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><span class="nav-number">5.3.</span> <span class="nav-text">使用 copytruncate 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gt"><span class="nav-number">6.</span> <span class="nav-text">&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#測試使用"><span class="nav-number">7.</span> <span class="nav-text">測試使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#測試完建議刪除檔案"><span class="nav-number">7.1.</span> <span class="nav-text">測試完建議刪除檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logrotate-2"><span class="nav-number">7.2.</span> <span class="nav-text">logrotate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">8.</span> <span class="nav-text">總結</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2020/01/27/logrotate-自動切割-log-小記/';
+          this.page.identifier = '2020/01/27/logrotate-自動切割-log-小記/';
+          this.page.title = 'logrotate 自動切割 log 小記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

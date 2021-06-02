@@ -1,37 +1,1271 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tls,憑證,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近要上線的專案會用到 LINE WEBHOOK竟然上正式環境 line 後台 webhook 模擬可以觸發 API但使用行動裝置竟然不可以打…(access.log沒有收到訊息)我們公司有防火牆、Server Load Balancer…查詢上花了不少時間">
+<meta name="keywords" content="tls,憑證">
+<meta property="og:type" content="article">
+<meta property="og:title" content="設備根憑證不正確導致不能打API問題">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近要上線的專案會用到 LINE WEBHOOK竟然上正式環境 line 後台 webhook 模擬可以觸發 API但使用行動裝置竟然不可以打…(access.log沒有收到訊息)我們公司有防火牆、Server Load Balancer…查詢上花了不少時間">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l4.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l3.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/chain.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/PublicKeyCertificateDiagram_It.svg/langzh-1100px-PublicKeyCertificateDiagram_It.svg.png">
+<meta property="og:updated_time" content="2021-06-02T15:57:46.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="設備根憑證不正確導致不能打API問題">
+<meta name="twitter:description" content="最近要上線的專案會用到 LINE WEBHOOK竟然上正式環境 line 後台 webhook 模擬可以觸發 API但使用行動裝置竟然不可以打…(access.log沒有收到訊息)我們公司有防火牆、Server Load Balancer…查詢上花了不少時間">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/">
+
+
+
+
+
+  <title>設備根憑證不正確導致不能打API問題 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/07/14/設備根憑證不正確導致不能打API問題/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">設備根憑證不正確導致不能打API問題</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-07-14T22:26:12+08:00">
+                2020-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/07/14/設備根憑證不正確導致不能打API問題/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>最近要上線的專案會用到 LINE WEBHOOK<br>竟然上正式環境 line 後台 webhook 模擬可以觸發 API<br>但使用行動裝置竟然不可以打…(access.log沒有收到訊息)<br>我們公司有防火牆、Server Load Balancer…<br>查詢上花了不少時間</p>
+<a id="more"></a>
+<p>由於流程很多，我上面就直接講重點</p>
+<h2 id="檢查方向"><a href="#檢查方向" class="headerlink" title="檢查方向"></a>檢查方向</h2><h3 id="LINE-文章有提到注意事項"><a href="#LINE-文章有提到注意事項" class="headerlink" title="LINE 文章有提到注意事項"></a>LINE 文章有提到注意事項</h3><blockquote>
+<p>在設定HTTPS伺服器時，有下列幾點必須注意的事項：</p>
+<ol>
+<li>HTTPS伺服器所使用的根憑證（Root CA）必須是在LINE平台的白名單列表中，否則LINE平台會拒絕傳送訊息。在白名單列表中大多數的憑證都需要付費申請，但是LINE平台也支援常用的免費憑證，例如Let’s Encrypt。</li>
+<li>請勿使用已知具有安全性漏洞的協定（例如SSL v2或SSL v3）或Cipher Suite（例如SWEET32或CVE-2016-2183）。</li>
+<li>請務必正確設定中繼憑證（Intermediate certificate），以避免無法對應到根憑證而發生錯誤。這是最常見的問題通報狀況，請在設定HTTPS伺服器時多加留意。</li>
+</ol>
+</blockquote>
+<p><a href="https://engineering.linecorp.com/zh-hant/blog/line-device-10/" target="_blank" rel="noopener">開發LINE聊天機器人不可不知的十件事 - LINE ENGINEERING</a></p>
+<p>我們公司瀏覽器看網頁沒有跳出安全性問題，Android、Iphone、Linux 也沒有問題<br>所以第一項認為沒問題，但魔鬼出在細節裡<br>文章裡的根憑證白名單列表看不見<br><strong>Google 一下會發現 TWCA 沒有這個憑證，後面再詳細說明</strong><br><a href="https://developers.line.biz/media/messaging-api/build-bot/ca_root_v2.txt" target="_blank" rel="noopener">developers.line.biz/media/messaging-api/build-bot/ca_root_v2.txt</a><br>總之我們前面認為這一段沒有問題</p>
+<p>2,3 憑證都確認都沒有問題</p>
+<p><a href="https://www.sslshopper.com/" target="_blank" rel="noopener">SSL Certificate Comparison and Reviews</a></p>
+<p>這個網站就可以檢查憑證是否有問題</p>
+<h3 id="Load-Balance-SNI-設定"><a href="#Load-Balance-SNI-設定" class="headerlink" title="Load Balance SNI 設定"></a>Load Balance SNI 設定</h3><p>當我們憑證出問題的時候<br>網路同仁有打電話給 Load Balance 廠商詢問設定<br>廠商提到要設定 SNI<br>讓我想到之前驗證環境的問題<br><a href="https://malagege.github.io/blog/2020/06/25/Java-%E5%9B%A0%E6%86%91%E8%AD%89-SNI-%E5%95%8F%E9%A1%8C%E9%A9%97%E8%AD%89%E4%B8%8D%E9%81%8E/">Java 因憑證 SNI 問題驗證不過 | 程式狂想筆記</a><br>原來 Apache 做的設定，對應 LB(負載平衡)機器也要做這些設定<br>但遺憾還是沒有解決問題</p>
+<h3 id="根憑證是否為裝置-Client-認證"><a href="#根憑證是否為裝置-Client-認證" class="headerlink" title="根憑證是否為裝置(Client)認證"></a>根憑證是否為裝置(Client)認證</h3><p>前面第一點已經據透了<br>我們發現驗證環境的萬用憑證可以跑<br>但是正式環境驗證憑證不可以跑</p>
+<p>原來公司舊有憑證是四層(TWCA)<br>但是新憑證是三層(TWCA)<br>這2種都是合法憑證</p>
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l4.png" title="四層">
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l3.png" title="三層">
+<p>從憑證路徑可以看到一個三層，一個四層<br>但偏偏 LINE ROOT CA 只有<code>CN=TWCA Root Certification Authority, OU=Root CA, O=TAIWAN-CA, C=TW</code><br>沒有 TWCA ROOT CA</p>
+<p>公司剛好因為換新憑證都改用三層<br>所以會有這個問題…</p>
+<p>所以中繼憑證改成四層就沒這個問題</p>
+<ol>
+<li>完美成果</li>
+</ol>
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh.png">
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh2.png" width="2">
+<ol start="2">
+<li>root ca 包在中繼憑證，順序錯誤</li>
+</ol>
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci.png">
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci2.png">
+<ol start="3">
+<li>root ca 包在中繼憑證+中繼憑證順序錯誤</li>
+</ol>
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook.png">
+<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook2.png">
+<p>我的建議憑證包四層比較不會出問題<br>因為第二層憑證是一樣的<br>第三層的話，Root CA 就會抓到白名單</p>
+<p>假如四層的話，中繼串到第三個後面，就是白名單<br>不過 TWCA 說最新發的都是三層??<del>這原因我就沒深入追查</del><br><a href="https://malagege.github.io/blog/2020/07/18/%E7%94%A2%E7%94%9F%E8%87%AA%E7%B0%BD%E6%86%91%E8%AD%89%E7%AD%86%E8%A8%98/#TWCA-%E6%86%91%E8%AD%89%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%89%E4%B8%89%E5%B1%A4%EF%BC%8C%E5%9B%9B%E5%B1%A4%E4%B8%B2%E5%88%B0%E5%90%8C%E4%B8%80%E5%80%8B%E6%86%91%E8%AD%89%E5%91%A2">產生自簽憑證筆記 | TWCA 憑證為什麼有三層，四層串到同一個憑證呢?</a><br>我猜應該相同名字會抓出來比較<br>剛好兩張私鑰都是一樣的</p>
+<p>題外話，這邊我發現有趣現象<br>用 Firefox 是三層(沒有看到四層)，Chrome(IE,Window)是四層<br>不知道是不是憑證是用 名稱去找的 <del><strong>這個是我猜的，目前沒有找到資訊</strong></del></p>
+<blockquote>
+<p>憑證簽發者(ISSUER)的名稱與憑證主體(Subject Name)名稱相同!<br>參考:<a href="https://www.sslbuyer.com/index.php?option=com_content&amp;view=article&amp;id=183:what-is-certificate-chain&amp;catid=25&amp;Itemid=4031" target="_blank" rel="noopener">憑證串鍊的解釋 - SSL憑證推薦網 | SSL憑證 | code Sign</a><br>難道真的是看名字??<br>Android也是三層<br>剛好有抓到 TWCA Root CA 根憑證所以才三層<br>至於怎麼抓的就不研究了</p>
+</blockquote>
+<p>現在回想<a href="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/">萬用憑證(WildCard)和中間憑證小記 | 程式狂想筆記</a><br>是不是沒有串到根憑證??現在也查不到了</p>
+<h3 id="檢查-Chipser"><a href="#檢查-Chipser" class="headerlink" title="檢查 Chipser"></a>檢查 Chipser</h3><ul>
+<li><p><a href="https://medium.com/@clu1022/%E9%82%A3%E4%BA%9B%E9%97%9C%E6%96%BCssl-tls%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B-%E4%B9%9D-ssl-communication-31a2a8a888a6" target="_blank" rel="noopener">那些關於SSL/TLS的二三事(九) — SSL (HTTPS)Communication | by Carl | Medium</a></p>
+</li>
+<li><p><a href="https://www.brilliantcode.net/1229/apache-advance-settings-tlsv1-2-tlsv1-1-sslv3/" target="_blank" rel="noopener">Apache進階設定(1) - TLSv1.2 TLSv1.1 SSLv2 SSLv3 - BrilliantCode.net</a></p>
+</li>
+</ul>
+<p>之前有聽說可以不戴加密做 TLS<br>有看到這個關鍵字 null cipher suites<br>不知道是不是指這個?<br>我就不詳細研究了</p>
+<h2 id="名詞整理"><a href="#名詞整理" class="headerlink" title="名詞整理"></a>名詞整理</h2><h3 id="根憑證"><a href="#根憑證" class="headerlink" title="根憑證"></a>根憑證</h3><blockquote>
+<p>Self-Signed CA<br>亦可稱為 root CA。由於此種 CA 所發的憑證(certificate)是不經由任何上層 CA 所認證，而是以「自行認證」的方式進行認證。因此像是最上層的商業 CA，或是自行架設內部認證用的 CA，都可以屬於此類。<br>參考來源: <a href="https://mistech.pixnet.net/blog/post/80751019-certificate-authority%28ca%29-%E6%86%91%E8%AD%89%E7%B0%A1%E4%BB%8B" target="_blank" rel="noopener">Certificate Authority(CA) 憑證簡介 @ MISTECH 技術手抄本 :: 痞客邦 ::</a></p>
+</blockquote>
+<p>簡單來說就是根憑證，一開始你的電腦微軟附的作業系統裡面，有裝一些憑證，隨著系統更新，這些憑證都會update。<br>根憑證因為沒有上層，所以你電腦有根憑證白名單，就會算是合法的憑證。</p>
+<h3 id="中繼憑證"><a href="#中繼憑證" class="headerlink" title="中繼憑證"></a>中繼憑證</h3><img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/chain.png" title="title">
+<p>參考來源:<a href="https://medium.com/@clu1022/%E9%82%A3%E4%BA%9B%E9%97%9C%E6%96%BCssl-tls%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B-%E5%8D%81%E4%BA%8C-chain-of-trust-f00da1f2cc15" target="_blank" rel="noopener">那些關於SSL/TLS的二三事(十二) — Chain of Trust | by Carl | Medium</a><br>這篇說得很清楚，但我也只是略懂略懂<br>一直在想為什麼會有中繼憑證，缺少中繼憑證會發生什麼事?順序錯會發生什麼事?<br>當前憑證並非是 Root CA 認證而是靠中繼憑證…<br>中繼憑證會再往上根 Root Ca 驗證<br>到白名單就是安全性任憑正</p>
+<h3 id="憑證加密過程"><a href="#憑證加密過程" class="headerlink" title="憑證加密過程"></a>憑證加密過程</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/PublicKeyCertificateDiagram_It.svg/langzh-1100px-PublicKeyCertificateDiagram_It.svg.png" alt=""></p>
+<p>簡單說就是 <code>公鑰</code> + <code>上層憑證私鑰</code> = 憑證<br>這張憑證就會給你設定 Apache 上<br>驗證憑證會跟上層憑證公鑰解開加密確認值<br>一致就確認沒問題，繼續往上面憑證追查，直到 Root CA</p>
+<h3 id="整理憑證鍊遇到問題"><a href="#整理憑證鍊遇到問題" class="headerlink" title="整理憑證鍊遇到問題"></a>整理憑證鍊遇到問題</h3><h4 id="Contains-anchors"><a href="#Contains-anchors" class="headerlink" title="Contains anchors"></a>Contains anchors</h4><p>包到主憑證，之前有看過文章中繼憑證不需要包 root ca</p>
+<p><a href="https://qualys-secure.force.com/discussions/s/question/0D52L00004TnvJ5SAJ/chain-issues-contains-anchors" target="_blank" rel="noopener">Chain issues: Contains anchors</a><br><a href="https://qualys-secure.force.com/discussions/s/question/0D52L00004TnyFQSAZ/trouble-with-intermediate-certificate-chain-issues-incomplete" target="_blank" rel="noopener">Trouble with intermediate certificate “Chain Issues: Incomplete”</a></p>
+<h4 id="Extra-download"><a href="#Extra-download" class="headerlink" title="Extra download"></a>Extra download</h4><p>好像就是中繼憑證跟給予憑證沒包在一起樣子?<br>我沒有實驗，像 nginx 就沒有中繼憑證設定<br>不是很確定原因</p>
+<p><a href="https://qualys-secure.force.com/discussions/s/question/0D52L00004TnuTuSAJ/how-to-fix-extra-download" target="_blank" rel="noopener">How to fix “Extra download”</a><br><a href="https://qualys-secure.force.com/discussions/s/question/0D52L00004TnuRQSAZ/multiple-certification-paths" target="_blank" rel="noopener">Multiple Certification Paths</a><br><a href="https://www.ssl.com.tw/Down/" target="_blank" rel="noopener">https://www.ssl.com.tw/Down/</a></p>
+<h3 id="下載憑證方法-無法看到中繼憑證"><a href="#下載憑證方法-無法看到中繼憑證" class="headerlink" title="下載憑證方法(無法看到中繼憑證)"></a>下載憑證方法(無法看到中繼憑證)</h3><p><a href="https://www.shellhacks.com/get-ssl-certificate-from-server-site-url-export-download/" target="_blank" rel="noopener">Get SSL Certificate from Server (Site URL) - Export &amp; Download - ShellHacks</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下載憑證 (不包含中繼)</span></span><br><span class="line"><span class="built_in">echo</span> | openssl s_client -servername NAME -connect HOST:PORT |\</span><br><span class="line">  sed -ne <span class="string">'/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p'</span> &gt; certificate.crt</span><br><span class="line"><span class="comment"># 查看中繼憑證 (-A 數字可以大一點)</span></span><br><span class="line"> <span class="built_in">echo</span> <span class="string">""</span>|openssl s_client -connect www.cgh.org.tw:443 2&gt;&amp;1 | grep -A 9 <span class="string">"Certificate chain"</span></span><br></pre></td></tr></table></figure>
+<p>其實之前就有做過類似筆記:<a href="https://malagege.github.io/blog/2020/05/30/Linux-%E6%8C%87%E4%BB%A4%E7%A2%BA%E8%AA%8DSSL%E6%86%91%E8%AD%89/">Linux 指令確認SSL憑證 | 程式狂想筆記</a></p>
+<h3 id="格式轉換"><a href="#格式轉換" class="headerlink" title="格式轉換"></a>格式轉換</h3><p><a href="https://ssorc.tw/7142/openssl-%E6%8C%87%E4%BB%A4-command-line-%E8%BD%89%E6%AA%94-pem-der-p7b-pfx-cer/" target="_blank" rel="noopener">openssl 指令 command line - 轉檔 pem/der/p7b/pfx/cer | SSORC.tw</a></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>安裝中繼憑證</p>
+<ul>
+<li><a href="http://yy-programer.blogspot.com/2019/02/gcacertificate-chain.html" target="_blank" rel="noopener">Yy’s Program: GCA政府憑證串鍊(Certificate chain)問題</a></li>
+</ul>
+<p>see chain </p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/18733383/show-entire-certificate-chain-for-a-local-certificate-file" target="_blank" rel="noopener">ssl - show entire certificate chain for a local certificate file - Stack Overflow</a></li>
+<li><a href="https://kdecherf.com/blog/2015/04/10/show-the-certificate-chain-of-a-local-x509-file/" target="_blank" rel="noopener">Show the certificate chain of a local X509 file - kdecherf ~ %</a><br>這邊是做憑證驗證</li>
+</ul>
+<p>憑證教學</p>
+<ul>
+<li><p><a href="https://blog.xuite.net/towns/hc/556816027-SSL+%E6%86%91%E8%AD%89%E7%94%B3%E8%AB%8B%E3%80%81%E5%8F%96%E5%BE%97%E5%8F%8A%E5%AE%89%E8%A3%9D" target="_blank" rel="noopener">SSL 憑證申請、取得及安裝 @ 來吧~~~電腦 :: 隨意窩 Xuite日誌</a></p>
+</li>
+<li><p><a href="http://www.alvinchen.club/2018/09/27/apache-nginx%E4%B8%8A%E5%AE%89%E8%A3%9D-twca%E6%86%91%E8%AD%89/" target="_blank" rel="noopener">Apache Nginx上安裝 TWCA憑證 - Alvin Chen Club</a></p>
+</li>
+<li><p><a href="https://ssl-config.mozilla.org/#server=apache&amp;version=2.4.41&amp;config=intermediate&amp;openssl=1.1.1d&amp;guideline=5.4" target="_blank" rel="noopener">Mozilla SSL Configuration Generator</a><br>之後相關 Apache, Redis, Mysql  TLS 加密可以看這邊設定</p>
+</li>
+</ul>
+<h2 id="小記"><a href="#小記" class="headerlink" title="小記"></a>小記</h2><p>原本這個問題沒有頭緒，line webhook 後臺可以打得到AP<br>但是用手機 LINE APP 操作就抓不到<br>有用防火牆看到 Server Action RST<br>正常Action:Session close<br>後來用公司 Load Balancer 作風包解析(tcpdump)<br>發現這一塊 https 三項交握有問題</p>
+<p>看了這篇除了驗證憑證，那註銷後的憑證要怎麼確認<br>Google 一下找到 CRL(<a href="http://ijecorp.blogspot.com/2016/01/ocsp-crl.html" target="_blank" rel="noopener">寫程式是良心事業: OCSP &amp; CRL 介紹</a>)<br>這邊就不先繼續研究了</p>
+<p>我覺得之後可以手動做做看</p>
+<p><del>TODO: 之後可能照保哥做做看自簽名憑證</del><br><a href="https://malagege.github.io/blog/2020/07/18/%E7%94%A2%E7%94%9F%E8%87%AA%E7%B0%BD%E6%86%91%E8%AD%89%E7%AD%86%E8%A8%98/">產生自簽憑證筆記 | 程式狂想筆記</a><br>完成測試</p>
+<p>這篇算是我的筆記，也許會有很多寫錯，建議大家還是看看大神寫文章!!<br><a href="https://blog.miniasp.com/post/2010/03/02/The-Complete-Guide-for-Purchase-Install-SSL-Certificate-to-IIS7" target="_blank" rel="noopener">購買與安裝 SSL 憑證完全攻略（以 IIS7 為例） | The Will Will Web</a><br><a href="https://blog.miniasp.com/post/2019/02/25/Creating-Self-signed-Certificate-using-OpenSSL?fbclid=IwAR3xS1xqkOfLQmK22bDyp9bgOJ71PBNChr-2REMq3oIMT5-0biUTJl41a1k" target="_blank" rel="noopener">如何使用 OpenSSL 建立開發測試用途的自簽憑證 (Self-Signed Certificate) | The Will Will Web</a><br><a href="https://blog.miniasp.com/post/2013/01/09/The-Complete-Guide-Free-StartSSL-personal-and-web-site-ssl-tls-certificates" target="_blank" rel="noopener">免費申請 StartSSL™ 個人數位簽章與網站 SSL 憑證完全攻略 | The Will Will Web</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/tls/" rel="tag"># tls</a>
+          
+            <a href="/blog/tags/憑證/" rel="tag"># 憑證</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/06/27/監控電腦活著發送-DISCORD-通知/" rel="next" title="監控電腦活著發送 DISCORD 通知">
+                <i class="fa fa-chevron-left"></i> 監控電腦活著發送 DISCORD 通知
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/" rel="prev" title="使用 command line 上傳檔案到 HFS">
+                使用 command line 上傳檔案到 HFS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#檢查方向"><span class="nav-number">1.</span> <span class="nav-text">檢查方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LINE-文章有提到注意事項"><span class="nav-number">1.1.</span> <span class="nav-text">LINE 文章有提到注意事項</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Load-Balance-SNI-設定"><span class="nav-number">1.2.</span> <span class="nav-text">Load Balance SNI 設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根憑證是否為裝置-Client-認證"><span class="nav-number">1.3.</span> <span class="nav-text">根憑證是否為裝置(Client)認證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#檢查-Chipser"><span class="nav-number">1.4.</span> <span class="nav-text">檢查 Chipser</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名詞整理"><span class="nav-number">2.</span> <span class="nav-text">名詞整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#根憑證"><span class="nav-number">2.1.</span> <span class="nav-text">根憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中繼憑證"><span class="nav-number">2.2.</span> <span class="nav-text">中繼憑證</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#憑證加密過程"><span class="nav-number">2.3.</span> <span class="nav-text">憑證加密過程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整理憑證鍊遇到問題"><span class="nav-number">2.4.</span> <span class="nav-text">整理憑證鍊遇到問題</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Contains-anchors"><span class="nav-number">2.4.1.</span> <span class="nav-text">Contains anchors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Extra-download"><span class="nav-number">2.4.2.</span> <span class="nav-text">Extra download</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下載憑證方法-無法看到中繼憑證"><span class="nav-number">2.5.</span> <span class="nav-text">下載憑證方法(無法看到中繼憑證)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式轉換"><span class="nav-number">2.6.</span> <span class="nav-text">格式轉換</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">2.7.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小記"><span class="nav-number">3.</span> <span class="nav-text">小記</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/';
+          this.page.identifier = '2020/07/14/設備根憑證不正確導致不能打API問題/';
+          this.page.title = '設備根憑證不正確導致不能打API問題';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

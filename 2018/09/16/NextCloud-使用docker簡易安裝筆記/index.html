@@ -1,37 +1,1246 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,nas,nextcloud,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="NextCloud 使用docker簡易安裝筆記">
+<meta name="keywords" content="docker,nas,nextcloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NextCloud 使用docker簡易安裝筆記">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="NextCloud 使用docker簡易安裝筆記">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/01.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/1.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/3.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/4.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/files_icons.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/001.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/002.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/003.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/004.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/005.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/006.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/007.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/config.png">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.447Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NextCloud 使用docker簡易安裝筆記">
+<meta name="twitter:description" content="NextCloud 使用docker簡易安裝筆記">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/">
+
+
+
+
+
+  <title>NextCloud 使用docker簡易安裝筆記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NextCloud 使用docker簡易安裝筆記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-09-16T00:59:32+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/16/NextCloud-使用docker簡易安裝筆記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>NextCloud 使用docker簡易安裝筆記</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  run  -d  -p  8000:80   nextcloud</span><br></pre></td></tr></table></figure>
+<p>就可以簡單使用NextCloud</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  run -d  -v  /mnt/HD1/nextcloud_bk:/var/www/html -p  8000:80 nextcloud</span><br></pre></td></tr></table></figure>
+<p>當然要備份資料可以掛載，我有試著掛載<code>~/data/owncolud.db</code>好像沒有作用<br>在想應該還有其他設定檔</p>
+<p>它還有很特別功能，竟然有檔案版本控制<br>我沒玩過NAS，不知道是不是這是NAS基本功能<br><img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/01.png"></p>
+<p>家裡有一台Raspberry PI，它被用來當動物機，常常追番用的<br>平常傳資料我都是在window開hfs去傳的，有時候覺得跑來跑去很麻煩<br>還在想它可以怎麼跟Raspbery PI用</p>
+<h2 id="elementary-OS-client設定"><a href="#elementary-OS-client設定" class="headerlink" title="elementary OS client設定"></a>elementary OS client設定</h2><img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/1.png">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:nextcloud-devs/client</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<p>這樣就能安裝 nextcloud-client<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nextcloud-client</span><br></pre></td></tr></table></figure></p>
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/2.png">
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/3.png">
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/4.png" title="沒有申請憑證，當然要點第2個選項">
+<p>可惜…，當天講者電腦icon有同步圖示，elementary OS好像看不到QQ</p>
+<p>後來安裝nautilus跟nautilus-nextcloud，然後登入再登入之後就能看到nautilus有圖示功能了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nautilus nautilus-nextcloud</span><br></pre></td></tr></table></figure></p>
+<p>原生elementary os 檔案管理工具沒有套件….<br><img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/files_icons.png"></p>
+<p>找個播放器來試試</p>
+<h2 id="安裝audio-player"><a href="#安裝audio-player" class="headerlink" title="安裝audio player"></a>安裝audio player</h2><p>可用上面搜尋快速找到你要的套件<br><img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/001.png"></p>
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/002.png" title="這邊不能用localhost連線，要用127.0.0.1(本機的話)">
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/003.png">
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/004.png">
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/005.png">
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/006.png">
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/007.png">
+<p>別對搜尋中按鈕騙了…，害我等了快30分鐘…(我還以為壞掉了)<br><em>請記得要點「搜尋中」他才會真的搜尋!!!</em></p>
+<p>後來還發現還有markdown套件!!!</p>
+<h1 id="假如區網可能會遇到非安全網域的問題"><a href="#假如區網可能會遇到非安全網域的問題" class="headerlink" title="假如區網可能會遇到非安全網域的問題"></a>假如區網可能會遇到非安全網域的問題</h1><p>假如你有root權限，直接做volumes資料夾那邊設定<br>沒的話要<code>docker exec -ti xxxx bash</code>進去改</p>
+<p>我沒看文件，加入 <code>1 =&gt; &#39;*&#39;,</code><br>竟然能跑XD<br>有對外開放IP，不建議這樣設定<br>指定比較安全</p>
+<img src="/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/config.png">
+<p>參考來源:<br><a href="http://bit.ly/sakana20180915" target="_blank" rel="noopener">講者簡報</a><br><a href="http://sakananote2.blogspot.com/" target="_blank" rel="noopener">講者blog</a><br><a href="https://docs.google.com/presentation/d/1aZzPbmhYfa51MsoK4FskQPeoIL6AqMXVzW5eQRiTfhw/edit#slide=id.g426e3e8d8f_1_0" target="_blank" rel="noopener">Promethues</a><br><a href="https://www.techrepublic.com/article/how-to-install-the-nextcloud-client-on-ubuntu/" target="_blank" rel="noopener">Ubuntu 安裝教學</a></p>
+<h2 id="意外升級搞壞-2021-01-10"><a href="#意外升級搞壞-2021-01-10" class="headerlink" title="意外升級搞壞(2021-01-10)"></a>意外升級搞壞(2021-01-10)</h2><p>今天用<a href="https://scan.nextcloud.com/" target="_blank" rel="noopener">Nextcloud Security Scan</a>掃我 nextcloud 弱點<br>發現版本稍微舊<br><a href="https://hub.docker.com/r/ownyourbits/nextcloudpi" target="_blank" rel="noopener">ownyourbits/nextcloudpi - Docker Hub</a><br>想說 <code>docker pull ownyourbits/nextcloudpi</code> 這樣更新<br>重啟新的 container 就可以了<br>誰知道 MariaDB 不能用了</p>
+<p>不知道是不是之前版本是 MySQL 關係<br>於是我只能重啟重建之路</p>
+<p>先假設我有使用 traefik<br>所以我的 80 443 port 都被占用</p>
+<p>這次我採取使用 docker-compose 來做</p>
+<p><strong> 以下我用1.34.1 操作還是有問題</strong><br>有看到有人降到 1.31 就能正常使用<br>好像後面有大改版，畫面首頁有調整</p>
+<p>1.34.1<br><a href="https://help.nextcloud.com/t/docker-volume-does-not-contain-user-data/101808/25" target="_blank" rel="noopener">Docker volume does not contain user data - ℹ️ Support / 📦 Appliances (Docker, Snappy, VM, NCP) - Nextcloud community</a><br>重點好像有bug，docker hub 好像沒這個版本<br>所以去 Git 上面抓下來編譯</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install jq</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/nextcloud/nextcloudpi.git  <span class="comment"># 預設就是 1.34.1</span></span><br><span class="line">git checkout v1.31</span><br><span class="line"><span class="built_in">cd</span> nextcloudpi</span><br><span class="line">./build-docker.sh armhf</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/nextcloud/nextcloudpi/blob/master/docker-compose-armhf.yml" target="_blank" rel="noopener">nextcloudpi/docker-compose-armhf.yml at master · nextcloud/nextcloudpi · GitHub</a><br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  nextcloudpi:</span></span><br><span class="line"><span class="comment">#    image:  ownyourbits/nextcloudpi</span></span><br><span class="line"><span class="comment">#    後來發現 nextcloudpi 有 nextcloudpi-armhf image</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">ownyourbits/nextcloudpi-armhf</span></span><br><span class="line"><span class="attr">    command:</span> <span class="string">"192.168.1.x"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">traefik_network</span></span><br><span class="line"><span class="attr">    labels:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.backend=ncp"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.routers.ncp.rule=Host(`xxxx.duckdns.org`)"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.routers.ncp.tls=true"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"traefik.http.services.ncp.loadbalancer.server.port=80"</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"1180:80"</span> <span class="comment"># 暫時使用，traefik 可以註解調</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"11443:443"</span> <span class="comment"># 暫時使用，traefik 可以註解調</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"4443:4443"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/media/USBdrive/ncp2:/data</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  traefik_network:</span></span><br><span class="line"><span class="attr">    external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>因為我用 Traefik 轉 https 關係<br>所以我要把 Force HTTPS 給關掉<br>nc-trust-domain 把 192.168.1.202 加進去</p>
+<p><a href="https://192.168.1.202:11443" target="_blank" rel="noopener">https://192.168.1.202:11443</a> 就能用 ncp 進去<br>我通常會建立新的 admin 帳號給自己</p>
+<p>要把舊的檔案一進去</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker-compose <span class="built_in">exec</span> nextcloudpi bash</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /data/nextcloud/</span><br><span class="line"></span><br><span class="line">sudo -u www-data php occ files:scan --all</span><br></pre></td></tr></table></figure>
+<p><del>新版檔案路徑在 <code>/data-ro/nextcloud/data/xxuser/files</code></del> 1.43.1 bug??</p>
+<p>上傳大量檔案推薦使用 WinSCP 上傳<br>可以參考:<a href="https://harry-lin.blogspot.com/2019/05/winscp-sftpsudo.html" target="_blank" rel="noopener">Harry 程式筆記: [WinSCP] sftp下使用sudo上傳檔案</a><br>怎麼使用 winscp? 可以參考我這篇 <a href="https://malagege.github.io/blog/2020/01/10/WinSCP%20%E7%94%A8%20sudo%20%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E7%9A%84%E6%96%B9%E6%B3%95/">WinSCP 用 sudo 上傳檔案的方法(含切換一般使用者) | 程式狂想筆記</a></p>
+<p><a href="https://192.168.1.x:4443/?app=nc-scan-auto" target="_blank" rel="noopener">https://192.168.1.x:4443/?app=nc-scan-auto</a></p>
+<p>可以馬上執行</p>
+<p>通常60分會讀一次</p>
+<p>暫時收工</p>
+<p><strong>2021-05-10</strong></p>
+<p>還是不想透過用指令方法去實作<br>traefik 上傳多個 MP3 會有問題(可能樹梅派做這些動作 loading 還是太重了)<br>想透過 sftp 上傳 權限用 www-data<br>本來想掛個sftp<br>但我又不想用www-data為帳號<br><code></code><br>git clone </p>
+<p>cd sftp </p>
+<p>docker build . -t rpi-sftp</p>
+<p>docker run -p 2223:22 -d rpi-sftp miles:123456:33:33:upload -v<br><code>`</code></p>
+<p><a href="https://mileslin.github.io/2020/02/%E4%BD%BF%E7%94%A8-Docker-%E5%BB%BA%E7%BD%AE-FTP-SFTP-%E7%92%B0%E5%A2%83/" target="_blank" rel="noopener">[Docker] 使用 Docker 建置 FTP(SFTP) 環境 - Miles’s Journey</a></p>
+<p><a href="https://hrbhot.github.io/posts/nextcloud/" target="_blank" rel="noopener">Nextcloud</a><br><a href="https://b1ue.me/archives/183" target="_blank" rel="noopener">nextcloud ntfs权限问题及解决方法-β1ùe</a><br><a href="https://www.fanfpy.top/index.php/archives/68/" target="_blank" rel="noopener">Docker安装nextcloud以及遇到的一下问题和优化方法 - 烦fpy</a></p>
+<p><a href="https://2formosa.blogspot.com/2020/10/change-group-on-UNIX-like-system.html" target="_blank" rel="noopener">阿就操場啊~: 使用者在Linux, BSD切換群組</a></p>
+<p>我後來使用  <code>usermod -a -G www-data pi</code><br>這樣我就可以執接sftp放檔案進去<br>www-data也能刪檔案</p>
+<p><a href="https://docs.linuxserver.io/images/docker-nextcloud" target="_blank" rel="noopener">linuxserver/nextcloud - LinuxServer.io</a></p>
+<p>改umask</p>
+<p><del><code>-e UMASK=022</code></del><br>沒效…，看來新建資料夾比較麻煩<br><a href="https://www.computernetworkingnotes.com/rhce-study-guide/how-to-change-default-umask-permission-in-linux.html" target="_blank" rel="noopener">How to change Default Umask Permission in Linux</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/blog/tags/nas/" rel="tag"># nas</a>
+          
+            <a href="/blog/tags/nextcloud/" rel="tag"># nextcloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-和-Java-JDBC預設sql-mode為嚴格模式/" rel="next" title="Truncated incorrect DOUBLE value: '785+712' 和 Java JDBC預設sql_mode為嚴格模式">
+                <i class="fa fa-chevron-left"></i> Truncated incorrect DOUBLE value: '785+712' 和 Java JDBC預設sql_mode為嚴格模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/09/18/Java操作POI修改報表sample檔發生信任活頁簿問題/" rel="prev" title="Java操作POI修改報表sample檔發生信任活頁簿問題">
+                Java操作POI修改報表sample檔發生信任活頁簿問題 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#elementary-OS-client設定"><span class="nav-number">1.</span> <span class="nav-text">elementary OS client設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝audio-player"><span class="nav-number">2.</span> <span class="nav-text">安裝audio player</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#假如區網可能會遇到非安全網域的問題"><span class="nav-number"></span> <span class="nav-text">假如區網可能會遇到非安全網域的問題</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#意外升級搞壞-2021-01-10"><span class="nav-number">1.</span> <span class="nav-text">意外升級搞壞(2021-01-10)</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2018/09/16/NextCloud-使用docker簡易安裝筆記/';
+          this.page.identifier = '2018/09/16/NextCloud-使用docker簡易安裝筆記/';
+          this.page.title = 'NextCloud 使用docker簡易安裝筆記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

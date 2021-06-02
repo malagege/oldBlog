@@ -1,37 +1,1235 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,sh,shell,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="shell 小記">
+<meta name="keywords" content="linux,sh,shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell Script 小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/10/23/Shell-Script-小記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="shell 小記">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shell Script 小記">
+<meta name="twitter:description" content="shell 小記">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/10/23/Shell-Script-小記/">
+
+
+
+
+
+  <title>Shell Script 小記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/10/23/Shell-Script-小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Shell Script 小記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-10-23T21:30:24+08:00">
+                2019-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/10/23/Shell-Script-小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/23/Shell-Script-小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <h2 id="shell-小記"><a href="#shell-小記" class="headerlink" title="shell 小記"></a>shell 小記</h2><a id="more"></a>
+<h3 id="變數大寫"><a href="#變數大寫" class="headerlink" title="變數大寫"></a>變數大寫</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TODAY=`date +<span class="string">"%Y%m%d"</span>`</span><br><span class="line">YESTERDAY=`date +<span class="string">"%Y%m%d"</span>  --date=<span class="variable">$&#123;TODAY&#125;</span>-1day`</span><br></pre></td></tr></table></figure>
+<h2 id="變數宣告-不能有空白"><a href="#變數宣告-不能有空白" class="headerlink" title="變數宣告 = 不能有空白"></a>變數宣告 = 不能有空白</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = 1234 <span class="comment"># A: command not found</span></span><br><span class="line">B=1234   <span class="comment"># Success</span></span><br></pre></td></tr></table></figure>
+<h3 id="字串截取"><a href="#字串截取" class="headerlink" title="字串截取"></a>字串截取</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STRING=<span class="string">"123456789"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;STRING:2:5&#125;</span>   <span class="comment"># 34567</span></span><br></pre></td></tr></table></figure>
+<h2 id="Array-宣告"><a href="#Array-宣告" class="headerlink" title="Array 宣告"></a>Array 宣告</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ARR=(123 456 789)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;ARR[2]&#125;</span>  <span class="comment"># 789</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#ARR[@]&#125;</span>  <span class="comment"># Array length</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"<span class="variable">$&#123;ARR[@]&#125;</span>"</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">"<span class="variable">$i</span>"</span></span><br><span class="line">   <span class="comment"># or do whatever with individual element of the array</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h2 id="Array-join-合併-動作"><a href="#Array-join-合併-動作" class="headerlink" title="Array join(合併) 動作"></a>Array join(合併) 動作</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> join_by &#123; <span class="built_in">local</span> d=<span class="variable">$1</span>; <span class="built_in">shift</span>; <span class="built_in">echo</span> -n <span class="string">"<span class="variable">$1</span>"</span>; <span class="built_in">shift</span>; <span class="built_in">printf</span> <span class="string">"%s"</span> <span class="string">"<span class="variable">$&#123;@/#/$d&#125;</span>"</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash" target="_blank" rel="noopener">How can I join elements of an array in Bash? - Stack Overflow</a></p>
+<h2 id="if-條件判斷"><a href="#if-條件判斷" class="headerlink" title="if 條件判斷"></a>if 條件判斷</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [  <span class="variable">$&#123;#ERROR_ARR[@]&#125;</span> != 0 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> xxxx</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h3 id="多個條件判斷"><a href="#多個條件判斷" class="headerlink" title="多個條件判斷"></a>多個條件判斷</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ -e <span class="variable">$FIND_FILE_320</span> ] &amp;&amp; [ -e <span class="variable">$FIND_FILE_192</span> ] &amp;&amp; [ -e <span class="variable">$FIND_FILE_30</span> ] &amp;&amp; [  -e <span class="variable">$FIND_FILE_ALBUM</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> xxx</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h2 id="mysql-查詢寫回變數"><a href="#mysql-查詢寫回變數" class="headerlink" title="mysql 查詢寫回變數"></a>mysql 查詢寫回變數</h2><p>FIND_ARRAY=(<code>mysql -h xxx.xx.xx.xx -D xxxx -u xxx -p__password__ -se &quot;SELECT xxx FROM xxx WHERE  limit 100&quot;</code>)</p>
+<ul>
+<li><a href="https://www.cnblogs.com/iforever/p/4459857.html" target="_blank" rel="noopener">shell处理mysql增、删、改、查 - 奔跑的Man - 博客园</a></li>
+<li><a href="http://mingxinglai.com/cn/2013/01/use-mysql-in-shell/" target="_blank" rel="noopener">shell中读写mysql数据库 | 赖明星</a></li>
+<li><a href="https://stackoverflow.com/questions/49819640/how-concatenate-strings-with-a-newline" target="_blank" rel="noopener">bash - How concatenate strings with a newline - Stack Overflow</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MYSQL_CMD=<span class="string">"/usr/bin/mysql -u ga_user -pxxx -h xxx --database=xxx -s"</span></span><br><span class="line">FIND_ARRAY=(`<span class="built_in">echo</span> <span class="string">"SELECT xxx FROM xxxx WHERE ... and ..... &lt; DATE_ADD(now(),INTERVAL -3 DAY) ORDER BY id LIMIT 100"</span> | <span class="variable">$&#123;MYSQL_CMD&#125;</span>`)</span><br><span class="line"></span><br><span class="line">FIND_ARRAY=(`mysql -h xxx -D xxx -u xxx -pxxx -se <span class="string">"SELECT xxx FROM xxx WHERE xxx and DATE_ADD(now(),INTERVAL -3 DAY) LIMIT 100"</span>`)</span><br></pre></td></tr></table></figure>
+<h2 id="function-宣告"><a href="#function-宣告" class="headerlink" title="function 宣告"></a>function 宣告</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> join_by &#123; <span class="built_in">local</span> d=<span class="variable">$1</span>; <span class="built_in">shift</span>; <span class="built_in">echo</span> -n <span class="string">"<span class="variable">$1</span>"</span>; <span class="built_in">shift</span>; <span class="built_in">printf</span> <span class="string">"%s"</span> <span class="string">"<span class="variable">$&#123;@/#/$d&#125;</span>"</span>; &#125;</span><br><span class="line">ERROR_SONG_ID_STRING=$(join_by , <span class="variable">$&#123;ERROR_SONG_ID[@]&#125;</span>)</span><br><span class="line">join_by , 1 2 3</span><br></pre></td></tr></table></figure>
+<h3 id="function-還傳段行字串"><a href="#function-還傳段行字串" class="headerlink" title="function 還傳段行字串"></a>function 還傳段行字串</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="function"><span class="title">a_function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">"Hello\nworld\n 1"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Hello"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"world"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Hello\nworld 4"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">"Hello\nworld\n 1"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Hello"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"world"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Hello\nworld 4"</span></span><br><span class="line"></span><br><span class="line">x=$(a_function <span class="string">"x"</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"x-no-quotes&gt;"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$x</span>                       <span class="comment">#No new lines!</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"&lt;x-no-quotes"</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/27872069/how-to-debug-a-bash-function-that-returns-a-value-and-how-to-add-newlines-to-a/27872114" target="_blank" rel="noopener">scripting - How to debug a bash function that returns a value, and how to add newlines to a variable? - Stack Overflow</a></p>
+<h3 id="shell-script-布林運算順序"><a href="#shell-script-布林運算順序" class="headerlink" title="shell script 布林運算順序"></a>shell script 布林運算順序</h3><p><a href="http://localhost:4000/blog/2019/11/06/shell-script-%E5%B8%83%E6%9E%97%E9%81%8B%E7%AE%97%E9%A0%86%E5%BA%8F/" target="_blank" rel="noopener">shell script 布林運算順序 | 程式狂想筆記</a></p>
+<h2 id="有關"><a href="#有關" class="headerlink" title="有關 *"></a>有關 *</h2><p><a href="https://malagege.github.io/blog/2020/01/21/linux-bash-shell-%E6%9C%89%E9%97%9C-%E6%98%9F%E8%99%9F%E7%9A%84%E4%BA%8B%E6%83%85/">linux bash / shell 有關 * 星號的事情 | 程式狂想筆記</a></p>
+<h2 id="shell-比較字串外面需要包"><a href="#shell-比較字串外面需要包" class="headerlink" title="shell 比較字串外面需要包"></a>shell 比較字串外面需要包</h2><blockquote>
+<p>if 常常遇到<code>[: ==: unary operator expected</code></p>
+<p>那是因為 == 左邊沒有抓到值，或是值為 null</p>
+<p>有兩種解決方法：</p>
+<ul>
+<li>if [ “$app-running” == “” ];</li>
+<li>if [[ $app-running == “” ]];</li>
+</ul>
+</blockquote>
+<p>參考:<a href="https://medium.com/micheh/linux-%E7%9A%84-shell-script-%E4%B8%AD-%E9%81%87%E5%88%B0-unary-operator-expected-%E7%9A%84%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95-3b4725d3fdf1" target="_blank" rel="noopener">Linux 的 shell script 中，遇到 unary operator expected 的解決方法</a></p>
+<h2 id="變數運算"><a href="#變數運算" class="headerlink" title="變數運算"></a>變數運算</h2><p>最近使用 shell 做回圈做<code>${index+1}</code><br>結果沒有印出來<br>爬文有找到幾個方法</p>
+<ol>
+<li><p>declare -i來聲明整數變量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x=1</span><br><span class="line">x+=1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$x</span></span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用let命令</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line"><span class="built_in">let</span> i+=1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$i</span></span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>使用(())</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">((++i))</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$i</span></span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>使用expr命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">i=`expr <span class="variable">$i</span> + 1`</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$i</span></span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>使用$(())</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">i=$((<span class="variable">$i</span> + 1))</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$i</span></span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>使用$[]</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line">i=$[<span class="variable">$i</span> + 1]</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$i</span></span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+<p>我比較喜歡 $(()) 和 (())</p>
+<p>參考來源: <a href="https://blog.csdn.net/Jerry_1126/article/details/52336340" target="_blank" rel="noopener">Shell中整数自增的几种方式_杰瑞的专栏-CSDN博客</a></p>
+<h2 id="複製檔案"><a href="#複製檔案" class="headerlink" title="複製檔案"></a>複製檔案</h2><p><a href="https://malagege.github.io/blog/2020/01/10/cp-%E8%A4%87%E8%A3%BD%E6%AA%94%E6%A1%88%E5%8F%AF%E8%83%BD%E6%B2%92%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/">cp 複製檔案可能沒注意的事情 | 程式狂想筆記</a></p>
+<h2 id="shell-function-回傳只能數字"><a href="#shell-function-回傳只能數字" class="headerlink" title="shell function 回傳只能數字"></a>shell function 回傳只能數字</h2><p>一般我們看 shell script function return 回傳值只能是數字<br>沒法回傳字串，仔細想想也滿有道理的<br>因為正常程式執行結束會回傳 exit (int)<br>要確定程式是否有正確執行完成 正常執行完成會回傳0</p>
+<p>那有沒有回傳字串方法<br>我看到是用 function 裡面做 echo<br>外面用`這個符號去包<br>滿有趣的寫法</p>
+<h2 id="Shell-實作守護進程方法"><a href="#Shell-實作守護進程方法" class="headerlink" title="Shell 實作守護進程方法"></a>Shell 實作守護進程方法</h2><p>TODO: LINK </p>
+<h2 id="SHELL-大小寫"><a href="#SHELL-大小寫" class="headerlink" title="SHELL 大小寫"></a>SHELL 大小寫</h2><p><a href="https://linuxhint.com/bash_lowercase_uppercase_strings/" target="_blank" rel="noopener">Bash lowercase and uppercase strings – Linux Hint</a></p>
+<h2 id="在-Shell-腳本中解析選項"><a href="#在-Shell-腳本中解析選項" class="headerlink" title="在 Shell 腳本中解析選項"></a>在 Shell 腳本中解析選項</h2><p><a href="https://liam.page/2016/11/11/ways-to-parse-arguments-in-shell-script/" target="_blank" rel="noopener">在 Shell 腳本中解析選項 | 始終</a></p>
+<h2 id="相關連結"><a href="#相關連結" class="headerlink" title="相關連結"></a>相關連結</h2><p><a href="https://blog.csdn.net/weixin_37490221/article/details/80869792" target="_blank" rel="noopener">Shell——你只需要了解这么多 - 枣面包的博客 - CSDN博客</a><br><a href="https://ithelp.ithome.com.tw/articles/10138639" target="_blank" rel="noopener">[Shell Script] Day27-提高可讀性之函式寫法(三) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><br><a href="https://blog.csdn.net/ithomer/article/details/7954577" target="_blank" rel="noopener">Linux Shell函数返回值 - 阳光岛主 - CSDN博客</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/blog/tags/sh/" rel="tag"># sh</a>
+          
+            <a href="/blog/tags/shell/" rel="tag"># shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/10/20/啟用樹梅派-root-帳號/" rel="next" title="啟用樹梅派 root 帳號">
+                <i class="fa fa-chevron-left"></i> 啟用樹梅派 root 帳號
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/" rel="prev" title="樹梅派(Raspberry PI)設定固定 IP 方法">
+                樹梅派(Raspberry PI)設定固定 IP 方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-小記"><span class="nav-number">1.</span> <span class="nav-text">shell 小記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#變數大寫"><span class="nav-number">1.1.</span> <span class="nav-text">變數大寫</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數宣告-不能有空白"><span class="nav-number">2.</span> <span class="nav-text">變數宣告 = 不能有空白</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字串截取"><span class="nav-number">2.1.</span> <span class="nav-text">字串截取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-宣告"><span class="nav-number">3.</span> <span class="nav-text">Array 宣告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-join-合併-動作"><span class="nav-number">4.</span> <span class="nav-text">Array join(合併) 動作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if-條件判斷"><span class="nav-number">5.</span> <span class="nav-text">if 條件判斷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多個條件判斷"><span class="nav-number">5.1.</span> <span class="nav-text">多個條件判斷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-查詢寫回變數"><span class="nav-number">6.</span> <span class="nav-text">mysql 查詢寫回變數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function-宣告"><span class="nav-number">7.</span> <span class="nav-text">function 宣告</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#function-還傳段行字串"><span class="nav-number">7.1.</span> <span class="nav-text">function 還傳段行字串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-script-布林運算順序"><span class="nav-number">7.2.</span> <span class="nav-text">shell script 布林運算順序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有關"><span class="nav-number">8.</span> <span class="nav-text">有關 *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-比較字串外面需要包"><span class="nav-number">9.</span> <span class="nav-text">shell 比較字串外面需要包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#變數運算"><span class="nav-number">10.</span> <span class="nav-text">變數運算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#複製檔案"><span class="nav-number">11.</span> <span class="nav-text">複製檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-function-回傳只能數字"><span class="nav-number">12.</span> <span class="nav-text">shell function 回傳只能數字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-實作守護進程方法"><span class="nav-number">13.</span> <span class="nav-text">Shell 實作守護進程方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHELL-大小寫"><span class="nav-number">14.</span> <span class="nav-text">SHELL 大小寫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-Shell-腳本中解析選項"><span class="nav-number">15.</span> <span class="nav-text">在 Shell 腳本中解析選項</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">16.</span> <span class="nav-text">相關連結</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/10/23/Shell-Script-小記/';
+          this.page.identifier = '2019/10/23/Shell-Script-小記/';
+          this.page.title = 'Shell Script 小記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

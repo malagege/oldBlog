@@ -1,37 +1,1343 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="systemd,crontab,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一般我們使用排程都是用 crontab再搭配使用flock 去做程式執行管控，這一段也有可能時間寫死程式一個flag，這無疑是要佔用檔案了前幾天我看到 systemd 可以做排程設定所以就簡單研究一下 其實之前就有簡單研究一直覺得這個東西非常實用用配置就能完成程式複雜判斷 網路上還滿多相關教學應該可以用在正式環境上面">
+<meta name="keywords" content="systemd,crontab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Systemd 時間排程筆記">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/12/07/Systemd-時間排程筆記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="一般我們使用排程都是用 crontab再搭配使用flock 去做程式執行管控，這一段也有可能時間寫死程式一個flag，這無疑是要佔用檔案了前幾天我看到 systemd 可以做排程設定所以就簡單研究一下 其實之前就有簡單研究一直覺得這個東西非常實用用配置就能完成程式複雜判斷 網路上還滿多相關教學應該可以用在正式環境上面">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Systemd 時間排程筆記">
+<meta name="twitter:description" content="一般我們使用排程都是用 crontab再搭配使用flock 去做程式執行管控，這一段也有可能時間寫死程式一個flag，這無疑是要佔用檔案了前幾天我看到 systemd 可以做排程設定所以就簡單研究一下 其實之前就有簡單研究一直覺得這個東西非常實用用配置就能完成程式複雜判斷 網路上還滿多相關教學應該可以用在正式環境上面">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/12/07/Systemd-時間排程筆記/">
+
+
+
+
+
+  <title>Systemd 時間排程筆記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/12/07/Systemd-時間排程筆記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Systemd 時間排程筆記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-12-07T23:01:20+08:00">
+                2020-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/12/07/Systemd-時間排程筆記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/07/Systemd-時間排程筆記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>一般我們使用排程都是用 crontab<br>再搭配使用flock 去做程式執行管控，這一段也有可能時間寫死程式一個flag，這無疑是要佔用檔案了<br>前幾天我看到 systemd 可以做排程設定<br>所以就簡單研究一下</p>
+<p>其實之前就有簡單研究<br>一直覺得這個東西非常實用<br>用配置就能完成程式複雜判斷</p>
+<p>網路上還滿多相關教學<br>應該可以用在正式環境上面</p>
+<a id="more"></a>
+<h2 id="了解工具名稱"><a href="#了解工具名稱" class="headerlink" title="了解工具名稱"></a>了解工具名稱</h2><p>Systemd 雖然指令叫 <code>systemctl</code>，但網路上看到都叫 systemd。</p>
+<blockquote>
+<p>查看和控制systemd的主要命令是systemctl。該命令可用查看系統狀態和管理系統及服務。詳見systemctl(1)。 </p>
+</blockquote>
+<p>參考: <a href="https://wiki.archlinux.org/index.php/Systemd_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">systemd (正體中文) - ArchWiki</a>)</p>
+<h2 id="簡單使用"><a href="#簡單使用" class="headerlink" title="簡單使用"></a>簡單使用</h2><p>之前<a href="https://malagege.github.io/blog/2019/10/14/rclone-%E6%8E%9B%E8%BC%89%E7%A1%AC%E7%A2%9F%E5%B0%8F%E8%A8%98/#%E8%87%AA%E5%8B%95%E6%8E%9B%E8%BC%89">rclone 掛載硬碟小記 | 程式狂想筆記</a>有簡單用過</p>
+<p>後面記得要加<code>sudo systemctl daemon-reload</code><br>後面記得要加<code>sudo systemctl daemon-reload</code><br>後面記得要加<code>sudo systemctl daemon-reload</code></p>
+<p>因為很重要，所以講三遍!!!<br>一不注意就忘記了XD</p>
+<h3 id="一般-root-使用小記"><a href="#一般-root-使用小記" class="headerlink" title="一般 root 使用小記"></a>一般 root 使用小記</h3><p>.target</p>
+<h3 id="UNIT-Service-Install"><a href="#UNIT-Service-Install" class="headerlink" title="UNIT,Service,Install"></a>UNIT,Service,Install</h3><blockquote>
+<p>[Unit] 小節選項</p>
+</blockquote>
+<blockquote>
+<p>單元文件中的 [Unit] 小節 包含與單元類型無關的通用信息。 可用的選項(亦稱”指令”或”屬性”)如下：</p>
+</blockquote>
+<p>參考: <a href="http://www.jinbuguo.com/systemd/systemd.unit.html" target="_blank" rel="noopener">systemd.unit 中文手册 [金步国]</a></p>
+<p>詳細內容:<a href="https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html" target="_blank" rel="noopener">Systemd 入門教程：實戰篇 - 阮一峰的網絡日誌</a> <a href="/blog/2020/12/07/Systemd-時間排程筆記/web1.png" title="備份圖">備份圖</a></p>
+<p>感覺上面重點都提到了…<br><del>我不忍心完整 copy &amp; paste</del>沒大握整理好，可以到裡面看!!<br>這邊整理我覺得之後可能會用到的</p>
+<p>看大多數接學都是用 root 設定 systemd<br><strong>前陣子有看到使用一般 user 操作 systemd</strong><br>本篇重點實作網路案例操作看看</p>
+<h2 id="systemctl-–user"><a href="#systemctl-–user" class="headerlink" title="systemctl –user"></a>systemctl –user</h2><p>最近爬到一篇 一般user也可以使用<br>一般主機排程都是設定在 root(我之前工作大多數都 這樣)<br>但最近在想是不是應該可以切開一個全縣讓工程師去做設定<br>畢竟大多數 MIS 也看不懂程式…</p>
+<h3 id="一般使用者實作"><a href="#一般使用者實作" class="headerlink" title="一般使用者實作"></a>一般使用者實作</h3><p>建置一個 Hello-world.service </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.config/systemd/user/hello-world.service</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><figcaption><span>hello-wrold.service</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Hello World Service</span><br><span class="line"><span class="attr">After</span>=systend-user-sessions.service</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=simple</span><br><span class="line"><span class="attr">ExecStart</span>=/home/malagege/hello-world.sh</span><br><span class="line"><span class="attr">SyslogIdentifier</span>=HelloWorldService</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=default.target</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p>啟用 hello-world.service<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user  <span class="built_in">enable</span>  hello-world.service                                                                                   </span><br><span class="line">Created symlink /home/malagege/.config/systemd/user/default.target.wants/hello-world.service → /home/malagege/.config/systemd/user/hello-world.service.</span><br></pre></td></tr></table></figure></p>
+<p><del>竟然不用做 systemctl daemon-reload!!! ~~<br>~~<strong>我還實有看到有的教學有用</strong><code>systemctl --user daemon-reload</code></del><br>修改 timer 的時候需要 <code>systemctl --user daemon-reload</code> 才會生效</p>
+<p>但我這邊沒使用就能用了<br>沒出現先enable 就會有了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> systemctl --user  status  hello-world.service</span><br><span class="line">● hello-world.service - Hello World Service</span><br><span class="line">   Loaded: loaded (/home/malagege/.config/systemd/user/hello-world.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: inactive (dead)</span><br><span class="line">systemctl --user  start  hello-world.service</span><br><span class="line"> ~/.config/systemd/user </span><br><span class="line">systemctl --user  status  hello-world.service</span><br><span class="line">● hello-world.service - Hello World Service</span><br><span class="line">   Loaded: loaded (/home/malagege/.config/systemd/user/hello-world.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since Tue 2020-11-17 23:26:23 CST; 4s ago</span><br><span class="line"> Main PID: 10483 (hello-world.sh)</span><br><span class="line">   CGroup: /user.slice/user-1000.slice/user@1000.service/hello-world.service</span><br><span class="line">           ├─10483 /bin/bash /home/malagege/hello-world.sh</span><br><span class="line">           └─10485 sleep 30</span><br><span class="line"></span><br><span class="line">11月 17 23:26:23 malagege-K42JB systemd[1317]: Started Hello World Service.</span><br></pre></td></tr></table></figure>
+<p>/home/malagege/.config/systemd/user/default.target.wants 裡面會出現  hello-world.service</p>
+<p>systemctl –user  disable  hello-world.service</p>
+<p>成功完成簡單操作</p>
+<h4 id="上面案例執行參數小記"><a href="#上面案例執行參數小記" class="headerlink" title="上面案例執行參數小記"></a>上面案例執行參數小記</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 標準輸出到</span><br><span class="line">StandardOutput=syslog</span><br><span class="line"># 標準錯誤輸出到</span><br><span class="line">StandardError=syslog</span><br><span class="line"># 設置syslog中log的程序名稱</span><br><span class="line">SyslogIdentifier=helloexample</span><br><span class="line"># 設置syslog中log類型</span><br><span class="line">SyslogFacility=local0</span><br><span class="line"># 設置syslog中log級別，此處為info</span><br><span class="line">SyslogLevel=info</span><br></pre></td></tr></table></figure>
+<p>Install 需要設定<br>這邊是網路參考去配置的</p>
+<p>參考:  <a href="https://exfast.me/2018/11/linux-use-systemd-manage-application-common-instructions/" target="_blank" rel="noopener">[Linux] 利用 Systemd 管理應用程式 – 常用指令 | 從入門到放棄</a></p>
+<h2 id="timer"><a href="#timer" class="headerlink" title="timer"></a>timer</h2><p>簡單說一下，這邊操作 systemd 的 timer 只有在 user 登入時候才會跑<br>所以需要做到開機跑 timer，需要設定 Linux 配置<br><strong>我這邊有測試桌面登入，登出會有問題，但不確定是不是每個 Linux 就會這樣，但 Command Line 模式都很正常</strong><br>下面會提到</p>
+<h3 id="初始設定"><a href="#初始設定" class="headerlink" title="初始設定"></a>初始設定</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loginctl show-user `__user_id__`</span><br></pre></td></tr></table></figure>
+<p>要設定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loginctl enable-linger `id -u` # 後面是放使用者名稱 或 id</span><br></pre></td></tr></table></figure>
+<p>會出現 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">Linger=no</span><br></pre></td></tr></table></figure>
+<p><code>Linger=no</code>代表沒有啟用<br>一般通常不會打開<br>這個不打開的話<br>只要登出使用者帳號，當下 systemd 的 timer 都不會執行<br><del><strong>這邊要注意!!疑似要用 root 權限設定</strong></del><br><del>像我用一般使用者設定</del><br><del>但登出 timer 就沒有繼續跑了…</del><br><del>後來嘗試很就，root 設定 loginctl 就成功了</del><br>結果後來桌面登出有時候 systemctl –user 還是會中斷…</p>
+<blockquote>
+<p>警告： systemd 服務是 沒有 會話的， 它們在 logind 狀態之外運行， 所以不要在 lingering 中啟用自動登陸的功能，這會導致 會話中斷。</p>
+</blockquote>
+<p>參考:<a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">systemd (簡體中文)/User (簡體中文) - ArchWiki</a>/User_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E9%9A%8F%E7%B3%BB%E7%BB%9F%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8systemd%E7%94%A8%E6%88%B7%E5%AE%9E%E4%BE%8B)</p>
+<p>用別的使用者下<code>ps -fu _user_</code>就可以看到有沒有起 <code>systemd --user</code></p>
+<p>有很大機率是這個原因…，不過不知道是我的 ElementaryOS 關係<br>顯示自動開啟不是很正確，有時候桌面登出還是會中斷 systemd<br>有空我再用樹梅派實體機器測試…</p>
+<p><strong>目前猜測用桌面登出會中斷 systemd</strong><br>PS: 我使用的是 ElementaryOS</p>
+<ul>
+<li><a href="https://elementaryos.stackexchange.com/questions/7726/how-to-enable-automatic-login-after-installing-elementary-os-loki" target="_blank" rel="noopener">settings - How to enable automatic login after installing elementary OS Loki - elementary OS Stack Exchange</a></li>
+<li><a href="https://unix.stackexchange.com/questions/462845/how-to-apply-lingering-immedeately" target="_blank" rel="noopener">systemd - How to apply lingering immedeately - Unix &amp; Linux Stack Exchange</a></li>
+<li><a href="https://blog.fairycat.cn/post/128" target="_blank" rel="noopener">用 systemd 管理 laravel 队列和定时任务 - fairycat</a></li>
+</ul>
+<h2 id="操作紀錄"><a href="#操作紀錄" class="headerlink" title="操作紀錄"></a>操作紀錄</h2><p>參考: <a href="https://www.junmajinlong.com/linux/systemd/systemd_timer/#systemd-timer%E5%85%A5%E9%97%A8%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%AF%8F3%E7%A7%92%E8%BF%90%E8%A1%8C%E4%B8%80%E6%AC%A1" target="_blank" rel="noopener">systemd timer：取代cron和at的定时任务 | 骏马金龙</a></p>
+<figure class="highlight ini"><figcaption><span>hello-timer.service</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span> = <span class="string">"Hello Timer Description"</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">ExecStart</span> = /home/malagege/hello-timer.sh</span><br><span class="line"><span class="comment"># ExecStart = /usr/bin/curl -s -o /dev/null -w '%&#123;http_code&#125;' 'https://www.junmajinlong.com'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><figcaption><span>hello-timer.timer</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span> = <span class="string">"run hello timer  every 3 seconds"</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Timer]</span></span><br><span class="line"><span class="attr">OnActiveSec</span> = <span class="number">1</span>s</span><br><span class="line"><span class="attr">OnUnitInactiveSec</span> = <span class="number">3</span>s</span><br><span class="line"><span class="attr">AccuracySec</span> = <span class="number">1</span>us</span><br><span class="line"><span class="attr">RandomizedDelaySec</span> = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span> = timers.target</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user  start  hello-timer.timer</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user list-timers --all</span><br><span class="line">NEXT                         LEFT    LAST                         PASSED UNIT              ACTIVATES</span><br><span class="line">Wed 2020-11-18 00:05:38 CST  1s left Wed 2020-11-18 00:05:35 CST  1s ago hello-timer.timer hello-timer.service</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">systemctl --user status  hello-timer.timer</span><br><span class="line">● hello-timer.timer - &quot;run hello timer  every 3 seconds&quot;</span><br><span class="line">   Loaded: loaded (/home/malagege/.config/systemd/user/hello-timer.timer; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (waiting) since Wed 2020-11-18 00:03:25 CST; 9min ago</span><br><span class="line">  Trigger: Wed 2020-11-18 00:13:15 CST; 825ms left</span><br><span class="line"></span><br><span class="line">11月 18 00:03:25 malagege-K42JB systemd[1317]: Started &quot;run hello timer  every 3 seconds&quot;.</span><br><span class="line"> ~/.config/systemd/user </span><br><span class="line">systemctl --user status  hello-timer.service</span><br><span class="line">● hello-timer.service - &quot;Hello Timer Description&quot;</span><br><span class="line">   Loaded: loaded (/home/malagege/.config/systemd/user/hello-timer.service; static; vendor preset: enabled)</span><br><span class="line">   Active: inactive (dead) since Wed 2020-11-18 00:13:18 CST; 2s ago</span><br><span class="line">  Process: 20922 ExecStart=/home/malagege/hello-timer.sh (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 20922 (code=exited, status=0/SUCCESS)</span><br><span class="line"></span><br><span class="line">11月 18 00:13:18 malagege-K42JB systemd[1317]: Started &quot;Hello Timer Description&quot;.</span><br><span class="line">11月 18 00:13:18 malagege-K42JB hello-timer.sh[20922]: hello world</span><br></pre></td></tr></table></figure>
+<p>很有趣的是 hello-timer.service 裡面狀態是static<br>不太確定是 .timer 影響到他</p>
+<p>查看 log </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl --user -u hello-timer.service</span><br></pre></td></tr></table></figure>
+<h3 id="動態延遲執行"><a href="#動態延遲執行" class="headerlink" title="動態延遲執行"></a>動態延遲執行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 定時器啟動後，再過10分鐘第一次觸發定時任務</span><br><span class="line">OnActiveSec=10m</span><br><span class="line"># 每次執行完任務後，再過15分鐘後再次觸發定時任務</span><br><span class="line">OnUnitInactiveSec=15m</span><br><span class="line"># 觸發事件後，允許推遲0-10分鐘再執行被觸發的任務</span><br><span class="line">AccuracySec=10m</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>以上指令的效果是：</p>
+<ul>
+<li>啟動定時器後的10m-20m內的任一時間點觸發第一次定時任務</li>
+<li>之後每隔15m-25m再次觸發定時任務 </li>
+</ul>
+</blockquote>
+<p>作者: 骏马金龙<br>链接: <a href="https://www.junmajinlong.com/linux/systemd/systemd_timer/" target="_blank" rel="noopener">https://www.junmajinlong.com/linux/systemd/systemd_timer/</a><br>来源: 骏马金龙<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>分開看指令，可能不是很了解<br>OnUnitInactiveSec 排程執行完之後會執行 service<br>AccuracySec 會增加起排程時間<br>所以才會變成 15~25 分鐘執行</p>
+<blockquote>
+<p>AccuracySec的默認值為1分鐘，所以如果不定義AccuracySec的話，即使用戶期待的是每秒觸發一次定時任務，但事實卻是會在1s-61s時間段內的一個隨機時間點觸發一次定時任務。(可以自己去觀察一下定時任務執行情況)</p>
+<p>但是，觸發定時任務的時間點並不表示這是執行任務的時間點。觸發了定時任務，還需要根據RandomizedDelaySec的值來決定何時執行定時任務。</p>
+<p>RandomizedDelaySec指定觸發定時任務後還需延遲一個指定範圍內的隨機時長才執行任務。該指令默認值為0，表示觸發後立即執行任務。</p>
+<p>使用RandomizedDelaySec，主要是為了在一個時間範圍內分散大量被同時觸發的定時任務，從而避免這些定時任務集中在同一時間點執行而CPU爭搶。</p>
+<p>可見，AccuracySec和RandomizedDelaySec的目的是相反的：</p>
+<pre><code>前者讓指定範圍內的定時器集中在同一個時間點一次性觸發它們的定時任務
+後者讓觸發的、將要被執行的任務均勻分散在一個時間段範圍內
+</code></pre><p>根據以上描述，如果用戶想要讓定時任務非常精確度地執行，需要將它們設置的足夠小。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; AccuracySec = 1ms        # 定時器到點就觸發定時任務</span><br><span class="line">&gt; RandomizedDelaySec = 0   # 定時任務一觸發就立刻執行任務</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>我的感覺選 AccuracySec 應該會比較好</p>
+<h3 id="運行級別-別打錯"><a href="#運行級別-別打錯" class="headerlink" title="運行級別(別打錯)"></a>運行級別(別打錯)</h3><p><a href="https://www.junmajinlong.com/linux/systemd/runlevel/" target="_blank" rel="noopener">systemd時代的運行級別 | 駿馬金龍</a></p>
+<p>總之設定 Install 的 target<br>timers.target 設定成timer.target<br>開機進然不會啟動<br>後來發現少加了s </p>
+<h3 id="查看systemd排程時間點"><a href="#查看systemd排程時間點" class="headerlink" title="查看systemd排程時間點"></a>查看systemd排程時間點</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-timers --no-pager</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>NEXT表示下一次要觸發定時任務的時間點<br>LEFT表示現在距離下次執行任務還剩多長時間(已經確定了下一次執行的時間點)，或者顯示最近一次執行任務已經過去了多長時間(還不確定下一次執行的時間點)&gt; ，稍後解釋了AccuracySec和RandomizedDelaySec就知道為什麼會有這兩種表示方式<br>LAST表示上次觸發定時任務的時間點<br>PASSED表示距離上一次執行任務已經過去多久<br>UNIT表示是哪個定時器<br>ACTIVATES表示該定時器所觸發的任務 </p>
+</blockquote>
+<h3 id="查看日誌"><a href="#查看日誌" class="headerlink" title="查看日誌"></a>查看日誌</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 查看指定服務的所有journal日誌信息</span><br><span class="line"># xxx.service是定時任務的名稱</span><br><span class="line">journalctl -u xxx.service</span><br><span class="line"></span><br><span class="line"># 實時監控尾部日誌，類似tail -f</span><br><span class="line">journalctl -f -u xxx.service</span><br><span class="line"></span><br><span class="line"># 顯示指定時間段內的日誌</span><br><span class="line"># --since：從指定時間點內開始的日誌</span><br><span class="line"># --until：到指定時間點為止的日誌</span><br><span class="line">journalctl -u xxx.service --since=&quot;2020-07-04 19:06:23&quot;</span><br><span class="line">journalctl -u xxx.service --since=&quot;60s ago&quot;</span><br><span class="line">journalctl -u xxx.service --since=&quot;1min ago&quot;</span><br><span class="line">journalctl -u page_test.service --since=&quot;-60s&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Calendar"><a href="#Calendar" class="headerlink" title="Calendar"></a>Calendar</h3><h4 id="一般時間執行"><a href="#一般時間執行" class="headerlink" title="一般時間執行"></a>一般時間執行</h4><p>全部參考:<a href="https://www.junmajinlong.com/linux/systemd/systemd_timer/#%E6%9B%B4%E4%B8%BA%E7%81%B5%E6%B4%BB%E7%9A%84%E5%AE%9A%E6%97%B6%E8%A7%84%E5%88%99%EF%BC%9AOnCalendar" target="_blank" rel="noopener">systemd timer：取代cron和at的定时任务 | 骏马金龙</a><br>裡面內容豐富，建議看裡面內文</p>
+<p>這邊貼範例<br>看範例修改就真的很方便</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 假如今日是2012-11-23</span><br><span class="line">  Fri 2012-11-23 11:12:13 → Fri 2012-11-23 11:12:13</span><br><span class="line">      2012-11-23 11:12:13 → Fri 2012-11-23 11:12:13</span><br><span class="line">  2012-11-23 11:12:13 UTC → Fri 2012-11-23 19:12:13</span><br><span class="line">               2012-11-23 → Fri 2012-11-23 00:00:00</span><br><span class="line">                 12-11-23 → Fri 2012-11-23 00:00:00</span><br><span class="line">                 11:12:13 → Fri 2012-11-23 11:12:13</span><br><span class="line">                    11:12 → Fri 2012-11-23 11:12:00</span><br><span class="line">                      now → Fri 2012-11-23 18:15:22</span><br><span class="line">                    today → Fri 2012-11-23 00:00:00</span><br><span class="line">                today UTC → Fri 2012-11-23 16:00:00</span><br><span class="line">                yesterday → Fri 2012-11-22 00:00:00</span><br><span class="line">                 tomorrow → Fri 2012-11-24 00:00:00</span><br><span class="line">                 +3h30min → Fri 2012-11-23 21:45:22</span><br><span class="line">                      -5s → Fri 2012-11-23 18:15:17</span><br><span class="line">                11min ago → Fri 2012-11-23 18:04:22</span><br><span class="line">      2 months 5 days ago</span><br><span class="line">              @1395716396 → Tue 2014-03-25 03:59:56</span><br></pre></td></tr></table></figure>
+<p>進階使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Sat,Mon..Wed   -&gt; 周一、二、三、四</span><br><span class="line">*:00           -&gt; 每小时，省略秒位</span><br><span class="line">*:*            -&gt; 每分钟，省略秒位</span><br><span class="line">*:*:*          -&gt; 每秒</span><br><span class="line">*-*-01 00:00   -&gt; 每月一号，省略秒位</span><br><span class="line">*-02~03        -&gt; 表示2月的倒数第三天  </span><br><span class="line">*-05~07/1      -&gt; 表示5月最后7天中的每一天</span><br><span class="line">*-05~1..7      -&gt; 同上</span><br><span class="line">Mon *-05~07/1  -&gt; 表示5月最后一个星期一</span><br><span class="line">*:*:3.33/10.05 -&gt; 小数表示秒。3.33,13.38,23.43,33.48,43.53</span><br><span class="line">9..17/2:00     -&gt; 从上午9点开始每隔两小时，直到下午5点</span><br><span class="line">12..14:10,20   -&gt; 12到14点的第10分钟和第20分钟，即1[234]:[12]0:00</span><br></pre></td></tr></table></figure></p>
+<p>連月底跟09~17每隔兩小時執行都可以做到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Sat,Mon..Wed   -&gt; 週一、二、三、四</span><br><span class="line">*:00           -&gt; 每小時，省略秒位</span><br><span class="line">*:*            -&gt; 每分鐘，省略秒位</span><br><span class="line">*:*:*          -&gt; 每秒</span><br><span class="line">*-*-01 00:00   -&gt; 每月一號，省略秒位</span><br><span class="line">*-02~03        -&gt; 表示2月的倒數第三天  </span><br><span class="line">*-05~07/1      -&gt; 表示5月最後7天中的每一天</span><br><span class="line">*-05~1..7      -&gt; 同上</span><br><span class="line">Mon *-05~07/1  -&gt; 表示5月最後一個星期一</span><br><span class="line">*:*:3.33/10.05 -&gt; 小數表示秒。3.33,13.38,23.43,33.48,43.53</span><br><span class="line">9..17/2:00     -&gt; 從上午9點開始每隔兩小時，直到下午5點</span><br><span class="line">12..14:10,20   -&gt; 12到14點的第10分鐘和第20分鐘，即1[234]:[12]0:00</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Sat,Mon..Wed   -&gt; 週一、二、三、四</span><br><span class="line">*:00           -&gt; 每小時，省略秒位</span><br><span class="line">*:*            -&gt; 每分鐘，省略秒位</span><br><span class="line">*:*:*          -&gt; 每秒</span><br><span class="line">*-*-01 00:00   -&gt; 每月一號，省略秒位</span><br><span class="line">*-02~03        -&gt; 表示2月的倒數第三天  </span><br><span class="line">*-05~07/1      -&gt; 表示5月最後7天中的每一天</span><br><span class="line">*-05~1..7      -&gt; 同上</span><br><span class="line">Mon *-05~07/1  -&gt; 表示5月最後一個星期一</span><br><span class="line">*:*:3.33/10.05 -&gt; 小數表示秒。3.33,13.38,23.43,33.48,43.53</span><br><span class="line">9..17/2:00     -&gt; 從上午9點開始每隔兩小時，直到下午5點</span><br><span class="line">12..14:10,20   -&gt; 12到14點的第10分鐘和第20分鐘，即1[234]:[12]0:00</span><br></pre></td></tr></table></figure>
+<h5 id="快速分析工具"><a href="#快速分析工具" class="headerlink" title="快速分析工具"></a>快速分析工具</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">systemd-analyze calendar &quot;*:*:00&quot;  </span><br><span class="line"> Original form: *:*:00</span><br><span class="line">Normalized form: *-*-* *:*:00</span><br><span class="line">    Next elapse: Sat 2020-11-21 00:01:00 CST</span><br><span class="line">       (in UTC): Fri 2020-11-20 16:01:00 UTC</span><br><span class="line">       From now: 24s left</span><br></pre></td></tr></table></figure>
+<p>後面放時間，可以看到內容</p>
+<h4 id="月底執行"><a href="#月底執行" class="headerlink" title="月底執行"></a>月底執行</h4><p>在還沒整理上面，有特別先找的</p>
+<p>之前就有記過<a href="https://malagege.github.io/blog/2019/08/04/%E6%8E%92%E7%A8%8B-crontab-%E6%99%82%E9%96%93%E8%A8%AD%E5%AE%9A%E6%9C%88%E5%BA%95%E5%9F%B7%E8%A1%8C%E6%96%B9%E6%B3%95/">排程 crontab 時間設定月底執行方法 | 程式狂想筆記</a><br>在想這個有沒有比較優的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">As of version 233, systemd supports using &quot;~&quot; in its calendar syntax to specify dates relative to the end of the month.</span><br><span class="line"></span><br><span class="line">OnCalendar=*-02~03 means the third last day in February (the 26th or 27th, depending on whether or not it&apos;s a leap year)</span><br><span class="line"></span><br><span class="line">Mon *-05~07/1 and Mon *-05~01..07 are synonyms for the last Monday in May.</span><br><span class="line"></span><br><span class="line">https://github.com/systemd/systemd/blob/v233/NEWS#L174</span><br></pre></td></tr></table></figure>
+<p><a href="https://unix.stackexchange.com/questions/306336/how-to-configure-systemd-timer-to-run-the-service-on-last-day-of-the-month" target="_blank" rel="noopener">How to configure Systemd Timer to run the service on last day of the month - Unix &amp; Linux Stack Exchange</a></p>
+<h4 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h4><p><strong>Timer</strong>段中還可以使用Unit指令和Persistent指令。</p>
+<ul>
+<li>Unit=xxx.service：默認情況下，a.timer對應要執行的任務文件是a.service，使用Unit指令可以明確指定觸發定時任務事件時要執行的文件</li>
+<li>Persistent=yes/no：只在使用了OnCalendar時有效，默認值no。設置yes時，會將上次執行任務的時間點保存在磁盤上，使得定時器再次被啟動時，可以立即判斷是否要執行丟失的任務 </li>
+</ul>
+<p>有間單測試，我以為設定<code>*:*:00</code> 超過三分鐘會執行三次，但是不會…</p>
+<p>timer</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span> = user login timer</span><br><span class="line"></span><br><span class="line"><span class="section">[Timer]</span></span><br><span class="line"><span class="attr">AccuracySec</span> = <span class="number">1</span>ms</span><br><span class="line"><span class="attr">RandomizedDelaySec</span> = <span class="number">0</span></span><br><span class="line"><span class="attr">OnCalendar</span> = *:*:<span class="number">00</span></span><br><span class="line"><span class="attr">Persistent</span> = <span class="literal">yes</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span> = timers.target</span><br></pre></td></tr></table></figure>
+<p>service</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description = current time when task is been executed</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart = /bin/bash -c &apos;date +&quot;%%T&quot; &gt;&gt;/home/malagege/a.log&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="socket-觸發啟動"><a href="#socket-觸發啟動" class="headerlink" title="socket 觸發啟動"></a>socket 觸發啟動</h2><p><a href="http://www.ruanyifeng.com/blog/2016/03/node-systemd-tutorial.html" target="_blank" rel="noopener">Node 应用的 Systemd 启动 - 阮一峰的网络日志</a></p>
+<p>這裡面有介紹<br>還覺得滿有趣的<br>但目前我這邊應該用不到這個功能</p>
+<h2 id="搜尋相關文章"><a href="#搜尋相關文章" class="headerlink" title="搜尋相關文章"></a>搜尋相關文章</h2><h3 id="詳細教學文章"><a href="#詳細教學文章" class="headerlink" title="詳細教學文章"></a>詳細教學文章</h3><ul>
+<li><a href="https://wiki.archlinux.org/index.php/Systemd_(%E6%AD%A3%E9%AB%94%E4%B8%AD%E6%96%87" target="_blank" rel="noopener">systemd (正體中文) - ArchWiki</a>)</li>
+<li><a href="https://cfarm.blog.aznc.cc/%E4%BD%BF%E7%94%A8-systemd-timer-%E4%BB%A3%E6%9B%BF-crontab/" target="_blank" rel="noopener">使用 systemd.timer 代替 crontab | C瓜農場</a></li>
+<li><a href="https://zdyxry.github.io/2018/06/28/%E4%BD%BF%E7%94%A8-systemd-timer-%E6%9B%BF%E6%8D%A2-crontab/" target="_blank" rel="noopener">使用 systemd timer 替换 crontab | Yiran’s Blog</a></li>
+<li><a href="https://www.junmajinlong.com/linux/systemd/runlevel/" target="_blank" rel="noopener">systemd時代的運行級別 | 駿馬金龍</a> <a href="/blog/2020/12/07/Systemd-時間排程筆記/web2.png" title="備份圖">備份圖</a><br><a href="https://www.junmajinlong.com/linux/systemd/systemd_timer/" target="_blank" rel="noopener">systemd timer：取代cron和at的定时任务 | 骏马金龙</a> <a href="/blog/2020/12/07/Systemd-時間排程筆記/web3.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.3chy2.com.tw/3c%E8%B3%87%E8%A8%8A/linux-systemd-%E8%A9%B3%E7%B4%B0%E4%BB%8B%E7%B4%B9-unit%E3%80%81unit-file%E3%80%81systemctl%E3%80%81target/" target="_blank" rel="noopener">Linux Systemd 詳細介紹: Unit、Unit File、Systemctl、Target | 3C</a> <a href="/blog/2020/12/07/Systemd-時間排程筆記/web4.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.junmajinlong.com/linux/index/#systemd" target="_blank" rel="noopener">Linux系列文章 | 骏马金龙</a></li>
+</ul>
+<h3 id="與supervisor-差異"><a href="#與supervisor-差異" class="headerlink" title="與supervisor 差異"></a>與supervisor 差異</h3><ul>
+<li><a href="https://segmentfault.com/a/1190000009338835" target="_blank" rel="noopener">systemd vs supervisord_spacewander - SegmentFault 思否</a></li>
+<li><a href="https://liqiang.io/post/systemd-vs-supervisord" target="_blank" rel="noopener">Systemd Supervisord 肤浅对比</a></li>
+<li><a href="https://www.zhihu.com/question/48833333" target="_blank" rel="noopener">systemd 和 supervisor 相比各有哪些优缺点？以及各自的适用场景是什么？ - 知乎</a></li>
+</ul>
+<p>之前分不清楚systemd 和 supervisor<br>最後看教學，一個是系統層級的、一個是應用層級的<br>最後還是決定學好 systemd</p>
+<p>不過後來發現 timer 相關設定 supervisor 沒有相關設定</p>
+<h3 id="跟-docker-差異"><a href="#跟-docker-差異" class="headerlink" title="跟 docker 差異"></a>跟 docker 差異</h3><ul>
+<li><a href="http://dockone.io/article/1093" target="_blank" rel="noopener">Systemd与Docker的爱恨情仇 - DockOne.io</a></li>
+<li><a href="https://blog.davy.tw/posts/use-systemd-to-manage-docker-container/" target="_blank" rel="noopener">使用 systemd 管理 Docker container</a></li>
+</ul>
+<p>之前有改想過systemd 管理docker 排程，但好像不建議這樣做…</p>
+<h3 id="Failed-to-connect-to-bus-No-such-file-or-directory”"><a href="#Failed-to-connect-to-bus-No-such-file-or-directory”" class="headerlink" title="Failed to connect to bus: No such file or directory”"></a>Failed to connect to bus: No such file or directory”</h3><p>我們公司環境沒版法使用 <code>systemctl --user</code><br>不知道是不是沒有 D-Bus關係<br>以下文章都嘗試過，還是沒辦法使用</p>
+<ul>
+<li><a href="https://superuser.com/questions/1561076/systemctl-use-failed-to-connect-to-bus-no-such-file-or-directory-debian-9" target="_blank" rel="noopener">linux - systemctl –use Failed to connect to bus: No such file or directory Debian 9 - Super User</a></li>
+<li><p><a href="https://gist.github.com/Cretezy/dc64ed4519c63c3eb636fba354f93a1f" target="_blank" rel="noopener">systemd user “Failed to connect to bus: No such file or directory”</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/tengdazhang770960436/article/details/78873869" target="_blank" rel="noopener">docker centos 使用 systemctl Failed to get D-Bus connection: Operation not permitted_彻底拆分，一切可控！-CSDN博客</a></p>
+</li>
+<li><a href="https://blog.csdn.net/tengdazhang770960436/article/details/78873869" target="_blank" rel="noopener">docker centos 使用 systemctl Failed to get D-Bus connection: Operation not permitted_彻底拆分，一切可控！-CSDN博客</a></li>
+</ul>
+<p>XDG_RUNTIME_DIR=/run/user/<code>id -u</code><br><del>建立資料夾??</del>沒有用<br><a href="https://answers.launchpad.net/ubuntu/+source/systemd/+question/287454" target="_blank" rel="noopener">https://answers.launchpad.net/ubuntu/+source/systemd/+question/287454</a></p>
+<p>XDG_RUNTIME_DIR=/run/user/$UID systemctl –user status<br>我電腦 ElementaryOS 新家的參數</p>
+<h3 id="其他參數"><a href="#其他參數" class="headerlink" title="其他參數"></a>其他參數</h3><h4 id="work-dir"><a href="#work-dir" class="headerlink" title="work dir"></a>work dir</h4><p><a href="https://www.digitalocean.com/community/questions/trying-to-change-workingdirectory-of-systemd-service-unit" target="_blank" rel="noopener">Trying to change WorkingDirectory of Systemd Service Unit | DigitalOcean</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WorkingDirectory=/home/pi</span><br><span class="line">ExecStart=/home/pi/launchscript.sh</span><br></pre></td></tr></table></figure></p>
+<p>ExecStart 必須要完整路徑</p>
+<h4 id="timeout"><a href="#timeout" class="headerlink" title="timeout"></a>timeout</h4><p><a href="https://unix.stackexchange.com/questions/227017/how-to-change-systemd-service-timeout-value" target="_blank" rel="noopener">centos - How to change systemd service timeout value? - Unix &amp; Linux Stack Exchange</a></p>
+<blockquote>
+<p>TimeoutStartSec=</p>
+</blockquote>
+<blockquote>
+<p>   設置該服務允許的最大啟動時長。 如果守護進程未能在限定的時長內發出”啟動完畢”的信號，那麼該服務將被視為啟動失敗，並會被關閉。 如果未指定時間單位，那麼將視為以秒為單位。 例如設為”20”等價於設為”20s”。 設為 “infinity” 則表示永不超時。 當 Type=oneshot 時， 默認值為 “infinity” (永不超時)， 否則默認值等於 DefaultTimeoutStartSec= 的值(參見 systemd-system.conf(5) 手冊)。</p>
+</blockquote>
+<blockquote>
+<p>   如果一個 Type=notify 服務發送了 “EXTEND_TIMEOUT_USEC=…” 信號， 那麼允許的啟動時長將會在 TimeoutStartSec= 基礎上繼續延長指定的時長。 注意，必須在 TimeoutStartSec= 用完之前發出第一個延時信號。當啟動時間超出 TimeoutStartSec= 之後，該服務可以在維持始終不超時的前提下，不斷重複發送 “EXTEND_TIMEOUT_USEC=…” 信號， 直到完成啟動(發送 “READY=1” 信號)。詳見 sd_notify(3) 手冊。<br>TimeoutStopSec=</p>
+</blockquote>
+<blockquote>
+<p>   此選項有兩個用途： (1)設置每個 ExecStop= 的超時時長。如果其中之一超時， 那麼所有後繼的 ExecStop= 都會被取消，並且該服務也會被 SIGTERM 信號強制關閉。 如果該服務沒有設置 ExecStop= ，那麼該服務將會立即被 SIGTERM 信號強制關閉。 (2)設置該服務自身停止的超時時長。如果超時，那麼該服務將會立即被 SIGTERM 信號強制關閉(參見 systemd.kill(5) 手冊中的 KillMode= 選項)。 如果未指定時間單位，那麼將視為以秒為單位。 例如設為”20”等價於設為”20s”。 設為 “infinity” 則表示永不超時。 默認值等於 DefaultTimeoutStopSec= 的值(參見 systemd-system.conf(5) 手冊)。</p>
+</blockquote>
+<blockquote>
+<p>   如果一個 Type=notify 服務發送了 “EXTEND_TIMEOUT_USEC=…” 信號， 那麼允許的停止時長將會在 TimeoutStopSec= 基礎上繼續延長指定的時長。 注意，必須在 TimeoutStopSec= 用完之前發出第一個延時信號。當停止時間超出 TimeoutStopSec= 之後，該服務可以在維持始終不超時的前提下，不斷重複發送 “EXTEND_TIMEOUT_USEC=…” 信號，直到完成停止。 詳見 sd_notify(3) 手冊。 </p>
+</blockquote>
+<p><a href="http://www.jinbuguo.com/systemd/systemd.service.html" target="_blank" rel="noopener">systemd.service 中文手冊 [金步國]</a></p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><p><a href="https://codertw.com/%E4%BC%BA%E6%9C%8D%E5%99%A8/170578/" target="_blank" rel="noopener">Ubuntu下Supervisor安裝、配置和使用 | 程式前沿</a><br>日後看情況再研究<br>有看到 golang 版本<br>假如沒有權限可以考慮<br>但發現好像沒有 crontab 東西</p>
+<p>不繼續研究了….</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>不專業總結<br>網路上有很多都寫得很詳細<br>建議看網路上詳細<br>本篇重點在筆記</p>
+<p>網路上沒什麼看到 systemd 搭配 docker 裡面跑<br>感覺 supervisor 真的比較多<br>但我覺得排程這個東西有必要做虛擬化跑?這個也是個問題</p>
+<p>用 crond 和 systemd 這個問題也是一個問題<br>目前我待過三家公司都是用 crond 居多<br>但用 crond 必須控制分散程式執行時間<br>有了 systemd ，工程師不用做複雜設計就可以使用<br>前提要會操作，所以進入門檻稍微高一點</p>
+<p>不知道這些 systemd 有沒有辦法紀錄到 elk 上面<br>但我覺得這之後有空再研究<br>畢竟我還不會用XD</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/systemd/" rel="tag"># systemd</a>
+          
+            <a href="/blog/tags/crontab/" rel="tag"># crontab</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/11/25/Docker-使用容量撐爆-Raspberry-PI-硬碟空間/" rel="next" title="Docker 使用容量撐爆 Raspberry PI 硬碟空間">
+                <i class="fa fa-chevron-left"></i> Docker 使用容量撐爆 Raspberry PI 硬碟空間
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/12/07/Command-Injection-小記/" rel="prev" title="Command Injection 小記">
+                Command Injection 小記 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解工具名稱"><span class="nav-number">1.</span> <span class="nav-text">了解工具名稱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#簡單使用"><span class="nav-number">2.</span> <span class="nav-text">簡單使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般-root-使用小記"><span class="nav-number">2.1.</span> <span class="nav-text">一般 root 使用小記</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIT-Service-Install"><span class="nav-number">2.2.</span> <span class="nav-text">UNIT,Service,Install</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#systemctl-–user"><span class="nav-number">3.</span> <span class="nav-text">systemctl –user</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般使用者實作"><span class="nav-number">3.1.</span> <span class="nav-text">一般使用者實作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上面案例執行參數小記"><span class="nav-number">3.1.1.</span> <span class="nav-text">上面案例執行參數小記</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#timer"><span class="nav-number">4.</span> <span class="nav-text">timer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始設定"><span class="nav-number">4.1.</span> <span class="nav-text">初始設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作紀錄"><span class="nav-number">5.</span> <span class="nav-text">操作紀錄</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#動態延遲執行"><span class="nav-number">5.1.</span> <span class="nav-text">動態延遲執行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#運行級別-別打錯"><span class="nav-number">5.2.</span> <span class="nav-text">運行級別(別打錯)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看systemd排程時間點"><span class="nav-number">5.3.</span> <span class="nav-text">查看systemd排程時間點</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看日誌"><span class="nav-number">5.4.</span> <span class="nav-text">查看日誌</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Calendar"><span class="nav-number">5.5.</span> <span class="nav-text">Calendar</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一般時間執行"><span class="nav-number">5.5.1.</span> <span class="nav-text">一般時間執行</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#快速分析工具"><span class="nav-number">5.5.1.1.</span> <span class="nav-text">快速分析工具</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#月底執行"><span class="nav-number">5.5.2.</span> <span class="nav-text">月底執行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久化"><span class="nav-number">5.5.3.</span> <span class="nav-text">持久化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#socket-觸發啟動"><span class="nav-number">6.</span> <span class="nav-text">socket 觸發啟動</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜尋相關文章"><span class="nav-number">7.</span> <span class="nav-text">搜尋相關文章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#詳細教學文章"><span class="nav-number">7.1.</span> <span class="nav-text">詳細教學文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#與supervisor-差異"><span class="nav-number">7.2.</span> <span class="nav-text">與supervisor 差異</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跟-docker-差異"><span class="nav-number">7.3.</span> <span class="nav-text">跟 docker 差異</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Failed-to-connect-to-bus-No-such-file-or-directory”"><span class="nav-number">7.4.</span> <span class="nav-text">Failed to connect to bus: No such file or directory”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他參數"><span class="nav-number">7.5.</span> <span class="nav-text">其他參數</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#work-dir"><span class="nav-number">7.5.1.</span> <span class="nav-text">work dir</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#timeout"><span class="nav-number">7.5.2.</span> <span class="nav-text">timeout</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Supervisor"><span class="nav-number">8.</span> <span class="nav-text">Supervisor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">9.</span> <span class="nav-text">總結</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2020/12/07/Systemd-時間排程筆記/';
+          this.page.identifier = '2020/12/07/Systemd-時間排程筆記/';
+          this.page.title = 'Systemd 時間排程筆記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

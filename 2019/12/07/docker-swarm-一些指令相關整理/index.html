@@ -1,37 +1,1254 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,swarm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="基本教學網站twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
+<meta name="keywords" content="docker,swarm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker swarm 一些指令相關整理">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="基本教學網站twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img1.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img2.png">
+<meta property="og:updated_time" content="2021-06-02T15:57:43.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker swarm 一些指令相關整理">
+<meta name="twitter:description" content="基本教學網站twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/">
+
+
+
+
+
+  <title>docker swarm 一些指令相關整理 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/12/07/docker-swarm-一些指令相關整理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker swarm 一些指令相關整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-12-07T20:06:28+08:00">
+                2019-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/12/07/docker-swarm-一些指令相關整理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/07/docker-swarm-一些指令相關整理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <h2 id="基本教學網站"><a href="#基本教學網站" class="headerlink" title="基本教學網站"></a>基本教學網站</h2><p><a href="https://github.com/twtrubiks/docker-swarm-tutorial" target="_blank" rel="noopener">twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝</a></p>
+<p><a href="https://outmanzzq.github.io/2019/06/18/docker-swarm-manager-ha/" target="_blank" rel="noopener">Docker Swarm 管理节点高可用分析 — outmanzzq</a></p>
+<p>由於上面網站都教的非常清楚<br>我這邊只記錄如何操作跟小筆記(或我覺得重要的)<br>不會詳細介紹，我覺得以上都說得很細</p>
+<a id="more"></a>
+<h3 id="managers"><a href="#managers" class="headerlink" title="managers"></a>managers</h3><p>後續有相關指令 managers 才可以執行 (EX: docker service, docker node)<br>之後下的指令是要在 manager 用</p>
+<h3 id="worker"><a href="#worker" class="headerlink" title="worker"></a>worker</h3><p>manager 會分配 task 給 work 用</p>
+<h2 id="基本連線"><a href="#基本連線" class="headerlink" title="基本連線"></a>基本連線</h2><p>要如何加入 manger 或 worker 呢?</p>
+<p>其實只要看<br><code>docker swarm join-token manager</code><br>或<br><code>docker swarm join-token worker</code><br>就能看到要加入 manager / worker 指令</p>
+<h2 id="docker-node"><a href="#docker-node" class="headerlink" title="docker node"></a>docker node</h2><p>docker node ls</p>
+<p>可以看到所有加入的 node</p>
+<h2 id="docker-service"><a href="#docker-service" class="headerlink" title="docker service"></a>docker service</h2><p>docker service 簡單來說就像 docker run 的 swarm 版。</p>
+<p>只能在 manager 執行，會自動分配在 node 執行<br>docker service create –name=my_nginx nginx<br>docker service create –detach=false –name my_nginx –mode replicated nginx</p>
+<p>docker service update<br>docker service update –publish-add 80 my_nginx</p>
+<h3 id="scale"><a href="#scale" class="headerlink" title="scale"></a>scale</h3><p>docker service scale my_nginx=5</p>
+<h3 id="兩種模式"><a href="#兩種模式" class="headerlink" title="兩種模式"></a>兩種模式</h3><p>replicated:簡單說就是自動分配<br>global   :簡單說就是全部 node 都裝</p>
+<p>預設 replicated</p>
+<p><a href="https://note.qidong.name/2018/11/docker-swarm/" target="_blank" rel="noopener">Docker Swarm概念与基本用法 · 零壹軒·笔记</a></p>
+<h3 id="關掉-service"><a href="#關掉-service" class="headerlink" title="關掉 service"></a>關掉 service</h3><p>docker dervice scale my_xxx=0</p>
+<p>docker service rm  my_xxx</p>
+<h3 id="docker-查看"><a href="#docker-查看" class="headerlink" title="docker 查看"></a>docker 查看</h3><p>docker service ps</p>
+<h3 id="查看日誌"><a href="#查看日誌" class="headerlink" title="查看日誌"></a>查看日誌</h3><p>docker service log</p>
+<h2 id="docker-stack"><a href="#docker-stack" class="headerlink" title="docker stack"></a>docker stack</h2><p>簡單來說， docker stack 就是 docker compose 的 swarm 版本。</p>
+<p>docker stack deploy –compose-file=portainer-agent-stack.yml portainer</p>
+<h2 id="portainer"><a href="#portainer" class="headerlink" title="portainer"></a>portainer</h2><p>在使用 portainer 新增機器(endpoint)<br>會有 agent 跟 docker<br>選擇 docker ，由於 docker swarm 是叢集，所以部份建立 container 要去不同 endpint (node) 看東西</p>
+<p>使用 agent 同一台 endpoint 就能看到全部</p>
+<img src="/blog/2019/12/07/docker-swarm-一些指令相關整理/img1.png" title="agent和docker">
+<p>不過哪個比較好，我還沒有確定，我們公司是用 docker</p>
+<p>設定 agent 沒有很順利，後來用完在此紀錄</p>
+<h3 id="agent"><a href="#agent" class="headerlink" title="agent"></a>agent</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml</span><br><span class="line">$ docker stack deploy --compose-file=portainer-agent-stack.yml portainer</span><br></pre></td></tr></table></figure>
+<p>官網設定會有很大問題，後來發現只要是 portainer 用 stack 部屬就會有問題(卡在一開始 Load 登入頁面)<br>不過單獨使用 portainer container 就沒這個問題</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span></span><br><span class="line"><span class="comment"># 可使用 docker swarm 注意 我把 volume 拿掉了</span></span><br><span class="line">docker service create \</span><br><span class="line">    --name portainer \</span><br><span class="line">    --publish 9000:9000 \</span><br><span class="line">    --publish 8000:8000 \</span><br><span class="line">    --replicas=1 \</span><br><span class="line">    --constraint <span class="string">'node.role == manager'</span> \</span><br><span class="line"><span class="comment">#    --mount type=bind,src=//path/on/host/data,dst=/data \    ##測試用，所以這個拿掉</span></span><br><span class="line">    portainer/portainer</span><br><span class="line"></span><br><span class="line">curl -L https://downloads.portainer.io/agent-stack.yml -o agent-stack.yml &amp;&amp; docker stack deploy --compose-file=agent-stack.yml portainer-agent</span><br></pre></td></tr></table></figure>
+<p>在隨便加入一個到 endpoint 就可以了<br>至於官方的不知道為什麼不能用?<br>目前找不到方法…(我是在 play with docker 跑的)<br>也有可能跟環境問題</p>
+<h3 id="agent-跟-docker-差異"><a href="#agent-跟-docker-差異" class="headerlink" title="agent 跟 docker 差異"></a>agent 跟 docker 差異</h3><img src="/blog/2019/12/07/docker-swarm-一些指令相關整理/img2.png" title="agent與docker差異">
+<p>192.168.1.17 有兩個，有一個是 agent 跟 docker<br>你會發現 agent 跟別的 agent 數量是一樣的<br>照道理可能加一個 agent 就可以了</p>
+<p><a href="https://www.kubernetes.org.cn/5883.html" target="_blank" rel="noopener">Portainer一个轻量级的Docker环境管理UI_Kubernetes中文社区</a><br><a href="https://yylin1.github.io/2019/01/28/portainer-set-tls/" target="_blank" rel="noopener">Portainer 透過 TLS 認證 - Yi Yang’s Blog</a></p>
+<h2 id="使用-play-with-docker"><a href="#使用-play-with-docker" class="headerlink" title="使用 play with docker"></a>使用 play with docker</h2><p>做 manager 和 worker 有預設三個 template<br>我後來發現不是每一個 template 都有幫你做 swarm join<br>所以建議良好習慣使用 <code>docker node ls</code> 查看有哪些加入</p>
+<h2 id="history"><a href="#history" class="headerlink" title="history"></a>history</h2><p>預設是 5 個</p>
+<p><a href="https://stackoverflow.com/questions/42364695/how-to-clear-docker-task-history" target="_blank" rel="noopener">linux - How to clear Docker task history - Stack Overflow</a></p>
+<p>docker swarm update –task-history-limit 5 </p>
+<h2 id="使用-swarm-volume-可能問題"><a href="#使用-swarm-volume-可能問題" class="headerlink" title="使用 swarm volume 可能問題"></a>使用 swarm volume 可能問題</h2><p>有時間研究再記錄</p>
+<p><a href="https://www.cnblogs.com/bigberg/p/8795265.html" target="_blank" rel="noopener">Docker集群管理Swarm数据持久化 - Bigberg - 博客园</a><br><a href="https://blog.51cto.com/ganbing/2091292" target="_blank" rel="noopener">“三剑客”之Swarm应用数据持久化管理（volume 、bind 、 nfs）-DevOps(甘兵)-51CTO博客</a></p>
+<h2 id="swarm-conjob"><a href="#swarm-conjob" class="headerlink" title="swarm conjob"></a>swarm conjob</h2><p>聽說 swarm 可以設定排程<br>我搜尋一下完全沒有看到<br>看到介紹有 schedule ，我以為內建應該會有排程東西，不過我猜這個跟 docker service 可能有關係<br>不過最後還是找到 <a href="https://github.com/crazy-max/swarm-cronjob" target="_blank" rel="noopener">crazy-max/swarm-cronjob: 📅 Create jobs on a time-based schedule on Docker 🐳 Swarm</a><br>好像新增 label 就能設定排程</p>
+<p>不過有看到類似看到每月最後一天執行程式<br>看到有人建議用 每月第一天<br>之前有寫過這篇解決<a href="https://malagege.github.io/blog/2019/08/04/%E6%8E%92%E7%A8%8B-crontab-%E6%99%82%E9%96%93%E8%A8%AD%E5%AE%9A%E6%9C%88%E5%BA%95%E5%9F%B7%E8%A1%8C%E6%96%B9%E6%B3%95/">排程 crontab 時間設定月底執行方法 | 程式狂想筆記</a><br>由於我公司的主機用UTC時間，但設定跟程式排程不是UTC時間<br>所以必須使用這個方式完成</p>
+<p><del>有空在補這個</del></p>
+<p><strong>2019-12-09</strong></p>
+<p>今天嘗試了一夏swarm-job<br>架設上非常方便<br>但有幾點要特別注意</p>
+<h3 id="安裝-swarm-cronjob"><a href="#安裝-swarm-cronjob" class="headerlink" title="安裝 swarm-cronjob"></a>安裝 swarm-cronjob</h3><p>可以用 play wtih docker 測試，開 template 3 個 manager 2 個 worker<br>方法跟上面一樣<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">docker service create \</span><br><span class="line">    --name portainer \</span><br><span class="line">    --publish 9000:9000 \</span><br><span class="line">    --publish 8000:8000 \</span><br><span class="line">    --replicas=1 \</span><br><span class="line">    --constraint <span class="string">'node.role == manager'</span> \</span><br><span class="line">    portainer/portainer</span><br><span class="line"></span><br><span class="line">curl -L https://downloads.portainer.io/agent-stack.yml -o agent-stack.yml &amp;&amp; docker stack deploy --compose-file=agent-stack.yml portainer-agent</span><br><span class="line"></span><br><span class="line"><span class="comment">## 安裝 swarm-cronjob</span></span><br><span class="line">docker service create --name swarm_cronjob \</span><br><span class="line">  --mount <span class="built_in">type</span>=<span class="built_in">bind</span>,<span class="built_in">source</span>=/var/run/docker.sock,target=/var/run/docker.sock \</span><br><span class="line">  --env <span class="string">"LOG_LEVEL=info"</span> \</span><br><span class="line">  --env <span class="string">"LOG_JSON=false"</span> \</span><br><span class="line">  --constraint <span class="string">"node.role == manager"</span> \</span><br><span class="line">  crazymax/swarm-cronjob</span><br></pre></td></tr></table></figure></p>
+<p>其他更多方式看官方文件</p>
+<h3 id="執行注意"><a href="#執行注意" class="headerlink" title="執行注意"></a>執行注意</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Set command to run the task command 需要下 command </span><br><span class="line">Set mode to replicated (default)  使用 replicated mode</span><br><span class="line">Set replicas to 0 to avoid running task as soon as the service is deployed  一開始設定replicas=0，否則會議開始就會跑</span><br><span class="line">Set restart_policy.condition to none. This is needed for a cronjob, otherwise the task will restart automatically restart_policy 請設定 none ，否則一開始會一直執行</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name=my_hello --replicas=0 --restart-condition=none --label  swarm.cronjob.enable=&quot;true&quot; --label swarm.cronjob.schedule=&quot;*/2 * * * *&quot; hello-world ./hello</span><br></pre></td></tr></table></figure>
+<p>官方可以帶的 label，前面兩個是必帶<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">swarm.cronjob.enable : Set to true to enable the cronjob (required)</span><br><span class="line">swarm.cronjob.schedule : CRON expression format to use. (required)</span><br><span class="line">swarm.cronjob.skip-running : Do not start a job if the service is currently running (optional)</span><br><span class="line">swarm.cronjob.replicas : Number of replicas to set on schedule in replicated mode. (optional, default 1)</span><br></pre></td></tr></table></figure></p>
+<p>有空再放 stack yml</p>
+<h3 id="agent-mode-global"><a href="#agent-mode-global" class="headerlink" title="agent mode global"></a>agent mode global</h3><p>我發現我只要新增 node 加入 swarm，就會自動安裝 agent<br>portainer 什麼設定都不用做!!!!太猛啦</p>
+<h2 id="相關連結"><a href="#相關連結" class="headerlink" title="相關連結"></a>相關連結</h2><p>加入最愛的連結，但我沒整理，我就放一些彩蛋吧XD</p>
+<ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10196261" target="_blank" rel="noopener">[Day 19] 在 Kubernetes 中實現負載平衡 - Ingress Controller - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
+<li><a href="https://objcoding.com/2018/09/03/docker-stack/" target="_blank" rel="noopener">Docker Stack多服务编排</a></li>
+<li><a href="https://super9.space/archives/1653" target="_blank" rel="noopener">Docker Swarm 進階實戰 (1) - Super9</a></li>
+<li><a href="https://blog.toright.com/posts/5598/%E7%94%A8-docker-swarm-%E9%83%A8%E7%BD%B2%E4%BD%A0%E7%9A%84%E9%9B%B2%E6%9C%8D%E5%8B%99-%E5%AF%A6%E4%BD%9C%E7%AF%87.html" target="_blank" rel="noopener">用 Docker Swarm 部署你的雲服務 (實作篇) - Soul &amp; Shell Blog</a></li>
+<li><a href="https://tingsyuanwang.github.io/blogs/2017/08/01/docker-%E5%BF%AB%E9%80%9F%E5%AD%B8%E7%BF%92%E8%87%AA%E6%88%91%E6%8C%91%E6%88%B0-Day7/" target="_blank" rel="noopener">docker 快速學習自我挑戰 Day7 | Vincent’s Corner</a></li>
+<li><a href="https://blog.tiger-workshop.com/docker-notes-how-to-run-compose-swarm-mode/" target="_blank" rel="noopener">[Docker 學習筆記] Run/Compose/Swarm Mode 幾個運行方式基本概念 – Tiger-Workshop Blog</a></li>
+<li><a href="https://www.cnblogs.com/Java3y/p/11982381.html" target="_blank" rel="noopener">全网最通俗易懂的Kafka入门！ - Java3y - 博客园</a></li>
+<li><a href="https://www.cnblogs.com/bigberg/p/8795265.html" target="_blank" rel="noopener">Docker集群管理Swarm数据持久化 - Bigberg - 博客园</a></li>
+<li><a href="https://www.itread01.com/content/1547272631.html" target="_blank" rel="noopener">Docker Swarm叢集實踐——部署篇 - IT閱讀</a></li>
+<li><a href="https://www.hkposts.com/55989/apache%E7%9A%84%E4%B8%89%E7%A8%AE%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F%EF%BC%88prefork-worker-event%EF%BC%89/" target="_blank" rel="noopener">Apache的三種工作模式（prefork/worker/Event）</a></li>
+<li><a href="https://collabnix.com/running-cron-jobs-container-on-5-node-docker-swarm-mode-cluster/" target="_blank" rel="noopener">Running Cron Jobs container on 5-Node Docker Swarm Mode Cluster – Collabnix</a></li>
+<li><a href="https://www.itread01.com/content/1548180022.html" target="_blank" rel="noopener">docker叢集管理工具–Swarm以及Portainer安裝 - IT閱讀</a></li>
+<li><a href="https://github.com/robfig/cron/issues/234" target="_blank" rel="noopener">How to set the last day of the month? · Issue #234 · robfig/cron</a></li>
+<li><a href="https://www.kubernetes.org.cn/5883.html" target="_blank" rel="noopener">Portainer一个轻量级的Docker环境管理UI_Kubernetes中文社区</a></li>
+<li><a href="https://blog.coding.net/blog/Haproxy&amp;Keepalived" target="_blank" rel="noopener">使用 Haproxy + Keepalived 构建基于 Docker 的高可用负载均衡服务（一） - CODING 博客</a></li>
+<li><a href="https://blog.51cto.com/dengaosky/2129856" target="_blank" rel="noopener">Haproxy+Keepalived高可用环境部署梳理（主主和主从模式）-眼眸刻着你的微笑-51CTO博客</a></li>
+<li><a href="https://stackoverflow.com/questions/41705134/how-can-i-remove-shutdown-docker-service-tasks-after-a-rolling-update" target="_blank" rel="noopener">containers - How can I remove shutdown Docker Service tasks after a rolling update? - Stack Overflow</a></li>
+<li><a href="https://blog.rj-bai.com/post/150.html" target="_blank" rel="noopener">Docker Swarm 实战 - rj-bai ‘s Blog</a></li>
+</ul>
+<h2 id="針對-CPU-架構選擇-image"><a href="#針對-CPU-架構選擇-image" class="headerlink" title="針對 CPU 架構選擇 image"></a>針對 CPU 架構選擇 image</h2><ol>
+<li>docker pull [OPTIONS] NAME[:TAG|@DIGEST]</li>
+</ol>
+<p>如：<br>docker pull ubuntu@sha256:45b23dee08af5e43a7fea6c4cf9c25ccf269ee113168c19722f8787</p>
+<ol start="2">
+<li>// 通过如下命令指定arch:<br>docker run -it –rm <image-name>:<tag>  arch=linux/arm64</tag></image-name></li>
+</ol>
+<p>方法三就不寫了，看起來很麻煩</p>
+<p>參考:<a href="https://blog.csdn.net/u010918487/article/details/107067224" target="_blank" rel="noopener">docker pull 指定 os/arch_Yu的博客-CSDN博客</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/blog/tags/swarm/" rel="tag"># swarm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/11/21/php-pcntl-fork-多程序小記/" rel="next" title="php pcntl_fork 多程序小記">
+                <i class="fa fa-chevron-left"></i> php pcntl_fork 多程序小記
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/12/19/快速調整-INERT-UPDATE-SQL-語法/" rel="prev" title="快速調整 INERT / UPDATE SQL 語法">
+                快速調整 INERT / UPDATE SQL 語法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本教學網站"><span class="nav-number">1.</span> <span class="nav-text">基本教學網站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#managers"><span class="nav-number">1.1.</span> <span class="nav-text">managers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#worker"><span class="nav-number">1.2.</span> <span class="nav-text">worker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本連線"><span class="nav-number">2.</span> <span class="nav-text">基本連線</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-node"><span class="nav-number">3.</span> <span class="nav-text">docker node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-service"><span class="nav-number">4.</span> <span class="nav-text">docker service</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scale"><span class="nav-number">4.1.</span> <span class="nav-text">scale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兩種模式"><span class="nav-number">4.2.</span> <span class="nav-text">兩種模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#關掉-service"><span class="nav-number">4.3.</span> <span class="nav-text">關掉 service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-查看"><span class="nav-number">4.4.</span> <span class="nav-text">docker 查看</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看日誌"><span class="nav-number">4.5.</span> <span class="nav-text">查看日誌</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-stack"><span class="nav-number">5.</span> <span class="nav-text">docker stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#portainer"><span class="nav-number">6.</span> <span class="nav-text">portainer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#agent"><span class="nav-number">6.1.</span> <span class="nav-text">agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent-跟-docker-差異"><span class="nav-number">6.2.</span> <span class="nav-text">agent 跟 docker 差異</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-play-with-docker"><span class="nav-number">7.</span> <span class="nav-text">使用 play with docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history"><span class="nav-number">8.</span> <span class="nav-text">history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-swarm-volume-可能問題"><span class="nav-number">9.</span> <span class="nav-text">使用 swarm volume 可能問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#swarm-conjob"><span class="nav-number">10.</span> <span class="nav-text">swarm conjob</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-swarm-cronjob"><span class="nav-number">10.1.</span> <span class="nav-text">安裝 swarm-cronjob</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#執行注意"><span class="nav-number">10.2.</span> <span class="nav-text">執行注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent-mode-global"><span class="nav-number">10.3.</span> <span class="nav-text">agent mode global</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關連結"><span class="nav-number">11.</span> <span class="nav-text">相關連結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#針對-CPU-架構選擇-image"><span class="nav-number">12.</span> <span class="nav-text">針對 CPU 架構選擇 image</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/';
+          this.page.identifier = '2019/12/07/docker-swarm-一些指令相關整理/';
+          this.page.title = 'docker swarm 一些指令相關整理';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

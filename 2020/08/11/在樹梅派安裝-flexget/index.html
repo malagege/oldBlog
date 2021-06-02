@@ -1,37 +1,1213 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,flexget,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在樹梅派安裝 flexget通常要裝 python 3.5以上更新系統flexget壞掉啦!! | 程式狂想筆記雖然這篇有小記但最近我看官方安裝方法有點不太一樣這邊小記安裝紀錄">
+<meta name="keywords" content="linux,flexget">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在樹梅派安裝 flexget">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/08/11/在樹梅派安裝-flexget/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="在樹梅派安裝 flexget通常要裝 python 3.5以上更新系統flexget壞掉啦!! | 程式狂想筆記雖然這篇有小記但最近我看官方安裝方法有點不太一樣這邊小記安裝紀錄">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:46.360Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在樹梅派安裝 flexget">
+<meta name="twitter:description" content="在樹梅派安裝 flexget通常要裝 python 3.5以上更新系統flexget壞掉啦!! | 程式狂想筆記雖然這篇有小記但最近我看官方安裝方法有點不太一樣這邊小記安裝紀錄">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/08/11/在樹梅派安裝-flexget/">
+
+
+
+
+
+  <title>在樹梅派安裝 flexget | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/08/11/在樹梅派安裝-flexget/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在樹梅派安裝 flexget</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2020-08-11T21:33:52+08:00">
+                2020-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2020/08/11/在樹梅派安裝-flexget/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/08/11/在樹梅派安裝-flexget/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>在樹梅派安裝 flexget<br>通常要裝 python 3.5以上<br><a href="https://malagege.github.io/blog/2018/01/07/logdown/2018-01-07-4726929/">更新系統flexget壞掉啦!! | 程式狂想筆記</a><br>雖然這篇有小記<br>但最近我看官方安裝方法有點不太一樣<br>這邊小記安裝紀錄</p>
+<a id="more"></a>
+<h2 id="安裝-flexget"><a href="#安裝-flexget" class="headerlink" title="安裝 flexget"></a>安裝 flexget</h2><h3 id="安裝-Pytnon-3-8"><a href="#安裝-Pytnon-3-8" class="headerlink" title="安裝 Pytnon 3.8"></a>安裝 Pytnon 3.8</h3><p>apt 無法取得<br>所以需要手動編譯 Python<br><a href="https://installvirtual.com/how-to-install-python-3-8-on-raspberry-pi-raspbian/" target="_blank" rel="noopener">How to install Python 3.8 on Raspberry Pi (Raspbian) - installvirtual</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev tar wget vim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下載 Python</span></span><br><span class="line">wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安裝 Python</span></span><br><span class="line"><span class="comment"># 這過程會很久，我使用 PI 1 ，安裝大概快一整天才好，建議使用 tmux 安裝，以免關掉需要重來</span></span><br><span class="line">sudo tar zxf Python-3.8.0.tgz</span><br><span class="line"><span class="built_in">cd</span> Python-3.8.0</span><br><span class="line">sudo ./configure --<span class="built_in">enable</span>-optimizations</span><br><span class="line">sudo make -j 4</span><br><span class="line">sudo make altinstall</span><br><span class="line"></span><br><span class="line"><span class="comment"># 檢查</span></span><br><span class="line">python3.8 -V</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 default 3.8 ，也可以不用做，直接輸入 python3.8</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"alias python=/usr/local/bin/python3.8"</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># clean</span></span><br><span class="line">sudo rm -rf Python-3.8.0.tgz</span><br><span class="line">sudo rm -rf Python-3.8.0</span><br></pre></td></tr></table></figure>
+<h3 id="另外一種安裝-Python"><a href="#另外一種安裝-Python" class="headerlink" title="另外一種安裝 Python"></a>另外一種安裝 Python</h3><p>發現有另外一種方式安裝 Python 3.8<br><a href="https://installvirtual.com/install-python-3-8-1-on-raspberry-pi-raspbian/" target="_blank" rel="noopener">Install Python 3.8.1 on Raspberry Pi (Raspbian) - installvirtual</a><br>已經安裝過了<br>我就不測試這個方法<br>但下次可能會試試看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt </span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev tar wget vim</span><br><span class="line"></span><br><span class="line"><span class="comment"># pyenv</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/pyenv/pyenv.git ~/.pyenv</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export PYENV_ROOT="$HOME/.pyenv"'</span> &gt;&gt; ~/.bashrc &amp;&amp; <span class="built_in">echo</span> <span class="string">'export PATH="$PYENV_ROOT/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">pyenv install 3.8.1</span><br><span class="line">pyenv versions</span><br></pre></td></tr></table></figure>
+<p>方法感覺更簡單</p>
+<h3 id="安裝-flexget-1"><a href="#安裝-flexget-1" class="headerlink" title="安裝 flexget"></a>安裝 flexget</h3><p>參考<a href="https://flexget.com/InstallWizard/Linux" target="_blank" rel="noopener">FlexGet</a>這篇<br>使用 virtualenv 還滿有趣的<br>記錄一下</p>
+<blockquote>
+<p>Supported versions of Python:<br>   3.6, 3.7<br>   3.8 (untested, but should work)</p>
+</blockquote>
+<p>官方建議安裝版本<br>不過我沒注意安裝 3.8<br>但是測試可以執行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virtualenv</span></span><br><span class="line">python3 -m venv ~/.flexget/   <span class="comment"># 推薦大家改.flexget 因為這樣設定 service 比較不會麻煩</span></span><br><span class="line"><span class="comment"># Install FlexGet in the virtualenv</span></span><br><span class="line"><span class="built_in">cd</span> ~/.flexget/</span><br><span class="line">bin/pip install flexget</span><br><span class="line"><span class="comment"># Running FlexGet from the virtualenv</span></span><br><span class="line"><span class="built_in">source</span> ~/.flexget/bin/activate</span><br><span class="line"><span class="comment"># flexget</span></span><br><span class="line">~/.flexget/bin/flexget [options]</span><br><span class="line"><span class="comment"># 全局安裝</span></span><br><span class="line"><span class="comment"># sudo pip install flexget</span></span><br></pre></td></tr></table></figure>
+<p>config.yml 要先設定在 flexget 資料夾才能這常執行</p>
+<p><strong>安裝 transmissionrpc</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~/flexget/bin/pip3 install  transmissionrpc</span><br><span class="line"><span class="comment"># 假如跑出錯誤Transmissionrpc module version 0.11 or higher required</span></span><br><span class="line"><span class="comment"># 就是少了安裝這個</span></span><br></pre></td></tr></table></figure>
+<p><del>最下面有比較潮的設定</del><br>docker 後來有對 config 做調整<br><figure class="highlight yml"><figcaption><span>config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web_server:</span> <span class="literal">yes</span></span><br><span class="line"></span><br><span class="line"><span class="attr">templates:</span></span><br><span class="line"><span class="attr">  default:</span></span><br><span class="line"><span class="attr">    transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">userpwd</span></span><br><span class="line"><span class="attr">      add_paused:</span> <span class="literal">no</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/Download/Mikata/201901/&#123;&#123;task&#125;&#125;</span></span><br><span class="line"><span class="attr">    free_space:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/</span></span><br><span class="line"><span class="attr">      space:</span> <span class="number">1000</span></span><br><span class="line"><span class="attr">    clean_transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">userpwd</span></span><br><span class="line"><span class="attr">      finished_for:</span> <span class="number">4</span> <span class="string">days</span></span><br><span class="line"><span class="attr">      min_ratio:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">    if:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"'季度全集' in category"</span><span class="string">:</span> <span class="string">reject</span></span><br><span class="line"><span class="attr">  olddownload:</span></span><br><span class="line"><span class="attr">    transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">malagege</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">malagegeinnfu</span></span><br><span class="line"><span class="attr">      add_paused:</span> <span class="literal">no</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/Download/Mikata/201810/&#123;&#123;task&#125;&#125;</span></span><br><span class="line"><span class="attr">    free_space:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/</span></span><br><span class="line"><span class="attr">      space:</span> <span class="number">1000</span></span><br><span class="line"><span class="attr">    clean_transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      finished_for:</span> <span class="number">4</span> <span class="string">days</span></span><br><span class="line"><span class="attr">      min_ratio:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">    if:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"'季度全集' in category"</span><span class="string">:</span> <span class="string">reject</span></span><br><span class="line"><span class="attr">  autoPass:</span></span><br><span class="line"><span class="attr">    transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      add_paused:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/Download/Mikata/201810/&#123;&#123;task&#125;&#125;</span></span><br><span class="line"><span class="attr">    if:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"'季度全集' in category"</span><span class="string">:</span> <span class="string">reject</span></span><br><span class="line"></span><br><span class="line"><span class="attr">tasks:</span></span><br><span class="line">  <span class="string">刀劍神域</span> <span class="attr">Alicization:</span></span><br><span class="line"><span class="attr">    rss:</span></span><br><span class="line"><span class="attr">      url:</span> <span class="attr">https://share.dmhy.org/topics/rss/sort_id/2/rss.xml?keyword=刀劍神域</span> <span class="string">Alicization+悠哈璃羽字幕社＆拉斯观测组+CHT</span></span><br><span class="line"><span class="attr">      other_fields:</span> <span class="string">[category]</span></span><br><span class="line"><span class="attr">    accept_all:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    template:</span> <span class="string">autoPass</span></span><br><span class="line"></span><br><span class="line"><span class="attr">schedules:</span></span><br><span class="line">  <span class="comment"># Run every 30 minutes on monday</span></span><br><span class="line"><span class="attr">  - tasks:</span> <span class="string">"*"</span></span><br><span class="line"><span class="attr">    schedule:</span></span><br><span class="line"><span class="attr">      hour:</span> <span class="string">"*/3"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="執行-WebUI-介面"><a href="#執行-WebUI-介面" class="headerlink" title="執行 WebUI 介面"></a>執行 WebUI 介面</h3><p><a href="https://flexget.com/Web-UI" target="_blank" rel="noopener">FlexGet</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 設定 web 密碼，切記要很嚴謹密碼</span></span><br><span class="line">flexget web passwd &lt;some_password&gt;</span><br><span class="line"><span class="comment"># 背景執行程式</span></span><br><span class="line">flexget daemon start --daemonize</span><br></pre></td></tr></table></figure></p>
+<p>WebUI config 可線上修改config.yml 而且還有除錯功能!!非常簡單!!</p>
+<p><a href="http://ip:5050" target="_blank" rel="noopener">http://ip:5050</a><br>user:flexget<br>pwd: (自己設定)</p>
+<p>這邊 task 需要執行成功一次後<br>才會出現!!!</p>
+<p>注意這邊控制 flexget<br>需要再 flexget 資料夾路徑<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/flexget</span><br><span class="line">~/flexget/bin/flexget daemon stop</span><br><span class="line">~/flexget/bin/flexget daemon start --daemon</span><br><span class="line"><span class="comment"># 2020-08-11 22:10:37 CRITICAL manager                       Failed to find configuration file config.yml</span></span><br><span class="line"><span class="comment"># 2020-08-11 22:10:37 INFO     manager                       Tried to read from: /home/pi, /home/pi/.flexget, /home/pi/.config/flexget</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="flexget-service"><a href="#flexget-service" class="headerlink" title="flexget service"></a>flexget service</h3><p><a href="https://gist.github.com/billsuxx/e2cd75d4b254e1999309" target="_blank" rel="noopener">/lib/systemd/system/flexget.service</a><br>下面路徑需要調整<br>我是放在/etc/systemd/system/flexget.service<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Flexget Daemon</span><br><span class="line"><span class="attr">After</span>=network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=simple</span><br><span class="line"><span class="attr">User</span>=pi</span><br><span class="line"><span class="attr">ExecStart</span>= /home/pi/.flexget/bin/flexget daemon start</span><br><span class="line"><span class="attr">ExecStop</span>= /home/pi/.flexget/bin/flexget daemon stop</span><br><span class="line"><span class="attr">ExecReload</span>= /home/pi/.flexget/bin/flexget daemon reload</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+<p>systemctl 直接 enable/disable<br><a href="https://malagege.github.io/blog/2019/10/14/rclone-%E6%8E%9B%E8%BC%89%E7%A1%AC%E7%A2%9F%E5%B0%8F%E8%A8%98/">rclone 掛載硬碟小記 | 程式狂想筆記</a><br>這裡面之前有紀錄 systemctl</p>
+<h2 id="docker-執行-flexget"><a href="#docker-執行-flexget" class="headerlink" title="docker 執行 flexget"></a>docker 執行 flexget</h2><h3 id="安裝-docker"><a href="#安裝-docker" class="headerlink" title="安裝 docker"></a>安裝 docker</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.docker.com/ | sh</span><br><span class="line">sudo usermod -aG docker pi</span><br><span class="line"><span class="comment"># 重新登入</span></span><br><span class="line">sudo systemctl restart docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+<h3 id="docker-執行-flexget-1"><a href="#docker-執行-flexget-1" class="headerlink" title="docker 執行 flexget"></a>docker 執行 flexget</h3><p>之前這邊有寫過<a href="https://malagege.github.io/blog/2020/01/08/Raspberry-Pi-%E4%BD%BF%E7%94%A8-Docker-%E6%9E%B6%E8%A8%AD-flexget/">Raspberry Pi 使用 Docker 架設 flexget | 程式狂想筆記</a><br>後來就沒繼續使用(因為我不太會用)<br>PI 要裝 Python 編譯比較花時間<br>在想有沒有比較快的方法</p>
+<p>pi 1 請使用 arm32v6 ，其他代請使用 armv7</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> arm32v7/python:<span class="number">3.8</span>.<span class="number">5</span>-alpine</span><br><span class="line"><span class="keyword">MAINTAINER</span> bren</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apk add --update \</span></span><br><span class="line"><span class="bash">  tzdata \</span></span><br><span class="line"><span class="bash">  ca-certificates \</span></span><br><span class="line"><span class="bash">  &amp;&amp; pip install --no-cache-dir --<span class="built_in">disable</span>-pip-version-check flexget transmissionrpc \</span></span><br><span class="line"><span class="bash">  &amp;&amp; rm -rf /var/cache/apk/*</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># Copy local files</span></span></span><br><span class="line"><span class="bash">COPY files/ /</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># add default volumes</span></span></span><br><span class="line"><span class="bash">VOLUME /config /data</span></span><br><span class="line"><span class="bash">WORKDIR /config</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># expose port for flexget webui</span></span></span><br><span class="line"><span class="bash">EXPOSE 3539 3539/tcp</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># run init.sh to set uid, gid, permissions and to launch flexget</span></span></span><br><span class="line"><span class="bash">RUN chmod +x /scripts/init.sh</span></span><br><span class="line"><span class="bash">CMD [<span class="string">"/scripts/init.sh"</span>]</span></span><br></pre></td></tr></table></figure>
+<p>docker build . -t malagege/flexget</p>
+<p><code>id pi</code>可以看當下 user id</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">    --name=flexget \</span><br><span class="line">    -restart=always \</span><br><span class="line">    -p 5050:5050 \ <span class="comment"># 注意 port</span></span><br><span class="line">    -v <span class="string">"<span class="variable">$PWD</span>/data"</span>:/data \</span><br><span class="line">    -v <span class="string">"<span class="variable">$PWD</span>/config"</span>:/config \</span><br><span class="line">    -e FG_WEBUI_PASSWD=__複雜密碼__ \</span><br><span class="line">    <span class="comment"># -e /mnt/xxx:/mnt/xxx  有使用 free_space 要開這個</span></span><br><span class="line">    <span class="comment"># -e PUID=1000 \</span></span><br><span class="line">    <span class="comment"># -e PGID=1000 \</span></span><br><span class="line">    -e TZ=<span class="string">"Asia/Taipei"</span> \</span><br><span class="line">    malagege/flexget</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.cnblogs.com/kaishirenshi/p/10396446.html" target="_blank" rel="noopener">docker參數–restart=always的作用 - 開始認識 - 博客園</a></p>
+<blockquote>
+<p> docker參數–restart=always的作用<br>創建容器時沒有添加參數  –restart=always ，導致的後果是：當 Docker 重啟時，容器未能自動啟動<br>1、Docker 命令修改<br>docker container update –restart=always 容器名字</p>
+</blockquote>
+<p><a href="https://flexget.com/Cookbook/TorrentCleanup" target="_blank" rel="noopener">FlexGet</a></p>
+<h2 id="bitbucket-CI-CD-檢查設定"><a href="#bitbucket-CI-CD-檢查設定" class="headerlink" title="bitbucket CI/CD 檢查設定"></a>bitbucket CI/CD 檢查設定</h2><p>因為這個我有跟我朋友一起改設定檔<br>所以我有加了 CI/CD 防止修改錯誤</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="string">nikolaik/python-nodejs:python3.8-nodejs12</span></span><br><span class="line"></span><br><span class="line"><span class="attr">pipelines:</span></span><br><span class="line"><span class="attr">  default:</span></span><br><span class="line"><span class="attr">    - step:</span></span><br><span class="line"><span class="attr">        script:</span> <span class="comment"># Modify the commands below to build your repository.</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">npm</span> <span class="string">install</span> <span class="bullet">-g</span> <span class="string">yaml-lint</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">yamllint</span> <span class="string">config.yml</span></span><br><span class="line"><span class="comment">#          - npm install</span></span><br><span class="line"><span class="comment">#          - npm test</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">pip</span> <span class="string">install</span> <span class="bullet">--no-cache-dir</span> <span class="bullet">--disable-pip-version-check</span> <span class="string">flexget</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">flexget</span> <span class="bullet">-V</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">flexget</span> <span class="string">check</span></span><br></pre></td></tr></table></figure>
+<p>2018-02-14 10:28 WARNING  manager    Config line XX is likely missing ‘:’ at the end<br>是 bug 所以先不用理會<br>參考:<a href="https://linkthis.me/2018/02/15/the-note-of-using-flexget/" target="_blank" rel="noopener">FLexget使用记录 - linkthis blog</a></p>
+<h3 id="Git-同步方法"><a href="#Git-同步方法" class="headerlink" title="Git 同步方法"></a>Git 同步方法</h3><p>最後更改需要執行<code>docker exec flexget flexget daemon reload-config</code><br>載入最新設定檔案</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /home/pi/flexget-arm/config &amp;&amp; git fetch origin master</span><br><span class="line"></span><br><span class="line">LOCAL_COMMITID=$(git rev-parse HEAD)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"LCOAL_COMMITID=<span class="variable">$&#123;LOCAL_COMMITID&#125;</span>"</span></span><br><span class="line">REMOTE_COMMITID=$(git rev-parse origin/master)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"REMOTE_COMMITID=<span class="variable">$&#123;REMOTE_COMMITID&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$LOCAL_COMMITID</span>"</span> != <span class="string">"<span class="variable">$REMOTE_COMMITID</span>"</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"COMMITID不一致，需做同步"</span></span><br><span class="line">    git reset origin/master --hard &amp;&amp; docker <span class="built_in">exec</span> flexget flexget daemon reload-config</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h3 id="手動執行排程"><a href="#手動執行排程" class="headerlink" title="手動執行排程"></a>手動執行排程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> flexget flexget execute  --tasks <span class="string">"TV-*"</span></span><br></pre></td></tr></table></figure>
+<p>config.yml<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web_server:</span> <span class="literal">yes</span></span><br><span class="line"></span><br><span class="line"><span class="attr">templates:</span></span><br><span class="line"><span class="attr">  default:</span></span><br><span class="line"><span class="attr">    transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      add_paused:</span> <span class="literal">no</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/Download/Mikata/TV/&#123;&#123;task&#125;&#125;</span></span><br><span class="line"><span class="attr">    free_space:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/</span></span><br><span class="line"><span class="attr">      space:</span> <span class="number">1000</span></span><br><span class="line"><span class="attr">    clean_transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      finished_for:</span> <span class="number">60</span> <span class="string">days</span></span><br><span class="line"><span class="attr">      min_ratio:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">    if:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"'季度全集' in category"</span><span class="string">:</span> <span class="string">reject</span></span><br><span class="line"><span class="attr">  autoPass:</span></span><br><span class="line"><span class="attr">    transmission:</span></span><br><span class="line"><span class="attr">      host:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.203</span></span><br><span class="line"><span class="attr">      port:</span> <span class="number">9091</span></span><br><span class="line"><span class="attr">      username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">      add_paused:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/Download/Mikata/autoPass/&#123;&#123;task&#125;&#125;</span></span><br><span class="line"><span class="attr">    if:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"'季度全集' in category"</span><span class="string">:</span> <span class="string">reject</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">tasks:</span></span><br><span class="line">  <span class="string">"TV-刀劍神域 Alicization"</span><span class="string">:</span></span><br><span class="line"><span class="attr">    rss:</span></span><br><span class="line"><span class="attr">      url:</span> <span class="attr">https://share.dmhy.org/topics/rss/sort_id/2/rss.xml?keyword=刀劍神域+悠哈璃羽字幕社＆拉斯观测组+CHT</span></span><br><span class="line"><span class="attr">      other_fields:</span> <span class="string">[category]</span></span><br><span class="line"><span class="attr">    accept_all:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">    template:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">    transmission:</span></span><br><span class="line"><span class="attr">      path:</span> <span class="string">/mnt/extHDD/Download/Mikata/TV/202007/&#123;&#123;task[3:]&#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">schedules:</span></span><br><span class="line"><span class="attr">  - tasks:</span> <span class="string">"TV-*"</span></span><br><span class="line"><span class="attr">    schedule:</span></span><br><span class="line"><span class="attr">      day_of_week:</span> <span class="string">mon,tue,wed,thu,fri,sat,sun</span></span><br><span class="line"><span class="attr">      hour:</span> <span class="string">"3,5,8,11,13,15,17,20"</span></span><br><span class="line"><span class="attr">      jitter:</span> <span class="number">60</span></span><br></pre></td></tr></table></figure></p>
+<p>這邊有發現 WebUI 用 GMT 時間<br>非本地時間…，但怎麼找設定都沒看到程式可以調整台灣時區</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/blog/tags/flexget/" rel="tag"># flexget</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2020/07/30/Jenkins-執行-Java-程式亂碼解決方法/" rel="next" title="Jenkins 執行 Java 程式亂碼解決方法">
+                <i class="fa fa-chevron-left"></i> Jenkins 執行 Java 程式亂碼解決方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2020/08/24/sql-匯出csv-Excel-工具/" rel="prev" title="sql 匯出csv ,Excel 工具">
+                sql 匯出csv ,Excel 工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-flexget"><span class="nav-number">1.</span> <span class="nav-text">安裝 flexget</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-Pytnon-3-8"><span class="nav-number">1.1.</span> <span class="nav-text">安裝 Pytnon 3.8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另外一種安裝-Python"><span class="nav-number">1.2.</span> <span class="nav-text">另外一種安裝 Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-flexget-1"><span class="nav-number">1.3.</span> <span class="nav-text">安裝 flexget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#執行-WebUI-介面"><span class="nav-number">1.4.</span> <span class="nav-text">執行 WebUI 介面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">2.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flexget-service"><span class="nav-number">2.1.</span> <span class="nav-text">flexget service</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-執行-flexget"><span class="nav-number">3.</span> <span class="nav-text">docker 執行 flexget</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-docker"><span class="nav-number">3.1.</span> <span class="nav-text">安裝 docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-執行-flexget-1"><span class="nav-number">3.2.</span> <span class="nav-text">docker 執行 flexget</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bitbucket-CI-CD-檢查設定"><span class="nav-number">4.</span> <span class="nav-text">bitbucket CI/CD 檢查設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-同步方法"><span class="nav-number">4.1.</span> <span class="nav-text">Git 同步方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手動執行排程"><span class="nav-number">4.2.</span> <span class="nav-text">手動執行排程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2020/08/11/在樹梅派安裝-flexget/';
+          this.page.identifier = '2020/08/11/在樹梅派安裝-flexget/';
+          this.page.title = '在樹梅派安裝 flexget';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

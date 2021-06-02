@@ -1,37 +1,1241 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+  
 
 
-{% block content %}
+<html class="theme-next mist use-motion" lang="zh-tw">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mysql,sharding,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="之前有做 Sharding 簡單紀錄MySQL 不錯優化文章&amp;amp;DB 雜記 | 程式狂想筆記最近工作上發現我還是沒有很了解 Sharding在工作上有很大的誤解當然這篇不會記錄到很深入只是記錄我的錯誤觀念改正">
+<meta name="keywords" content="mysql,sharding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL sharding初步認識小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/05/03/MySQL-sharding初步認識小記/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="之前有做 Sharding 簡單紀錄MySQL 不錯優化文章&amp;amp;DB 雜記 | 程式狂想筆記最近工作上發現我還是沒有很了解 Sharding在工作上有很大的誤解當然這篇不會記錄到很深入只是記錄我的錯誤觀念改正">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:updated_time" content="2021-06-02T15:57:42.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL sharding初步認識小記">
+<meta name="twitter:description" content="之前有做 Sharding 簡單紀錄MySQL 不錯優化文章&amp;amp;DB 雜記 | 程式狂想筆記最近工作上發現我還是沒有很了解 Sharding在工作上有很大的誤解當然這篇不會記錄到很深入只是記錄我的錯誤觀念改正">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/05/03/MySQL-sharding初步認識小記/">
+
+
+
+
+
+  <title>MySQL sharding初步認識小記 | 程式狂想筆記</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-105195903-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  <!-- Google AdSense start -->
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1439458814178865",
+    enable_page_level_ads: true
+  });
+</script>
+
+  <!-- Google AdSense end -->
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程式狂想筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一個攻城師奮鬥史</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            好站連結
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            檢索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/05/03/MySQL-sharding初步認識小記/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL sharding初步認識小記</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2019-05-03T22:47:18+08:00">
+                2019-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2019/05/03/MySQL-sharding初步認識小記/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/03/MySQL-sharding初步認識小記/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+        <div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        <p>之前有做 Sharding 簡單紀錄<a href="https://malagege.github.io/blog/2018/12/27/MySQL%E4%B8%8D%E9%8C%AF%E5%84%AA%E5%8C%96%E6%96%87%E7%AB%A0-DB%E9%9B%9C%E8%A8%98/">MySQL 不錯優化文章&amp;DB 雜記 | 程式狂想筆記</a><br>最近工作上發現我還是沒有很了解 Sharding<br>在工作上有很大的誤解<br>當然這篇不會記錄到很深入<br>只是記錄我的錯誤觀念改正</p>
+<a id="more"></a>
+<h2 id="首先做-Sharding，不能做-join-動作"><a href="#首先做-Sharding，不能做-join-動作" class="headerlink" title="首先做 Sharding，不能做 join 動作"></a>首先做 Sharding，不能做 join 動作</h2><p>因為先前開會，對方沒有講很清楚<br>我以為部分資料表可以同步到別的 Database<br>想說還是能做 join 問題<br>(沒想到沒有適用 mariadb sharding 功能)<br>但是，最近問相關問題的時候<br>問到 join 相關事情，有得到消息是<code>不能做join</code>事情<br>當然也不會使用到類似 MariaDB Spider 東西<br>連線所有抓資料<code>要用程式處理</code><br>當然有些 count,group by 動作可能都用程式處理了</p>
+<p><del>當然想說這麼複雜的東西交給工程師用很冏</del></p>
+<blockquote>
+<p>3、跨節點合併排序分頁問題<br>一旦進行了數據的水平切分之後，可能就並不僅僅只有跨節點 Join 無法正常運行，有些排序分頁的 Query 語句的數據源可能也會被切分到多個節點，這樣造成的直接後果就是這些排序分頁 Query 無法繼續正常運行。其實這和跨節點 Join 是一個道理，數據源存在於多個節點上，要通過一個 Query 來解決，就和跨節點 Join 是一樣的操作。同樣 Federated 也可以部分解決，當然存在的風險也一樣。<br>還是同樣的問題，怎麼辦？我同樣仍然繼續建議通過應用程序來解決。<br>如何解決？解決的思路大體上和跨節點 Join 的解決類似，但是有一點和跨節點 Join 不太一樣，Join 很多時候都有一個驅動與被驅動的關係，所以 Join 本身涉及到的多個表之間的數據讀取一般都會存在一個順序關係。但是排序分頁就不太一樣了，排序分頁的數據源基本上可以說是一個表（或者一個結果集），本身並不存在一個順序關係，所以在從多個數據源取數據的過程是完全可以並行的。這樣，排序分頁數據的取數效率我們可以做的比跨庫 Join 更高，所以帶來的性能損失相對的要更小，在有些情況下可能比在原來未進行數據切分的數據庫中效率更高了。當然，不論是跨節點 Join 還是跨節點排序分頁，都會使我們的應用服務器消耗更多的資源，尤其是內存資源，因為我們在讀取訪問以及合併結果集的這個過程需要比原來處理更多的數據。<br>分析到這裡，可能很多讀者朋友會發現，上面所有的這些問題，我給出的建議基本上都是通過應用程序來解決。大家可能心裡開始犯嘀咕了，是不是因為我是 DBA，所以就很多事情都扔給應用架構師和開發人員了？<br>其實完全不是這樣，首先應用程序由於其特殊性，可以非常容易做到很好的擴展性，但是數據庫就不一樣，必須借助很多其他的方式才能做到擴展，而且在這個擴展過程中，很難避免帶來有些原來在集中式數據庫中可以解決但被切分開成一個數據庫集群之後就成為一個難題的情況。要想讓系統整體得到最大限度的擴展，我們只能讓應用程序做更多的事情，來解決數據庫集群無法較好解決的問題。<br>作者：浮浮尘尘<br>链接：<a href="https://www.jianshu.com/p/6ebafabfddae" target="_blank" rel="noopener">https://www.jianshu.com/p/6ebafabfddae</a><br>来源：简书<br>简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>
+</blockquote>
+<p><del>看著看著眼淚掉出來</del></p>
+<ul>
+<li><a href="https://blog.csdn.net/bluishglc/article/details/6161475" target="_blank" rel="noopener">数据库 Sharding 的基本思想和切分策略 - Laurence 的技术博客 - CSDN 博客</a></li>
+<li><a href="https://www.jianshu.com/p/6ebafabfddae" target="_blank" rel="noopener">MySQL Sharding 详解 - 简书</a></li>
+<li><a href="http://database.51cto.com/art/201809/583857.htm" target="_blank" rel="noopener">MySQL 分库分表，写得太好了！ - 51CTO.COM</a></li>
+<li><a href="https://blog.gslin.org/archives/2017/02/02/7113/mysql-%E4%B8%8A-sharding-%E7%9A%84%E6%96%B9%E6%A1%88/" target="_blank" rel="noopener">MySQL 上 sharding 的方案 | Gea-Suan Lin’s BLOG</a></li>
+<li><a href="https://malagege.github.io/blog/2018/12/27/MySQL%E4%B8%8D%E9%8C%AF%E5%84%AA%E5%8C%96%E6%96%87%E7%AB%A0-DB%E9%9B%9C%E8%A8%98/">MySQL 不錯優化文章&amp;DB 雜記 | 程式狂想筆記</a></li>
+<li><a href="http://hongyitong.github.io/2016/12/16/%E5%88%86%E8%A1%A8%E5%88%86%E5%BA%93%EF%BC%88%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%EF%BC%89%20/" target="_blank" rel="noopener">数据库 Sharding 的基本思想和切分策略（分库分表） | 忆桐之家的博客</a></li>
+<li><a href="https://dbaplus.cn/news-11-1854-1.html" target="_blank" rel="noopener">方案虽好，成本先行：数据库 Sharding+Proxy 实践解析 - MySQL - dbaplus 社群：围绕 Data、Blockchain、AiOps 的企业级专业社群。技术大咖、原创干货，每天精品原创文章推送，每周线上技术分享，每月线下技术沙龙。</a></li>
+<li><a href="https://www.itread01.com/content/1545726433.html" target="_blank" rel="noopener">MySql 從一竅不通到入門（五）Sharding：分表、分庫、分片和分割槽 - IT 閱讀</a></li>
+<li><a href="https://blog.csdn.net/KingCat666/article/details/78325158" target="_blank" rel="noopener">MySql 从一窍不通到入门（九）Sharding 的实现和规避 - Invoker’s Tower - CSDN 博客</a></li>
+<li><a href="https://www.zhihu.com/question/22521550" target="_blank" rel="noopener">现在 mysql 的分布式数据访问层主流方案有哪些? - 知乎</a></li>
+<li><a href="https://yq.aliyun.com/articles/404971" target="_blank" rel="noopener">传统分库分表(sharding)的缺陷与破解之法-云栖社区-阿里云</a></li>
+</ul>
+<h2 id="分表方式"><a href="#分表方式" class="headerlink" title="分表方式"></a>分表方式</h2><ol>
+<li>用非 Sharding 某一張記錄 sharding，如<a href="http://database.51cto.com/art/201809/583857.htm" target="_blank" rel="noopener">MySQL 分库分表，写得太好了！ - 51CTO.COM</a></li>
+</ol>
+<p>用程式去做導向動作</p>
+<ol start="2">
+<li>用%(程式餘數)去做分割</li>
+</ol>
+<p>當初看這段有想到之後擴增 Sharding 不是要做資料轉移<br>剛好這篇有提到 <a href="https://blog.csdn.net/lihongxun945/article/details/51482903" target="_blank" rel="noopener">数据库 sharding 和一致性哈希算法 - 言川的博客 - CSDN 博客</a><br>擴增事要做資料轉移的</p>
+<p>現有 code，可以參考 open bilibili 有實作這個功能 XDD</p>
+<h2 id="Sharding-各-table-的主鍵-id-不能重複"><a href="#Sharding-各-table-的主鍵-id-不能重複" class="headerlink" title="Sharding 各 table 的主鍵 id 不能重複"></a>Sharding 各 table 的主鍵 id 不能重複</h2><ol>
+<li>Sharding DB 設定 auto_increment 起始不一樣。(ex:DB1 0, DB2 10000000)</li>
+<li>拿不會重複資料串流水號，(EX:(USER_ID)UUID+id)</li>
+</ol>
+<h2 id="另類-DB-實作作法"><a href="#另類-DB-實作作法" class="headerlink" title="另類 DB 實作作法"></a>另類 DB 實作作法</h2><blockquote>
+<p>Vitess 就是由 Youtube 團隊為了解決資料量龐大、邏輯複雜導致 Query 的錯誤率升高，讓 Youtube 工程團隊有解不完的 Bug、加不完的班。又幸好當時寫這套前端窗口的人致力開源這份程式碼，才讓後世的人能不用辛苦地寫一份這種可怕的東西(我想也沒多少人寫得出來)。</p>
+</blockquote>
+<p><a href="https://www.infoq.cn/article/NHSAAmN*MfpLiTiTTEu5" target="_blank" rel="noopener">对比 Vitess，ShardingSphere 有哪些不同</a><br><a href="https://a28283878.github.io/documents/Database-Scaling-Vitess.html" target="_blank" rel="noopener">Mysql — sharding , partitioning | Richard’s Blog</a><br>kingshard<br><a href="https://github.com/flike/kingshard/blob/master/doc/KingDoc/how_to_use_kingshard.md" target="_blank" rel="noopener">kingshard/how_to_use_kingshard.md at master · flike/kingshard · GitHub</a></p>
+<h2 id="我有個大膽的想法"><a href="#我有個大膽的想法" class="headerlink" title="我有個大膽的想法"></a>我有個大膽的想法</h2><p>如果兩個 Array 做 join 動作有什麼做法?</p>
+<p>後來有找到這個<br><a href="https://hant.helplib.com/Web_Development/article_3813" target="_blank" rel="noopener">LINQ PHP 比較：YaLinqo，Ginq，Pinq<em>Web 開發</em>幫酷</a><br><a href="http://io.gchatelier.fr/blog/yalinqo-linq-php-exemple/#joio" target="_blank" rel="noopener">YaLinqo port de .NET 4 LINQ vers PHP - Par l’exemple</a></p>
+<p><strong>Yalinqo 裡面的 join 跟 SQL Join 好像不太一樣</strong><br>當然也有找到程式自幹的，<a href="https://stackoverflow.com/questions/25836473/how-to-simulate-the-sql-left-join-operation-using-php-arrays" target="_blank" rel="noopener">How to simulate the SQL LEFT JOIN operation using PHP arrays? - Stack Overflow</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//function to simulate the left join</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">left_join_array</span>(<span class="params">$left, $right, $left_join_on, $right_join_on = NULL</span>)</span>&#123;</span><br><span class="line">        $final= array();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(empty($right_join_on))</span><br><span class="line">            $right_join_on = $left_join_on;</span><br><span class="line"></span><br><span class="line">        foreach($left AS $k =&gt; $v)&#123;</span><br><span class="line">            $final[$k] = $v;</span><br><span class="line">            foreach($right AS $kk =&gt; $vv)&#123;</span><br><span class="line">                <span class="keyword">if</span>($v[$left_join_on] == $vv[$right_join_on])&#123;</span><br><span class="line">                    foreach($vv AS $key =&gt; $val)</span><br><span class="line">                        $final[$k][$key] = $val;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    foreach($vv AS $key =&gt; $val)</span><br><span class="line">                        $final[$k][$key] = NULL;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">       <span class="keyword">return</span> $final;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>比較特別要 join 兩個欄位，名稱可以不一樣，所以後面兩個參數是用來對應關聯屬性<br>我這邊有簡單實作<a href="http://sandbox.onlinephpfunctions.com/code/72c7b55bc7cf39f57454c5641e9e1ffd4758b178" target="_blank" rel="noopener">PHP Sandbox, test PHP online, PHP tester</a></p>
+<p>後來發現 join 空資料時候會有問題，小小修正</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">left_join_array</span>(<span class="params">$left, $right, $left_join_on, $right_join_on = NULL</span>)</span>&#123;</span><br><span class="line">    $final= array();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(empty($right_join_on))</span><br><span class="line">        $right_join_on = $left_join_on;</span><br><span class="line"></span><br><span class="line">    foreach($left AS $k =&gt; $v)&#123;</span><br><span class="line">        $final[$k] = $v;</span><br><span class="line">        foreach($right AS $kk =&gt; $vv)&#123;</span><br><span class="line">            <span class="keyword">if</span>($v[$left_join_on] == $vv[$right_join_on])&#123;</span><br><span class="line">                foreach($vv AS $key =&gt; $val)</span><br><span class="line">                    $final[$k][$key] = $val;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                foreach($vv AS $key =&gt; $val)&#123;</span><br><span class="line">                    <span class="keyword">if</span>($key == $left_join_on) <span class="keyword">continue</span>;</span><br><span class="line">                    $final[$k][$key] = NULL;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> $final;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改寫 inner join</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">left_join_array</span>(<span class="params">$left, $right, $left_join_on, $right_join_on = NULL</span>)</span>&#123;</span><br><span class="line">    $final= array();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(empty($right_join_on))</span><br><span class="line">        $right_join_on = $left_join_on;</span><br><span class="line"></span><br><span class="line">    foreach($left AS $k =&gt; $v)&#123;</span><br><span class="line">        foreach($right AS $kk =&gt; $vv)&#123;</span><br><span class="line">            <span class="keyword">if</span>($v[$left_join_on] == $vv[$right_join_on])&#123;</span><br><span class="line">                $final[$k] = $v;</span><br><span class="line">                foreach($vv AS $key =&gt; $val)</span><br><span class="line">                    $final[$k][$key] = $val;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> $final;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="找到其他套件"><a href="#找到其他套件" class="headerlink" title="找到其他套件"></a>找到其他套件</h3><p><a href="https://github.com/erdalceylan/array-join" target="_blank" rel="noopener">GitHub - erdalceylan/array-join: php array join</a></p>
+<h3 id="排序問題"><a href="#排序問題" class="headerlink" title="排序問題"></a>排序問題</h3><p><a href="https://stackoverflow.com/questions/2699086/how-to-sort-multi-dimensional-array-by-value" target="_blank" rel="noopener">php - How to Sort Multi-dimensional Array by Value? - Stack Overflow</a></p>
+<h3 id="效能上的問題"><a href="#效能上的問題" class="headerlink" title="效能上的問題"></a>效能上的問題</h3><blockquote>
+<p>其次你 left_join_array 功能是一個問題，它的速度是 O(n^3)，速度很慢，並儘可能內存去你分配噸也是如此，但在我們談論如何優化數據之前，我需要更多關於您想要處理數據的信息。<br>MySQL 將總是比任何你能在幾分鐘內寫速度更快，尤其是如果你沒有關於如何 RDBMS 工作的任何知識。您可以儘可能多地模擬它，但 MySQL 應該至少快一個數量級; MySQL 的連接算法是 O((n<em>m) log(n</em>m))，你的算法指數級地慢（字面上）。</p>
+</blockquote>
+<p><a href="http://cn.voidcc.com/question/p-vznlcvcp-tn.html" target="_blank" rel="noopener">PHP 脚本 - VoidCC</a><br><a href="https://stackoverflow.com/questions/46408886/php-script-for-optimizing-loading-csv-data/46409077#46409077" target="_blank" rel="noopener">algorithm - PHP script for optimizing loading CSV data - Stack Overflow</a><br>請用在資料少上面</p>
+<h3 id="物件快速轉陣列方法"><a href="#物件快速轉陣列方法" class="headerlink" title="物件快速轉陣列方法"></a>物件快速轉陣列方法</h3><p><code>json_decode(json_encode(\$products), true);</code><br><a href="https://stackoverflow.com/questions/4345554/convert-php-object-to-associative-array" target="_blank" rel="noopener">Convert PHP object to associative array - Stack Overflow</a></p>
+<p>其他想到再補…</p>
+<p><strong>2020-06-13</strong></p>
+<p>最近在看 Procedure stored 處理大量資料是不是最好解<br>看起來大量資料是…<br>在這之間有查到 sharding 文章覺得不錯，並整理一下</p>
+<p><a href="https://medium.com/@allaboutdataanalysis/%E5%AF%AB%E5%A5%BDsql%E5%BE%88%E6%9C%89%E5%BF%85%E8%A6%81-3206014d5422" target="_blank" rel="noopener">寫好SQL很有必要！ - 數據分析那些事 - Medium</a> <a href="/blog/2019/05/03/MySQL-sharding初步認識小記/web1.png" title="備份圖">備份圖</a></p>
+<p><a href="https://www.cnblogs.com/jshen/p/7682502.html" target="_blank" rel="noopener">分庫分表的基本思想 - -j神—– - 博客園</a> <a href="/blog/2019/05/03/MySQL-sharding初步認識小記/web2.png" title="備份圖">備份圖</a></p>
+<p>其他沒相關的整理</p>
+<p><a href="https://blog.darkthread.net/blog/async-batch-update-performance/" target="_blank" rel="noopener">使用非同步處理提升資料庫更新速度-黑暗執行緒</a></p>
+<p><a href="https://stackoverflow.com/questions/46051642/can-i-rollback-after-calling-stored-procedure-in-java-test" target="_blank" rel="noopener">oracle - Can I rollback after calling stored procedure in java test? - Stack Overflow</a></p>
+<p><strong>2020-06-18</strong></p>
+<ul>
+<li><p><a href="https://cloud.tencent.com/developer/article/1506228" target="_blank" rel="noopener">一次分表踩坑实践的探讨 - 云+社区 - 腾讯云</a><br>sharding 做報表還是很大的難題阿!!</p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/9a21b4f9c3dd" target="_blank" rel="noopener">SpringBoot2.x集成Sharding-JDBC实现分库分表 - 简书</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/74c02a2a89de" target="_blank" rel="noopener">Spring boot+mybatis+mysql+ sharding-jdbc实现分库分表学习demo - 簡書</a></p>
+</li>
+<li><p><a href="https://codertw.com/ios/61625/" target="_blank" rel="noopener">為什麼要用spring-data-jpa而不直接用hibernate | 程式前沿</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/blog/tags/sharding/" rel="tag"># sharding</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/03/codeigniter設定router踩雷/" rel="next" title="codeigniter設定router踩雷">
+                <i class="fa fa-chevron-left"></i> codeigniter設定router踩雷
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/05/05/CSS設定響應式-RWD-有幾種方法/" rel="prev" title="CSS設定響應式(RWD)有幾種方法">
+                CSS設定響應式(RWD)有幾種方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
 
     <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+      
     </div>
   </div>
 
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+          </div>
+          
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+<div align="center">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">malagege</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">588</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blog/categories/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">分類</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-name">標籤</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/malagege" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先做-Sharding，不能做-join-動作"><span class="nav-number">1.</span> <span class="nav-text">首先做 Sharding，不能做 join 動作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分表方式"><span class="nav-number">2.</span> <span class="nav-text">分表方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sharding-各-table-的主鍵-id-不能重複"><span class="nav-number">3.</span> <span class="nav-text">Sharding 各 table 的主鍵 id 不能重複</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#另類-DB-實作作法"><span class="nav-number">4.</span> <span class="nav-text">另類 DB 實作作法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我有個大膽的想法"><span class="nav-number">5.</span> <span class="nav-text">我有個大膽的想法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#找到其他套件"><span class="nav-number">5.1.</span> <span class="nav-text">找到其他套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序問題"><span class="nav-number">5.2.</span> <span class="nav-text">排序問題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效能上的問題"><span class="nav-number">5.3.</span> <span class="nav-text">效能上的問題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物件快速轉陣列方法"><span class="nav-number">5.4.</span> <span class="nav-text">物件快速轉陣列方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://malagege-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://malagege.github.io/blog/2019/05/03/MySQL-sharding初步認識小記/';
+          this.page.identifier = '2019/05/03/MySQL-sharding初步認識小記/';
+          this.page.title = 'MySQL sharding初步認識小記';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://malagege-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
