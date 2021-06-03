@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,">
+  <meta name="keywords" content="linux," />
 
 
 
@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="最近做到大檔案處理方式由於資料太多，程式在掃整個檔案目錄就花費很多時間在想有什麼工具可以監聽資料夾這個動作後來有找到 inotify-tools 可以做到這邊就小記">
-<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="inotify-tools 監聽資料夾裡檔案異動工具">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近做到大檔案處理方式由於資料太多，程式在掃整個檔案目錄就花費很多時間在想有什麼工具可以監聽資料夾這個動作後來有找到 inotify-tools 可以做到這邊就小記">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:44.056Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-01-12T06:47:03.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:55.064Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="inotify-tools 監聽資料夾裡檔案異動工具">
-<meta name="twitter:description" content="最近做到大檔案處理方式由於資料太多，程式在掃整個檔案目錄就花費很多時間在想有什麼工具可以監聽資料夾這個動作後來有找到 inotify-tools 可以做到這邊就小記">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/"/>
 
 
 
@@ -147,7 +147,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +159,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +171,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +205,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +215,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +225,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +235,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +245,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +260,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +281,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +314,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +359,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,8 +370,8 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/實用工具/" itemprop="url" rel="index">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
                     <span itemprop="name">實用工具</span>
                   </a>
                 </span>
@@ -384,8 +389,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/" itemprop="commentCount"></span>
+                <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +421,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -426,10 +442,10 @@
 <a id="more"></a>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install inotify-tools</span><br></pre></td></tr></table></figure>
 <h2 id="Linux-指令"><a href="#Linux-指令" class="headerlink" title="Linux 指令"></a>Linux 指令</h2><p>監聽 /home 資料夾目錄(文件的訪問，寫入，修改，刪除)</p>
-<h3 id="inotifywait"><a href="#inotifywait" class="headerlink" title="inotifywait"></a>inotifywait</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inotifywait -rm /home</span><br></pre></td></tr></table></figure>
+<h3 id="inotifywait"><a href="#inotifywait" class="headerlink" title="inotifywait"></a>inotifywait</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inotifywait -rm &#x2F;home</span><br></pre></td></tr></table></figure>
 <p>note:<br>-r 遞迴目錄都會接收到監聽<br>-m 收到監聽異動會持續監聽，不會停止</p>
 <p>ls 資料夾也會收到訊息</p>
-<h3 id="inotifywatch"><a href="#inotifywatch" class="headerlink" title="inotifywatch"></a>inotifywatch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inotifywatch -v -e access -e modify -t 60 -r /home</span><br></pre></td></tr></table></figure>
+<h3 id="inotifywatch"><a href="#inotifywatch" class="headerlink" title="inotifywatch"></a>inotifywatch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inotifywatch -v -e access -e modify -t 60 -r &#x2F;home</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Establishing watches…<br>Setting up watch(es) on /home<br>OK, /home is now being watched.<br>Total of 5 watches.<br>Finished establishing watches, now collecting statistics.<br>Will listen for events for 30 seconds.<br>total  access  modify  filename<br>13     3       10      /home/vagrant/</p>
 </blockquote>
@@ -535,25 +551,25 @@
 </ul>
 <h2 id="小小實驗"><a href="#小小實驗" class="headerlink" title="小小實驗"></a>小小實驗</h2><p><a href="https://malagege.github.io/blog/2020/01/10/cp-%E8%A4%87%E8%A3%BD%E6%AA%94%E6%A1%88%E5%8F%AF%E8%83%BD%E6%B2%92%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/">cp 複製檔案可能沒注意的事情 | 程式狂想筆記</a><br>實驗一下複製大檔案當下狀況<br>是忽看到 CLOSE_WRITE 做複製動作會比較安全</p>
 <p>看了一下<br>-e close_write,delete,create,attrib<br>-e close_write,delete,moved_to<br>我看其他篇文章有下這個<br>這樣真的用 close_write 比較安全</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/home/vagrant/vv/ CREATE file.txt</span><br><span class="line">/home/vagrant/vv/ OPEN file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">...</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ MODIFY file.txt</span><br><span class="line">/home/vagrant/vv/ CLOSE_WRITE,CLOSE file.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; CREATE file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; OPEN file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">...</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; MODIFY file.txt</span><br><span class="line">&#x2F;home&#x2F;vagrant&#x2F;vv&#x2F; CLOSE_WRITE,CLOSE file.txt</span><br></pre></td></tr></table></figure>
 <h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我本來想找找網路上有沒有搭配 inotify-tools 做 RabbitMQ 動作<br>是有找到 <a href="https://github.com/prashanthpai/sof-object-listing/tree/master/inotify" target="_blank" rel="noopener">sof-object-listing/inotify at master · prashanthpai/sof-object-listing</a>，但未確認是不是能真的用<br>大多是做 <strong>Web 監聽檔案</strong> 和 <strong>資料同步</strong> 居多<br>但是 inotify-tools 看起來也有接收大量打案也有極限<br>不知道是不是一個好的解決方式<br>也要看其況</p>
 <h2 id="相關連結"><a href="#相關連結" class="headerlink" title="相關連結"></a>相關連結</h2><ul>
-<li><a href="https://www.centos.bz/2012/06/inotify-tools-introduction/" target="_blank" rel="noopener">inotify-tools使用方法介紹-Linux運維日誌</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web1.png" title="備份圖">備份圖</a></li>
-<li><a href="http://www.1felse.com/blog/view.do?blogId=ff8080816102bdbb01610d45232d005a" target="_blank" rel="noopener">CentOS 6.9上inotify-tools 安裝及使用方法 - 1felse筆記</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web2.png" title="備份圖">備份圖</a></li>
-<li><a href="https://jackyu.cn/tech/rsync-plus-inotify-tools/" target="_blank" rel="noopener">rsync + inotify-tools 實現 Linux 文件雙向實時同步 – Jacky’s Blog</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web3.png" title="備份圖">備份圖</a></li>
-<li><a href="https://help.aliyun.com/document_detail/25475.html?spm=5176.2020520101.121.1.211d5c9aAGX8X2#allowHttp" target="_blank" rel="noopener">安全组应用案例<em>安全组</em>安全_云服务器 ECS-阿里云</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web4.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.centos.bz/2012/06/inotify-tools-introduction/" target="_blank" rel="noopener">inotify-tools使用方法介紹-Linux運維日誌</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web1.png" title="備份圖">備份圖</a></li>
+<li><a href="http://www.1felse.com/blog/view.do?blogId=ff8080816102bdbb01610d45232d005a" target="_blank" rel="noopener">CentOS 6.9上inotify-tools 安裝及使用方法 - 1felse筆記</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web2.png" title="備份圖">備份圖</a></li>
+<li><a href="https://jackyu.cn/tech/rsync-plus-inotify-tools/" target="_blank" rel="noopener">rsync + inotify-tools 實現 Linux 文件雙向實時同步 – Jacky’s Blog</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web3.png" title="備份圖">備份圖</a></li>
+<li><a href="https://help.aliyun.com/document_detail/25475.html?spm=5176.2020520101.121.1.211d5c9aAGX8X2#allowHttp" target="_blank" rel="noopener">安全组应用案例<em>安全组</em>安全_云服务器 ECS-阿里云</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web4.png" title="備份圖">備份圖</a></li>
 <li><a href="https://blog.csdn.net/chunyuan314/article/details/81750211" target="_blank" rel="noopener">PHP用inotify擴展監控文件_chunyuan314的博客-CSDN博客</a></li>
 <li><a href="https://man.linuxde.net/inotifywait" target="_blank" rel="noopener">inotifywait命令_Linux inotifywait 命令用法詳解：異步文件系統監控機制</a></li>
-<li><a href="https://www.cnblogs.com/spareribs/p/7722453.html" target="_blank" rel="noopener">inotify-tools + php腳本實現Linux服務器文件監控並郵件提醒 - 黃小濤 - 博客園</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web5.png" title="備份圖">備份圖</a></li>
-<li><a href="https://jusene.github.io/2017/02/18/rsync-inotify/" target="_blank" rel="noopener">Rsync+Inotify 搭建實時同步數據 ‧ Jusene’s Blog</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web6.png" title="備份圖">備份圖</a></li>
-<li><a href="https://www.devopssec.cn/2018/08/23/%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-RSYNC%E7%BB%93%E5%90%88INOTIFY-TOOLS%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5/" target="_blank" rel="noopener">數據同步工具-RSYNC結合INOTIFY-TOOLS實現數據實時同步 | DevOpsSec</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web7.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.cnblogs.com/spareribs/p/7722453.html" target="_blank" rel="noopener">inotify-tools + php腳本實現Linux服務器文件監控並郵件提醒 - 黃小濤 - 博客園</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web5.png" title="備份圖">備份圖</a></li>
+<li><a href="https://jusene.github.io/2017/02/18/rsync-inotify/" target="_blank" rel="noopener">Rsync+Inotify 搭建實時同步數據 ‧ Jusene’s Blog</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web6.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.devopssec.cn/2018/08/23/%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7-RSYNC%E7%BB%93%E5%90%88INOTIFY-TOOLS%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5/" target="_blank" rel="noopener">數據同步工具-RSYNC結合INOTIFY-TOOLS實現數據實時同步 | DevOpsSec</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web7.png" title="備份圖">備份圖</a></li>
 </ul>
 <p><strong>彩蛋</strong><br>突然想到上次研究 Oauth API<br>發現有些token 能做到時效性<br>但一直沒有時間紀錄<br>看到有一篇說 token 時效性問題<br>突然想到這樣不就會買台時間不一樣的問題<br>但後來發現原來 oauth 傳的時間是 duration 時間<br>所以不會有這個問題</p>
 <ul>
 <li><a href="https://carsonwah.github.io/http-authentication.html" target="_blank" rel="noopener">開發者必備知識 - HTTP認證（HTTP Authentication） - Carson’s Tech Note</a></li>
 <li><a href="https://github.com/thephpleague/oauth2-server" target="_blank" rel="noopener">thephpleague/oauth2-server: A spec compliant, secure by default PHP OAuth 2.0 Server</a></li>
 <li><a href="https://yhv5.com/token_1532.html?" target="_blank" rel="noopener">揭秘Token的工作原理 | Crazy’s Blog</a></li>
-<li><a href="https://columns.chicken-house.net/2016/12/01/microservice7-apitoken/" target="_blank" rel="noopener">微服務架構 #4, 如何強化微服務的安全性? API Token / JWT 的應用 — 安德魯的部落格</a> <a href="/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/web8.png" title="備份圖">備份圖</a></li>
+<li><a href="https://columns.chicken-house.net/2016/12/01/microservice7-apitoken/" target="_blank" rel="noopener">微服務架構 #4, 如何強化微服務的安全性? API Token / JWT 的應用 — 安德魯的部落格</a> <a href="/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/web8.png" title="備份圖">備份圖</a></li>
 <li><a href="https://juejin.im/post/5a6c60166fb9a01caf37a5e5" target="_blank" rel="noopener">Token 认证的来龙去脉 - 掘金</a></li>
 <li><a href="https://ithelp.ithome.com.tw/m/articles/10015681" target="_blank" rel="noopener">iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
 <li><a href="https://dotblogs.com.tw/litfal/2014/03/08/144298" target="_blank" rel="noopener">RSA數位簽章的簡單流程 | Litfal的S/L中心 - 點部落</a></li>
@@ -594,7 +610,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/01/12/Docker-in-Docker-DinD-和-RabbitMQ-解決大量資料方法小記/" rel="next" title="Docker in Docker (DinD) 和 RabbitMQ 解決大量資料方法小記">
+              <a href="/blog/2020/01/12/Docker-in-Docker-DinD-%E5%92%8C-RabbitMQ-%E8%A7%A3%E6%B1%BA%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/" rel="next" title="Docker in Docker (DinD) 和 RabbitMQ 解決大量資料方法小記">
                 <i class="fa fa-chevron-left"></i> Docker in Docker (DinD) 和 RabbitMQ 解決大量資料方法小記
               </a>
             
@@ -604,7 +620,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/01/12/Kubernetes-雜記/" rel="prev" title="Kubernetes 雜記">
+              <a href="/blog/2020/01/12/Kubernetes-%E9%9B%9C%E8%A8%98/" rel="prev" title="Kubernetes 雜記">
                 Kubernetes 雜記 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -640,7 +656,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -650,8 +666,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -688,7 +714,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -699,7 +725,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -929,7 +955,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/';
+          this.page.url = 'https://malagege.github.io/blog/2020/01/12/inotify-tools-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E5%A4%BE%E8%A3%A1%E6%AA%94%E6%A1%88%E7%95%B0%E5%8B%95%E5%B7%A5%E5%85%B7/';
           this.page.identifier = '2020/01/12/inotify-tools-監聽資料夾裡檔案異動工具/';
           this.page.title = 'inotify-tools 監聽資料夾裡檔案異動工具';
         };

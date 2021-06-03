@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="xlsx,pandas,excel merge,">
+  <meta name="keywords" content="xlsx,pandas,excel merge," />
 
 
 
@@ -80,18 +80,20 @@
 
 
 <meta name="description" content="平常維運大量資料，需要分批去撈資料需要把資料合併又要花很多工最近在找有什麼好用的方法">
-<meta name="keywords" content="xlsx,pandas,excel merge">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多個 Excel(xlsx) 合併方法">
-<meta property="og:url" content="https://malagege.github.io/blog/2021/03/31/多個-Excel-xlsx-合併方法/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="平常維運大量資料，需要分批去撈資料需要把資料合併又要花很多工最近在找有什麼好用的方法">
-<meta property="og:locale" content="zh-tw">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/xDd8DbS.png">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.386Z">
+<meta property="article:published_time" content="2021-03-31T12:30:25.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.803Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="xlsx">
+<meta property="article:tag" content="pandas">
+<meta property="article:tag" content="excel merge">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多個 Excel(xlsx) 合併方法">
-<meta name="twitter:description" content="平常維運大量資料，需要分批去撈資料需要把資料合併又要花很多工最近在找有什麼好用的方法">
 <meta name="twitter:image" content="https://i.imgur.com/xDd8DbS.png">
 
 
@@ -122,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2021/03/31/多個-Excel-xlsx-合併方法/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2021/03/31/多個-Excel-xlsx-合併方法/"/>
 
 
 
@@ -149,7 +151,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -158,9 +163,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -170,13 +175,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -204,9 +209,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -214,9 +219,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -224,9 +229,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -234,9 +239,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -244,9 +249,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -259,7 +264,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -280,7 +285,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -311,20 +318,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/03/31/多個-Excel-xlsx-合併方法/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -356,7 +363,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -367,8 +374,8 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/實用工具/" itemprop="url" rel="index">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
                     <span itemprop="name">實用工具</span>
                   </a>
                 </span>
@@ -386,8 +393,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2021/03/31/多個-Excel-xlsx-合併方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/31/多個-Excel-xlsx-合併方法/" itemprop="commentCount"></span>
+                <a href="/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2021/03/31/多個-Excel-xlsx-合併方法/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -417,8 +425,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -430,7 +448,7 @@
 <p><img src="https://i.imgur.com/xDd8DbS.png" alt=""></p>
 <p>免費版會有 Excel Merger Free 字眼，所以應該沒辦法免費使用…</p>
 <h2 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h2><p>建議直接安裝Anaconda3 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">--</span><br><span class="line">!dir /D *xlsx</span><br><span class="line"># window 沒 ls</span><br><span class="line">---</span><br><span class="line">import glob</span><br><span class="line">glob.glob(&quot;*xlsx&quot;)</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">all_data = pd.DataFrame()</span><br><span class="line">for f in glob.glob(&quot;*xlsx&quot;):</span><br><span class="line">    df = pd.read_excel(f)</span><br><span class="line">    all_data = all_data.append(df,ignore_index=True)</span><br><span class="line">    </span><br><span class="line">---    </span><br><span class="line"></span><br><span class="line">all_data.to_excel(&quot;result.xlsx&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">--</span><br><span class="line">!dir &#x2F;D *xlsx</span><br><span class="line"># window 沒 ls</span><br><span class="line">---</span><br><span class="line">import glob</span><br><span class="line">glob.glob(&quot;*xlsx&quot;)</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">all_data &#x3D; pd.DataFrame()</span><br><span class="line">for f in glob.glob(&quot;*xlsx&quot;):</span><br><span class="line">    df &#x3D; pd.read_excel(f)</span><br><span class="line">    all_data &#x3D; all_data.append(df,ignore_index&#x3D;True)</span><br><span class="line">    </span><br><span class="line">---    </span><br><span class="line"></span><br><span class="line">all_data.to_excel(&quot;result.xlsx&quot;)</span><br></pre></td></tr></table></figure>
 <p>參考: <a href="https://pbpython.com/excel-file-combine.html" target="_blank" rel="noopener">Combining Data From Multiple Excel Files - Practical Business Python</a></p>
 
       
@@ -466,7 +484,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2021/03/28/在-Raspberry-Pi-建置-V2ray/" rel="next" title="在 Raspberry Pi 建置 V2ray">
+              <a href="/blog/2021/03/28/%E5%9C%A8-Raspberry-Pi-%E5%BB%BA%E7%BD%AE-V2ray/" rel="next" title="在 Raspberry Pi 建置 V2ray">
                 <i class="fa fa-chevron-left"></i> 在 Raspberry Pi 建置 V2ray
               </a>
             
@@ -476,7 +494,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2021/03/31/wiremock-反向代理方法/" rel="prev" title="wiremock 反向代理方法">
+              <a href="/blog/2021/03/31/wiremock-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/" rel="prev" title="wiremock 反向代理方法">
                 wiremock 反向代理方法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -512,7 +530,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -522,8 +540,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -560,7 +588,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -571,7 +599,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -801,7 +829,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2021/03/31/多個-Excel-xlsx-合併方法/';
+          this.page.url = 'https://malagege.github.io/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/';
           this.page.identifier = '2021/03/31/多個-Excel-xlsx-合併方法/';
           this.page.title = '多個 Excel(xlsx) 合併方法';
         };

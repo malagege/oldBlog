@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="kill,pkill,">
+  <meta name="keywords" content="kill,pkill," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="最近有排程卡住MIS 殺掉(kill)程式，發現他的子程序還在跑我們都以為 kill 掉父程序就可以關掉子程序今天實驗出來是不能的 2021 沒想到這篇 Google 還滿容易搜尋到當初只是操作筆記，簡單紀錄不過有部分寫錯，把多餘錯誤份刪掉留下重點…避免其他人吸收錯誤知識">
-<meta name="keywords" content="kill,pkill">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何在 Linux 殺掉(kill)子程序">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/10/03/如何在-Linux-殺掉-kill-子程序/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/10/03/%E5%A6%82%E4%BD%95%E5%9C%A8-Linux-%E6%AE%BA%E6%8E%89-kill-%E5%AD%90%E7%A8%8B%E5%BA%8F/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近有排程卡住MIS 殺掉(kill)程式，發現他的子程序還在跑我們都以為 kill 掉父程序就可以關掉子程序今天實驗出來是不能的 2021 沒想到這篇 Google 還滿容易搜尋到當初只是操作筆記，簡單紀錄不過有部分寫錯，把多餘錯誤份刪掉留下重點…避免其他人吸收錯誤知識">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.391Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-10-03T12:50:49.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.807Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="kill">
+<meta property="article:tag" content="pkill">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何在 Linux 殺掉(kill)子程序">
-<meta name="twitter:description" content="最近有排程卡住MIS 殺掉(kill)程式，發現他的子程序還在跑我們都以為 kill 掉父程序就可以關掉子程序今天實驗出來是不能的 2021 沒想到這篇 Google 還滿容易搜尋到當初只是操作筆記，簡單紀錄不過有部分寫錯，把多餘錯誤份刪掉留下重點…避免其他人吸收錯誤知識">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/10/03/如何在-Linux-殺掉-kill-子程序/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/10/03/如何在-Linux-殺掉-kill-子程序/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/10/03/如何在-Linux-殺掉-kill-子程序/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/10/03/%E5%A6%82%E4%BD%95%E5%9C%A8-Linux-%E6%AE%BA%E6%8E%89-kill-%E5%AD%90%E7%A8%8B%E5%BA%8F/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/10/03/如何在-Linux-殺掉-kill-子程序/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/03/如何在-Linux-殺掉-kill-子程序/" itemprop="commentCount"></span>
+                <a href="/blog/2019/10/03/%E5%A6%82%E4%BD%95%E5%9C%A8-Linux-%E6%AE%BA%E6%8E%89-kill-%E5%AD%90%E7%A8%8B%E5%BA%8F/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/10/03/如何在-Linux-殺掉-kill-子程序/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -440,7 +457,7 @@
 <p>PGID 也可以用 ps 指令去查<br><a href="https://unix.stackexchange.com/questions/82724/ps-switches-to-display-pid-ppid-pgid-and-sid-collectively" target="_blank" rel="noopener">process - ps switches to display PID, PPID, PGID, and SID collectively - Unix &amp; Linux Stack Exchange</a></p>
 <p><strong>2020-11-26</strong><br>最近用碰觸 kill<br>忘記一般 kill 要加負號才能刪掉子程序</p>
 <p>最近也在探討 nohup 和 &amp; 也能不能做尋組刪除<br>答案是可以的</p>
-<p>可以參考: <a href="https://juejin.cn/post/6844903927989665806?utm_campaign=devtool.com&amp;utm_medium=devtool.com&amp;utm_medium=devtool.com&amp;utm_source=devtool.com%3Futm_campaign%3Ddevtool.com&amp;utm_source=devtool.com" target="_blank" rel="noopener">[譯] 如何殺死一個進程和它的所有子進程</a> <a href="/blog/2019/10/03/如何在-Linux-殺掉-kill-子程序/web1.png" title="備份圖">備份圖</a></p>
+<p>可以參考: <a href="https://juejin.cn/post/6844903927989665806?utm_campaign=devtool.com&amp;utm_medium=devtool.com&amp;utm_medium=devtool.com&amp;utm_source=devtool.com%3Futm_campaign%3Ddevtool.com&amp;utm_source=devtool.com" target="_blank" rel="noopener">[譯] 如何殺死一個進程和它的所有子進程</a> <a href="/blog/2019/10/03/%E5%A6%82%E4%BD%95%E5%9C%A8-Linux-%E6%AE%BA%E6%8E%89-kill-%E5%AD%90%E7%A8%8B%E5%BA%8F/web1.png" title="備份圖">備份圖</a></p>
 <p>最近想做一個守護進程…<br>再研究…</p>
 <p>參考連結:</p>
 <blockquote>
@@ -467,7 +484,7 @@
 <p>pkill -9 -x $process_name</p>
 <p>9.Using pkill, kill processes by session</p>
 <p>pkill -9 -s $sess</p>
-<p>How to get PID,PGID,sessionid etc?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; # ps -o pid,ppid,pgid,gid,sess,cmd -U root</span><br><span class="line">&gt;   PID  PPID  PGID   GID  SESS CMD</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<p>How to get PID,PGID,sessionid etc?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ps -o pid,ppid,pgid,gid,sess,cmd -U root</span><br><span class="line">  PID  PPID  PGID   GID  SESS CMD</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <ul>
 <li><a href="http://fibrevillage.com/sysadmin/237-ways-to-kill-parent-and-child-processes-in-one-command" target="_blank" rel="noopener">Ways to kill parent and child processes in one command - Fibrevillage</a></li>
@@ -511,7 +528,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/10/01/用-Markdown-畫循序圖小記/" rel="next" title="用 Markdown 畫循序圖小記">
+              <a href="/blog/2019/10/01/%E7%94%A8-Markdown-%E7%95%AB%E5%BE%AA%E5%BA%8F%E5%9C%96%E5%B0%8F%E8%A8%98/" rel="next" title="用 Markdown 畫循序圖小記">
                 <i class="fa fa-chevron-left"></i> 用 Markdown 畫循序圖小記
               </a>
             
@@ -521,7 +538,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/10/05/在-Linux-設定排程超過執行時間-kill-掉方法/" rel="prev" title="在 Linux 設定排程超過執行時間 kill 掉方法">
+              <a href="/blog/2019/10/05/%E5%9C%A8-Linux-%E8%A8%AD%E5%AE%9A%E6%8E%92%E7%A8%8B%E8%B6%85%E9%81%8E%E5%9F%B7%E8%A1%8C%E6%99%82%E9%96%93-kill-%E6%8E%89%E6%96%B9%E6%B3%95/" rel="prev" title="在 Linux 設定排程超過執行時間 kill 掉方法">
                 在 Linux 設定排程超過執行時間 kill 掉方法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -557,7 +574,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -567,8 +584,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -605,7 +632,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -616,7 +643,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -846,7 +873,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/10/03/如何在-Linux-殺掉-kill-子程序/';
+          this.page.url = 'https://malagege.github.io/blog/2019/10/03/%E5%A6%82%E4%BD%95%E5%9C%A8-Linux-%E6%AE%BA%E6%8E%89-kill-%E5%AD%90%E7%A8%8B%E5%BA%8F/';
           this.page.identifier = '2019/10/03/如何在-Linux-殺掉-kill-子程序/';
           this.page.title = '如何在 Linux 殺掉(kill)子程序';
         };

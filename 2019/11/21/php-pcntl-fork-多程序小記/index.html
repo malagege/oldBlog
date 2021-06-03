@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="php,">
+  <meta name="keywords" content="php," />
 
 
 
@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="之前在 swoole 有簡單紀錄 pcntl_fork我在寫那篇之前，以為 pcntl_fork 執行子程序大概不會收到執行結果不過今天仔細看，可以接收到程式執行結果但還是不能傳接收參數值">
-<meta name="keywords" content="php">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php pcntl_fork 多程序小記">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/11/21/php-pcntl-fork-多程序小記/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="之前在 swoole 有簡單紀錄 pcntl_fork我在寫那篇之前，以為 pcntl_fork 執行子程序大概不會收到執行結果不過今天仔細看，可以接收到程式執行結果但還是不能傳接收參數值">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:45.154Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-11-21T12:43:51.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:56.211Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="php">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="php pcntl_fork 多程序小記">
-<meta name="twitter:description" content="之前在 swoole 有簡單紀錄 pcntl_fork我在寫那篇之前，以為 pcntl_fork 執行子程序大概不會收到執行結果不過今天仔細看，可以接收到程式執行結果但還是不能傳接收參數值">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/11/21/php-pcntl-fork-多程序小記/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/11/21/php-pcntl-fork-多程序小記/"/>
 
 
 
@@ -147,7 +147,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +159,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +171,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +205,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +215,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +225,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +235,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +245,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +260,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +281,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +314,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/11/21/php-pcntl-fork-多程序小記/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +359,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +370,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/PHP/" itemprop="url" rel="index">
                     <span itemprop="name">PHP</span>
                   </a>
@@ -384,8 +389,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/11/21/php-pcntl-fork-多程序小記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/21/php-pcntl-fork-多程序小記/" itemprop="commentCount"></span>
+                <a href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/11/21/php-pcntl-fork-多程序小記/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +421,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -426,12 +442,12 @@
 <a id="more"></a>
 <h2 id="簡單範例"><a href="#簡單範例" class="headerlink" title="簡單範例"></a>簡單範例</h2><p><a href="http://pkwbim-programming-note.blogspot.com/2008/01/phpmulti-process-1.html" target="_blank" rel="noopener">多采多姿的程式筆記: 利用PHP寫Multi Process程式 1 - 產生子程序</a><br>基本上裡面範例可以直接拿來改<br>建議先了解 fork 子程序概念會是最好</p>
 <p><a href="http://pkwbim-programming-note.blogspot.com/2008/01/phpmulti-process-2.html" target="_blank" rel="noopener">多采多姿的程式筆記: 利用PHP用寫Multi Process程式 - 2 使用信號機</a><br>ftok  swoole 裡面有 Message Quene 有提到</p>
-<h2 id="pcntl-wait、pcntl-waitpid"><a href="#pcntl-wait、pcntl-waitpid" class="headerlink" title="pcntl_wait、pcntl_waitpid"></a>pcntl_wait、pcntl_waitpid</h2><p><a href="https://www.cnblogs.com/leezhxing/p/5223289.html" target="_blank" rel="noopener">php多进程总结 - leezhxing - 博客园</a><a href="/blog/2019/11/21/php-pcntl-fork-多程序小記/web2.png" title="備份圖">備份圖</a></p>
+<h2 id="pcntl-wait、pcntl-waitpid"><a href="#pcntl-wait、pcntl-waitpid" class="headerlink" title="pcntl_wait、pcntl_waitpid"></a>pcntl_wait、pcntl_waitpid</h2><p><a href="https://www.cnblogs.com/leezhxing/p/5223289.html" target="_blank" rel="noopener">php多进程总结 - leezhxing - 博客园</a><a href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/web2.png" title="備份圖">備份圖</a></p>
 <p>裡面也有提 殭屍程序</p>
 <p><a href="http://blog.jangmt.com/2015/02/php-multi-process-ping.html" target="_blank" rel="noopener">八克里: PHP Multi Process 程式以 PING 多主機應用為範例</a><br>備份<a href="https://github.com/malagege/mylinux_document/blob/master/ping.php" target="_blank" rel="noopener">mylinux_document/ping.php at master · malagege/mylinux_document</a></p>
-<h2 id="DB-連線問題"><a href="#DB-連線問題" class="headerlink" title="DB 連線問題"></a>DB 連線問題</h2><p>目前有簡單實驗，父子 DB 連線是可以共用的<br>但不建議這樣做，同時在跑的程式結果有做 交易(translation) 就很麻煩<br>所以還是分開來會比較好<br><a href="https://www.cnblogs.com/AllenChou/p/6607182.html" target="_blank" rel="noopener">pcntl_fork 導致 MySQL server has gone away 解決方案 - AllenChou - 博客園</a> <a href="/blog/2019/11/21/php-pcntl-fork-多程序小記/web3.png" title="備份圖">備份圖</a></p>
+<h2 id="DB-連線問題"><a href="#DB-連線問題" class="headerlink" title="DB 連線問題"></a>DB 連線問題</h2><p>目前有簡單實驗，父子 DB 連線是可以共用的<br>但不建議這樣做，同時在跑的程式結果有做 交易(translation) 就很麻煩<br>所以還是分開來會比較好<br><a href="https://www.cnblogs.com/AllenChou/p/6607182.html" target="_blank" rel="noopener">pcntl_fork 導致 MySQL server has gone away 解決方案 - AllenChou - 博客園</a> <a href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/web3.png" title="備份圖">備份圖</a></p>
 <p><strong>2019-12-04</strong><br>建議做 fork 時候最好先把連線關掉<br>完成重新做連線會比較好<br>否則會預到很多問題</p>
-<h2 id="Daemon"><a href="#Daemon" class="headerlink" title="Daemon"></a>Daemon</h2><p><a href="https://anyof.me/articles/489" target="_blank" rel="noopener">PHP实现daemon | Nginlion</a> <a href="/blog/2019/11/21/php-pcntl-fork-多程序小記/web4.png" title="備份圖">備份圖</a><br><a href="http://wsfdl.com/linux/2015/10/18/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AAdaemon.html" target="_blank" rel="noopener">如何优雅地运行一个 Daemon</a><br><a href="https://sunzy.me/2017/09/php-multi-process/" target="_blank" rel="noopener">PHP多进程编程 | 第二世</a> <a href="/blog/2019/11/21/php-pcntl-fork-多程序小記/web5.png" title="備份圖">備份圖</a></p>
+<h2 id="Daemon"><a href="#Daemon" class="headerlink" title="Daemon"></a>Daemon</h2><p><a href="https://anyof.me/articles/489" target="_blank" rel="noopener">PHP实现daemon | Nginlion</a> <a href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/web4.png" title="備份圖">備份圖</a><br><a href="http://wsfdl.com/linux/2015/10/18/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AAdaemon.html" target="_blank" rel="noopener">如何优雅地运行一个 Daemon</a><br><a href="https://sunzy.me/2017/09/php-multi-process/" target="_blank" rel="noopener">PHP多进程编程 | 第二世</a> <a href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/web5.png" title="備份圖">備份圖</a></p>
 <h3 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h3><p><a href="https://github.com/shaneharter/PHP-Daemon" target="_blank" rel="noopener">shaneharter/PHP-Daemon: Build production-ready Daemons using PHP 5.3+. Build fault-tolerant applications without the boilerplate.</a><br><a href="https://www.cnblogs.com/kerrycode/p/3595724.html" target="_blank" rel="noopener">深入理解Linux修改hostname - 潇湘隐者 - 博客园</a><br><a href="https://blog.gtwang.org/programming/bash-tutorial-parallel-subprocesses-and-wait/" target="_blank" rel="noopener">Bash 程式設計教學：平行執行背景子行程，用 wait 等待工作結束 - G. T. Wang</a></p>
 
       
@@ -463,7 +479,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/11/12/Shell-快速統計資料夾下底層檔案數量/" rel="next" title="Shell 快速統計資料夾下底層檔案數量">
+              <a href="/blog/2019/11/12/Shell-%E5%BF%AB%E9%80%9F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99%E5%A4%BE%E4%B8%8B%E5%BA%95%E5%B1%A4%E6%AA%94%E6%A1%88%E6%95%B8%E9%87%8F/" rel="next" title="Shell 快速統計資料夾下底層檔案數量">
                 <i class="fa fa-chevron-left"></i> Shell 快速統計資料夾下底層檔案數量
               </a>
             
@@ -473,7 +489,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/12/07/docker-swarm-一些指令相關整理/" rel="prev" title="docker swarm 一些指令相關整理">
+              <a href="/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/" rel="prev" title="docker swarm 一些指令相關整理">
                 docker swarm 一些指令相關整理 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -509,7 +525,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -519,8 +535,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -557,7 +583,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -568,7 +594,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -798,7 +824,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/11/21/php-pcntl-fork-多程序小記/';
+          this.page.url = 'https://malagege.github.io/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/';
           this.page.identifier = '2019/11/21/php-pcntl-fork-多程序小記/';
           this.page.title = 'php pcntl_fork 多程序小記';
         };

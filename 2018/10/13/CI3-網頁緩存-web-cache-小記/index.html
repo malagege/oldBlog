@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="CI,">
+  <meta name="keywords" content="CI," />
 
 
 
@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="最近做一個排行榜API但回傳時間真的太久了於是做一個緩存突然想到Codeigiter內建有網頁緩存裝置竟然內建有這個功能那還要自己手刻嗎XD">
-<meta name="keywords" content="CI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CI3 網頁緩存(web cache)小記">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/10/13/CI3-網頁緩存-web-cache-小記/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/10/13/CI3-%E7%B6%B2%E9%A0%81%E7%B7%A9%E5%AD%98-web-cache-%E5%B0%8F%E8%A8%98/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近做一個排行榜API但回傳時間真的太久了於是做一個緩存突然想到Codeigiter內建有網頁緩存裝置竟然內建有這個功能那還要自己手刻嗎XD">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.008Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-10-13T10:39:39.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:49.205Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="CI">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CI3 網頁緩存(web cache)小記">
-<meta name="twitter:description" content="最近做一個排行榜API但回傳時間真的太久了於是做一個緩存突然想到Codeigiter內建有網頁緩存裝置竟然內建有這個功能那還要自己手刻嗎XD">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/10/13/CI3-網頁緩存-web-cache-小記/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/10/13/CI3-網頁緩存-web-cache-小記/"/>
 
 
 
@@ -147,7 +147,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +159,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +171,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +205,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +215,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +225,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +235,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +245,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +260,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +281,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +314,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/10/13/CI3-網頁緩存-web-cache-小記/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/10/13/CI3-%E7%B6%B2%E9%A0%81%E7%B7%A9%E5%AD%98-web-cache-%E5%B0%8F%E8%A8%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +359,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +370,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Codeigiter/" itemprop="url" rel="index">
                     <span itemprop="name">Codeigiter</span>
                   </a>
@@ -384,8 +389,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/10/13/CI3-網頁緩存-web-cache-小記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/13/CI3-網頁緩存-web-cache-小記/" itemprop="commentCount"></span>
+                <a href="/blog/2018/10/13/CI3-%E7%B6%B2%E9%A0%81%E7%B7%A9%E5%AD%98-web-cache-%E5%B0%8F%E8%A8%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/10/13/CI3-網頁緩存-web-cache-小記/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +421,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -431,8 +447,7 @@
 <p>最後小記</p>
 <p>因為PHP Codeigiter是吃a權限(不是apache)<br>但是cache是資料夾是設定755<br>原本想先對cache做777<br>其實我還不知道資料夾權限是吃什麼<br>最後可以跑cache</p>
 <p>所以最後看到cache檔案室吃<code>apache</code><br>其實把那個資料夾改成<code>apache</code>權限就能用了<br>也沒必要設定777</p>
-<p>假如真的覺得他的cache檔案設定不太好<br>可以從設定檔設定放置路徑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$config[&apos;cache_path&apos;] = &quot;&quot;。如果您不想使用默認的緩存目錄（system/cache/）來存儲緩存，可以設置完整的服務器目錄</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://hk.saowen.com/a/2247a2730eb875d73a771b369fa169f2ec85e0a7766e7b9d69fe5cc1fded6849" target="_blank" rel="noopener">【ci框架】config.php配置文檔解讀 - 掃文資訊</a></p>
+<p>假如真的覺得他的cache檔案設定不太好<br>可以從設定檔設定放置路徑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$config[&#39;cache_path&#39;] &#x3D; &quot;&quot;。如果您不想使用默認的緩存目錄（system&#x2F;cache&#x2F;）來存儲緩存，可以設置完整的服務器目錄</span><br></pre></td></tr></table></figure><br><a href="https://hk.saowen.com/a/2247a2730eb875d73a771b369fa169f2ec85e0a7766e7b9d69fe5cc1fded6849" target="_blank" rel="noopener">【ci框架】config.php配置文檔解讀 - 掃文資訊</a></p>
 <p>有空來做php 讀取封包header筆記</p>
 <ul>
 <li><a href="https://blog.longwin.com.tw/2017/10/php-get-custom-http-header-2017/" target="_blank" rel="noopener">PHP 讀取客製化傳送進來的 HTTP Header | Tsung’s Blog</a></li>
@@ -470,7 +485,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/10/13/whistle-在Linux下類似Fiddler抓封包工具/" rel="next" title="whistle - 在Linux下類似Fiddler抓封包工具">
+              <a href="/blog/2018/10/13/whistle-%E5%9C%A8Linux%E4%B8%8B%E9%A1%9E%E4%BC%BCFiddler%E6%8A%93%E5%B0%81%E5%8C%85%E5%B7%A5%E5%85%B7/" rel="next" title="whistle - 在Linux下類似Fiddler抓封包工具">
                 <i class="fa fa-chevron-left"></i> whistle - 在Linux下類似Fiddler抓封包工具
               </a>
             
@@ -480,7 +495,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/10/19/electron使用winapi筆記/" rel="prev" title="electron使用winapi筆記">
+              <a href="/blog/2018/10/19/electron%E4%BD%BF%E7%94%A8winapi%E7%AD%86%E8%A8%98/" rel="prev" title="electron使用winapi筆記">
                 electron使用winapi筆記 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -516,7 +531,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -526,8 +541,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -555,7 +580,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -566,7 +591,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -780,7 +805,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/10/13/CI3-網頁緩存-web-cache-小記/';
+          this.page.url = 'https://malagege.github.io/blog/2018/10/13/CI3-%E7%B6%B2%E9%A0%81%E7%B7%A9%E5%AD%98-web-cache-%E5%B0%8F%E8%A8%98/';
           this.page.identifier = '2018/10/13/CI3-網頁緩存-web-cache-小記/';
           this.page.title = 'CI3 網頁緩存(web cache)小記';
         };

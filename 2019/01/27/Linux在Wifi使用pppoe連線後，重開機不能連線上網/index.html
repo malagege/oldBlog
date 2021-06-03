@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,wifi,">
+  <meta name="keywords" content="linux,wifi," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="在使用Linux 使用 pppoe 連線方法小記 | 程式狂想筆記後重開機發現不能上網我還以為是 wifi 壞掉好在最後查到原因在此筆記">
-<meta name="keywords" content="linux,wifi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux在Wifi使用pppoe連線後，重開機不能連線上網">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/01/27/Linux%E5%9C%A8Wifi%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E5%BE%8C%EF%BC%8C%E9%87%8D%E9%96%8B%E6%A9%9F%E4%B8%8D%E8%83%BD%E9%80%A3%E7%B7%9A%E4%B8%8A%E7%B6%B2/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="在使用Linux 使用 pppoe 連線方法小記 | 程式狂想筆記後重開機發現不能上網我還以為是 wifi 壞掉好在最後查到原因在此筆記">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.570Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-01-27T11:47:29.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:53.395Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="wifi">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux在Wifi使用pppoe連線後，重開機不能連線上網">
-<meta name="twitter:description" content="在使用Linux 使用 pppoe 連線方法小記 | 程式狂想筆記後重開機發現不能上網我還以為是 wifi 壞掉好在最後查到原因在此筆記">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/01/27/Linux%E5%9C%A8Wifi%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E5%BE%8C%EF%BC%8C%E9%87%8D%E9%96%8B%E6%A9%9F%E4%B8%8D%E8%83%BD%E9%80%A3%E7%B7%9A%E4%B8%8A%E7%B6%B2/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/" itemprop="commentCount"></span>
+                <a href="/blog/2019/01/27/Linux%E5%9C%A8Wifi%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E5%BE%8C%EF%BC%8C%E9%87%8D%E9%96%8B%E6%A9%9F%E4%B8%8D%E8%83%BD%E9%80%A3%E7%B7%9A%E4%B8%8A%E7%B6%B2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -425,7 +442,7 @@
         <p>在使用<a href="https://malagege.github.io/blog/2019/01/26/Linux%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/">Linux 使用 pppoe 連線方法小記 | 程式狂想筆記</a>後<br>重開機發現不能上網<br>我還以為是 wifi 壞掉<br>好在最後查到原因<br>在此筆記</p>
 <a id="more"></a>
 <p>首先，我在<code>sudo vim /etc/network/interfaces</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># interfaces(5) file used by ifup(8) and ifdown(8)</span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line">iface dsl-provider inet ppp</span><br><span class="line">pre-up /bin/ip link set wlp3s0 up # line maintained by pppoeconf</span><br><span class="line">provider dsl-provider</span><br><span class="line"></span><br><span class="line">auto wlp3s0</span><br><span class="line">iface wlp3s0 inet manual</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># interfaces(5) file used by ifup(8) and ifdown(8)</span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line">iface dsl-provider inet ppp</span><br><span class="line">pre-up &#x2F;bin&#x2F;ip link set wlp3s0 up # line maintained by pppoeconf</span><br><span class="line">provider dsl-provider</span><br><span class="line"></span><br><span class="line">auto wlp3s0</span><br><span class="line">iface wlp3s0 inet manual</span><br></pre></td></tr></table></figure>
 <p>在意開始之前，只有這兩段</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br></pre></td></tr></table></figure>
 <p><del>不過，重開機才能確定網路才能設定到</del><br>後來網路上找到<code>sudo service networking restart</code><br>不過我在 ElementaryOS 上沒有什麼效果<br>後來</p>
@@ -442,9 +459,9 @@
 </ul>
 <p><strong>重新檢查連線</strong></p>
 <p><a href="http://yhhuang1966.blogspot.com/2018/01/blog-post.html" target="_blank" rel="noopener">小狐狸事務所: 樹莓派自動偵測網路斷線時重開機的方法</a><br><a href="https://weworkweplay.com/play/rebooting-the-raspberry-pi-when-it-loses-wireless-connection-wifi/" target="_blank" rel="noopener">Rebooting the Raspberry Pi when it loses wireless connection | We Work We Play</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ping -c4 192.168.1.1 &gt; /dev/null</span><br><span class="line"> </span><br><span class="line">if [ $? != 0 ] </span><br><span class="line">then</span><br><span class="line">  sudo /sbin/shutdown -r now</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ping -c4 192.168.1.1 &gt; &#x2F;dev&#x2F;null</span><br><span class="line"> </span><br><span class="line">if [ $? !&#x3D; 0 ] </span><br><span class="line">then</span><br><span class="line">  sudo &#x2F;sbin&#x2F;shutdown -r now</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 <p><em>/5 </em> <em> </em> * /usr/bin/sudo -H /usr/local/bin/checkwifi.sh &gt;&gt; /dev/null 2&gt;&amp;1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ping -c4 192.168.1.1 &gt; /dev/null</span><br><span class="line"> </span><br><span class="line">if [ $? != 0 ] </span><br><span class="line">then</span><br><span class="line">  echo &quot;No network connection, restarting wlan0&quot;</span><br><span class="line">  /sbin/ifdown &apos;wlan0&apos;</span><br><span class="line">  sleep 5</span><br><span class="line">  /sbin/ifup --force &apos;wlan0&apos;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ping -c4 192.168.1.1 &gt; &#x2F;dev&#x2F;null</span><br><span class="line"> </span><br><span class="line">if [ $? !&#x3D; 0 ] </span><br><span class="line">then</span><br><span class="line">  echo &quot;No network connection, restarting wlan0&quot;</span><br><span class="line">  &#x2F;sbin&#x2F;ifdown &#39;wlan0&#39;</span><br><span class="line">  sleep 5</span><br><span class="line">  &#x2F;sbin&#x2F;ifup --force &#39;wlan0&#39;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 <p><strong>2.為了要使raspberry pi  不要進入省電或自動將無線網路關掉</strong><br>參考:<a href="http://learn-infotech-blog.blogspot.com/2015/04/raspberry-pi-2-modelb.html" target="_blank" rel="noopener">IT學習日誌: [Raspberry Pi 2 ModelB] 無線網路常常斷線解決方法</a><br>在/etc/network/interfaces<br>加上一行<br>wireless-power off<br> 外</p>
 <p>修改   /etc/kbd/config<br>將 BLANK_TIME= 改為 BLANK_TIME=0<br>和 POWERDOWN_TIME=  改為  POWERDOWN_TIME=0 </p>
 
@@ -479,7 +496,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/01/26/Linux使用pppoe連線方法小記/" rel="next" title="Linux使用pppoe連線方法小記">
+              <a href="/blog/2019/01/26/Linux%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/" rel="next" title="Linux使用pppoe連線方法小記">
                 <i class="fa fa-chevron-left"></i> Linux使用pppoe連線方法小記
               </a>
             
@@ -489,7 +506,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/01/28/PHP有關參照-Reference-的那些事/" rel="prev" title="PHP有關參照(Reference)的那些事">
+              <a href="/blog/2019/01/28/PHP%E6%9C%89%E9%97%9C%E5%8F%83%E7%85%A7-Reference-%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/" rel="prev" title="PHP有關參照(Reference)的那些事">
                 PHP有關參照(Reference)的那些事 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -525,7 +542,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -535,8 +552,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -564,7 +591,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -575,7 +602,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -789,7 +816,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/';
+          this.page.url = 'https://malagege.github.io/blog/2019/01/27/Linux%E5%9C%A8Wifi%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E5%BE%8C%EF%BC%8C%E9%87%8D%E9%96%8B%E6%A9%9F%E4%B8%8D%E8%83%BD%E9%80%A3%E7%B7%9A%E4%B8%8A%E7%B6%B2/';
           this.page.identifier = '2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/';
           this.page.title = 'Linux在Wifi使用pppoe連線後，重開機不能連線上網';
         };

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,nat,iptables,">
+  <meta name="keywords" content="linux,nat,iptables," />
 
 
 
@@ -80,17 +80,19 @@
 
 
 <meta name="description" content="之前有跟別的公司合作取得三組 VPN 帳號密碼但是我們團隊有 10 人這三組怎麼做雖然最近專案已經結束了我有看到使用 Linux iptables 設定 NAT 轉發封包今天就簡單嘗試">
-<meta name="keywords" content="linux,nat,iptables">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 iptables 實做 NAT 轉發封包">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/06/14/使用-iptables-實做-NAT-轉發封包/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/06/14/%E4%BD%BF%E7%94%A8-iptables-%E5%AF%A6%E5%81%9A-NAT-%E8%BD%89%E7%99%BC%E5%B0%81%E5%8C%85/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="之前有跟別的公司合作取得三組 VPN 帳號密碼但是我們團隊有 10 人這三組怎麼做雖然最近專案已經結束了我有看到使用 Linux iptables 設定 NAT 轉發封包今天就簡單嘗試">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.199Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-06-14T09:38:42.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.620Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="nat">
+<meta property="article:tag" content="iptables">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 iptables 實做 NAT 轉發封包">
-<meta name="twitter:description" content="之前有跟別的公司合作取得三組 VPN 帳號密碼但是我們團隊有 10 人這三組怎麼做雖然最近專案已經結束了我有看到使用 Linux iptables 設定 NAT 轉發封包今天就簡單嘗試">
 
 
 
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/06/14/使用-iptables-實做-NAT-轉發封包/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/06/14/使用-iptables-實做-NAT-轉發封包/"/>
 
 
 
@@ -147,7 +149,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +161,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +173,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +207,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +217,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +227,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +237,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +247,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +262,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +283,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +316,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/06/14/使用-iptables-實做-NAT-轉發封包/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/06/14/%E4%BD%BF%E7%94%A8-iptables-%E5%AF%A6%E5%81%9A-NAT-%E8%BD%89%E7%99%BC%E5%B0%81%E5%8C%85/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +361,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +372,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +391,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/06/14/使用-iptables-實做-NAT-轉發封包/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/06/14/使用-iptables-實做-NAT-轉發封包/" itemprop="commentCount"></span>
+                <a href="/blog/2020/06/14/%E4%BD%BF%E7%94%A8-iptables-%E5%AF%A6%E5%81%9A-NAT-%E8%BD%89%E7%99%BC%E5%B0%81%E5%8C%85/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/06/14/使用-iptables-實做-NAT-轉發封包/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +423,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -460,7 +478,7 @@
 <p>PC(一般):<br>IP: 192.168.100.50(起設定在 192.168.100.0/24 範圍內)<br>Mask: 255.255.255.0<br>Gateway: 192.168.100.2</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. Define variables</span></span><br><span class="line"><span class="comment">## WAN_IF 是設定轉發出去 IP &amp; 從哪邊轉發出去</span></span><br><span class="line"><span class="comment">## 我這邊是 Linux 在 1 個 Wifi Interface 做 2 個 IP</span></span><br><span class="line"><span class="comment">## 這邊我主要是對另一台做連線動作</span></span><br><span class="line"><span class="comment">## 保哥範例是 PPPOE ，這邊可以設定 VPN Interface</span></span><br><span class="line"></span><br><span class="line">WAN_IF=<span class="string">"wlp3s0"</span></span><br><span class="line">WAN_IP=<span class="string">"192.168.1.117"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 進來 IP 做轉發，通常是設定區域網路 IP 範圍</span></span><br><span class="line"><span class="comment">## 這邊我也是用同一個 Interface</span></span><br><span class="line"></span><br><span class="line">LAN_IF=<span class="string">"wlp3s0"</span></span><br><span class="line">LAN_IP=<span class="string">"192.168.100.0/24"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. modprobe</span></span><br><span class="line"></span><br><span class="line">/sbin/modprobe ip_tables</span><br><span class="line">/sbin/modprobe iptable_filter</span><br><span class="line">/sbin/modprobe ip_conntrack</span><br><span class="line">/sbin/modprobe ip_conntrack_ftp</span><br><span class="line">/sbin/modprobe ip_conntrack_irc</span><br><span class="line">/sbin/modprobe ipt_state</span><br><span class="line">/sbin/modprobe ipt_limit</span><br><span class="line">/sbin/modprobe ipt_REJECT</span><br><span class="line">/sbin/modprobe ipt_REDIRECT</span><br><span class="line">/sbin/modprobe ipt_LOG</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. Flush &amp; Reset iptables settings</span></span><br><span class="line"></span><br><span class="line">/sbin/iptables -F</span><br><span class="line">/sbin/iptables -X</span><br><span class="line">/sbin/iptables -Z</span><br><span class="line">/sbin/iptables -F -t nat</span><br><span class="line">/sbin/iptables -X -t nat</span><br><span class="line">/sbin/iptables -Z -t nat</span><br><span class="line">/sbin/iptables -P INPUT DROP</span><br><span class="line">/sbin/iptables -P OUTPUT ACCEPT</span><br><span class="line">/sbin/iptables -P FORWARD ACCEPT</span><br><span class="line">/sbin/iptables -t nat -P PREROUTING ACCEPT</span><br><span class="line">/sbin/iptables -t nat -P POSTROUTING ACCEPT</span><br><span class="line">/sbin/iptables -t nat -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Accept connection from LOCALHOST ( loopback )</span></span><br><span class="line"></span><br><span class="line">/sbin/iptables -A INPUT -i lo -j ACCEPT</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. Acception connection from some ports ( Firewall rules )</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># /sbin/iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. Source NAT settings</span></span><br><span class="line"></span><br><span class="line">/sbin/iptables -A INPUT -i <span class="variable">$LAN_IF</span> -j ACCEPT</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"1"</span> &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line">/sbin/iptables -A POSTROUTING -t nat -o <span class="variable">$WAN_IF</span> -s <span class="variable">$LAN_IP</span> -j SNAT --to <span class="variable">$WAN_IP</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 8. Accept connection from ESTABLISHED and RELATED connection</span></span><br><span class="line"></span><br><span class="line">/sbin/iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><br></pre></td></tr></table></figure>
 <p>DNAT 就是這一段了<br>我有空研究再補<br>通常對方沒設定 SNAT 的時候<br>只能設定 DNAT(或安全因素)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/sbin/iptables -t nat -A PREROUTING -p tcp -i ppp0 --dport 80 -j DNAT --to 192.168.100.104:80</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;sbin&#x2F;iptables -t nat -A PREROUTING -p tcp -i ppp0 --dport 80 -j DNAT --to 192.168.100.104:80</span><br></pre></td></tr></table></figure>
 <p>最後設定這個不如使用 VPN 實做會不會比較方便?<br>有時間研究</p>
 <h2 id="番外-iptables-可以設定對網域做調整"><a href="#番外-iptables-可以設定對網域做調整" class="headerlink" title="番外 iptables 可以設定對網域做調整"></a>番外 iptables 可以設定對網域做調整</h2><p><a href="https://defragged.org/2020/03/14/blocking-http-requests-via-iptables-for-a-specific-domain/" target="_blank" rel="noopener">Blocking HTTP requests via Iptables for a specific domain – Defragged</a></p>
 
@@ -497,7 +515,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/06/09/Linux-查詢執行很久程式方法/" rel="next" title="Linux 查詢執行很久程式方法">
+              <a href="/blog/2020/06/09/Linux-%E6%9F%A5%E8%A9%A2%E5%9F%B7%E8%A1%8C%E5%BE%88%E4%B9%85%E7%A8%8B%E5%BC%8F%E6%96%B9%E6%B3%95/" rel="next" title="Linux 查詢執行很久程式方法">
                 <i class="fa fa-chevron-left"></i> Linux 查詢執行很久程式方法
               </a>
             
@@ -507,7 +525,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/06/15/Maven-建置專案初體驗/" rel="prev" title="Maven 建置專案初體驗">
+              <a href="/blog/2020/06/15/Maven-%E5%BB%BA%E7%BD%AE%E5%B0%88%E6%A1%88%E5%88%9D%E9%AB%94%E9%A9%97/" rel="prev" title="Maven 建置專案初體驗">
                 Maven 建置專案初體驗 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -543,7 +561,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -553,8 +571,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -591,7 +619,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -602,7 +630,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -832,7 +860,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/06/14/使用-iptables-實做-NAT-轉發封包/';
+          this.page.url = 'https://malagege.github.io/blog/2020/06/14/%E4%BD%BF%E7%94%A8-iptables-%E5%AF%A6%E5%81%9A-NAT-%E8%BD%89%E7%99%BC%E5%B0%81%E5%8C%85/';
           this.page.identifier = '2020/06/14/使用-iptables-實做-NAT-轉發封包/';
           this.page.title = '使用 iptables 實做 NAT 轉發封包';
         };

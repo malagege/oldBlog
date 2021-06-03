@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="自動化,js-yaml,yaml,測試,">
+  <meta name="keywords" content="自動化,js-yaml,yaml,測試," />
 
 
 
@@ -80,17 +80,20 @@
 
 
 <meta name="description" content="因為要做動物機要做自動化載入yaml想檢查一些設定是不是有錯誤利用上一篇寫的Exit Codes 程式回傳錯誤碼 « 進擊的程式新手在透過Bitbucket做設定今天進行還滿順利在此筆記">
-<meta name="keywords" content="自動化,js-yaml,yaml,測試">
 <meta property="og:type" content="article">
 <meta property="og:title" content="寫測試程式用js-yaml對設定檔做簡查">
 <meta property="og:url" content="https://malagege.github.io/blog/2017/12/13/logdown/2017-12-13-js-yaml-write-test-program-to-do-a-simple-check-on-configuration-files/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="因為要做動物機要做自動化載入yaml想檢查一些設定是不是有錯誤利用上一篇寫的Exit Codes 程式回傳錯誤碼 « 進擊的程式新手在透過Bitbucket做設定今天進行還滿順利在此筆記">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:45.045Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2017-12-13T06:41:00.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:56.067Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="自動化">
+<meta property="article:tag" content="js-yaml">
+<meta property="article:tag" content="yaml">
+<meta property="article:tag" content="測試">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="寫測試程式用js-yaml對設定檔做簡查">
-<meta name="twitter:description" content="因為要做動物機要做自動化載入yaml想檢查一些設定是不是有錯誤利用上一篇寫的Exit Codes 程式回傳錯誤碼 « 進擊的程式新手在透過Bitbucket做設定今天進行還滿順利在此筆記">
 
 
 
@@ -120,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2017/12/13/logdown/2017-12-13-js-yaml-write-test-program-to-do-a-simple-check-on-configuration-files/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2017/12/13/logdown/2017-12-13-js-yaml-write-test-program-to-do-a-simple-check-on-configuration-files/"/>
 
 
 
@@ -147,7 +150,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +162,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +174,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +208,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +218,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +228,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +238,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +248,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +263,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +284,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +317,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/12/13/logdown/2017-12-13-js-yaml-write-test-program-to-do-a-simple-check-on-configuration-files/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +362,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +373,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/CI/" itemprop="url" rel="index">
                     <span itemprop="name">CI</span>
                   </a>
@@ -385,7 +393,8 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/blog/2017/12/13/logdown/2017-12-13-js-yaml-write-test-program-to-do-a-simple-check-on-configuration-files/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/12/13/logdown/2017-12-13-js-yaml-write-test-program-to-do-a-simple-check-on-configuration-files/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/13/logdown/2017-12-13-js-yaml-write-test-program-to-do-a-simple-check-on-configuration-files/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +424,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -427,7 +446,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">yaml = <span class="built_in">require</span>(<span class="string">"js-yaml"</span>);</span><br><span class="line">fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get document, or throw exception on error</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> doc = yaml.safeLoad(fs.readFileSync(<span class="string">'config.yml'</span>, <span class="string">'utf8'</span>));</span><br><span class="line">  <span class="comment">//console.log(doc);</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'沒法正常解析yaml'</span>);</span><br><span class="line">  <span class="built_in">console</span>.error(e);</span><br><span class="line">  process.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">yaml = <span class="built_in">require</span>(<span class="string">"js-yaml"</span>);</span><br><span class="line">fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Get document, or throw exception on error</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> doc = yaml.safeLoad(fs.readFileSync(<span class="string">'config.yml'</span>, <span class="string">'utf8'</span>));</span><br><span class="line">  <span class="comment">//console.log(doc);</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'沒法正常解析yaml'</span>);</span><br><span class="line">  <span class="built_in">console</span>.error(e);</span><br><span class="line">  process.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> default_path = doc.templates.default.transmission.path;</span><br><span class="line">    <span class="keyword">let</span> olddownload_path = doc.templates.olddownload.transmission.path;</span><br><span class="line">    <span class="keyword">let</span> autoPass_path = doc.templates.autoPass.transmission.path;</span><br><span class="line">    <span class="keyword">let</span> default_month = default_path.substr(<span class="number">32</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">let</span> olddownload_month = olddownload_path.substr(<span class="number">32</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">let</span> autoPass_month = autoPass_path.substr(<span class="number">32</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> now_month = <span class="keyword">new</span> <span class="built_in">Date</span>().getMonth();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> month_maping = &#123;</span><br><span class="line">        <span class="string">'0'</span> : <span class="string">'01'</span>,</span><br><span class="line">        <span class="string">'1'</span> : <span class="string">'01'</span>,</span><br><span class="line">        <span class="string">'2'</span> : <span class="string">'01'</span>,</span><br><span class="line">        <span class="string">'3'</span> : <span class="string">'04'</span>,</span><br><span class="line">        <span class="string">'4'</span> : <span class="string">'04'</span>,</span><br><span class="line">        <span class="string">'5'</span> : <span class="string">'04'</span>,</span><br><span class="line">        <span class="string">'6'</span> : <span class="string">'07'</span>,</span><br><span class="line">        <span class="string">'7'</span> : <span class="string">'07'</span>,</span><br><span class="line">        <span class="string">'8'</span> : <span class="string">'07'</span>,</span><br><span class="line">        <span class="string">'09'</span> : <span class="string">'10'</span>,</span><br><span class="line">        <span class="string">'10'</span> : <span class="string">'10'</span>,</span><br><span class="line">        <span class="string">'11'</span> : <span class="string">'10'</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (month_maping[now_month] != default_month) <span class="keyword">throw</span> <span class="string">"config.yml裡default_path沒設定正確("</span> + month_maping[now_month] +<span class="string">")月份名稱"</span>;</span><br><span class="line">    <span class="keyword">if</span> (month_maping[now_month<span class="number">-3</span>] != olddownload_month) <span class="keyword">throw</span> <span class="string">"config.yml裡olddownload_month沒設定正確("</span> + month_maping[now_month] + <span class="string">")月份名稱"</span>;</span><br><span class="line">    <span class="keyword">if</span> (month_maping[now_month<span class="number">-3</span>] != autoPass_month) <span class="keyword">throw</span> <span class="string">"config.yml裡autoPass_month沒設定正確("</span> + month_maping[now_month] + <span class="string">")月份名稱"</span>;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(error);</span><br><span class="line">    process.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'測試正常'</span>);</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">image: node:6.9.4</span><br><span class="line"></span><br><span class="line">pipelines:</span><br><span class="line">  default:</span><br><span class="line">    - step:</span><br><span class="line">        script: # Modify the commands below to build your repository.</span><br><span class="line">          - npm install -g yaml-lint</span><br><span class="line">          - yamllint config.yml</span><br><span class="line">          - npm install</span><br><span class="line">          - npm test</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;yaml_config&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;test.js&quot;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;js-yaml&quot;: &quot;^3.10.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;&#125;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;node test&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;repository&quot;: &#123;</span><br><span class="line">    &quot;type&quot;: &quot;git&quot;,</span><br><span class="line">    &quot;url&quot;: &quot;git+https://malagege@bitbucket.org/malagege/yaml_config.git&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;author&quot;: &quot;&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;,</span><br><span class="line">  &quot;homepage&quot;: &quot;https://bitbucket.org/malagege/yaml_config#readme&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;yaml_config&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;test.js&quot;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;js-yaml&quot;: &quot;^3.10.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;&#125;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;test&quot;: &quot;node test&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;repository&quot;: &#123;</span><br><span class="line">    &quot;type&quot;: &quot;git&quot;,</span><br><span class="line">    &quot;url&quot;: &quot;git+https:&#x2F;&#x2F;malagege@bitbucket.org&#x2F;malagege&#x2F;yaml_config.git&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;author&quot;: &quot;&quot;,</span><br><span class="line">  &quot;license&quot;: &quot;ISC&quot;,</span><br><span class="line">  &quot;homepage&quot;: &quot;https:&#x2F;&#x2F;bitbucket.org&#x2F;malagege&#x2F;yaml_config#readme&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -444,13 +463,13 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/自動化/" rel="tag"># 自動化</a>
+            <a href="/blog/tags/%E8%87%AA%E5%8B%95%E5%8C%96/" rel="tag"># 自動化</a>
           
             <a href="/blog/tags/js-yaml/" rel="tag"># js-yaml</a>
           
             <a href="/blog/tags/yaml/" rel="tag"># yaml</a>
           
-            <a href="/blog/tags/測試/" rel="tag"># 測試</a>
+            <a href="/blog/tags/%E6%B8%AC%E8%A9%A6/" rel="tag"># 測試</a>
           
         </div>
       
@@ -509,7 +528,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -519,8 +538,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -548,7 +577,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -559,7 +588,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>

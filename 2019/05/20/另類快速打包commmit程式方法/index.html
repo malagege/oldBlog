@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="shell,">
+  <meta name="keywords" content="shell," />
 
 
 
@@ -80,18 +80,18 @@
 
 
 <meta name="description" content="快速打包程式的腳本(shell) | 程式狂想筆記之前有寫過這篇，再包程式都是固定的程式有時候公司需要打包只有異動到的檔案這時候之前寫的程式內容可以修正但我在想有什麼快速整理">
-<meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="另類快速打包commmit程式方法">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/05/20/另類快速打包commmit程式方法/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/05/20/%E5%8F%A6%E9%A1%9E%E5%BF%AB%E9%80%9F%E6%89%93%E5%8C%85commmit%E7%A8%8B%E5%BC%8F%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="快速打包程式的腳本(shell) | 程式狂想筆記之前有寫過這篇，再包程式都是固定的程式有時候公司需要打包只有異動到的檔案這時候之前寫的程式內容可以修正但我在想有什麼快速整理">
-<meta property="og:locale" content="zh-tw">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://stackoverflow.com/a/32596855">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.257Z">
+<meta property="article:published_time" content="2019-05-20T15:35:45.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.676Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="另類快速打包commmit程式方法">
-<meta name="twitter:description" content="快速打包程式的腳本(shell) | 程式狂想筆記之前有寫過這篇，再包程式都是固定的程式有時候公司需要打包只有異動到的檔案這時候之前寫的程式內容可以修正但我在想有什麼快速整理">
 <meta name="twitter:image" content="https://stackoverflow.com/a/32596855">
 
 
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/05/20/另類快速打包commmit程式方法/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/05/20/另類快速打包commmit程式方法/"/>
 
 
 
@@ -149,7 +149,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -158,9 +161,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -170,13 +173,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -204,9 +207,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -214,9 +217,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -224,9 +227,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -234,9 +237,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -244,9 +247,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -259,7 +262,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -280,7 +283,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -311,20 +316,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/05/20/另類快速打包commmit程式方法/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/05/20/%E5%8F%A6%E9%A1%9E%E5%BF%AB%E9%80%9F%E6%89%93%E5%8C%85commmit%E7%A8%8B%E5%BC%8F%E6%96%B9%E6%B3%95/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -356,7 +361,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -367,7 +372,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/shell/" itemprop="url" rel="index">
                     <span itemprop="name">shell</span>
                   </a>
@@ -386,8 +391,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/05/20/另類快速打包commmit程式方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/20/另類快速打包commmit程式方法/" itemprop="commentCount"></span>
+                <a href="/blog/2019/05/20/%E5%8F%A6%E9%A1%9E%E5%BF%AB%E9%80%9F%E6%89%93%E5%8C%85commmit%E7%A8%8B%E5%BC%8F%E6%96%B9%E6%B3%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/05/20/另類快速打包commmit程式方法/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -417,8 +423,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -434,7 +450,7 @@
 <p>在<a href="https://stackoverflow.com/a/8722721" target="_blank" rel="noopener">bash - Linux: copy and create destination dir if it does not exist - Stack Overflow</a>有提到用<code>--parents</code>可以解決問題</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/tmp $ mkdir foo</span><br><span class="line">/tmp $ mkdir foo/foo</span><br><span class="line">/tmp $ touch foo/foo/foo.txt</span><br><span class="line">/tmp $ mkdir bar</span><br><span class="line">/tmp $ cp --parents foo/foo/foo.txt bar</span><br><span class="line">/tmp $ ls bar/foo/foo</span><br><span class="line">foo.txt</span><br></pre></td></tr></table></figure>
 <p>複製檔案範例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp --parents foo/foo/foo.txt(打包檔案) ~/(打包路徑)</span><br><span class="line">#ex</span><br><span class="line">cp --parent ooo/xxx.php ~/Desktop</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp --parents foo&#x2F;foo&#x2F;foo.txt(打包檔案) ~&#x2F;(打包路徑)</span><br><span class="line">#ex</span><br><span class="line">cp --parent ooo&#x2F;xxx.php ~&#x2F;Desktop</span><br></pre></td></tr></table></figure>
 <p>用 Sublime Text 快速貼上也很快 XD</p>
 <h3 id="cp-另類複製方法"><a href="#cp-另類複製方法" class="headerlink" title="cp 另類複製方法"></a>cp 另類複製方法</h3><p>但有看到 Mac 不能用<code>--parents</code><br>有看到一種方法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /foo/bar &amp;&amp; cp myfile.txt <span class="variable">$_</span></span><br></pre></td></tr></table></figure>
@@ -444,7 +460,7 @@
 <p>所以\$_可以做這樣運用</p>
 <p><a href="https://www.slideshare.net/misscoming/bash-shell-script" target="_blank" rel="noopener">Bash shell script 教學</a><br><a href="https://image.slidesharecdn.com/bashshellscript-150218092059-conversion-gate01/95/bash-shell-script-10-638.jpg?cb=1424287937" target="_blank" rel="noopener">bash-shell-script-10-638.jpg（JPEG 圖片，638x479 像素）</a></p>
 <h2 id="7z-快速壓縮打包"><a href="#7z-快速壓縮打包" class="headerlink" title="7z 快速壓縮打包"></a>7z 快速壓縮打包</h2><p>2019-05-22<br>用 CP 指令打包，還需要手動作壓縮<br>今天有找到一個方法<br>設定 <code>file.txt</code> 可完成快入打包<br>file.txt</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxx/ooo.jpg</span><br><span class="line">xxx/ooo.jpg</span><br><span class="line">xxx/ooo.jpg</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxx&#x2F;ooo.jpg</span><br><span class="line">xxx&#x2F;ooo.jpg</span><br><span class="line">xxx&#x2F;ooo.jpg</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">now=`date +<span class="string">"%Y%m%d_%H%M"</span>`</span><br><span class="line">7z a  DestinyTest_<span class="variable">$now</span>.7z @file.txt</span><br></pre></td></tr></table></figure>
 <p>真的非常方便</p>
 <p>相關連結</p>
@@ -485,7 +501,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/05/20/Android在Chrome做Debug封包方法/" rel="next" title="Android在Chrome做Debug封包方法">
+              <a href="/blog/2019/05/20/Android%E5%9C%A8Chrome%E5%81%9ADebug%E5%B0%81%E5%8C%85%E6%96%B9%E6%B3%95/" rel="next" title="Android在Chrome做Debug封包方法">
                 <i class="fa fa-chevron-left"></i> Android在Chrome做Debug封包方法
               </a>
             
@@ -495,7 +511,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/05/20/SQL-union-排序的問題/" rel="prev" title="SQL union 排序的問題">
+              <a href="/blog/2019/05/20/SQL-union-%E6%8E%92%E5%BA%8F%E7%9A%84%E5%95%8F%E9%A1%8C/" rel="prev" title="SQL union 排序的問題">
                 SQL union 排序的問題 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -531,7 +547,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -541,8 +557,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -579,7 +605,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -590,7 +616,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -820,7 +846,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/05/20/另類快速打包commmit程式方法/';
+          this.page.url = 'https://malagege.github.io/blog/2019/05/20/%E5%8F%A6%E9%A1%9E%E5%BF%AB%E9%80%9F%E6%89%93%E5%8C%85commmit%E7%A8%8B%E5%BC%8F%E6%96%B9%E6%B3%95/';
           this.page.identifier = '2019/05/20/另類快速打包commmit程式方法/';
           this.page.title = '另類快速打包commmit程式方法';
         };

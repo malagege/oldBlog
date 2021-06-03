@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MySQL,IN,效能,">
+  <meta name="keywords" content="MySQL,IN,效能," />
 
 
 
@@ -80,17 +80,19 @@
 
 
 <meta name="description" content="最近使用有一個程式SQL會跑3秒程式共花了1x秒鐘想把他cost 時間降下來但IN方法不知道為什麼那麼慢就簡單研究有沒有更好的寫法">
-<meta name="keywords" content="MySQL,IN,效能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在MySQL5.0查詢大量資料使用IN子查詢好慢(優化方法)">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/05/15/%E5%9C%A8MySQL5-0%E6%9F%A5%E8%A9%A2%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E4%BD%BF%E7%94%A8IN%E5%AD%90%E6%9F%A5%E8%A9%A2%E5%A5%BD%E6%85%A2/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近使用有一個程式SQL會跑3秒程式共花了1x秒鐘想把他cost 時間降下來但IN方法不知道為什麼那麼慢就簡單研究有沒有更好的寫法">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.263Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-05-15T12:01:47.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.680Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="IN">
+<meta property="article:tag" content="效能">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在MySQL5.0查詢大量資料使用IN子查詢好慢(優化方法)">
-<meta name="twitter:description" content="最近使用有一個程式SQL會跑3秒程式共花了1x秒鐘想把他cost 時間降下來但IN方法不知道為什麼那麼慢就簡單研究有沒有更好的寫法">
 
 
 
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/"/>
 
 
 
@@ -147,7 +149,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +161,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +173,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +207,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +217,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +227,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +237,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +247,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +262,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +283,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +316,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/05/15/%E5%9C%A8MySQL5-0%E6%9F%A5%E8%A9%A2%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E4%BD%BF%E7%94%A8IN%E5%AD%90%E6%9F%A5%E8%A9%A2%E5%A5%BD%E6%85%A2/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +361,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +372,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/SQL/" itemprop="url" rel="index">
                     <span itemprop="name">SQL</span>
                   </a>
@@ -384,8 +391,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/" itemprop="commentCount"></span>
+                <a href="/blog/2018/05/15/%E5%9C%A8MySQL5-0%E6%9F%A5%E8%A9%A2%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E4%BD%BF%E7%94%A8IN%E5%AD%90%E6%9F%A5%E8%A9%A2%E5%A5%BD%E6%85%A2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +423,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -436,8 +454,7 @@
 <p>而假如外部的表格A是相對的儲存大量資料，則採用第一個方法IN的效率將會比較好，假如你使用EXISTS，則除了會對A這個大表格進行全面掃瞄外，還會一筆一筆讀取所有A的資料列，效能自然較差。<br>簡單的一句話，外大內小=IN，外小內大=EXISTS，這是一個實用的概略評估方法，在大部分的情況下是適用的。</p>
 </blockquote>
 <p>我覺得優化原因是<a href="https://github.com/TritonHo/slides/blob/master/Taipei%202017-10%20talk/SQL_report_v2.pdf" target="_blank" rel="noopener">slides/SQL_report_v2.pdf at master · TritonHo/slides</a>的Query Optimizer淺談</p>
-<p>不過我修改<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> stm.playlistID</span><br><span class="line">     <span class="keyword">FROM</span> <span class="string">`first_big_table`</span> stm </span><br><span class="line">     <span class="keyword">WHERE</span> <span class="keyword">exists</span></span><br><span class="line">         (<span class="keyword">SELECT</span> <span class="string">'x'</span></span><br><span class="line">          <span class="keyword">FROM</span> <span class="string">`small_table`</span></span><br><span class="line">          <span class="keyword">WHERE</span> as_id = <span class="number">1</span></span><br><span class="line">            <span class="keyword">AND</span> item_no = <span class="number">1</span></span><br><span class="line">            <span class="keyword">AND</span> stm.sid <span class="keyword">IN</span> <span class="keyword">sid</span>)</span><br></pre></td></tr></table></figure></p>
-<p>還是沒用…</p>
+<p>不過我修改<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> stm.playlistID</span><br><span class="line">     <span class="keyword">FROM</span> <span class="string">`first_big_table`</span> stm </span><br><span class="line">     <span class="keyword">WHERE</span> <span class="keyword">exists</span></span><br><span class="line">         (<span class="keyword">SELECT</span> <span class="string">'x'</span></span><br><span class="line">          <span class="keyword">FROM</span> <span class="string">`small_table`</span></span><br><span class="line">          <span class="keyword">WHERE</span> as_id = <span class="number">1</span></span><br><span class="line">            <span class="keyword">AND</span> item_no = <span class="number">1</span></span><br><span class="line">            <span class="keyword">AND</span> stm.sid <span class="keyword">IN</span> <span class="keyword">sid</span>)</span><br></pre></td></tr></table></figure><br>還是沒用…</p>
 <p>最後還是想到<a href="https://www.facebook.com/groups/616369245163622" target="_blank" rel="noopener">Backend 台灣 (Backend Tw)</a>裡面的T大常常批評MySQL</p>
 <h2 id="子查詢語句注意問題"><a href="#子查詢語句注意問題" class="headerlink" title="子查詢語句注意問題"></a>子查詢語句注意問題</h2><p> <a href="http://seanphpbook.blogspot.tw/2015/08/mysql.html" target="_blank" rel="noopener">謝晒的PHP網頁設計: [MYSQL] 多層式子查詢 效能注意事項</a></p>
 <h2 id="用程式組IN字串就PK"><a href="#用程式組IN字串就PK" class="headerlink" title="用程式組IN字串就PK"></a>用程式組IN字串就PK</h2><p>今天實驗結果，在MYSQL5.0使用子查詢IN改寫exists速度還是很慢<br>然後發現跟我之前寫的非相關子查詢速度有不一樣<br>但是改成IN(‘xxxx’,’oooo’,’fffff’)<br>速度就比較快<br>所以目前先用程式拆兩段</p>
@@ -484,7 +501,7 @@
           
             <a href="/blog/tags/IN/" rel="tag"># IN</a>
           
-            <a href="/blog/tags/效能/" rel="tag"># 效能</a>
+            <a href="/blog/tags/%E6%95%88%E8%83%BD/" rel="tag"># 效能</a>
           
         </div>
       
@@ -497,7 +514,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/05/14/PHP的array-slice與array-splice差別/" rel="next" title="PHP的array_slice與array_splice差別">
+              <a href="/blog/2018/05/14/PHP%E7%9A%84array-slice%E8%88%87array-splice%E5%B7%AE%E5%88%A5/" rel="next" title="PHP的array_slice與array_splice差別">
                 <i class="fa fa-chevron-left"></i> PHP的array_slice與array_splice差別
               </a>
             
@@ -507,7 +524,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/05/17/MySQL查詢進行中程序狀況，並刪掉lock程序/" rel="prev" title="MySQL查詢進行中程序狀況，並刪掉lock程序">
+              <a href="/blog/2018/05/17/MySQL%E6%9F%A5%E8%A9%A2%E9%80%B2%E8%A1%8C%E4%B8%AD%E7%A8%8B%E5%BA%8F%E7%8B%80%E6%B3%81%EF%BC%8C%E4%B8%A6%E5%88%AA%E6%8E%89lock%E7%A8%8B%E5%BA%8F/" rel="prev" title="MySQL查詢進行中程序狀況，並刪掉lock程序">
                 MySQL查詢進行中程序狀況，並刪掉lock程序 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -543,7 +560,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -553,8 +570,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -591,7 +618,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -602,7 +629,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -832,7 +859,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/';
+          this.page.url = 'https://malagege.github.io/blog/2018/05/15/%E5%9C%A8MySQL5-0%E6%9F%A5%E8%A9%A2%E5%A4%A7%E9%87%8F%E8%B3%87%E6%96%99%E4%BD%BF%E7%94%A8IN%E5%AD%90%E6%9F%A5%E8%A9%A2%E5%A5%BD%E6%85%A2/';
           this.page.identifier = '2018/05/15/在MySQL5-0查詢大量資料使用IN子查詢好慢/';
           this.page.title = '在MySQL5.0查詢大量資料使用IN子查詢好慢(優化方法)';
         };

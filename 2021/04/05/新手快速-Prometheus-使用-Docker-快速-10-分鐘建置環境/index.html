@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="prometheus,exporter,">
+  <meta name="keywords" content="prometheus,exporter," />
 
 
 
@@ -80,23 +80,24 @@
 
 
 <meta name="description" content="首先，最近再找能跑的 prometheus 的 docker-compose 檔案快速建置流程，體驗裡面介面功能">
-<meta name="keywords" content="prometheus,exporter">
 <meta property="og:type" content="article">
 <meta property="og:title" content="新手快速 Prometheus 使用 Docker 快速 10 分鐘建置環境">
-<meta property="og:url" content="https://malagege.github.io/blog/2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="首先，最近再找能跑的 prometheus 的 docker-compose 檔案快速建置流程，體驗裡面介面功能">
-<meta property="og:locale" content="zh-tw">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/RsmdEbZ.png">
 <meta property="og:image" content="https://i.imgur.com/2UUIdQ3.png">
 <meta property="og:image" content="https://i.imgur.com/3GpZ9EU.png">
 <meta property="og:image" content="https://i.imgur.com/RewTNHy.png">
 <meta property="og:image" content="https://i.imgur.com/G110MnW.png">
 <meta property="og:image" content="https://i.imgur.com/Dyf1Fda.png">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.422Z">
+<meta property="article:published_time" content="2021-04-05T10:20:48.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.840Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="prometheus">
+<meta property="article:tag" content="exporter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="新手快速 Prometheus 使用 Docker 快速 10 分鐘建置環境">
-<meta name="twitter:description" content="首先，最近再找能跑的 prometheus 的 docker-compose 檔案快速建置流程，體驗裡面介面功能">
 <meta name="twitter:image" content="https://i.imgur.com/RsmdEbZ.png">
 
 
@@ -127,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/"/>
 
 
 
@@ -154,7 +155,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -163,9 +167,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -175,13 +179,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -209,9 +213,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -219,9 +223,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -229,9 +233,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -239,9 +243,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -249,9 +253,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -264,7 +268,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -285,7 +289,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -316,20 +322,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -361,7 +367,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -372,7 +378,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Prometheus/" itemprop="url" rel="index">
                     <span itemprop="name">Prometheus</span>
                   </a>
@@ -391,8 +397,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/" itemprop="commentCount"></span>
+                <a href="/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -422,8 +429,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -451,10 +468,10 @@
 <p>這邊 Grafana 就設定完了</p>
 <h3 id="通知教學"><a href="#通知教學" class="headerlink" title="通知教學"></a>通知教學</h3><h2 id="信箱設定"><a href="#信箱設定" class="headerlink" title="信箱設定"></a>信箱設定</h2><p>假設不想用真實信箱，可以用我之前fake stmp email 工具來設定<br><a href="https://malagege.github.io/blog/2018/12/09/maildev%E8%A9%A6%E7%94%A8%E7%AD%86%E8%A8%98/">maildev試用筆記 | 程式狂想筆記</a></p>
 <p>安裝maildev</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 1080:80 -p 1025:25 djfarrelly/maildev</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 1080:80 -p 1025:25 djfarrelly&#x2F;maildev</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim alertmanager/config.yml</span><br></pre></td></tr></table></figure>
 <p>設定 stmp 1025, tls = false ，帳號、密碼可以不用理(畢竟是假的…)</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">global:</span></span><br><span class="line">  <span class="comment">#163服务器</span></span><br><span class="line"><span class="attr">  smtp_smarthost:</span> <span class="string">'192.168.1.113:1025'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱</span></span><br><span class="line"><span class="attr">  smtp_from:</span> <span class="string">'your-email@foxmail.com'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱用户名，也就是你的邮箱　　　　　</span></span><br><span class="line"><span class="attr">  smtp_auth_username:</span> <span class="string">'your-email@foxmail.com'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱密码</span></span><br><span class="line"><span class="attr">  smtp_auth_password:</span> <span class="string">'your-password'</span></span><br><span class="line">  <span class="comment">#进行tls验证</span></span><br><span class="line"><span class="attr">  smtp_require_tls:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">route:</span></span><br><span class="line"><span class="attr">  group_by:</span> <span class="string">['alertname']</span></span><br><span class="line"><span class="attr">  group_wait:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">  group_interval:</span> <span class="number">10</span><span class="string">s</span></span><br><span class="line"><span class="attr">  repeat_interval:</span> <span class="number">10</span><span class="string">m</span></span><br><span class="line"><span class="attr">  receiver:</span> <span class="string">live-monitoring</span></span><br><span class="line"></span><br><span class="line"><span class="attr">receivers:</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">'live-monitoring'</span></span><br><span class="line">  <span class="comment">#收邮件的邮箱</span></span><br><span class="line"><span class="attr">  email_configs:</span></span><br><span class="line"><span class="attr">  - to:</span> <span class="string">'your-email@163.com'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">global:</span></span><br><span class="line">  <span class="comment">#163服务器</span></span><br><span class="line">  <span class="attr">smtp_smarthost:</span> <span class="string">'192.168.1.113:1025'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱</span></span><br><span class="line">  <span class="attr">smtp_from:</span> <span class="string">'your-email@foxmail.com'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱用户名，也就是你的邮箱　　　　　</span></span><br><span class="line">  <span class="attr">smtp_auth_username:</span> <span class="string">'your-email@foxmail.com'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱密码</span></span><br><span class="line">  <span class="attr">smtp_auth_password:</span> <span class="string">'your-password'</span></span><br><span class="line">  <span class="comment">#进行tls验证</span></span><br><span class="line">  <span class="attr">smtp_require_tls:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">route:</span></span><br><span class="line">  <span class="attr">group_by:</span> <span class="string">['alertname']</span></span><br><span class="line">  <span class="attr">group_wait:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">group_interval:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">repeat_interval:</span> <span class="string">10m</span></span><br><span class="line">  <span class="attr">receiver:</span> <span class="string">live-monitoring</span></span><br><span class="line"></span><br><span class="line"><span class="attr">receivers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'live-monitoring'</span></span><br><span class="line">  <span class="comment">#收邮件的邮箱</span></span><br><span class="line">  <span class="attr">email_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">to:</span> <span class="string">'your-email@163.com'</span></span><br></pre></td></tr></table></figure>
 <p>讓你的 alertmanager 發送 mail<br>只需要讓你 node_exporter 結束程式就可以了</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose stop node_exporter</span><br></pre></td></tr></table></figure>
 <p>執行完，稍後兩分鐘…(因為設定是兩分鐘)，可以看到mail 會發送到maildev</p>
@@ -473,7 +490,7 @@
 <h3 id="架設-line-notify-gateway"><a href="#架設-line-notify-gateway" class="headerlink" title="架設 line notify gateway"></a>架設 line notify gateway</h3><p>官方沒推薦使用哪一個line notify<br>可能國外很少用</p>
 <p>這篇有找到<a href="https://nontster.medium.com/line-notify-gateway-2-f117c20c6f62" target="_blank" rel="noopener">line-notify-gateway (2). ใน blog… | by Nont Banditwong | Medium</a><br>雖然看不懂裡面文章<br>但從指令可以看出東西</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 18081:18081 -e line-notify.personal-access-token=<span class="string">'&#123;換成你的TOKEN&#125;'</span> --name line-notify-gateway nontster/line-notify-gateway</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">receivers:</span></span><br><span class="line"><span class="attr">- name:</span> <span class="string">line-noti</span></span><br><span class="line"><span class="attr">  webhook_configs:</span></span><br><span class="line"><span class="attr">  - url:</span> <span class="attr">http://192.168.73.161:18081/v1/alertmanager/payload</span></span><br><span class="line"><span class="attr">    send_resolved:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">receivers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">line-noti</span></span><br><span class="line">  <span class="attr">webhook_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">url:</span> <span class="string">http://192.168.73.161:18081/v1/alertmanager/payload</span></span><br><span class="line">    <span class="attr">send_resolved:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>測試alertmanager 訊息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">"Content-type: application/json"</span> -X POST -d <span class="string">'&#123;"recei"status":"firing","alerts":[&#123;"status":"firing","labels":&#123;"alertname":"InstanceDown","instance":"director1:9100","job":"ipvs","severity":"critical"&#125;,"annotations":&#123;"description":"director1:9100 of job ipvs has been down for  more than 5 minutes.","summary":"Instance director1:9100 down"&#125;,"startsAt":"2019-06-09T09:12:56.795099989Z","endsAt":"0001-01-01T00:00:00Z","generatorURL":"http://72426f0cd030:9090/graph?g0.expr=up+%3D%3D+0&amp;g0.tab=1"&#125;],"groupLabels":&#123;"alertname":"InstanceDown"&#125;,"commonLabels":&#123;"alertname":"InstanceDown","instance":"director1:9100","job":"ipvs","severity":"critical"&#125;,"commonAnnotations":&#123;"description":"director1:9100 of job ipvs has been down for  more than 5 minutes.","summary":"Instance director1:9100 down"&#125;,"externalURL":"http://alertmanager:9093","version":"4","groupKey":"&#123;&#125;:&#123;alertname=\"InstanceDown\"&#125;"&#125;'</span> http://localhost:18081/v1/alertmanager/payload</span><br></pre></td></tr></table></figure></p>
 <p>測試結果可進行運行</p>
 <h2 id="監控"><a href="#監控" class="headerlink" title="監控"></a>監控</h2><p>裡面有內建設定 exporter 服務沒偵測到兩分鐘會發送通知<br>除了這些外，還有 traefik exporter ,blackbox exporter, 各種 exporter等等</p>
@@ -511,7 +528,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2021/04/04/Raspberry-Pi-調整-swap-虛擬記憶體/" rel="next" title="Raspberry Pi 調整 swap 虛擬記憶體">
+              <a href="/blog/2021/04/04/Raspberry-Pi-%E8%AA%BF%E6%95%B4-swap-%E8%99%9B%E6%93%AC%E8%A8%98%E6%86%B6%E9%AB%94/" rel="next" title="Raspberry Pi 調整 swap 虛擬記憶體">
                 <i class="fa fa-chevron-left"></i> Raspberry Pi 調整 swap 虛擬記憶體
               </a>
             
@@ -521,7 +538,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2021/04/05/Raspberry-Pi-部屬-Prometheus/" rel="prev" title="Raspberry Pi 部屬 Prometheus">
+              <a href="/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/" rel="prev" title="Raspberry Pi 部屬 Prometheus">
                 Raspberry Pi 部屬 Prometheus <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -557,7 +574,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -567,8 +584,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -605,7 +632,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -616,7 +643,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -846,7 +873,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/';
+          this.page.url = 'https://malagege.github.io/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/';
           this.page.identifier = '2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/';
           this.page.title = '新手快速 Prometheus 使用 Docker 快速 10 分鐘建置環境';
         };

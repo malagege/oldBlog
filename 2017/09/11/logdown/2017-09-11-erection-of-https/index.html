@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,TLS,SSL,Let’s Encrypt,Certbot,">
+  <meta name="keywords" content="Linux,TLS,SSL,Let’s Encrypt,Certbot," />
 
 
 
@@ -80,17 +80,21 @@
 
 
 <meta name="description" content="最近想讓動物機增加安全性，有看到免費的letsencrypt教學文 又好像有工具自動產生憑證 以經有看到勇者試了，當然也要嘗試:P">
-<meta name="keywords" content="Linux,TLS,SSL,Let’s Encrypt,Certbot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)">
 <meta property="og:url" content="https://malagege.github.io/blog/2017/09/11/logdown/2017-09-11-erection-of-https/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近想讓動物機增加安全性，有看到免費的letsencrypt教學文 又好像有工具自動產生憑證 以經有看到勇者試了，當然也要嘗試:P">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:45.031Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2017-09-11T05:09:00.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:56.051Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="TLS">
+<meta property="article:tag" content="SSL">
+<meta property="article:tag" content="Let’s Encrypt">
+<meta property="article:tag" content="Certbot">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Raspberry PI 自動設定Let’s Encrypt！ TLS(SSL 憑證)">
-<meta name="twitter:description" content="最近想讓動物機增加安全性，有看到免費的letsencrypt教學文 又好像有工具自動產生憑證 以經有看到勇者試了，當然也要嘗試:P">
 
 
 
@@ -120,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2017/09/11/logdown/2017-09-11-erection-of-https/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2017/09/11/logdown/2017-09-11-erection-of-https/"/>
 
 
 
@@ -147,7 +151,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +163,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +175,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +209,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +219,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +229,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +239,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +249,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +264,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +285,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +318,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/09/11/logdown/2017-09-11-erection-of-https/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +363,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +374,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -385,7 +394,8 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/blog/2017/09/11/logdown/2017-09-11-erection-of-https/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/11/logdown/2017-09-11-erection-of-https/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/09/11/logdown/2017-09-11-erection-of-https/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +425,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -428,18 +448,18 @@
 <p><a href="https://www.weblink.idv.tw/2017/74" target="_blank" rel="noopener">申請Let’s Encrypt－以Raspberry Pi為例 </a>，<br>再做這篇的時候會跳出版本太舊</p>
 <p><code>sudo ./certbot-auto --apache --domain=**網域** certonly</code></p>
 <p>動物機好像說版本太舊</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get remove libaugeas0 augeas-tools libaugeas-dev</span><br><span class="line">$ sudo apt-get install libreadline6-dev libxml2-dev</span><br><span class="line">$ cd /tmp</span><br><span class="line">$ wget http://download.augeas.net/augeas-1.6.0.tar.gz</span><br><span class="line">$ tar -zxf augeas-1.6.0.tar.gz</span><br><span class="line">$ cd augeas-1.6.0</span><br><span class="line">$ CFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; CPPFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; ./configure</span><br><span class="line">$ CFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; CPPFLAGS=&apos;-march=armv6 -mfpu=vfp -mfloat-abi=hard&apos; make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get remove libaugeas0 augeas-tools libaugeas-dev</span><br><span class="line">$ sudo apt-get install libreadline6-dev libxml2-dev</span><br><span class="line">$ cd &#x2F;tmp</span><br><span class="line">$ wget http:&#x2F;&#x2F;download.augeas.net&#x2F;augeas-1.6.0.tar.gz</span><br><span class="line">$ tar -zxf augeas-1.6.0.tar.gz</span><br><span class="line">$ cd augeas-1.6.0</span><br><span class="line">$ CFLAGS&#x3D;&#39;-march&#x3D;armv6 -mfpu&#x3D;vfp -mfloat-abi&#x3D;hard&#39; CPPFLAGS&#x3D;&#39;-march&#x3D;armv6 -mfpu&#x3D;vfp -mfloat-abi&#x3D;hard&#39; .&#x2F;configure</span><br><span class="line">$ CFLAGS&#x3D;&#39;-march&#x3D;armv6 -mfpu&#x3D;vfp -mfloat-abi&#x3D;hard&#39; CPPFLAGS&#x3D;&#39;-march&#x3D;armv6 -mfpu&#x3D;vfp -mfloat-abi&#x3D;hard&#39; make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
 <p><a href="https://lordofthemoon.com/blog/2016/08/lets-encrypt-for-the-raspberry-pi-model-b/" target="_blank" rel="noopener">Let’s Encrypt for the Raspberry Pi (model B)</a><br>後來找上面那個方法還是沒用<br>最後<del>賭</del>升級<code>sudo apt-get dist-uprgrade</code><br>升上去就可以跑了…</p>
 <p>但會出現Timeout狀態<br>(之後有找到原因我的AP的 Virtual Server沒有設定443PORT)<br>不過我最後設完，apache設定沒有自動增加ssl設定</p>
 <p>看來有機會還是要開一個apache筆記</p>
 <p>最後看到另一篇用webroot方法，<a href="https://ezbox.idv.tw/52/free-ssl-lets-encrypt-certbot/" target="_blank" rel="noopener">免費的 SSL 憑證：Let’s Encrypt！</a></p>
 <p><code>sudo ./certbot-auto certonly --webroot -d ***網域***</code></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Saving debug log to /var/log/letsencrypt/letsencrypt.log</span><br><span class="line">Plugins selected: Authenticator webroot, Installer None</span><br><span class="line">Obtaining a new certificate</span><br><span class="line">Performing the following challenges:</span><br><span class="line">http-01 challenge for ****</span><br><span class="line"></span><br><span class="line">Select the webroot for ****</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">1: Enter a new webroot</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Press 1 [enter] to confirm the selection (press &apos;c&apos; to cancel):</span><br><span class="line"></span><br><span class="line">** Invalid input **</span><br><span class="line">Press 1 [enter] to confirm the selection (press &apos;c&apos; to cancel): 1</span><br><span class="line">Input the webroot for ******: (Enter &apos;c&apos; to cancel):</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"> does not exist or is not a directory</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Input the webroot for ********: (Enter &apos;c&apos; to cancel): /var/www/</span><br><span class="line">Waiting for verification...</span><br><span class="line">Cleaning up challenges</span><br><span class="line"></span><br><span class="line">IMPORTANT NOTES:</span><br><span class="line"> - Congratulations! Your certificate and chain have been saved at:</span><br><span class="line">   /etc/letsencrypt/live/****/fullchain.pem</span><br><span class="line">   Your key file has been saved at:</span><br><span class="line">   /etc/letsencrypt/live/****/privkey.pem</span><br><span class="line">   Your cert will expire on 2017-12-10. To obtain a new or tweaked</span><br><span class="line">   version of this certificate in the future, simply run certbot-auto</span><br><span class="line">   again. To non-interactively renew *all* of your certificates, run</span><br><span class="line">   &quot;certbot-auto renew&quot;</span><br><span class="line"> - If you like Certbot, please consider supporting our work by:</span><br><span class="line"></span><br><span class="line">   Donating to ISRG / Let&apos;s Encrypt:   https://letsencrypt.org/donate</span><br><span class="line">   Donating to EFF:                    https://eff.org/donate-le</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Saving debug log to &#x2F;var&#x2F;log&#x2F;letsencrypt&#x2F;letsencrypt.log</span><br><span class="line">Plugins selected: Authenticator webroot, Installer None</span><br><span class="line">Obtaining a new certificate</span><br><span class="line">Performing the following challenges:</span><br><span class="line">http-01 challenge for ****</span><br><span class="line"></span><br><span class="line">Select the webroot for ****</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">1: Enter a new webroot</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Press 1 [enter] to confirm the selection (press &#39;c&#39; to cancel):</span><br><span class="line"></span><br><span class="line">** Invalid input **</span><br><span class="line">Press 1 [enter] to confirm the selection (press &#39;c&#39; to cancel): 1</span><br><span class="line">Input the webroot for ******: (Enter &#39;c&#39; to cancel):</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"> does not exist or is not a directory</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Input the webroot for ********: (Enter &#39;c&#39; to cancel): &#x2F;var&#x2F;www&#x2F;</span><br><span class="line">Waiting for verification...</span><br><span class="line">Cleaning up challenges</span><br><span class="line"></span><br><span class="line">IMPORTANT NOTES:</span><br><span class="line"> - Congratulations! Your certificate and chain have been saved at:</span><br><span class="line">   &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;****&#x2F;fullchain.pem</span><br><span class="line">   Your key file has been saved at:</span><br><span class="line">   &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;****&#x2F;privkey.pem</span><br><span class="line">   Your cert will expire on 2017-12-10. To obtain a new or tweaked</span><br><span class="line">   version of this certificate in the future, simply run certbot-auto</span><br><span class="line">   again. To non-interactively renew *all* of your certificates, run</span><br><span class="line">   &quot;certbot-auto renew&quot;</span><br><span class="line"> - If you like Certbot, please consider supporting our work by:</span><br><span class="line"></span><br><span class="line">   Donating to ISRG &#x2F; Let&#39;s Encrypt:   https:&#x2F;&#x2F;letsencrypt.org&#x2F;donate</span><br><span class="line">   Donating to EFF:                    https:&#x2F;&#x2F;eff.org&#x2F;donate-le</span><br></pre></td></tr></table></figure>
 <p>看到這個就表示成功</p>
 <blockquote>
 <p> 申請的網域的SSL憑證<br>cert.pem: Your domain’s certificate<br> Let’s Encrypt 的 鏈證書<br>chain.pem: The Let’s Encrypt chain certificate<br> cert.pem 和 chain.pem 的合併檔<br>fullchain.pem: cert.pem and chain.pem combined<br> SSL憑證的私鑰，千千萬萬要飽護好<br>privkey.pem: Your certificate’s private key</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:443&gt;</span><br><span class="line">        ServerAdmin service@**網域**</span><br><span class="line">        DocumentRoot /var/www/</span><br><span class="line">        ServerName **網域**</span><br><span class="line">        ServerAlias **網域**</span><br><span class="line"></span><br><span class="line">        SSLEngine On</span><br><span class="line">        SSLCertificateFile /etc/letsencrypt/live/**網域**/cert.pem</span><br><span class="line">        SSLCertificateKeyFile /etc/letsencrypt/live/**網域**/privkey.pem</span><br><span class="line">        SSLCertificateChainFile /etc/letsencrypt/live/**網域**/chain.pem</span><br><span class="line">        SSLCACertificateFile /etc/letsencrypt/live/**網域**/fullchain.pem</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:443&gt;</span><br><span class="line">        ServerAdmin service@**網域**</span><br><span class="line">        DocumentRoot &#x2F;var&#x2F;www&#x2F;</span><br><span class="line">        ServerName **網域**</span><br><span class="line">        ServerAlias **網域**</span><br><span class="line"></span><br><span class="line">        SSLEngine On</span><br><span class="line">        SSLCertificateFile &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;**網域**&#x2F;cert.pem</span><br><span class="line">        SSLCertificateKeyFile &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;**網域**&#x2F;privkey.pem</span><br><span class="line">        SSLCertificateChainFile &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;**網域**&#x2F;chain.pem</span><br><span class="line">        SSLCACertificateFile &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;**網域**&#x2F;fullchain.pem</span><br><span class="line">&lt;&#x2F;VirtualHost&gt;</span><br></pre></td></tr></table></figure>
 <p><code>Invalid command &#39;SSLEngine&#39;, perhaps misspelled or defined by a module not included in the server configuration</code><br>這個錯誤訊息是  沒有啟用ssl模組<br>啟用<br><code>sudo a2dismod ssl</code></p>
 <p>但後來發現怎麼很多沒有教關閉<br>爬文一下就找到了</p>
 <p>關閉<br><code>sudo a2enmod ssl</code></p>
@@ -454,10 +474,10 @@
 <p><code>sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load</code></p>
 <p>在/etc/apache2/sites-enabled/000-default</p>
 <p><code>AllowOverride None</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond  %&#123;HTTPS&#125; !=on</span><br><span class="line">#RewriteRule  ^(.*) https://%&#123;SERVER_NAME&#125;$1 [L,R]</span><br><span class="line"> RewriteRule ^(.*)$ https://%&#123;HTTP_HOST&#125;%&#123;REQUEST_URI&#125; [L,R]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RewriteEngine on</span><br><span class="line">RewriteCond  %&#123;HTTPS&#125; !&#x3D;on</span><br><span class="line">#RewriteRule  ^(.*) https:&#x2F;&#x2F;%&#123;SERVER_NAME&#125;$1 [L,R]</span><br><span class="line"> RewriteRule ^(.*)$ https:&#x2F;&#x2F;%&#123;HTTP_HOST&#125;%&#123;REQUEST_URI&#125; [L,R]</span><br></pre></td></tr></table></figure>
 <p>這樣http就能導到https了</p>
 <p>我有擋國外IP要怎麼自動更新憑證</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">/usr/local/bin/certbot-auto renew --quiet</span><br><span class="line">sh /etc/network/iptables.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;bin&#x2F;certbot-auto renew --quiet</span><br><span class="line">sh &#x2F;etc&#x2F;network&#x2F;iptables.sh</span><br></pre></td></tr></table></figure>
 <p>自動更新憑證<br><code>30 2 1 * * sh /root/ssl_bot.sh</code></p>
 <p><strong>2017/10/17</strong><br>發現網站憑證日期怎麼沒有更新…<br>以為設定有問題<br>Google查了一下</p>
 <blockquote>
@@ -491,7 +511,7 @@
           
             <a href="/blog/tags/SSL/" rel="tag"># SSL</a>
           
-            <a href="/blog/tags/Let’s-Encrypt/" rel="tag"># Let’s Encrypt</a>
+            <a href="/blog/tags/Let%E2%80%99s-Encrypt/" rel="tag"># Let’s Encrypt</a>
           
             <a href="/blog/tags/Certbot/" rel="tag"># Certbot</a>
           
@@ -552,7 +572,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -562,8 +582,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -600,7 +630,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -611,7 +641,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>

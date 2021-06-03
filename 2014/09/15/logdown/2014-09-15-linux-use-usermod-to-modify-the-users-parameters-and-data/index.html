@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,usermod,">
+  <meta name="keywords" content="Linux,usermod," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="修改使用者帳號資訊（管理者）  usermod -l newname username　　　　　# 變更使用者帳號名稱usermod -o -u 101 username　　　　　 # 變更使用者 UIDusermod -g users username　　　　　　# 變更使用者主要群組usermod -G mis,sales username　　　　# 變更使用者次要群組usermod -c">
-<meta name="keywords" content="Linux,usermod">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 利用 usermod 修改使用者的參數和資料">
 <meta property="og:url" content="https://malagege.github.io/blog/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="修改使用者帳號資訊（管理者）  usermod -l newname username　　　　　# 變更使用者帳號名稱usermod -o -u 101 username　　　　　 # 變更使用者 UIDusermod -g users username　　　　　　# 變更使用者主要群組usermod -G mis,sales username　　　　# 變更使用者次要群組usermod -c">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:44.962Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2014-09-15T09:11:00.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:55.216Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="usermod">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux 利用 usermod 修改使用者的參數和資料">
-<meta name="twitter:description" content="修改使用者帳號資訊（管理者）  usermod -l newname username　　　　　# 變更使用者帳號名稱usermod -o -u 101 username　　　　　 # 變更使用者 UIDusermod -g users username　　　　　　# 變更使用者主要群組usermod -G mis,sales username　　　　# 變更使用者次要群組usermod -c">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -385,7 +391,8 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/blog/2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/09/15/logdown/2014-09-15-linux-use-usermod-to-modify-the-users-parameters-and-data/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -430,9 +447,7 @@
 <p>Linux usermod -p 修改用户密码</p>
 </blockquote>
 <hr>
-<p>passwd也可以修改口令，但是这是一种交互式的方式，需要用户干预。当然也可以使用重定向或者管道向passwd喂数据，暂且不提。<br>linux下增加用户的命令是useradd，修改用户的命令是usermod，二者都有一个参数 –p，这个参数可以直接指定用户的口令，但是需要注意的是，这个口令并不是明文，而是经过加密的一个字串。<br>linux下可以用python编辑器通过编程的方法得到加密字串（linux下用python命令启动编辑器）：<br>下面是一个完整的过程，蓝色字体的是用户输入的命令，而红色的是系统输出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@linux ~]# python</span><br><span class="line">Python 2.3.4 (#1, Oct 26 2004, 16:42:40)</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[GCC <span class="number">3.4</span><span class="number">.2</span> <span class="number">20041017</span> (Red Hat <span class="number">3.4</span><span class="number">.2</span><span class="number">-6.</span>fc3)] on linux2</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"> <span class="keyword">import</span> crypt;print(crypt.crypt(<span class="string">"your password"</span>,<span class="string">"ab"</span>));</span><br><span class="line">ab62Jfo2yjBEo</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<p>上面用户输入信息中的“your password”可以替换为需要加密的口令，“ab”可替换为任意的两个大小写字符或者数字，而“ab62Jfo2yjBEo”就是加密后的密文。<br>一个简单的例子如下：<br>useradd –p ab62Jfo2yjBEo testuser<br>usermod –p ab62Jfo2yjBEo testuser</p>
+<p>passwd也可以修改口令，但是这是一种交互式的方式，需要用户干预。当然也可以使用重定向或者管道向passwd喂数据，暂且不提。<br>linux下增加用户的命令是useradd，修改用户的命令是usermod，二者都有一个参数 –p，这个参数可以直接指定用户的口令，但是需要注意的是，这个口令并不是明文，而是经过加密的一个字串。<br>linux下可以用python编辑器通过编程的方法得到加密字串（linux下用python命令启动编辑器）：<br>下面是一个完整的过程，蓝色字体的是用户输入的命令，而红色的是系统输出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@linux ~]# python</span><br><span class="line">Python 2.3.4 (#1, Oct 26 2004, 16:42:40)</span><br></pre></td></tr></table></figure><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[GCC <span class="number">3.4</span><span class="number">.2</span> <span class="number">20041017</span> (Red Hat <span class="number">3.4</span><span class="number">.2</span><span class="number">-6.</span>fc3)] on linux2</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"> <span class="keyword">import</span> crypt;print(crypt.crypt(<span class="string">"your password"</span>,<span class="string">"ab"</span>));</span><br><span class="line">ab62Jfo2yjBEo</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure><br>上面用户输入信息中的“your password”可以替换为需要加密的口令，“ab”可替换为任意的两个大小写字符或者数字，而“ab62Jfo2yjBEo”就是加密后的密文。<br>一个简单的例子如下：<br>useradd –p ab62Jfo2yjBEo testuser<br>usermod –p ab62Jfo2yjBEo testuser</p>
 <p>來源：<a href="http://www.cppblog.com/aaxron/archive/2010/12/02/135251.html" target="_blank" rel="noopener">http://www.cppblog.com/aaxron/archive/2010/12/02/135251.html</a></p>
 
       
@@ -512,7 +527,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -522,8 +537,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -560,7 +585,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -571,7 +596,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -638,7 +663,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-l-newname-username-變更使用者帳號名稱"><span class="nav-number">1.</span> <span class="nav-text">usermod -l newname username　　　　　# 變更使用者帳號名稱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-o-u-101-username-變更使用者-UID"><span class="nav-number">2.</span> <span class="nav-text">usermod -o -u 101 username　　　　　 # 變更使用者 UID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-g-users-username-變更使用者主要群組"><span class="nav-number">3.</span> <span class="nav-text">usermod -g users username　　　　　　# 變更使用者主要群組</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-G-mis-sales-username-變更使用者次要群組"><span class="nav-number">4.</span> <span class="nav-text">usermod -G mis,sales username　　　　# 變更使用者次要群組</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-c-“manager”-username-修改使用者註解內容"><span class="nav-number">5.</span> <span class="nav-text">usermod -c “manager” username　　　 # 修改使用者註解內容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-m-d-home-user-username-變更使用者家目錄路徑"><span class="nav-number">6.</span> <span class="nav-text">usermod -m -d /home/user username　# 變更使用者家目錄路徑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-s-usr-bin-ksh-username-變更使用者預設-Shell"><span class="nav-number">7.</span> <span class="nav-text">usermod -s /usr/bin/ksh username　　 # 變更使用者預設 Shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-e-1-1-2010-username-變更使用者過期期限"><span class="nav-number">8.</span> <span class="nav-text">usermod -e 1/1/2010 username　　　　# 變更使用者過期期限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-p-FEeig-jYifke-username-變更使用者密碼"><span class="nav-number">9.</span> <span class="nav-text">usermod -p FEeig.jYifke username　　 # 變更使用者密碼</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-l-newname-username-變更使用者帳號名稱"><span class="nav-number">1.</span> <span class="nav-text">usermod -l newname username　　　　　# 變更使用者帳號名稱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-o-u-101-username-變更使用者-UID"><span class="nav-number">2.</span> <span class="nav-text">usermod -o -u 101 username　　　　　 # 變更使用者 UID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-g-users-username-變更使用者主要群組"><span class="nav-number">3.</span> <span class="nav-text">usermod -g users username　　　　　　# 變更使用者主要群組</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-G-mis-sales-username-變更使用者次要群組"><span class="nav-number">4.</span> <span class="nav-text">usermod -G mis,sales username　　　　# 變更使用者次要群組</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-c-“manager”-username-修改使用者註解內容"><span class="nav-number">5.</span> <span class="nav-text">usermod -c “manager” username　　　 # 修改使用者註解內容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-m-d-home-user-username-變更使用者家目錄路徑"><span class="nav-number">6.</span> <span class="nav-text">usermod -m -d &#x2F;home&#x2F;user username　# 變更使用者家目錄路徑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-s-usr-bin-ksh-username-變更使用者預設-Shell"><span class="nav-number">7.</span> <span class="nav-text">usermod -s &#x2F;usr&#x2F;bin&#x2F;ksh username　　 # 變更使用者預設 Shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-e-1-1-2010-username-變更使用者過期期限"><span class="nav-number">8.</span> <span class="nav-text">usermod -e 1&#x2F;1&#x2F;2010 username　　　　# 變更使用者過期期限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#usermod-p-FEeig-jYifke-username-變更使用者密碼"><span class="nav-number">9.</span> <span class="nav-text">usermod -p FEeig.jYifke username　　 # 變更使用者密碼</span></a></li></ol></div>
             
 
           </div>

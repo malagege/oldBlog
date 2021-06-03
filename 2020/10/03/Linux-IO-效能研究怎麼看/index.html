@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,io,">
+  <meta name="keywords" content="linux,io," />
 
 
 
@@ -80,20 +80,21 @@
 
 
 <meta name="description" content="最近除了看 CPU 使用率過高之前 Raspberry Pi 使用 NextCloud 的時候速度非常慢一直以為是 CPU 關係，但後來發現不是官網友提到是 IO 效能關係">
-<meta name="keywords" content="linux,io">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux IO 效能研究怎麼看">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/10/03/Linux-IO-效能研究怎麼看/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近除了看 CPU 使用率過高之前 Raspberry Pi 使用 NextCloud 的時候速度非常慢一直以為是 CPU 關係，但後來發現不是官網友提到是 IO 效能關係">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/10/03/Linux-IO-效能研究怎麼看/1.png">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/16898515-1f65ff3be1502b87.png?imageMogr2/auto-orient/strip|imageView2/2/w/585">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.478Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/1.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/16898515-1f65ff3be1502b87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/585">
+<meta property="article:published_time" content="2020-10-02T17:16:29.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:53.331Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="io">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux IO 效能研究怎麼看">
-<meta name="twitter:description" content="最近除了看 CPU 使用率過高之前 Raspberry Pi 使用 NextCloud 的時候速度非常慢一直以為是 CPU 關係，但後來發現不是官網友提到是 IO 效能關係">
-<meta name="twitter:image" content="https://malagege.github.io/blog/2020/10/03/Linux-IO-效能研究怎麼看/1.png">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/1.png">
 
 
 
@@ -123,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/10/03/Linux-IO-效能研究怎麼看/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/10/03/Linux-IO-效能研究怎麼看/"/>
 
 
 
@@ -150,7 +151,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -159,9 +163,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -171,13 +175,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -205,9 +209,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -215,9 +219,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -225,9 +229,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -235,9 +239,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -245,9 +249,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -260,7 +264,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -281,7 +285,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -312,20 +318,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/10/03/Linux-IO-效能研究怎麼看/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -357,7 +363,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -368,7 +374,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -387,8 +393,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/10/03/Linux-IO-效能研究怎麼看/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/03/Linux-IO-效能研究怎麼看/" itemprop="commentCount"></span>
+                <a href="/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/10/03/Linux-IO-效能研究怎麼看/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -418,8 +425,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -429,7 +446,7 @@
 <a id="more"></a>
 <p>一直以為 IO 效能跟硬碟有關係<br>但後來研究一翻，參考網路上一些文章<br>後來 CPU, RAM, Network … 等等都有關係</p>
 <h2 id="IO-效能怎麼看"><a href="#IO-效能怎麼看" class="headerlink" title="IO 效能怎麼看?"></a>IO 效能怎麼看?</h2><p><a href="https://blog.csdn.net/wenniuwuren/article/details/50558183" target="_blank" rel="noopener">Linux 性能监控 —— 磁盘 I/O_wenniuwuren-CSDN博客</a></p>
-<img src="/blog/2020/10/03/Linux-IO-效能研究怎麼看/1.png" title="top">
+<img src="/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/1.png" class="" title="top">
 <blockquote>
 <p>二. 如何衡量磁盤 I/O 存在瓶頸<br>磁盤 I/O 是否存在瓶頸取決於當前機器 CPU 的總核數（總核數計算移步我的另一篇博文: Linux 性能監控 —- Load Average）。 公式： X(IO) = 1/（cpu 總核數） 用來衡量磁盤 I/O 情況， 以上圖的機器為例子， 這台機器 2 CPU 12 核 也就是總核心數為 2*12 = 24， X(IO) = 0.04166666 = 4.17%。<br>如果上圖指標長時間大於 4.17%， 那麼我們的網站響應可能就會變慢了。  </p>
 </blockquote>
@@ -446,7 +463,7 @@
 </li>
 </ul>
 <h2 id="wa-高不一定是出在硬碟-io"><a href="#wa-高不一定是出在硬碟-io" class="headerlink" title="wa 高不一定是出在硬碟 io"></a>wa 高不一定是出在硬碟 io</h2><ul>
-<li><a href="https://www.lijyyh.com/2012/01/linux.html" target="_blank" rel="noopener">傲笑紅塵路: 監控Linux 系統效能狀況</a> <a href="/blog/2020/10/03/Linux-IO-效能研究怎麼看/web1.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.lijyyh.com/2012/01/linux.html" target="_blank" rel="noopener">傲笑紅塵路: 監控Linux 系統效能狀況</a> <a href="/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/web1.png" title="備份圖">備份圖</a></li>
 </ul>
 <p>可能是網路等等其他<br>這邊有查到 sar 可以查詢 CPU, RAM, Disk I/O, Network </p>
 <p>網路查詢方法<br><a href="https://blog.csdn.net/wangjianno2/article/details/39256163" target="_blank" rel="noopener">使用sar工具进行cpu/mem/io/network等性能分析_@<em>囚徒-2018</em>的家园-CSDN博客</a><br><a href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/sar.html" target="_blank" rel="noopener">12. sar 找出系统瓶颈的利器 — Linux Tools Quick Tutorial</a><br><a href="https://testerhome.com/topics/20606" target="_blank" rel="noopener">记一次服务端 IO 瓶颈问题定位 · TesterHome</a></p>
@@ -466,11 +483,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">pi@PI203:~ $ vmstat 1 20</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  1  85568  89920  14888 559472    0    0     2     1    3    2  1  1 98  1  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  178  266  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  175  272  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  164  250  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  202  304  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  183  283  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  180  267  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  161  244  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  166  253  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  177  275  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  190  295  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  188  289  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  179  270  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  177  275  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  175  266  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  164  254  0  0 75 25  0</span><br><span class="line"> 1  1  85568  89896  14888 559472    0    0     0     0  187  289  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  169  255  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  181  283  0  0 75 25  0</span><br><span class="line"> 0  1  85568  89896  14888 559472    0    0     0     0  171  248  0  0 75 25  0</span><br></pre></td></tr></table></figure>
 <p>這邊wa 這麼高，沒有降下來…這邊 top 應該跟 wa 是一樣的東西</p>
 <h2 id="vsftp-程式-uninterruptible-sleep-狀態"><a href="#vsftp-程式-uninterruptible-sleep-狀態" class="headerlink" title="vsftp 程式 uninterruptible sleep 狀態"></a>vsftp 程式 uninterruptible sleep 狀態</h2><p>參照這個shell 找到 vsftp 有問題<a href="https://www.503error.com/2016/iowait-%E8%BF%87%E9%AB%98%E9%97%AE%E9%A2%98%E7%9A%84%E6%9F%A5%E6%89%BE%E5%8F%8A%E8%A7%A3%E5%86%B3linux/1035.html" target="_blank" rel="noopener">iowait 过高问题的查找及解决linux | 张志明的个人博客</a><br>裡面有提到用 iotop 但我看數字都正常</p>
-<h3 id="查看-uninterruptible-sleep-程式"><a href="#查看-uninterruptible-sleep-程式" class="headerlink" title="查看 uninterruptible sleep 程式"></a>查看 uninterruptible sleep 程式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> # for x in `seq 1 1 10`; do ps -eo state,pid,cmd | grep &quot;^D&quot;; echo &quot;----&quot;; sleep 5; done</span><br><span class="line">D 18634 /usr/sbin/vsftpd /etc/vsftpd.conf</span><br><span class="line">----</span><br><span class="line">D 18634 /usr/sbin/vsftpd /etc/vsftpd.conf</span><br><span class="line">----</span><br></pre></td></tr></table></figure>
-<p>這邊除了這個方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 1 &quot;(ps aux | awk &apos;\$8 ~ /D/  &#123; print \$0 &#125;&apos;)&quot;</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://serverfault.com/questions/61510/linux-how-can-i-see-whats-waiting-for-disk-io" target="_blank" rel="noopener">Linux - How can I see what’s waiting for disk IO - Server Fault</a></p>
+<h3 id="查看-uninterruptible-sleep-程式"><a href="#查看-uninterruptible-sleep-程式" class="headerlink" title="查看 uninterruptible sleep 程式"></a>查看 uninterruptible sleep 程式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> # for x in &#96;seq 1 1 10&#96;; do ps -eo state,pid,cmd | grep &quot;^D&quot;; echo &quot;----&quot;; sleep 5; done</span><br><span class="line">D 18634 &#x2F;usr&#x2F;sbin&#x2F;vsftpd &#x2F;etc&#x2F;vsftpd.conf</span><br><span class="line">----</span><br><span class="line">D 18634 &#x2F;usr&#x2F;sbin&#x2F;vsftpd &#x2F;etc&#x2F;vsftpd.conf</span><br><span class="line">----</span><br></pre></td></tr></table></figure>
+<p>這邊除了這個方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 1 &quot;(ps aux | awk &#39;\$8 ~ &#x2F;D&#x2F;  &#123; print \$0 &#125;&#39;)&quot;</span><br></pre></td></tr></table></figure><br><a href="https://serverfault.com/questions/61510/linux-how-can-i-see-whats-waiting-for-disk-io" target="_blank" rel="noopener">Linux - How can I see what’s waiting for disk IO - Server Fault</a></p>
 <p><a href="https://serverfault.com/questions/616570/find-process-causing-io-wait-time" target="_blank" rel="noopener">linux - Find process causing IO wait time - Server Fault</a><br>iotop 不知道能不能看到</p>
-<h3 id="lsof-p-18634"><a href="#lsof-p-18634" class="headerlink" title="lsof -p 18634"></a>lsof -p 18634</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">COMMAND   PID USER   FD      TYPE     DEVICE SIZE/OFF    NODE NAME</span><br><span class="line">vsftpd  18634   pi  cwd   unknown                             /mnt/gdrive/ACG/TV/202007/沒落要塞 DECA-DENCE (stat: Permission denied)</span><br><span class="line">vsftpd  18634   pi  rtd       DIR      179,2     4096       2 /</span><br><span class="line">vsftpd  18634   pi  txt       REG      179,2   113240   24973 /usr/sbin/vsftpd</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    42632    1674 /lib/arm-linux-gnueabihf/libnss_files-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    26600    1697 /lib/arm-linux-gnueabihf/librt-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    17956    1637 /lib/arm-linux-gnueabihf/libcap-ng.so.0.0.0</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   130416    1693 /lib/arm-linux-gnueabihf/libpthread-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2     9768    1644 /lib/arm-linux-gnueabihf/libdl-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   116032    1580 /lib/arm-linux-gnueabihf/libaudit.so.1.0.0</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    71576    1671 /lib/arm-linux-gnueabihf/libnsl-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2  1296004    1636 /lib/arm-linux-gnueabihf/libc-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    17872    1638 /lib/arm-linux-gnueabihf/libcap.so.2.25</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2  2118048   15238 /usr/lib/arm-linux-gnueabihf/libcrypto.so.1.1</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   454924   15239 /usr/lib/arm-linux-gnueabihf/libssl.so.1.1</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    50896    2417 /lib/arm-linux-gnueabihf/libpam.so.0.84.2</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    30508    1715 /lib/arm-linux-gnueabihf/libwrap.so.0.7.6</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    17708   14650 /usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   138604    1559 /lib/arm-linux-gnueabihf/ld-2.28.so</span><br><span class="line">vsftpd  18634   pi    0u     sock        0,8      0t0 2903508 protocol: TCPv6</span><br><span class="line">vsftpd  18634   pi    1u     sock        0,8      0t0 2903508 protocol: TCPv6</span><br><span class="line">vsftpd  18634   pi    2u     sock        0,8      0t0 2903508 protocol: TCPv6</span><br><span class="line">vsftpd  18634   pi    3w      REG      179,2    37351    1427 /var/log/vsftpd.log.1</span><br><span class="line">vsftpd  18634   pi    4r  unknown                             /mnt/gdrive/ACG/TV/202007/沒落要塞 DECA-DENCE/[Airota][Deca-Dence][05][1080p AVC AAC][CHT].mp4 (stat: Permission denied)</span><br><span class="line">vsftpd  18634   pi    5u     unix 0x97115dd6      0t0 2898890 type=STREAM</span><br><span class="line">vsftpd  18634   pi    6u     sock        0,8      0t0 2907724 protocol: TCPv6</span><br></pre></td></tr></table></figure>
+<h3 id="lsof-p-18634"><a href="#lsof-p-18634" class="headerlink" title="lsof -p 18634"></a>lsof -p 18634</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">COMMAND   PID USER   FD      TYPE     DEVICE SIZE&#x2F;OFF    NODE NAME</span><br><span class="line">vsftpd  18634   pi  cwd   unknown                             &#x2F;mnt&#x2F;gdrive&#x2F;ACG&#x2F;TV&#x2F;202007&#x2F;沒落要塞 DECA-DENCE (stat: Permission denied)</span><br><span class="line">vsftpd  18634   pi  rtd       DIR      179,2     4096       2 &#x2F;</span><br><span class="line">vsftpd  18634   pi  txt       REG      179,2   113240   24973 &#x2F;usr&#x2F;sbin&#x2F;vsftpd</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    42632    1674 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libnss_files-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    26600    1697 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;librt-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    17956    1637 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libcap-ng.so.0.0.0</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   130416    1693 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libpthread-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2     9768    1644 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libdl-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   116032    1580 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libaudit.so.1.0.0</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    71576    1671 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libnsl-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2  1296004    1636 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libc-2.28.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    17872    1638 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libcap.so.2.25</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2  2118048   15238 &#x2F;usr&#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libcrypto.so.1.1</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   454924   15239 &#x2F;usr&#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libssl.so.1.1</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    50896    2417 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libpam.so.0.84.2</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    30508    1715 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libwrap.so.0.7.6</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2    17708   14650 &#x2F;usr&#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;libarmmem-v7l.so</span><br><span class="line">vsftpd  18634   pi  mem       REG      179,2   138604    1559 &#x2F;lib&#x2F;arm-linux-gnueabihf&#x2F;ld-2.28.so</span><br><span class="line">vsftpd  18634   pi    0u     sock        0,8      0t0 2903508 protocol: TCPv6</span><br><span class="line">vsftpd  18634   pi    1u     sock        0,8      0t0 2903508 protocol: TCPv6</span><br><span class="line">vsftpd  18634   pi    2u     sock        0,8      0t0 2903508 protocol: TCPv6</span><br><span class="line">vsftpd  18634   pi    3w      REG      179,2    37351    1427 &#x2F;var&#x2F;log&#x2F;vsftpd.log.1</span><br><span class="line">vsftpd  18634   pi    4r  unknown                             &#x2F;mnt&#x2F;gdrive&#x2F;ACG&#x2F;TV&#x2F;202007&#x2F;沒落要塞 DECA-DENCE&#x2F;[Airota][Deca-Dence][05][1080p AVC AAC][CHT].mp4 (stat: Permission denied)</span><br><span class="line">vsftpd  18634   pi    5u     unix 0x97115dd6      0t0 2898890 type&#x3D;STREAM</span><br><span class="line">vsftpd  18634   pi    6u     sock        0,8      0t0 2907724 protocol: TCPv6</span><br></pre></td></tr></table></figure>
 <p>這邊查了一下</p>
 <blockquote>
 <p>產生D狀態的原因出現uninterruptible sleep狀態的進程一般是因為在等待IO，例如磁盤IO、網絡IO等。在發出的IO請求得不到相應之後，進程一般就會轉入uninterruptible sleep狀態，例如若NFS服務端關閉時，如果沒有事先amount相關目錄。在客戶端執行df的話就會掛住整個會話，再用ps axf查看的話會發現df進程狀態位已經變成D。</p>
@@ -533,7 +549,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/09/29/JBoss-佈署程式和-cli-操作小記/" rel="next" title="JBoss 佈署程式和 cli 操作小記">
+              <a href="/blog/2020/09/29/JBoss-%E4%BD%88%E7%BD%B2%E7%A8%8B%E5%BC%8F%E5%92%8C-cli-%E6%93%8D%E4%BD%9C%E5%B0%8F%E8%A8%98/" rel="next" title="JBoss 佈署程式和 cli 操作小記">
                 <i class="fa fa-chevron-left"></i> JBoss 佈署程式和 cli 操作小記
               </a>
             
@@ -543,7 +559,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/10/12/Raspberry-Pi-使用-Seafile-初體驗/" rel="prev" title="Raspberry Pi 使用 Seafile 初體驗">
+              <a href="/blog/2020/10/12/Raspberry-Pi-%E4%BD%BF%E7%94%A8-Seafile-%E5%88%9D%E9%AB%94%E9%A9%97/" rel="prev" title="Raspberry Pi 使用 Seafile 初體驗">
                 Raspberry Pi 使用 Seafile 初體驗 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -579,7 +595,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -589,8 +605,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -627,7 +653,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -638,7 +664,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -868,7 +894,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/10/03/Linux-IO-效能研究怎麼看/';
+          this.page.url = 'https://malagege.github.io/blog/2020/10/03/Linux-IO-%E6%95%88%E8%83%BD%E7%A0%94%E7%A9%B6%E6%80%8E%E9%BA%BC%E7%9C%8B/';
           this.page.identifier = '2020/10/03/Linux-IO-效能研究怎麼看/';
           this.page.title = 'Linux IO 效能研究怎麼看';
         };

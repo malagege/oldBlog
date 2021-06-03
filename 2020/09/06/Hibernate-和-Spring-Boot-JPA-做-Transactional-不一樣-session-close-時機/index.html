@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hibernate,transactional,jpa,spring,">
+  <meta name="keywords" content="hibernate,transactional,jpa,spring," />
 
 
 
@@ -80,17 +80,20 @@
 
 
 <meta name="description" content="之前我有做過Spring 交易事務失效 | 程式狂想筆記我以為大概了解 Spring 交易事務原理但是我又遇到奇怪問題在研究了一番，終於找到一些問題">
-<meta name="keywords" content="hibernate,transactional,jpa,spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="之前我有做過Spring 交易事務失效 | 程式狂想筆記我以為大概了解 Spring 交易事務原理但是我又遇到奇怪問題在研究了一番，終於找到一些問題">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.127Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-09-06T07:01:58.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:49.364Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="hibernate">
+<meta property="article:tag" content="transactional">
+<meta property="article:tag" content="jpa">
+<meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機">
-<meta name="twitter:description" content="之前我有做過Spring 交易事務失效 | 程式狂想筆記我以為大概了解 Spring 交易事務原理但是我又遇到奇怪問題在研究了一番，終於找到一些問題">
 
 
 
@@ -120,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/"/>
 
 
 
@@ -147,7 +150,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +162,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +174,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +208,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +218,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +228,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +238,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +248,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +263,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +284,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +317,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +362,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +373,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Java/" itemprop="url" rel="index">
                     <span itemprop="name">Java</span>
                   </a>
@@ -384,8 +392,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/" itemprop="commentCount"></span>
+                <a href="/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +424,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -438,7 +457,7 @@
 <h3 id="我的Hibernate-物件變成了Detached"><a href="#我的Hibernate-物件變成了Detached" class="headerlink" title="我的Hibernate 物件變成了Detached ???"></a>我的Hibernate 物件變成了Detached ???</h3><p>我的Hibernate 物件變成了Detached ???<br>最後爬到這篇文章</p>
 <blockquote>
 <p>getCurrentSession得到的session是和事務綁定的session，所以：<br>1，要用getCurrentSession生產的session，就必須有事務環境，意思就是你必須在調用session方法之前，session.beginTransaction（）；就算你只是get或者query<br>2，在事務提交之後，即session.getTransaction().commit()之後，session自動關閉，所以你用getCurrentSession，只需要commit事務，不要去調用session.close()。</p>
-<p>3，你用的是ssh，spring為hibernate的current_session_context_class配置了一個SpringSessionContext來幫你管理getCurrentSession中的session，所以，你在OpenSessionInview的時候，spring就自動的幫你打開了session——&gt;你在執行用AOP包裝的事務的時候，事務就開啟了——&gt;執行你的業務方法——&gt;提交事務（注意，hibernate管理的getCurrentSession在提交事務的時候才會關閉ession，而spring提供的這個SpringSessionContext不會） ——&gt;opensessioninview關閉session。<br>從上面的執行流程可以看出，你在SSH集成的時候，如果用的是getCurrentSession的集成方式，就不能設置hibernate的current_session_context_class為thread，而應該空著，讓spring幫你。<br>參考:<a href="https://blog.csdn.net/qq_25843323/article/details/50286643" target="_blank" rel="noopener">hibernate中创建session的两种方式方式，区别在哪里？_qq_25843323的博客-CSDN博客</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web2.png" title="備份圖">備份圖</a></p>
+<p>3，你用的是ssh，spring為hibernate的current_session_context_class配置了一個SpringSessionContext來幫你管理getCurrentSession中的session，所以，你在OpenSessionInview的時候，spring就自動的幫你打開了session——&gt;你在執行用AOP包裝的事務的時候，事務就開啟了——&gt;執行你的業務方法——&gt;提交事務（注意，hibernate管理的getCurrentSession在提交事務的時候才會關閉ession，而spring提供的這個SpringSessionContext不會） ——&gt;opensessioninview關閉session。<br>從上面的執行流程可以看出，你在SSH集成的時候，如果用的是getCurrentSession的集成方式，就不能設置hibernate的current_session_context_class為thread，而應該空著，讓spring幫你。<br>參考:<a href="https://blog.csdn.net/qq_25843323/article/details/50286643" target="_blank" rel="noopener">hibernate中创建session的两种方式方式，区别在哪里？_qq_25843323的博客-CSDN博客</a> <a href="/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/web2.png" title="備份圖">備份圖</a></p>
 </blockquote>
 <p>Hibernate daoImpl</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> Session <span class="title">getSession</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sessionFactory.getCurrentSession();  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(T entity)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.getSession().save(entity);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -460,7 +479,7 @@
 <p><del>這邊有提到使用<strong>persist 或者 merge 操作之後並不會直接提交事務</strong></del></p>
 <p>這邊我會錯意，其實我寫這一段覺得還是哪裡怪怪的<br>後來查了一下<br>應該是 Spring 事務傳播</p>
 <ul>
-<li><a href="https://segmentfault.com/a/1190000013341344" target="_blank" rel="noopener">Spring事務傳播行為詳解 - 個人文章 - SegmentFault 思否</a>  <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web6.png" title="備份圖">備份圖</a><br>這篇寫得很棒!!</li>
+<li><a href="https://segmentfault.com/a/1190000013341344" target="_blank" rel="noopener">Spring事務傳播行為詳解 - 個人文章 - SegmentFault 思否</a>  <a href="/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/web6.png" title="備份圖">備份圖</a><br>這篇寫得很棒!!</li>
 <li><a href="https://www.jianshu.com/p/1533f0f5241a" target="_blank" rel="noopener">Spring声明式事务管理之二：核心接口API - 簡書</a></li>
 <li><a href="https://stackoverflow.com/questions/19396563/does-hibernates-session-close-automatically-rollback-uncommitted-transactions" target="_blank" rel="noopener">java - Does Hibernate’s Session.close() automatically rollback uncommitted transactions? - Stack Overflow</a></li>
 <li><a href="https://blog.csdn.net/qq_23476319/article/details/56043282" target="_blank" rel="noopener">HibernateTransactionManager和DataSourceTransactionManager_qq_23476319的博客-CSDN博客</a></li>
@@ -476,9 +495,9 @@
 <li><a href="https://www.cnblogs.com/wenq001/p/9264861.html" target="_blank" rel="noopener">springboot jpa 批量保存數據–EntityManager和 JpaRepository - WenQ001 - 博客園</a></li>
 <li><a href="https://stackoverflow.com/questions/161224/what-are-the-differences-between-the-different-saving-methods-in-hibernate" target="_blank" rel="noopener">java - What are the differences between the different saving methods in Hibernate? - Stack Overflow</a></li>
 <li><a href="https://blog.csdn.net/u010739551/article/details/47253881" target="_blank" rel="noopener">Hibernate save()与persist()区别_攻城狮Luke（刘健彬）-CSDN博客</a></li>
-<li><a href="http://www.blogjava.net/dreamstone/archive/2007/07/29/133071.html" target="_blank" rel="noopener">hibernate的各种保存方式的区别 (save,persist,update,saveOrUpdte,merge,flush,lock)等 - DANCE WITH JAVA - BlogJava</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web4.png" title="備份圖">備份圖</a></li>
-<li><a href="https://sites.google.com/site/hzg139/home/orm-jihibernate/hibernate/hibernate" target="_blank" rel="noopener">Hibernate各种保存方式的区别 - 不發光的螢火蟲</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web3.png" title="備份圖">備份圖</a></li>
-<li><a href="https://www.cnblogs.com/xiaoheike/p/5374613.html" target="_blank" rel="noopener">Hibernate save, saveOrUpdate, persist, merge, update 区别 - xiaoheike - 博客园</a> <a href="/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/web1.png" title="備份圖">備份圖</a><br><a href="https://github.com/xiaoheike/HibernateSavePersistUpdateMergeDiff" target="_blank" rel="noopener">xiaoheike/HibernateSavePersistUpdateMergeDiff</a></li>
+<li><a href="http://www.blogjava.net/dreamstone/archive/2007/07/29/133071.html" target="_blank" rel="noopener">hibernate的各种保存方式的区别 (save,persist,update,saveOrUpdte,merge,flush,lock)等 - DANCE WITH JAVA - BlogJava</a> <a href="/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/web4.png" title="備份圖">備份圖</a></li>
+<li><a href="https://sites.google.com/site/hzg139/home/orm-jihibernate/hibernate/hibernate" target="_blank" rel="noopener">Hibernate各种保存方式的区别 - 不發光的螢火蟲</a> <a href="/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/web3.png" title="備份圖">備份圖</a></li>
+<li><a href="https://www.cnblogs.com/xiaoheike/p/5374613.html" target="_blank" rel="noopener">Hibernate save, saveOrUpdate, persist, merge, update 区别 - xiaoheike - 博客园</a> <a href="/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/web1.png" title="備份圖">備份圖</a><br><a href="https://github.com/xiaoheike/HibernateSavePersistUpdateMergeDiff" target="_blank" rel="noopener">xiaoheike/HibernateSavePersistUpdateMergeDiff</a></li>
 </ol>
 <h2 id="try-catch-到底能不能抓到-Transactional-public-method"><a href="#try-catch-到底能不能抓到-Transactional-public-method" class="headerlink" title="try catch 到底能不能抓到 @Transactional public method ?"></a>try catch 到底能不能抓到 @Transactional public method ?</h2><p>先說一下問題，我因為上面敘述，我接觸專案 DaoImpl.java 是使用 Hibernate<br>我接觸到的專案是不會抓到 try catch &lt;—這邊指的是 dao.save 會抓到<br>非使用 Spring Boot JPA 的 try catch 抓地到<br>所以我這邊操作出來竟然測出兩種不一樣解果</p>
 <p>Spring Boot JPA 使用 try catch(內層)抓地到 Exception &lt;—這邊指的是 dao.save 丟的 Exception 不是一般 Exception</p>
@@ -543,7 +562,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/09/03/Oracle-匯出-Schema-好用工具/" rel="next" title="Oracle 匯出 Schema 好用工具">
+              <a href="/blog/2020/09/03/Oracle-%E5%8C%AF%E5%87%BA-Schema-%E5%A5%BD%E7%94%A8%E5%B7%A5%E5%85%B7/" rel="next" title="Oracle 匯出 Schema 好用工具">
                 <i class="fa fa-chevron-left"></i> Oracle 匯出 Schema 好用工具
               </a>
             
@@ -553,7 +572,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/09/08/Oracle-空白字元-和-NULL/" rel="prev" title="Oracle 空白字元 和 NULL">
+              <a href="/blog/2020/09/08/Oracle-%E7%A9%BA%E7%99%BD%E5%AD%97%E5%85%83-%E5%92%8C-NULL/" rel="prev" title="Oracle 空白字元 和 NULL">
                 Oracle 空白字元 和 NULL <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -589,7 +608,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -599,8 +618,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -637,7 +666,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -648,7 +677,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -715,7 +744,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#發現問題"><span class="nav-number">1.</span> <span class="nav-text">發現問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#為什麼會發生這個問題呢-我做-update-就可以正常修改"><span class="nav-number">1.1.</span> <span class="nav-text">為什麼會發生這個問題呢?我做 update 就可以正常修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我的Hibernate-物件變成了Detached"><span class="nav-number">1.2.</span> <span class="nav-text">我的Hibernate 物件變成了Detached ???</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-Transactional-每做一次都會-commit-並-session-關閉"><span class="nav-number">1.3.</span> <span class="nav-text">Hibernate @Transactional 每做一次都會 commit 並 session 關閉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot-JPA-save-使用-Transactional-不會做-commit"><span class="nav-number">1.4.</span> <span class="nav-text">Spring Boot JPA save 使用 @Transactional 不會做 commit?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-的-commit-flush"><span class="nav-number">1.5.</span> <span class="nav-text">Hibernate 的 commit, flush</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是-persist-merge"><span class="nav-number">1.6.</span> <span class="nav-text">什麼是 persist , merge?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch-到底能不能抓到-Transactional-public-method"><span class="nav-number">2.</span> <span class="nav-text">try catch 到底能不能抓到 @Transactional public method ?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-觀察"><span class="nav-number">2.1.</span> <span class="nav-text">try catch 觀察</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-最好寫在哪邊"><span class="nav-number">2.2.</span> <span class="nav-text">try catch 最好寫在哪邊?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結-心得"><span class="nav-number">3.</span> <span class="nav-text">總結/心得</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#發現問題"><span class="nav-number">1.</span> <span class="nav-text">發現問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#為什麼會發生這個問題呢-我做-update-就可以正常修改"><span class="nav-number">1.1.</span> <span class="nav-text">為什麼會發生這個問題呢?我做 update 就可以正常修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我的Hibernate-物件變成了Detached"><span class="nav-number">1.2.</span> <span class="nav-text">我的Hibernate 物件變成了Detached ???</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-Transactional-每做一次都會-commit-並-session-關閉"><span class="nav-number">1.3.</span> <span class="nav-text">Hibernate @Transactional 每做一次都會 commit 並 session 關閉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot-JPA-save-使用-Transactional-不會做-commit"><span class="nav-number">1.4.</span> <span class="nav-text">Spring Boot JPA save 使用 @Transactional 不會做 commit?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hibernate-的-commit-flush"><span class="nav-number">1.5.</span> <span class="nav-text">Hibernate 的 commit, flush</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是-persist-merge"><span class="nav-number">1.6.</span> <span class="nav-text">什麼是 persist , merge?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch-到底能不能抓到-Transactional-public-method"><span class="nav-number">2.</span> <span class="nav-text">try catch 到底能不能抓到 @Transactional public method ?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-觀察"><span class="nav-number">2.1.</span> <span class="nav-text">try catch 觀察</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#try-catch-最好寫在哪邊"><span class="nav-number">2.2.</span> <span class="nav-text">try catch 最好寫在哪邊?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結-心得"><span class="nav-number">3.</span> <span class="nav-text">總結&#x2F;心得</span></a></li></ol></div>
             
 
           </div>
@@ -878,7 +907,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/';
+          this.page.url = 'https://malagege.github.io/blog/2020/09/06/Hibernate-%E5%92%8C-Spring-Boot-JPA-%E5%81%9A-Transactional-%E4%B8%8D%E4%B8%80%E6%A8%A3-session-close-%E6%99%82%E6%A9%9F/';
           this.page.identifier = '2020/09/06/Hibernate-和-Spring-Boot-JPA-做-Transactional-不一樣-session-close-時機/';
           this.page.title = 'Hibernate 和 Spring Boot JPA 做 @Transactional 不一樣 session.close 時機';
         };

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ecmascript6,">
+  <meta name="keywords" content="ecmascript6," />
 
 
 
@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="最近因為學了VueJS，覺得事時候要進入Vue cli環境用用看但知道Vue cli是使用Webpack總覺得不了解JS模組化要怎麼寫之後程式會踩到一堆雷在此先記錄一些筆記">
-<meta name="keywords" content="ecmascript6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ECMAScript6 Module使用筆記">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/09/22/ECMAScript6-Module使用筆記/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/09/22/ECMAScript6-Module%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近因為學了VueJS，覺得事時候要進入Vue cli環境用用看但知道Vue cli是使用Webpack總覺得不了解JS模組化要怎麼寫之後程式會踩到一堆雷在此先記錄一些筆記">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.072Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-09-22T13:34:53.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:49.286Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="ecmascript6">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ECMAScript6 Module使用筆記">
-<meta name="twitter:description" content="最近因為學了VueJS，覺得事時候要進入Vue cli環境用用看但知道Vue cli是使用Webpack總覺得不了解JS模組化要怎麼寫之後程式會踩到一堆雷在此先記錄一些筆記">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/09/22/ECMAScript6-Module使用筆記/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/09/22/ECMAScript6-Module使用筆記/"/>
 
 
 
@@ -147,7 +147,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +159,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +171,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +205,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +215,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +225,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +235,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +245,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +260,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +281,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +314,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/09/22/ECMAScript6-Module使用筆記/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/09/22/ECMAScript6-Module%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +359,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +370,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/JavaScript/" itemprop="url" rel="index">
                     <span itemprop="name">JavaScript</span>
                   </a>
@@ -384,8 +389,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/09/22/ECMAScript6-Module使用筆記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/22/ECMAScript6-Module使用筆記/" itemprop="commentCount"></span>
+                <a href="/blog/2018/09/22/ECMAScript6-Module%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/22/ECMAScript6-Module使用筆記/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +421,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -424,7 +440,7 @@
 
         <p>最近因為學了VueJS，覺得事時候要進入Vue cli環境用用看<br>但知道Vue cli是使用Webpack<br>總覺得不了解JS模組化要怎麼寫<br>之後程式會踩到一堆雷<br>在此先記錄一些筆記</p>
 <a id="more"></a>
-<p>在之前有看過nodejs的<code>require</code>，JavaScript的<code>import xxxx from ooo</code><br>一直以為他們都是大同小意，可能可以互通<br>但今天看到這篇<a href="http://imweb.io/topic/582293894067ce9726778be9" target="_blank" rel="noopener">Node中没搞明白require和import，你会被坑的很惨 - 腾讯Web前端 IMWeb 团队社区 | blog | 团队博客</a><br><a href="/blog/2018/09/22/ECMAScript6-Module使用筆記/1.png" title="備份圖">備份圖</a><br>發現完全不一樣</p>
+<p>在之前有看過nodejs的<code>require</code>，JavaScript的<code>import xxxx from ooo</code><br>一直以為他們都是大同小意，可能可以互通<br>但今天看到這篇<a href="http://imweb.io/topic/582293894067ce9726778be9" target="_blank" rel="noopener">Node中没搞明白require和import，你会被坑的很惨 - 腾讯Web前端 IMWeb 团队社区 | blog | 团队博客</a><br><a href="/blog/2018/09/22/ECMAScript6-Module%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/1.png" title="備份圖">備份圖</a><br>發現完全不一樣</p>
 <p>由於我對COMMONJS、AMD跟nodejs不熟悉<br>所以我這篇指記錄ECMAScript 6 模組化</p>
 <h2 id="模組-導出"><a href="#模組-導出" class="headerlink" title="(模組)導出"></a>(模組)導出</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">export</span> b;</span><br><span class="line"><span class="keyword">export</span> <span class="number">1</span>;<span class="comment">//不能放不是變數，只能放function name跟object指定</span></span><br></pre></td></tr></table></figure>
 <p>詳細:<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/export" target="_blank" rel="noopener">export - JavaScript | MDN</a></p>
@@ -435,24 +451,19 @@
 <p><code>export {xxxx, oooo,ffff}</code><br>當export放物件(大陸翻:對象，最近看中文一直看不懂這詞XD)</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123; name1 <span class="keyword">as</span> <span class="keyword">default</span>, … &#125;;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> …;</span><br><span class="line"><span class="keyword">export</span> &#123; name1, name2, …, nameN &#125; <span class="keyword">from</span> …;</span><br><span class="line"><span class="keyword">export</span> &#123; import1 <span class="keyword">as</span> name1, import2 <span class="keyword">as</span> name2, …, nameN &#125; <span class="keyword">from</span> …;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>另外要注意的是，如果想 import 的同時 export 出去，<br>並?不會 export 預設輸出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export * from …;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>你必須額外 import 它的預設輸出，然後再用 export<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import mod from &quot;mod&quot;;</span><br><span class="line">export default mod;</span><br></pre></td></tr></table></figure></p>
+<p>另外要注意的是，如果想 import 的同時 export 出去，<br>並?不會 export 預設輸出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export * from …;</span><br></pre></td></tr></table></figure><br>你必須額外 import 它的預設輸出，然後再用 export<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import mod from &quot;mod&quot;;</span><br><span class="line">export default mod;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <h2 id="模組-導入"><a href="#模組-導入" class="headerlink" title="(模組)導入"></a>(模組)導入</h2><p>如果我們要輸出單獨的 function, object, class 或當做 fallback 值來輸出的話，就可以用預設輸出：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module "my-module.js"</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">cube</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x * x * x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> b = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p>外部檔案的 import 用法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cube <span class="keyword">from</span> <span class="string">'my-module'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;b&#125; <span class="keyword">from</span> <span class="string">'my-module'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(cube(<span class="number">3</span>)); <span class="comment">// 27</span></span><br></pre></td></tr></table></figure></p>
-<p>Note 注意預設輸出不能使用 var, let , const。</p>
+<p>外部檔案的 import 用法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cube <span class="keyword">from</span> <span class="string">'my-module'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;b&#125; <span class="keyword">from</span> <span class="string">'my-module'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(cube(<span class="number">3</span>)); <span class="comment">// 27</span></span><br></pre></td></tr></table></figure><br>Note 注意預設輸出不能使用 var, let , const。</p>
 <p>比較要注意的事情<br><code>import</code>後面有沒有<code>{}</code>就不一樣了<br><code>{}</code>裡面是放export 變數名稱<br>沒有的話，import xxx，xxx是指default導出的東西</p>
-<h2 id="HTML載入"><a href="#HTML載入" class="headerlink" title="HTML載入"></a>HTML載入</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"module"</span> <span class="attr">src</span>=<span class="string">"a.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="HTML載入"><a href="#HTML載入" class="headerlink" title="HTML載入"></a>HTML載入</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"module"</span> <span class="attr">src</span>=<span class="string">"a.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>現在Server都支援了ES6載入模組<br>當然要實驗看看</p>
 <h2 id="小小實驗"><a href="#小小實驗" class="headerlink" title="小小實驗"></a>小小實驗</h2><h3 id="HFS踩坑記，無法載入"><a href="#HFS踩坑記，無法載入" class="headerlink" title="HFS踩坑記，無法載入"></a>HFS踩坑記，無法載入</h3><p>在公司用hfs不能開啟，但用xxamp可以直行<br>但是在家裡hfs又可以用了…</p>
 <h3 id="兩個export物件會怎麼樣"><a href="#兩個export物件會怎麼樣" class="headerlink" title="兩個export物件會怎麼樣"></a>兩個export物件會怎麼樣</h3><p>這是我想的，好奇這樣能不能跑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export &#123;xxxx,oooo&#125;</span><br><span class="line">export &#123;zzzz,yyyy&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="b-js"><a href="#b-js" class="headerlink" title="b.js"></a>b.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &#123;a,b&#125;</span><br><span class="line"><span class="keyword">export</span> &#123;c,d&#125;</span><br><span class="line"><span class="comment">// export &#123;a,c,d&#125;</span></span><br><span class="line"><span class="comment">// SyntaxError: duplicate export name 'a'</span></span><br></pre></td></tr></table></figure>
-<p>詳細下載<a href="/blog/2018/09/22/ECMAScript6-Module使用筆記/jsModule.7z" title="我寫的東西">我寫的東西</a></p>
-<p>題外話<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export &#123;b&#125;; // 这是ES6的写法，实际上就是&#123;b:b&#125;</span><br></pre></td></tr></table></figure></p>
-<p>原本以為文章寫錯<br>剛好邊看直播<a href="https://www.youtube.com/watch?v=aYlihfn-Gmg" target="_blank" rel="noopener">[ Alex 宅幹嘛 ] 👨‍💻Vue 全家桶與 RESTful API 串接入門介紹 Part 2 - YouTube</a><br>有題到這個是ES6語法 XD</p>
+<p>詳細下載<a href="/blog/2018/09/22/ECMAScript6-Module%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/jsModule.7z" title="我寫的東西">我寫的東西</a></p>
+<p>題外話<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export &#123;b&#125;; &#x2F;&#x2F; 这是ES6的写法，实际上就是&#123;b:b&#125;</span><br></pre></td></tr></table></figure><br>原本以為文章寫錯<br>剛好邊看直播<a href="https://www.youtube.com/watch?v=aYlihfn-Gmg" target="_blank" rel="noopener">[ Alex 宅幹嘛 ] 👨‍💻Vue 全家桶與 RESTful API 串接入門介紹 Part 2 - YouTube</a><br>有題到這個是ES6語法 XD</p>
 
       
     </div>
@@ -483,7 +494,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/09/19/Vue-js簡易筆記/" rel="next" title="Vue.js簡易筆記">
+              <a href="/blog/2018/09/19/Vue-js%E7%B0%A1%E6%98%93%E7%AD%86%E8%A8%98/" rel="next" title="Vue.js簡易筆記">
                 <i class="fa fa-chevron-left"></i> Vue.js簡易筆記
               </a>
             
@@ -493,7 +504,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/09/25/postman-使用pre-request-Script抓token範例/" rel="prev" title="Postman 使用pre-request Script抓token範例">
+              <a href="/blog/2018/09/25/postman-%E4%BD%BF%E7%94%A8pre-request-Script%E6%8A%93token%E7%AF%84%E4%BE%8B/" rel="prev" title="Postman 使用pre-request Script抓token範例">
                 Postman 使用pre-request Script抓token範例 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -529,7 +540,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -539,8 +550,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -577,7 +598,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -588,7 +609,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -818,7 +839,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/09/22/ECMAScript6-Module使用筆記/';
+          this.page.url = 'https://malagege.github.io/blog/2018/09/22/ECMAScript6-Module%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/';
           this.page.identifier = '2018/09/22/ECMAScript6-Module使用筆記/';
           this.page.title = 'ECMAScript6 Module使用筆記';
         };

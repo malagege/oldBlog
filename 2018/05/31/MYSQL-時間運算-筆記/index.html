@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MySQL,UNIX_TIMESTAMP,to_days,">
+  <meta name="keywords" content="MySQL,UNIX_TIMESTAMP,to_days," />
 
 
 
@@ -80,17 +80,19 @@
 
 
 <meta name="description" content="平常用到時間運算，假如能在SQL撈到想要的資料這樣程式可以寫得少，速度也跟者快…但是偏偏MySQL時間運算不太熟在此網路找一些，寫筆記….">
-<meta name="keywords" content="MySQL,UNIX_TIMESTAMP,to_days">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MYSQL 時間運算 筆記">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/05/31/MYSQL-時間運算-筆記/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/05/31/MYSQL-%E6%99%82%E9%96%93%E9%81%8B%E7%AE%97-%E7%AD%86%E8%A8%98/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="平常用到時間運算，假如能在SQL撈到想要的資料這樣程式可以寫得少，速度也跟者快…但是偏偏MySQL時間運算不太熟在此網路找一些，寫筆記….">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.576Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-05-31T13:19:48.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:53.397Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="UNIX_TIMESTAMP">
+<meta property="article:tag" content="to_days">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MYSQL 時間運算 筆記">
-<meta name="twitter:description" content="平常用到時間運算，假如能在SQL撈到想要的資料這樣程式可以寫得少，速度也跟者快…但是偏偏MySQL時間運算不太熟在此網路找一些，寫筆記….">
 
 
 
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/05/31/MYSQL-時間運算-筆記/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/05/31/MYSQL-時間運算-筆記/"/>
 
 
 
@@ -147,7 +149,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +161,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +173,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +207,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +217,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +227,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +237,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +247,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +262,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +283,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +316,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/05/31/MYSQL-時間運算-筆記/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/05/31/MYSQL-%E6%99%82%E9%96%93%E9%81%8B%E7%AE%97-%E7%AD%86%E8%A8%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +361,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +372,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/MySQL/" itemprop="url" rel="index">
                     <span itemprop="name">MySQL</span>
                   </a>
@@ -384,8 +391,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/05/31/MYSQL-時間運算-筆記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/31/MYSQL-時間運算-筆記/" itemprop="commentCount"></span>
+                <a href="/blog/2018/05/31/MYSQL-%E6%99%82%E9%96%93%E9%81%8B%E7%AE%97-%E7%AD%86%E8%A8%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/31/MYSQL-時間運算-筆記/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +423,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -439,8 +457,7 @@
 </ul>
 <h3 id="TIMESTAMPDIFF-DAY-’2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><a href="#TIMESTAMPDIFF-DAY-’2015-09-28-21-00-01’-’2015-09-28-13-23-11’" class="headerlink" title="TIMESTAMPDIFF(DAY,’2015-09-28 21:00:01’,’2015-09-28 13:23:11’)"></a>TIMESTAMPDIFF(DAY,’2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</h3><p><a href="https://stackoverflow.com/questions/2174058/mysql-timediff-to-hours" target="_blank" rel="noopener">php - mysql timediff to hours - Stack Overflow</a></p>
 <h3 id="to-days-lt-gt-from-days"><a href="#to-days-lt-gt-from-days" class="headerlink" title="to_days&lt;=&gt;from_days"></a>to_days&lt;=&gt;from_days</h3><p>to_days()傳回天數數字<br>+1就是加1天</p>
-<p>看範例比較快<br><a href="http://sanujpblue.blogspot.tw/2014/12/mysql.html" target="_blank" rel="noopener">糯米玩PC: MySql 按日期進行統計</a><br><a href="http://282120928-qq-com.iteye.com/blog/1289492" target="_blank" rel="noopener">TO_DAYS日期函数 - 我的地盘 - ITeye博客</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT from_days(to_days(now())+1);</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://www.w3schools.com/sql/trymysql.asp?filename=trysql_func_mysql_from_days" target="_blank" rel="noopener">MySQL Tryit Editor v1.0</a><br>直接試比較快懂，我爬了很久<br>以為是UNIX_TIMESTAMP….<strong>但不是</strong></p>
+<p>看範例比較快<br><a href="http://sanujpblue.blogspot.tw/2014/12/mysql.html" target="_blank" rel="noopener">糯米玩PC: MySql 按日期進行統計</a><br><a href="http://282120928-qq-com.iteye.com/blog/1289492" target="_blank" rel="noopener">TO_DAYS日期函数 - 我的地盘 - ITeye博客</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT from_days(to_days(now())+1);</span><br></pre></td></tr></table></figure><br><a href="https://www.w3schools.com/sql/trymysql.asp?filename=trysql_func_mysql_from_days" target="_blank" rel="noopener">MySQL Tryit Editor v1.0</a><br>直接試比較快懂，我爬了很久<br>以為是UNIX_TIMESTAMP….<strong>但不是</strong></p>
 <h3 id="time-to-sec-lt-gt-sec-to-time"><a href="#time-to-sec-lt-gt-sec-to-time" class="headerlink" title="time_to_sec&lt;=&gt;sec_to_time"></a>time_to_sec&lt;=&gt;sec_to_time</h3><p>用時間格式轉乘秒，可以超過24小時<br>(感覺能用在UNIX_TIMESTAMP運算上面)</p>
 <p><a href="https://www.w3schools.com/sql/func_mysql_time_to_sec.asp" target="_blank" rel="noopener">MySQL TIME_TO_SEC() Function</a></p>
 <ul>
@@ -513,7 +530,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/05/31/PHP-xlsx-writer-excel-15位數會進動進位的問題/" rel="next" title="PHP_xlsx_writer  excel 15位數會進動進位的問題">
+              <a href="/blog/2018/05/31/PHP-xlsx-writer-excel-15%E4%BD%8D%E6%95%B8%E6%9C%83%E9%80%B2%E5%8B%95%E9%80%B2%E4%BD%8D%E7%9A%84%E5%95%8F%E9%A1%8C/" rel="next" title="PHP_xlsx_writer  excel 15位數會進動進位的問題">
                 <i class="fa fa-chevron-left"></i> PHP_xlsx_writer  excel 15位數會進動進位的問題
               </a>
             
@@ -523,7 +540,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/06/02/git同步分支衝突解決方法/" rel="prev" title="git同步分支衝突解決方法">
+              <a href="/blog/2018/06/02/git%E5%90%8C%E6%AD%A5%E5%88%86%E6%94%AF%E8%A1%9D%E7%AA%81%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95/" rel="prev" title="git同步分支衝突解決方法">
                 git同步分支衝突解決方法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -559,7 +576,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -569,8 +586,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -607,7 +634,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -618,7 +645,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -685,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-lt-gt-FROM-UNIXTIME"><span class="nav-number">1.</span> <span class="nav-text">UNIX_TIMESTAMP()&lt;==&gt;FROM_UNIXTIME()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATEDIFF-‘2015-09-28-21-00-01’-’2015-08-31-13-00-01’"><span class="nav-number">2.</span> <span class="nav-text">DATEDIFF(‘2015-09-28 21:00:01’,’2015-08-31 13:00:01’);</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMEDIFF-‘2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">3.</span> <span class="nav-text">TIMEDIFF(‘2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMESTAMPDIFF-DAY-’2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">4.</span> <span class="nav-text">TIMESTAMPDIFF(DAY,’2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-days-lt-gt-from-days"><span class="nav-number">5.</span> <span class="nav-text">to_days&lt;=&gt;from_days</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time-to-sec-lt-gt-sec-to-time"><span class="nav-number">6.</span> <span class="nav-text">time_to_sec&lt;=&gt;sec_to_time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL跟DB2-差異寫法"><span class="nav-number">7.</span> <span class="nav-text">MySQL跟DB2 差異寫法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-時間加法運算"><span class="nav-number">8.</span> <span class="nav-text">UNIX_TIMESTAMP 時間加法運算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小心效能"><span class="nav-number">9.</span> <span class="nav-text">小心效能</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL裡的NOW-與UNIX-TIMESTAMP"><span class="nav-number"></span> <span class="nav-text">MySQL裡的NOW()與UNIX_TIMESTAMP()</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-lt-gt-FROM-UNIXTIME"><span class="nav-number">1.</span> <span class="nav-text">UNIX_TIMESTAMP()&lt;&#x3D;&#x3D;&gt;FROM_UNIXTIME()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATEDIFF-‘2015-09-28-21-00-01’-’2015-08-31-13-00-01’"><span class="nav-number">2.</span> <span class="nav-text">DATEDIFF(‘2015-09-28 21:00:01’,’2015-08-31 13:00:01’);</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMEDIFF-‘2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">3.</span> <span class="nav-text">TIMEDIFF(‘2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIMESTAMPDIFF-DAY-’2015-09-28-21-00-01’-’2015-09-28-13-23-11’"><span class="nav-number">4.</span> <span class="nav-text">TIMESTAMPDIFF(DAY,’2015-09-28 21:00:01’,’2015-09-28 13:23:11’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-days-lt-gt-from-days"><span class="nav-number">5.</span> <span class="nav-text">to_days&lt;&#x3D;&gt;from_days</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time-to-sec-lt-gt-sec-to-time"><span class="nav-number">6.</span> <span class="nav-text">time_to_sec&lt;&#x3D;&gt;sec_to_time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL跟DB2-差異寫法"><span class="nav-number">7.</span> <span class="nav-text">MySQL跟DB2 差異寫法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-TIMESTAMP-時間加法運算"><span class="nav-number">8.</span> <span class="nav-text">UNIX_TIMESTAMP 時間加法運算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小心效能"><span class="nav-number">9.</span> <span class="nav-text">小心效能</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL裡的NOW-與UNIX-TIMESTAMP"><span class="nav-number"></span> <span class="nav-text">MySQL裡的NOW()與UNIX_TIMESTAMP()</span></a></div>
             
 
           </div>
@@ -848,7 +875,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/05/31/MYSQL-時間運算-筆記/';
+          this.page.url = 'https://malagege.github.io/blog/2018/05/31/MYSQL-%E6%99%82%E9%96%93%E9%81%8B%E7%AE%97-%E7%AD%86%E8%A8%98/';
           this.page.identifier = '2018/05/31/MYSQL-時間運算-筆記/';
           this.page.title = 'MYSQL 時間運算 筆記';
         };

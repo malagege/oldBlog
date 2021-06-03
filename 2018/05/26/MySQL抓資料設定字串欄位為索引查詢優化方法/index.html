@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="sql,MySQL,index,MySQL優化,">
+  <meta name="keywords" content="sql,MySQL,index,MySQL優化," />
 
 
 
@@ -80,22 +80,25 @@
 
 
 <meta name="description" content="常把搜尋條件用在索引上面可以加快查詢今天實驗一個東西，把uid加入到index上面但是explain竟然還是full scanindex還會有掃全表的問題覺得很神奇就稍微研究一下筆記筆記">
-<meta name="keywords" content="sql,MySQL,index,MySQL優化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL抓資料設定字串欄位為索引查詢優化方法">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="常把搜尋條件用在索引上面可以加快查詢今天實驗一個東西，把uid加入到index上面但是explain竟然還是full scanindex還會有掃全表的問題覺得很神奇就稍微研究一下筆記筆記">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/slow.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/fast.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/normal.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/best.png">
-<meta property="og:updated_time" content="2021-06-02T15:57:43.434Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/slow.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/fast.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/normal.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/best.png">
+<meta property="article:published_time" content="2018-05-25T16:40:01.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:53.573Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="index">
+<meta property="article:tag" content="MySQL優化">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL抓資料設定字串欄位為索引查詢優化方法">
-<meta name="twitter:description" content="常把搜尋條件用在索引上面可以加快查詢今天實驗一個東西，把uid加入到index上面但是explain竟然還是full scanindex還會有掃全表的問題覺得很神奇就稍微研究一下筆記筆記">
-<meta name="twitter:image" content="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/slow.png">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/slow.png">
 
 
 
@@ -125,7 +128,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/"/>
 
 
 
@@ -152,7 +155,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -161,9 +167,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -173,13 +179,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,9 +213,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -217,9 +223,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -227,9 +233,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -237,9 +243,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -247,9 +253,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -262,7 +268,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -283,7 +289,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -314,20 +322,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -359,7 +367,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -370,7 +378,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/MySQL/" itemprop="url" rel="index">
                     <span itemprop="name">MySQL</span>
                   </a>
@@ -389,8 +397,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/" itemprop="commentCount"></span>
+                <a href="/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -420,8 +429,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -429,14 +448,14 @@
 
         <p>常把搜尋條件用在索引上面<br>可以加快查詢<br>今天實驗一個東西，把uid加入到index上面<br>但是<code>explain</code>竟然還是full scan<br>index還會有掃全表的問題<br>覺得很神奇<br>就稍微研究一下<br>筆記筆記</p>
 <a id="more"></a>
-<img src="/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/slow.png" title="一般查詢">
+<img src="/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/slow.png" class="" title="一般查詢">
 <p>沒有用<code>*</code>查詢，竟然還會full scan<br>Google查詢一下，varchar做為index好像不太好(不確定是這個問題，相關資訊太少)</p>
 <p>就換了一下查法</p>
-<img src="/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/fast.png" title="primary key,index key查詢">
+<img src="/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/fast.png" class="" title="primary key,index key查詢">
 <p>竟然就正常…</p>
-<p>那試試*看看好了…<br><img src="/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/normal.png" title="primary key,index key查詢"><br>full scan</p>
+<p>那試試*看看好了…<br><img src="/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/normal.png" class="" title="primary key,index key查詢"><br>full scan</p>
 <p>最後試試，IN優化方法(使用inner join )</p>
-<img src="/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/best.png" title="primary key,index key查詢">
+<img src="/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/best.png" class="" title="primary key,index key查詢">
 <p><strong>注意where用哪張表，select就要用另一張表</strong></p>
 <p>這樣就不會full scan了<br>愉悅!!!!</p>
 <p>參考來源：</p>
@@ -474,7 +493,7 @@
           
             <a href="/blog/tags/index/" rel="tag"># index</a>
           
-            <a href="/blog/tags/MySQL優化/" rel="tag"># MySQL優化</a>
+            <a href="/blog/tags/MySQL%E5%84%AA%E5%8C%96/" rel="tag"># MySQL優化</a>
           
         </div>
       
@@ -487,7 +506,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/05/25/用MySQL抓多欄取起始時間與結束時間用法/" rel="next" title="用MySQL抓多列取起始時間與結束時間用法">
+              <a href="/blog/2018/05/25/%E7%94%A8MySQL%E6%8A%93%E5%A4%9A%E6%AC%84%E5%8F%96%E8%B5%B7%E5%A7%8B%E6%99%82%E9%96%93%E8%88%87%E7%B5%90%E6%9D%9F%E6%99%82%E9%96%93%E7%94%A8%E6%B3%95/" rel="next" title="用MySQL抓多列取起始時間與結束時間用法">
                 <i class="fa fa-chevron-left"></i> 用MySQL抓多列取起始時間與結束時間用法
               </a>
             
@@ -497,7 +516,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/05/26/使用phpstorm用docker-remote遠端操作/" rel="prev" title="使用phpstorm用docker remote遠端操作">
+              <a href="/blog/2018/05/26/%E4%BD%BF%E7%94%A8phpstorm%E7%94%A8docker-remote%E9%81%A0%E7%AB%AF%E6%93%8D%E4%BD%9C/" rel="prev" title="使用phpstorm用docker remote遠端操作">
                 使用phpstorm用docker remote遠端操作 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -533,7 +552,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -543,8 +562,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -572,7 +601,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -583,7 +612,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -797,7 +826,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/';
+          this.page.url = 'https://malagege.github.io/blog/2018/05/26/MySQL%E6%8A%93%E8%B3%87%E6%96%99%E8%A8%AD%E5%AE%9A%E5%AD%97%E4%B8%B2%E6%AC%84%E4%BD%8D%E7%82%BA%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%A9%A2%E5%84%AA%E5%8C%96%E6%96%B9%E6%B3%95/';
           this.page.identifier = '2018/05/26/MySQL抓資料設定字串欄位為索引查詢優化方法/';
           this.page.title = 'MySQL抓資料設定字串欄位為索引查詢優化方法';
         };

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="pi,raspberry,">
+  <meta name="keywords" content="pi,raspberry," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="Raspberry PI 設定小記因為最近中華 P883 偶爾連不到 Raspberry Pi重開 P883 就能使用不知道是不是在中華數據機設定就會很不穩所以我想改成設定在 PI 上面">
-<meta name="keywords" content="pi,raspberry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="樹梅派(Raspberry PI)設定固定 IP 方法">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/10/24/%E6%A8%B9%E6%A2%85%E6%B4%BE-Raspberry-PI-%E8%A8%AD%E5%AE%9A%E5%9B%BA%E5%AE%9A-IP-%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="Raspberry PI 設定小記因為最近中華 P883 偶爾連不到 Raspberry Pi重開 P883 就能使用不知道是不是在中華數據機設定就會很不穩所以我想改成設定在 PI 上面">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.438Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-10-24T13:25:32.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.874Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="pi">
+<meta property="article:tag" content="raspberry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="樹梅派(Raspberry PI)設定固定 IP 方法">
-<meta name="twitter:description" content="Raspberry PI 設定小記因為最近中華 P883 偶爾連不到 Raspberry Pi重開 P883 就能使用不知道是不是在中華數據機設定就會很不穩所以我想改成設定在 PI 上面">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/10/24/%E6%A8%B9%E6%A2%85%E6%B4%BE-Raspberry-PI-%E8%A8%AD%E5%AE%9A%E5%9B%BA%E5%AE%9A-IP-%E6%96%B9%E6%B3%95/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/" itemprop="commentCount"></span>
+                <a href="/blog/2019/10/24/%E6%A8%B9%E6%A2%85%E6%B4%BE-Raspberry-PI-%E8%A8%AD%E5%AE%9A%E5%9B%BA%E5%AE%9A-IP-%E6%96%B9%E6%B3%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -427,7 +444,7 @@
 <h2 id="設在-Router-機器-vs-設定主機-好處"><a href="#設在-Router-機器-vs-設定主機-好處" class="headerlink" title="設在 Router 機器 vs 設定主機 好處"></a>設在 Router 機器 vs 設定主機 好處</h2><p>一般有這兩種，各有優缺點</p>
 <p>假如 Router 機器掛掉，裡面資料 IP 有備份可能不用重新設定<br>但需要買一樣的 數據機</p>
 <p>相反主機也是這個道理，目前我看我做網路朋友是選<code>設定主機</code></p>
-<h2 id="設定方法"><a href="#設定方法" class="headerlink" title="設定方法"></a>設定方法</h2><p>/etc/dhcpcd.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface eth0</span><br><span class="line">static ip_address=192.168.1.177</span><br><span class="line">static routers=192.168.1.1</span><br><span class="line">static domain_name_servers=192.168.1.1</span><br></pre></td></tr></table></figure></p>
+<h2 id="設定方法"><a href="#設定方法" class="headerlink" title="設定方法"></a>設定方法</h2><p>/etc/dhcpcd.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface eth0</span><br><span class="line">static ip_address&#x3D;192.168.1.177</span><br><span class="line">static routers&#x3D;192.168.1.1</span><br><span class="line">static domain_name_servers&#x3D;192.168.1.1</span><br></pre></td></tr></table></figure></p>
 <h2 id="以前方法"><a href="#以前方法" class="headerlink" title="以前方法"></a>以前方法</h2><p>還是紀錄一下</p>
 <p>######################<br>/etc/network/interfaces</p>
 <p>######################<br>iface eth0 inet static<br>address x.x.x.x<br>netmask x.x.x.x<br>network x.x.x.x<br>broadcast x.x.x.x<br>gateway x.x.x.x</p>
@@ -466,7 +483,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/10/23/Shell-Script-小記/" rel="next" title="Shell Script 小記">
+              <a href="/blog/2019/10/23/Shell-Script-%E5%B0%8F%E8%A8%98/" rel="next" title="Shell Script 小記">
                 <i class="fa fa-chevron-left"></i> Shell Script 小記
               </a>
             
@@ -476,7 +493,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/10/24/Pulse-Secure-不能使用，重新安裝方法/" rel="prev" title="Pulse Secure 不能使用，重新安裝方法">
+              <a href="/blog/2019/10/24/Pulse-Secure-%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8%EF%BC%8C%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%9D%E6%96%B9%E6%B3%95/" rel="prev" title="Pulse Secure 不能使用，重新安裝方法">
                 Pulse Secure 不能使用，重新安裝方法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -512,7 +529,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -522,8 +539,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -560,7 +587,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -571,7 +598,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -801,7 +828,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/';
+          this.page.url = 'https://malagege.github.io/blog/2019/10/24/%E6%A8%B9%E6%A2%85%E6%B4%BE-Raspberry-PI-%E8%A8%AD%E5%AE%9A%E5%9B%BA%E5%AE%9A-IP-%E6%96%B9%E6%B3%95/';
           this.page.identifier = '2019/10/24/樹梅派-Raspberry-PI-設定固定-IP-方法/';
           this.page.title = '樹梅派(Raspberry PI)設定固定 IP 方法';
         };

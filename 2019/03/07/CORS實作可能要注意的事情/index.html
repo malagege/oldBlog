@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="cors,ajax,">
+  <meta name="keywords" content="cors,ajax," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="雖然平常沒有使用 CORS但是之前有嘗試了解 CORS 流程原理其實瀏覽器會先送 OPTIONS 封包做確認有做跨域 header 東西，就會傳送資訊今天突然想到傳送兩次不是會做兩次程式東西我稍微爬了一下文章原來我想的問題真的是有這個問題">
-<meta name="keywords" content="cors,ajax">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CORS實作可能要注意的事情">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/03/07/CORS實作可能要注意的事情/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/03/07/CORS%E5%AF%A6%E4%BD%9C%E5%8F%AF%E8%83%BD%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="雖然平常沒有使用 CORS但是之前有嘗試了解 CORS 流程原理其實瀏覽器會先送 OPTIONS 封包做確認有做跨域 header 東西，就會傳送資訊今天突然想到傳送兩次不是會做兩次程式東西我稍微爬了一下文章原來我想的問題真的是有這個問題">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.008Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-03-07T12:47:01.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:49.206Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="cors">
+<meta property="article:tag" content="ajax">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CORS實作可能要注意的事情">
-<meta name="twitter:description" content="雖然平常沒有使用 CORS但是之前有嘗試了解 CORS 流程原理其實瀏覽器會先送 OPTIONS 封包做確認有做跨域 header 東西，就會傳送資訊今天突然想到傳送兩次不是會做兩次程式東西我稍微爬了一下文章原來我想的問題真的是有這個問題">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/03/07/CORS實作可能要注意的事情/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/03/07/CORS實作可能要注意的事情/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/03/07/CORS實作可能要注意的事情/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/03/07/CORS%E5%AF%A6%E4%BD%9C%E5%8F%AF%E8%83%BD%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/JavaScript/" itemprop="url" rel="index">
                     <span itemprop="name">JavaScript</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/03/07/CORS實作可能要注意的事情/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/07/CORS實作可能要注意的事情/" itemprop="commentCount"></span>
+                <a href="/blog/2019/03/07/CORS%E5%AF%A6%E4%BD%9C%E5%8F%AF%E8%83%BD%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/03/07/CORS實作可能要注意的事情/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -424,7 +441,7 @@
 
         <p>雖然平常沒有使用 CORS<br>但是之前有嘗試了解 CORS 流程原理<br>其實瀏覽器會先送 OPTIONS 封包做確認<br>有做跨域 header 東西，就會傳送資訊<br>今天突然想到傳送兩次<br>不是會做兩次程式東西<br>我稍微爬了一下文章<br>原來我想的問題真的是有這個問題</p>
 <a id="more"></a>
-<p>看到這篇<a href="https://zhuanlan.zhihu.com/p/29980092" target="_blank" rel="noopener">CORS 跨域原理浅析 - 知乎</a> <a href="/blog/2019/03/07/CORS實作可能要注意的事情/web.png" title="備份圖">備份圖</a><br>裡面有提到很多很細的內容<br>我自己也有用簡單 PHP 測試</p>
+<p>看到這篇<a href="https://zhuanlan.zhihu.com/p/29980092" target="_blank" rel="noopener">CORS 跨域原理浅析 - 知乎</a> <a href="/blog/2019/03/07/CORS%E5%AF%A6%E4%BD%9C%E5%8F%AF%E8%83%BD%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/web.png" title="備份圖">備份圖</a><br>裡面有提到很多很細的內容<br>我自己也有用簡單 PHP 測試</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">"Access-Control-Allow-Origin: *"</span>);</span><br><span class="line">header(<span class="string">"Access-Control-Allow-Headers: *"</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'work!'</span> . PHP_EOL;</span><br><span class="line">$fp = fopen(<span class="string">'test.txt'</span>,<span class="string">'a+'</span>);</span><br><span class="line">fwrite($fp,<span class="string">'1'</span>. PHP_EOL);</span><br><span class="line">fclose($fp);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'finial'</span> . PHP_EOL;</span><br></pre></td></tr></table></figure>
 <p>簡單用<code>php -s 0.0.0.0:8888</code>就可以啟動 php 簡易 server<br>在隨便網頁開啟開發者工具，可以<code>fetch(&#39;http://localhost:8888/test.php&#39;)</code><br>可以看<code>test.txt</code>有幾個 1<br>就知道執行幾次</p>
 <p>雖然平常沒甚麼機會使用 CORS，但是還是紀錄這個容易忽略的事情<br>話說 Laravel 好像也要注意怎麼修改</p>
@@ -467,7 +484,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/03/06/jQuery快速方便載入-load-方法/" rel="next" title="jQuery快速方便載入(load)方法">
+              <a href="/blog/2019/03/06/jQuery%E5%BF%AB%E9%80%9F%E6%96%B9%E4%BE%BF%E8%BC%89%E5%85%A5-load-%E6%96%B9%E6%B3%95/" rel="next" title="jQuery快速方便載入(load)方法">
                 <i class="fa fa-chevron-left"></i> jQuery快速方便載入(load)方法
               </a>
             
@@ -477,7 +494,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/03/10/我的JavaScript筆記/" rel="prev" title="我的JavaScript筆記">
+              <a href="/blog/2019/03/10/%E6%88%91%E7%9A%84JavaScript%E7%AD%86%E8%A8%98/" rel="prev" title="我的JavaScript筆記">
                 我的JavaScript筆記 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -513,7 +530,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -523,8 +540,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -552,7 +579,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -563,7 +590,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -777,7 +804,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/03/07/CORS實作可能要注意的事情/';
+          this.page.url = 'https://malagege.github.io/blog/2019/03/07/CORS%E5%AF%A6%E4%BD%9C%E5%8F%AF%E8%83%BD%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E6%83%85/';
           this.page.identifier = '2019/03/07/CORS實作可能要注意的事情/';
           this.page.title = 'CORS實作可能要注意的事情';
         };

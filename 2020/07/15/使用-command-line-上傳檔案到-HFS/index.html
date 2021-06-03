@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,hfs,curl,">
+  <meta name="keywords" content="linux,hfs,curl," />
 
 
 
@@ -80,17 +80,19 @@
 
 
 <meta name="description" content="最近要使用 Linux 下載憑證下來看主機沒有裝 vsftpd 想說用 WinSCP 下載但又發現沒有使用 root 權限無法進去資料夾有想到有沒有 sudo 方法Winscp使用sudo user登录-阿里云开发者社区但不太想改這個設定…最後突然想到有 Windows HFS 來接檔案原本有想到 nc 接檔案，但好像很麻煩 哈哈Ubuntu 用 nc 指令互傳檔案Windows 也沒 nc 指令">
-<meta name="keywords" content="linux,hfs,curl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 command line 上傳檔案到 HFS">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/07/15/%E4%BD%BF%E7%94%A8-command-line-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-HFS/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近要使用 Linux 下載憑證下來看主機沒有裝 vsftpd 想說用 WinSCP 下載但又發現沒有使用 root 權限無法進去資料夾有想到有沒有 sudo 方法Winscp使用sudo user登录-阿里云开发者社区但不太想改這個設定…最後突然想到有 Windows HFS 來接檔案原本有想到 nc 接檔案，但好像很麻煩 哈哈Ubuntu 用 nc 指令互傳檔案Windows 也沒 nc 指令">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.198Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-07-15T15:17:32.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:57.619Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="hfs">
+<meta property="article:tag" content="curl">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 command line 上傳檔案到 HFS">
-<meta name="twitter:description" content="最近要使用 Linux 下載憑證下來看主機沒有裝 vsftpd 想說用 WinSCP 下載但又發現沒有使用 root 權限無法進去資料夾有想到有沒有 sudo 方法Winscp使用sudo user登录-阿里云开发者社区但不太想改這個設定…最後突然想到有 Windows HFS 來接檔案原本有想到 nc 接檔案，但好像很麻煩 哈哈Ubuntu 用 nc 指令互傳檔案Windows 也沒 nc 指令">
 
 
 
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/"/>
 
 
 
@@ -147,7 +149,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +161,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +173,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +207,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +217,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +227,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +237,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +247,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +262,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +283,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +316,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/07/15/%E4%BD%BF%E7%94%A8-command-line-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-HFS/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +361,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +372,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +391,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/07/15/使用-command-line-上傳檔案到-HFS/" itemprop="commentCount"></span>
+                <a href="/blog/2020/07/15/%E4%BD%BF%E7%94%A8-command-line-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-HFS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/07/15/使用-command-line-上傳檔案到-HFS/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +423,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -429,19 +447,13 @@
 <p>記得資料夾要設定上傳 anyone<br>原理可以看<a href="https://slinbody.pixnet.net/blog/post/66022614" target="_blank" rel="noopener">curl upload file @ 495884965 :: 痞客邦 ::</a></p>
 <blockquote>
 <p>#curl -v -F ‘file=@/tmp/444.jpg’ -b cookies.txt -c cookies.txt  <a href="https://your.web.site/upload" target="_blank" rel="noopener">https://your.web.site/upload</a><br>其中，file要看該網頁的變數名稱決定</p>
-<p>例如：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;     <span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">post</span> <span class="attr">enctype</span>=<span class="string">multipart/form-data</span>&gt;</span></span><br><span class="line">&gt;       <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">file</span> <span class="attr">name</span>=<span class="string">file_name</span>&gt;</span></span><br><span class="line">&gt;          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">submit</span> <span class="attr">value</span>=<span class="string">Upload</span>&gt;</span></span><br><span class="line">&gt;     <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>用curl時，就要變成file_name</p>
+<p>例如：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">post</span> <span class="attr">enctype</span>=<span class="string">multipart/form-data</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">file</span> <span class="attr">name</span>=<span class="string">file_name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">submit</span> <span class="attr">value</span>=<span class="string">Upload</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure><br>用curl時，就要變成file_name</p>
 </blockquote>
 <p>我還以為 @ 是多餘的</p>
 <p>最後成功</p>
 <p>最後有爬到<a href="http://rejetto.com/forum/index.php?pretty;board=hfs-~-http-file-server;topic=upload-with-filename-inside-url.msg1042258#msg1042258" target="_blank" rel="noopener">upload with filename inside URL</a></p>
 <blockquote>
-<p>1) The curl command shown below without an ending “/“ after the <code>&lt;HFSfolder&gt;</code> works better in that it return the “301” code to the console when everything works properly (with an ending “/“ you get the echo of the HFS html upload page, the upload still works fine, but having the return code available to any error checking in a script is probably be better).  You probably know better than I why there is this slight difference between having the “/“ at the end and not having it.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl  -F fileupload1=@MyFile.iso  -F press=<span class="string">"Upload files"</span>  http://&lt;HFSipaddress&gt;/&lt;HFSfolder&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>2) I’ve tested curl ability to take input from stdin via a command, for example, like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat testfile.gz  |  curl -F fileupload1=@-;filename=atestfile.gz -F press=<span class="string">"Upload files"</span> http://&lt;HFSipaddress&gt;/&lt;HFSfolder&gt;</span><br></pre></td></tr></table></figure></p>
+<p>1) The curl command shown below without an ending “/“ after the <code>&lt;HFSfolder&gt;</code> works better in that it return the “301” code to the console when everything works properly (with an ending “/“ you get the echo of the HFS html upload page, the upload still works fine, but having the return code available to any error checking in a script is probably be better).  You probably know better than I why there is this slight difference between having the “/“ at the end and not having it.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl  -F fileupload1=@MyFile.iso  -F press=<span class="string">"Upload files"</span>  http://&lt;HFSipaddress&gt;/&lt;HFSfolder&gt;</span><br></pre></td></tr></table></figure><br>2) I’ve tested curl ability to take input from stdin via a command, for example, like this:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat testfile.gz  |  curl -F fileupload1=@-;filename=atestfile.gz -F press=<span class="string">"Upload files"</span> http://&lt;HFSipaddress&gt;/&lt;HFSfolder&gt;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 
       
@@ -477,7 +489,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/" rel="next" title="設備根憑證不正確導致不能打API問題">
+              <a href="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/" rel="next" title="設備根憑證不正確導致不能打API問題">
                 <i class="fa fa-chevron-left"></i> 設備根憑證不正確導致不能打API問題
               </a>
             
@@ -487,7 +499,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/07/15/監控多個網頁腳本-Shell/" rel="prev" title="監控多個網頁腳本(Shell)">
+              <a href="/blog/2020/07/15/%E7%9B%A3%E6%8E%A7%E5%A4%9A%E5%80%8B%E7%B6%B2%E9%A0%81%E8%85%B3%E6%9C%AC-Shell/" rel="prev" title="監控多個網頁腳本(Shell)">
                 監控多個網頁腳本(Shell) <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -523,7 +535,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -533,8 +545,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -562,7 +584,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -573,7 +595,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -787,7 +809,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/';
+          this.page.url = 'https://malagege.github.io/blog/2020/07/15/%E4%BD%BF%E7%94%A8-command-line-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-HFS/';
           this.page.identifier = '2020/07/15/使用-command-line-上傳檔案到-HFS/';
           this.page.title = '使用 command line 上傳檔案到 HFS';
         };

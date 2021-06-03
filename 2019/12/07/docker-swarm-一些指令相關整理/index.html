@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="docker,swarm,">
+  <meta name="keywords" content="docker,swarm," />
 
 
 
@@ -79,21 +79,22 @@
 
 
 
-<meta name="description" content="基本教學網站twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
-<meta name="keywords" content="docker,swarm">
+<meta name="description" content="基本教學網站twtrubiks&#x2F;docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker swarm 一些指令相關整理">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
-<meta property="og:description" content="基本教學網站twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img1.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img2.png">
-<meta property="og:updated_time" content="2021-06-02T15:57:43.836Z">
+<meta property="og:description" content="基本教學網站twtrubiks&#x2F;docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/img1.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/img2.png">
+<meta property="article:published_time" content="2019-12-07T12:06:28.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:54.851Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="swarm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker swarm 一些指令相關整理">
-<meta name="twitter:description" content="基本教學網站twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝 Docker Swarm 管理节点高可用分析 — outmanzzq 由於上面網站都教的非常清楚我這邊只記錄如何操作跟小筆記(或我覺得重要的)不會詳細介紹，我覺得以上都說得很細">
-<meta name="twitter:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/img1.png">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/img1.png">
 
 
 
@@ -123,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/"/>
 
 
 
@@ -150,7 +151,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -159,9 +163,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -171,13 +175,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -205,9 +209,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -215,9 +219,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -225,9 +229,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -235,9 +239,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -245,9 +249,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -260,7 +264,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -281,7 +285,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -312,20 +318,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/12/07/docker-swarm-一些指令相關整理/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -357,7 +363,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -368,7 +374,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Docker/" itemprop="url" rel="index">
                     <span itemprop="name">Docker</span>
                   </a>
@@ -387,8 +393,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/12/07/docker-swarm-一些指令相關整理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/07/docker-swarm-一些指令相關整理/" itemprop="commentCount"></span>
+                <a href="/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/12/07/docker-swarm-一些指令相關整理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -418,8 +425,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -450,14 +467,14 @@
 <p>docker stack deploy –compose-file=portainer-agent-stack.yml portainer</p>
 <h2 id="portainer"><a href="#portainer" class="headerlink" title="portainer"></a>portainer</h2><p>在使用 portainer 新增機器(endpoint)<br>會有 agent 跟 docker<br>選擇 docker ，由於 docker swarm 是叢集，所以部份建立 container 要去不同 endpint (node) 看東西</p>
 <p>使用 agent 同一台 endpoint 就能看到全部</p>
-<img src="/blog/2019/12/07/docker-swarm-一些指令相關整理/img1.png" title="agent和docker">
+<img src="/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/img1.png" class="" title="agent和docker">
 <p>不過哪個比較好，我還沒有確定，我們公司是用 docker</p>
 <p>設定 agent 沒有很順利，後來用完在此紀錄</p>
-<h3 id="agent"><a href="#agent" class="headerlink" title="agent"></a>agent</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml</span><br><span class="line">$ docker stack deploy --compose-file=portainer-agent-stack.yml portainer</span><br></pre></td></tr></table></figure>
+<h3 id="agent"><a href="#agent" class="headerlink" title="agent"></a>agent</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -L https:&#x2F;&#x2F;downloads.portainer.io&#x2F;portainer-agent-stack.yml -o portainer-agent-stack.yml</span><br><span class="line">$ docker stack deploy --compose-file&#x3D;portainer-agent-stack.yml portainer</span><br></pre></td></tr></table></figure>
 <p>官網設定會有很大問題，後來發現只要是 portainer 用 stack 部屬就會有問題(卡在一開始 Load 登入頁面)<br>不過單獨使用 portainer container 就沒這個問題</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer</span></span><br><span class="line"><span class="comment"># 可使用 docker swarm 注意 我把 volume 拿掉了</span></span><br><span class="line">docker service create \</span><br><span class="line">    --name portainer \</span><br><span class="line">    --publish 9000:9000 \</span><br><span class="line">    --publish 8000:8000 \</span><br><span class="line">    --replicas=1 \</span><br><span class="line">    --constraint <span class="string">'node.role == manager'</span> \</span><br><span class="line"><span class="comment">#    --mount type=bind,src=//path/on/host/data,dst=/data \    ##測試用，所以這個拿掉</span></span><br><span class="line">    portainer/portainer</span><br><span class="line"></span><br><span class="line">curl -L https://downloads.portainer.io/agent-stack.yml -o agent-stack.yml &amp;&amp; docker stack deploy --compose-file=agent-stack.yml portainer-agent</span><br></pre></td></tr></table></figure>
 <p>在隨便加入一個到 endpoint 就可以了<br>至於官方的不知道為什麼不能用?<br>目前找不到方法…(我是在 play with docker 跑的)<br>也有可能跟環境問題</p>
-<h3 id="agent-跟-docker-差異"><a href="#agent-跟-docker-差異" class="headerlink" title="agent 跟 docker 差異"></a>agent 跟 docker 差異</h3><img src="/blog/2019/12/07/docker-swarm-一些指令相關整理/img2.png" title="agent與docker差異">
+<h3 id="agent-跟-docker-差異"><a href="#agent-跟-docker-差異" class="headerlink" title="agent 跟 docker 差異"></a>agent 跟 docker 差異</h3><img src="/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/img2.png" class="" title="agent與docker差異">
 <p>192.168.1.17 有兩個，有一個是 agent 跟 docker<br>你會發現 agent 跟別的 agent 數量是一樣的<br>照道理可能加一個 agent 就可以了</p>
 <p><a href="https://www.kubernetes.org.cn/5883.html" target="_blank" rel="noopener">Portainer一个轻量级的Docker环境管理UI_Kubernetes中文社区</a><br><a href="https://yylin1.github.io/2019/01/28/portainer-set-tls/" target="_blank" rel="noopener">Portainer 透過 TLS 認證 - Yi Yang’s Blog</a></p>
 <h2 id="使用-play-with-docker"><a href="#使用-play-with-docker" class="headerlink" title="使用 play with docker"></a>使用 play with docker</h2><p>做 manager 和 worker 有預設三個 template<br>我後來發現不是每一個 template 都有幫你做 swarm join<br>所以建議良好習慣使用 <code>docker node ls</code> 查看有哪些加入</p>
@@ -473,8 +490,8 @@
 <p>今天嘗試了一夏swarm-job<br>架設上非常方便<br>但有幾點要特別注意</p>
 <h3 id="安裝-swarm-cronjob"><a href="#安裝-swarm-cronjob" class="headerlink" title="安裝 swarm-cronjob"></a>安裝 swarm-cronjob</h3><p>可以用 play wtih docker 測試，開 template 3 個 manager 2 個 worker<br>方法跟上面一樣<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">docker service create \</span><br><span class="line">    --name portainer \</span><br><span class="line">    --publish 9000:9000 \</span><br><span class="line">    --publish 8000:8000 \</span><br><span class="line">    --replicas=1 \</span><br><span class="line">    --constraint <span class="string">'node.role == manager'</span> \</span><br><span class="line">    portainer/portainer</span><br><span class="line"></span><br><span class="line">curl -L https://downloads.portainer.io/agent-stack.yml -o agent-stack.yml &amp;&amp; docker stack deploy --compose-file=agent-stack.yml portainer-agent</span><br><span class="line"></span><br><span class="line"><span class="comment">## 安裝 swarm-cronjob</span></span><br><span class="line">docker service create --name swarm_cronjob \</span><br><span class="line">  --mount <span class="built_in">type</span>=<span class="built_in">bind</span>,<span class="built_in">source</span>=/var/run/docker.sock,target=/var/run/docker.sock \</span><br><span class="line">  --env <span class="string">"LOG_LEVEL=info"</span> \</span><br><span class="line">  --env <span class="string">"LOG_JSON=false"</span> \</span><br><span class="line">  --constraint <span class="string">"node.role == manager"</span> \</span><br><span class="line">  crazymax/swarm-cronjob</span><br></pre></td></tr></table></figure></p>
 <p>其他更多方式看官方文件</p>
-<h3 id="執行注意"><a href="#執行注意" class="headerlink" title="執行注意"></a>執行注意</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Set command to run the task command 需要下 command </span><br><span class="line">Set mode to replicated (default)  使用 replicated mode</span><br><span class="line">Set replicas to 0 to avoid running task as soon as the service is deployed  一開始設定replicas=0，否則會議開始就會跑</span><br><span class="line">Set restart_policy.condition to none. This is needed for a cronjob, otherwise the task will restart automatically restart_policy 請設定 none ，否則一開始會一直執行</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name=my_hello --replicas=0 --restart-condition=none --label  swarm.cronjob.enable=&quot;true&quot; --label swarm.cronjob.schedule=&quot;*/2 * * * *&quot; hello-world ./hello</span><br></pre></td></tr></table></figure>
+<h3 id="執行注意"><a href="#執行注意" class="headerlink" title="執行注意"></a>執行注意</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Set command to run the task command 需要下 command </span><br><span class="line">Set mode to replicated (default)  使用 replicated mode</span><br><span class="line">Set replicas to 0 to avoid running task as soon as the service is deployed  一開始設定replicas&#x3D;0，否則會議開始就會跑</span><br><span class="line">Set restart_policy.condition to none. This is needed for a cronjob, otherwise the task will restart automatically restart_policy 請設定 none ，否則一開始會一直執行</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name&#x3D;my_hello --replicas&#x3D;0 --restart-condition&#x3D;none --label  swarm.cronjob.enable&#x3D;&quot;true&quot; --label swarm.cronjob.schedule&#x3D;&quot;*&#x2F;2 * * * *&quot; hello-world .&#x2F;hello</span><br></pre></td></tr></table></figure>
 <p>官方可以帶的 label，前面兩個是必帶<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">swarm.cronjob.enable : Set to true to enable the cronjob (required)</span><br><span class="line">swarm.cronjob.schedule : CRON expression format to use. (required)</span><br><span class="line">swarm.cronjob.skip-running : Do not start a job if the service is currently running (optional)</span><br><span class="line">swarm.cronjob.replicas : Number of replicas to set on schedule in replicated mode. (optional, default 1)</span><br></pre></td></tr></table></figure></p>
 <p>有空再放 stack yml</p>
 <h3 id="agent-mode-global"><a href="#agent-mode-global" class="headerlink" title="agent mode global"></a>agent mode global</h3><p>我發現我只要新增 node 加入 swarm，就會自動安裝 agent<br>portainer 什麼設定都不用做!!!!太猛啦</p>
@@ -504,7 +521,7 @@
 </ol>
 <p>如：<br>docker pull ubuntu@sha256:45b23dee08af5e43a7fea6c4cf9c25ccf269ee113168c19722f8787</p>
 <ol start="2">
-<li>// 通过如下命令指定arch:<br>docker run -it –rm <image-name>:<tag>  arch=linux/arm64</tag></image-name></li>
+<li>// 通过如下命令指定arch:<br>docker run -it –rm <image-name>:<tag>  arch=linux/arm64</li>
 </ol>
 <p>方法三就不寫了，看起來很麻煩</p>
 <p>參考:<a href="https://blog.csdn.net/u010918487/article/details/107067224" target="_blank" rel="noopener">docker pull 指定 os/arch_Yu的博客-CSDN博客</a></p>
@@ -540,7 +557,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/11/21/php-pcntl-fork-多程序小記/" rel="next" title="php pcntl_fork 多程序小記">
+              <a href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/" rel="next" title="php pcntl_fork 多程序小記">
                 <i class="fa fa-chevron-left"></i> php pcntl_fork 多程序小記
               </a>
             
@@ -550,7 +567,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/12/19/快速調整-INERT-UPDATE-SQL-語法/" rel="prev" title="快速調整 INERT / UPDATE SQL 語法">
+              <a href="/blog/2019/12/19/%E5%BF%AB%E9%80%9F%E8%AA%BF%E6%95%B4-INERT-UPDATE-SQL-%E8%AA%9E%E6%B3%95/" rel="prev" title="快速調整 INERT / UPDATE SQL 語法">
                 快速調整 INERT / UPDATE SQL 語法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -586,7 +603,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -596,8 +613,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -634,7 +661,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -645,7 +672,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -875,7 +902,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/12/07/docker-swarm-一些指令相關整理/';
+          this.page.url = 'https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/';
           this.page.identifier = '2019/12/07/docker-swarm-一些指令相關整理/';
           this.page.title = 'docker swarm 一些指令相關整理';
         };

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="pppoe,network,">
+  <meta name="keywords" content="pppoe,network," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="最近在好奇 pppoe 到底能不能走 wifigoogle 一下發現[問題] 走 Wi-Fi 可以搭配 PPPoE 嗎? - 看板 NextTV - 批踢踢實業坊這篇有人說可以也有人說不行…其中一段cassine:PPPoE顧名思義就是PPP over Ethernet，不是PPP over WiFi感覺還滿有道理的不過還是有看到留言說可以使用今天要來破解是不是真的…">
-<meta name="keywords" content="pppoe,network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux使用pppoe連線方法小記">
-<meta property="og:url" content="https://malagege.github.io/blog/2019/01/26/Linux使用pppoe連線方法小記/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2019/01/26/Linux%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近在好奇 pppoe 到底能不能走 wifigoogle 一下發現[問題] 走 Wi-Fi 可以搭配 PPPoE 嗎? - 看板 NextTV - 批踢踢實業坊這篇有人說可以也有人說不行…其中一段cassine:PPPoE顧名思義就是PPP over Ethernet，不是PPP over WiFi感覺還滿有道理的不過還是有看到留言說可以使用今天要來破解是不是真的…">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.568Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-01-26T14:55:39.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:53.394Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="pppoe">
+<meta property="article:tag" content="network">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux使用pppoe連線方法小記">
-<meta name="twitter:description" content="最近在好奇 pppoe 到底能不能走 wifigoogle 一下發現[問題] 走 Wi-Fi 可以搭配 PPPoE 嗎? - 看板 NextTV - 批踢踢實業坊這篇有人說可以也有人說不行…其中一段cassine:PPPoE顧名思義就是PPP over Ethernet，不是PPP over WiFi感覺還滿有道理的不過還是有看到留言說可以使用今天要來破解是不是真的…">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2019/01/26/Linux使用pppoe連線方法小記/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2019/01/26/Linux使用pppoe連線方法小記/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/01/26/Linux使用pppoe連線方法小記/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2019/01/26/Linux%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2019/01/26/Linux使用pppoe連線方法小記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/26/Linux使用pppoe連線方法小記/" itemprop="commentCount"></span>
+                <a href="/blog/2019/01/26/Linux%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/01/26/Linux使用pppoe連線方法小記/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -428,15 +445,15 @@
 <p>簡單記錄一下怎麼使用</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安裝pppoeconf</span></span><br><span class="line">sudo apt-get install pppoeconf</span><br><span class="line"><span class="comment"># 設定</span></span><br><span class="line">sudo pppoeconf</span><br></pre></td></tr></table></figure>
 <p>設定可以參考<a href="http://thinker-evans.blogspot.com/2015/04/raspberry-pi-adsl-pppoe.html" target="_blank" rel="noopener">沉思的伊文: Raspberry Pi 樹莓派 ADSL PPPoE 連線到網際網路</a><br>‘noauth’跟’defaultroute’這個選 yes</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">向配置文件添加 『noauth&apos; 和 『defaultroute&apos;</span><br><span class="line">noauth 不認證遠端身份，家庭寬帶默認 Yes 即可</span><br><span class="line">defaultroute 添加默認路由，不手動改路由表或者特殊需求默認 Yes 即可</span><br><span class="line">參考[【家庭服务器计划】pppoeconf | Debian 配置 PPPOE 上网 – Lensual‘s Space](https://lensual.space/brain-hole/846.html)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">向配置文件添加 『noauth&#39; 和 『defaultroute&#39;</span><br><span class="line">noauth 不認證遠端身份，家庭寬帶默認 Yes 即可</span><br><span class="line">defaultroute 添加默認路由，不手動改路由表或者特殊需求默認 Yes 即可</span><br><span class="line">參考[【家庭服务器计划】pppoeconf | Debian 配置 PPPOE 上网 – Lensual‘s Space](https:&#x2F;&#x2F;lensual.space&#x2F;brain-hole&#x2F;846.html)</span><br></pre></td></tr></table></figure>
 <p><a href="https://blog.csdn.net/moreorless/article/details/5397427" target="_blank" rel="noopener">linux 添加静态路由 - leon - CSDN 博客</a><br>MTU 選項也選 yes<br>詳細:<a href="http://tc.wangchao.net.cn/bbs/detail_1450004.html" target="_blank" rel="noopener">小議 TCP 的 MSS(最大分段)以及 MTU - 王朝網路 - wangchao.net.cn</a><br><a href="https://lensual.space/brain-hole/846.html" target="_blank" rel="noopener">【家庭服务器计划】pppoeconf | Debian 配置 PPPOE 上网 – Lensual‘s Space</a><br>裡面都詳細提到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MTU 最大傳輸單元，二層幀的淨荷</span><br><span class="line">MSS 最大報文長度，TCP 協議特性，TCP 協議的淨荷，用於協商適應路徑中的 MTU</span><br><span class="line">Ethernet 的 MTU 為 1500 (Byte) ，超過 1500 的載荷 ( payload ) 將被分段，最大幀長度為 Eth Header(14) + Payload(1500) + FCS(4) = 1518 (Byte)。其實 FCS 用 wireshark 抓包看不到的，用於校驗已經被系統底層剔除。另外以太網規範還有前導碼和幀間隔，那些是用來底層收發控制相關的（誤</span><br><span class="line">PPP 的 MTU 同為 1500，最大幀長度為 PPP Header(5) + Payload(1500) + FCS(2) + Flag(1) = 1508 (Byte)。</span><br><span class="line">要把 PPP 塞進 Ethernet 就是 PPPOE，需要把 PPP 的 MTU 縮減才可以使得 PPP 滿足 Ethernet 的 MTU。</span><br><span class="line">原來的 PPP 最大會出現 1508 的幀，現在需要控制在 1500 以內。PPP 的 MTU 就是 1500 – (1508 – 1500) = 1492。</span><br><span class="line">所以 PPPOE 的 MTU 通常為 1492 (Byte) ，以便在 MTU 為 1500 的 Ethernet 上運行。</span><br><span class="line">MSS 箝制(Clamping) 會修改 TCP SYN 的 MSS 以符合當前的 MTU。因為置於路由器後面的主機使用的是 MTU 為 1500 的 Ethernet 。雖然 ICMP 協議可以在傳輸過程中修正 TCP 的 MSS ，但是部分運營商和設備考慮到安全問題或者就是不想讓你 ping 和 tracertoute 免得投訴他們禁止了 ICMP 協議。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MTU 最大傳輸單元，二層幀的淨荷</span><br><span class="line">MSS 最大報文長度，TCP 協議特性，TCP 協議的淨荷，用於協商適應路徑中的 MTU</span><br><span class="line">Ethernet 的 MTU 為 1500 (Byte) ，超過 1500 的載荷 ( payload ) 將被分段，最大幀長度為 Eth Header(14) + Payload(1500) + FCS(4) &#x3D; 1518 (Byte)。其實 FCS 用 wireshark 抓包看不到的，用於校驗已經被系統底層剔除。另外以太網規範還有前導碼和幀間隔，那些是用來底層收發控制相關的（誤</span><br><span class="line">PPP 的 MTU 同為 1500，最大幀長度為 PPP Header(5) + Payload(1500) + FCS(2) + Flag(1) &#x3D; 1508 (Byte)。</span><br><span class="line">要把 PPP 塞進 Ethernet 就是 PPPOE，需要把 PPP 的 MTU 縮減才可以使得 PPP 滿足 Ethernet 的 MTU。</span><br><span class="line">原來的 PPP 最大會出現 1508 的幀，現在需要控制在 1500 以內。PPP 的 MTU 就是 1500 – (1508 – 1500) &#x3D; 1492。</span><br><span class="line">所以 PPPOE 的 MTU 通常為 1492 (Byte) ，以便在 MTU 為 1500 的 Ethernet 上運行。</span><br><span class="line">MSS 箝制(Clamping) 會修改 TCP SYN 的 MSS 以符合當前的 MTU。因為置於路由器後面的主機使用的是 MTU 為 1500 的 Ethernet 。雖然 ICMP 協議可以在傳輸過程中修正 TCP 的 MSS ，但是部分運營商和設備考慮到安全問題或者就是不想讓你 ping 和 tracertoute 免得投訴他們禁止了 ICMP 協議。</span><br></pre></td></tr></table></figure>
 <p>基本上設定都是 yes</p>
 <p>連線</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 連線dsl-provider設定檔</span></span><br><span class="line">pon dsl-provider</span><br><span class="line"><span class="comment"># 斷線pppoe</span></span><br><span class="line">poff dsl-provider</span><br><span class="line"><span class="comment"># 查詢狀態</span></span><br><span class="line">plog</span><br><span class="line">ifconfig</span><br><span class="line"><span class="comment"># 關閉全部pppoe</span></span><br><span class="line">poff -a</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PPPOE設定檔</span><br><span class="line">    /etc/ppp/peers/dsl-provider</span><br><span class="line">    dsl-provider內紀錄ADSL連線相關參數（含帳號），可以修改成hinet以利識別，但改檔名後，pppoe_on_boot檔內的開機自動撥接的設定檔名稱也要跟著換，否則開機自動撥接功能會失效。</span><br><span class="line">    /etc/ppp/pppoe_on_boot</span><br><span class="line">    設定系統開機時自動撥接之設定檔，其中「exec pppd call dsl-provider」就是執行撥接時呼叫的設定檔</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PPPOE設定檔</span><br><span class="line">    &#x2F;etc&#x2F;ppp&#x2F;peers&#x2F;dsl-provider</span><br><span class="line">    dsl-provider內紀錄ADSL連線相關參數（含帳號），可以修改成hinet以利識別，但改檔名後，pppoe_on_boot檔內的開機自動撥接的設定檔名稱也要跟著換，否則開機自動撥接功能會失效。</span><br><span class="line">    &#x2F;etc&#x2F;ppp&#x2F;pppoe_on_boot</span><br><span class="line">    設定系統開機時自動撥接之設定檔，其中「exec pppd call dsl-provider」就是執行撥接時呼叫的設定檔</span><br></pre></td></tr></table></figure>
 <p>重新連線 script<a href="https://blog.longwin.com.tw/2007/08/adsl_repppoe_script_2007/" target="_blank" rel="noopener">Debian Linux: ADSL PPPoE 自動重撥 Script | Tsung’s Blog</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">重新撥接的程式 及 設定步驟</span><br><span class="line"></span><br><span class="line">重新撥接的程式如下: (vim /usr/bin/repppoe)</span><br><span class="line"></span><br><span class="line">    #!/bin/bash</span><br><span class="line">    #if !ping -c 3 168.95.1.1 &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">    #if !(cat /proc/net/dev | grep ppp0) &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">    #if !(cat /proc/net/dev | grep ppp) &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">    if !ping -c 3 tw.yahoo.com &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">    then</span><br><span class="line">    #/usr/bin/poff</span><br><span class="line">    #/usr/bin/pon dsl-provider</span><br><span class="line">    /usr/bin/pon</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">chmod +x /usr/bin/repppoe</span><br><span class="line">設定 crontab (設 root 的 crontab)</span><br><span class="line"></span><br><span class="line">    crontab -e # 之後寫入下述</span><br><span class="line">    */5 * * * * /usr/bin/repppoe</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">重新撥接的程式 及 設定步驟</span><br><span class="line"></span><br><span class="line">重新撥接的程式如下: (vim &#x2F;usr&#x2F;bin&#x2F;repppoe)</span><br><span class="line"></span><br><span class="line">    #!&#x2F;bin&#x2F;bash</span><br><span class="line">    #if !ping -c 3 168.95.1.1 &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</span><br><span class="line">    #if !(cat &#x2F;proc&#x2F;net&#x2F;dev | grep ppp0) &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</span><br><span class="line">    #if !(cat &#x2F;proc&#x2F;net&#x2F;dev | grep ppp) &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</span><br><span class="line">    if !ping -c 3 tw.yahoo.com &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1</span><br><span class="line">    then</span><br><span class="line">    #&#x2F;usr&#x2F;bin&#x2F;poff</span><br><span class="line">    #&#x2F;usr&#x2F;bin&#x2F;pon dsl-provider</span><br><span class="line">    &#x2F;usr&#x2F;bin&#x2F;pon</span><br><span class="line">    fi</span><br><span class="line"></span><br><span class="line">chmod +x &#x2F;usr&#x2F;bin&#x2F;repppoe</span><br><span class="line">設定 crontab (設 root 的 crontab)</span><br><span class="line"></span><br><span class="line">    crontab -e # 之後寫入下述</span><br><span class="line">    *&#x2F;5 * * * * &#x2F;usr&#x2F;bin&#x2F;repppoe</span><br></pre></td></tr></table></figure>
 <p>進入就到這邊，以後要用可以翻翻這篇。</p>
 <p>小記…，發現 pon 可以一直新增 pppoe 連線<br>但好像最後面新增會做 default route<br>所以只會有一個 ip 才會連到<br>我一直以為都可以連…<br>但還是要小心，我記得 hinet 只能撥接 8 個<br><a href="http://service.hinet.net/2004/adslstaticip_faq.htm" target="_blank" rel="noopener">HiNet 客戶服務 &gt; 問題搜尋 &gt; 上網問題</a></p>
 <p>參考來源:</p>
@@ -483,7 +500,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2019/01/19/composer使用psr0-psr4-classmap-files自動載入紀錄/" rel="next" title="composer使用psr0,psr4,classmap,files自動載入筆記心得">
+              <a href="/blog/2019/01/19/composer%E4%BD%BF%E7%94%A8psr0-psr4-classmap-files%E8%87%AA%E5%8B%95%E8%BC%89%E5%85%A5%E7%B4%80%E9%8C%84/" rel="next" title="composer使用psr0,psr4,classmap,files自動載入筆記心得">
                 <i class="fa fa-chevron-left"></i> composer使用psr0,psr4,classmap,files自動載入筆記心得
               </a>
             
@@ -493,7 +510,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2019/01/27/Linux在Wifi使用pppoe連線後，重開機不能連線上網/" rel="prev" title="Linux在Wifi使用pppoe連線後，重開機不能連線上網">
+              <a href="/blog/2019/01/27/Linux%E5%9C%A8Wifi%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E5%BE%8C%EF%BC%8C%E9%87%8D%E9%96%8B%E6%A9%9F%E4%B8%8D%E8%83%BD%E9%80%A3%E7%B7%9A%E4%B8%8A%E7%B6%B2/" rel="prev" title="Linux在Wifi使用pppoe連線後，重開機不能連線上網">
                 Linux在Wifi使用pppoe連線後，重開機不能連線上網 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -529,7 +546,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -539,8 +556,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -568,7 +595,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -579,7 +606,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -793,7 +820,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2019/01/26/Linux使用pppoe連線方法小記/';
+          this.page.url = 'https://malagege.github.io/blog/2019/01/26/Linux%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/';
           this.page.identifier = '2019/01/26/Linux使用pppoe連線方法小記/';
           this.page.title = 'Linux使用pppoe連線方法小記';
         };

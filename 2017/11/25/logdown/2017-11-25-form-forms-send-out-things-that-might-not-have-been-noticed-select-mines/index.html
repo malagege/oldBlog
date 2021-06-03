@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="HTML,select,地雷,Form,">
+  <meta name="keywords" content="HTML,select,地雷,Form," />
 
 
 
@@ -80,17 +80,20 @@
 
 
 <meta name="description" content="因為最近程式需要從IE8到IE11相容易改版今天同事問我他跟我說他最近網路遇到的怪事IE8做submit可以接收到多個select資料但是IE11確不行….後來發現這真的不是很多人知道的東西做一下筆記">
-<meta name="keywords" content="HTML,select,地雷,Form">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Form 送出可能沒注意到的事情(select地雷)">
 <meta property="og:url" content="https://malagege.github.io/blog/2017/11/25/logdown/2017-11-25-form-forms-send-out-things-that-might-not-have-been-noticed-select-mines/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="因為最近程式需要從IE8到IE11相容易改版今天同事問我他跟我說他最近網路遇到的怪事IE8做submit可以接收到多個select資料但是IE11確不行….後來發現這真的不是很多人知道的東西做一下筆記">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:45.040Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2017-11-25T05:53:00.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:56.061Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="select">
+<meta property="article:tag" content="地雷">
+<meta property="article:tag" content="Form">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Form 送出可能沒注意到的事情(select地雷)">
-<meta name="twitter:description" content="因為最近程式需要從IE8到IE11相容易改版今天同事問我他跟我說他最近網路遇到的怪事IE8做submit可以接收到多個select資料但是IE11確不行….後來發現這真的不是很多人知道的東西做一下筆記">
 
 
 
@@ -120,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2017/11/25/logdown/2017-11-25-form-forms-send-out-things-that-might-not-have-been-noticed-select-mines/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2017/11/25/logdown/2017-11-25-form-forms-send-out-things-that-might-not-have-been-noticed-select-mines/"/>
 
 
 
@@ -147,7 +150,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +162,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +174,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +208,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +218,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +228,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +238,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +248,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +263,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +284,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +317,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2017/11/25/logdown/2017-11-25-form-forms-send-out-things-that-might-not-have-been-noticed-select-mines/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +362,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +373,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/HTML/" itemprop="url" rel="index">
                     <span itemprop="name">HTML</span>
                   </a>
@@ -385,7 +393,8 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/blog/2017/11/25/logdown/2017-11-25-form-forms-send-out-things-that-might-not-have-been-noticed-select-mines/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/11/25/logdown/2017-11-25-form-forms-send-out-things-that-might-not-have-been-noticed-select-mines/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/25/logdown/2017-11-25-form-forms-send-out-things-that-might-not-have-been-noticed-select-mines/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +424,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -425,17 +444,15 @@
         <p>因為最近程式需要從IE8到IE11相容易改版<br>今天同事問我他跟我說他最近網路遇到的怪事<br>IE8做submit可以接收到多個select資料<br>但是IE11確不行….<br>後來發現這真的不是很多人知道的東西<br>做一下筆記<br><a id="more"></a></p>
 <p>#select 地雷</p>
 <p>##value設定沒有options裡面的值</p>
-<p>當設定select.value=’ffff’，但是select沒有內容，select將會為””空字串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The value IDL attribute, on getting, must return the value of the first option element in the list of options in tree order that has its selectedness set to true, if any. If there isn&apos;t one, then it must return the empty string.</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://html.spec.whatwg.org/multipage/form-elements.html#dom-select-value" target="_blank" rel="noopener">HTML Standard</a></p>
-<p>##select設定沒有內容值，submit不會送出去<br><strong>如上面的「value設定沒有options裡面的值」</strong><br>不會送出去<br>可參考第5點<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If the field element is a select element, then for each option element in the select element&apos;s list of options whose selectedness is true and that is not disabled, append an entry to the form data set with the name as the name, the value of the option element as the value, and type as the type.</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#concept-form-submit" target="_blank" rel="noopener">HTML Standard</a></p>
+<p>當設定select.value=’ffff’，但是select沒有內容，select將會為””空字串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The value IDL attribute, on getting, must return the value of the first option element in the list of options in tree order that has its selectedness set to true, if any. If there isn&#39;t one, then it must return the empty string.</span><br></pre></td></tr></table></figure><br><a href="https://html.spec.whatwg.org/multipage/form-elements.html#dom-select-value" target="_blank" rel="noopener">HTML Standard</a></p>
+<p>##select設定沒有內容值，submit不會送出去<br><strong>如上面的「value設定沒有options裡面的值」</strong><br>不會送出去<br>可參考第5點<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If the field element is a select element, then for each option element in the select element&#39;s list of options whose selectedness is true and that is not disabled, append an entry to the form data set with the name as the name, the value of the option element as the value, and type as the type.</span><br></pre></td></tr></table></figure><br><a href="https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#concept-form-submit" target="_blank" rel="noopener">HTML Standard</a></p>
 <p>##option沒設定value，預設value為text名稱</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span>&gt;</span>test<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>上面沒有設定value預設會以text內容為主(上面option value為test)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The value attribute provides a value for element. The value of an option element is the value of the value content attribute, if there is one, or, if there is not, the value of the element&apos;s text IDL attribute.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The value attribute provides a value for element. The value of an option element is the value of the value content attribute, if there is one, or, if there is not, the value of the element&#39;s text IDL attribute.</span><br></pre></td></tr></table></figure>
 <p><a href="https://html.spec.whatwg.org/multipage/form-elements.html#dom-option-value" target="_blank" rel="noopener">HTML Standard</a></p>
 <h2 id="checkbox-radio-地雷"><a href="#checkbox-radio-地雷" class="headerlink" title="checkbox radio 地雷"></a>checkbox radio 地雷</h2><p>打勾(v)確沒有設定value值，value預設傳on<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Otherwise, if the field element is an input element whose type attribute is in the Checkbox state or the Radio Button state, then:</span><br><span class="line">    If the field element has a value attribute specified, then let value be the value of that attribute; otherwise, let value be the string &quot;on&quot;.</span><br><span class="line">    Append an entry to the form data set with name as the name, value as the value, and type as the type.</span><br></pre></td></tr></table></figure></p>
-<p>當沒選擇檔案submit情況<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Otherwise, if the field element is an input element whose type attribute is in the File Upload state, then for each file selected in the input element, append an entry to the form data set with the name as the name, the file (consisting of the name, the type, and the body) as the value, and type as the type. If there are no selected files, then append an entry to the form data set with the name as the name, the empty string as the value, and application/octet-stream as the type.</span><br></pre></td></tr></table></figure></p>
+<p>當沒選擇檔案submit情況<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Otherwise, if the field element is an input element whose type attribute is in the File Upload state, then for each file selected in the input element, append an entry to the form data set with the name as the name, the file (consisting of the name, the type, and the body) as the value, and type as the type. If there are no selected files, then append an entry to the form data set with the name as the name, the empty string as the value, and application&#x2F;octet-stream as the type.</span><br></pre></td></tr></table></figure></p>
 <p>這有遇到過，但也沒找到相關文件<br>原來文件有寫這個</p>
 <p>#結論<br>IE8可以跑多個select原因<br>是因為IE8 bug關係</p>
 <p>IE11就照原本W3C文件規範XD<br>這次真的了解很多東西</p>
@@ -460,7 +477,7 @@
           
             <a href="/blog/tags/select/" rel="tag"># select</a>
           
-            <a href="/blog/tags/地雷/" rel="tag"># 地雷</a>
+            <a href="/blog/tags/%E5%9C%B0%E9%9B%B7/" rel="tag"># 地雷</a>
           
             <a href="/blog/tags/Form/" rel="tag"># Form</a>
           
@@ -521,7 +538,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -531,8 +548,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -569,7 +596,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -580,7 +607,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>

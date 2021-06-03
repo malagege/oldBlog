@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,flat,bigdicmal,">
+  <meta name="keywords" content="java,flat,bigdicmal," />
 
 
 
@@ -80,17 +80,19 @@
 
 
 <meta name="description" content="最近因為公司最近要改報表公式因為對BigDicmal不是很熟所以又特別翻了一下這邊簡單說明一下，城市運算很大數字會失準所以必須用別的方法算出正確數字">
-<meta name="keywords" content="java,flat,bigdicmal">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA BigDicmal 精度運算筆記 與  精度運算一些事">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/11/29/JAVA-BigDicmal-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E7%AD%86%E8%A8%98-%E8%88%87-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E4%B8%80%E4%BA%9B%E4%BA%8B/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近因為公司最近要改報表公式因為對BigDicmal不是很熟所以又特別翻了一下這邊簡單說明一下，城市運算很大數字會失準所以必須用別的方法算出正確數字">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.191Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-11-29T12:23:06.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:49.727Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="flat">
+<meta property="article:tag" content="bigdicmal">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JAVA BigDicmal 精度運算筆記 與  精度運算一些事">
-<meta name="twitter:description" content="最近因為公司最近要改報表公式因為對BigDicmal不是很熟所以又特別翻了一下這邊簡單說明一下，城市運算很大數字會失準所以必須用別的方法算出正確數字">
 
 
 
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/"/>
 
 
 
@@ -147,7 +149,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +161,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +173,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +207,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +217,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +227,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +237,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +247,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +262,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +283,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +316,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/11/29/JAVA-BigDicmal-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E7%AD%86%E8%A8%98-%E8%88%87-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E4%B8%80%E4%BA%9B%E4%BA%8B/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +361,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,8 +372,8 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/程式心法/" itemprop="url" rel="index">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%A8%8B%E5%BC%8F%E5%BF%83%E6%B3%95/" itemprop="url" rel="index">
                     <span itemprop="name">程式心法</span>
                   </a>
                 </span>
@@ -384,8 +391,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/" itemprop="commentCount"></span>
+                <a href="/blog/2018/11/29/JAVA-BigDicmal-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E7%AD%86%E8%A8%98-%E8%88%87-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E4%B8%80%E4%BA%9B%E4%BA%8B/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +423,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -446,16 +464,14 @@
 <li><a href="https://blog.csdn.net/qq_36497605/article/details/70597318" target="_blank" rel="noopener">BigDecimal.setScale 处理java小数用法 - 天涯海角的博客 - CSDN博客</a></li>
 <li><a href="https://blog.csdn.net/lilie008/article/details/38318485" target="_blank" rel="noopener">BigDecimal.setScale()方法 - lilie008的专栏 - CSDN博客</a></li>
 </ul>
-<h3 id="PHP-也有浮點數算術問題"><a href="#PHP-也有浮點數算術問題" class="headerlink" title="PHP   也有浮點數算術問題"></a>PHP   也有浮點數算術問題</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">例如：</span><br><span class="line">1.</span><br><span class="line">$a = 0.1;</span><br><span class="line">$b = 0.7;</span><br><span class="line">var_dump(($a + $b) == 0.8);</span><br><span class="line">打印出來的值為 boolean false</span><br><span class="line">這是為啥?PHP手冊對於浮點數有以下警告信息:</span><br><span class="line">Warning</span><br><span class="line">浮點數精度</span><br><span class="line">顯然簡單的十進制分數如同 0.1 或 0.7 不能在不丟失一點點精度的情況下轉換為內部二進制的格式。這就會造成混亂的結果：例如，floor((0.1+0.7)*10) 通常會返回 7 而不是預期中的 8，因為該結果內部的表示其實是類似 7.9999999999…。</span><br><span class="line">這和一個事實有關，那就是不可能精確的用有限位數表達某些十進制分數。例如，十進制的 1/3 變成了 0.3333333. . .。</span><br><span class="line">所以永遠不要相信浮點數結果精確到了最後一位，也永遠不要比較兩個浮點數是否相等。如果確實需要更高的精度，應該使用任意精度數學函數或者 gmp 函數</span><br></pre></td></tr></table></figure>
-<p><a href="https://hk.saowen.com/a/1a3866ccb1c370b2fbcba7841ef434c1b80246a5666867cb549023af83b2088e" target="_blank" rel="noopener">黃聰：php精度計算問題 - 掃文資訊</a><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="number">.1</span> + <span class="number">.2</span>;    <span class="comment">//0.3</span></span><br><span class="line">var_dump(<span class="number">.1</span> + <span class="number">.2</span>); <span class="comment">//float(0.30000000000000004441)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  PHP echo converts 0.30000000000000004441 to a string and shortens it to “0.3”. To achieve the desired floating point result, adjust the precision ini setting: ini_set(“precision”, 17).</span></span><br></pre></td></tr></table></figure></p>
-<p><a href="https://0.30000000000000004.com/" target="_blank" rel="noopener">0.30000000000000004.com/</a></p>
+<h3 id="PHP-也有浮點數算術問題"><a href="#PHP-也有浮點數算術問題" class="headerlink" title="PHP   也有浮點數算術問題"></a>PHP   也有浮點數算術問題</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">例如：</span><br><span class="line">1.</span><br><span class="line">$a &#x3D; 0.1;</span><br><span class="line">$b &#x3D; 0.7;</span><br><span class="line">var_dump(($a + $b) &#x3D;&#x3D; 0.8);</span><br><span class="line">打印出來的值為 boolean false</span><br><span class="line">這是為啥?PHP手冊對於浮點數有以下警告信息:</span><br><span class="line">Warning</span><br><span class="line">浮點數精度</span><br><span class="line">顯然簡單的十進制分數如同 0.1 或 0.7 不能在不丟失一點點精度的情況下轉換為內部二進制的格式。這就會造成混亂的結果：例如，floor((0.1+0.7)*10) 通常會返回 7 而不是預期中的 8，因為該結果內部的表示其實是類似 7.9999999999…。</span><br><span class="line">這和一個事實有關，那就是不可能精確的用有限位數表達某些十進制分數。例如，十進制的 1&#x2F;3 變成了 0.3333333. . .。</span><br><span class="line">所以永遠不要相信浮點數結果精確到了最後一位，也永遠不要比較兩個浮點數是否相等。如果確實需要更高的精度，應該使用任意精度數學函數或者 gmp 函數</span><br></pre></td></tr></table></figure>
+<p><a href="https://hk.saowen.com/a/1a3866ccb1c370b2fbcba7841ef434c1b80246a5666867cb549023af83b2088e" target="_blank" rel="noopener">黃聰：php精度計算問題 - 掃文資訊</a><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="number">.1</span> + <span class="number">.2</span>;    <span class="comment">//0.3</span></span><br><span class="line">var_dump(<span class="number">.1</span> + <span class="number">.2</span>); <span class="comment">//float(0.30000000000000004441)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  PHP echo converts 0.30000000000000004441 to a string and shortens it to “0.3”. To achieve the desired floating point result, adjust the precision ini setting: ini_set(“precision”, 17).</span></span><br></pre></td></tr></table></figure><br><a href="https://0.30000000000000004.com/" target="_blank" rel="noopener">0.30000000000000004.com/</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">These functions are only available if PHP was configured with --enable-bcmath . </span><br><span class="line"></span><br><span class="line">bcmath ist not installed automatically with php 7 on linux (ubuntu server)</span><br><span class="line">You have to use: sudo apt-get install php-bcmath</span><br></pre></td></tr></table></figure>
 <p><a href="http://php.net/manual/en/bc.installation.php" target="_blank" rel="noopener">PHP: Installation - Manual</a></p>
 <h2 id="倍精轉數字小筆記"><a href="#倍精轉數字小筆記" class="headerlink" title="倍精轉數字小筆記"></a>倍精轉數字小筆記</h2><h3 id="PHP倍精變成數字-字串"><a href="#PHP倍精變成數字-字串" class="headerlink" title="PHP倍精變成數字(字串)"></a>PHP倍精變成數字(字串)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">number_format(<span class="number">1.2378147769392E+14</span>,<span class="number">0</span>,<span class="string">''</span>,<span class="string">''</span>)</span><br></pre></td></tr></table></figure>
 <p><a href="https://stackoverflow.com/questions/4964059/convert-exponential-to-a-whole-number-in-php/4964120#4964120" target="_blank" rel="noopener">Convert exponential to a whole number in PHP - Stack Overflow</a></p>
 <h3 id="PHP-數字字串-with-comma-轉乘數字"><a href="#PHP-數字字串-with-comma-轉乘數字" class="headerlink" title="PHP 數字字串(with comma)轉乘數字"></a>PHP 數字字串(with comma)轉乘數字</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$number = <span class="string">'1,000'</span>;</span><br><span class="line">$number = (int) filter_var($number, FILTER_SANITIZE_NUMBER_INT);</span><br><span class="line">var_dump($number);</span><br></pre></td></tr></table></figure>
-<p>Or<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$number = <span class="string">'1,000.5669'</span>;</span><br><span class="line">$number = (float) str_replace(<span class="string">','</span>, <span class="string">''</span>, $number);</span><br><span class="line">var_dump($number);</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://stackoverflow.com/questions/25966365/getting-int-value-from-comma-separated-number-php" target="_blank" rel="noopener">getting int value from comma separated number php - Stack Overflow</a></p>
+<p>Or<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$number = <span class="string">'1,000.5669'</span>;</span><br><span class="line">$number = (float) str_replace(<span class="string">','</span>, <span class="string">''</span>, $number);</span><br><span class="line">var_dump($number);</span><br></pre></td></tr></table></figure><br><a href="https://stackoverflow.com/questions/25966365/getting-int-value-from-comma-separated-number-php" target="_blank" rel="noopener">getting int value from comma separated number php - Stack Overflow</a></p>
 <h3 id="MySQL-倍精變成數字-字串"><a href="#MySQL-倍精變成數字-字串" class="headerlink" title="MySQL 倍精變成數字(字串)"></a>MySQL 倍精變成數字(字串)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">REPLACE</span>(<span class="keyword">FORMAT</span>(<span class="number">100000000000000000000000000000000000000</span>, <span class="number">0</span>), <span class="string">','</span>, <span class="string">''</span>)</span><br></pre></td></tr></table></figure>
 <p>MySQL 轉型型態方法<br><a href="https://blog.wu-boy.com/2010/12/%E8%B3%87%E6%96%99%E5%BA%AB-%E5%A6%82%E4%BD%95%E8%BD%89%E6%8F%9B-mysql-varchar-type-%E5%88%B0-int-type/" target="_blank" rel="noopener">[資料庫] 如何轉換 Mysql varchar type 到 int type | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY</a></p>
 <p><a href="http://www.programmer-club.com.tw/ShowSameTitleN/general/6768.html" target="_blank" rel="noopener">使用浮點數最最基本的觀念 / 一般討論區 / 程式設計俱樂部</a><br><a href="https://www.zhihu.com/question/65960911" target="_blank" rel="noopener">為什麼在項目中要儘量避免使用浮點數，不使用浮點數，那該如何計算浮點數？ - 知乎</a><br><a href="https://blog.darkthread.net/blog/about-money-distribution/" target="_blank" rel="noopener">CODE-分贓程式的寫法-黑暗執行緒</a><br>什麼時候要用浮點數、什麼時候要用倍精?<br>我目前來看在算錢，尤其算拆分比(有用到乘除)算到有小數點會影響到<br>盡可能用bigdicmal這種東西</p>
@@ -493,7 +509,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/11/26/git刪除遠端-remote-分支/" rel="next" title="git刪除遠端(remote)分支和強制pull下來分支">
+              <a href="/blog/2018/11/26/git%E5%88%AA%E9%99%A4%E9%81%A0%E7%AB%AF-remote-%E5%88%86%E6%94%AF/" rel="next" title="git刪除遠端(remote)分支和強制pull下來分支">
                 <i class="fa fa-chevron-left"></i> git刪除遠端(remote)分支和強制pull下來分支
               </a>
             
@@ -503,7 +519,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/11/29/nodejs-event-stream被植入比特幣小記/" rel="prev" title="nodejs event stream被植入比特幣小記">
+              <a href="/blog/2018/11/29/nodejs-event-stream%E8%A2%AB%E6%A4%8D%E5%85%A5%E6%AF%94%E7%89%B9%E5%B9%A3%E5%B0%8F%E8%A8%98/" rel="prev" title="nodejs event stream被植入比特幣小記">
                 nodejs event stream被植入比特幣小記 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -539,7 +555,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -549,8 +565,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -587,7 +613,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -598,7 +624,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -665,7 +691,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-也有浮點數算術問題"><span class="nav-number">1.</span> <span class="nav-text">PHP   也有浮點數算術問題</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#倍精轉數字小筆記"><span class="nav-number"></span> <span class="nav-text">倍精轉數字小筆記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP倍精變成數字-字串"><span class="nav-number">1.</span> <span class="nav-text">PHP倍精變成數字(字串)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-數字字串-with-comma-轉乘數字"><span class="nav-number">2.</span> <span class="nav-text">PHP 數字字串(with comma)轉乘數字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-倍精變成數字-字串"><span class="nav-number">3.</span> <span class="nav-text">MySQL 倍精變成數字(字串)</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-也有浮點數算術問題"><span class="nav-number">1.</span> <span class="nav-text">PHP   也有浮點數算術問題</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倍精轉數字小筆記"><span class="nav-number"></span> <span class="nav-text">倍精轉數字小筆記</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP倍精變成數字-字串"><span class="nav-number">1.</span> <span class="nav-text">PHP倍精變成數字(字串)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-數字字串-with-comma-轉乘數字"><span class="nav-number">2.</span> <span class="nav-text">PHP 數字字串(with comma)轉乘數字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-倍精變成數字-字串"><span class="nav-number">3.</span> <span class="nav-text">MySQL 倍精變成數字(字串)</span></a></li></ol></div>
             
 
           </div>
@@ -828,7 +854,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/';
+          this.page.url = 'https://malagege.github.io/blog/2018/11/29/JAVA-BigDicmal-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E7%AD%86%E8%A8%98-%E8%88%87-%E7%B2%BE%E5%BA%A6%E9%81%8B%E7%AE%97%E4%B8%80%E4%BA%9B%E4%BA%8B/';
           this.page.identifier = '2018/11/29/JAVA-BigDicmal-精度運算筆記-與-精度運算一些事/';
           this.page.title = 'JAVA BigDicmal 精度運算筆記 與  精度運算一些事';
         };

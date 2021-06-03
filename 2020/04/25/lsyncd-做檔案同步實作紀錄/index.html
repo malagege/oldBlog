@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="lsyncd,">
+  <meta name="keywords" content="lsyncd," />
 
 
 
@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="最近看到這幾篇使用 inotify 做文件同步感到有興趣雖然現在工作上目前還沒用到但這種情境感覺很常遇到希望能用不用寫程式方法  Rsync + inotify 做文件实时同步 - 哈希 Rsync + sersync 实现文件实时同步 - 哈希 rsync + lsyncd 实现文件实时同步 - 哈希">
-<meta name="keywords" content="lsyncd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lsyncd 做檔案同步實作紀錄">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/04/25/lsyncd-%E5%81%9A%E6%AA%94%E6%A1%88%E5%90%8C%E6%AD%A5%E5%AF%A6%E4%BD%9C%E7%B4%80%E9%8C%84/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近看到這幾篇使用 inotify 做文件同步感到有興趣雖然現在工作上目前還沒用到但這種情境感覺很常遇到希望能用不用寫程式方法  Rsync + inotify 做文件实时同步 - 哈希 Rsync + sersync 实现文件实时同步 - 哈希 rsync + lsyncd 实现文件实时同步 - 哈希">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:45.094Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-04-25T08:22:34.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:56.130Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="lsyncd">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lsyncd 做檔案同步實作紀錄">
-<meta name="twitter:description" content="最近看到這幾篇使用 inotify 做文件同步感到有興趣雖然現在工作上目前還沒用到但這種情境感覺很常遇到希望能用不用寫程式方法  Rsync + inotify 做文件实时同步 - 哈希 Rsync + sersync 实现文件实时同步 - 哈希 rsync + lsyncd 实现文件实时同步 - 哈希">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/"/>
 
 
 
@@ -147,7 +147,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +159,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +171,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +205,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +215,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +225,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +235,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +245,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +260,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +281,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +314,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/04/25/lsyncd-%E5%81%9A%E6%AA%94%E6%A1%88%E5%90%8C%E6%AD%A5%E5%AF%A6%E4%BD%9C%E7%B4%80%E9%8C%84/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +359,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +370,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +389,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/25/lsyncd-做檔案同步實作紀錄/" itemprop="commentCount"></span>
+                <a href="/blog/2020/04/25/lsyncd-%E5%81%9A%E6%AA%94%E6%A1%88%E5%90%8C%E6%AD%A5%E5%AF%A6%E4%BD%9C%E7%B4%80%E9%8C%84/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/04/25/lsyncd-做檔案同步實作紀錄/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +421,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -436,7 +452,7 @@
 <ul>
 <li>sersync</li>
 </ul>
-<p>這篇<a href="https://www.centos.bz/2017/08/lsyncd-rsync-inotify/" target="_blank" rel="noopener">lsyncd实时同步搭建指南——取代rsync+inotify-Linux运维日志</a>有講到很多優點缺點<a href="/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/web1.png" title="備份圖">備份圖</a><br>為了不浪費時間<br>所以我就不實作了</p>
+<p>這篇<a href="https://www.centos.bz/2017/08/lsyncd-rsync-inotify/" target="_blank" rel="noopener">lsyncd实时同步搭建指南——取代rsync+inotify-Linux运维日志</a>有講到很多優點缺點<a href="/blog/2020/04/25/lsyncd-%E5%81%9A%E6%AA%94%E6%A1%88%E5%90%8C%E6%AD%A5%E5%AF%A6%E4%BD%9C%E7%B4%80%E9%8C%84/web1.png" title="備份圖">備份圖</a><br>為了不浪費時間<br>所以我就不實作了</p>
 <h2 id="lsyncd"><a href="#lsyncd" class="headerlink" title="lsyncd"></a>lsyncd</h2><h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h3><p>apt install rsyncd</p>
 <p>或去 github 官網抓 <a href="https://github.com/axkibe/lsyncd" target="_blank" rel="noopener">axkibe/lsyncd: Lsyncd (Live Syncing Daemon) synchronizes local directories with remote targets</a></p>
 <h4 id="lua-記得要升到-5-2"><a href="#lua-記得要升到-5-2" class="headerlink" title="lua 記得要升到 5.2"></a>lua 記得要升到 5.2</h4><p>Lua &gt;= 5.2</p>
@@ -446,7 +462,7 @@
 <p><a href="https://axkibe.github.io/lsyncd/manual/building/" target="_blank" rel="noopener">Lsyncd - Building</a></p>
 <h3 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h3><p>一開始不會有<code>/etc/lsyncd.conf</code><br>可以做 <code>service lsync status</code> 有沒有執行</p>
 <p><del>vim /etc/lsyncd.conf</del> 網路上看到是這個路徑<br>但是我看<code>CONFIG=/etc/lsyncd/lsyncd.conf.lua</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"># 全域設定</span><br><span class="line">settings &#123;</span><br><span class="line">    logfile = &quot;/var/log/lsyncd/lsyncd.log&quot;,</span><br><span class="line">    statusFile = &quot;/var/log/lsyncd/lsyncd.status&quot;</span><br><span class="line">    inotifyMode = &quot;CloseWrite&quot;,</span><br><span class="line">    maxProcesses = 8,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">## 以下設定參考 https://www.centos.bz/2017/08/lsyncd-rsync-inotify/</span><br><span class="line"># 可設定多組</span><br><span class="line"># I. 本地目錄同步，direct：cp/rm/mv。 適用：500+萬文件，變動不大</span><br><span class="line">sync &#123;</span><br><span class="line">    default.direct,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;/tmp/dest&quot;,</span><br><span class="line">    delay = 1</span><br><span class="line">    maxProcesses = 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># II. 本地目錄同步，rsync模式：rsync</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;/tmp/dest1&quot;,</span><br><span class="line">    excludeFrom = &quot;/etc/rsyncd.d/rsync_exclude.lst&quot;,</span><br><span class="line">    rsync     = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        bwlimit   = 2000</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># III. 遠程目錄同步，rsync模式 + rsyncd daemon</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;syncuser@172.29.88.223::module1&quot;,</span><br><span class="line">    delete=&quot;running&quot;,  # 可以改成false 這樣就不會刪掉</span><br><span class="line">    exclude = &#123; &quot;.*&quot;, &quot;.tmp&quot; &#125;,</span><br><span class="line">    delay = 30,</span><br><span class="line">    init = false, # 默認init功能設置為false來跳過初始rsync過程</span><br><span class="line">    rsync     = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        verbose   = true,</span><br><span class="line">        password_file = &quot;/etc/rsyncd.d/rsync.pwd&quot;,</span><br><span class="line">        _extra    = &#123;&quot;--bwlimit=200&quot;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># IV. 遠程目錄同步，rsync模式 + ssh shell</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;172.29.88.223:/tmp/dest&quot;,</span><br><span class="line">    # target    = &quot;root@172.29.88.223:/remote/dest&quot;,</span><br><span class="line">    # 上面target，注意如果是普通用戶，必須擁有寫權限</span><br><span class="line">    maxDelays = 5,</span><br><span class="line">    delay = 30,</span><br><span class="line">    # init = true,</span><br><span class="line">    rsync     = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        bwlimit   = 2000</span><br><span class="line">        # rsh = &quot;/usr/bin/ssh -p 22 -o StrictHostKeyChecking=no&quot;</span><br><span class="line">        # 如果要指定其它端口，請用上面的rsh</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># V. 遠程目錄同步，rsync模式 + rsyncssh，效果與上面相同</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsyncssh,</span><br><span class="line">    source    = &quot;/tmp/src2&quot;,</span><br><span class="line">    host      = &quot;172.29.88.223&quot;,</span><br><span class="line">    targetdir = &quot;/remote/dir&quot;,</span><br><span class="line">    excludeFrom = &quot;/etc/rsyncd.d/rsync_exclude.lst&quot;,</span><br><span class="line">    # maxDelays = 5,</span><br><span class="line">    delay = 0,</span><br><span class="line">    # init = false,</span><br><span class="line">    rsync    = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        verbose   = true,</span><br><span class="line">        _extra = &#123;&quot;--bwlimit=2000&quot;&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ssh      = &#123;</span><br><span class="line">        port  =  1234</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"># 全域設定</span><br><span class="line">settings &#123;</span><br><span class="line">    logfile &#x3D; &quot;&#x2F;var&#x2F;log&#x2F;lsyncd&#x2F;lsyncd.log&quot;,</span><br><span class="line">    statusFile &#x3D; &quot;&#x2F;var&#x2F;log&#x2F;lsyncd&#x2F;lsyncd.status&quot;</span><br><span class="line">    inotifyMode &#x3D; &quot;CloseWrite&quot;,</span><br><span class="line">    maxProcesses &#x3D; 8,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">## 以下設定參考 https:&#x2F;&#x2F;www.centos.bz&#x2F;2017&#x2F;08&#x2F;lsyncd-rsync-inotify&#x2F;</span><br><span class="line"># 可設定多組</span><br><span class="line"># I. 本地目錄同步，direct：cp&#x2F;rm&#x2F;mv。 適用：500+萬文件，變動不大</span><br><span class="line">sync &#123;</span><br><span class="line">    default.direct,</span><br><span class="line">    source    &#x3D; &quot;&#x2F;tmp&#x2F;src&quot;,</span><br><span class="line">    target    &#x3D; &quot;&#x2F;tmp&#x2F;dest&quot;,</span><br><span class="line">    delay &#x3D; 1</span><br><span class="line">    maxProcesses &#x3D; 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># II. 本地目錄同步，rsync模式：rsync</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    &#x3D; &quot;&#x2F;tmp&#x2F;src&quot;,</span><br><span class="line">    target    &#x3D; &quot;&#x2F;tmp&#x2F;dest1&quot;,</span><br><span class="line">    excludeFrom &#x3D; &quot;&#x2F;etc&#x2F;rsyncd.d&#x2F;rsync_exclude.lst&quot;,</span><br><span class="line">    rsync     &#x3D; &#123;</span><br><span class="line">        binary &#x3D; &quot;&#x2F;usr&#x2F;bin&#x2F;rsync&quot;,</span><br><span class="line">        archive &#x3D; true,</span><br><span class="line">        compress &#x3D; true,</span><br><span class="line">        bwlimit   &#x3D; 2000</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># III. 遠程目錄同步，rsync模式 + rsyncd daemon</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    &#x3D; &quot;&#x2F;tmp&#x2F;src&quot;,</span><br><span class="line">    target    &#x3D; &quot;syncuser@172.29.88.223::module1&quot;,</span><br><span class="line">    delete&#x3D;&quot;running&quot;,  # 可以改成false 這樣就不會刪掉</span><br><span class="line">    exclude &#x3D; &#123; &quot;.*&quot;, &quot;.tmp&quot; &#125;,</span><br><span class="line">    delay &#x3D; 30,</span><br><span class="line">    init &#x3D; false, # 默認init功能設置為false來跳過初始rsync過程</span><br><span class="line">    rsync     &#x3D; &#123;</span><br><span class="line">        binary &#x3D; &quot;&#x2F;usr&#x2F;bin&#x2F;rsync&quot;,</span><br><span class="line">        archive &#x3D; true,</span><br><span class="line">        compress &#x3D; true,</span><br><span class="line">        verbose   &#x3D; true,</span><br><span class="line">        password_file &#x3D; &quot;&#x2F;etc&#x2F;rsyncd.d&#x2F;rsync.pwd&quot;,</span><br><span class="line">        _extra    &#x3D; &#123;&quot;--bwlimit&#x3D;200&quot;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># IV. 遠程目錄同步，rsync模式 + ssh shell</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    &#x3D; &quot;&#x2F;tmp&#x2F;src&quot;,</span><br><span class="line">    target    &#x3D; &quot;172.29.88.223:&#x2F;tmp&#x2F;dest&quot;,</span><br><span class="line">    # target    &#x3D; &quot;root@172.29.88.223:&#x2F;remote&#x2F;dest&quot;,</span><br><span class="line">    # 上面target，注意如果是普通用戶，必須擁有寫權限</span><br><span class="line">    maxDelays &#x3D; 5,</span><br><span class="line">    delay &#x3D; 30,</span><br><span class="line">    # init &#x3D; true,</span><br><span class="line">    rsync     &#x3D; &#123;</span><br><span class="line">        binary &#x3D; &quot;&#x2F;usr&#x2F;bin&#x2F;rsync&quot;,</span><br><span class="line">        archive &#x3D; true,</span><br><span class="line">        compress &#x3D; true,</span><br><span class="line">        bwlimit   &#x3D; 2000</span><br><span class="line">        # rsh &#x3D; &quot;&#x2F;usr&#x2F;bin&#x2F;ssh -p 22 -o StrictHostKeyChecking&#x3D;no&quot;</span><br><span class="line">        # 如果要指定其它端口，請用上面的rsh</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"># V. 遠程目錄同步，rsync模式 + rsyncssh，效果與上面相同</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsyncssh,</span><br><span class="line">    source    &#x3D; &quot;&#x2F;tmp&#x2F;src2&quot;,</span><br><span class="line">    host      &#x3D; &quot;172.29.88.223&quot;,</span><br><span class="line">    targetdir &#x3D; &quot;&#x2F;remote&#x2F;dir&quot;,</span><br><span class="line">    excludeFrom &#x3D; &quot;&#x2F;etc&#x2F;rsyncd.d&#x2F;rsync_exclude.lst&quot;,</span><br><span class="line">    # maxDelays &#x3D; 5,</span><br><span class="line">    delay &#x3D; 0,</span><br><span class="line">    # init &#x3D; false,</span><br><span class="line">    rsync    &#x3D; &#123;</span><br><span class="line">        binary &#x3D; &quot;&#x2F;usr&#x2F;bin&#x2F;rsync&quot;,</span><br><span class="line">        archive &#x3D; true,</span><br><span class="line">        compress &#x3D; true,</span><br><span class="line">        verbose   &#x3D; true,</span><br><span class="line">        _extra &#x3D; &#123;&quot;--bwlimit&#x3D;2000&quot;&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ssh      &#x3D; &#123;</span><br><span class="line">        port  &#x3D;  1234</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p><strong>default.direct</strong></p>
 <p>Default.direct可以用來保持兩個本地目錄同步，比使用default.rsync更好的性能。Default.direct在啟動時使用（就像default.rsync一樣）rsync來初始化目標目錄與源目錄的同步。但是，在正常操作期間，default.direct使用/ bin / cp，/ bin / rm和/ bin / mv來保持同步。所有參數就像default.rsync一樣。</p>
 <p>delete 也適用這個屬性</p>
@@ -461,7 +477,7 @@
 <p>跟我想要抓的東西不一樣</p>
 <h2 id="可能做-Layer-2-做自訂動作"><a href="#可能做-Layer-2-做自訂動作" class="headerlink" title="可能做 Layer 2 做自訂動作"></a>可能做 Layer 2 做自訂動作</h2><p>感覺這邊自由度很高<br>因為我對 lua 不熟<br>所以就沒打算做這段</p>
 <ul>
-<li><a href="https://gowa.club/Linux-Unix/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8Lsyncd%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E9%95%9C%E5%83%8F%E5%90%8C%E6%AD%A5.html" target="_blank" rel="noopener">關於使用Lsyncd進行數據鏡像同步 | 退思園</a> <a href="/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/web2.png" title="備份圖">備份圖</a><br>裡面有官方中文說明</li>
+<li><a href="https://gowa.club/Linux-Unix/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8Lsyncd%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E9%95%9C%E5%83%8F%E5%90%8C%E6%AD%A5.html" target="_blank" rel="noopener">關於使用Lsyncd進行數據鏡像同步 | 退思園</a> <a href="/blog/2020/04/25/lsyncd-%E5%81%9A%E6%AA%94%E6%A1%88%E5%90%8C%E6%AD%A5%E5%AF%A6%E4%BD%9C%E7%B4%80%E9%8C%84/web2.png" title="備份圖">備份圖</a><br>裡面有官方中文說明</li>
 </ul>
 <h2 id="其他參考"><a href="#其他參考" class="headerlink" title="其他參考"></a>其他參考</h2><ul>
 <li><a href="https://axkibe.github.io/lsyncd/manual/examples/" target="_blank" rel="noopener">Lsyncd - Examples</a></li>
@@ -516,7 +532,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/04/16/串接-LINE-message-API-WebHook-和-LIFF-小記/" rel="next" title="串接 LINE message API(WebHook)  和 LIFF 小記">
+              <a href="/blog/2020/04/16/%E4%B8%B2%E6%8E%A5-LINE-message-API-WebHook-%E5%92%8C-LIFF-%E5%B0%8F%E8%A8%98/" rel="next" title="串接 LINE message API(WebHook)  和 LIFF 小記">
                 <i class="fa fa-chevron-left"></i> 串接 LINE message API(WebHook)  和 LIFF 小記
               </a>
             
@@ -526,7 +542,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/04/26/模擬不良網路環境方法/" rel="prev" title="模擬不良網路環境方法">
+              <a href="/blog/2020/04/26/%E6%A8%A1%E6%93%AC%E4%B8%8D%E8%89%AF%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/" rel="prev" title="模擬不良網路環境方法">
                 模擬不良網路環境方法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -562,7 +578,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -572,8 +588,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -610,7 +636,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -621,7 +647,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -851,7 +877,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/04/25/lsyncd-做檔案同步實作紀錄/';
+          this.page.url = 'https://malagege.github.io/blog/2020/04/25/lsyncd-%E5%81%9A%E6%AA%94%E6%A1%88%E5%90%8C%E6%AD%A5%E5%AF%A6%E4%BD%9C%E7%B4%80%E9%8C%84/';
           this.page.identifier = '2020/04/25/lsyncd-做檔案同步實作紀錄/';
           this.page.title = 'lsyncd 做檔案同步實作紀錄';
         };

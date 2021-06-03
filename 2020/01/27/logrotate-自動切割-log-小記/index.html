@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,log,">
+  <meta name="keywords" content="linux,log," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="最近 Pi 2號機有時候 ssh 不穩重開數據機或重插網路線就恢復正常不知道是哪邊問題想寫 ping log 來排除一些狀況">
-<meta name="keywords" content="linux,log">
 <meta property="og:type" content="article">
 <meta property="og:title" content="logrotate 自動切割 log 小記">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/01/27/logrotate-自動切割-log-小記/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/01/27/logrotate-%E8%87%AA%E5%8B%95%E5%88%87%E5%89%B2-log-%E5%B0%8F%E8%A8%98/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近 Pi 2號機有時候 ssh 不穩重開數據機或重插網路線就恢復正常不知道是哪邊問題想寫 ping log 來排除一些狀況">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:45.077Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-01-27T11:49:59.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:56.104Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="log">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="logrotate 自動切割 log 小記">
-<meta name="twitter:description" content="最近 Pi 2號機有時候 ssh 不穩重開數據機或重插網路線就恢復正常不知道是哪邊問題想寫 ping log 來排除一些狀況">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/01/27/logrotate-自動切割-log-小記/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/01/27/logrotate-自動切割-log-小記/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/01/27/logrotate-自動切割-log-小記/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/01/27/logrotate-%E8%87%AA%E5%8B%95%E5%88%87%E5%89%B2-log-%E5%B0%8F%E8%A8%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/27/logrotate-自動切割-log-小記/" itemprop="commentCount"></span>
+                <a href="/blog/2020/01/27/logrotate-%E8%87%AA%E5%8B%95%E5%88%87%E5%89%B2-log-%E5%B0%8F%E8%A8%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/01/27/logrotate-自動切割-log-小記/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -427,7 +444,7 @@
 <h2 id="ping-shell"><a href="#ping-shell" class="headerlink" title="ping shell"></a>ping shell</h2><p>首先，我需要準備 ping 的 shell 程式</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">IP=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line">date <span class="string">"+%Y-%m-%d %H:%M:%S"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"PING HOST <span class="variable">$&#123;IP&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ TRUE ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        ping -c 10 <span class="variable">$&#123;IP&#125;</span></span><br><span class="line">        sleep 300 <span class="comment">#300秒檢查</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <p>開啟 tmux 分割多個視窗<br><code>./test.sh &gt; ping_tw.yahoo.com.log</code></p>
-<p>更多 ping 相關指令<br><a href="https://blog.gtwang.org/linux/windows-linux-ping-command-tutorial/" target="_blank" rel="noopener">Ping 指令用法教學：檢查網路連線狀態與品質 - G. T. Wang</a> <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/ping.png" title="備份圖">備份圖</a></p>
+<p>更多 ping 相關指令<br><a href="https://blog.gtwang.org/linux/windows-linux-ping-command-tutorial/" target="_blank" rel="noopener">Ping 指令用法教學：檢查網路連線狀態與品質 - G. T. Wang</a> <a href="/blog/2020/01/27/logrotate-%E8%87%AA%E5%8B%95%E5%88%87%E5%89%B2-log-%E5%B0%8F%E8%A8%98/ping.png" title="備份圖">備份圖</a></p>
 <h3 id="沒辦法中斷-Ctrl-C-程式"><a href="#沒辦法中斷-Ctrl-C-程式" class="headerlink" title="沒辦法中斷(Ctrl + C) 程式"></a>沒辦法中斷(Ctrl + C) 程式</h3><p><a href="https://www.jianshu.com/p/a028c9eef2c2" target="_blank" rel="noopener">你无法用ctrl c 杀死的进程 - 简书</a></p>
 <p>簡單解決方法，用 htop kill掉程式吧…</p>
 <h3 id="shell-比較要注意加”"><a href="#shell-比較要注意加”" class="headerlink" title="shell 比較要注意加”"></a>shell 比較要注意加”</h3><blockquote>
@@ -435,7 +452,7 @@
 </blockquote>
 <p><a href="https://medium.com/micheh/linux-%E7%9A%84-shell-script-%E4%B8%AD-%E9%81%87%E5%88%B0-unary-operator-expected-%E7%9A%84%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95-3b4725d3fdf1" target="_blank" rel="noopener">Linux 的 shell script 中，遇到 unary operator expected 的解決方法</a></p>
 <h3 id="shell-error-print"><a href="#shell-error-print" class="headerlink" title="shell error print"></a>shell error print</h3><p><a href="http://linuxcommand.org/lc3_wss0140.php" target="_blank" rel="noopener">Writing shell scripts - Lesson 14: Errors and Signals and Traps (Oh My!) - Part 1</a></p>
-<h2 id="logrotate"><a href="#logrotate" class="headerlink" title="logrotate"></a>logrotate</h2><h3 id="更換-log-方法"><a href="#更換-log-方法" class="headerlink" title="更換 log 方法"></a>更換 log 方法</h3><p>其實 logrotate 切割 log 我有在想不會跟線上執行程式衝到嗎?<br><a href="https://wsgzao.github.io/post/logrotate/" target="_blank" rel="noopener">Linux 日志切割神器 logrotate 原理介绍和配置详解 | HelloDog</a> <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/web1.png" title="備份圖">備份圖</a><br>這邊裡面有詳細說明</p>
+<h2 id="logrotate"><a href="#logrotate" class="headerlink" title="logrotate"></a>logrotate</h2><h3 id="更換-log-方法"><a href="#更換-log-方法" class="headerlink" title="更換 log 方法"></a>更換 log 方法</h3><p>其實 logrotate 切割 log 我有在想不會跟線上執行程式衝到嗎?<br><a href="https://wsgzao.github.io/post/logrotate/" target="_blank" rel="noopener">Linux 日志切割神器 logrotate 原理介绍和配置详解 | HelloDog</a> <a href="/blog/2020/01/27/logrotate-%E8%87%AA%E5%8B%95%E5%88%87%E5%89%B2-log-%E5%B0%8F%E8%A8%98/web1.png" title="備份圖">備份圖</a><br>這邊裡面有詳細說明</p>
 <blockquote>
 <p>如上也就是 logrotate 的默認操作方式，也就是 mv+create 執行完之後，通知應用重新在新文件寫入即可。mv+create 成本都比較低，幾乎是原子操作，如果應用支持重新打開日誌文件，如 syslog, nginx, mysql 等，那麼這是最好的方式。<br>不過，有些程序並不支持這種方式，壓根沒有提供重新打開日誌的接口；而如果重啟應用程序，必然會降低可用性，為此引入了如下方式。</p>
 </blockquote>
@@ -537,7 +554,7 @@ noolddir - 轉儲後的日誌文件和當前日誌文件放在同一個目錄下
 prerotate/endscript - 在轉儲以前需要執行的命令可以放入這個選項對之間，這兩個關鍵字必須單獨成行
 sharedscripts - 默認情況下，prerotate/endscript 內定義的命令會對匹配到的所有文件 (比如： /var/log/news/*）都執行一次，如果指定為 sharedscripts，則這些命令只會執行一次
 dateext - 對於轉儲的日誌文件加上日期後綴
-</code></pre><p>參考:<a href="https://www.pwdpwd.com/post/2020-01-03-linux-logrotate/" target="_blank" rel="noopener">Linux 日誌切割工具 Logrotate | PwD</a> <a href="/blog/2020/01/27/logrotate-自動切割-log-小記/web2.png" title="備份圖">備份圖</a></p>
+</code></pre><p>參考:<a href="https://www.pwdpwd.com/post/2020-01-03-linux-logrotate/" target="_blank" rel="noopener">Linux 日誌切割工具 Logrotate | PwD</a> <a href="/blog/2020/01/27/logrotate-%E8%87%AA%E5%8B%95%E5%88%87%E5%89%B2-log-%E5%B0%8F%E8%A8%98/web2.png" title="備份圖">備份圖</a></p>
 <h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>其實這篇不重要刪減，所以看的內容非常雜<br>不過經過這次實驗有清楚了解到要怎麼使用 logrotate</p>
 <p>後續如果程式要做 HUP 訊號要怎麼處理?之後有空在研究</p>
 
@@ -572,7 +589,7 @@ dateext - 對於轉儲的日誌文件加上日期後綴
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/01/21/linux-bash-shell-有關-星號的事情/" rel="next" title="linux bash / shell 有關 * 星號的事情">
+              <a href="/blog/2020/01/21/linux-bash-shell-%E6%9C%89%E9%97%9C-%E6%98%9F%E8%99%9F%E7%9A%84%E4%BA%8B%E6%83%85/" rel="next" title="linux bash / shell 有關 * 星號的事情">
                 <i class="fa fa-chevron-left"></i> linux bash / shell 有關 * 星號的事情
               </a>
             
@@ -582,7 +599,7 @@ dateext - 對於轉儲的日誌文件加上日期後綴
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/02/09/VScode-Sublime-使用套件整理/" rel="prev" title="VScode,Sublime 使用套件整理">
+              <a href="/blog/2020/02/09/VScode-Sublime-%E4%BD%BF%E7%94%A8%E5%A5%97%E4%BB%B6%E6%95%B4%E7%90%86/" rel="prev" title="VScode,Sublime 使用套件整理">
                 VScode,Sublime 使用套件整理 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -618,7 +635,7 @@ dateext - 對於轉儲的日誌文件加上日期後綴
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -628,8 +645,18 @@ dateext - 對於轉儲的日誌文件加上日期後綴
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -666,7 +693,7 @@ dateext - 對於轉儲的日誌文件加上日期後綴
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -677,7 +704,7 @@ dateext - 對於轉儲的日誌文件加上日期後綴
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -744,7 +771,7 @@ dateext - 對於轉儲的日誌文件加上日期後綴
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ping-shell"><span class="nav-number">1.</span> <span class="nav-text">ping shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#沒辦法中斷-Ctrl-C-程式"><span class="nav-number">1.1.</span> <span class="nav-text">沒辦法中斷(Ctrl + C) 程式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-比較要注意加”"><span class="nav-number">1.2.</span> <span class="nav-text">shell 比較要注意加”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-error-print"><span class="nav-number">1.3.</span> <span class="nav-text">shell error print</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logrotate"><span class="nav-number">2.</span> <span class="nav-text">logrotate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更換-log-方法"><span class="nav-number">2.1.</span> <span class="nav-text">更換 log 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#輸出問題"><span class="nav-number">2.2.</span> <span class="nav-text">輸出問題</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logrotate-1"><span class="nav-number">3.</span> <span class="nav-text">logrotate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相關教學網站"><span class="nav-number">3.1.</span> <span class="nav-text">相關教學網站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logrotate-重點小記"><span class="nav-number">3.2.</span> <span class="nav-text">logrotate 重點小記</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的-ping-程式設定"><span class="nav-number">4.</span> <span class="nav-text">我的 ping 程式設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#訊號問題"><span class="nav-number">5.</span> <span class="nav-text">訊號問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#意外小實驗結果"><span class="nav-number">5.1.</span> <span class="nav-text">意外小實驗結果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-create-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><span class="nav-number">5.2.</span> <span class="nav-text">使用 create 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-copytruncate-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><span class="nav-number">5.3.</span> <span class="nav-text">使用 copytruncate 做 ./ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gt"><span class="nav-number">6.</span> <span class="nav-text">&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#測試使用"><span class="nav-number">7.</span> <span class="nav-text">測試使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#測試完建議刪除檔案"><span class="nav-number">7.1.</span> <span class="nav-text">測試完建議刪除檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logrotate-2"><span class="nav-number">7.2.</span> <span class="nav-text">logrotate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">8.</span> <span class="nav-text">總結</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ping-shell"><span class="nav-number">1.</span> <span class="nav-text">ping shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#沒辦法中斷-Ctrl-C-程式"><span class="nav-number">1.1.</span> <span class="nav-text">沒辦法中斷(Ctrl + C) 程式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-比較要注意加”"><span class="nav-number">1.2.</span> <span class="nav-text">shell 比較要注意加”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-error-print"><span class="nav-number">1.3.</span> <span class="nav-text">shell error print</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logrotate"><span class="nav-number">2.</span> <span class="nav-text">logrotate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更換-log-方法"><span class="nav-number">2.1.</span> <span class="nav-text">更換 log 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#輸出問題"><span class="nav-number">2.2.</span> <span class="nav-text">輸出問題</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logrotate-1"><span class="nav-number">3.</span> <span class="nav-text">logrotate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相關教學網站"><span class="nav-number">3.1.</span> <span class="nav-text">相關教學網站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logrotate-重點小記"><span class="nav-number">3.2.</span> <span class="nav-text">logrotate 重點小記</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的-ping-程式設定"><span class="nav-number">4.</span> <span class="nav-text">我的 ping 程式設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#訊號問題"><span class="nav-number">5.</span> <span class="nav-text">訊號問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#意外小實驗結果"><span class="nav-number">5.1.</span> <span class="nav-text">意外小實驗結果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-create-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><span class="nav-number">5.2.</span> <span class="nav-text">使用 create 做 .&#x2F;ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-copytruncate-做-ping-sh-127-0-0-1-gt-gt-ping-127-0-0-1-log"><span class="nav-number">5.3.</span> <span class="nav-text">使用 copytruncate 做 .&#x2F;ping.sh 127.0.0.1 &gt;&gt; ping_127.0.0.1.log</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gt"><span class="nav-number">6.</span> <span class="nav-text">&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#測試使用"><span class="nav-number">7.</span> <span class="nav-text">測試使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#測試完建議刪除檔案"><span class="nav-number">7.1.</span> <span class="nav-text">測試完建議刪除檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logrotate-2"><span class="nav-number">7.2.</span> <span class="nav-text">logrotate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">8.</span> <span class="nav-text">總結</span></a></li></ol></div>
             
 
           </div>
@@ -907,7 +934,7 @@ dateext - 對於轉儲的日誌文件加上日期後綴
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/01/27/logrotate-自動切割-log-小記/';
+          this.page.url = 'https://malagege.github.io/blog/2020/01/27/logrotate-%E8%87%AA%E5%8B%95%E5%88%87%E5%89%B2-log-%E5%B0%8F%E8%A8%98/';
           this.page.identifier = '2020/01/27/logrotate-自動切割-log-小記/';
           this.page.title = 'logrotate 自動切割 log 小記';
         };

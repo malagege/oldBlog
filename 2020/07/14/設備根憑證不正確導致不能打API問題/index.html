@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tls,憑證,">
+  <meta name="keywords" content="tls,憑證," />
 
 
 
@@ -80,28 +80,29 @@
 
 
 <meta name="description" content="最近要上線的專案會用到 LINE WEBHOOK竟然上正式環境 line 後台 webhook 模擬可以觸發 API但使用行動裝置竟然不可以打…(access.log沒有收到訊息)我們公司有防火牆、Server Load Balancer…查詢上花了不少時間">
-<meta name="keywords" content="tls,憑證">
 <meta property="og:type" content="article">
 <meta property="og:title" content="設備根憑證不正確導致不能打API問題">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近要上線的專案會用到 LINE WEBHOOK竟然上正式環境 line 後台 webhook 模擬可以觸發 API但使用行動裝置竟然不可以打…(access.log沒有收到訊息)我們公司有防火牆、Server Load Balancer…查詢上花了不少時間">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l4.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l3.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh2.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci2.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook2.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/chain.png">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/l4.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/l3.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/cgh.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/cgh2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/eci.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/eci2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/linewebhook.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/linewebhook2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/chain.png">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/PublicKeyCertificateDiagram_It.svg/langzh-1100px-PublicKeyCertificateDiagram_It.svg.png">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.499Z">
+<meta property="article:published_time" content="2020-07-14T14:26:12.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:58.172Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="tls">
+<meta property="article:tag" content="憑證">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="設備根憑證不正確導致不能打API問題">
-<meta name="twitter:description" content="最近要上線的專案會用到 LINE WEBHOOK竟然上正式環境 line 後台 webhook 模擬可以觸發 API但使用行動裝置竟然不可以打…(access.log沒有收到訊息)我們公司有防火牆、Server Load Balancer…查詢上花了不少時間">
-<meta name="twitter:image" content="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l4.png">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/l4.png">
 
 
 
@@ -131,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/"/>
 
 
 
@@ -158,7 +159,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -167,9 +171,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -179,13 +183,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -213,9 +217,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -223,9 +227,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -233,9 +237,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -243,9 +247,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -253,9 +257,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -268,7 +272,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -289,7 +293,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -320,20 +326,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/07/14/設備根憑證不正確導致不能打API問題/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -365,7 +371,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -376,7 +382,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -395,8 +401,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/07/14/設備根憑證不正確導致不能打API問題/" itemprop="commentCount"></span>
+                <a href="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/07/14/設備根憑證不正確導致不能打API問題/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -426,8 +433,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -452,26 +469,26 @@
 <h3 id="Load-Balance-SNI-設定"><a href="#Load-Balance-SNI-設定" class="headerlink" title="Load Balance SNI 設定"></a>Load Balance SNI 設定</h3><p>當我們憑證出問題的時候<br>網路同仁有打電話給 Load Balance 廠商詢問設定<br>廠商提到要設定 SNI<br>讓我想到之前驗證環境的問題<br><a href="https://malagege.github.io/blog/2020/06/25/Java-%E5%9B%A0%E6%86%91%E8%AD%89-SNI-%E5%95%8F%E9%A1%8C%E9%A9%97%E8%AD%89%E4%B8%8D%E9%81%8E/">Java 因憑證 SNI 問題驗證不過 | 程式狂想筆記</a><br>原來 Apache 做的設定，對應 LB(負載平衡)機器也要做這些設定<br>但遺憾還是沒有解決問題</p>
 <h3 id="根憑證是否為裝置-Client-認證"><a href="#根憑證是否為裝置-Client-認證" class="headerlink" title="根憑證是否為裝置(Client)認證"></a>根憑證是否為裝置(Client)認證</h3><p>前面第一點已經據透了<br>我們發現驗證環境的萬用憑證可以跑<br>但是正式環境驗證憑證不可以跑</p>
 <p>原來公司舊有憑證是四層(TWCA)<br>但是新憑證是三層(TWCA)<br>這2種都是合法憑證</p>
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l4.png" title="四層">
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/l3.png" title="三層">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/l4.png" class="" title="四層">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/l3.png" class="" title="三層">
 <p>從憑證路徑可以看到一個三層，一個四層<br>但偏偏 LINE ROOT CA 只有<code>CN=TWCA Root Certification Authority, OU=Root CA, O=TAIWAN-CA, C=TW</code><br>沒有 TWCA ROOT CA</p>
 <p>公司剛好因為換新憑證都改用三層<br>所以會有這個問題…</p>
 <p>所以中繼憑證改成四層就沒這個問題</p>
 <ol>
 <li>完美成果</li>
 </ol>
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh.png">
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/cgh2.png" width="2">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/cgh.png" class="">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/cgh2.png" class="" width="2">
 <ol start="2">
 <li>root ca 包在中繼憑證，順序錯誤</li>
 </ol>
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci.png">
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/eci2.png">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/eci.png" class="">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/eci2.png" class="">
 <ol start="3">
 <li>root ca 包在中繼憑證+中繼憑證順序錯誤</li>
 </ol>
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook.png">
-<img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/linewebhook2.png">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/linewebhook.png" class="">
+<img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/linewebhook2.png" class="">
 <p>我的建議憑證包四層比較不會出問題<br>因為第二層憑證是一樣的<br>第三層的話，Root CA 就會抓到白名單</p>
 <p>假如四層的話，中繼串到第三個後面，就是白名單<br>不過 TWCA 說最新發的都是三層??<del>這原因我就沒深入追查</del><br><a href="https://malagege.github.io/blog/2020/07/18/%E7%94%A2%E7%94%9F%E8%87%AA%E7%B0%BD%E6%86%91%E8%AD%89%E7%AD%86%E8%A8%98/#TWCA-%E6%86%91%E8%AD%89%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%89%E4%B8%89%E5%B1%A4%EF%BC%8C%E5%9B%9B%E5%B1%A4%E4%B8%B2%E5%88%B0%E5%90%8C%E4%B8%80%E5%80%8B%E6%86%91%E8%AD%89%E5%91%A2">產生自簽憑證筆記 | TWCA 憑證為什麼有三層，四層串到同一個憑證呢?</a><br>我猜應該相同名字會抓出來比較<br>剛好兩張私鑰都是一樣的</p>
 <p>題外話，這邊我發現有趣現象<br>用 Firefox 是三層(沒有看到四層)，Chrome(IE,Window)是四層<br>不知道是不是憑證是用 名稱去找的 <del><strong>這個是我猜的，目前沒有找到資訊</strong></del></p>
@@ -490,7 +507,7 @@
 <p>Self-Signed CA<br>亦可稱為 root CA。由於此種 CA 所發的憑證(certificate)是不經由任何上層 CA 所認證，而是以「自行認證」的方式進行認證。因此像是最上層的商業 CA，或是自行架設內部認證用的 CA，都可以屬於此類。<br>參考來源: <a href="https://mistech.pixnet.net/blog/post/80751019-certificate-authority%28ca%29-%E6%86%91%E8%AD%89%E7%B0%A1%E4%BB%8B" target="_blank" rel="noopener">Certificate Authority(CA) 憑證簡介 @ MISTECH 技術手抄本 :: 痞客邦 ::</a></p>
 </blockquote>
 <p>簡單來說就是根憑證，一開始你的電腦微軟附的作業系統裡面，有裝一些憑證，隨著系統更新，這些憑證都會update。<br>根憑證因為沒有上層，所以你電腦有根憑證白名單，就會算是合法的憑證。</p>
-<h3 id="中繼憑證"><a href="#中繼憑證" class="headerlink" title="中繼憑證"></a>中繼憑證</h3><img src="/blog/2020/07/14/設備根憑證不正確導致不能打API問題/chain.png" title="title">
+<h3 id="中繼憑證"><a href="#中繼憑證" class="headerlink" title="中繼憑證"></a>中繼憑證</h3><img src="/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/chain.png" class="" title>
 <p>參考來源:<a href="https://medium.com/@clu1022/%E9%82%A3%E4%BA%9B%E9%97%9C%E6%96%BCssl-tls%E7%9A%84%E4%BA%8C%E4%B8%89%E4%BA%8B-%E5%8D%81%E4%BA%8C-chain-of-trust-f00da1f2cc15" target="_blank" rel="noopener">那些關於SSL/TLS的二三事(十二) — Chain of Trust | by Carl | Medium</a><br>這篇說得很清楚，但我也只是略懂略懂<br>一直在想為什麼會有中繼憑證，缺少中繼憑證會發生什麼事?順序錯會發生什麼事?<br>當前憑證並非是 Root CA 認證而是靠中繼憑證…<br>中繼憑證會再往上根 Root Ca 驗證<br>到白名單就是安全性任憑正</p>
 <h3 id="憑證加密過程"><a href="#憑證加密過程" class="headerlink" title="憑證加密過程"></a>憑證加密過程</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/PublicKeyCertificateDiagram_It.svg/langzh-1100px-PublicKeyCertificateDiagram_It.svg.png" alt=""></p>
 <p>簡單說就是 <code>公鑰</code> + <code>上層憑證私鑰</code> = 憑證<br>這張憑證就會給你設定 Apache 上<br>驗證憑證會跟上層憑證公鑰解開加密確認值<br>一致就確認沒問題，繼續往上面憑證追查，直到 Root CA</p>
@@ -544,7 +561,7 @@
           
             <a href="/blog/tags/tls/" rel="tag"># tls</a>
           
-            <a href="/blog/tags/憑證/" rel="tag"># 憑證</a>
+            <a href="/blog/tags/%E6%86%91%E8%AD%89/" rel="tag"># 憑證</a>
           
         </div>
       
@@ -557,7 +574,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/06/27/監控電腦活著發送-DISCORD-通知/" rel="next" title="監控電腦活著發送 DISCORD 通知">
+              <a href="/blog/2020/06/27/%E7%9B%A3%E6%8E%A7%E9%9B%BB%E8%85%A6%E6%B4%BB%E8%91%97%E7%99%BC%E9%80%81-DISCORD-%E9%80%9A%E7%9F%A5/" rel="next" title="監控電腦活著發送 DISCORD 通知">
                 <i class="fa fa-chevron-left"></i> 監控電腦活著發送 DISCORD 通知
               </a>
             
@@ -567,7 +584,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/07/15/使用-command-line-上傳檔案到-HFS/" rel="prev" title="使用 command line 上傳檔案到 HFS">
+              <a href="/blog/2020/07/15/%E4%BD%BF%E7%94%A8-command-line-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-HFS/" rel="prev" title="使用 command line 上傳檔案到 HFS">
                 使用 command line 上傳檔案到 HFS <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -603,7 +620,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -613,8 +630,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -651,7 +678,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -662,7 +689,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -892,7 +919,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/07/14/設備根憑證不正確導致不能打API問題/';
+          this.page.url = 'https://malagege.github.io/blog/2020/07/14/%E8%A8%AD%E5%82%99%E6%A0%B9%E6%86%91%E8%AD%89%E4%B8%8D%E6%AD%A3%E7%A2%BA%E5%B0%8E%E8%87%B4%E4%B8%8D%E8%83%BD%E6%89%93API%E5%95%8F%E9%A1%8C/';
           this.page.identifier = '2020/07/14/設備根憑證不正確導致不能打API問題/';
           this.page.title = '設備根憑證不正確導致不能打API問題';
         };

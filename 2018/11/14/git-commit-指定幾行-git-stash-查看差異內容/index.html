@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="git,git stash,">
+  <meta name="keywords" content="git,git stash," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="最近使用Socuretree，發現大部分功能都看懂了Chocolatey Gallery | Sourcetree for Windows Enterprise 3.0.8但是我發現stash，可以看到裡面存甚麼東西Sourcetree還有git add 指定行數到index這個看起來很方便不知道原生怎麼處理這邊筆記">
-<meta name="keywords" content="git,git stash">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git commit 指定幾行 &amp; git stash 查看差異內容">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/11/14/git-commit-%E6%8C%87%E5%AE%9A%E5%B9%BE%E8%A1%8C-git-stash-%E6%9F%A5%E7%9C%8B%E5%B7%AE%E7%95%B0%E5%85%A7%E5%AE%B9/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近使用Socuretree，發現大部分功能都看懂了Chocolatey Gallery | Sourcetree for Windows Enterprise 3.0.8但是我發現stash，可以看到裡面存甚麼東西Sourcetree還有git add 指定行數到index這個看起來很方便不知道原生怎麼處理這邊筆記">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:43.936Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-11-14T12:40:10.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:54.904Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="git stash">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git commit 指定幾行 &amp; git stash 查看差異內容">
-<meta name="twitter:description" content="最近使用Socuretree，發現大部分功能都看懂了Chocolatey Gallery | Sourcetree for Windows Enterprise 3.0.8但是我發現stash，可以看到裡面存甚麼東西Sourcetree還有git add 指定行數到index這個看起來很方便不知道原生怎麼處理這邊筆記">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/11/14/git-commit-%E6%8C%87%E5%AE%9A%E5%B9%BE%E8%A1%8C-git-stash-%E6%9F%A5%E7%9C%8B%E5%B7%AE%E7%95%B0%E5%85%A7%E5%AE%B9/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Git/" itemprop="url" rel="index">
                     <span itemprop="name">Git</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/" itemprop="commentCount"></span>
+                <a href="/blog/2018/11/14/git-commit-%E6%8C%87%E5%AE%9A%E5%B9%BE%E8%A1%8C-git-stash-%E6%9F%A5%E7%9C%8B%E5%B7%AE%E7%95%B0%E5%85%A7%E5%AE%B9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -424,7 +441,7 @@
 
         <p>最近使用Socuretree，發現大部分功能都看懂了<br><a href="https://chocolatey.org/packages/SourceTree" target="_blank" rel="noopener">Chocolatey Gallery | Sourcetree for Windows Enterprise 3.0.8</a><br>但是我發現stash，可以看到裡面存甚麼東西<br>Sourcetree還有git add 指定行數到index<br>這個看起來很方便<br>不知道原生怎麼處理<br>這邊筆記</p>
 <a id="more"></a>
-<h2 id="git-add-p"><a href="#git-add-p" class="headerlink" title="git add -p"></a>git add -p</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># To remove &apos;-&apos; lines, make them &apos; &apos; lines (context).</span><br><span class="line"># To remove &apos;+&apos; lines, delete them.</span><br><span class="line"># Lines starting with # will be removed</span><br></pre></td></tr></table></figure>
+<h2 id="git-add-p"><a href="#git-add-p" class="headerlink" title="git add -p"></a>git add -p</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># To remove &#39;-&#39; lines, make them &#39; &#39; lines (context).</span><br><span class="line"># To remove &#39;+&#39; lines, delete them.</span><br><span class="line"># Lines starting with # will be removed</span><br></pre></td></tr></table></figure>
 <p>簡單來說<br>‘+’不想被add進去，要移除單行內容(如:vi dd)<br>‘-‘不想被add進去，要取代’ ‘(空白)(如:vi r 空白)</p>
 <h2 id="git-stash-show-p"><a href="#git-stash-show-p" class="headerlink" title="git stash show -p"></a>git stash show -p</h2><p><a href="https://stackoverflow.com/questions/7677736/git-diff-against-a-stash" target="_blank" rel="noopener">Git diff against a stash - Stack Overflow</a></p>
 <p>這樣就能看到差異了</p>
@@ -481,7 +498,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/11/13/hls影音串流小記/" rel="next" title="hls影音串流小記">
+              <a href="/blog/2018/11/13/hls%E5%BD%B1%E9%9F%B3%E4%B8%B2%E6%B5%81%E5%B0%8F%E8%A8%98/" rel="next" title="hls影音串流小記">
                 <i class="fa fa-chevron-left"></i> hls影音串流小記
               </a>
             
@@ -491,7 +508,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/11/14/bug永存重點小記-為什麼-usr會有bin資料夾/" rel="prev" title="bug永存重點小記 - 為什麼/usr會有bin資料夾">
+              <a href="/blog/2018/11/14/bug%E6%B0%B8%E5%AD%98%E9%87%8D%E9%BB%9E%E5%B0%8F%E8%A8%98-%E7%82%BA%E4%BB%80%E9%BA%BC-usr%E6%9C%83%E6%9C%89bin%E8%B3%87%E6%96%99%E5%A4%BE/" rel="prev" title="bug永存重點小記 - 為什麼/usr會有bin資料夾">
                 bug永存重點小記 - 為什麼/usr會有bin資料夾 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -527,7 +544,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -537,8 +554,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -575,7 +602,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -586,7 +613,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -653,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-add-p"><span class="nav-number">1.</span> <span class="nav-text">git add -p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-stash-show-p"><span class="nav-number">2.</span> <span class="nav-text">git stash show -p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#番外vim筆記-單行上移-下移-方法"><span class="nav-number">3.</span> <span class="nav-text">番外vim筆記(單行上移/下移)方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stash-apply"><span class="nav-number">4.</span> <span class="nav-text">stash apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新上-remote-新的分支"><span class="nav-number">5.</span> <span class="nav-text">重新上 remote 新的分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取消-remote-branch-追蹤"><span class="nav-number">6.</span> <span class="nav-text">取消 remote branch 追蹤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-add-p"><span class="nav-number">1.</span> <span class="nav-text">git add -p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-stash-show-p"><span class="nav-number">2.</span> <span class="nav-text">git stash show -p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#番外vim筆記-單行上移-下移-方法"><span class="nav-number">3.</span> <span class="nav-text">番外vim筆記(單行上移&#x2F;下移)方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stash-apply"><span class="nav-number">4.</span> <span class="nav-text">stash apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新上-remote-新的分支"><span class="nav-number">5.</span> <span class="nav-text">重新上 remote 新的分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取消-remote-branch-追蹤"><span class="nav-number">6.</span> <span class="nav-text">取消 remote branch 追蹤</span></a></li></ol></div>
             
 
           </div>
@@ -816,7 +843,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/';
+          this.page.url = 'https://malagege.github.io/blog/2018/11/14/git-commit-%E6%8C%87%E5%AE%9A%E5%B9%BE%E8%A1%8C-git-stash-%E6%9F%A5%E7%9C%8B%E5%B7%AE%E7%95%B0%E5%85%A7%E5%AE%B9/';
           this.page.identifier = '2018/11/14/git-commit-指定幾行-git-stash-查看差異內容/';
           this.page.title = 'git commit 指定幾行 & git stash 查看差異內容';
         };

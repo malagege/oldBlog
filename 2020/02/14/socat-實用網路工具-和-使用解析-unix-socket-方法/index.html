@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="linux,socat,">
+  <meta name="keywords" content="linux,socat," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="最近要看 unix socket 傳送資料而苦惱剛好最近這個工具就是要你懂Unix Socket 进行抓包解析 | plantegg馬上實作看看!!!">
-<meta name="keywords" content="linux,socat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="socat 實用網路工具 和 使用解析 unix socket 方法">
-<meta property="og:url" content="https://malagege.github.io/blog/2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近要看 unix socket 傳送資料而苦惱剛好最近這個工具就是要你懂Unix Socket 进行抓包解析 | plantegg馬上實作看看!!!">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:45.208Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-02-14T09:17:15.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:56.317Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="socat">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="socat 實用網路工具 和 使用解析 unix socket 方法">
-<meta name="twitter:description" content="最近要看 unix socket 傳送資料而苦惱剛好最近這個工具就是要你懂Unix Socket 进行抓包解析 | plantegg馬上實作看看!!!">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/" itemprop="commentCount"></span>
+                <a href="/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -435,21 +452,20 @@
 </ol>
 <p>所以正常應該會有來回資料</p>
 <p>用上面方法，我發現 docker 怎麼沒有 docker 容器跑出來結果<code>docker run ubuntu echo hello</code><br>經過一番測試</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /var/run/docker.sock /var/run/docker.sock.original</span><br><span class="line">sudo socat -t100 -d -x -v UNIX-LISTEN:/var/run/docker.sock,mode=777,reuseaddr,fork UNIX-CONNECT:/var/run/docker.sock.original</span><br></pre></td></tr></table></figure>
-<p>用以上參數可以正常看到執行結果，又在想他有做轉發應該都會來回，應該可以做顯示<br>發現多了<code>-t100 -d -x -v</code>可以顯示結果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /var/run/docker.sock /var/run/docker.sock.original</span><br><span class="line">sudo socat -t100 -d -x -v TCP-LISTEN:8089,reuseaddr,fork UNIX-CONNECT:/var/run/docker.sock.original</span><br><span class="line">sudo socat -t100 -d -x -v UNIX-LISTEN:/var/run/docker.sock,fork TCP-CONNECT:127.0.0.1:8089</span><br></pre></td></tr></table></figure></p>
-<p>這樣就正常了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mv &#x2F;var&#x2F;run&#x2F;docker.sock &#x2F;var&#x2F;run&#x2F;docker.sock.original</span><br><span class="line">sudo socat -t100 -d -x -v UNIX-LISTEN:&#x2F;var&#x2F;run&#x2F;docker.sock,mode&#x3D;777,reuseaddr,fork UNIX-CONNECT:&#x2F;var&#x2F;run&#x2F;docker.sock.original</span><br></pre></td></tr></table></figure>
+<p>用以上參數可以正常看到執行結果，又在想他有做轉發應該都會來回，應該可以做顯示<br>發現多了<code>-t100 -d -x -v</code>可以顯示結果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mv &#x2F;var&#x2F;run&#x2F;docker.sock &#x2F;var&#x2F;run&#x2F;docker.sock.original</span><br><span class="line">sudo socat -t100 -d -x -v TCP-LISTEN:8089,reuseaddr,fork UNIX-CONNECT:&#x2F;var&#x2F;run&#x2F;docker.sock.original</span><br><span class="line">sudo socat -t100 -d -x -v UNIX-LISTEN:&#x2F;var&#x2F;run&#x2F;docker.sock,fork TCP-CONNECT:127.0.0.1:8089</span><br></pre></td></tr></table></figure><br>這樣就正常了</p>
 <p><code>-t&lt;timeout&gt;</code><br>沒想到是跟這個有關係，設定-t100 就能顯示</p>
 <blockquote>
-<p>When one channel has reached EOF, the write part of the other channel is shut down. Then, socat waits <timeout> [timeval] seconds before terminating.  Default  is  0.5  seconds.<br>This  timeout only applies to addresses where write and read part can be closed independently. When during the timeout interval the read part gives EOF, socat terminates without   awaiting the timeout.</timeout></p>
+<p>When one channel has reached EOF, the write part of the other channel is shut down. Then, socat waits <timeout> [timeval] seconds before terminating.  Default  is  0.5  seconds.<br>This  timeout only applies to addresses where write and read part can be closed independently. When during the timeout interval the read part gives EOF, socat terminates without   awaiting the timeout.</p>
 </blockquote>
 <p><code>-v</code> http 的話可服選擇這種方式去顯示記錄<br><code>-x</code> 也是顯示封包格式</p>
-<h2 id="相關指令"><a href="#相關指令" class="headerlink" title="相關指令"></a>相關指令</h2><h3 id="讀寫文件"><a href="#讀寫文件" class="headerlink" title="讀寫文件"></a>讀寫文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">socat - /xxx/note.txt</span><br><span class="line">socat - ./note.txt</span><br></pre></td></tr></table></figure>
+<h2 id="相關指令"><a href="#相關指令" class="headerlink" title="相關指令"></a>相關指令</h2><h3 id="讀寫文件"><a href="#讀寫文件" class="headerlink" title="讀寫文件"></a>讀寫文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">socat - &#x2F;xxx&#x2F;note.txt</span><br><span class="line">socat - .&#x2F;note.txt</span><br></pre></td></tr></table></figure>
 <p>我一直搞不懂 - 意思<br>不過 第二個 address 是 STDOUT 突然就好懂了<br>不知道<code>-</code>是不是呼略的意思?</p>
 <p>通常 socat [ option ] address1 address2</p>
 <p>address1-&gt;address2</p>
 <h3 id="開-port-通訊"><a href="#開-port-通訊" class="headerlink" title="開 port 通訊"></a>開 port 通訊</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># command a window</span></span><br><span class="line">socat TCP-LISTEN:7000 -        </span><br><span class="line"><span class="comment"># command b window</span></span><br><span class="line">socat - TCP:127.0.0.1:7000</span><br></pre></td></tr></table></figure>
 <p>### </p>
-<h1 id="在服務端-7005-端口建立一個-Shell。"><a href="#在服務端-7005-端口建立一個-Shell。" class="headerlink" title="在服務端 7005 端口建立一個 Shell。"></a>在服務端 7005 端口建立一個 Shell。</h1><p>server<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ socat TCP-LISTEN:7005,fork,reuseaddr EXEC:/bin/bash,pty,stderr</span><br><span class="line">或者</span><br><span class="line">$ socat TCP-LISTEN:7005,fork,reuseaddr system:bash,pty,stderr</span><br></pre></td></tr></table></figure></p>
+<h1 id="在服務端-7005-端口建立一個-Shell。"><a href="#在服務端-7005-端口建立一個-Shell。" class="headerlink" title="在服務端 7005 端口建立一個 Shell。"></a>在服務端 7005 端口建立一個 Shell。</h1><p>server<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ socat TCP-LISTEN:7005,fork,reuseaddr EXEC:&#x2F;bin&#x2F;bash,pty,stderr</span><br><span class="line">或者</span><br><span class="line">$ socat TCP-LISTEN:7005,fork,reuseaddr system:bash,pty,stderr</span><br></pre></td></tr></table></figure></p>
 <p>client</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 連接到服務器的 7005 端口，即可獲得一個 Shell。readline 是 GNU 的命令行編輯器，具有歷史功能。</span><br><span class="line">$ socat readline tcp:127.0.0.1:7005</span><br></pre></td></tr></table></figure>
 <h4 id="我的ubuntu-不能用-readline"><a href="#我的ubuntu-不能用-readline" class="headerlink" title="我的ubuntu 不能用 readline"></a>我的ubuntu 不能用 readline</h4><blockquote>
@@ -524,7 +540,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2020/02/10/PHP-DI-簡單自動注入小記/" rel="next" title="PHP-DI 簡單自動注入小記">
+              <a href="/blog/2020/02/10/PHP-DI-%E7%B0%A1%E5%96%AE%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/" rel="next" title="PHP-DI 簡單自動注入小記">
                 <i class="fa fa-chevron-left"></i> PHP-DI 簡單自動注入小記
               </a>
             
@@ -534,7 +550,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2020/02/15/vagrant-搭配使用-ansible-和-docker-架設-redis-小記/" rel="prev" title="vagrant 搭配使用 ansible 和 docker 架設 redis 小記">
+              <a href="/blog/2020/02/15/vagrant-%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8-ansible-%E5%92%8C-docker-%E6%9E%B6%E8%A8%AD-redis-%E5%B0%8F%E8%A8%98/" rel="prev" title="vagrant 搭配使用 ansible 和 docker 架設 redis 小記">
                 vagrant 搭配使用 ansible 和 docker 架設 redis 小記 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -570,7 +586,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -580,8 +596,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -618,7 +644,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -629,7 +655,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -696,7 +722,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#簡單介紹"><span class="nav-number">1.</span> <span class="nav-text">簡單介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首先怎麼抓到-unix-socket"><span class="nav-number">2.</span> <span class="nav-text">首先怎麼抓到 unix socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關指令"><span class="nav-number">3.</span> <span class="nav-text">相關指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#讀寫文件"><span class="nav-number">3.1.</span> <span class="nav-text">讀寫文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#開-port-通訊"><span class="nav-number">3.2.</span> <span class="nav-text">開 port 通訊</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#在服務端-7005-端口建立一個-Shell。"><span class="nav-number"></span> <span class="nav-text">在服務端 7005 端口建立一個 Shell。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#我的ubuntu-不能用-readline"><span class="nav-number">0.0.1.</span> <span class="nav-text">我的ubuntu 不能用 readline</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件傳送"><span class="nav-number">0.1.</span> <span class="nav-text">文件傳送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讀寫分離"><span class="nav-number">0.2.</span> <span class="nav-text">讀寫分離</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通過-OPENSSL-加密傳送"><span class="nav-number">0.3.</span> <span class="nav-text">通過 OPENSSL 加密傳送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#憑證問題"><span class="nav-number">0.4.</span> <span class="nav-text">憑證問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何監聽-port-抓-GET-POST-封包"><span class="nav-number">1.</span> <span class="nav-text">如何監聽 port 抓 GET POST 封包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wireshark"><span class="nav-number">1.1.</span> <span class="nav-text">Wireshark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcpdump"><span class="nav-number">1.2.</span> <span class="nav-text">tcpdump</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關教學網站"><span class="nav-number">2.</span> <span class="nav-text">相關教學網站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查詢到工具"><span class="nav-number">2.1.</span> <span class="nav-text">查詢到工具</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#簡單介紹"><span class="nav-number">1.</span> <span class="nav-text">簡單介紹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首先怎麼抓到-unix-socket"><span class="nav-number">2.</span> <span class="nav-text">首先怎麼抓到 unix socket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關指令"><span class="nav-number">3.</span> <span class="nav-text">相關指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#讀寫文件"><span class="nav-number">3.1.</span> <span class="nav-text">讀寫文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#開-port-通訊"><span class="nav-number">3.2.</span> <span class="nav-text">開 port 通訊</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在服務端-7005-端口建立一個-Shell。"><span class="nav-number"></span> <span class="nav-text">在服務端 7005 端口建立一個 Shell。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#我的ubuntu-不能用-readline"><span class="nav-number">0.0.1.</span> <span class="nav-text">我的ubuntu 不能用 readline</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件傳送"><span class="nav-number">0.1.</span> <span class="nav-text">文件傳送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讀寫分離"><span class="nav-number">0.2.</span> <span class="nav-text">讀寫分離</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通過-OPENSSL-加密傳送"><span class="nav-number">0.3.</span> <span class="nav-text">通過 OPENSSL 加密傳送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#憑證問題"><span class="nav-number">0.4.</span> <span class="nav-text">憑證問題</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何監聽-port-抓-GET-POST-封包"><span class="nav-number">1.</span> <span class="nav-text">如何監聽 port 抓 GET POST 封包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wireshark"><span class="nav-number">1.1.</span> <span class="nav-text">Wireshark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcpdump"><span class="nav-number">1.2.</span> <span class="nav-text">tcpdump</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關教學網站"><span class="nav-number">2.</span> <span class="nav-text">相關教學網站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查詢到工具"><span class="nav-number">2.1.</span> <span class="nav-text">查詢到工具</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -859,7 +885,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/';
+          this.page.url = 'https://malagege.github.io/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/';
           this.page.identifier = '2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/';
           this.page.title = 'socat 實用網路工具 和 使用解析 unix socket 方法';
         };

@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Kubernetes,ingress,">
+  <meta name="keywords" content="Kubernetes,ingress," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="最近我在學習 Kubernetes，我有問我 K8S 裡面使用 load balance 能不能做到 Cookies 第一次指向到某一台 Server我那時後才學到 Service ，Service 是使用 iptable 所以應該無法做到我剛看到 Ingress 章節，應該是可以做到我朋友需求但仔細想想，探討這個問題也應該沒有意義使用 K8S 應該就是使用微服務架構，探討 Server 會不會掛">
-<meta name="keywords" content="Kubernetes,ingress">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes 使用 Ingress 做負載平衡">
-<meta property="og:url" content="https://malagege.github.io/blog/2021/02/11/Kubernetes-使用-Ingress-做負載平衡/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近我在學習 Kubernetes，我有問我 K8S 裡面使用 load balance 能不能做到 Cookies 第一次指向到某一台 Server我那時後才學到 Service ，Service 是使用 iptable 所以應該無法做到我剛看到 Ingress 章節，應該是可以做到我朋友需求但仔細想想，探討這個問題也應該沒有意義使用 K8S 應該就是使用微服務架構，探討 Server 會不會掛">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.341Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-02-11T08:37:01.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:52.722Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="ingress">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kubernetes 使用 Ingress 做負載平衡">
-<meta name="twitter:description" content="最近我在學習 Kubernetes，我有問我 K8S 裡面使用 load balance 能不能做到 Cookies 第一次指向到某一台 Server我那時後才學到 Service ，Service 是使用 iptable 所以應該無法做到我剛看到 Ingress 章節，應該是可以做到我朋友需求但仔細想想，探討這個問題也應該沒有意義使用 K8S 應該就是使用微服務架構，探討 Server 會不會掛">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2021/02/11/Kubernetes-使用-Ingress-做負載平衡/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2021/02/11/Kubernetes-使用-Ingress-做負載平衡/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/11/Kubernetes-使用-Ingress-做負載平衡/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
                     <span itemprop="name">Kubernetes</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2021/02/11/Kubernetes-使用-Ingress-做負載平衡/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/11/Kubernetes-使用-Ingress-做負載平衡/" itemprop="commentCount"></span>
+                <a href="/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2021/02/11/Kubernetes-使用-Ingress-做負載平衡/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -444,7 +461,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl patch daemonsets -n projectcontour envoy -p <span class="string">'&#123;"spec":&#123;"template":&#123;"spec":&#123;"nodeSelector":&#123;"ingress-ready":"true"&#125;,"tolerations":[&#123;"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"&#125;]&#125;&#125;&#125;&#125;'</span></span><br></pre></td></tr></table></figure>
 <p>先設定，之後代研究這個是做什麼用<br>但我發現這個沒設定好像也能跑 = =a</p>
 <h3 id="使用-Ingress"><a href="#使用-Ingress" class="headerlink" title="使用 Ingress"></a>使用 Ingress</h3><p>預設好像就有這個，所以不需要特別裝</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">foo-app</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">foo</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">foo-app</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">hashicorp/http-echo:0.2.3</span></span><br><span class="line"><span class="attr">    args:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"-text=foo"</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">foo-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">foo</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line">  <span class="comment"># Default port used by the image</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">5678</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">bar-app</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">bar</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">bar-app</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">hashicorp/http-echo:0.2.3</span></span><br><span class="line"><span class="attr">    args:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"-text=bar"</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">bar-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">bar</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line">  <span class="comment"># Default port used by the image</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">5678</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">example-ingress</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">  - http:</span></span><br><span class="line"><span class="attr">      paths:</span></span><br><span class="line"><span class="attr">      - path:</span> <span class="string">/foo</span></span><br><span class="line"><span class="attr">        backend:</span></span><br><span class="line"><span class="attr">          serviceName:</span> <span class="string">foo-service</span></span><br><span class="line"><span class="attr">          servicePort:</span> <span class="number">5678</span></span><br><span class="line"><span class="attr">      - path:</span> <span class="string">/bar</span></span><br><span class="line"><span class="attr">        backend:</span></span><br><span class="line"><span class="attr">          serviceName:</span> <span class="string">bar-service</span></span><br><span class="line"><span class="attr">          servicePort:</span> <span class="number">5678</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">foo-app</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">foo</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">foo-app</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">hashicorp/http-echo:0.2.3</span></span><br><span class="line">    <span class="attr">args:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">"-text=foo"</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">foo-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">foo</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="comment"># Default port used by the image</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">5678</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">bar-app</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">bar</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">bar-app</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">hashicorp/http-echo:0.2.3</span></span><br><span class="line">    <span class="attr">args:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">"-text=bar"</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">bar-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">bar</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="comment"># Default port used by the image</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">5678</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">networking.k8s.io/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">example-ingress</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/foo</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">foo-service</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">5678</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/bar</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">bar-service</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">5678</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
 <p>上面建立兩個pod,service，然後新增 Ingress 設定</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml</span><br></pre></td></tr></table></figure>
 <h3 id="執行內容"><a href="#執行內容" class="headerlink" title="執行內容"></a>執行內容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># should output "foo"</span></span><br><span class="line">curl localhost/foo</span><br><span class="line"><span class="comment"># should output "bar"</span></span><br><span class="line">curl localhost/bar</span><br></pre></td></tr></table></figure>
@@ -456,14 +473,14 @@
 <h3 id="service-pod-ingress-設定"><a href="#service-pod-ingress-設定" class="headerlink" title="service ,pod , ingress 設定"></a>service ,pod , ingress 設定</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立測試 pod</span></span><br><span class="line">kubectl create -f  https://raw.githubusercontent.com/zxcvbnius/k8s-30-day-sharing/master/Day19/demo-ingress/helloworld-pod.yaml</span><br></pre></td></tr></table></figure>
 <p>事後想想這邊可以用上面範例 echo 出不同字串<br>這樣就可以知道用到哪一個 pod</p>
 <p>建立兩個測試用 serivce 都倒同一個 service</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">helloworld-v1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">3000</span></span><br><span class="line"><span class="attr">    protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">3000</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">helloworld-pod</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">helloworld-v2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">3000</span></span><br><span class="line"><span class="attr">    protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">3000</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">helloworld-pod</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">helloworld-v1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">3000</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">3000</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">helloworld-pod</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">helloworld-v2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">3000</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">3000</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">helloworld-pod</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://raw.githubusercontent.com/zxcvbnius/k8s-30-day-sharing/master/Day19/demo-ingress/helloworld-service.yaml</span><br><span class="line">kubectl get svc</span><br><span class="line"><span class="comment"># Name:              helloworld-v1</span></span><br><span class="line"><span class="comment"># Namespace:         default</span></span><br><span class="line"><span class="comment"># Labels:            &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Annotations:       &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Selector:          app=helloworld-pod</span></span><br><span class="line"><span class="comment"># Type:              ClusterIP</span></span><br><span class="line"><span class="comment"># IP Families:       &lt;none&gt;</span></span><br><span class="line"><span class="comment"># IP:                10.96.172.11</span></span><br><span class="line"><span class="comment"># IPs:               &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Port:              &lt;unset&gt;  3000/TCP</span></span><br><span class="line"><span class="comment"># TargetPort:        3000/TCP</span></span><br><span class="line"><span class="comment"># Endpoints:         172.17.0.7:3000</span></span><br><span class="line"><span class="comment"># Session Affinity:  None</span></span><br><span class="line"><span class="comment"># Events:            &lt;none&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Name:              helloworld-v2</span></span><br><span class="line"><span class="comment"># Namespace:         default</span></span><br><span class="line"><span class="comment"># Labels:            &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Annotations:       &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Selector:          app=helloworld-pod</span></span><br><span class="line"><span class="comment"># Type:              ClusterIP</span></span><br><span class="line"><span class="comment"># IP Families:       &lt;none&gt;</span></span><br><span class="line"><span class="comment"># IP:                10.96.251.221</span></span><br><span class="line"><span class="comment"># IPs:               &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Port:              &lt;unset&gt;  3000/TCP</span></span><br><span class="line"><span class="comment"># TargetPort:        3000/TCP</span></span><br><span class="line"><span class="comment"># Endpoints:         172.17.0.7:3000</span></span><br><span class="line"><span class="comment"># Session Affinity:  None</span></span><br><span class="line"><span class="comment"># Events:            &lt;none&gt;</span></span><br></pre></td></tr></table></figure>
 <p>確認是否成功</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 進去 node 確認狀況</span></span><br><span class="line">minikube ssh</span><br><span class="line"><span class="comment"># 確認 pods 可以正常連到</span></span><br><span class="line">curl 10.96.172.11:3000</span><br></pre></td></tr></table></figure>
 <p>繼續建立 ingress controller</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方安裝 nginx ingress controller</span></span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/baremetal/deploy.yaml</span><br><span class="line"><span class="comment"># 原作yaml 無法建立</span></span><br><span class="line"><span class="comment"># error: error validating "https://raw.githubusercontent.com/zxcvbnius/k8s-30-day-sharing/master/Day19/demo-ingress/nginx-ingress.yaml": error validating data: [ValidationError(Ingress.metadata): unknown field "kubernetes.io/ingress.class" in io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta, ValidationError(Ingress.spec.rules[0]): unknown field "paths" in io.k8s.api.extensions.v1beta1.IngressRule]; if you choose to ignore these errors, turn validation off with --validate=false</span></span><br><span class="line">vim nginx-ingress.yaml</span><br></pre></td></tr></table></figure>
-<p>參考 <a href="https://github.com/zxcvbnius/k8s-30-day-sharing/blob/master/Day19/demo-ingress/ingress-example-2.yaml" target="_blank" rel="noopener">k8s-30-day-sharing/ingress-example-2.yaml at master · zxcvbnius/k8s-30-day-sharing</a><br>裡面 service name 有錯誤，建議使用下面複製<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">example-2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">  - host:</span> <span class="string">helloworld-v1.example.com</span></span><br><span class="line"><span class="attr">    http:</span></span><br><span class="line"><span class="attr">      paths:</span></span><br><span class="line"><span class="attr">      - path:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">        backend:</span> </span><br><span class="line"><span class="attr">          serviceName:</span> <span class="string">helloworld-v1</span></span><br><span class="line"><span class="attr">          servicePort:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">  - host:</span> <span class="string">helloworld-v2.example.com</span></span><br><span class="line"><span class="attr">    http:</span></span><br><span class="line"><span class="attr">      paths:</span></span><br><span class="line"><span class="attr">      - path:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">        backend:</span></span><br><span class="line"><span class="attr">          serviceName:</span> <span class="string">helloworld-v2</span></span><br><span class="line"><span class="attr">          servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure></p>
+<p>參考 <a href="https://github.com/zxcvbnius/k8s-30-day-sharing/blob/master/Day19/demo-ingress/ingress-example-2.yaml" target="_blank" rel="noopener">k8s-30-day-sharing/ingress-example-2.yaml at master · zxcvbnius/k8s-30-day-sharing</a><br>裡面 service name 有錯誤，建議使用下面複製<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">example-2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">helloworld-v1.example.com</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">        <span class="attr">backend:</span> </span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">helloworld-v1</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">80</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">host:</span> <span class="string">helloworld-v2.example.com</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">      <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">        <span class="attr">backend:</span></span><br><span class="line">          <span class="attr">serviceName:</span> <span class="string">helloworld-v2</span></span><br><span class="line">          <span class="attr">servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="測試-host-方法"><a href="#測試-host-方法" class="headerlink" title="測試 host 方法"></a>測試 host 方法</h3><ol>
 <li>curl -H<br>之前<a href="https://malagege.github.io/blog/2020/10/13/%E5%9C%A8-Raspberry-PI-%E6%9E%B6%E8%A8%AD-Traefik-%E5%88%9D%E9%AB%94%E9%A9%97/#%E6%B8%AC%E8%A9%A6%E6%96%B9%E6%B3%95">在 Raspberry PI 架設 Traefik 初體驗 | 程式狂想筆記</a>這篇有紀錄<br>通常改 /etc/hosts 檔案或者curl 指令可以做到(這當初看到 traefik 官方文件寫的，還滿神奇的，畢竟很多教學沒這樣教)</li>
 </ol>
@@ -471,8 +488,8 @@
 <li>/etc/hosts</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 這個 IP 是 node IP</span></span><br><span class="line">curl -H Host:helloworld-v1.example.com http://192.168.99.102/  </span><br><span class="line">curl -H Host:helloworld-v2.example.com http://192.168.99.102/</span><br></pre></td></tr></table></figure>
-<h2 id="SSL-termination-代理端做-tls"><a href="#SSL-termination-代理端做-tls" class="headerlink" title="SSL termination(代理端做 tls)"></a>SSL termination(代理端做 tls)</h2><p>ingress-ssl-sceret.yaml<br><figure class="highlight yaml"><figcaption><span>ingress-ssl-sceret.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="string">tls.crt:</span> <span class="string">YmFzZTY0X2VuY29kZWRfY2VydA==</span></span><br><span class="line">  <span class="string">tls.key:</span> <span class="string">YmFzZTY0X2VuY29kZWRfa2V5</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">ssh-secret</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br></pre></td></tr></table></figure></p>
-<p>example3-ingress.yaml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">example-3</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  tls:</span></span><br><span class="line"><span class="attr">  - secretName:</span> <span class="string">ssh-secret</span></span><br><span class="line"><span class="attr">  backend:</span></span><br><span class="line"><span class="attr">    serviceName:</span> <span class="string">helloworld-v1</span></span><br><span class="line"><span class="attr">    servicePort:</span> <span class="number">3000</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="SSL-termination-代理端做-tls"><a href="#SSL-termination-代理端做-tls" class="headerlink" title="SSL termination(代理端做 tls)"></a>SSL termination(代理端做 tls)</h2><p>ingress-ssl-sceret.yaml<br><figure class="highlight yaml"><figcaption><span>ingress-ssl-sceret.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">tls.crt:</span> <span class="string">YmFzZTY0X2VuY29kZWRfY2VydA==</span></span><br><span class="line">  <span class="attr">tls.key:</span> <span class="string">YmFzZTY0X2VuY29kZWRfa2V5</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Secret</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ssh-secret</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">Opaque</span></span><br></pre></td></tr></table></figure></p>
+<p>example3-ingress.yaml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">example-3</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">tls:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">secretName:</span> <span class="string">ssh-secret</span></span><br><span class="line">  <span class="attr">backend:</span></span><br><span class="line">    <span class="attr">serviceName:</span> <span class="string">helloworld-v1</span></span><br><span class="line">    <span class="attr">servicePort:</span> <span class="number">3000</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="運行多個-Ingress-Controller"><a href="#運行多個-Ingress-Controller" class="headerlink" title="運行多個 Ingress Controller"></a>運行多個 Ingress Controller</h2><p>一個叢集中運行多個Ingress 控制器，可以搭配 Annotation 的 <code>kubernetes.io/ingress.class</code><br>如果沒有配置 <code>kubernetes.io/ingress.class</code>，會有多個不同Ingress Controller 搶 Ingress 使用權，並寫入Ingress 件的status 欄位</p>
 <p>後面兩個就不先仔細研究</p>
 <h2 id="wildcard-host"><a href="#wildcard-host" class="headerlink" title="wildcard host"></a>wildcard host</h2><p><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/#hostname-wildcards" target="_blank" rel="noopener">Ingress | Kubernetes</a></p>
@@ -511,7 +528,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2021/02/04/Kubernetes-服務探索-Service-Discovery/" rel="next" title="Kubernetes 服務探索(Service Discovery)">
+              <a href="/blog/2021/02/04/Kubernetes-%E6%9C%8D%E5%8B%99%E6%8E%A2%E7%B4%A2-Service-Discovery/" rel="next" title="Kubernetes 服務探索(Service Discovery)">
                 <i class="fa fa-chevron-left"></i> Kubernetes 服務探索(Service Discovery)
               </a>
             
@@ -521,7 +538,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2021/02/13/Kubernetes-的-ReplicasSet/" rel="prev" title="Kubernetes 的 ReplicaSet">
+              <a href="/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/" rel="prev" title="Kubernetes 的 ReplicaSet">
                 Kubernetes 的 ReplicaSet <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -557,7 +574,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -567,8 +584,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -605,7 +632,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -616,7 +643,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -846,7 +873,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2021/02/11/Kubernetes-使用-Ingress-做負載平衡/';
+          this.page.url = 'https://malagege.github.io/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/';
           this.page.identifier = '2021/02/11/Kubernetes-使用-Ingress-做負載平衡/';
           this.page.title = 'Kubernetes 使用 Ingress 做負載平衡';
         };

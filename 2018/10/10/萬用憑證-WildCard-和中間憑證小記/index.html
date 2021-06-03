@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tls,ssl,wildcard,憑證,">
+  <meta name="keywords" content="tls,ssl,wildcard,憑證," />
 
 
 
@@ -80,27 +80,30 @@
 
 
 <meta name="description" content="最近公司https網站很奇怪，桌面版的Chrome,Firefox顯示正常(安全)但是手機版的Chrome正常，Firefox不正常(非安全)倒置Line App內崁網頁不正常(連結https那台主機沒有正常跳頁)">
-<meta name="keywords" content="tls,ssl,wildcard,憑證">
 <meta property="og:type" content="article">
 <meta property="og:title" content="萬用憑證(WildCard)和中間憑證小記">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="最近公司https網站很奇怪，桌面版的Chrome,Firefox顯示正常(安全)但是手機版的Chrome正常，Firefox不正常(非安全)倒置Line App內崁網頁不正常(連結https那台主機沒有正常跳頁)">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/a.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/b.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/android_fierfox.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/line_webview.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/curl_ok.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/curl_no_ok.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/a_digicert.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/b_digicert.png">
-<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/yahoo_digicert.png">
-<meta property="og:updated_time" content="2021-06-02T15:57:46.478Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/a.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/b.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/android_fierfox.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/line_webview.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/curl_ok.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/curl_no_ok.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/a_digicert.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/b_digicert.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/yahoo_digicert.png">
+<meta property="article:published_time" content="2018-10-10T15:54:38.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:58.032Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="tls">
+<meta property="article:tag" content="ssl">
+<meta property="article:tag" content="wildcard">
+<meta property="article:tag" content="憑證">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="萬用憑證(WildCard)和中間憑證小記">
-<meta name="twitter:description" content="最近公司https網站很奇怪，桌面版的Chrome,Firefox顯示正常(安全)但是手機版的Chrome正常，Firefox不正常(非安全)倒置Line App內崁網頁不正常(連結https那台主機沒有正常跳頁)">
-<meta name="twitter:image" content="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/a.png">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/a.png">
 
 
 
@@ -130,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/"/>
 
 
 
@@ -157,7 +160,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -166,9 +172,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -178,13 +184,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -212,9 +218,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -222,9 +228,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -232,9 +238,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -242,9 +248,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -252,9 +258,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -267,7 +273,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -288,7 +294,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -319,20 +327,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -364,7 +372,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -375,8 +383,8 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/程式心法/" itemprop="url" rel="index">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%A8%8B%E5%BC%8F%E5%BF%83%E6%B3%95/" itemprop="url" rel="index">
                     <span itemprop="name">程式心法</span>
                   </a>
                 </span>
@@ -394,8 +402,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/10/萬用憑證-WildCard-和中間憑證小記/" itemprop="commentCount"></span>
+                <a href="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/10/10/萬用憑證-WildCard-和中間憑證小記/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -425,8 +434,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -437,18 +456,18 @@
 <p>之前在保哥粉絲團看過<a href="https://www.facebook.com/will.fans/videos/1760703873958749/" target="_blank" rel="noopener">申請 Let’s Encrypt 免費 SSL 憑證一次就上手</a><br>所以對憑證有基本的了解<br>但沒深入了解</p>
 <p>目前有些網站憑證，手機版(Android)Webview會有問題。IOS皆正常<br>但點入登入(網域)LINE會空白頁&amp;Android Firefox會顯是為安全憑證</p>
 <p>正常桌面瀏覽器</p>
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/a.png" title="a網域">
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/b.png" title="b網域">
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/android_fierfox.png" title="android_firefox">
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/line_webview.png" title="line_webview">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/a.png" class="" title="a網域">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/b.png" class="" title="b網域">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/android_fierfox.png" class="" title="android_firefox">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/line_webview.png" class="" title="line_webview">
 <p>發現公司不同子網域是用<code>萬用憑證</code><br>簡單來說就是<code>*.xxxx.com.tw</code><br>但問題來了…，為什麼a網段根b網段(都是*.xxxx.com.tw)<br>為什麼a正常、b不正常</p>
 <p>最後爬到這個，<a href="https://www.v2ex.com/t/138734" target="_blank" rel="noopener">DigiCert 的证书，在浏览器（firefox，chrome）上都绿了应该没问题，但是 wget 总是出错 - V2EX</a><br>intermediate certifcate(中間憑證)有問題…<br>瀏覽器會智能判斷，所以不會跳出錯誤<br>經過實驗postman也不會出錯….(可能他是Chrome吧XD)</p>
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/curl_ok.png" title="a網域可以連">
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/curl_no_ok.png" title="b網域不能連">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/curl_ok.png" class="" title="a網域可以連">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/curl_no_ok.png" class="" title="b網域不能連">
 <p>感覺哪裡怪怪的<br>後來發現<a href="https://www.digicert.com/help/" target="_blank" rel="noopener">SSL Certificate Checker - Diagnostic Tool | DigiCert.com</a>可以測試憑證</p>
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/a_digicert.png" title="a_digicert檢查">
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/b_digicert.png" title="b_digicert檢查">
-<img src="/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/yahoo_digicert.png" title="正常yahoo的">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/a_digicert.png" class="" title="a_digicert檢查">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/b_digicert.png" class="" title="b_digicert檢查">
+<img src="/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/yahoo_digicert.png" class="" title="正常yahoo的">
 <p><a href="https://lv5.in/2016/11/22/%E4%BD%A0%E5%8F%AF%E8%83%BD%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84%E6%86%91%E8%AD%89%E5%A4%A7%E5%B0%8F%E4%BA%8B/" target="_blank" rel="noopener">你可能不知道的憑證大小事 - 吾輩乃程序猿</a><br><a href="https://blog.yorkxin.org/2009/02/23/buying-a-turbo-ssl-cert.html" target="_blank" rel="noopener">[筆記] SSL 憑證購買記 - Yu-Cheng Chuang’s Blog</a><br>裡面有介紹中繼憑證可能會影像憑證安全性</p>
 <p>跟MIS說是憑證問題，可能要查看看<br>不過MIS說是廠商給他的，所以可能他要問廠商才清楚<br>目前查到這樣了</p>
 <p>其他相關筆記</p>
@@ -479,7 +498,7 @@
           
             <a href="/blog/tags/wildcard/" rel="tag"># wildcard</a>
           
-            <a href="/blog/tags/憑證/" rel="tag"># 憑證</a>
+            <a href="/blog/tags/%E6%86%91%E8%AD%89/" rel="tag"># 憑證</a>
           
         </div>
       
@@ -492,7 +511,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/10/08/在手機上Firefox-Chrome-電腦除錯方法/" rel="next" title="在手機上Firefox &Chrome 電腦除錯方法">
+              <a href="/blog/2018/10/08/%E5%9C%A8%E6%89%8B%E6%A9%9F%E4%B8%8AFirefox-Chrome-%E9%9B%BB%E8%85%A6%E9%99%A4%E9%8C%AF%E6%96%B9%E6%B3%95/" rel="next" title="在手機上Firefox &Chrome 電腦除錯方法">
                 <i class="fa fa-chevron-left"></i> 在手機上Firefox &Chrome 電腦除錯方法
               </a>
             
@@ -502,7 +521,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/10/11/git保護分支不會被commit/" rel="prev" title="git保護分支不會被commit">
+              <a href="/blog/2018/10/11/git%E4%BF%9D%E8%AD%B7%E5%88%86%E6%94%AF%E4%B8%8D%E6%9C%83%E8%A2%ABcommit/" rel="prev" title="git保護分支不會被commit">
                 git保護分支不會被commit <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -538,7 +557,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -548,8 +567,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -577,7 +606,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -588,7 +617,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -802,7 +831,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/10/10/萬用憑證-WildCard-和中間憑證小記/';
+          this.page.url = 'https://malagege.github.io/blog/2018/10/10/%E8%90%AC%E7%94%A8%E6%86%91%E8%AD%89-WildCard-%E5%92%8C%E4%B8%AD%E9%96%93%E6%86%91%E8%AD%89%E5%B0%8F%E8%A8%98/';
           this.page.identifier = '2018/10/10/萬用憑證-WildCard-和中間憑證小記/';
           this.page.title = '萬用憑證(WildCard)和中間憑證小記';
         };

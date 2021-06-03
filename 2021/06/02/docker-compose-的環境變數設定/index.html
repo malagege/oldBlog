@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="docker,">
+  <meta name="keywords" content="docker," />
 
 
 
@@ -80,19 +80,19 @@
 
 
 <meta name="description" content="Docker Compose 引用环境变量 - sparkdev - 博客园 之前用 docker-compose 都不知道可以抓環境變數甚至 .env 也可以抓到某天看到這個方法今天來整理一下，不確定是哪個版本才有這個功能">
-<meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker-compose 的環境變數設定">
-<meta property="og:url" content="https://malagege.github.io/blog/2021/06/02/docker-compose-的環境變數設定/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/06/02/docker-compose-%E7%9A%84%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="Docker Compose 引用环境变量 - sparkdev - 博客园 之前用 docker-compose 都不知道可以抓環境變數甚至 .env 也可以抓到某天看到這個方法今天來整理一下，不確定是哪個版本才有這個功能">
-<meta property="og:locale" content="zh-tw">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/oFP350e.png">
 <meta property="og:image" content="https://i.imgur.com/vNoQqee.png">
-<meta property="og:updated_time" content="2021-06-02T16:14:23.143Z">
+<meta property="article:published_time" content="2021-06-02T12:46:23.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:46:27.079Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker-compose 的環境變數設定">
-<meta name="twitter:description" content="Docker Compose 引用环境变量 - sparkdev - 博客园 之前用 docker-compose 都不知道可以抓環境變數甚至 .env 也可以抓到某天看到這個方法今天來整理一下，不確定是哪個版本才有這個功能">
 <meta name="twitter:image" content="https://i.imgur.com/oFP350e.png">
 
 
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2021/06/02/docker-compose-的環境變數設定/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2021/06/02/docker-compose-的環境變數設定/"/>
 
 
 
@@ -150,7 +150,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -159,9 +162,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -171,13 +174,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -205,9 +208,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -215,9 +218,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -225,9 +228,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -235,9 +238,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -245,9 +248,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -260,7 +263,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -281,7 +284,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -312,20 +317,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/06/02/docker-compose-的環境變數設定/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/06/02/docker-compose-%E7%9A%84%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -357,7 +362,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -368,7 +373,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Docker/" itemprop="url" rel="index">
                     <span itemprop="name">Docker</span>
                   </a>
@@ -387,8 +392,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2021/06/02/docker-compose-的環境變數設定/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/02/docker-compose-的環境變數設定/" itemprop="commentCount"></span>
+                <a href="/blog/2021/06/02/docker-compose-%E7%9A%84%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2021/06/02/docker-compose-的環境變數設定/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -418,8 +424,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -430,19 +446,19 @@
 <a id="more"></a>
 <h2 id="Bash-環境變數"><a href="#Bash-環境變數" class="headerlink" title="Bash 環境變數"></a>Bash 環境變數</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> IMAGETAG=httpd</span><br></pre></td></tr></table></figure>
 <p>windows posershell 不知道要怎麼抓<br>但先不研究</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  web:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">$&#123;IMAGETAG&#125;</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">"80:80"</span></span><br><span class="line"><span class="attr">  redis:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">"redis:alpine"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">$&#123;IMAGETAG&#125;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">"80:80"</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">"redis:alpine"</span></span><br></pre></td></tr></table></figure>
 <h3 id="預設環境變數"><a href="#預設環境變數" class="headerlink" title="預設環境變數"></a>預設環境變數</h3><p>重新開新的bash</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  web:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">$&#123;IMAGETAG:-nginx&#125;</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">     -</span> <span class="string">"80:80"</span></span><br><span class="line"><span class="attr">  redis:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">"redis:alpine"</span></span><br></pre></td></tr></table></figure>
-<h3 id="環境變數傳給容器"><a href="#環境變數傳給容器" class="headerlink" title="環境變數傳給容器"></a>環境變數傳給容器</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web:</span></span><br><span class="line"><span class="attr">  environment:</span></span><br><span class="line"><span class="attr">    DEBUG:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">$&#123;IMAGETAG:-nginx&#125;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">"80:80"</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">"redis:alpine"</span></span><br></pre></td></tr></table></figure>
+<h3 id="環境變數傳給容器"><a href="#環境變數傳給容器" class="headerlink" title="環境變數傳給容器"></a>環境變數傳給容器</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web:</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">DEBUG:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>同等於<br> docker run -e DEBUG=1 ubuntu bash</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -e DEBUG=1 ubuntu bash</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$DEBUG</span></span><br><span class="line"><span class="comment">#1</span></span><br></pre></td></tr></table></figure>
 <p>沒有設定 1 會為 null<br>請參考如下</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web:</span></span><br><span class="line"><span class="attr">  environment:</span></span><br><span class="line"><span class="attr">    DEBUG:</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web:</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">DEBUG:</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://i.imgur.com/oFP350e.png" alt=""></p>
 <p>再 Linux 設定 DEBUG 環境變數為 1</p>
 <p><img src="https://i.imgur.com/vNoQqee.png" alt=""></p>
-<h2 id="env"><a href="#env" class="headerlink" title=".env"></a>.env</h2><p>參考: <a href="https://docs.docker.com/compose/environment-variables/" target="_blank" rel="noopener">Environment variables in Compose | Docker Documentation</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ cat .env</span><br><span class="line">TAG=v1.5</span><br><span class="line"></span><br><span class="line">$ cat docker-compose.yml</span><br><span class="line">version: &apos;3&apos;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &quot;webapp:$&#123;TAG&#125;&quot;</span><br><span class="line">$ docker-compose config</span><br><span class="line"></span><br><span class="line">version: &apos;3&apos;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &apos;webapp:v1.5&apos;</span><br></pre></td></tr></table></figure></p>
-<h2 id="設定檔案為容器多個環境變數"><a href="#設定檔案為容器多個環境變數" class="headerlink" title="設定檔案為容器多個環境變數"></a>設定檔案為容器多個環境變數</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ cat .env</span><br><span class="line">TAG=v1.5</span><br><span class="line"></span><br><span class="line">$ cat ./config/.env.dev</span><br><span class="line">TAG=v1.6</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ cat docker-compose.yml</span><br><span class="line">version: &apos;3&apos;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &quot;webapp:$&#123;TAG&#125;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ docker-compose config </span><br><span class="line">version: &apos;3&apos;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &apos;webapp:v1.5&apos;</span><br><span class="line">    </span><br><span class="line">$ docker-compose --env-file ./config/.env.dev config </span><br><span class="line">version: &apos;3&apos;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &apos;webapp:v1.6&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="env"><a href="#env" class="headerlink" title=".env"></a>.env</h2><p>參考: <a href="https://docs.docker.com/compose/environment-variables/" target="_blank" rel="noopener">Environment variables in Compose | Docker Documentation</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ cat .env</span><br><span class="line">TAG&#x3D;v1.5</span><br><span class="line"></span><br><span class="line">$ cat docker-compose.yml</span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &quot;webapp:$&#123;TAG&#125;&quot;</span><br><span class="line">$ docker-compose config</span><br><span class="line"></span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &#39;webapp:v1.5&#39;</span><br></pre></td></tr></table></figure></p>
+<h2 id="設定檔案為容器多個環境變數"><a href="#設定檔案為容器多個環境變數" class="headerlink" title="設定檔案為容器多個環境變數"></a>設定檔案為容器多個環境變數</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ cat .env</span><br><span class="line">TAG&#x3D;v1.5</span><br><span class="line"></span><br><span class="line">$ cat .&#x2F;config&#x2F;.env.dev</span><br><span class="line">TAG&#x3D;v1.6</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ cat docker-compose.yml</span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &quot;webapp:$&#123;TAG&#125;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ docker-compose config </span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &#39;webapp:v1.5&#39;</span><br><span class="line">    </span><br><span class="line">$ docker-compose --env-file .&#x2F;config&#x2F;.env.dev config </span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    image: &#39;webapp:v1.6&#39;</span><br></pre></td></tr></table></figure>
 <p>最下面同等於 </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --env-file=./config/.env.dev</span><br></pre></td></tr></table></figure>
 <h2 id="環境變數使用順序"><a href="#環境變數使用順序" class="headerlink" title="環境變數使用順序"></a>環境變數使用順序</h2><ol>
@@ -489,7 +505,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2021/06/02/SQL-UPDATE-SET-FROM-用法/" rel="next" title="SQL: UPDATE ... SET ... FROM 用法">
+              <a href="/blog/2021/06/02/SQL-UPDATE-SET-FROM-%E7%94%A8%E6%B3%95/" rel="next" title="SQL: UPDATE ... SET ... FROM 用法">
                 <i class="fa fa-chevron-left"></i> SQL: UPDATE ... SET ... FROM 用法
               </a>
             
@@ -499,7 +515,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2021/06/02/Jboss-設定-http-導-https/" rel="prev" title="Jboss 設定 http 導 https">
+              <a href="/blog/2021/06/02/Jboss-%E8%A8%AD%E5%AE%9A-http-%E5%B0%8E-https/" rel="prev" title="Jboss 設定 http 導 https">
                 Jboss 設定 http 導 https <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -535,7 +551,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -545,8 +561,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -583,7 +609,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -594,7 +620,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -661,7 +687,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash-環境變數"><span class="nav-number">1.</span> <span class="nav-text">Bash 環境變數</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#預設環境變數"><span class="nav-number">1.1.</span> <span class="nav-text">預設環境變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#環境變數傳給容器"><span class="nav-number">1.2.</span> <span class="nav-text">環境變數傳給容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#env"><span class="nav-number">2.</span> <span class="nav-text">.env</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定檔案為容器多個環境變數"><span class="nav-number">3.</span> <span class="nav-text">設定檔案為容器多個環境變數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#環境變數使用順序"><span class="nav-number">4.</span> <span class="nav-text">環境變數使用順序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依照環境變數建置測試-正式環境"><span class="nav-number">5.</span> <span class="nav-text">依照環境變數建置測試/正式環境</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash-環境變數"><span class="nav-number">1.</span> <span class="nav-text">Bash 環境變數</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#預設環境變數"><span class="nav-number">1.1.</span> <span class="nav-text">預設環境變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#環境變數傳給容器"><span class="nav-number">1.2.</span> <span class="nav-text">環境變數傳給容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#env"><span class="nav-number">2.</span> <span class="nav-text">.env</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定檔案為容器多個環境變數"><span class="nav-number">3.</span> <span class="nav-text">設定檔案為容器多個環境變數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#環境變數使用順序"><span class="nav-number">4.</span> <span class="nav-text">環境變數使用順序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依照環境變數建置測試-正式環境"><span class="nav-number">5.</span> <span class="nav-text">依照環境變數建置測試&#x2F;正式環境</span></a></li></ol></div>
             
 
           </div>
@@ -824,7 +850,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2021/06/02/docker-compose-的環境變數設定/';
+          this.page.url = 'https://malagege.github.io/blog/2021/06/02/docker-compose-%E7%9A%84%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/';
           this.page.identifier = '2021/06/02/docker-compose-的環境變數設定/';
           this.page.title = 'docker-compose 的環境變數設定';
         };

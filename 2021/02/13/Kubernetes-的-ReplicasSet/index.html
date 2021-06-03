@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="kubernetes,replicasset,">
+  <meta name="keywords" content="kubernetes,replicasset," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="我目前看書上是舊版範例所以使用官方ReplicaSet | Kubernetes範例目前推薦 [Kubernetes] ReplicaSet 介紹 | 小信豬的原始部落這邊只是會放操作紀錄，不會很專業解說">
-<meta name="keywords" content="kubernetes,replicasset">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubernetes 的 ReplicaSet">
-<meta property="og:url" content="https://malagege.github.io/blog/2021/02/13/Kubernetes-的-ReplicasSet/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="我目前看書上是舊版範例所以使用官方ReplicaSet | Kubernetes範例目前推薦 [Kubernetes] ReplicaSet 介紹 | 小信豬的原始部落這邊只是會放操作紀錄，不會很專業解說">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:42.417Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-02-12T18:10:07.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:53.298Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="replicasset">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kubernetes 的 ReplicaSet">
-<meta name="twitter:description" content="我目前看書上是舊版範例所以使用官方ReplicaSet | Kubernetes範例目前推薦 [Kubernetes] ReplicaSet 介紹 | 小信豬的原始部落這邊只是會放操作紀錄，不會很專業解說">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2021/02/13/Kubernetes-的-ReplicasSet/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2021/02/13/Kubernetes-的-ReplicasSet/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/13/Kubernetes-的-ReplicasSet/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index">
                     <span itemprop="name">Kubernetes</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2021/02/13/Kubernetes-的-ReplicasSet/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/13/Kubernetes-的-ReplicasSet/" itemprop="commentCount"></span>
+                <a href="/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2021/02/13/Kubernetes-的-ReplicasSet/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -425,19 +442,19 @@
         <p>我目前看書上是舊版範例<br>所以使用官方<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/replicaset/#how-a-replicaset-works" target="_blank" rel="noopener">ReplicaSet | Kubernetes</a>範例<br>目前推薦 <a href="https://godleon.github.io/blog/Kubernetes/k8s-ReplicaSet-Overview/" target="_blank" rel="noopener">[Kubernetes] ReplicaSet 介紹 | 小信豬的原始部落</a><br>這邊只是會放操作紀錄，不會很專業解說</p>
 <a id="more"></a>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一般建立 pod 完可以在建立 service<br>我以為 ReplicaSet 也是差不多樣子<br>但實作完才發現不一樣…<br>建立 ReplicaSet 就會建立 Pod</p>
-<h2 id="建立有-template-的-ReplicaSet"><a href="#建立有-template-的-ReplicaSet" class="headerlink" title="建立有 template 的 ReplicaSet"></a>建立有 template 的 ReplicaSet</h2><figure class="highlight yml"><figcaption><span>fronted.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicaSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">guestbook</span></span><br><span class="line"><span class="attr">    tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="comment"># modify replicas according to your case</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">php-redis</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">gcr.io/google_samples/gb-frontend:v3</span></span><br></pre></td></tr></table></figure>
+<h2 id="建立有-template-的-ReplicaSet"><a href="#建立有-template-的-ReplicaSet" class="headerlink" title="建立有 template 的 ReplicaSet"></a>建立有 template 的 ReplicaSet</h2><figure class="highlight yml"><figcaption><span>fronted.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicaSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">frontend</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">guestbook</span></span><br><span class="line">    <span class="attr">tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="comment"># modify replicas according to your case</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">tier:</span> <span class="string">frontend</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">tier:</span> <span class="string">frontend</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">php-redis</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">gcr.io/google_samples/gb-frontend:v3</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立 fronted ReplicaSet</span></span><br><span class="line">kubectl apply -f https://kubernetes.io/examples/controllers/frontend.yaml</span><br><span class="line"><span class="comment"># replicaset.apps/frontend created</span></span><br><span class="line"><span class="comment"># 查看狀況</span></span><br><span class="line">kubectl get rs</span><br><span class="line"><span class="comment"># NAME       DESIRED   CURRENT   READY   AGE</span></span><br><span class="line"><span class="comment"># frontend   3         3         3       25s</span></span><br><span class="line">kubectl describle rs/fronted</span><br><span class="line"><span class="comment"># Name:         frontend</span></span><br><span class="line"><span class="comment"># Namespace:    default</span></span><br><span class="line"><span class="comment"># Selector:     tier=frontend</span></span><br><span class="line"><span class="comment"># Labels:       app=guestbook</span></span><br><span class="line"><span class="comment">#               tier=frontend</span></span><br><span class="line"><span class="comment"># Annotations:  &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Replicas:     3 current / 3 desired</span></span><br><span class="line"><span class="comment"># Pods Status:  3 Running / 0 Waiting / 0 Succeeded / 0 Failed</span></span><br><span class="line"><span class="comment"># Pod Template:</span></span><br><span class="line"><span class="comment">#   Labels:  tier=frontend</span></span><br><span class="line"><span class="comment">#   Containers:</span></span><br><span class="line"><span class="comment">#    php-redis:</span></span><br><span class="line"><span class="comment">#     Image:        gcr.io/google_samples/gb-frontend:v3</span></span><br><span class="line"><span class="comment">#     Port:         &lt;none&gt;</span></span><br><span class="line"><span class="comment">#     Host Port:    &lt;none&gt;</span></span><br><span class="line"><span class="comment">#     Environment:  &lt;none&gt;</span></span><br><span class="line"><span class="comment">#     Mounts:       &lt;none&gt;</span></span><br><span class="line"><span class="comment">#   Volumes:        &lt;none&gt;</span></span><br><span class="line"><span class="comment"># Events:</span></span><br><span class="line"><span class="comment">#   Type    Reason            Age   From                   Message</span></span><br><span class="line"><span class="comment">#   ----    ------            ----  ----                   -------</span></span><br><span class="line"><span class="comment">#   Normal  SuccessfulCreate  53s   replicaset-controller  Created pod: frontend-bfdqg</span></span><br><span class="line"><span class="comment">#   Normal  SuccessfulCreate  53s   replicaset-controller  Created pod: frontend-7rlhd</span></span><br><span class="line"><span class="comment">#   Normal  SuccessfulCreate  53s   replicaset-controller  Created pod: frontend-p54kd</span></span><br><span class="line">kubectl get pods </span><br><span class="line"><span class="comment"># NAME             READY   STATUS    RESTARTS   AGE</span></span><br><span class="line"><span class="comment"># frontend-b2zdv   1/1     Running   0          6m36s</span></span><br><span class="line"><span class="comment"># frontend-vcmts   1/1     Running   0          6m36s</span></span><br><span class="line"><span class="comment"># frontend-wtsmm   1/1     Running   0          6m36s</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods frontend-b2zdv -o yaml</span><br></pre></td></tr></table></figure>
 <p>查看 meta.ownerReferences<br>這邊先跳過<br><a href="https://draveness.me/kubernetes-replicaset/" target="_blank" rel="noopener">详解 Kubernetes ReplicaSet 的实现原理 - 面向信仰编程</a></p>
-<h2 id="無-template-建立"><a href="#無-template-建立" class="headerlink" title="無 template 建立"></a>無 template 建立</h2><figure class="highlight yml"><figcaption><span>pod-rs.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">pod1</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">hello1</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">gcr.io/google-samples/hello-app:2.0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">pod2</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  containers:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">hello2</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">gcr.io/google-samples/hello-app:1.0</span></span><br></pre></td></tr></table></figure>
+<h2 id="無-template-建立"><a href="#無-template-建立" class="headerlink" title="無 template 建立"></a>無 template 建立</h2><figure class="highlight yml"><figcaption><span>pod-rs.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pod1</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">hello1</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">gcr.io/google-samples/hello-app:2.0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pod2</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">tier:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">hello2</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">gcr.io/google-samples/hello-app:1.0</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://kubernetes.io/examples/pods/pod-rs.yaml</span><br><span class="line">kubectl get pods </span><br><span class="line"><span class="comment"># NAME             READY   STATUS        RESTARTS   AGE</span></span><br><span class="line"><span class="comment"># frontend-7rlhd   1/1     Running       0          10m</span></span><br><span class="line"><span class="comment"># frontend-bfdqg   1/1     Running       0          10m</span></span><br><span class="line"><span class="comment"># frontend-p54kd   1/1     Running       0          10m</span></span><br><span class="line"><span class="comment"># pod1             0/1     Terminating   0          5s</span></span><br><span class="line"><span class="comment"># pod2             0/1     Terminating   0          5s</span></span><br></pre></td></tr></table></figure>
 <p>這邊會看到，我們建立的 pod 沒有變建立起來<br>原因是 ReplicaSet 設定為三，已經建立過了(label 相同)</p>
 <p>如果清空，先建立兩個 pod 再 新增 rs<br>會友不一樣的結果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NAME             READY   STATUS    RESTARTS   AGE</span><br><span class="line">frontend-hmmj2   1/1     Running   0          9s</span><br><span class="line">pod1             1/1     Running   0          36s</span><br><span class="line">pod2             1/1     Running   0          36s</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NAME             READY   STATUS    RESTARTS   AGE</span><br><span class="line">frontend-hmmj2   1&#x2F;1     Running   0          9s</span><br><span class="line">pod1             1&#x2F;1     Running   0          36s</span><br><span class="line">pod2             1&#x2F;1     Running   0          36s</span><br></pre></td></tr></table></figure>
 <h2 id="擴展-ReplicaSet"><a href="#擴展-ReplicaSet" class="headerlink" title="擴展 ReplicaSet"></a>擴展 ReplicaSet</h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale replicasets fronted --replicas=4</span><br></pre></td></tr></table></figure>
 <p>指令操作可以直接套用<br>但大多數不推薦這個方式<br>假如 yaml 重建不會用到<br>大多數都從文件調整</p>
 <h2 id="kubectl-apply-套用"><a href="#kubectl-apply-套用" class="headerlink" title="kubectl apply 套用"></a>kubectl apply 套用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f xxx.yaml</span><br></pre></td></tr></table></figure>
-<h2 id="自動擴展"><a href="#自動擴展" class="headerlink" title="自動擴展"></a>自動擴展</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">autoscaling/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">HorizontalPodAutoscaler</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">frontend-scaler</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  scaleTargetRef:</span></span><br><span class="line"><span class="attr">    kind:</span> <span class="string">ReplicaSet</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">frontend</span></span><br><span class="line"><span class="attr">  minReplicas:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">  maxReplicas:</span> <span class="number">10</span></span><br><span class="line"><span class="attr">  targetCPUUtilizationPercentage:</span> <span class="number">50</span></span><br></pre></td></tr></table></figure>
+<h2 id="自動擴展"><a href="#自動擴展" class="headerlink" title="自動擴展"></a>自動擴展</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">autoscaling/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">HorizontalPodAutoscaler</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">frontend-scaler</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">scaleTargetRef:</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">ReplicaSet</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">frontend</span></span><br><span class="line">  <span class="attr">minReplicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">maxReplicas:</span> <span class="number">10</span></span><br><span class="line">  <span class="attr">targetCPUUtilizationPercentage:</span> <span class="number">50</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://k8s.io/examples/controllers/hpa-rs.yaml</span><br></pre></td></tr></table></figure>
 <p>或只打指令<code>kubectl autoscale rs frontend --max=10 --min=3 --cpu-percent=50</code></p>
 <p>看完這麼多，官方推薦使用 Deployment 來替代 ReplicaSet<br>這單元簡單操作並不難</p>
@@ -476,7 +493,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2021/02/11/Kubernetes-使用-Ingress-做負載平衡/" rel="next" title="Kubernetes 使用 Ingress 做負載平衡">
+              <a href="/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/" rel="next" title="Kubernetes 使用 Ingress 做負載平衡">
                 <i class="fa fa-chevron-left"></i> Kubernetes 使用 Ingress 做負載平衡
               </a>
             
@@ -486,7 +503,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2021/02/14/Kubernetes-的-Deployment/" rel="prev" title="Kubernetes 的 Deployment">
+              <a href="/blog/2021/02/14/Kubernetes-%E7%9A%84-Deployment/" rel="prev" title="Kubernetes 的 Deployment">
                 Kubernetes 的 Deployment <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -522,7 +539,7 @@
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -532,8 +549,18 @@
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -570,7 +597,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -581,7 +608,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -811,7 +838,7 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2021/02/13/Kubernetes-的-ReplicasSet/';
+          this.page.url = 'https://malagege.github.io/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/';
           this.page.identifier = '2021/02/13/Kubernetes-的-ReplicasSet/';
           this.page.title = 'Kubernetes 的 ReplicaSet';
         };

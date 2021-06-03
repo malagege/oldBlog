@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-tw">
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="regex,lookarounds,">
+  <meta name="keywords" content="regex,lookarounds," />
 
 
 
@@ -80,17 +80,18 @@
 
 
 <meta name="description" content="這次專案有用到 email 學生任證，有想一個用 email 方法但這次需求要把一些教育信箱排除在外…查了一下 regex 好像沒法對特定單字做不過我有實做一個方法(不知道有沒有漏洞)">
-<meta name="keywords" content="regex,lookarounds">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Regex 排除單字方法(Lookarounds)">
-<meta property="og:url" content="https://malagege.github.io/blog/2018/07/03/Regex-排除單字方法-Lookarounds/index.html">
+<meta property="og:url" content="https://malagege.github.io/blog/2018/07/03/Regex-%E6%8E%92%E9%99%A4%E5%96%AE%E5%AD%97%E6%96%B9%E6%B3%95-Lookarounds/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="這次專案有用到 email 學生任證，有想一個用 email 方法但這次需求要把一些教育信箱排除在外…查了一下 regex 好像沒法對特定單字做不過我有實做一個方法(不知道有沒有漏洞)">
-<meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2021-06-02T15:57:43.595Z">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-07-03T13:07:23.000Z">
+<meta property="article:modified_time" content="2021-06-02T16:37:53.984Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="regex">
+<meta property="article:tag" content="lookarounds">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Regex 排除單字方法(Lookarounds)">
-<meta name="twitter:description" content="這次專案有用到 email 學生任證，有想一個用 email 方法但這次需求要把一些教育信箱排除在外…查了一下 regex 好像沒法對特定單字做不過我有實做一個方法(不知道有沒有漏洞)">
 
 
 
@@ -120,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="https://malagege.github.io/blog/2018/07/03/Regex-排除單字方法-Lookarounds/">
+  <link rel="canonical" href="https://malagege.github.io/blog/2018/07/03/Regex-排除單字方法-Lookarounds/"/>
 
 
 
@@ -147,7 +148,10 @@
 
 
   <!-- Google AdSense start -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script
+  async
+  src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
     google_ad_client: "ca-pub-1439458814178865",
@@ -156,9 +160,9 @@
 </script>
 
   <!-- Google AdSense end -->
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-tw">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
 
   
   
@@ -168,13 +172,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/blog/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">程式狂想筆記</span>
         <span class="logo-line-after"><i></i></span>
@@ -202,9 +206,9 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/blog/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首頁
           </a>
@@ -212,9 +216,9 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags/" rel="section">
+          <a href="/blog/tags/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             標籤
           </a>
@@ -222,9 +226,9 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories/" rel="section">
+          <a href="/blog/categories/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分類
           </a>
@@ -232,9 +236,9 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/blog/archives/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             歸檔
           </a>
@@ -242,9 +246,9 @@
       
         
         <li class="menu-item menu-item-links">
-          <a href="/blog/links/" rel="section">
+          <a href="/blog/links/%20" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
             
             好站連結
           </a>
@@ -257,7 +261,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
             檢索
           </a>
@@ -278,7 +282,9 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -309,20 +315,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/07/03/Regex-排除單字方法-Lookarounds/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/blog/2018/07/03/Regex-%E6%8E%92%E9%99%A4%E5%96%AE%E5%AD%97%E6%96%B9%E6%B3%95-Lookarounds/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="malagege">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/blog/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="程式狂想筆記">
     </span>
 
@@ -354,7 +360,7 @@
           </span>
 
           
-            <span class="post-category">
+            <span class="post-category" >
             
               <span class="post-meta-divider">|</span>
             
@@ -365,7 +371,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/blog/categories/Regex/" itemprop="url" rel="index">
                     <span itemprop="name">Regex</span>
                   </a>
@@ -384,8 +390,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/2018/07/03/Regex-排除單字方法-Lookarounds/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/07/03/Regex-排除單字方法-Lookarounds/" itemprop="commentCount"></span>
+                <a href="/blog/2018/07/03/Regex-%E6%8E%92%E9%99%A4%E5%96%AE%E5%AD%97%E6%96%B9%E6%B3%95-Lookarounds/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/07/03/Regex-排除單字方法-Lookarounds/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -415,8 +422,18 @@
       
         
         <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -426,8 +443,7 @@
 <a id="more"></a>
 <h3 id="a-xxx"><a href="#a-xxx" class="headerlink" title="a(?!xxx)"></a>a(?!xxx)</h3><p>不會抓 axxx，但會抓 ax,axx,aoxxx 的<code>a</code></p>
 <h3 id="a-xxx-1"><a href="#a-xxx-1" class="headerlink" title="a(?=xxx)"></a>a(?=xxx)</h3><p>會抓 axxx 的<code>a</code></p>
-<h3 id="xxx"><a href="#xxx" class="headerlink" title="(?:xxx)"></a>(?:xxx)</h3><p><strong>2019-12-08</strong><br>這邊 xxx 一樣是連詞<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^I like (?:dogs|penguins), but not (?:lions|tigers).$</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://www.ocpsoft.org/tutorials/regular-expressions/or-in-regex/?fbclid=IwAR0AWbTPjZKC5bXSqGBfHOTMEqPG5T-K7lmQKs9UWd3yD0Qdmz3y1aUOSvI" target="_blank" rel="noopener">Regular Expression for Or | “|” Regex | Regular Expression I | OCPsoft</a></p>
+<h3 id="xxx"><a href="#xxx" class="headerlink" title="(?:xxx)"></a>(?:xxx)</h3><p><strong>2019-12-08</strong><br>這邊 xxx 一樣是連詞<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^I like (?:dogs|penguins), but not (?:lions|tigers).$</span><br></pre></td></tr></table></figure><br><a href="https://www.ocpsoft.org/tutorials/regular-expressions/or-in-regex/?fbclid=IwAR0AWbTPjZKC5bXSqGBfHOTMEqPG5T-K7lmQKs9UWd3yD0Qdmz3y1aUOSvI" target="_blank" rel="noopener">Regular Expression for Or | “|” Regex | Regular Expression I | OCPsoft</a></p>
 <p>不會算 group</p>
 <p>最後再沒有找到資料情況下，有例用上面 3 個想到一個方法</p>
 <p><code>@(?!nfu)\S*edu.tw</code></p>
@@ -438,7 +454,7 @@
 <p><a href="http://www.rexegg.com/regex-quickstart.html#lookarounds" target="_blank" rel="noopener">Regex Cheat Sheet</a>看到裡面還有很多不會<br>感覺還有更深的東西。有時間再食用。</p>
 <p><strong>2019-07-25</strong></p>
 <p>今天在改 PHP 程式，由於要改一些程式把<code>xxx_line</code>去除掉<br>但是跟 PHP <code>__LINE__</code>衝突<br>不過後來找到正規化去除<code>(?&lt;!_)_line</code></p>
-<p><a href="http://darkk6.blogspot.com/2017/03/regexp-lookahead-lookbehind.html" target="_blank" rel="noopener">無聊技術研究: RegExp 應用： lookahead , lookbehind</a> <a href="/blog/2018/07/03/Regex-排除單字方法-Lookarounds/web1.png" title="備份圖">備份圖</a></p>
+<p><a href="http://darkk6.blogspot.com/2017/03/regexp-lookahead-lookbehind.html" target="_blank" rel="noopener">無聊技術研究: RegExp 應用： lookahead , lookbehind</a> <a href="/blog/2018/07/03/Regex-%E6%8E%92%E9%99%A4%E5%96%AE%E5%AD%97%E6%96%B9%E6%B3%95-Lookarounds/web1.png" title="備份圖">備份圖</a></p>
 <p>裡面有提到<code>lookahead</code>(往前看)</p>
 <pre><code>Positive lookahead ： a(?=Y)
 Negative lookahead ： a(?!Y)
@@ -483,7 +499,7 @@ Negative lookahead ： a(?!Y)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/2018/07/03/SQL-not-in-in-拆開寫法/" rel="next" title="SQL not in & in 拆開寫法">
+              <a href="/blog/2018/07/03/SQL-not-in-in-%E6%8B%86%E9%96%8B%E5%AF%AB%E6%B3%95/" rel="next" title="SQL not in & in 拆開寫法">
                 <i class="fa fa-chevron-left"></i> SQL not in & in 拆開寫法
               </a>
             
@@ -493,7 +509,7 @@ Negative lookahead ： a(?!Y)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/2018/07/04/php字串符號帶變數用法/" rel="prev" title="php字串" 符號帶變數用法"="">
+              <a href="/blog/2018/07/04/php%E5%AD%97%E4%B8%B2%E7%AC%A6%E8%99%9F%E5%B8%B6%E8%AE%8A%E6%95%B8%E7%94%A8%E6%B3%95/" rel="prev" title="php字串"符號帶變數用法">
                 php字串"符號帶變數用法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -529,7 +545,7 @@ Negative lookahead ： a(?!Y)
       <div id="disqus_thread">
         <noscript>
           Please enable JavaScript to view the
-          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a>
         </noscript>
       </div>
     </div>
@@ -539,8 +555,18 @@ Negative lookahead ： a(?!Y)
 
 
 <div align="center">
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1439458814178865" data-ad-slot="2236653478"></ins>
+  <script
+    async
+    src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+  ></script>
+  <ins
+    class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-1439458814178865"
+    data-ad-slot="2236653478"
+  ></ins>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
@@ -577,7 +603,7 @@ Negative lookahead ： a(?!Y)
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">malagege</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -588,7 +614,7 @@ Negative lookahead ： a(?!Y)
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/blog/archives/%20%7C%7C%20archive">
               
                   <span class="site-state-item-count">588</span>
                   <span class="site-state-item-name">文章</span>
@@ -655,7 +681,7 @@ Negative lookahead ： a(?!Y)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-xxx"><span class="nav-number">1.</span> <span class="nav-text">a(?!xxx)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-xxx-1"><span class="nav-number">2.</span> <span class="nav-text">a(?=xxx)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xxx"><span class="nav-number">3.</span> <span class="nav-text">(?:xxx)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-xxx"><span class="nav-number">1.</span> <span class="nav-text">a(?!xxx)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-xxx-1"><span class="nav-number">2.</span> <span class="nav-text">a(?&#x3D;xxx)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xxx"><span class="nav-number">3.</span> <span class="nav-text">(?:xxx)</span></a></li></ol></div>
             
 
           </div>
@@ -818,7 +844,7 @@ Negative lookahead ： a(?!Y)
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://malagege.github.io/blog/2018/07/03/Regex-排除單字方法-Lookarounds/';
+          this.page.url = 'https://malagege.github.io/blog/2018/07/03/Regex-%E6%8E%92%E9%99%A4%E5%96%AE%E5%AD%97%E6%96%B9%E6%B3%95-Lookarounds/';
           this.page.identifier = '2018/07/03/Regex-排除單字方法-Lookarounds/';
           this.page.title = 'Regex 排除單字方法(Lookarounds)';
         };
