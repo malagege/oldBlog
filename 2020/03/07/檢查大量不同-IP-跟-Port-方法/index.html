@@ -292,6 +292,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <p>最近要測試大量主機 Port ，看裡面東西有沒有開通<br>使用大量 <code>telnet ip port</code> 非常花很多時間<br>最近在想有沒有好用的工具方便我們檢查</p>
 <a id="more"></a>
 <h2 id="建立多台-vagrant-連線"><a href="#建立多台-vagrant-連線" class="headerlink" title="建立多台 vagrant 連線"></a>建立多台 vagrant 連線</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></span><br><span class="line">  config.vm.provision <span class="string">"shell"</span>, <span class="symbol">inline:</span> <span class="string">"echo Hello"</span></span><br><span class="line">  config.vm.define <span class="string">"web"</span> <span class="keyword">do</span> <span class="params">|web|</span></span><br><span class="line">    web.vm.box = <span class="string">"ubuntu/xenial64"</span></span><br><span class="line">    web.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.50.2"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  config.vm.define <span class="string">"db"</span> <span class="keyword">do</span> <span class="params">|db|</span></span><br><span class="line">    db.vm.box = <span class="string">"ubuntu/xenial64"</span></span><br><span class="line">    db.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.50.3"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>

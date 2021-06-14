@@ -291,6 +291,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <p>之前有使用 group_concat ，但沒有特別做筆記<br>今天剛好查報表資料，就特別來筆記</p>
 <a id="more"></a>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> oa.id,</span><br><span class="line">       <span class="keyword">GROUP_CONCAT</span>(<span class="keyword">if</span>(a.xxx_group = <span class="number">0</span> , <span class="literal">NULL</span>,a.xxx_group)) <span class="keyword">AS</span> xxx_group,</span><br><span class="line">       <span class="keyword">CONCAT_WS</span>(<span class="string">','</span>,<span class="keyword">IF</span>(f.a1,<span class="string">'a1'</span>,<span class="literal">NULL</span>),<span class="keyword">IF</span>(f.a2,<span class="string">'a2'</span>,<span class="literal">NULL</span>),<span class="keyword">IF</span>(f.a3,<span class="string">'a3'</span>,<span class="literal">NULL</span>)) <span class="keyword">AS</span> <span class="string">'a...'</span>,</span><br><span class="line">       <span class="keyword">IF</span>(a.xxx &gt; <span class="string">''</span></span><br><span class="line">          <span class="keyword">OR</span> a.bbb &gt; <span class="string">''</span>,<span class="string">'Y'</span>,<span class="string">'N'</span>) <span class="keyword">AS</span> <span class="string">'oo'</span>,</span><br><span class="line">       <span class="keyword">IF</span>(a.cc &gt; <span class="string">''</span> ,<span class="string">'Y'</span>,<span class="string">'N'</span>) <span class="keyword">AS</span> <span class="string">'cc'</span></span><br><span class="line"><span class="keyword">FROM</span> a</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> b <span class="keyword">ON</span> b = a.id</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> f <span class="keyword">ON</span> f.xxx_id = a.id</span><br></pre></td></tr></table></figure>

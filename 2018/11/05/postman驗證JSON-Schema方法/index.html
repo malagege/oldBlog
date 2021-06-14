@@ -292,6 +292,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <p>最近在實作 API，發現上次只有做 VSCODE 檢查<br>postman 假如可以用的話，也很方便</p>
 <a id="more"></a>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> schema = &#123;</span><br><span class="line">    <span class="string">"$schema"</span>: <span class="string">"http://json-schema.org/draft-06/schema#"</span>,</span><br><span class="line">        ......(略)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">pm.test(<span class="string">"Check JSON"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> jsonData = pm.response.json();</span><br><span class="line">  <span class="keyword">var</span> valid = tv4.validate(jsonData, schema, <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">if</span> (valid !== <span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(tv4.error);</span><br><span class="line">      tests[<span class="string">'tv4.error:'</span> + tv4.error] = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  pm.expect(valid).to.be.true;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>

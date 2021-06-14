@@ -293,6 +293,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <p>最近簡單做了一個 web 文字模板<br>其實就是簡單正規化去取代<br>之前也有寫個類似東西<br>但是都要大幅度去改東西<br>不是很方便<br>但這次主要是紀錄 js 讀/寫 txt方法</p>
 <a id="more"></a>
 <h2 id="讀"><a href="#讀" class="headerlink" title="讀"></a>讀</h2><p>網路上忘記從哪邊參考過來的<br>其實我loadFile this抓不到原因是我呼叫方式<br>事後才想到<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadFile</span>(<span class="params">file</span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> fr=<span class="keyword">new</span> FileReader(); </span><br><span class="line">  <span class="keyword">var</span> that = file;</span><br><span class="line">    fr.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">        <span class="built_in">console</span>.log(fr.result);</span><br><span class="line">        <span class="comment">// $(that).prev().val(fr.result); </span></span><br><span class="line">        <span class="comment">//   chgData();</span></span><br><span class="line">    &#125;;</span><br><span class="line">      </span><br><span class="line">    fr.readAsText(file.files[<span class="number">0</span>]); </span><br><span class="line">  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>

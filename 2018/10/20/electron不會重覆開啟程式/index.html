@@ -291,6 +291,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <p>最近爬到能electron不會重新開啟程式方法<br>筆記筆記</p>
 <a id="more"></a>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 點擊圖標(桌面快捷方式)檢查當前活動實例的個數</span></span><br><span class="line"><span class="keyword">const</span> isSecondInstance = app.makeSingleInstance(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (mainWindow) &#123;</span><br><span class="line">    <span class="keyword">if</span> (mainWindow.isMinimized()) &#123;</span><br><span class="line">      mainWindow.restore(); <span class="comment">// 窗口從最小化恢復時觸發</span></span><br><span class="line">    &#125;</span><br><span class="line">    mainWindow.show();</span><br><span class="line">    <span class="comment">// mainWindow.maximize();</span></span><br><span class="line">    mainWindow.focus();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">if</span> (isSecondInstance) &#123;</span><br><span class="line">  app.quit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

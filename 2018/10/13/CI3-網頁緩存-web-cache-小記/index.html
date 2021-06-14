@@ -291,6 +291,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <p>最近做一個排行榜API<br>但回傳時間真的太久了<br>於是做一個緩存<br>突然想到Codeigiter內建有網頁緩存裝置<br>竟然內建有這個功能<br>那還要自己手刻嗎XD</p>
 <a id="more"></a>
 <p>PHP<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(! <span class="keyword">isset</span>($_SERVER[<span class="string">'HTTP_X_KEY'</span>]) ||  $_SERVER[<span class="string">'HTTP_X_KEY'</span>] != <span class="string">"xxxxxxx"</span>)</span><br><span class="line">      &#123;</span><br><span class="line">          http_response_code( <span class="number">500</span> );</span><br><span class="line">          <span class="keyword">die</span>( <span class="string">'NO ENTER'</span> );</span><br><span class="line">      &#125;</span><br><span class="line">      header(<span class="string">"x-api-key: xxxxxxx"</span>);</span><br><span class="line"><span class="keyword">$this</span>-&gt;output-&gt;cache(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"hello world2"</span>;</span><br></pre></td></tr></table></figure></p>

@@ -291,6 +291,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <a id="more"></a>
 <h2 id="建立-Clusters"><a href="#建立-Clusters" class="headerlink" title="建立 Clusters"></a>建立 Clusters</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap &lt;map-name&gt; &lt;data-source&gt;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the local directory</span></span><br><span class="line">mkdir -p configure-pod-container/configmap/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download the sample files into `configure-pod-container/configmap/` directory</span></span><br><span class="line">wget https://kubernetes.io/examples/configmap/game.properties -O configure-pod-container/configmap/game.properties</span><br><span class="line">wget https://kubernetes.io/examples/configmap/ui.properties -O configure-pod-container/configmap/ui.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the configmap</span></span><br><span class="line">kubectl create configmap game-config --from-file=configure-pod-container/configmap/</span><br></pre></td></tr></table></figure>

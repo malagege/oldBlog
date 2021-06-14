@@ -292,6 +292,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
         <p>前幾個月有個程式，因為需要多人做設定檔<br>所以就使用bitbucket來管理<br>在樹莓派一直遇到要打帳號、密碼<br>其怪，私鑰那些我都要試過阿</p>
 <p>結果Google一下，發現這篇<br><a href="https://stackoverflow.com/questions/8600652/git-on-bitbucket-always-asked-for-password-even-after-uploading-my-public-ssh?noredirect=1&amp;lq=1" target="_blank" rel="noopener">Git on Bitbucket: Always asked for password, even after uploading my public SSH key - Stack Overflow</a><br>預設是https情況下會問密碼<br>在.git/config把網址改成ssh網址確實可運做了<br><code>ssh://git@bitbucket.org/userName/repoName.git</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">As explained here, if you clone with SSH url, you don&#39;t need to enter username &#x2F; password each time you push &#x2F; pull. Check above answer by @manojlds</span><br><span class="line"></span><br><span class="line">But if you want to clone with HTTPS and want to avoid entering username &#x2F; password each time, you can store credentials into cache with below command:</span><br><span class="line"></span><br><span class="line">git config --global credential.helper &#39;cache --timeout 3600&#39;</span><br><span class="line"></span><br><span class="line">where 3600 (seconds) means 1 hour, you may change it as per your requirement.</span><br></pre></td></tr></table></figure>
