@@ -58,3 +58,15 @@ cat testfile.gz  |  curl -F fileupload1=@-;filename=atestfile.gz -F press="Uploa
 ```
 
 
+## socat 大法
+
+on host 1 	
+```
+socat -u open:myfile.exe,binary tcp-listen:999
+```
+on host 2 	
+```
+socat -u tcp:host1:999 open:myfile.exe,create,binary
+```
+
+參考:[socat 使用手册 « 倾旋的博客](https://payloads.online/tools/socat)

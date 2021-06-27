@@ -75,3 +75,12 @@ find . -maxdepth 2 -type f  -name 'composer.json' -execdir  composer update  \;
 ```
 
 [应该在find命令中使用-execdir代替-exec_一程山水一程歌-CSDN博客](https://blog.csdn.net/Qidi_Huang/article/details/53388589)
+
+
+### 搬檔案可參考
+
+```
+rsync -a --remove-source-files SOURCEDIR /mnt/TARGETDIR/
+```
+
+[如何在 Linux 搬動資料夾與其所有檔案到另一個同名資料夾 | The Will Will Web](https://blog.miniasp.com/post/2021/06/25/Move-folder-and-files-to-same-folder-name-on-another-disk?fbclid=IwAR33EHmCeKLFk8CC1Tlr-i2gsWEb-WZP1RGH2wVHNMoWPJT7PNjFvKtei_c)

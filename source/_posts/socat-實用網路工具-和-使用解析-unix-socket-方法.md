@@ -6,7 +6,8 @@ categories: Linux
 ---
 
 最近要看 unix socket 傳送資料而苦惱
-剛好最近這個工具[就是要你懂Unix Socket 进行抓包解析 | plantegg](https://plantegg.github.io/2019/04/04/%E5%B0%B1%E6%98%AF%E8%A6%81%E4%BD%A0%E6%87%82%E6%8A%93%E5%8C%85--Unix-Socket%E6%8A%93%E5%8C%85/)
+剛好最近這個工具[通过tcpdump对Unix Domain Socket 进行抓包解析 | plantegg](https://plantegg.github.io/2018/01/01/%E9%80%9A%E8%BF%87tcpdump%E5%AF%B9Unix%20Socket%20%E8%BF%9B%E8%A1%8C%E6%8A%93%E5%8C%85%E8%A7%A3%E6%9E%90/)
+[就是要你懂Unix Socket 进行抓包解析 | plantegg](https://plantegg.github.io/2019/04/04/%E5%B0%B1%E6%98%AF%E8%A6%81%E4%BD%A0%E6%87%82%E6%8A%93%E5%8C%85--Unix-Socket%E6%8A%93%E5%8C%85/)
 馬上實作看看!!!
 
 <!--more-->
