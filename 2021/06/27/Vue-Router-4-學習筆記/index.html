@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="這篇 Vue Router 4 學習筆記，大部份都是抄官方文件內容，有簡單實作小記，可參考 GIT 練習，算是自己學習重點筆記。">
+<meta property="og:type" content="article">
+<meta property="og:title" content=" Vue Router 4 學習筆記">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="這篇 Vue Router 4 學習筆記，大部份都是抄官方文件內容，有簡單實作小記，可參考 GIT 練習，算是自己學習重點筆記。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/FK9JlKb.png">
+<meta property="og:image" content="https://i.imgur.com/Djd7ZY4.png">
+<meta property="article:published_time" content="2021-06-27T06:44:45.000Z">
+<meta property="article:modified_time" content="2021-06-27T06:46:02.885Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="vue router">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/FK9JlKb.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title> Vue Router 4 學習筆記 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+           Vue Router 4 學習筆記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-06-27 14:44:45 / 修改時間：14:46:02" itemprop="dateCreated datePublished" datetime="2021-06-27T14:44:45+08:00">2021-06-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/Vue-Router-4-學習筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>這篇 Vue Router 4 學習筆記，大部份都是抄<a href="https://next.router.vuejs.org/zh/" target="_blank" rel="noopener">官方</a>文件內容，有簡單實作小記，可參考 GIT 練習，算是自己學習重點筆記。</p>
+<a id="more"></a>
+<h2 id="安裝-Vue-router-4"><a href="#安裝-Vue-router-4" class="headerlink" title="安裝 Vue router 4"></a>安裝 Vue router 4</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-router@4</span><br></pre></td></tr></table></figure>
+<p>設定 main.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></span><br><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./components/Home.vue'</span></span><br><span class="line"><span class="keyword">import</span> About <span class="keyword">from</span> <span class="string">'./components/About.vue'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 定義一些路由</span></span><br><span class="line"><span class="comment">// 每個路由都需要映射到一個組件。</span></span><br><span class="line"><span class="comment">// 我們後面再討論嵌套路由。</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">component</span>: Home &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/about'</span>, <span class="attr">component</span>: About &#125;,</span><br><span class="line">  ]</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 3. 創建路由實例並傳遞 `routes` 配置</span></span><br><span class="line"><span class="comment">// 你可以在這裡輸入更多的配置，但我們在這裡</span></span><br><span class="line"><span class="comment">// 暫時保持簡單</span></span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">    <span class="comment">// 4. 內部提供了 history 模式的實現。為了簡單起見，我們在這裡使用 hash 模式。</span></span><br><span class="line">    history: createWebHashHistory(),</span><br><span class="line">    routes, <span class="comment">// `routes: routes` 的縮寫</span></span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">createApp(App).use(router).mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>重點提醒:</p>
+<ol>
+<li>import { createRouter, createWebHashHistory } from ‘vue-router’</li>
+<li>routes 宣告</li>
+<li>router 宣告(使用 createRouter, createWebHashHistory)</li>
+<li>createApp use vue-router</li>
+</ol>
+<p>App.vue<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;h1&gt;Hello App!&lt;&#x2F;h1&gt;</span><br><span class="line">  &lt;p&gt;</span><br><span class="line">    &lt;!--使用 router-link 組件進行導航 --&gt;</span><br><span class="line">    &lt;!--通過傳遞 &#96;to&#96; 來指定鏈接 --&gt;</span><br><span class="line">    &lt;!--&#96;&lt;router-link&gt;&#96; 將呈現一個帶有正確 &#96;href&#96; 屬性的 &#96;&lt;a&gt;&#96; 標籤--&gt;</span><br><span class="line">    &lt;router-link to&#x3D;&quot;&#x2F;&quot;&gt;Go to Home&lt;&#x2F;router-link&gt;</span><br><span class="line">    &lt;router-link to&#x3D;&quot;&#x2F;about&quot;&gt;Go to About&lt;&#x2F;router-link&gt;</span><br><span class="line">  &lt;&#x2F;p&gt;</span><br><span class="line">  &lt;!-- 路由出口 --&gt;</span><br><span class="line">  &lt;!-- 路由匹配到的組件將渲染在這裡 --&gt;</span><br><span class="line">  &lt;router-view&gt;&lt;&#x2F;router-view&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import Home from &#39;.&#x2F;components&#x2F;Home.vue&#39;</span><br><span class="line">import About from &#39;.&#x2F;components&#x2F;About.vue&#39;</span><br><span class="line">import HelloWorld from &#39;.&#x2F;components&#x2F;HelloWorld.vue&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; This starter template is using Vue 3 experimental &lt;script setup&gt; SFCs</span><br><span class="line">&#x2F;&#x2F; Check out https:&#x2F;&#x2F;github.com&#x2F;vuejs&#x2F;rfcs&#x2F;blob&#x2F;script-setup-2&#x2F;active-rfcs&#x2F;0000-script-setup.md</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line">#app &#123;</span><br><span class="line">  font-family: Avenir, Helvetica, Arial, sans-serif;</span><br><span class="line">  -webkit-font-smoothing: antialiased;</span><br><span class="line">  -moz-osx-font-smoothing: grayscale;</span><br><span class="line">  text-align: center;</span><br><span class="line">  color: #2c3e50;</span><br><span class="line">  margin-top: 60px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure></p>
+<p>重點提醒</p>
+<ol>
+<li><code>&lt;router-link to=&quot;/&quot;&gt;Go to Home&lt;/router-link&gt;</code> 超連結指定某路由</li>
+<li><code>&lt;router-view&gt;&lt;/router-view&gt;</code> 路由顯示的Vue元件</li>
+</ol>
+<p>GIT:<a href="https://github.com/malagege/vue-router-test/commit/8d7a44b6059b3caf6ad648056817af4c8ec9060c" target="_blank" rel="noopener">8d7a44b6059b3caf6ad648056817af4c8ec9060c</a></p>
+<blockquote>
+<p>要在 setup 函數中訪問路由，請調用 useRouter 或 useRoute 函數。我們將在 Composition API 中瞭解更多信息。<br>在整個文檔中，我們會經常使用 router 實例，請記住，this.$router 與直接使用通過 createRouter 創建的 router 實例完全相同。我們使用 this.\$router 的原因是，我們不想在每個需要操作路由的組件中都導入路由。</p>
+</blockquote>
+<p>引用一下官方這段，setup 函數可以用 <code>useRouter</code> 和 <code>useRoute</code>。 router 是指整個 router實例。 route 是指 <code>routes</code>某一個 route 設定。</p>
+<h2 id="動態路由匹配"><a href="#動態路由匹配" class="headerlink" title="動態路由匹配"></a>動態路由匹配</h2><p><a href="https://next.router.vuejs.org/zh/guide/essentials/dynamic-matching.html" target="_blank" rel="noopener">带参数的动态路由匹配 | Vue Router</a></p>
+<h3 id="帶參數動態路由"><a href="#帶參數動態路由" class="headerlink" title="帶參數動態路由"></a>帶參數動態路由</h3><p>使用 $route.param</p>
+<table>
+<thead>
+<tr>
+<th>匹配模式</th>
+<th>匹配路徑</th>
+<th>$route.params</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/users/:username</td>
+<td>/users/eduardo</td>
+<td>{ username: ‘eduardo’ }</td>
+</tr>
+<tr>
+<td>/users/:username/posts/:postId</td>
+<td>/users/eduardo/posts/123</td>
+<td>{ username: ‘eduardo’, postId: ‘123’ }</td>
+</tr>
+</tbody>
+</table>
+<p>GIT:<a href="https://github.com/malagege/vue-router-test/commit/b1afcbb8fe9240e4851a680db958fafc558b6dd9" target="_blank" rel="noopener">https://github.com/malagege/vue-router-test/commit/b1afcbb8fe9240e4851a680db958fafc558b6dd9</a></p>
+<h3 id="響應路由參數的變化-重要"><a href="#響應路由參數的變化-重要" class="headerlink" title="響應路由參數的變化(重要)"></a>響應路由參數的變化(重要)</h3><p>取得資料就是 AJAX 可用這個方式取得，後面會講到。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  created() &#123;</span><br><span class="line">    <span class="keyword">this</span>.$watch(</span><br><span class="line">      () =&gt; <span class="keyword">this</span>.$route.params,</span><br><span class="line">      (toParams, previousParams) =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'toParams'</span>,toParams,<span class="string">'previsousParams'</span>,previousParams);</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>watch 跟 $watch 差別</p>
+<blockquote>
+<ul>
+<li>$watch : 實體上的函數，使用此函數註冊監聽器。</li>
+<li>watch : 實體上的屬性，此屬性設置的物件在實體建立時會叫用 $watch 註冊監聽器。</li>
+</ul>
+<p>$watch 是註冊監聽器的函數，而 watch 是為了開發者方便在實體上設置監聽器而提供的，其實 watch 本身也是使用 $watch 註冊監聽器。</p>
+</blockquote>
+<p>參考:</p>
+<ul>
+<li><a href="https://peterhpchen.github.io/VuejsQuest/basic/08_Watcher.html#%E4%BB%8B%E7%B4%B9" target="_blank" rel="noopener">監聽器( watch ) | 勇者鬥 Vue 龍</a></li>
+<li><a href="https://segmentfault.com/q/1010000023828086" target="_blank" rel="noopener">vue中watch和vm.$watch方法的區別？ - SegmentFault 思否</a></li>
+</ul>
+<p>使用 beforeRouteUpdate 導航守衛<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//   使用 beforeRouteUpdate 導航守衛</span></span><br><span class="line">  <span class="keyword">async</span> beforeRouteUpdate(to, <span class="keyword">from</span>) &#123;</span><br><span class="line">    <span class="comment">// 對路由變化做出響應...</span></span><br><span class="line">    <span class="comment">// this.userData = await fetchUser(to.params.id)</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'to'</span>,to,<span class="string">'from'</span>,<span class="keyword">from</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>簡單說明，第一次進來不會觸發上面兩個 function ，但第二次就會了。<br><img src="https://i.imgur.com/FK9JlKb.png" alt=""></p>
+<p>GIT: <a href="https://github.com/malagege/vue-router-test/commit/9649555832b6732ed355f765b0047e733294f3a4" target="_blank" rel="noopener">9649555832b6732ed355f765b0047e733294f3a4</a></p>
+<h3 id="捕獲所有路由或-404-Not-found-路由"><a href="#捕獲所有路由或-404-Not-found-路由" class="headerlink" title="捕獲所有路由或 404 Not found 路由"></a>捕獲所有路由或 404 Not found 路由</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  <span class="comment">// 將匹配所有內容並將其放在 `$route.params.pathMatch` 下</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/:pathMatch(.*)*'</span>, <span class="attr">name</span>: <span class="string">'NotFound'</span>, <span class="attr">component</span>: NotFound &#125;,</span><br><span class="line">  <span class="comment">// 將匹配以 `/user-` 開頭的所有內容，並將其放在 `$route.params.afterUser` 下</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/user-:afterUser(.*)'</span>, <span class="attr">component</span>: UserGeneric &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$router.push(&#123;</span><br><span class="line">  name: <span class="string">'NotFound'</span>,</span><br><span class="line">  params: &#123; <span class="attr">pathMatch</span>: <span class="keyword">this</span>.$route.path.split(<span class="string">'/'</span>) &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>這邊我改變一下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    methods:&#123;</span><br><span class="line">        test()&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.$route.path.split(<span class="string">'/'</span>));</span><br><span class="line">            <span class="keyword">this</span>.$router.push(&#123;</span><br><span class="line">            name: <span class="string">'NotFound'</span>,</span><br><span class="line">            <span class="comment">// :pathMatch 為 下面參數可以帶入</span></span><br><span class="line">            <span class="comment">// http://localhost:3000/#/123/456</span></span><br><span class="line">            params: &#123; <span class="attr">pathMatch</span>: [<span class="string">'123'</span>,<span class="string">'456'</span>] &#125;,</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>GIT:<a href="https://github.com/malagege/vue-router-test/commit/ef8040a99c655c68c20b92e8aceb47f64b7403c7" target="_blank" rel="noopener">ef8040a99c655c68c20b92e8aceb47f64b7403c7</a></p>
+<h2 id="路由的匹配語法"><a href="#路由的匹配語法" class="headerlink" title="路由的匹配語法"></a>路由的匹配語法</h2><p><a href="https://next.router.vuejs.org/zh/guide/essentials/route-matching-syntax.html" target="_blank" rel="noopener">路由的匹配語法 | Vue Router</a></p>
+<p>基本上就是用正規表達式設定路由。這邊就不簡單實作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  <span class="comment">// /:orderId -&gt; 僅匹配數字</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/:orderId(\\d+)'</span> &#125;,</span><br><span class="line">  <span class="comment">// /:productName -&gt; 匹配其他任何內容</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/:productName'</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="可重複的參數"><a href="#可重複的參數" class="headerlink" title="可重複的參數"></a>可重複的參數</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  <span class="comment">// /:chapters -&gt;  匹配 /one, /one/two, /one/two/three, 等</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/:chapters+'</span> &#125;,</span><br><span class="line">  <span class="comment">// /:chapters -&gt; 匹配 /, /one, /one/two, /one/two/three, 等</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/:chapters*'</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>router.resolve 組出 url</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 給定 &#123; path: '/:chapters*', name: 'chapters' &#125;,</span></span><br><span class="line">router.resolve(&#123; <span class="attr">name</span>: <span class="string">'chapters'</span>, <span class="attr">params</span>: &#123; <span class="attr">chapters</span>: [] &#125; &#125;).href</span><br><span class="line"><span class="comment">// 產生 /</span></span><br><span class="line">router.resolve(&#123; <span class="attr">name</span>: <span class="string">'chapters'</span>, <span class="attr">params</span>: &#123; <span class="attr">chapters</span>: [<span class="string">'a'</span>, <span class="string">'b'</span>] &#125; &#125;).href</span><br><span class="line"><span class="comment">// 產生 /a/b</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 給定 &#123; path: '/:chapters+', name: 'chapters' &#125;,</span></span><br><span class="line">router.resolve(&#123; <span class="attr">name</span>: <span class="string">'chapters'</span>, <span class="attr">params</span>: &#123; <span class="attr">chapters</span>: [] &#125; &#125;).href</span><br><span class="line"><span class="comment">// 拋出錯誤，因為 `chapters` 為空</span></span><br></pre></td></tr></table></figure>
+<p><code>+</code>與<code>*</code> 的差別</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  <span class="comment">// 僅匹配數字</span></span><br><span class="line">  <span class="comment">// 匹配 /1, /1/2, 等</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/:chapters(\\d+)+'</span> &#125;,</span><br><span class="line">  <span class="comment">// 匹配 /, /1, /1/2, 等</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/:chapters(\\d+)*'</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="可選參數"><a href="#可選參數" class="headerlink" title="可選參數"></a>可選參數</h3><blockquote>
+<p>請注意，* 在技術上也標誌著一個參數是可選的，但 ? 參數不能重複。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  <span class="comment">// 匹配 /users 和 /users/posva</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/users/:userId?'</span> &#125;,</span><br><span class="line">  <span class="comment">// 匹配 /users 和 /users/42</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'/users/:userId(\\d+)?'</span> &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="嵌套路由-nested-routes"><a href="#嵌套路由-nested-routes" class="headerlink" title="嵌套路由(nested-routes)"></a>嵌套路由(nested-routes)</h2><p><img src="https://i.imgur.com/Djd7ZY4.png" alt=""></p>
+<p>兩個步驟</p>
+<ol>
+<li>設定 router 的 children 屬性</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">component</span>: Home &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/about'</span>, <span class="attr">component</span>: About &#125;,</span><br><span class="line">    <span class="comment">// 動態段以冒號開始</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/users/:id'</span>, <span class="attr">component</span>: User ,</span><br><span class="line">      children: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="comment">// 當 /user/:id/profile 匹配成功 </span></span><br><span class="line">          <span class="comment">// UserProfile 將被渲染到 User 的 &lt;router-view&gt; 內部</span></span><br><span class="line">          path: <span class="string">'profile'</span>,</span><br><span class="line">          component: UserProfile,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="comment">// 當 /user/:id/posts 匹配成功</span></span><br><span class="line">          <span class="comment">// UserPosts 將被渲染到 User 的 &lt;router-view&gt; 內部</span></span><br><span class="line">          path: <span class="string">'posts'</span>,</span><br><span class="line">          component: UserPosts,</span><br><span class="line">        &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>設定目標組件(父層) router-view</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    User  &#123;&#123; $route.params.id &#125;&#125;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;button v-on:click&#x3D;&quot;test&quot;&gt; on test&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;router-view&gt;&lt;&#x2F;router-view&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>連結: <a href="http://localhost:3000/#/users/1/profile" target="_blank" rel="noopener">http://localhost:3000/#/users/1/profile</a></p>
+<p>GIT:<a href="https://github.com/malagege/vue-router-test/commit/" target="_blank" rel="noopener">a0ee324aefb696a91645c1258181979cd7c35277</a></p>
+<h3 id="設定嵌套路由首頁"><a href="#設定嵌套路由首頁" class="headerlink" title="設定嵌套路由首頁"></a>設定嵌套路由首頁</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">component</span>: Home &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/about'</span>, <span class="attr">component</span>: About &#125;,</span><br><span class="line">    <span class="comment">// 動態段以冒號開始</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/users/:id'</span>, <span class="attr">component</span>: User ,</span><br><span class="line">      children: [</span><br><span class="line">        <span class="comment">// UserHome will be rendered inside User's &lt;router-view&gt;</span></span><br><span class="line">        <span class="comment">// when /user/:id is matched</span></span><br><span class="line">        <span class="comment">// 當 /user/:id 匹配成功</span></span><br><span class="line">        <span class="comment">// UserHome 將被渲染到 User 的 &lt;router-view&gt; 內部</span></span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">''</span>, <span class="attr">component</span>: UserHome &#125;,</span><br></pre></td></tr></table></figure>
+<p>連結: <a href="http://localhost:3000/#/users/1/" target="_blank" rel="noopener">http://localhost:3000/#/users/1/</a></p>
+<p>GIT:<a href="https://github.com/malagege/vue-router-test/commit/1d362c35c2ad53966a8d1794e845f7a07fc5eafa" target="_blank" rel="noopener">1d362c35c2ad53966a8d1794e845f7a07fc5eafa</a></p>
+<p>官方範例:<a href="https://codesandbox.io/s/nested-views-vue-router-4-examples-hl326?initialpath=/users/eduardo&amp;file=/src/main.js" target="_blank" rel="noopener">Nested Views - Vue Router 4 examples - CodeSandbox</a></p>
+<h2 id="編程式導航-Navigation-Guards"><a href="#編程式導航-Navigation-Guards" class="headerlink" title="編程式導航(Navigation Guards)"></a>編程式導航(Navigation Guards)</h2><h3 id="跳頁到不同路徑網址"><a href="#跳頁到不同路徑網址" class="headerlink" title="跳頁到不同路徑網址"></a>跳頁到不同路徑網址</h3><p>原本標題「導航到不同的位置」，我覺得看不是很懂，看我改得比較白話，哈哈。</p>
+<blockquote>
+<p>注意：在 Vue 實例中，你可以通過 \$router 訪問路由實例。因此你可以調用 this.$router.push。</p>
+</blockquote>
+<blockquote>
+<p>想要導航到不同的 URL，可以使用 router.push 方法。這個方法會向 history 棧添加一個新的記錄，所以，當用戶點擊瀏覽器後退按鈕時，會回到之前的 URL。</p>
+</blockquote>
+<blockquote>
+<p>當你點擊 <code>&lt;router-link&gt;</code> 時，內部會調用這個方法，所以點擊 <code>&lt;router-link :to=&quot;...&quot;&gt;</code> 相當於調用 router.push(…) ：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>聲明式</th>
+<th>編程式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><router-link :to="..."></td>
+<td>router.push(…)</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 字符串路徑</span></span><br><span class="line">router.push(<span class="string">'/users/eduardo'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 帶有路徑的對象</span></span><br><span class="line">router.push(&#123; <span class="attr">path</span>: <span class="string">'/users/eduardo'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 命名的路由，並加上參數，讓路由建立 url</span></span><br><span class="line">router.push(&#123; <span class="attr">name</span>: <span class="string">'user'</span>, <span class="attr">params</span>: &#123; <span class="attr">username</span>: <span class="string">'eduardo'</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 帶查詢參數，結果是 /register?plan=private</span></span><br><span class="line">router.push(&#123; <span class="attr">path</span>: <span class="string">'/register'</span>, <span class="attr">query</span>: &#123; <span class="attr">plan</span>: <span class="string">'private'</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 帶 hash，結果是 /about#team</span></span><br><span class="line">router.push(&#123; <span class="attr">path</span>: <span class="string">'/about'</span>, <span class="attr">hash</span>: <span class="string">'#team'</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>比較特別的是後面三個，用<code>query</code>和<code>hash</code>屬性前面沒帶過</p>
+<p>稍微查了一下，<a href="https://blog.csdn.net/weixin_45846862/article/details/112182113" target="_blank" rel="noopener">這篇提到</a>裡面提到使用<code>this.$route.query.參數</code>也可以抓到值</p>
+<p><a href="https://next.router.vuejs.org/api/#query" target="_blank" rel="noopener">API Reference | Vue Router</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> username = <span class="string">'eduardo'</span></span><br><span class="line"><span class="comment">// 我們可以手動建立 url，但我們必須自己處理編碼</span></span><br><span class="line">router.push(<span class="string">`/user/<span class="subst">$&#123;username&#125;</span>`</span>) <span class="comment">// -&gt; /user/eduardo</span></span><br><span class="line"><span class="comment">// 同樣</span></span><br><span class="line">router.push(&#123; <span class="attr">path</span>: <span class="string">`/user/<span class="subst">$&#123;username&#125;</span>`</span> &#125;) <span class="comment">// -&gt; /user/eduardo</span></span><br><span class="line"><span class="comment">// 如果可能的話，使用 `name` 和 `params` 從自動 URL 編碼中獲益</span></span><br><span class="line">router.push(&#123; <span class="attr">name</span>: <span class="string">'user'</span>, <span class="attr">params</span>: &#123; username &#125; &#125;) <span class="comment">// -&gt; /user/eduardo</span></span><br><span class="line"><span class="comment">// `params` 不能與 `path` 一起使用</span></span><br><span class="line">router.push(&#123; <span class="attr">path</span>: <span class="string">'/user'</span>, <span class="attr">params</span>: &#123; username &#125; &#125;) <span class="comment">// -&gt; /user</span></span><br></pre></td></tr></table></figure>
+<p>我有嘗試使用參數帶中文，但沒有發現什麼問題</p>
+<p>GIT:<a href="https://github.com/malagege/vue-router-test/commit/75bf26ebf64ec5c2c4dc6f5476e86bb517327e65" target="_blank" rel="noopener">75bf26ebf64ec5c2c4dc6f5476e86bb517327e65</a></p>
+<blockquote>
+<p>由於屬性 to 與 router.push 接受的對象種類相同，所以兩者的規則完全相同。<br>router.push 和所有其他導航方法都會返回一個 Promise，讓我們可以等到導航完成後才知道是成功還是失敗。我們將在 Navigation Handling 中詳細介紹。</p>
+</blockquote>
+<h3 id="替換當前位置"><a href="#替換當前位置" class="headerlink" title="替換當前位置"></a>替換當前位置</h3><blockquote>
+<p>它的作用類似於 router.push，唯一不同的是，它在導航時不會向 history 添加新記錄，正如它的名字所暗示的那樣——它取代了當前的條目。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>聲明式</th>
+<th>編程式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><router-link :to="..." replace></td>
+<td>router.replace(…)</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.push(&#123; <span class="attr">path</span>: <span class="string">'/home'</span>, <span class="attr">replace</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"><span class="comment">// 相當於</span></span><br><span class="line">router.replace(&#123; <span class="attr">path</span>: <span class="string">'/home'</span> &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="回前一頁、下一頁"><a href="#回前一頁、下一頁" class="headerlink" title="回前一頁、下一頁"></a>回前一頁、下一頁</h3><blockquote>
+<p>該方法採用一個整數作為參數，表示在歷史堆棧中前進或後退多少步，類似於 <code>window.history.go(n)</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向前移動一條記錄，與 router.forward() 相同</span></span><br><span class="line">router.go(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回一條記錄，與router.back() 相同</span></span><br><span class="line">router.go(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 前進 3 條記錄</span></span><br><span class="line">router.go(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果沒有那麼多記錄，靜默失敗</span></span><br><span class="line">router.go(<span class="number">-100</span>)</span><br><span class="line">router.go(<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="命名路由"><a href="#命名路由" class="headerlink" title="命名路由"></a>命名路由</h2><blockquote>
+<p>除了 path 之外，你還可以為任何路由提供 name。這有以下優點：</p>
+<ul>
+<li>沒有硬編碼的 URL</li>
+<li>params 的自動編碼/解碼。</li>
+<li>防止你在 url 中出現打字錯誤。</li>
+<li>繞過路徑排序（如顯示一個）</li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/user/:username'</span>,</span><br><span class="line">    name: <span class="string">'user'</span>,</span><br><span class="line">    component: User</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-link :to&#x3D;&quot;&#123; name: &#39;user&#39;, params: &#123; username: &#39;erina&#39; &#125;&#125;&quot;&gt;</span><br><span class="line">  User</span><br><span class="line">&lt;&#x2F;router-link&gt;</span><br></pre></td></tr></table></figure>
+<p>與下面程式相同</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.push(&#123; <span class="attr">name</span>: <span class="string">'user'</span>, <span class="attr">params</span>: &#123; <span class="attr">username</span>: <span class="string">'erina'</span> &#125; &#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/vuejs/vue-router/blob/dev/examples/named-routes/app.js" target="_blank" rel="noopener">vue-router/app.js at dev · vuejs/vue-router</a></p>
+<h2 id="命名視圖"><a href="#命名視圖" class="headerlink" title="命名視圖"></a>命名視圖</h2><p>簡單來說，設定 <code>router-view</code> 沒設定 name 後，預設名稱會是<code>default</code>。這邊看範例比較快。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-view class&#x3D;&quot;view left-sidebar&quot; name&#x3D;&quot;LeftSidebar&quot;&gt;&lt;&#x2F;router-view&gt;</span><br><span class="line">&lt;router-view class&#x3D;&quot;view main-content&quot;&gt;&lt;&#x2F;router-view&gt;</span><br><span class="line">&lt;router-view class&#x3D;&quot;view right-sidebar&quot; name&#x3D;&quot;RightSidebar&quot;&gt;&lt;&#x2F;router-view&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">  history: createWebHashHistory(),</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">'/'</span>,</span><br><span class="line">      components: &#123;</span><br><span class="line">        <span class="keyword">default</span>: Home,</span><br><span class="line">        <span class="comment">// LeftSidebar: LeftSidebar 的縮寫</span></span><br><span class="line">        LeftSidebar,</span><br><span class="line">        <span class="comment">// 它們與 `&lt;router-view&gt;` 上的 `name` 屬性匹配</span></span><br><span class="line">        RightSidebar,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>官方範例:<a href="https://codesandbox.io/s/named-views-vue-router-4-examples-rd20l?file=/src/main.js" target="_blank" rel="noopener">Named Views - Vue Router 4 examples - CodeSandbox</a></p>
+<h3 id="嵌套命名視圖"><a href="#嵌套命名視圖" class="headerlink" title="嵌套命名視圖"></a>嵌套命名視圖</h3><p>我覺得這部分看官方文件比較清楚。</p>
+<p><a href="https://next.router.vuejs.org/zh/guide/essentials/named-views.html#%E5%B5%8C%E5%A5%97%E5%91%BD%E5%90%8D%E8%A7%86%E5%9B%BE" target="_blank" rel="noopener">命名視圖 | Vue Router</a></p>
+<p>官方範例: <a href="https://codesandbox.io/s/nested-named-views-vue-router-4-examples-re9yl?&amp;initialpath=%2Fsettings%2Femails" target="_blank" rel="noopener">Nested Named Views - Vue Router 4 examples - CodeSandbox</a></p>
+<h2 id="重新導向和别名"><a href="#重新導向和别名" class="headerlink" title="重新導向和别名"></a>重新導向和别名</h2><p>官方文件原翻譯: 重定向和别名</p>
+<h3 id="重新導向-redirect"><a href="#重新導向-redirect" class="headerlink" title="重新導向(redirect)"></a>重新導向(redirect)</h3><p>/search/screens -&gt; /search?q=screens</p>
+<p>跟後端 redirect 意思差不多</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const routes &#x3D; [&#123; path: &#39;&#x2F;home&#39;, redirect: &#39;&#x2F;&#39; &#125;]</span><br></pre></td></tr></table></figure>
+<p>也能指向一個 route 的名稱</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const routes &#x3D; [&#123; path: &#39;&#x2F;home&#39;, redirect: &#123; name: &#39;homepage&#39; &#125; &#125;]</span><br></pre></td></tr></table></figure>
+<h4 id="動態導向-帶參數"><a href="#動態導向-帶參數" class="headerlink" title="動態導向(帶參數)"></a>動態導向(帶參數)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// /search/screens -&gt; /search?q=screens</span></span><br><span class="line">    path: <span class="string">'/search/:searchText'</span>,</span><br><span class="line">    redirect: <span class="function"><span class="params">to</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 方法接收目標路由作為參數</span></span><br><span class="line">      <span class="comment">// return 重定向的字符串路徑/路徑對象</span></span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">path</span>: <span class="string">'/search'</span>, <span class="attr">query</span>: &#123; <span class="attr">q</span>: to.params.searchText &#125; &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/search'</span>,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h4 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h4><p><code>/</code> 參照 <code>/home</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const routes &#x3D; [&#123; path: &#39;&#x2F;&#39;, component: Homepage, alias: &#39;&#x2F;home&#39; &#125;]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通過別名，你可以自由地將 UI 結構映射到一個任意的 URL，而不受配置的嵌套結構的限制。<strong>使別名以 / 開頭，以使嵌套路徑中的路徑成為絕對路徑。</strong>你甚至可以將兩者結合起來，用一個數組提供多個別名：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/users'</span>,</span><br><span class="line">    component: UsersLayout,</span><br><span class="line">    children: [</span><br><span class="line">      <span class="comment">// 為這 3 個 URL 呈現 UserList</span></span><br><span class="line">      <span class="comment">// - /users</span></span><br><span class="line">      <span class="comment">// - /users/list</span></span><br><span class="line">      <span class="comment">// - /people</span></span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">''</span>, <span class="attr">component</span>: UserList, <span class="attr">alias</span>: [<span class="string">'/people'</span>, <span class="string">'list'</span>] &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>SEO 需要注意的事情:<a href="https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls?hl=en&amp;visit_id=637596083090705419-2476927526&amp;rd=1" target="_blank" rel="noopener">Consolidate Duplicate URLs with Canonicals | Google Search Central</a></p>
+<h2 id="將-props-傳遞給路由組件-容易忘記"><a href="#將-props-傳遞給路由組件-容易忘記" class="headerlink" title="將 props 傳遞給路由組件(容易忘記?)"></a>將 props 傳遞給路由組件(容易忘記?)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = &#123;</span><br><span class="line">  template: <span class="string">'&lt;div&gt;User &#123;&#123; $route.params.id &#125;&#125;&lt;/div&gt;'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> routes = [&#123; <span class="attr">path</span>: <span class="string">'/user/:id'</span>, <span class="attr">component</span>: User &#125;]</span><br></pre></td></tr></table></figure>
+<p>替換</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = &#123;</span><br><span class="line">  props: [<span class="string">'id'</span>],</span><br><span class="line">  template: <span class="string">'&lt;div&gt;User &#123;&#123; id &#125;&#125;&lt;/div&gt;'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> routes = [&#123; <span class="attr">path</span>: <span class="string">'/user/:id'</span>, <span class="attr">component</span>: User, <span class="attr">props</span>: <span class="literal">true</span> &#125;]</span><br></pre></td></tr></table></figure>
+<p>簡單來說 route 設定多了 <code>props:true</code>，prop也需要設定對應變數</p>
+<h3 id="Boolean-mode"><a href="#Boolean-mode" class="headerlink" title="Boolean mode"></a>Boolean mode</h3><blockquote>
+<p>當 props 設置為 true 時，route.params 將被設置為組件的 props。</p>
+</blockquote>
+<h4 id="命名視圖-1"><a href="#命名視圖-1" class="headerlink" title="命名視圖"></a>命名視圖</h4><p>簡單來說，跟上面用法差不多。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/user/:id'</span>,</span><br><span class="line">    components: &#123; <span class="attr">default</span>: User, <span class="attr">sidebar</span>: Sidebar &#125;,</span><br><span class="line">    props: &#123; <span class="attr">default</span>: <span class="literal">true</span>, <span class="attr">sidebar</span>: <span class="literal">false</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="物件給值-固定給值"><a href="#物件給值-固定給值" class="headerlink" title="物件給值(固定給值)"></a>物件給值(固定給值)</h3><p>這邊是固定給值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/promotion/from-newsletter'</span>,</span><br><span class="line">    component: Promotion,</span><br><span class="line">    props: &#123; <span class="attr">newsletterPopup</span>: <span class="literal">false</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="函式給值-重要"><a href="#函式給值-重要" class="headerlink" title="函式給值(重要?)"></a>函式給值(重要?)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/search'</span>,</span><br><span class="line">    component: SearchUser,</span><br><span class="line">    props: <span class="function"><span class="params">route</span> =&gt;</span> (&#123; <span class="attr">query</span>: route.query.q &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>官方範例:<a href="https://github.com/vuejs/vue-router/blob/dev/examples/route-props/app.js" target="_blank" rel="noopener">vue-router/app.js at dev · vuejs/vue-router</a></p>
+<p>這邊就不實戰，簡單做個結論，動態給值，可使用props,function 方式進去，固定方式可以用 object mode</p>
+<h2 id="歷史模式"><a href="#歷史模式" class="headerlink" title="歷史模式"></a>歷史模式</h2><p>都是Web 常見的兩種<code>hash</code>,<code>html5 history api</code></p>
+<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">  history: createWebHashHistory(),</span><br><span class="line">  routes: [</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="HTML5-模式"><a href="#HTML5-模式" class="headerlink" title="HTML5 模式"></a>HTML5 模式</h3><blockquote>
+<p>用 createWebHistory() 创建 HTML5 模式，推荐使用这个模式：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRouter, createWebHistory &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = createRouter(&#123;</span><br><span class="line">  history: createWebHistory(),</span><br><span class="line">  routes: [</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="伺服器配置"><a href="#伺服器配置" class="headerlink" title="伺服器配置"></a>伺服器配置</h3><p><a href="https://next.router.vuejs.org/zh/guide/essentials/history-mode.html#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B" target="_blank" rel="noopener">不同的歷史模式 | Vue Router</a></p>
+<p><del>官方竟然沒放 Traefik ，我自己爬文找一下。</del><br>我竟然犯蠢了…，Traefik 不是 Web Server，所以我應該是要改代理後面的Web Server。</p>
+<p>參考:<a href="https://community.traefik.io/t/nginx-try-files-to-traefik-ingressrout/6915" target="_blank" rel="noopener">Nginx try_files to traefik ingressrout? - Traefik / Traefik v2 - Traefik Labs Community Forum</a></p>
+<blockquote>
+<p>Sorry, not clear.</p>
+<p>Nginx is a web server not just a proxy like Traefik, and Traefik does not have a feature similar to try_files simply because it’s not a web server.</p>
+<p>Also “not working” is not a very good problem description. How do you test, what results are you expecting and what are you observing instead?</p>
+</blockquote>
+<p>其實也可以不用拿一般Web Server跑，直接用nodejs執行。</p>
+<p>參考:<a href="https://stackoverflow.com/questions/59491055/runing-vue-cli-app-under-docker-simple-index-html-is-opened" target="_blank" rel="noopener">vue.js - Runing vue/cli app under docker simple index.html is opened - Stack Overflow</a><br>)</p>
+<h2 id="導航守衛-Navigation-Guards"><a href="#導航守衛-Navigation-Guards" class="headerlink" title="導航守衛(Navigation Guards)"></a>導航守衛(Navigation Guards)</h2><h3 id="全局前置守衛"><a href="#全局前置守衛" class="headerlink" title="全局前置守衛"></a>全局前置守衛</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = createRouter(&#123; ... &#125;)</span><br><span class="line"></span><br><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 返回 false 以取消導航</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>當一個導航觸發時，全局前置守衛按照創建順序調用。守衛是異步解析執行，此時導航在所有守衛 resolve 完之前一直處於等待中。</p>
+</blockquote>
+<p>這邊有去做個實作，第一次進去，to 和 from 都會有值，這邊設定一半機率會跳頁!!簡單來說，to 是要轉頁面，from 是來源頁，當回傳 false時候，會轉到 from 。所以這就是為什麼第一次進去，from ,to 都是一樣，不會卡住問題</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'beforeEach START'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'to'</span>,to)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'from'</span>,<span class="keyword">from</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'beforeEach END'</span>)</span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">Math</span>.random()&gt; <span class="number">0.5</span>) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 返回 false 以取消導航</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>每個守衛方法接收兩個參數：</p>
+<ul>
+<li>to: 即將要進入的目標 用一種標準化的方式</li>
+<li>from: 當前導航正要離開的路由 用一種標準化的方式</li>
+</ul>
+<p>可以返回的值如下:</p>
+<ul>
+<li>false: 取消當前的導航。如果瀏覽器的 URL 改變了(可能是用戶手動或者瀏覽器後退按鈕)，那麼 URL 地址會重置到 from 路由對應的地址。</li>
+<li>一個路由地址: 通過一個路由地址跳轉到一個不同的地址，就像你調用 router.push() 一樣，你可以設置諸如 replace: true 或 name: ‘home’ 之類的配置。當前的導航被中斷，然後進行一個新的導航，就和 from 一樣。</li>
+</ul>
+</blockquote>
+<h3 id="錯誤監聽"><a href="#錯誤監聽" class="headerlink" title="錯誤監聽"></a>錯誤監聽</h3><blockquote>
+<p>如果遇到了意料之外的情況，可能會拋出一個 Error。這會取消導航並且調用 router.onError() 註冊過的回調。</p>
+<p>如果什麼都沒有，undefined 或返回 true，則導航是有效的，並調用下一個導航守衛</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'beforeEach START'</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'to'</span>,to)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'from'</span>,<span class="keyword">from</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'beforeEach END'</span>)</span><br><span class="line">  a[<span class="number">2</span>]</span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">Math</span>.random()&gt; <span class="number">0.5</span>) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// 返回 false 以取消導航</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.onError(<span class="function">(<span class="params">error,to,<span class="keyword">from</span></span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Error START'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'error'</span>,error);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'to'</span>, to);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'from'</span>, <span class="keyword">from</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Error END'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">![](https://i.imgur.com/AI8VPxo.png)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#### 可用 Promise工作方式</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript=</span><br><span class="line">router.beforeEach(<span class="keyword">async</span> (to, <span class="keyword">from</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// canUserAccess() 返回 `true` 或 `false`</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> canUserAccess(to)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="可選的第三個參數-next"><a href="#可選的第三個參數-next" class="headerlink" title="可選的第三個參數 next"></a>可選的第三個參數 next</h4><blockquote>
+<p>在之前的 Vue Router 版本中，也是可以使用 第三個參數 next 的。這是一個常見的錯誤來源，可以通過 RFC 來消除錯誤。然而，它仍然是被支持的，這意味著你可以向任何導航守衛傳遞第三個參數。在這種情況下，確保 next 在任何給定的導航守衛中都被嚴格調用一次。它可以出現多於一次，但是只能在所有的邏輯路徑都不重疊的情況下，否則鉤子永遠都不會被解析或報錯。這裡有一個在用戶未能驗證身份時重定向到/login的錯誤用例：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GOOD</span></span><br><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.name !== <span class="string">'Login'</span> &amp;&amp; !isAuthenticated) next(&#123; <span class="attr">name</span>: <span class="string">'Login'</span> &#125;)</span><br><span class="line">  <span class="keyword">else</span> next()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>簡單來說，這邊簡單實作是否登入動作導向登入頁。<code>next()</code>裡面空值，會進去<code>to</code>頁面，假如有指定next裡面參數，會進去到指定頁面。</p>
+<p>這邊我們看到，這邊沒有return ture/false，我很好奇我這邊return false會怎麼樣?結論，<code>next()</code>會執行跳頁動作，所以return true/false就沒有什麼意思。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.name === <span class="string">'about'</span>)&#123;</span><br><span class="line">    next()</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    next(&#123; <span class="attr">name</span>: <span class="string">'about'</span> &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// else next()</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="全局解析守衛"><a href="#全局解析守衛" class="headerlink" title="全局解析守衛"></a>全局解析守衛</h3><blockquote>
+<p>你可以用 router.beforeResolve 註冊一個全局守衛。這和 router.beforeEach 類似，因為它在 每次導航時都會觸發，但是確保在導航被確認之前，同時在所有組件內守衛和異步路由組件被解析之後，解析守衛就被正確調用。這裡有一個例子，確保用戶可以訪問自定義 meta 屬性 requiresCamera 的路由：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">router.beforeResolve(<span class="keyword">async</span> to =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.meta.requiresCamera) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> askForCameraPermission()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      <span class="keyword">if</span> (error <span class="keyword">instanceof</span> NotAllowedError) &#123;</span><br><span class="line">        <span class="comment">// ... 處理錯誤，然後取消導航</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 意料之外的錯誤，取消導航並把錯誤傳給全局處理器</span></span><br><span class="line">        <span class="keyword">throw</span> error</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>這邊可以進行權限判斷。</p>
+<h3 id="全局後置鉤子"><a href="#全局後置鉤子" class="headerlink" title="全局後置鉤子"></a>全局後置鉤子</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.afterEach(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  sendToAnalytics(to.fullPath)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.afterEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, failure</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!failure) sendToAnalytics(to.fullPath)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://next.router.vuejs.org/zh/guide/advanced/navigation-failures.html" target="_blank" rel="noopener">等待导航结果 | Vue Router</a></p>
+<h4 id="路由-route-獨享的守衛"><a href="#路由-route-獨享的守衛" class="headerlink" title="路由(route)獨享的守衛"></a>路由(route)獨享的守衛</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/users/:id'</span>,</span><br><span class="line">    component: UserDetails,</span><br><span class="line">    beforeEnter: <span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// reject the navigation</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>beforeEnter 守衛 只在進入路由時觸發，不會在 params、query 或 hash 改變時觸發。例如，從 /users/2 進入到 /users/3 或者從 /users/2#info 進入到 /users/2#projects。它們只有在 從一個不同的 路由導航時，才會被觸發。</p>
+<p>你也可以將一個函數數組傳遞給 beforeEnter，這在為不同的路由重用守衛時很有用：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeQueryParams</span>(<span class="params">to</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Object</span>.keys(to.query).length)</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">path</span>: to.path, <span class="attr">query</span>: &#123;&#125;, <span class="attr">hash</span>: to.hash &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeHash</span>(<span class="params">to</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (to.hash) <span class="keyword">return</span> &#123; <span class="attr">path</span>: to.path, <span class="attr">query</span>: to.query, <span class="attr">hash</span>: <span class="string">''</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/users/:id'</span>,</span><br><span class="line">    component: UserDetails,</span><br><span class="line">    beforeEnter: [removeQueryParams, removeHash],</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/about'</span>,</span><br><span class="line">    component: UserDetails,</span><br><span class="line">    beforeEnter: [removeQueryParams],</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>beforeEnter 這邊是設定在 route，可以帶路陣列方式。</p>
+<h4 id="組件內的守衛"><a href="#組件內的守衛" class="headerlink" title="組件內的守衛"></a>組件內的守衛</h4><blockquote>
+<p> 可用的配置 API</p>
+<p>你可以為路由組件添加以下配置：</p>
+<ul>
+<li>beforeRouteEnter</li>
+<li>beforeRouteUpdate</li>
+<li>beforeRouteLeave</li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UserDetails = &#123;</span><br><span class="line">  template: <span class="string">`...`</span>,</span><br><span class="line">  beforeRouteEnter(to, <span class="keyword">from</span>) &#123;</span><br><span class="line">    <span class="comment">// 在渲染該組件的對應路由被驗證前調用</span></span><br><span class="line">    <span class="comment">// 不能獲取組件實例 `this` ！</span></span><br><span class="line">    <span class="comment">// 因為當守衛執行時，組件實例還沒被創建！</span></span><br><span class="line">  &#125;,</span><br><span class="line">  beforeRouteUpdate(to, <span class="keyword">from</span>) &#123;</span><br><span class="line">    <span class="comment">// 在當前路由改變，但是該組件被覆用時調用</span></span><br><span class="line">    <span class="comment">// 舉例來說，對於一個帶有動態參數的路徑 `/users/:id`，在 `/users/1` 和 `/users/2` 之間跳轉的時候，</span></span><br><span class="line">    <span class="comment">// 由於會渲染同樣的 `UserDetails` 組件，因此組件實例會被覆用。而這個鉤子就會在這個情況下被調用。</span></span><br><span class="line">    <span class="comment">// 因為在這種情況發生的時候，組件已經掛載好了，導航守衛可以訪問組件實例 `this`</span></span><br><span class="line">  &#125;,</span><br><span class="line">  beforeRouteLeave(to, <span class="keyword">from</span>) &#123;</span><br><span class="line">    <span class="comment">// 在導航離開渲染該組件的對應路由時調用</span></span><br><span class="line">    <span class="comment">// 與 `beforeRouteUpdate` 一樣，它可以訪問組件實例 `this`</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常用 beforeRouteLeave</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">beforeRouteLeave (to, <span class="keyword">from</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> answer = <span class="built_in">window</span>.confirm(<span class="string">'Do you really want to leave? you have unsaved changes!'</span>)</span><br><span class="line">  <span class="keyword">if</span> (!answer) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="完整的導航解析流程"><a href="#完整的導航解析流程" class="headerlink" title="完整的導航解析流程"></a>完整的導航解析流程</h3><pre><code>導航被觸發。
+在失活的組件裡調用 beforeRouteLeave 守衛。
+調用全局的 beforeEach 守衛。
+在重用的組件裡調用 beforeRouteUpdate 守衛(2.2+)。
+在路由配置裡調用 beforeEnter。
+解析異步路由組件。
+在被激活的組件裡調用 beforeRouteEnter。
+調用全局的 beforeResolve 守衛(2.5+)。
+導航被確認。
+調用全局的 afterEach 鉤子。
+觸發 DOM 更新。
+調用 beforeRouteEnter 守衛中傳給 next 的回調函數，創建好的組件實例會作為回調函數的參數傳入。
+</code></pre><h2 id="路由元信息"><a href="#路由元信息" class="headerlink" title="路由元信息"></a>路由元信息</h2><p>可針對 route 設定 meta 做一些事情判斷</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/posts'</span>,</span><br><span class="line">    component: PostsLayout,</span><br><span class="line">    children: [</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">'new'</span>,</span><br><span class="line">        component: PostsNew,</span><br><span class="line">        <span class="comment">// 只有經過身份驗證的用戶才能創建帖子</span></span><br><span class="line">        meta: &#123; <span class="attr">requiresAuth</span>: <span class="literal">true</span> &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: <span class="string">':id'</span>,</span><br><span class="line">        component: PostsDetail</span><br><span class="line">        <span class="comment">// 任何人都可以閱讀文章</span></span><br><span class="line">        meta: &#123; <span class="attr">requiresAuth</span>: <span class="literal">false</span> &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 而不是去檢查每條路由記錄</span></span><br><span class="line">  <span class="comment">// to.matched.some(record =&gt; record.meta.requiresAuth)</span></span><br><span class="line">  <span class="keyword">if</span> (to.meta.requiresAuth &amp;&amp; !auth.isLoggedIn()) &#123;</span><br><span class="line">    <span class="comment">// 此路由需要授權，請檢查是否已登錄</span></span><br><span class="line">    <span class="comment">// 如果沒有，則重定向到登錄頁面</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      path: <span class="string">'/login'</span>,</span><br><span class="line">      <span class="comment">// 保存我們所在的位置，以便以後再來</span></span><br><span class="line">      query: &#123; <span class="attr">redirect</span>: to.fullPath &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="懶加載"><a href="#懶加載" class="headerlink" title="懶加載"></a>懶加載</h2><p>原寫法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> About <span class="keyword">from</span> <span class="string">'./components/About.vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">component</span>: Home &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>:<span class="string">'about'</span>, <span class="attr">path</span>: <span class="string">'/about'</span>, <span class="attr">component</span>: About &#125;,</span><br></pre></td></tr></table></figure></p>
+<p>新寫法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> About = <span class="keyword">import</span>(<span class="string">'./components/About.vue'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">'/'</span>, <span class="attr">component</span>: Home &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>:<span class="string">'about'</span>, <span class="attr">path</span>: <span class="string">'/about'</span>, <span class="attr">component</span>: About &#125;,</span><br></pre></td></tr></table></figure>
+<p>簡單來說，變動只有第一行。<br><strong>2021-06-20目前 webpack才能用的樣子，Vite不能樣子</strong></p>
+<h2 id="獲取資料-重點"><a href="#獲取資料-重點" class="headerlink" title="獲取資料(重點)"></a>獲取資料(重點)</h2><p>當初我在想，載入資料不就寫在 <code>create</code> 就好了嗎?後來我發現，不能這樣，所以官方範例都用 <code>$watch</code> 去做監聽參數。</p>
+<p><a href="https://cn.vuejs.org/v2/api/#vm-watch" target="_blank" rel="noopener">API — Vue.js</a></p>
+<p>有兩個方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;post&quot;&gt;</span><br><span class="line">    &lt;div v-if&#x3D;&quot;loading&quot; class&#x3D;&quot;loading&quot;&gt;Loading...&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div v-if&#x3D;&quot;error&quot; class&#x3D;&quot;error&quot;&gt;&#123;&#123; error &#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div v-if&#x3D;&quot;post&quot; class&#x3D;&quot;content&quot;&gt;</span><br><span class="line">      &lt;h2&gt;&#123;&#123; post.title &#125;&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">      &lt;p&gt;&#123;&#123; post.body &#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+<p>方式一</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      post: <span class="literal">null</span>,</span><br><span class="line">      error: <span class="literal">null</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    <span class="comment">// watch 路由的參數，以便再次獲取數據</span></span><br><span class="line">    <span class="keyword">this</span>.$watch(</span><br><span class="line">      () =&gt; <span class="keyword">this</span>.$route.params,</span><br><span class="line">      () =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.fetchData()</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// 組件創建完後獲取數據，</span></span><br><span class="line">      <span class="comment">// 此時 data 已經被 observed 了</span></span><br><span class="line">      &#123; <span class="attr">immediate</span>: <span class="literal">true</span> &#125;</span><br><span class="line">    )</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    fetchData() &#123;</span><br><span class="line">      <span class="keyword">this</span>.error = <span class="keyword">this</span>.post = <span class="literal">null</span></span><br><span class="line">      <span class="keyword">this</span>.loading = <span class="literal">true</span></span><br><span class="line">      <span class="comment">// replace `getPost` with your data fetching util / API wrapper</span></span><br><span class="line">      <span class="comment">// 用你的數據獲取 util 或 API 替換 `getPost`</span></span><br><span class="line">      getPost(<span class="keyword">this</span>.$route.params.id, (err, post) =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.loading = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          <span class="keyword">this</span>.error = err.toString()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">this</span>.post = post</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 randomuser 參照官方做個簡單範例</p>
+<p>GIT: <a href="https://github.com/malagege/vue-router-test/commit/6995135924b391a6cd9fe3f8564e3aa80051b036" target="_blank" rel="noopener">6995135924b391a6cd9fe3f8564e3aa80051b036</a></p>
+<p>方式二</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      post: <span class="literal">null</span>,</span><br><span class="line">      error: <span class="literal">null</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  beforeRouteEnter(to, <span class="keyword">from</span>, next) &#123;</span><br><span class="line">    getPost(to.params.id, (err, post) =&gt; &#123;</span><br><span class="line">      next(<span class="function"><span class="params">vm</span> =&gt;</span> vm.setData(err, post))</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 路由改變前，組件就已經渲染完了</span></span><br><span class="line">  <span class="comment">// 邏輯稍稍不同</span></span><br><span class="line">  <span class="keyword">async</span> beforeRouteUpdate(to, <span class="keyword">from</span>) &#123;</span><br><span class="line"><span class="comment">//    this.post = null</span></span><br><span class="line"><span class="comment">//    try &#123;</span></span><br><span class="line"><span class="comment">//      this.post = await getPost(to.params.id)</span></span><br><span class="line"><span class="comment">//    &#125; catch (error) &#123;</span></span><br><span class="line"><span class="comment">//      this.error = error.toString()</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line">    getUser(to.params.id, (err, User) =&gt; &#123;</span><br><span class="line">      <span class="keyword">this</span>.setData(err,User)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    setData (err, User) &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">this</span>.error = err.toString()</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.User = User</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>官方忘記加了 setData method，回看 v3 版本文件有這個 method</p>
+<p>GIT: <a href="https://github.com/malagege/vue-router-test/commit/8b717a40aa0169fcd8a6fb8eaf3500f65119c428" target="_blank" rel="noopener">8b717a40aa0169fcd8a6fb8eaf3500f65119c428</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/vue/" rel="tag"># vue</a>
+              <a href="/blog/tags/vue-router/" rel="tag"># vue router</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/06/27/Word-docx-%E8%BD%89-pdf-%E6%96%B9%E6%B3%95/" rel="prev" title="Word (docx) 轉 pdf 方法">
+      <i class="fa fa-chevron-left"></i> Word (docx) 轉 pdf 方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/06/27/%E7%9C%8B-HTTP-%E5%92%8C-HTTPS-API-%E6%9C%8D%E5%8B%99%E5%B0%81%E5%8C%85%E5%8F%83%E6%95%B8%E6%96%B9%E6%B3%95/" rel="next" title="看 HTTP 和 HTTPS API 服務封包參數方法">
+      看 HTTP 和 HTTPS API 服務封包參數方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-Vue-router-4"><span class="nav-number">1.</span> <span class="nav-text">安裝 Vue router 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#動態路由匹配"><span class="nav-number">2.</span> <span class="nav-text">動態路由匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#帶參數動態路由"><span class="nav-number">2.1.</span> <span class="nav-text">帶參數動態路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#響應路由參數的變化-重要"><span class="nav-number">2.2.</span> <span class="nav-text">響應路由參數的變化(重要)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#捕獲所有路由或-404-Not-found-路由"><span class="nav-number">2.3.</span> <span class="nav-text">捕獲所有路由或 404 Not found 路由</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由的匹配語法"><span class="nav-number">3.</span> <span class="nav-text">路由的匹配語法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可重複的參數"><span class="nav-number">3.1.</span> <span class="nav-text">可重複的參數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可選參數"><span class="nav-number">3.2.</span> <span class="nav-text">可選參數</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套路由-nested-routes"><span class="nav-number">4.</span> <span class="nav-text">嵌套路由(nested-routes)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#設定嵌套路由首頁"><span class="nav-number">4.1.</span> <span class="nav-text">設定嵌套路由首頁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#編程式導航-Navigation-Guards"><span class="nav-number">5.</span> <span class="nav-text">編程式導航(Navigation Guards)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#跳頁到不同路徑網址"><span class="nav-number">5.1.</span> <span class="nav-text">跳頁到不同路徑網址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#替換當前位置"><span class="nav-number">5.2.</span> <span class="nav-text">替換當前位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回前一頁、下一頁"><span class="nav-number">5.3.</span> <span class="nav-text">回前一頁、下一頁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名路由"><span class="nav-number">6.</span> <span class="nav-text">命名路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名視圖"><span class="nav-number">7.</span> <span class="nav-text">命名視圖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套命名視圖"><span class="nav-number">7.1.</span> <span class="nav-text">嵌套命名視圖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新導向和别名"><span class="nav-number">8.</span> <span class="nav-text">重新導向和别名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重新導向-redirect"><span class="nav-number">8.1.</span> <span class="nav-text">重新導向(redirect)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#動態導向-帶參數"><span class="nav-number">8.1.1.</span> <span class="nav-text">動態導向(帶參數)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#别名"><span class="nav-number">8.1.2.</span> <span class="nav-text">别名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#將-props-傳遞給路由組件-容易忘記"><span class="nav-number">9.</span> <span class="nav-text">將 props 傳遞給路由組件(容易忘記?)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-mode"><span class="nav-number">9.1.</span> <span class="nav-text">Boolean mode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命名視圖-1"><span class="nav-number">9.1.1.</span> <span class="nav-text">命名視圖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物件給值-固定給值"><span class="nav-number">9.2.</span> <span class="nav-text">物件給值(固定給值)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函式給值-重要"><span class="nav-number">9.3.</span> <span class="nav-text">函式給值(重要?)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#歷史模式"><span class="nav-number">10.</span> <span class="nav-text">歷史模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash"><span class="nav-number">10.1.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5-模式"><span class="nav-number">10.2.</span> <span class="nav-text">HTML5 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伺服器配置"><span class="nav-number">10.3.</span> <span class="nav-text">伺服器配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#導航守衛-Navigation-Guards"><span class="nav-number">11.</span> <span class="nav-text">導航守衛(Navigation Guards)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局前置守衛"><span class="nav-number">11.1.</span> <span class="nav-text">全局前置守衛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#錯誤監聽"><span class="nav-number">11.2.</span> <span class="nav-text">錯誤監聽</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可選的第三個參數-next"><span class="nav-number">11.2.1.</span> <span class="nav-text">可選的第三個參數 next</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局解析守衛"><span class="nav-number">11.3.</span> <span class="nav-text">全局解析守衛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局後置鉤子"><span class="nav-number">11.4.</span> <span class="nav-text">全局後置鉤子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#路由-route-獨享的守衛"><span class="nav-number">11.4.1.</span> <span class="nav-text">路由(route)獨享的守衛</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#組件內的守衛"><span class="nav-number">11.4.2.</span> <span class="nav-text">組件內的守衛</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整的導航解析流程"><span class="nav-number">11.5.</span> <span class="nav-text">完整的導航解析流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由元信息"><span class="nav-number">12.</span> <span class="nav-text">路由元信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#懶加載"><span class="nav-number">13.</span> <span class="nav-text">懶加載</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#獲取資料-重點"><span class="nav-number">14.</span> <span class="nav-text">獲取資料(重點)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">600</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">480</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/";
+    this.page.identifier = "2021/06/27/Vue-Router-4-學習筆記/";
+    this.page.title = " Vue Router 4 學習筆記";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
