@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="之前寫一張網卡使用多組 IP 方法 - 使用上設定防火牆陷阱 | 程式狂想筆記有談過使用上設定防火牆陷阱，彈要怎麼看出去方法ip route show，但我對輸出出來資訊不太懂，今天特別研究一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="查看 IP 指令和路由筆記">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="之前寫一張網卡使用多組 IP 方法 - 使用上設定防火牆陷阱 | 程式狂想筆記有談過使用上設定防火牆陷阱，彈要怎麼看出去方法ip route show，但我對輸出出來資訊不太懂，今天特別研究一下。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-07-14T12:45:37.000Z">
+<meta property="article:modified_time" content="2021-07-14T13:18:14.325Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="ip">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="route">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>查看 IP 指令和路由筆記 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          查看 IP 指令和路由筆記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-14 20:45:37 / 修改時間：21:18:14" itemprop="dateCreated datePublished" datetime="2021-07-14T20:45:37+08:00">2021-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/查看-IP-指令和路由筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>之前寫<a href="https://malagege.github.io/blog/2020/05/30/%E4%B8%80%E5%BC%B5%E7%B6%B2%E5%8D%A1%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%B5%84-IP-%E6%96%B9%E6%B3%95/#%E4%BD%BF%E7%94%A8%E4%B8%8A%E8%A8%AD%E5%AE%9A%E9%98%B2%E7%81%AB%E7%89%86%E9%99%B7%E9%98%B1">一張網卡使用多組 IP 方法 - 使用上設定防火牆陷阱 | 程式狂想筆記</a>有談過<code>使用上設定防火牆陷阱</code>，彈要怎麼看出去方法<code>ip route show</code>，但我對輸出出來資訊不太懂，今天特別研究一下。</p>
+<a id="more"></a>
+<h2 id="ip-詳細指令"><a href="#ip-詳細指令" class="headerlink" title="ip 詳細指令"></a>ip 詳細指令</h2><p><a href="https://www.jianshu.com/p/5f933834a5c2" target="_blank" rel="noopener">linux IP命令简介 - 簡書</a> <a href="https://i.imgur.com/LXEBoQA.png" target="_blank" rel="noopener">備份圖</a></p>
+<p>我找出介紹詳細指令簡介，建議可以看一下，相關問題可以解決。</p>
+<h2 id="所以要怎麼看出去-ip"><a href="#所以要怎麼看出去-ip" class="headerlink" title="所以要怎麼看出去 ip?"></a>所以要怎麼看出去 ip?</h2><h3 id="ip-route-show"><a href="#ip-route-show" class="headerlink" title="ip route show"></a>ip route show</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#ip route show</span><br><span class="line">default via 10.0.2.2 dev enp0s3 proto dhcp metric 100</span><br><span class="line">default via 192.168.99.1 dev enp0s8 proto static metric 101</span><br><span class="line">10.0.2.0&#x2F;24 dev enp0s3 proto kernel scope link src 10.0.2.15 metric 100</span><br><span class="line">10.244.0.0&#x2F;24 via 10.244.0.0 dev flannel.1 onlink</span><br><span class="line">10.244.1.0&#x2F;24 dev cni0 proto kernel scope link src 10.244.1.1</span><br><span class="line">10.244.2.0&#x2F;24 via 10.244.2.0 dev flannel.1 onlink</span><br><span class="line">172.17.0.0&#x2F;16 dev docker0 proto kernel scope link src 172.17.0.1</span><br><span class="line">192.168.99.0&#x2F;24 dev enp0s8 proto kernel scope link src 192.168.99.111 metric 101</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>default表示默認的route，即其他route規則沒有生效就默認使用該條規則。兩條default規則分別對應不同的device。<br>dev表示device，即使用的interface是哪個<br>proto表示該條規則的protocol identifier，有：</p>
+<pre><code>redirect，該路由是由於ICMP redirect產生(install)
+kernel，該路由是在內核進行自動配置的時候產生的
+boot，該路由是在bootup的時候產生
+static，該路由是由管理員增加的，為了覆蓋動態路由
+ra，該路由由Router Discovery tool產生
+</code></pre><p>scope，同上面ip addr show介紹的scope<br>src，表示為優先選擇的源地址，當給目標地址發包的時候<br>metric，表示到目的地的距離(the ‘distance’ to the target)，是一個數字，其單位可以是：Hop, Delay, Throughput, Reliability</p>
+</blockquote>
+<p>參考來源:<br><a href="https://www.jianshu.com/p/5f933834a5c2" target="_blank" rel="noopener">linux IP命令简介 - 簡書</a><br><a href="https://segmentfault.com/a/1190000019363010" target="_blank" rel="noopener">通俗理解IP路由 - SegmentFault 思否</a></p>
+<p>其實我還是覺得這樣還是很不方便看，<code>route</code>指令可以看到那些外部 IP 會倒哪個 Gateway。後面也會講 route 指令也被廢棄了…</p>
+<p>這邊也可以設定一個固定 IP 會指定至到哪一個 Gateway，設定結果如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">10.88.22.11 via 172.26.15.254 dev eth1 </span><br><span class="line">10.88.22.12 via 172.26.15.254 dev eth1 </span><br><span class="line">10.88.22.13 via 172.26.15.254 dev eth1</span><br></pre></td></tr></table></figure>
+<p>這邊我觀查 via 後面是放 Gateway IP，前面是目標 IP 會指定一個 Gateway 傳出去。程式寫太久，再回來看真的會忘記…</p>
+<h4 id="小記看-ip-route-技巧"><a href="#小記看-ip-route-技巧" class="headerlink" title="小記看 ip route 技巧"></a>小記看 ip route 技巧</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">default via 10.89.8.254 dev eth0 </span><br><span class="line">10.88.22.11 via 172.26.15.254 dev eth1 </span><br><span class="line">10.88.22.12 via 172.26.15.254 dev eth1 </span><br><span class="line">10.88.22.13 via 172.26.15.254 dev eth1 </span><br><span class="line">10.89.8.0&#x2F;24 dev eth0  proto kernel  scope link  src 10.89.8.88 </span><br><span class="line">169.254.0.0&#x2F;16 dev eth2  scope link  metric 1004 </span><br><span class="line">169.254.0.0&#x2F;16 dev eth1  scope link  metric 1005 </span><br><span class="line">169.254.0.0&#x2F;16 dev eth0  scope link  metric 1006 </span><br><span class="line">172.26.15.0&#x2F;24 dev eth1  proto kernel  scope link  src 172.26.15.30 </span><br><span class="line">172.26.25.0&#x2F;24 dev eth2  proto kernel  scope link  src 172.26.25.100</span><br></pre></td></tr></table></figure>
+<p>步驟 </p>
+<ol>
+<li>尋找目標 IP 對應上面 via 關鍵字搜尋會指定到哪一個 Gateway ，沒有的話就看 default Gateway</li>
+<li>尋找 Gatway IP 範圍，如:10.89.8.254 =&gt; 10.89.8.0/24</li>
+<li>找出那一行的 src 10.89.8.88 </li>
+</ol>
+<blockquote>
+<p>src，表示為優先選擇的源地址，當給目標地址發包的時候</p>
+</blockquote>
+<h3 id="ip-a"><a href="#ip-a" class="headerlink" title="ip a"></a>ip a</h3><p>我覺得 <code>ip route show</code> 比較難第一時間看出來，在想有什麼關鍵字可以看結果。</p>
+<p><a href="https://www.jianshu.com/p/5f933834a5c2" target="_blank" rel="noopener">linux IP命令简介 - 簡書</a>裡面有提到<code>secondary</code>當為外發的網絡包選擇默認源地址時不使用該地址</p>
+<blockquote>
+<p>secondary，當為外發的網絡包選擇默認源地址時不使用該地址</p>
+</blockquote>
+<p>這樣來看確實可以馬上看出來，不過 <code>ifconfig</code> 沒有看到相關資訊。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># ip a</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN qlen 1</span><br><span class="line">    link&#x2F;loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1&#x2F;8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1&#x2F;128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">....</span><br><span class="line">6: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP qlen 1000</span><br><span class="line">    link&#x2F;ether xx:xx:xx:xx:xx brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.89.8.88&#x2F;24 brd 10.89.8.255 scope global eth0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.103&#x2F;24 brd 10.89.8.255 scope global secondary eth0:103</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.104&#x2F;24 brd 10.89.8.255 scope global secondary eth0:104</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.105&#x2F;24 brd 10.89.8.255 scope global secondary eth0:105</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.106&#x2F;24 brd 10.89.8.255 scope global secondary eth0:106</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.107&#x2F;24 brd 10.89.8.255 scope global secondary eth0:107</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.108&#x2F;24 brd 10.89.8.255 scope global secondary eth0:108</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.109&#x2F;24 brd 10.89.8.255 scope global secondary eth0:109</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.110&#x2F;24 brd 10.89.8.255 scope global secondary eth0:110</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.113&#x2F;24 brd 10.89.8.255 scope global secondary eth0:113</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.114&#x2F;24 brd 10.89.8.255 scope global secondary eth0:114</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.115&#x2F;24 brd 10.89.8.255 scope global secondary eth0:115</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.116&#x2F;24 brd 10.89.8.255 scope global secondary eth0:116</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.117&#x2F;24 brd 10.89.8.255 scope global secondary eth0:117</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.118&#x2F;24 brd 10.89.8.255 scope global secondary eth0:118</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.165&#x2F;24 brd 10.89.8.255 scope global secondary eth0:165</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.193&#x2F;24 brd 10.89.8.255 scope global secondary eth0:193</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet 10.89.8.91&#x2F;24 brd 10.89.8.255 scope global secondary eth0:91</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::f002:2aff:feff:b865&#x2F;64 scope link</span><br></pre></td></tr></table></figure>
+<h2 id="被廢棄掉的指令-彩蛋"><a href="#被廢棄掉的指令-彩蛋" class="headerlink" title="被廢棄掉的指令(彩蛋)"></a>被廢棄掉的指令(彩蛋)</h2><p>有空詳細記錄。</p>
+<p>ifconfig -&gt; ip a<br>traceroute -&gt; tracepath<br><a href="https://unix.stackexchange.com/questions/500796/traceroute-command-replacement-or-alternative" target="_blank" rel="noopener">linux - traceroute command: replacement or alternative - Unix &amp; Linux Stack Exchange</a><br>route -&gt; ip route<br><a href="https://dougvitale.wordpress.com/2011/12/21/deprecated-linux-networking-commands-and-their-replacements/" target="_blank" rel="noopener">Deprecated Linux networking commands and their replacements | Doug Vitale Tech Blog</a></p>
+<h3 id="查看-ip-expose-port"><a href="#查看-ip-expose-port" class="headerlink" title="查看 ip expose port"></a>查看 ip expose port</h3><p><a href="https://malagege.github.io/blog/2020/09/28/Linux-%E6%9F%A5%E7%9C%8B%E7%A8%8B%E5%BC%8F%E7%94%A8%E5%93%AA%E4%BA%9B-port-%E6%96%B9%E6%B3%95/">[轉]Linux 查看程式用哪些 port 方法 | 程式狂想筆記</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -an |grep LISTEN </span><br><span class="line">ss -an |grep LISTEN</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/ip/" rel="tag"># ip</a>
+              <a href="/blog/tags/network/" rel="tag"># network</a>
+              <a href="/blog/tags/route/" rel="tag"># route</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/" rel="prev" title="Dbeaver 使用變數 做SQL 範本 和查詢設定 title">
+      <i class="fa fa-chevron-left"></i> Dbeaver 使用變數 做SQL 範本 和查詢設定 title
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/07/14/Vue-%E4%BD%BF%E7%94%A8%E7%B6%81%E5%AE%9A-class-%E7%AD%86%E8%A8%98/" rel="next" title="Vue 使用綁定 class  筆記">
+      Vue 使用綁定 class  筆記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ip-詳細指令"><span class="nav-number">1.</span> <span class="nav-text">ip 詳細指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所以要怎麼看出去-ip"><span class="nav-number">2.</span> <span class="nav-text">所以要怎麼看出去 ip?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-route-show"><span class="nav-number">2.1.</span> <span class="nav-text">ip route show</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#小記看-ip-route-技巧"><span class="nav-number">2.1.1.</span> <span class="nav-text">小記看 ip route 技巧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ip-a"><span class="nav-number">2.2.</span> <span class="nav-text">ip a</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#被廢棄掉的指令-彩蛋"><span class="nav-number">3.</span> <span class="nav-text">被廢棄掉的指令(彩蛋)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-ip-expose-port"><span class="nav-number">3.1.</span> <span class="nav-text">查看 ip expose port</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">608</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">484</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/";
+    this.page.identifier = "2021/07/14/查看-IP-指令和路由筆記/";
+    this.page.title = "查看 IP 指令和路由筆記";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
