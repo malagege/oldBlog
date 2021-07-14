@@ -137,7 +137,7 @@ methods: {
 
 ```
 
-GIT:a05d6cc9bd64e11de6be51a57a1f1e547b637a46
+GIT: [https://github.com/malagege/vuex-test/commit/a05d6cc9bd64e11de6be51a57a1f1e547b637a46](https://github.com/malagege/vuex-test/commit/a05d6cc9bd64e11de6be51a57a1f1e547b637a46)
 
 
 > 再次強調，我們通過提交 mutation 的方式，而非直接改變 store.state.count，是因為我們想要更明確地追蹤到狀態的變化。這個簡單的約定能夠讓你的意圖更加明顯，這樣你在閱讀代碼的時候能更容易地解讀應用內部的狀態改變。此外，這樣也讓我們有機會去實現一些能記錄每次狀態改變，保存狀態快照的調試工具。有了它，我們甚至可以實現如時間穿梭般的調試體驗。
@@ -225,7 +225,7 @@ computed: mapState([
 ])
 ```
 
-GIT: 4e9b200cdcca3a043ff9e94c446b2d4900c1e5d0
+GIT: [https://github.com/malagege/vuex-test/commit/4e9b200cdcca3a043ff9e94c446b2d4900c1e5d0](https://github.com/malagege/vuex-test/commit/4e9b200cdcca3a043ff9e94c446b2d4900c1e5d0)
 
 但一般 `computed` 不可能全部包給 `mapState`。所以我們要可以使用 ES 解構。
 
@@ -241,7 +241,7 @@ computed: {
 }
 ```
 
-GIT: 9c690013d6cc52afc1cd72eb801ac16fc4bf5d1d
+GIT: [https://github.com/malagege/vuex-test/commit/9c690013d6cc52afc1cd72eb801ac16fc4bf5d1d](https://github.com/malagege/vuex-test/commit/9c690013d6cc52afc1cd72eb801ac16fc4bf5d1d)
 
 
 #### 小記
@@ -302,7 +302,7 @@ console.log('store.getters.doneTodos :' + store.getters.doneTodos )
 ```
 
 
-GIT: 750360bfa2a97e02aa1c84708a33edfe9718366e
+GIT: [https://github.com/malagege/vuex-test/commit/750360bfa2a97e02aa1c84708a33edfe9718366e](https://github.com/malagege/vuex-test/commit/750360bfa2a97e02aa1c84708a33edfe9718366e)
 
 ### 通過屬性訪問
 
@@ -339,7 +339,7 @@ getters: {
   }
 }
 ```
-GIT: 536f50d2aab41bf5448b6f617f124a8913a808aa
+GIT: [https://github.com/malagege/vuex-test/commit/536f50d2aab41bf5448b6f617f124a8913a808aa]()
 
 
 簡單說，Function 裡面回傳 Function 。還滿特別用法。
@@ -413,7 +413,7 @@ store.commit('increment')
 
 ![圖片](https://user-images.githubusercontent.com/6058558/123091878-6e725b00-d45c-11eb-9e00-9be9e9c1fd0b.png)
 
-GIT: 00bd0b93a7ffb3d41a413eabc519cb15a3a2df2f
+GIT: [https://github.com/malagege/vuex-test/commit/00bd0b93a7ffb3d41a413eabc519cb15a3a2df2f](https://github.com/malagege/vuex-test/commit/536f50d2aab41bf5448b6f617f124a8913a808aa)
 
 ### 什麼是 payload
 
@@ -443,7 +443,7 @@ store.commit('increment', 10)
 ```
 
 
-GIT: e04820c2cd0245e0faee9364ecf0aa927c9019bc
+GIT: [https://github.com/malagege/vuex-test/commit/e04820c2cd0245e0faee9364ecf0aa927c9019bc](https://github.com/malagege/vuex-test/commit/e04820c2cd0245e0faee9364ecf0aa927c9019bc)
 
 > 在大多數情況下，載荷應該是一個**物件**，這樣可以包含多個字段並且記錄的 mutation 會更易讀：
 
@@ -463,7 +463,7 @@ store.commit('increment', {
 })
 ```
 
-GIT: d033910dafe268599615e67d374ecb33709cc5dc
+GIT: [https://github.com/malagege/vuex-test/commit/d033910dafe268599615e67d374ecb33709cc5dc](https://github.com/malagege/vuex-test/commit/d033910dafe268599615e67d374ecb33709cc5dc)
 
 
 ## commit 使用物件傳值
@@ -483,7 +483,7 @@ mutations: {
 }
 ```
 
-GIT: caa624c19d4741924f3abe5c9f6d0f5b93cb34f3
+GIT: [https://github.com/malagege/vuex-test/commit/caa624c19d4741924f3abe5c9f6d0f5b93cb34f3](https://github.com/malagege/vuex-test/commit/caa624c19d4741924f3abe5c9f6d0f5b93cb34f3)
 
 
 
@@ -517,7 +517,7 @@ const store = createStore({
 > 用不用常量取決於你——在需要多人協作的大型項目中，這會很有幫助。但如果你不喜歡，你完全可以不這樣做。
 
 
-GIT: 00841e0ede5e9473df641eff3646f69dade93256
+GIT: [https://github.com/malagege/vuex-test/commit/00841e0ede5e9473df641eff3646f69dade93256](https://github.com/malagege/vuex-test/commit/00841e0ede5e9473df641eff3646f69dade93256)
 
 
 ### Mutation 必須是同步函數
@@ -586,7 +586,7 @@ console.log(`新值：${store.state.number}`);
 結果:
 ![](https://i.imgur.com/JbCEPWh.png)
 
-GIT: 739138bbef8a7ed162456fafbf7a9d5808b4f1d2
+GIT: [https://github.com/malagege/vuex-test/commit/739138bbef8a7ed162456fafbf7a9d5808b4f1d2](https://github.com/malagege/vuex-test/commit/739138bbef8a7ed162456fafbf7a9d5808b4f1d2)
 
 #### 同步測試
 
@@ -698,7 +698,7 @@ store.dispatch('increment')
 
 ![](https://i.imgur.com/dfPPjVP.png)
 
-GIT: 637dfc3482613d86027ee32af369ede218793438
+GIT: [https://github.com/malagege/vuex-test/commit/637dfc3482613d86027ee32af369ede218793438](https://github.com/malagege/vuex-test/commit/637dfc3482613d86027ee32af369ede218793438)
 
 > 乍一眼看上去感覺多此一舉，我們直接分發 mutation 豈不更方便？實際上並非如此，還記得 mutation 必須同步執行這個限制麼？Action 就不受約束！我們可以在 action 內部執行異步操作：
 
@@ -728,7 +728,7 @@ store.dispatch({
 
 ```
 
-GIT: c0de63b661c0addc1edc6e24da3cb920cd242ab3
+GIT: [https://github.com/malagege/vuex-test/commit/c0de63b661c0addc1edc6e24da3cb920cd242ab3](https://github.com/malagege/vuex-test/commit/c0de63b661c0addc1edc6e24da3cb920cd242ab3)
 
 > 來看一個更加實際的購物車示例，涉及到調用異步 API 和分發多重 mutation：
 
@@ -834,7 +834,7 @@ actions: {
 
 ```
 
-GIT: 4d639191a71bd674fffc7593a097f44673dcdf63
+GIT: [https://github.com/malagege/vuex-test/commit/4d639191a71bd674fffc7593a097f44673dcdf63](https://github.com/malagege/vuex-test/commit/4d639191a71bd674fffc7593a097f44673dcdf63)
 
 ![](https://i.imgur.com/YWfOr7k.png)
 
@@ -1229,7 +1229,6 @@ const store = createStore({
 
 ![](https://i.imgur.com/PmhNNkR.png)
 
-GIT: 
 
 ### 開發環境與發佈環境
 

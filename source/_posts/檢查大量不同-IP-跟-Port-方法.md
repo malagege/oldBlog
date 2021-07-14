@@ -191,3 +191,77 @@ Get-Content -Path .\computers.txt | Test-NetConnection -Port 1
 更多相關:
 [Run Test-NetConnection on multiple machines, the best way：PowerShell](https://www.reddit.com/r/PowerShell/comments/ff2x1f/run_testnetconnection_on_multiple_machines_the/)
 [Test connection to servers on several ports - Powershellbros.com](https://www.powershellbros.com/test-connection-to-servers-on-several-ports/)
+
+
+## 工作用測 IP  PORT 的腳本
+
+記得把 IP1,IP2 關鍵字換成IP
+
+```bash
+#!/bin/bash
+COLOR_REST='\e[0m';
+COLOR_GREEN='\e[0;32m';
+COLOR_RED='\e[0;31m';
+
+echo "正式環境";
+
+# 443
+for i in {IP1,IP2,IP3};
+do
+        for j in 443;
+        do
+                (nc -zv -w 5 ${i} ${j}) > /dev/null 2>&1 && echo -e "${COLOR_GREEN}${i}:${j} :: 可以連結${COLOR_REST}" || echo -e "${COLOR_RED}${i}:${j} :: 不能連結${COLOR_REST}"
+        done
+done
+
+# 9101
+for i in {IP1,IP2,IP3}
+do
+        for j in 9101;
+        do
+                (nc -zv -w 5 ${i} ${j}) > /dev/null 2>&1 && echo -e "${COLOR_GREEN}${i}:${j} :: 可以連結${COLOR_REST}" || echo -e "${COLOR_RED}${i}:${j} :: 不能連結${COLOR_REST}"
+        done
+done
+
+# 1549
+for i in IP1
+do
+        for j in 1549;
+        do
+                (nc -zv -w 5 ${i} ${j}) > /dev/null 2>&1 && echo -e "${COLOR_GREEN}${i}:${j} :: 可以連結${COLOR_REST}" || echo -e "${COLOR_RED}${i}:${j} :: 不能連結${COLOR_REST}"
+        done
+done
+
+
+echo "驗證環境";
+
+
+# 26112
+for i in {IP1,IP2};
+do
+        for j in 26112;
+        do
+                (nc -zv -w 5 ${i} ${j}) > /dev/null 2>&1 && echo -e "${COLOR_GREEN}${i}:${j} :: 可以連結${COLOR_REST}" || echo -e "${COLOR_RED}${i}:${j} :: 不能連結${COLOR_REST}"
+        done
+done
+
+# 9101
+for i in {IP1,IP2,IP3};
+do
+        for j in 9101;
+        do
+                (nc -zv -w 5 ${i} ${j}) > /dev/null 2>&1 && echo -e "${COLOR_GREEN}${i}:${j} :: 可以連結${COLOR_REST}" || echo -e "${COLOR_RED}${i}:${j} :: 不能連結${COLOR_REST}"
+        done
+done
+
+
+# 有兩個 port 1549,1561
+for i in IP1;
+do
+        for j in {1549,1561};
+        do
+                (nc -zv -w 5 ${i} ${j}) > /dev/null 2>&1 && echo -e "${COLOR_GREEN}${i}:${j} :: 可以連結${COLOR_REST}" || echo -e "${COLOR_RED}${i}:${j} :: 不能連結${COLOR_REST}"
+        done
+done
+
+```

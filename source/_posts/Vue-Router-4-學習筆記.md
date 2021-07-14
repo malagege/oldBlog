@@ -733,12 +733,6 @@ const router = createRouter({
 > Also "not working" is not a very good problem description. How do you test, what results are you expecting and what are you observing instead?
 
 
-其實也可以不用拿一般Web Server跑，直接用nodejs執行。
-
-
-參考:[vue.js - Runing vue/cli app under docker simple index.html is opened - Stack Overflow](https://stackoverflow.com/questions/59491055/runing-vue-cli-app-under-docker-simple-index-html-is-opened)
-)
-
 ## 導航守衛(Navigation Guards)
 
 
