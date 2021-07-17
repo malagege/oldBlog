@@ -223,3 +223,8 @@ trap 相關指令，可以用來可以控制關閉方法
 ## 調整完美關閉腳本
 
 TODO: 待修改
+
+
+彩蛋
+
+[執行 Docker 容器可使用 dumb-init 或 tini 改善程序優雅結束的問題 | The Will Will Web](https://blog.miniasp.com/post/2021/07/09/Use-dumb-init-in-Docker-Container)

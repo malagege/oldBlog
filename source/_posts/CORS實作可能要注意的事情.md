@@ -45,3 +45,4 @@ echo 'finial' . PHP_EOL;
 - [CORS 跨域原理浅析 - 知乎](https://zhuanlan.zhihu.com/p/29980092)
 - [Laravel 处理 OPTIONS 请求的原理探索及  批量处理方案 - 知乎](https://zhuanlan.zhihu.com/p/33542992)
 - [PHP, Larave, Nginx 設置 Header 允許請求 CORS 的幾種方式 « 關於網路那些事...](https://adon988.logdown.com/posts/7816040-cross-domain-cros-request-issues)
+- [✋🏼🔥 CS Visualized: CORS - DEV Community](https://dev.to/lydiahallie/cs-visualized-cors-5b8h)
