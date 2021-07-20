@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="我這台電腦 hfs 無法對外連線，有設定開通防火牆，一直找不出什麼問題。最近看了Docker Desktop for Windows 啟動的容器無法透過遠端連接的靈異事件簿 | The Will Will Web，嘗試著調整防火牆，別台電腦終於可以連了。 雖然保哥紀錄已經夠完整了，建議可以看上面文章，這邊還是紀錄我的筆記。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Window 防火牆設定完成無法連通的問題">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="我這台電腦 hfs 無法對外連線，有設定開通防火牆，一直找不出什麼問題。最近看了Docker Desktop for Windows 啟動的容器無法透過遠端連接的靈異事件簿 | The Will Will Web，嘗試著調整防火牆，別台電腦終於可以連了。 雖然保哥紀錄已經夠完整了，建議可以看上面文章，這邊還是紀錄我的筆記。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/img1.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/img2.png">
+<meta property="og:image" content="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/img1.png">
+<meta property="article:published_time" content="2021-07-17T14:21:10.000Z">
+<meta property="article:modified_time" content="2021-07-17T15:09:26.144Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="window">
+<meta property="article:tag" content="firewall">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/img1.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Window 防火牆設定完成無法連通的問題 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Window 防火牆設定完成無法連通的問題
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-17 22:21:10 / 修改時間：23:09:26" itemprop="dateCreated datePublished" datetime="2021-07-17T22:21:10+08:00">2021-07-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Window/" itemprop="url" rel="index"><span itemprop="name">Window</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/17/Window-防火牆設定完成無法聯通的問題/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>我這台電腦 hfs 無法對外連線，有設定開通防火牆，一直找不出什麼問題。最近看了<a href="https://blog.miniasp.com/post/2021/06/14/Docker-Desktop-for-Windows-Windows-Firewall-Issues" target="_blank" rel="noopener">Docker Desktop for Windows 啟動的容器無法透過遠端連接的靈異事件簿 | The Will Will Web</a>，嘗試著調整防火牆，別台電腦終於可以連了。</p>
+<p>雖然保哥紀錄已經夠完整了，建議可以看上面文章，這邊還是紀錄我的筆記。</p>
+<a id="more"></a>
+<h2 id="了解-Window-私有網路-共用網路"><a href="#了解-Window-私有網路-共用網路" class="headerlink" title="了解 Window 私有網路/共用網路"></a>了解 Window 私有網路/共用網路</h2><p>什麼是私有網路/共用網路，共用網路在網路芳鄰不會被探索到。私有網路是在家裡讓網路芳鄰可以連到，這邊就不深入探索這些有什麼功能。</p>
+<p>怎麼看現在網路用什麼位置?<br>使用 Powershell 看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-NetConnectionProfile</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Name             : 網路  2</span><br><span class="line">InterfaceAlias   : nMatrix Virtual Network</span><br><span class="line">InterfaceIndex   : 10</span><br><span class="line">NetworkCategory  : Public</span><br><span class="line">IPv4Connectivity : LocalNetwork</span><br><span class="line">IPv6Connectivity : NoTraffic</span><br><span class="line"></span><br><span class="line">Name             : CHTXXX</span><br><span class="line">InterfaceAlias   : 區域連線</span><br><span class="line">InterfaceIndex   : 29</span><br><span class="line">NetworkCategory  : Public</span><br><span class="line">IPv4Connectivity : Internet</span><br><span class="line">IPv6Connectivity : NoTraffic</span><br></pre></td></tr></table></figure>
+<p>這邊可以看到我是使用共用網路，所以網路芳鄰是找不到的。<br>上面保哥有特別說，正常在家會想分享網路芳鄰，可能就要開私有網路。在外面要連 Wifi 的話，可以使用共用網路，可以看情況選擇。</p>
+<h3 id="切換共用網路-私有網路"><a href="#切換共用網路-私有網路" class="headerlink" title="切換共用網路/私有網路"></a>切換共用網路/私有網路</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 私有網路</span></span><br><span class="line"><span class="built_in">Set-NetConnectionProfile</span> <span class="literal">-Name</span> <span class="string">"CHTXXX"</span> <span class="literal">-NetworkCategory</span> Private</span><br><span class="line"><span class="comment"># 共用網路</span></span><br><span class="line"><span class="built_in">Set-NetConnectionProfile</span> <span class="literal">-Name</span> <span class="string">"CHTXXX"</span> <span class="literal">-NetworkCategory</span> Public</span><br></pre></td></tr></table></figure>
+<p>這邊假如你切換網路能跑了，但問題不是出在這邊，你可以往下在看下去是甚麼原因。</p>
+<h2 id="了解防火牆-取消後發生的事情"><a href="#了解防火牆-取消後發生的事情" class="headerlink" title="了解防火牆 取消後發生的事情"></a>了解防火牆 取消後發生的事情</h2><p>一般第一次打開應用程式，如 hfs 會跳出防火牆圖示，如下。</p>
+<img src="/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/img1.png" class="" title="防火牆">
+<p>我們按下「取消」，然後看到防火牆規則</p>
+<img src="/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/img2.png" class="" title="防火牆">
+<p>竟然防火牆規則都是「封鎖」的(私有/共用網路)，然後你打開 hfs 軟體就無法選擇防火牆規則，因為都已經設定封鎖。</p>
+<p>簡單做個這個防火牆會發生什麼事情</p>
+<h2 id="最後整理"><a href="#最後整理" class="headerlink" title="最後整理"></a>最後整理</h2><img src="/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/img1.png" class="" title="防火牆">
+<p>上面有那個選擇，就是對私有網路看共用網路做允許或封鎖設定。</p>
+<ol>
+<li>假如你取消，就是私有網路、共用網路做封鎖。</li>
+<li>假如你勾選私有網路，那就是私有網路做允許，共用網路做封鎖。</li>
+<li>假如你勾選共用網路，那就是共用網路做允許，私有網路做封鎖。</li>
+<li>假如全勾，就是私有網路、共用網路做允許。</li>
+</ol>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>首先，為什麼要知道當前網路是在私有網路/共用網路？因為在看防火牆規則才知道哪一個有效的。<br>再來就是看當前網路下，防火牆是否開通。</p>
+<p>結案:D</p>
+<h2 id="指令小記"><a href="#指令小記" class="headerlink" title="指令小記"></a>指令小記</h2><p>posershell 查詢防火牆規則<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-NetFirewallRule | where &#123; $_.Name -like &quot;*hfs*&quot; &#125; | ft</span><br></pre></td></tr></table></figure></p>
+<p>開啟防火牆 cmd <code>wf.msc</code></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/window/" rel="tag"># window</a>
+              <a href="/blog/tags/firewall/" rel="tag"># firewall</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/07/14/%E7%94%A8-Sublime-%E5%88%86%E5%89%B2-SQL-%E8%AA%9E%E5%8F%A5-LIKE-1000%E7%AD%86%E8%B3%87%E6%96%99-%E8%AA%9E%E5%8F%A5/" rel="prev" title="用 Sublime 分割 SQL 語句 LIKE 1000筆資料 語句">
+      <i class="fa fa-chevron-left"></i> 用 Sublime 分割 SQL 語句 LIKE 1000筆資料 語句
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#了解-Window-私有網路-共用網路"><span class="nav-number">1.</span> <span class="nav-text">了解 Window 私有網路&#x2F;共用網路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#切換共用網路-私有網路"><span class="nav-number">1.1.</span> <span class="nav-text">切換共用網路&#x2F;私有網路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解防火牆-取消後發生的事情"><span class="nav-number">2.</span> <span class="nav-text">了解防火牆 取消後發生的事情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最後整理"><span class="nav-number">3.</span> <span class="nav-text">最後整理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#總結"><span class="nav-number">4.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指令小記"><span class="nav-number">5.</span> <span class="nav-text">指令小記</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">609</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">485</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/";
+    this.page.identifier = "2021/07/17/Window-防火牆設定完成無法聯通的問題/";
+    this.page.title = "Window 防火牆設定完成無法連通的問題";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
