@@ -68,6 +68,41 @@ rsync –delete-before -d -a –progress –stats /a/ /data/
 > find with -exec用了14分鐘
 > 直接用rm結果是刪除失敗. 
 
+### 實測
+
+```bash
+# 建立 500000 測試文件
+for i in $(seq 1 500000); do echo testing >> $i.txt; done
+
+find /test -type f -exec rm {} \;
+find /test -mtime +7 -exec rm {} \;
+find /test -size +7M -exec rm {} \;
+
+time rm -f * #/bin/rm: Argument list too long
+time find ./ -type f -exec rm {} \;      #real    14m51.735s
+time find ./ -type f -delete     # real    5m11.937s
+time perl -e 'for(<*>){((stat)[9]<(unlink))}'   # real    1m0.488s (王者)
+time rsync -a --delete blanktest/ test/   # real    2m52.502s
+```
+
+測試 Perl 真的很快，不知道是用甚麼巫術。
+
+推薦詳細可以看[Rsync同步时删除多余文件 [附：删除大量文件方法的效率对比] - 散尽浮华 - 博客园](https://www.cnblogs.com/kevingrace/p/5766139.html) {% asset_link web1.png 備份圖 %}
+裡面介紹很詳細
+
+```bash
+# #1 刪除某資料夾檔案
+#1）建立一個空的文件夾：
+# mkdir /tmp/test
+#2）用rsync刪除目標目錄：
+# rsync --delete-before -a -H -v --progress --stats /tmp/test/ log/
+這樣要刪除的log目錄就會被清空了，刪除的速度會非常快。rsync實際上用的是替換原理，處理數十萬個文件也是秒刪。
+
+# #2 刪除某資料夾檔案
+# 搬移後刪除
+rsync -a --remove-source-files SOURCEDIR /mnt/TARGETDIR/
+```
+
 [Linux 刪除海量文件 rm -f 會卡死怎麼破？ - OSCHINA](https://www.oschina.net/question/255612_220479)
 
 ## 大量檔案複製
@@ -81,10 +116,72 @@ rsync –delete-before -d -a –progress –stats /a/ /data/
 > 　　這樣比較笨重的服務，這個時候， nc可能成為唯一的上傳手段。
 > 　　比如將機器A上的test目錄上傳到到機器 B（192.168.0.11）上，只需要：
 > 　　在機器B上，用nc來監聽一個端口，隨便就好，只要不被佔用；並且將收到的數據用tar展開。-l代表監聽模式。
-> 　　#nc -l 4444 |tar -C /tmp/dir -zxf –
+> 　　#nc -l 4444 |tar -C /tmp/dir -zxf -
 > 　　然後，在A上通過nc和 tar發送test目錄。使用一致的4444的端口。
-> 　　#tar -zcvf – test|nc 192.168.0.11 4444
+> 　　#tar -zcvf - test|nc 192.168.0.11 4444
 
 [Linux下文件過多過碎問題 – 工作筆記](http://www.zxzblog.com/linux-morefile/)
 
-哪天用到再說...
+~~哪天用到再說...~~
+
+### 實測
+
+最近工作有座大量刪除檔案，在我還滿好奇使用這個速度會有多快?上面指令竟然無法使用!!!不過後來有找到類似指令，最後測試成功。
+參考: [Netcat（Linux nc 指令）網路管理者工具實用範例| 兩台主機之間複製整個目錄 - G. T. Wang](https://blog.gtwang.org/linux/linux-utility-netcat-examples/)
+
+下面操作要照順序
+
+在接收端電腦使用
+
+```bash
+nc -l 5000 | tar xvf -
+```
+
+在發送端電腦使用
+
+```bash
+# localhost 換成你的目地電腦
+# 前面可以加 time ，可以算時間
+# /path/to/dir 是要傳送檔案目錄
+# 5000 傳輸 port
+tar cvf - /path/to/dir | nc localhost 5000
+
+```
+
+相同電腦，執行速度
+
+```
+real    4m43.463s
+user    0m9.270s
+sys     0m47.256s
+```
+
+### zxvf 操作
+
+不會比較快，額且還會卡住...，但其實是完成的。
+
+
+
+
+## 大量看檔案數
+
+```bash
+time perl -e 'opendir D, "."; @files = readdir D; closedir D; print scalar(@files)."\n"' 1315029  real    0m0.580s user    0m0.302s sys     0m0.275s – 
+```
+
+尚未測試。
+
+[shell - Fast Linux file count for a large number of files - Stack Overflow](https://stackoverflow.com/questions/1427032/fast-linux-file-count-for-a-large-number-of-files)
+
+
+## 大量檔案看大小
+
+尚未測試
+
+[command line - Fast way to display the size of each subdirectory in a directory - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/307583/fast-way-to-display-the-size-of-each-subdirectory-in-a-directory)
+
+[One billion files on Linux [LWN.net]](https://lwn.net/Articles/400629/)
+
+[linux - Filesystem large number of files in a single directory - Server Fault](https://serverfault.com/questions/43133/filesystem-large-number-of-files-in-a-single-directory)
+
+[XFS vs EXT4 | 夏天的风的博客](http://xiaqunfeng.cc/2017/07/06/XFS-vs-EXT4/)

@@ -106,3 +106,23 @@ http://xfs.org/index.php/XFS_FAQ#Q:_Why_do_I_receive_No_space_left_on_device_aft
 * [Linux 支援的檔案系統小評測-liuake-ChinaUnix博客](http://m.blog.chinaunix.net/uid-573799-id-2091461.html)
 
 * [关于XFS文件系统的一个问题](https://groups.google.com/g/zh-kernel/c/7qlx4az_yDg)
+
+
+- [xfs vs ext4 性能压测对比 - 云+社区 - 腾讯云](https://cloud.tencent.com/developer/article/1460643)
+
+```
+可能的空间满报错
+
+如果大家在网上搜索xfs的文章可能会搜到磁盘空间剩余很多，但是却报错空间不足的问题，大意就是xfs文件系统会把inode存储在磁盘最开始的这1T空间里，如果这部分空间被完全填满了，那么就会出现磁盘空间不足的错误提示了。解决办法就是在挂载时，指定 inode64 选项：
+
+mount -o remount -o noatime,nodiratime,inode64,nobarrier /dev/sdb1 /backup
+
+这个在内核3.7以后的版本 已经解决了。其实默认defaults 挂载参数是
+
+    (rw,noatime,attr2,inode64,sunit=128,swidth=512,noquota)
+```
+
+
+[为什么CENTOS 7.0开始选择XFS作为默认的文件系统？XFS相比ext有什么优点？ - 知乎](https://www.zhihu.com/question/24413471)
+[linux 文件系统 xfs, ext4 的区别 - 简书](https://www.jianshu.com/p/b775498ed1f5)
+[EXT4与XFS文件系统对I/O的影响_BK_sys的博客-CSDN博客](https://blog.csdn.net/BK_sys/article/details/112582264)
