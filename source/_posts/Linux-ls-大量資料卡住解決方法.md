@@ -158,7 +158,7 @@ sys     0m47.256s
 
 ### zxvf 操作
 
-不會比較快，額且還會卡住...，但其實是完成的。
+不會比較快，而且還會卡住...，但其實是完成的。
 
 
 
@@ -166,17 +166,92 @@ sys     0m47.256s
 ## 大量看檔案數
 
 ```bash
-time perl -e 'opendir D, "."; @files = readdir D; closedir D; print scalar(@files)."\n"' 1315029  real    0m0.580s user    0m0.302s sys     0m0.275s – 
+time perl -e 'opendir D, "."; @files = readdir D; closedir D; print scalar(@files)."\n"' #1315029  real    0m0.580s user    0m0.302s sys     0m0.275s – 
 ```
 
-尚未測試。
+我這邊測試時間
+```
+real    0m1.620s
+user    0m0.101s
+sys     0m0.565s
+```
 
-[shell - Fast Linux file count for a large number of files - Stack Overflow](https://stackoverflow.com/questions/1427032/fast-linux-file-count-for-a-large-number-of-files)
+使用`time ls -f | wc -l`時間好像更快
 
+```
+real    0m0.397s
+user    0m0.175s
+sys     0m0.250s
+```
+
+參考:
+- [shell - Fast Linux file count for a large number of files - Stack Overflow](https://stackoverflow.com/questions/1427032/fast-linux-file-count-for-a-large-number-of-files)
+- [PERL count files in a dir](https://www.unix.com/shell-programming-and-scripting/113891-perl-count-files-dir.html)
+
+## 找大量使用inode 資料夾
+
+```bash
+wget http://downinfo.myhostadmin.net/check_inode_counts.txt
+mv check_inode_counts.txt check_inode_counts.pl
+perl check_inode_counts.pl /
+```
+
+check_inode_counts.pl
+```perl
+#!/usr/bin/perl -w
+use strict;
+my $threshold=50000;
+my ($count,$bigdir);
+sub count_inodes($);
+sub count_inodes($)
+{
+	my $dir=shift;
+	return if($count>=$threshold);
+	if(opendir(my $dh,$dir))
+	{
+		while(defined(my $file=readdir($dh)))
+		{
+			next if ($file eq '.'||$file eq '..');
+			$count++;
+			my $path=$dir.'/'.$file;
+			count_inodes($path) if (-d $path);
+		}
+		closedir($dh);
+	}else
+	{
+		warn "couldn't open $dir - $!\n";
+	}
+}
+
+push(@ARGV, '.') unless (@ARGV);
+while (@ARGV)
+{
+	my $main=shift;
+	$main.='/' unless($main=~/\/$/);
+	if(opendir(my $dh, $main))
+	{
+		while(defined(my $file=readdir($dh)))
+		{
+			$count=0;
+			next if($file eq '.'||$file eq '..'||! -d $main.$file);
+			count_inodes($main.$file);
+			$count=">".$threshold if($count>=$threshold);
+			printf "%10s\t%s\n", $count, $main.$file;
+		}
+		closedir($dh);
+	}
+	else
+	{
+		warn "couldn't open $main - $!\n";
+	}
+}
+
+```
+
+[linux系统磁盘block、inode占满处理 - 华为云](https://www.huaweicloud.com/articles/b989923796f37fb1736e0063f83b2c24.html)
 
 ## 大量檔案看大小
 
-尚未測試
 
 [command line - Fast way to display the size of each subdirectory in a directory - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/307583/fast-way-to-display-the-size-of-each-subdirectory-in-a-directory)
 
@@ -185,3 +260,5 @@ time perl -e 'opendir D, "."; @files = readdir D; closedir D; print scalar(@file
 [linux - Filesystem large number of files in a single directory - Server Fault](https://serverfault.com/questions/43133/filesystem-large-number-of-files-in-a-single-directory)
 
 [XFS vs EXT4 | 夏天的风的博客](http://xiaqunfeng.cc/2017/07/06/XFS-vs-EXT4/)
+
+
