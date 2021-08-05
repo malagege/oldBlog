@@ -28,7 +28,7 @@
 <meta property="og:description" content="最近公司上板 Java 排程程式都會遇到亂碼 ????這個都不能手動執行今天解決這個問題整理一下">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-07-30T12:30:16.000Z">
-<meta property="article:modified_time" content="2021-06-27T08:05:07.850Z">
+<meta property="article:modified_time" content="2021-07-26T15:17:27.096Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="java">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-07-26 23:17:27" itemprop="dateModified" datetime="2021-07-26T23:17:27+08:00">2021-07-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,7 +320,7 @@
 </blockquote>
 <p><a href="https://blog.csdn.net/whitehack/article/details/51705889" target="_blank" rel="noopener">ssh連接遠程主機執行腳本的環境變量問題_whitehack的專欄-CSDN博客_ssh 遠程執行命令 含變量</a> <a href="/blog/2020/07/30/Jenkins-%E5%9F%B7%E8%A1%8C-Java-%E7%A8%8B%E5%BC%8F%E4%BA%82%E7%A2%BC%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95/web1.png" title="備份圖">備份圖</a><br>目前看到這篇有疑似這個問題<br>所以導致登入環境變數會有不一樣結果<br>我也沒看到有設定 BASH_ENV 參數</p>
 <p>不過確實因為 ssh remote  command 登入<br>造就登入不一樣結果</p>
-<p>裡面有滿清楚內容<a href="https://blog.csdn.net/whitehack/article/details/51705889" target="_blank" rel="noopener">ssh連接遠程主機執行腳本的環境變量問題_whitehack的專欄-CSDN博客_ssh 遠程執行命令 含變量</a></p>
+<p>裡面有滿清楚內容<a href="https://blog.csdn.net/whitehack/article/details/51705889" target="_blank" rel="noopener">ssh連接遠程主機執行腳本的環境變量問題_whitehack的專欄-CSDN博客_ssh 遠程執行命令 含變量</a>、<a href="https://blog.miniasp.com/post/2021/07/26/Bash-and-Zsh-Initialization-Files" target="_blank" rel="noopener">關於 Linux 下 Bash 與 Zsh 啟動檔的載入順序研究 | The Will Will Web</a></p>
 <blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|                | login  |interactive|non-interactive|</span><br><span class="line">|                |        |non-login  |non-login      |</span><br><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|&#x2F;etc&#x2F;profile    |   A    |           |               |</span><br><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|&#x2F;etc&#x2F;bash.bashrc|        |    A      |               |</span><br><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|~&#x2F;.bashrc       |        |    B      |               |</span><br><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|~&#x2F;.bash_profile |   B1   |           |               |</span><br><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|~&#x2F;.bash_login   |   B2   |           |               |</span><br><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|~&#x2F;.profile      |   B3   |           |               |</span><br><span class="line">+----------------+--------+-----------+---------------+</span><br><span class="line">|BASH_ENV        |        |           |       A       |</span><br><span class="line">+----------------+--------+-----------+---------------+ </span><br></pre></td></tr></table></figure>
 <p>配置文件建議</p>
@@ -330,6 +330,7 @@
 <p>   ~/.bash_profile：應該儘可能的簡單，通常會在最後加載.profile和.bashrc(注意順序)<br>   ~/.bash_login：在前面討論過，別用它<br>   ~/.profile：此文件用於login shell，所有你想在整個用戶會話期間都有效的內容都應該放置於此，比如啟動進程，環境變量等<br>   ~/.bashrc：只放置與bash有關的命令，所有與交互有關的命令都應該出現在此，比如bash的補全、alias、顏色、提示符等等。特別注意：別在這裡輸出任何內容（我們前面只是為了演示，別學我哈）</p>
 </blockquote>
 <p>因為我猜測 jenkins 進去跟我用 xshell 語系不一樣<br>所以就做了 log 紀錄，發現真的不一樣<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LC_ALL=<span class="string">"en_US.UTF-8"</span></span><br><span class="line">date &gt;&gt; /tmp/test_ssh.log</span><br><span class="line">env &gt;&gt; /tmp/test_ssh.log</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"--------"</span> &gt;&gt; /tmp/test_ssh.log</span><br><span class="line">locale &gt;&gt; /tmp/test_ssh.log</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"======="</span> &gt;&gt; /tmp/test_ssh.log</span><br></pre></td></tr></table></figure></p>
+<p>但不是上面問題</p>
 <p>之前看到使用 file.enconding 去解決<br><del>但實際用上卻沒有效果</del><br>跟 file.enconding 沒關係，是我使用 JAVA_OPTS環境變數<br>沒有效果，後面會講到</p>
 <blockquote>
 <p>java 預設在處理文字檔案的寫入時，<br>會以 os 的預設編碼當作寫入的編碼規則，<br>這個問題常會發生在 windows 英文的作業系統要寫入中文的時候發生，</p>
