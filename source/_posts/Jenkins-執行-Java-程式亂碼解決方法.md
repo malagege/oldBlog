@@ -38,7 +38,7 @@ categories: Linux
 不過確實因為 ssh remote  command 登入
 造就登入不一樣結果
 
-裡面有滿清楚內容[ssh連接遠程主機執行腳本的環境變量問題_whitehack的專欄-CSDN博客_ssh 遠程執行命令 含變量](https://blog.csdn.net/whitehack/article/details/51705889)
+裡面有滿清楚內容[ssh連接遠程主機執行腳本的環境變量問題_whitehack的專欄-CSDN博客_ssh 遠程執行命令 含變量](https://blog.csdn.net/whitehack/article/details/51705889)、[關於 Linux 下 Bash 與 Zsh 啟動檔的載入順序研究 | The Will Will Web](https://blog.miniasp.com/post/2021/07/26/Bash-and-Zsh-Initialization-Files)
 > ```
 +----------------+--------+-----------+---------------+
 |                | login  |interactive|non-interactive|
@@ -90,6 +90,8 @@ echo "--------" >> /tmp/test_ssh.log
 locale >> /tmp/test_ssh.log
 echo "=======" >> /tmp/test_ssh.log
 ```
+
+但不是上面問題
 
 之前看到使用 file.enconding 去解決
 ~~但實際用上卻沒有效果~~

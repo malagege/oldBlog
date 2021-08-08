@@ -1,5 +1,5 @@
 ---
-title: linux bash / shell 有關 * 星號的事情
+title: linux bash / shell 有關 * 星號的事情(glob)
 date: 2020-01-21 21:25:57
 tags: [bash,shell]
 categories: Linux
@@ -15,6 +15,9 @@ ls *.jpg
 但是有些細節沒有釐清
 偶爾會遇到不能用的狀況下
 今天終於徹底了解
+
+**2021-07-25**
+最近才發現這有專有名稱叫做`glob`
 
 <!--more-->
 

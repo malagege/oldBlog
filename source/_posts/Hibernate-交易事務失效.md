@@ -147,3 +147,7 @@ Hibernate 有時起事務會失敗，外層加 @Transactional 就能解決
 * [MySQL_通过binlog查看原始SQL语句 - 掘金](https://juejin.im/post/6844903650293186574)
 * [jquery 高效实现htmlencode()与htmldecode()函数_jackhuclan的专栏-CSDN博客](https://blog.csdn.net/jackhuclan/article/details/79298039?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.edu_weight&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.edu_weight)
 * [Showing a Spring transaction in log4j_王奕然的博客-CSDN博客](https://blog.csdn.net/wyxz126/article/details/8752094)
+
+2021-08-02
+
+有看到比較完整介紹交易文章。[詳細瞭解 Spring Transaction 的 Propagation](https://www.tpisoftware.com/tpu/articleDetails/2092) {% asset_link web4.png 備份圖 %}

@@ -42,3 +42,9 @@ GUI 可以選擇要抓到項目。
 
 - [WinMerge: How to exclude *.bak and *.tmp files? - Super User](https://superuser.com/questions/726526/winmerge-how-to-exclude-bak-and-tmp-files)
 - [Using Filters - WinMerge 2.16 Manual](https://manual.winmerge.org/en/Filters.html)
+
+
+## 離題: Git(比較大法)
+
+[Git 小技巧 - 產生從零開始的 git diff 報告-黑暗執行緒](https://blog.darkthread.net/blog/git-diff-from-zero/)
+

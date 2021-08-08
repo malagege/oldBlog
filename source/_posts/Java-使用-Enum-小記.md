@@ -5,10 +5,7 @@ tags: [java]
 categories: Java
 ---
 
-平常不怎麼使用 Enum 
-非常地不熟悉
-今天剛好用到
-順便季錄一下
+平常不怎麼使用 Enum ，非常地不熟悉，今天剛好用到，順便記錄一下。
 
 <!--more-->
 
@@ -104,7 +101,7 @@ public enum Car {
 其他詳細可看:[進階 enum 運用](https://openhome.cc/Gossip/Java/EnumMore.html)
 
 
-## 取出列表資料
+## 取出列表資料(values)
 
 ```java
 for(Car car: Car.values())
@@ -170,14 +167,50 @@ for(Car car: Car.values())
 > ```
 > Then you can just do: values.contains("your string") which returns true or false.
 
+### values() 神奇 method 實作方法
 
+參考: [Java Enum - javatpoint](https://www.javatpoint.com/enum-in-java)
+原理 static 放 `$VALUES` 陣列變數，使用`values()` 會傳 `$VALUES` 陣列變數 ，就可以 foreach 比較。
+
+```java
+    final class Season extends Enum  
+    {  
+        public static Season[] values()  
+        {  
+            return (Season[])$VALUES.clone();  
+        }  
+        public static Season valueOf(String s)  
+        {  
+            return (Season)Enum.valueOf(Season, s);  
+        }  
+        private Season(String s, int i, int j)  
+        {  
+            super(s, i);  
+            value = j;  
+        }  
+        public static final Season WINTER;  
+        public static final Season SUMMER;  
+        private int value;  
+        private static final Season $VALUES[];  
+        static   
+        {  
+            WINTER = new Season("WINTER", 0, 10);  
+            SUMMER = new Season("SUMMER", 1, 20);  
+            $VALUES = (new Season[] {  
+                WINTER, SUMMER  
+            });  
+        }  
+    }  
+```
 
 其他之後有遇到再補
 
 **2020-06-18**
 
-最近做 Enum 發現測試環境跟正式環境設定的值會不一樣
-所以找一下有什麼方法可以解決這個問題
+## 特別載入環境變數方法
+
+最近做 Enum 發現測試環境跟正式環境設定的值會不一樣，所以找一下有什麼方法可以解決這個問題。
+目前這邊還沒測試能不能這樣用。
 
 [java property file as enum - Stack Overflow](https://stackoverflow.com/questions/4908973/java-property-file-as-enum)
 
@@ -215,5 +248,90 @@ public enum Constants {
         return value;
     }
 
+}
+```
+
+
+## enum 裡面帶 method 方法
+
+```java
+ //1.提供当前枚举类的对象，多个对象之间用逗号隔开，末尾对象分号结束
+   SPRING ("春天","春暖花开"){
+        @Override
+        public void show() {
+            System.out.println("spring!!!");
+        }
+    },
+   SUMMER("夏天","夏日炎炎"){
+       @Override
+       public void show() {
+           System.out.println("summer!!!");
+       }
+   },
+   AUTUMN ("秋天","秋高气爽"){
+       @Override
+       public void show() {
+           System.out.println("autumn!!!");
+       }
+   },
+   WINTER ("冬天","冰天雪地"){
+       @Override
+       public void show() {
+           super.show();
+           System.out.println("winter!!!");
+       }
+   };
+```
+
+參考: [java枚举和注解 - 知乎](https://zhuanlan.zhihu.com/p/355383710)
+
+## 實用範例
+
+方便以後直接找 sample code 來用，畢竟真的不常寫，很容易要想怎麼寫。
+最佳範例: [菜鳥工程師 肉豬: Java 列舉(Enum)範例](https://matthung0807.blogspot.com/2017/10/java-enum.html)
+還是推薦看裡面內容。
+
+```java
+public enum WeekDay {
+
+    SUN("Sunday","星期日", 0),
+    MON("Monday","星期一", 1),
+    TUE("Tuesday","星期二", 2),
+    WED("Wednesday","星期三", 3),
+    THU("Thursday","星期四", 4), 
+    FRI("Friday","星期五", 5),
+    SAT("Saturday","星期六", 6);
+
+    WeekDay(String day, String chinese, int code){
+        this.day = day;
+        this.chinese = chinese;
+        this.code = code;
+    }
+
+    private final String day;
+    private final String chinese;
+    private int code;
+
+    public static WeekDay getWeek(int i){
+        for(WeekDay weekDay : values()){
+            if(weekDay.getCode() == i) {
+                return weekDay;
+            }
+        }
+        return null;
+    }
+
+    public String getDay(){
+        return this.day;
+    }
+    
+    public String getChinese() {
+        return this.chinese;
+    }
+
+    public int getCode() {
+        return this.code;
+    }
+  
 }
 ```

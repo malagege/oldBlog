@@ -38,23 +38,23 @@ Oralce 有限制 Like 不能超過 1000 多筆。之前有寫過相關文章如�
 
 1. 在 Sublime 使用 regex `((.*\n){1,3})`
 
-{% asset_img XQvraNs.png 1 %}
+{% asset_img XQvraNs.png  %}
 
 
 2. 選擇 Find all 按鈕
 
-{% asset_img eSl1lCW.png 2 %}
+{% asset_img eSl1lCW.png  %}
 
 
 3. 按 「Shift + 方向鍵左(←)」 後，再按「Shift + 方向鍵左(↑)」
 
-{% asset_img AW4FHWp.png 3 %}
+{% asset_img AW4FHWp.png  %}
 
 4. Ctrl + J ，按完就完成兩段句子，最後一行可刪掉
 
 5. 複製兩段 LIKE SQL 語句，中間替代參數也要先設定
 
-{% asset_img faRy4L8.png 5 %}
+{% asset_img faRy4L8.png  %}
 
 
 6. 全部框選`:id:` Ctrl + D，把1,2行複製起來，貼上即可完成
@@ -73,4 +73,99 @@ Oralce 有限制 Like 不能超過 1000 多筆。之前有寫過相關文章如�
 
 真的行數到超多筆的話，這個方法應該也沒辦法。
 
-其實這個可以用程式寫，有空寫在補在這。
+~~其實這個可以用程式寫，有空寫在補在這。~~
+
+[CodeSandbox](https://codesandbox.io/s/distracted-tdd-fcklf?file=/src/components/HelloWorld.vue)
+沒有認真寫
+
+```html
+<template>
+  <div class="hello">
+    <textarea v-model.lazy="item" cols="30" rows="10"></textarea>
+    <textarea v-model.lazy="sql" id="" cols="30" rows="10"></textarea>
+  </div>
+  <div>
+    <textarea v-model="result" cols="30" rows="10" readonly></textarea>
+  </div>
+</template>
+
+<script>
+import * as a from "lodash";
+
+export default {
+  name: "HelloWorld",
+  data() {
+    return {
+      item: "",
+      sql: "",
+    };
+  },
+  method: {
+    getDataDebounced() {},
+  },
+  created() {
+    this.getDataDebounced = a.debounce(() => {
+      let items = a.chunk(
+        this.item.split("\n").filter((str) => str !== ""),
+        1000
+      );
+      console.log(items);
+      items = items.map((a) => {
+        a = a.map((str) => "'" + str + "'");
+        return a.join(",");
+      });
+      let r = "";
+      items.forEach((item) => {
+        let aa = this.sql.replace("::id::", item);
+        console.log(aa);
+        r += aa;
+        r += "\n";
+      });
+      console.log(r);
+      this.result = r;
+      console.log(this.result);
+    }, 1000);
+  },
+  computed: {
+    result() {
+      let items = a.chunk(
+        this.item.split("\n").filter((str) => str !== ""),
+        1000
+      );
+      console.log(items);
+      items = items.map((a) => {
+        a = a.map((str) => "'" + str + "'");
+        return a.join(",");
+      });
+      let r = "";
+      items.forEach((item) => {
+        let aa = this.sql.replace("::id::", item);
+        console.log(aa);
+        r += aa;
+        r += "\n";
+      });
+      return r;
+    },
+  },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>
+
+```
