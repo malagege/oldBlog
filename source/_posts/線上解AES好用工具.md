@@ -14,6 +14,8 @@ categories: 實用工具
 
 
 1. [AES decryption AES encryption AES Hex Key Supported - The X Online Tools](https://the-x.cn/en-us/cryptography/Aes.aspx)
+2. [CTF在线工具-AES在线加解密|AES在线加密|AES在线解密|AES encryption|AES decryption](http://ctf.ssleye.com/caes.html)   
+3. [在线AES加密解密 - 拉米工具](https://tool.lmeee.com/jiami/aes)
 
 
 2. [CyberChef](https://gchq.github.io/CyberChef/)
