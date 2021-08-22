@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="最近公司 API 原有測試程式需要改前後端，才能測試 API。最近在想能不能搭配 Vite &amp; Vue 能實現前端測試 API。API有做加密，今天就先研究如何實現 AES&#x2F;CBC&#x2F;NoPadding加密。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript,Java 實作 AES&#x2F;CBC&#x2F;NoPadding 加密方法">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/08/22/JavaScript-Java-%E5%AF%A6%E4%BD%9C-AES-CBC-NoPadding-%E5%8A%A0%E5%AF%86%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近公司 API 原有測試程式需要改前後端，才能測試 API。最近在想能不能搭配 Vite &amp; Vue 能實現前端測試 API。API有做加密，今天就先研究如何實現 AES&#x2F;CBC&#x2F;NoPadding加密。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-08-22T07:41:55.000Z">
+<meta property="article:modified_time" content="2021-08-22T07:42:26.628Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="aes">
+<meta property="article:tag" content="cbc">
+<meta property="article:tag" content="nopadding">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/08/22/JavaScript-Java-%E5%AF%A6%E4%BD%9C-AES-CBC-NoPadding-%E5%8A%A0%E5%AF%86%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>JavaScript,Java 實作 AES/CBC/NoPadding 加密方法 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/08/22/JavaScript-Java-%E5%AF%A6%E4%BD%9C-AES-CBC-NoPadding-%E5%8A%A0%E5%AF%86%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript,Java 實作 AES/CBC/NoPadding 加密方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-08-22 15:41:55 / 修改時間：15:42:26" itemprop="dateCreated datePublished" datetime="2021-08-22T15:41:55+08:00">2021-08-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%8A%A0%E5%AF%86/" itemprop="url" rel="index"><span itemprop="name">加密</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/08/22/JavaScript-Java-%E5%AF%A6%E4%BD%9C-AES-CBC-NoPadding-%E5%8A%A0%E5%AF%86%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/08/22/JavaScript-Java-實作-AES-CBC-NoPadding-加密方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>最近公司 API 原有測試程式需要改前後端，才能測試 API。最近在想能不能搭配 Vite &amp; Vue 能實現前端測試 API。API有做加密，今天就先研究如何實現 AES/CBC/NoPadding加密。</p>
+<a id="more"></a>
+<h2 id="公司使用情境"><a href="#公司使用情境" class="headerlink" title="公司使用情境"></a>公司使用情境</h2><p>API 接口所有參數會經過第一層加密(包最外層變數)，這邊會有一個外部key，內層資料會用內部key再做一次加密。</p>
+<p>這邊我還是小小抱怨一下，公司這篇稱外部key為私鑰，內部key為公鑰，我這邊原本看到這邊應該是非對稱加密，當初裡面長輩也說這邊是非對稱加密，但我最近找了一下套件發現不是，之前一直在想這邊怎麼產生公鑰(內部key)、私鑰(外部key)，這邊可以不用想了，密碼應該也是rand 產生出來了。根本不是非對稱加密。</p>
+<p>這邊不是重點，我們趕快來想想怎麼比較快錯出來。</p>
+<h2 id="解決方案"><a href="#解決方案" class="headerlink" title="解決方案"></a>解決方案</h2><p>我想快速做出來，這邊有想想幾個方案</p>
+<p>內部程式</p>
+<ul>
+<li>node-java:<br>載入 Java Method 呼叫加密程式。但我沒有採用此方案，因為還要而外裝node-gpy ，可能還要搭配 node-electron 來使用，修改程式便利性又降低了。</li>
+<li>vite-electron-plugin<br>本來想採取上面方案搭配，但是原因同上。而且風險係數太多。</li>
+<li>crypto<br>好像也能做到，但好像看到相關文章寫沒支援 Padding設定?? 所以先跳過</li>
+<li>crypto-js<br>可以用在web上面，後來採用這個方案。</li>
+</ul>
+<h2 id="實作-Java-JavaScript-做-AES-CBC-NoPadding"><a href="#實作-Java-JavaScript-做-AES-CBC-NoPadding" class="headerlink" title="實作 Java/JavaScript 做 AES/CBC/NoPadding"></a>實作 Java/JavaScript 做 AES/CBC/NoPadding</h2><p>網路上這個範例可說是零，我自己整理出來趕快記筆記。</p>
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">decryptBase64StrByAES</span><span class="params">(String encodeBase64Str, String decrypt,String iv)</span> </span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> UnsupportedEncodingException,InvalidAlgorithmParameterException,NoSuchPaddingException,NoSuchAlgorithmException,InvalidKeyException,BadPaddingException,IllegalBlockSizeException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span>[] unDecryptByte = Base64.decodeBase64(encodeBase64Str);</span><br><span class="line">        Cipher deCipher = Cipher.getInstance(<span class="string">"AES/CBC/NoPadding"</span>);</span><br><span class="line"></span><br><span class="line">        SecretKeySpec decryptSpec = <span class="keyword">new</span> SecretKeySpec(decrypt.getBytes(), <span class="string">"AES"</span>);</span><br><span class="line">        IvParameterSpec ivspec = <span class="keyword">new</span> IvParameterSpec(iv.getBytes());</span><br><span class="line">        deCipher.init(Cipher.DECRYPT_MODE, decryptSpec, ivspec);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(deCipher.doFinal(unDecryptByte), <span class="string">"UTF-8"</span>).trim();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">encryptBase64StrByAES</span><span class="params">(String unDecryptStr, String decrypt, String iv)</span> </span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> UnsupportedEncodingException,InvalidAlgorithmParameterException,NoSuchPaddingException,NoSuchAlgorithmException,InvalidKeyException,BadPaddingException,IllegalBlockSizeException </span>&#123;</span><br><span class="line">    </span><br><span class="line">        Cipher cipher = Cipher.getInstance(<span class="string">"AES/CBC/NoPadding"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 補齊16倍數，不足padding zero</span></span><br><span class="line">        <span class="keyword">int</span> blockSize = cipher.getBlockSize();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">byte</span>[] dataBytes = unDecryptStr.getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line">        <span class="keyword">int</span> plaintextLength = dataBytes.length;</span><br><span class="line">        <span class="keyword">if</span> (plaintextLength % blockSize != <span class="number">0</span>) &#123;</span><br><span class="line">            plaintextLength = plaintextLength + (blockSize - (plaintextLength % blockSize));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">byte</span>[] plaintext = <span class="keyword">new</span> <span class="keyword">byte</span>[plaintextLength];</span><br><span class="line">        System.arraycopy(dataBytes, <span class="number">0</span>, plaintext, <span class="number">0</span>, dataBytes.length);</span><br><span class="line"></span><br><span class="line">        SecretKeySpec decryptSpec = <span class="keyword">new</span> SecretKeySpec(decrypt.getBytes(), <span class="string">"AES"</span>);</span><br><span class="line">        IvParameterSpec ivspec = <span class="keyword">new</span> IvParameterSpec(iv.getBytes());</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, decryptSpec, ivspec);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> Base64.encodeBase64String(cipher.doFinal(plaintext));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> com.serpro.library.String;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.codec.binary.Base64;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.NoSuchPaddingException;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.IvParameterSpec;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MCrypt</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String iv;</span><br><span class="line">        <span class="keyword">private</span> String SecretKey;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">private</span> IvParameterSpec ivspec;</span><br><span class="line">        <span class="keyword">private</span> SecretKeySpec keyspec;</span><br><span class="line">        <span class="keyword">private</span> Cipher cipher;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MCrypt</span><span class="params">(String iv, String key)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">this</span>.setIv(iv);</span><br><span class="line">                <span class="keyword">this</span>.setSecretKey(key);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            ivspec = <span class="keyword">new</span> IvParameterSpec(iv.getBytes());</span><br><span class="line"></span><br><span class="line">            keyspec = <span class="keyword">new</span> SecretKeySpec(SecretKey.getBytes(), <span class="string">"AES"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                    cipher = Cipher.getInstance(<span class="string">"AES/CBC/NoPadding"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">                    <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</span><br><span class="line">                    <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getIv</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.iv;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> IvParameterSpec <span class="title">getIvSpc</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.ivspec;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setIv</span><span class="params">(String iv)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(iv.length() != <span class="number">16</span>)&#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"Quantidade IV inválida"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.iv = iv;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setSecretKey</span><span class="params">(String key)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(key.length() != <span class="number">16</span>)&#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"Quantidade Key Inválido"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.SecretKey = key;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line"></span><br><span class="line">                MCrypt mcrypt = <span class="keyword">new</span> MCrypt(<span class="string">"9sb9510e375d44f0"</span>, <span class="string">"9756e93d09054s4f"</span>);  </span><br><span class="line"></span><br><span class="line">                String encrypted = mcrypt.encrypt(<span class="string">"佩德羅加布里埃爾 佩德羅加布里埃爾"</span>); </span><br><span class="line">                String decrypted = mcrypt.decrypt(encrypted);</span><br><span class="line"></span><br><span class="line">                System.out.println(encrypted);</span><br><span class="line">                System.out.println(decrypted);</span><br><span class="line"></span><br><span class="line">            &#125;  <span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line"></span><br><span class="line">                System.out.println(e.getMessage());</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">encrypt</span><span class="params">(String text)</span> <span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(text == <span class="keyword">null</span> || text.length() == <span class="number">0</span>)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"Empty string"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] encrypted = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);</span><br><span class="line"></span><br><span class="line">                encrypted = cipher.doFinal(padString(text).getBytes());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e)</span><br><span class="line">            &#123;                       </span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"[encrypt] "</span> + e.getMessage());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.toBase64(encrypted);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">decrypt</span><span class="params">(String code)</span> <span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(code == <span class="keyword">null</span> || code.length() == <span class="number">0</span>)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"Empty string"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] decrypted = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                    cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);</span><br><span class="line"></span><br><span class="line">                    decrypted = cipher.doFinal(Base64.decodeBase64(code));</span><br><span class="line">                    <span class="comment">//Remove trailing zeroes</span></span><br><span class="line">                    <span class="keyword">if</span>( decrypted.length &gt; <span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">int</span> trim = <span class="number">0</span>;</span><br><span class="line">                        <span class="keyword">for</span>( <span class="keyword">int</span> i = decrypted.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- ) <span class="keyword">if</span>( decrypted[i] == <span class="number">0</span> ) trim++;</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">if</span>( trim &gt; <span class="number">0</span> )</span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="keyword">byte</span>[] newArray = <span class="keyword">new</span> <span class="keyword">byte</span>[decrypted.length - trim];</span><br><span class="line">                            System.arraycopy(decrypted, <span class="number">0</span>, newArray, <span class="number">0</span>, decrypted.length - trim);</span><br><span class="line">                            decrypted = newArray;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"[decrypt] "</span> + e.getMessage());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(decrypted);</span><br><span class="line">        &#125;      </span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">padString</span><span class="params">(String source)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">char</span> paddingChar = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> size = <span class="number">16</span>;</span><br><span class="line">            <span class="keyword">int</span> x = source.length() % size;</span><br><span class="line">            <span class="keyword">int</span> padLength = size - x;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; padLength; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                  source += paddingChar;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> source;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toBase64</span><span class="params">(<span class="keyword">byte</span>[] buffer)</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> Base64.encodeBase64String(buffer);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比較要注意 NoPadding 好像要處理文字 Padding，但我看其他PKCS，Java那一段好像都不需要做??</p>
+<p>參考:<br><a href="https://zhuanlan.zhihu.com/p/349116118" target="_blank" rel="noopener">Java 使用Cipher类实现加密 - 知乎</a><br><a href="http://smlie-blog.blogspot.com/2013/07/java-javaaes-encrypt-and-decrypt-example.html" target="_blank" rel="noopener">Jesse’s blog: [Java] 使用Java實做，AES encrypt and decrypt</a><br><a href="https://github.com/PgPedroGabriel/java-php-mcrypt-base64/blob/master/Java/src/com/serpro/library/String/MCrypt.java" target="_blank" rel="noopener">java-php-mcrypt-base64/MCrypt.java at master · PgPedroGabriel/java-php-mcrypt-base64</a><br><a href="https://www.jianshu.com/p/b277b75013e4" target="_blank" rel="noopener">java版本的AES/CBC/NoPadding和Python3版本的AES/CBC/NoPadding 记录 - 簡書</a></p>
+<h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> CryptoJS <span class="keyword">from</span> <span class="string">"crypto-js"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encryptBase64StrByAES</span>(<span class="params">data,key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> cipher = CryptoJS.AES.encrypt(data, CryptoJS.enc.Utf8.parse(key), &#123;</span><br><span class="line">        iv: CryptoJS.enc.Utf8.parse(key),</span><br><span class="line">        mode: CryptoJS.mode.CBC,</span><br><span class="line">        padding: CryptoJS.pad.ZeroPadding</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> cipher.toString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decryptBase64StrByAES</span>(<span class="params">data, key</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// data = CryptoJS.enc.Base64.parse(data)</span></span><br><span class="line">    <span class="comment">// console.log('dd',data)</span></span><br><span class="line">    <span class="keyword">let</span> cipher = CryptoJS.AES.decrypt(data, CryptoJS.enc.Utf8.parse(key), &#123;</span><br><span class="line">        iv: CryptoJS.enc.Utf8.parse(key),</span><br><span class="line">        mode: CryptoJS.mode.CBC,</span><br><span class="line">        padding: CryptoJS.pad.ZeroPadding</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cipher.toString(CryptoJS.enc.Utf8)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="要了解的知識"><a href="#要了解的知識" class="headerlink" title="要了解的知識"></a>要了解的知識</h2><p>PRIVATEKEY:必須至少16個字元，最大32個字元，因為使用AES演算法，可以的話，最好給32個字比較安全</p>
+<p>IV:必須至少16個字元，最大32個字元，因為使用AES演算法，可以的話，最好給32個字比較安全</p>
+<p>HEX: <a href="https://www.cnblogs.com/chenss15060100790/p/9079686.html" target="_blank" rel="noopener">Hex和Base64 - 疯狂的妞妞 - 博客园</a></p>
+<p>URLBASE64</p>
+<blockquote>
+<p>標準的Base64並不適合直接放在URL裡傳輸，因為URL編碼器會把標準Base64中的/和+字元變為形如%XX的形式，而這些%號在存入資料庫時還需要再進行轉換，因為ANSI SQL中已將%號用作萬用字元。<br>為解決此問題，可採用一種用於URL的改進Base64編碼，它不在末尾填充=號，並將標準Base64中的+和/分別改成了-和_，這樣就免去了在URL編解碼和資料庫儲存時所要做的轉換，避免了編碼資訊長度在此過程中的增加，並統一了資料庫、表單等處物件識別碼的格式。<br>另有一種用於正規表示式的改進Base64變種，它將+和/改成了!和-，因為+，*以及前面在IRCu中用到的[和]在正規表示式中都可能具有特殊含義。 </p>
+</blockquote>
+<p>參考: <a href="https://zh.wikipedia.org/wiki/Base64#URL" target="_blank" rel="noopener">Base64 - 維基百科，自由的百科全書</a></p>
+<h2 id="可以應用地方"><a href="#可以應用地方" class="headerlink" title="可以應用地方"></a>可以應用地方</h2><p>token : 但這樣會不會有AES加密後長度會不一致??要怎麼用比較安全，有空來研究。<br>看起來有各式各樣方式。<br>目前比較正規是拿 sha256(userid+user_data…+sign_datetime) 產生一組 token ，sign_datetime需要儲存到db，這一組也不需要存到資料庫，到時候token 驗證用db sign_datetime 再做一次 sha256 encode方式測試是否有效，但這是一種 token 只能有一組方法。</p>
+<p>另一種做法產生 UUID 然後存放到資料庫裡面，這也是以前比較常見方法。 </p>
+<p>JWT 也是最近最常用方式，userid放在jwt裡面，但是重要資訊不能放在上面，不知道這長度會不會一致，有時間再研究。</p>
+<p>HTTP Header 不能超過 8kb ，這一點也要注意。</p>
+<ul>
+<li><a href="https://learnku.com/articles/8584/php-and-web-end-symmetric-encryption-transmission-jsencryptcryptojs" target="_blank" rel="noopener">PHP 和 Web 端对称加密传输|JSEncrypt|CryptoJS | Laravel China 社区</a></li>
+<li><a href="http://www.woshipm.com/pd/877760.html" target="_blank" rel="noopener">简单理解token机制 | 人人都是产品经理</a></li>
+<li><a href="https://blog.yyisyou.tw/5d272c64/" target="_blank" rel="noopener">認識Cookie、Session、Token與JWT | Yang Yang</a></li>
+<li><a href="https://help.aliyun.com/document_detail/159037.html" target="_blank" rel="noopener">生成Token - 音视频通信 - 阿里云</a></li>
+<li><a href="https://blog.csdn.net/qq_41369135/article/details/116530607" target="_blank" rel="noopener">传统token与Jwt区别及优缺点_qq_41369135的博客-CSDN博客_jwttoken优点与缺点</a></li>
+<li><a href="https://medium.com/starbugs/what-are-encoding-encrypt-and-hashing-4b03d40e7b0c" target="_blank" rel="noopener">一次搞懂密碼學中的三兄弟 — Encode、Encrypt 跟 Hash | by Larry Lu | Starbugs Weekly 星巴哥技術專欄 | Medium</a></li>
+<li><a href="http://blog.leapoahead.com/2015/09/06/understanding-jwt/" target="_blank" rel="noopener">JSON Web Token - 在Web应用间安全地传递信息 - 回田园</a></li>
+<li><a href="https://bbs.csdn.net/topics/392509818" target="_blank" rel="noopener">关于token验证几点不明白的地方-CSDN社区</a></li>
+<li><a href="http://wsfdl.com/openstack/2015/12/26/%E7%90%86%E8%A7%A3Keystone%E7%9A%84%E5%9B%9B%E7%A7%8DToken.html" target="_blank" rel="noopener">理解 Keystone 的四种 Token</a></li>
+<li><a href="https://alvinzhu.me/web/2014/04/26/10-things-you-should-know-about-tokens.html" target="_blank" rel="noopener">Alvin Zhu - 关于 Token，你应该知道的十件事</a></li>
+<li><a href="https://hackerain.me/2020/11/09/openstack/keystone-fernet-token.html" target="_blank" rel="noopener">Keystone Fernet Token解析 | 开心鬼</a></li>
+<li><a href="https://kylinyu.win/jwt-advanced/" target="_blank" rel="noopener">深入探討 JSON Web Token (JWT) - 墨冊</a></li>
+</ul>
+<p>驗證信: 這樣應該就不用存 DB了，時間也可以存裡面，這樣也可以不用讀DB。<br>網路上大多數方法都是存在 DB，但我想用AES加密應該可行的，後來有找到有人實作。<br><a href="https://blog.safeandsound.cn/post/UseJava2ImplimentTheEmail-bindingSystem.html" target="_blank" rel="noopener">java实现绑定邮箱与验证系统 | jay’s Blog</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/blog/tags/java/" rel="tag"># java</a>
+              <a href="/blog/tags/aes/" rel="tag"># aes</a>
+              <a href="/blog/tags/cbc/" rel="tag"># cbc</a>
+              <a href="/blog/tags/nopadding/" rel="tag"># nopadding</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/08/22/%E6%88%91%E5%A4%9A%E5%B9%B4%E5%BF%BD%E7%95%A5%E4%BA%86-Java-RuntimeException-%E8%A7%80%E5%BF%B5/" rel="prev" title="我多年忽略了 Java RuntimeException 觀念">
+      <i class="fa fa-chevron-left"></i> 我多年忽略了 Java RuntimeException 觀念
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/08/22/Chrome-%E8%8E%AB%E5%90%8D%E5%85%B6%E5%A6%99-localhost-%E6%9C%83%E5%B0%8E%E5%88%B0-HTTPS/" rel="next" title="Chrome 莫名其妙 localhost 會導到 HTTPS">
+      Chrome 莫名其妙 localhost 會導到 HTTPS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#公司使用情境"><span class="nav-number">1.</span> <span class="nav-text">公司使用情境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解決方案"><span class="nav-number">2.</span> <span class="nav-text">解決方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實作-Java-JavaScript-做-AES-CBC-NoPadding"><span class="nav-number">3.</span> <span class="nav-text">實作 Java&#x2F;JavaScript 做 AES&#x2F;CBC&#x2F;NoPadding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java"><span class="nav-number">3.1.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-number">3.2.</span> <span class="nav-text">JavaScript</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要了解的知識"><span class="nav-number">4.</span> <span class="nav-text">要了解的知識</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可以應用地方"><span class="nav-number">5.</span> <span class="nav-text">可以應用地方</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">624</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">84</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">499</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/08/22/JavaScript-Java-%E5%AF%A6%E4%BD%9C-AES-CBC-NoPadding-%E5%8A%A0%E5%AF%86%E6%96%B9%E6%B3%95/";
+    this.page.identifier = "2021/08/22/JavaScript-Java-實作-AES-CBC-NoPadding-加密方法/";
+    this.page.title = "JavaScript,Java 實作 AES/CBC/NoPadding 加密方法";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
