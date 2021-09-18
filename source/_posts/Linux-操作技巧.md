@@ -1,5 +1,5 @@
 ---
-title: Linux 操作技巧
+title: Linux Bash 操作技巧
 date: 2021-06-27 14:55:00
 tags: [linux]
 categories: Linux 
@@ -33,3 +33,8 @@ Ctrl+Y 貼上
 6:25​ - ctrl-x-e - continue editing your current shell line in a text editor (uses $EDITOR)
 7:54​ - alt-. - paste previous command's argument (useful for running multiple commands on the same resource)
 9:18​ - reset - resets/unborks your terminal
+
+
+{% asset_img https://raw.githubusercontent.com/it9gamelog/it9gamelog/master/bash_cheatsheet/Bash%20Cheatsheet.png title %}
+
+最近看[Bash Hotkey貓紙 - I.T. 9 遊戲日誌 - Medium](https://it9gamelog.medium.com/bash-hotkey%E8%B2%93%E7%B4%99-124dd00cc594)，跟上面介紹影片一樣
