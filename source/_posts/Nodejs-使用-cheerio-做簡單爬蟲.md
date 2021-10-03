@@ -35,3 +35,8 @@ const __dirname = dirname(__filename)
 ```
 
 [Node.js使用ES6 Module | Eddy 思考與學習](https://eddychang.me/node-es6-module)
+
+
+使用 tag 查詢不難，跟jQuery 差不多這邊。
+- [Anime-List/YuC-AnimeList.js at master · ACGNTaiwan/Anime-List](https://github.com/ACGNTaiwan/Anime-List/blob/master/crawler/YuC-AnimeList.js)
+- [add generateAnimeList · malagege/vue-myanimelist@63645ca](https://github.com/malagege/vue-myanimelist/commit/63645ca4407c602253ff9838940759f74a9c9734)看範例改比較快
