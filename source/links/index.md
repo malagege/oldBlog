@@ -64,3 +64,4 @@ date: 2018-05-14 21:24:11
 - [Ryan4Yin's Space](https://ryan4yin.space/)
 - [LEMONSYS|个人博客](https://www.lemonsys.cn/)
 - [Welcome.Web.World](https://hsiangfeng.github.io/)
+- [技術雜記 Technology Notes - Jack Yu | 傑克](https://yu-jack.github.io/)

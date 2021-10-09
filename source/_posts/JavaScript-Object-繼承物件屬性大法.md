@@ -8,7 +8,7 @@ categories: JavaScript
 有時候自幹套件，使用 Object 去設定會非常簡單，但是會有物件繼承問題。要如何快速解決問題呢?我之前有使用過 `jQuery.extend` 來解決這個問題。但是最近寫 Vue，不太可能使用 Query ，我相信 ES6 應該有新寫法(還真的有)，這邊來整理一下。
 <!--more-->
 
-## jQuery
+## "jQuery"
 
 ```javascript=
 var object1 = {
