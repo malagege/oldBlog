@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="Vue 動畫過渡(Transition) 筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue 動畫過渡(Transition) 筆記">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="Vue 動畫過渡(Transition) 筆記">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/hu1wTEp.png">
+<meta property="og:image" content="https://v3.cn.vuejs.org/images/transitions.svg">
+<meta property="article:published_time" content="2021-10-09T15:20:30.000Z">
+<meta property="article:modified_time" content="2021-10-09T15:20:56.106Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/hu1wTEp.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Vue 動畫過渡(Transition) 筆記 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue 動畫過渡(Transition) 筆記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-10-09 23:20:30 / 修改時間：23:20:56" itemprop="dateCreated datePublished" datetime="2021-10-09T23:20:30+08:00">2021-10-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Vue-動畫過渡-Transition-筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>Vue 動畫過渡(Transition) 筆記</p>
+<a id="more"></a>
+<h2 id="WEB-動畫知識"><a href="#WEB-動畫知識" class="headerlink" title="WEB 動畫知識"></a>WEB 動畫知識</h2><p>一個是 Transition，另一個是 Animation。</p>
+<h2 id="Transition-Animation-釐清差異"><a href="#Transition-Animation-釐清差異" class="headerlink" title="Transition / Animation 釐清差異"></a>Transition / Animation 釐清差異</h2><p>可參考</p>
+<ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10197303" target="_blank" rel="noopener">Day27：小事之 Transition 與 Animation - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></li>
+</ul>
+<p><img src="https://i.imgur.com/hu1wTEp.png" alt=""></p>
+<h2 id="Vue-的規範"><a href="#Vue-的規範" class="headerlink" title="Vue 的規範"></a>Vue 的規範</h2><p><img src="https://v3.cn.vuejs.org/images/transitions.svg" alt=""></p>
+<p>Enter<br>畫面顯示(如 v-if 出來)</p>
+<ol>
+<li>xxx-enter-from, xxx-enter-active</li>
+<li>xxx-enter-active</li>
+<li>xxx-enter-to, xxx-enter-active</li>
+<li>no(Vue-transition) class</li>
+</ol>
+<p>Leave<br>畫面移除(如 v-if 移除)</p>
+<ol>
+<li>xxx-leave-from, xxx-leave-active</li>
+<li>xxx-leave-active</li>
+<li>xxx-leave-to, xxx-leave-active</li>
+<li>no(Vue-transition) class</li>
+</ol>
+<h3 id="xxx怎麼命名"><a href="#xxx怎麼命名" class="headerlink" title="xxx怎麼命名"></a>xxx怎麼命名</h3><p>透過html<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;transition name&#x3D;&quot;bounce&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>bounce-leave-from</li>
+<li>bounce-leave-active</li>
+<li>bounce-leave-to</li>
+<li>bounce-leave-active</li>
+</ul>
+<h2 id="一般使用"><a href="#一般使用" class="headerlink" title="一般使用"></a>一般使用</h2><h2 id="搭配-Vue-過渡-Enter-Leave-amp-List-Transitions"><a href="#搭配-Vue-過渡-Enter-Leave-amp-List-Transitions" class="headerlink" title="搭配 Vue 過渡 (Enter/Leave &amp; List Transitions)"></a>搭配 Vue 過渡 (Enter/Leave &amp; List Transitions)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;transition name&#x3D;&quot;bounce&quot;&gt;</span><br><span class="line">    &lt;p v-if&#x3D;&quot;show&quot;&gt;</span><br><span class="line">     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis</span><br><span class="line">     enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi</span><br><span class="line">     tristique senectus et netus.</span><br><span class="line">   &lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;transition&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.bounce-enter-active</span> &#123;</span><br><span class="line">  <span class="attribute">animation</span>: bounce-in <span class="number">0.5s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.bounce-leave-active</span> &#123;</span><br><span class="line">  <span class="attribute">animation</span>: bounce-in <span class="number">0.5s</span> reverse;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> bounce-in &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  50% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">1.25</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>小記重點</p>
+<ol>
+<li><code>&lt;transition&gt;</code>的 name(xxx)</li>
+<li>設定 xxx-leave-from, xxx-leave-active, xxx-enter-to 過渡屬性</li>
+</ol>
+<h2 id="搭配-Vue-過渡-Enter-Leave-amp-List-Transitions-class"><a href="#搭配-Vue-過渡-Enter-Leave-amp-List-Transitions-class" class="headerlink" title="搭配 Vue 過渡 (Enter/Leave &amp; List Transitions) class"></a>搭配 Vue 過渡 (Enter/Leave &amp; List Transitions) class</h2><ul>
+<li>enter-from-class</li>
+<li>enter-active-class</li>
+<li>enter-to-class</li>
+<li>leave-from-class</li>
+<li>leave-active-class</li>
+<li>leave-to-class</li>
+</ul>
+<h3 id="使用-animate-class"><a href="#使用-animate-class" class="headerlink" title="使用 animate class"></a>使用 animate class</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;link</span><br><span class="line">  href&#x3D;&quot;https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;animate.css&#x2F;4.1.0&#x2F;animate.min.css&quot;</span><br><span class="line">  rel&#x3D;&quot;stylesheet&quot;</span><br><span class="line">  type&#x3D;&quot;text&#x2F;css&quot;</span><br><span class="line">&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id&#x3D;&quot;demo&quot;&gt;</span><br><span class="line">  &lt;button @click&#x3D;&quot;show &#x3D; !show&quot;&gt;</span><br><span class="line">    Toggle render</span><br><span class="line">  &lt;&#x2F;button&gt;</span><br><span class="line"></span><br><span class="line">  &lt;transition</span><br><span class="line">    name&#x3D;&quot;custom-classes-transition&quot;</span><br><span class="line">    enter-active-class&#x3D;&quot;animate__animated animate__tada&quot;</span><br><span class="line">    leave-active-class&#x3D;&quot;animate__animated animate__bounceOutRight&quot;</span><br><span class="line">  &gt;</span><br><span class="line">    &lt;p v-if&#x3D;&quot;show&quot;&gt;hello&lt;&#x2F;p&gt;</span><br><span class="line">  &lt;&#x2F;transition&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+<p>簡單重點，不需考慮 form/to 概念`。</p>
+<ol>
+<li>name=”custom-classes-transition”</li>
+<li>enter-active-class=”animate__animated animate__tada”</li>
+<li>leave-active-class=”animate__animated animate__bounceOutRight”</li>
+</ol>
+<h3 id="回憶第一步驟-name-做甚麼"><a href="#回憶第一步驟-name-做甚麼" class="headerlink" title="回憶第一步驟 name 做甚麼?"></a>回憶第一步驟 name 做甚麼?</h3><blockquote>
+<p>對於這些在過渡中切換的類名來說，如果你使用一個沒有名字的 <code>&lt;transition&gt;</code>，則 v- 是這些class名的默認前綴。如果你使用了 <code>&lt;transition name=&quot;my-transition&quot;&gt;</code>，那麼 v-enter-from會替換為 my-transition-enter-from。</p>
+</blockquote>
+<p>上面<code>xxx怎麼命名</code>有提到，感覺很容易忘記是這樣命名。</p>
+<h2 id="搭配-Animate-css"><a href="#搭配-Animate-css" class="headerlink" title="搭配 Animate.css"></a>搭配 Animate.css</h2><p>可以看<a href="https://ithelp.ithome.com.tw/articles/10251903" target="_blank" rel="noopener">【Day 26】CSS Animation - CSS 動畫資源蒐集與使用教學 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
+<h3 id="官網建議"><a href="#官網建議" class="headerlink" title="官網建議"></a>官網建議</h3><ol>
+<li>不要使用 root Element (html,body)</li>
+<li>不要使用大的 Element 做動畫 (Bad UX)</li>
+<li>不要使用無限動畫(分心使用者注意力)</li>
+<li>Mind the initial and final state of your elements(animation-fill-mode)</li>
+<li>不能用在inline(要使用 inline-block)</li>
+</ol>
+<h3 id="滾動到畫面觸發動畫"><a href="#滾動到畫面觸發動畫" class="headerlink" title="滾動到畫面觸發動畫"></a>滾動到畫面觸發動畫</h3><p><a href="https://coolcssanimation.com/how-to-trigger-a-css-animation-on-scroll/" target="_blank" rel="noopener">How to trigger a CSS animation on scroll</a></p>
+<p>IntersectionObserver<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const observer &#x3D; new IntersectionObserver(entries &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; Loop over the entries</span><br><span class="line">  entries.forEach(entry &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F; If the element is visible</span><br><span class="line">    if (entry.isIntersecting) &#123;</span><br><span class="line">      &#x2F;&#x2F; Add the animation class</span><br><span class="line">      entry.target.classList.add(&#39;square-animation&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">observer.observe(document.querySelector(&#39;.square&#39;));</span><br></pre></td></tr></table></figure></p>
+<p>這邊題外話，之前有看過 Observer，這邊也有看到<a href="https://malagege.github.io/blog/2018/10/24/vue-chat-scroll%E5%92%8CMutationObserver%E5%B0%8F%E8%A8%98/">vue-chat-scroll和MutationObserver小記 | 程式狂想筆記</a>，雖然兩者沒關係，可以看更多 Observer 在<a href="https://developer.mozilla.org/zh-TW/docs/Web/API" target="_blank" rel="noopener">Web APIs | MDN</a>搜尋 Observer`。</p>
+<h3 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h3><p>我猜我應該沒有空整理這個，先貼上來吧。</p>
+<p><a href="https://medium.com/%E9%BA%A5%E5%85%8B%E7%9A%84%E5%8D%8A%E8%B7%AF%E5%87%BA%E5%AE%B6%E7%AD%86%E8%A8%98/%E8%AA%8D%E8%AD%98-intersection-observer-api-%E5%AF%A6%E4%BD%9C-lazy-loading-%E5%92%8C-infinite-scroll-c8d434ad218c" target="_blank" rel="noopener">認識 Intersection Observer API：實作 Lazy Loading 和 Infinite Scroll | by Mike Huang | 麥克的半路出家筆記 | Medium</a></p>
+<p>沒想到 lazy load 圖片，還能做到 Infinite Scroll 。這麼強大。</p>
+<p><a href="https://zh.javascript.info/weakmap-weakset" target="_blank" rel="noopener">WeakMap and WeakSet（弱映射和弱集合）</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95-1/" rel="prev" title="# Maven 下載 Jar 方法">
+      <i class="fa fa-chevron-left"></i> # Maven 下載 Jar 方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/10/09/CSS-Grid-%E7%AD%86%E8%A8%98/" rel="next" title="CSS Grid 筆記">
+      CSS Grid 筆記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB-動畫知識"><span class="nav-number">1.</span> <span class="nav-text">WEB 動畫知識</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transition-Animation-釐清差異"><span class="nav-number">2.</span> <span class="nav-text">Transition &#x2F; Animation 釐清差異</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-的規範"><span class="nav-number">3.</span> <span class="nav-text">Vue 的規範</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xxx怎麼命名"><span class="nav-number">3.1.</span> <span class="nav-text">xxx怎麼命名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般使用"><span class="nav-number">4.</span> <span class="nav-text">一般使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭配-Vue-過渡-Enter-Leave-amp-List-Transitions"><span class="nav-number">5.</span> <span class="nav-text">搭配 Vue 過渡 (Enter&#x2F;Leave &amp; List Transitions)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭配-Vue-過渡-Enter-Leave-amp-List-Transitions-class"><span class="nav-number">6.</span> <span class="nav-text">搭配 Vue 過渡 (Enter&#x2F;Leave &amp; List Transitions) class</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-animate-class"><span class="nav-number">6.1.</span> <span class="nav-text">使用 animate class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回憶第一步驟-name-做甚麼"><span class="nav-number">6.2.</span> <span class="nav-text">回憶第一步驟 name 做甚麼?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭配-Animate-css"><span class="nav-number">7.</span> <span class="nav-text">搭配 Animate.css</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官網建議"><span class="nav-number">7.1.</span> <span class="nav-text">官網建議</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滾動到畫面觸發動畫"><span class="nav-number">7.2.</span> <span class="nav-text">滾動到畫面觸發動畫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#彩蛋"><span class="nav-number">7.3.</span> <span class="nav-text">彩蛋</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">642</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">86</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">515</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/";
+    this.page.identifier = "2021/10/09/Vue-動畫過渡-Transition-筆記/";
+    this.page.title = "Vue 動畫過渡(Transition) 筆記";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

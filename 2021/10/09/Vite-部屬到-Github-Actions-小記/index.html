@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="最近研究如何發布或定期執行程式，所以就找了一下並整理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vite 部屬到 Github Actions 小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="最近研究如何發布或定期執行程式，所以就找了一下並整理。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/Rh5Lgbt.png">
+<meta property="og:image" content="https://i.imgur.com/539HkGH.png">
+<meta property="og:image" content="https://i.imgur.com/B2Fg3aj.png">
+<meta property="og:image" content="https://i.imgur.com/Q0AQgiD.png">
+<meta property="article:published_time" content="2021-10-09T15:18:01.000Z">
+<meta property="article:modified_time" content="2021-10-09T15:18:46.183Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="vite">
+<meta property="article:tag" content="github">
+<meta property="article:tag" content="actions">
+<meta property="article:tag" content="deploy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/Rh5Lgbt.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Vite 部屬到 Github Actions 小記 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vite 部屬到 Github Actions 小記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-10-09 23:18:01 / 修改時間：23:18:46" itemprop="dateCreated datePublished" datetime="2021-10-09T23:18:01+08:00">2021-10-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vite/" itemprop="url" rel="index"><span itemprop="name">Vite</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Vite-部屬到-Github-Actions-小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>最近研究如何發布或定期執行程式，所以就找了一下並整理。</p>
+<a id="more"></a>
+<h2 id="免費限制"><a href="#免費限制" class="headerlink" title="免費限制"></a>免費限制</h2><p>作业执行时间 - 工作流程中的每个作业最多可以运行 6 个小时。 如果作业达到此限制，该作业将会终止而无法完成。</p>
+<p>工作流程运行时间 - 每个工作流程的运行时限为 72 小时。 如果工作流程运行时间达到此限制，其运行将被取消。</p>
+<h2 id="教學"><a href="#教學" class="headerlink" title="教學"></a>教學</h2><p>參考:<br><a href="https://tzuhui.github.io/2020/12/11/Vue/Vue-deploy-github-actions/" target="_blank" rel="noopener">https://tzuhui.github.io/2020/12/11/Vue/Vue-deploy-github-actions/</a></p>
+<p><a href="https://milkmidi.medium.com/%E6%B7%B1%E5%85%A5%E4%BD%86%E4%B8%8D%E6%B7%BA%E5%87%BA-%E5%A6%82%E4%BD%95%E7%94%A8-github-actions-%E8%87%AA%E5%8B%95%E7%99%BC%E4%BD%88-gh-pages-8183464dfe84" target="_blank" rel="noopener">https://milkmidi.medium.com/%E6%B7%B1%E5%85%A5%E4%BD%86%E4%B8%8D%E6%B7%BA%E5%87%BA-%E5%A6%82%E4%BD%95%E7%94%A8-github-actions-%E8%87%AA%E5%8B%95%E7%99%BC%E4%BD%88-gh-pages-8183464dfe84</a></p>
+<h3 id="設定-Github-Token-給-Github-Actions-用"><a href="#設定-Github-Token-給-Github-Actions-用" class="headerlink" title="設定 Github Token 給 Github Actions 用"></a>設定 Github Token 給 Github Actions 用</h3><p>專案設定</p>
+<p><img src="https://i.imgur.com/Rh5Lgbt.png" alt=""></p>
+<p><img src="https://i.imgur.com/539HkGH.png" alt=""></p>
+<p>勾選圖片選項<br><img src="https://i.imgur.com/B2Fg3aj.png" alt=""></p>
+<p>此token 產生之後無法看到，記得先存起來。</p>
+<h3 id="設定-secret"><a href="#設定-secret" class="headerlink" title="設定 secret"></a>設定 secret</h3><p>設定完無法再看到之前設定值，滿特別的東西。</p>
+<p><img src="https://i.imgur.com/Q0AQgiD.png" alt=""></p>
+<h3 id="前湍-Vite-設定"><a href="#前湍-Vite-設定" class="headerlink" title="前湍 Vite 設定"></a>前湍 Vite 設定</h3><p>調整 vite.confing.js</p>
+<p>base: ‘/vite-test-publish-githubpage/‘,</p>
+<h3 id="專案目錄需要設定"><a href="#專案目錄需要設定" class="headerlink" title="專案目錄需要設定"></a>專案目錄需要設定</h3><p>.github/workflows/main.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This is a basic workflow to help you get started with Actions</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">deploy</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Controls when the action will run. </span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="comment"># Triggers the workflow on push or pull request events but only for the main branch</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">pull_request:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">schedule:</span></span><br><span class="line">    <span class="comment"># * is a special character in YAML so you have to quote this string</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">cron:</span>  <span class="string">'0,15,30,45 12,13 * * *'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Allows you to run this workflow manually from the Actions tab</span></span><br><span class="line">  <span class="attr">workflow_dispatch:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A workflow run is made up of one or more jobs that can run sequentially or in parallel</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="comment"># This workflow contains a single job called "build"</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="comment"># The type of runner that the job will run on</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Steps represent a sequence of tasks that will be executed as part of the job</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="comment"># Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">&amp;</span> <span class="string">Build</span> <span class="comment"># 執行指令</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line">          <span class="string">npm</span> <span class="string">install</span></span><br><span class="line">          <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span> </span><br><span class="line">          </span><br><span class="line">      <span class="comment"># Runs a single command using the runners shell</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">JamesIves/github-pages-deploy-action@4.1.4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="comment"># ACCESS_TOKEN: $&#123;&#123; secrets.ACCESS_TOKEN &#125;&#125; # Settings &gt; Secret 建立的 ACCESS_TOKEN，推同個 repo 的話可以不需要</span></span><br><span class="line">          <span class="attr">branch:</span> <span class="string">gh-pages</span> <span class="comment"># deploy 到 gh-pages 這個分支</span></span><br><span class="line">          <span class="attr">folder:</span> <span class="string">dist</span> <span class="comment"># build 後的資料夾</span></span><br></pre></td></tr></table></figure>
+<p>有看到文章說<code>.github/workflows/</code>會執行當下目錄下 yaml 檔案。</p>
+<h2 id="排程設定"><a href="#排程設定" class="headerlink" title="排程設定"></a>排程設定</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Controls when the action will run. </span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="comment"># Triggers the workflow on push or pull request events but only for the main branch</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">pull_request:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">schedule:</span></span><br><span class="line">    <span class="comment"># * is a special character in YAML so you have to quote this string</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">cron:</span>  <span class="string">'0,15,30,45 12,13 * * *'</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://skeptric.com/github-action-cron/" target="_blank" rel="noopener">https://skeptric.com/github-action-cron/</a></p>
+<p>timezone 時區要注意，不是用台灣時間，UTC+0時間。排成也不會馬上啟動，好像大多數排隊消化其他人排成，後續才會輪到，甚至排到兩次可能會取消，請看下面例子。</p>
+<p>例如:<code>cron:  &#39;0,15,30,45 9 * * *&#39;</code>。<br>下面都是台灣時間<br>0   =&gt;<br>15  =&gt; 17:17<br>30  =&gt; 17:39<br>45  =&gt; 17:51</p>
+<p>這邊看到 0分時候沒有啟動，原因是 Github Actions 還沒排到，所以15分又啟動排成就不會執行。</p>
+<h2 id="actions-status-discord-通知"><a href="#actions-status-discord-通知" class="headerlink" title="actions-status-discord 通知"></a>actions-status-discord 通知</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">sarisia/actions-status-discord@v1</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">always()</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">webhook:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.DISCORD_WEBHOOK</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="attr">title:</span> <span class="string">"deploy"</span></span><br><span class="line">    <span class="attr">description:</span> <span class="string">"Build and deploy to GitHub Pages"</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">GitHub</span> <span class="string">Actions</span></span><br></pre></td></tr></table></figure>
+<h2 id="相關教學文章"><a href="#相關教學文章" class="headerlink" title="相關教學文章"></a>相關教學文章</h2><p><a href="https://github.com/JamesIves/github-pages-deploy-action" target="_blank" rel="noopener">https://github.com/JamesIves/github-pages-deploy-action</a></p>
+<p><a href="https://hackmd.io/@3obs7uo2R0ywhgjPUysZZg/r1mzSci7w#%E5%BB%BA%E7%AB%8BDrone-Runner-Server%EF%BC%88Agent%EF%BC%89" target="_blank" rel="noopener">史上最齊全最詳細的Drone自動化教學文件 - HackMD</a></p>
+<p><a href="https://github.com/actions/starter-workflows" target="_blank" rel="noopener">actions/starter-workflows: Accelerating new GitHub Actions workflows</a></p>
+<p><a href="https://docs.github.com/cn/actions/reference/events-that-trigger-workflows" target="_blank" rel="noopener">https://docs.github.com/cn/actions/reference/events-that-trigger-workflows</a></p>
+<p><a href="https://medium.com/starbugs/%E5%AF%A6%E4%BD%9C%E9%96%8B%E6%BA%90%E5%B0%8F%E5%B7%A5%E5%85%B7-%E8%88%87-github-actions-%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-3dd2d70eeb" target="_blank" rel="noopener">https://medium.com/starbugs/%E5%AF%A6%E4%BD%9C%E9%96%8B%E6%BA%90%E5%B0%8F%E5%B7%A5%E5%85%B7-%E8%88%87-github-actions-%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%9B%B8%E9%81%87-3dd2d70eeb</a></p>
+<p><a href="https://segmentfault.com/a/1190000018459195" target="_blank" rel="noopener">使用drone和gogs搭建自己的CI/CD系统 - SegmentFault 思否</a></p>
+<p><a href="https://blog.ruanbekker.com/blog/2021/03/09/cicd-with-droneci-and-gitea-using-docker-compose/" target="_blank" rel="noopener">CICD With DroneCI and Gitea Using Docker Compose - Ruan Bekker’s Blog</a></p>
+<h2 id="Raspberry-PI-架-Drone"><a href="#Raspberry-PI-架-Drone" class="headerlink" title="Raspberry PI 架 Drone"></a>Raspberry PI 架 Drone</h2><p><a href="https://www.alexhyett.com/drone-ci-raspberry-pi/" target="_blank" rel="noopener">How to set up Drone CI on Raspberry Pi (and why you shouldn’t) | Alex Hyett</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/vite/" rel="tag"># vite</a>
+              <a href="/blog/tags/github/" rel="tag"># github</a>
+              <a href="/blog/tags/actions/" rel="tag"># actions</a>
+              <a href="/blog/tags/deploy/" rel="tag"># deploy</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/10/09/%E4%BD%BF%E7%94%A8-unplugin-icons-vite-plugin-icons-%E5%88%9D%E9%AB%94%E9%A9%97/" rel="prev" title="使用 unplugin-icons (vite-plugin-icons) 初體驗">
+      <i class="fa fa-chevron-left"></i> 使用 unplugin-icons (vite-plugin-icons) 初體驗
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95/" rel="next" title="Maven 下載 Jar 方法">
+      Maven 下載 Jar 方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#免費限制"><span class="nav-number">1.</span> <span class="nav-text">免費限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#教學"><span class="nav-number">2.</span> <span class="nav-text">教學</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#設定-Github-Token-給-Github-Actions-用"><span class="nav-number">2.1.</span> <span class="nav-text">設定 Github Token 給 Github Actions 用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#設定-secret"><span class="nav-number">2.2.</span> <span class="nav-text">設定 secret</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前湍-Vite-設定"><span class="nav-number">2.3.</span> <span class="nav-text">前湍 Vite 設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#專案目錄需要設定"><span class="nav-number">2.4.</span> <span class="nav-text">專案目錄需要設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排程設定"><span class="nav-number">3.</span> <span class="nav-text">排程設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#actions-status-discord-通知"><span class="nav-number">4.</span> <span class="nav-text">actions-status-discord 通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關教學文章"><span class="nav-number">5.</span> <span class="nav-text">相關教學文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raspberry-PI-架-Drone"><span class="nav-number">6.</span> <span class="nav-text">Raspberry PI 架 Drone</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">642</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">86</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">515</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/";
+    this.page.identifier = "2021/10/09/Vite-部屬到-Github-Actions-小記/";
+    this.page.title = "Vite 部屬到 Github Actions 小記";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

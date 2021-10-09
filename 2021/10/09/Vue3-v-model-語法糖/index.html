@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="之前在學 Vue 2 的時候，稍微釐清 v-model 觀念。但一陣子沒用了，忘了差不多，今天在讀 Vue3 順便來回顧一下之前觀念，順便來筆記一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3 v-model 語法糖">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="之前在學 Vue 2 的時候，稍微釐清 v-model 觀念。但一陣子沒用了，忘了差不多，今天在讀 Vue3 順便來回顧一下之前觀念，順便來筆記一下。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-10-09T15:22:02.000Z">
+<meta property="article:modified_time" content="2021-10-09T15:22:24.052Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="v-model">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Vue3 v-model 語法糖 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue3 v-model 語法糖
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-10-09 23:22:02 / 修改時間：23:22:24" itemprop="dateCreated datePublished" datetime="2021-10-09T23:22:02+08:00">2021-10-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Vue3-v-model-語法糖/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>之前在學 Vue 2 的時候，稍微釐清 v-model 觀念。但一陣子沒用了，忘了差不多，今天在讀 Vue3 順便來回顧一下之前觀念，順便來筆記一下。</p>
+<a id="more"></a>
+<h2 id="一般-Component"><a href="#一般-Component" class="headerlink" title="一般 Component"></a>一般 Component</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;ChildComponent v-model&#x3D;&quot;pageTitle&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 簡寫: --&gt;</span><br><span class="line"></span><br><span class="line">&lt;ChildComponent</span><br><span class="line">  :modelValue&#x3D;&quot;pageTitle&quot;</span><br><span class="line">  @update:modelValue&#x3D;&quot;pageTitle &#x3D; $event&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="重點1-簡寫"><a href="#重點1-簡寫" class="headerlink" title="重點1(簡寫)"></a>重點1(簡寫)</h3><p>簡單說明<br>v-model 簡寫 =&gt; <code>:modelValue=&quot;xxx&quot; @update:modelValue=&quot;xxxx&quot;</code><br>現在 Vue 3 也可以控制 v-model而外變數<br><code>v-model:title</code> =&gt; <code>:title=&quot;xxx&quot; @update:title=&quot;xxxx&quot;</code></p>
+<h3 id="重點2-觸發-Event-改變-ModelValue-值"><a href="#重點2-觸發-Event-改變-ModelValue-值" class="headerlink" title="重點2(觸發 Event 改變 ModelValue 值)"></a>重點2(觸發 Event 改變 ModelValue 值)</h3><p>這邊 <code>@update:modelValue=&quot;xxx&quot;</code>和<code>@update:title=&quot;xxxx&quot;</code> 這邊需要知道 Vue 處理 Event 方式，內層 Component 使用 <code>this.$emit(&#39;update:modelValue&#39;,changeValue)</code>去做 Event 觸發動作</p>
+<h2 id="Form-ModelValue一些方式"><a href="#Form-ModelValue一些方式" class="headerlink" title="Form  ModelValue一些方式"></a>Form  ModelValue一些方式</h2><p>我們前一篇講到 Component 簡寫，但在 Form(input , textarea …)就不是這樣了。<br>自己有在官方文件看到寫法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-model&#x3D;&quot;searchText&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 簡寫 --&gt; </span><br><span class="line"></span><br><span class="line">&lt;input :value&#x3D;&quot;searchText&quot; @input&#x3D;&quot;searchText &#x3D; $event.target.value&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<p><a href="https://v3.vuejs.org/guide/forms.html#modifiers" target="_blank" rel="noopener">Form Input Bindings | Vue.js</a></p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>一般 select 寫法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id&#x3D;&quot;v-model-select-dynamic&quot; class&#x3D;&quot;demo&quot;&gt;</span><br><span class="line">  &lt;select v-model&#x3D;&quot;selected&quot;&gt;</span><br><span class="line">    &lt;option v-for&#x3D;&quot;option in options&quot; :value&#x3D;&quot;option.value&quot;&gt;</span><br><span class="line">      &#123;&#123; option.text &#125;&#125;</span><br><span class="line">    &lt;&#x2F;option&gt;</span><br><span class="line">  &lt;&#x2F;select&gt;</span><br><span class="line">  &lt;span&gt;Selected: &#123;&#123; selected &#125;&#125;&lt;&#x2F;span&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">Vue.createApp(&#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      selected: &#39;A&#39;,</span><br><span class="line">      options: [</span><br><span class="line">        &#123; text: &#39;One&#39;, value: &#39;A&#39; &#125;,</span><br><span class="line">        &#123; text: &#39;Two&#39;, value: &#39;B&#39; &#125;,</span><br><span class="line">        &#123; text: &#39;Three&#39;, value: &#39;C&#39; &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).mount(&#39;#v-model-select-dynamic&#39;)</span><br></pre></td></tr></table></figure>
+<h3 id="checkbox"><a href="#checkbox" class="headerlink" title="checkbox"></a>checkbox</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- &#96;picked&#96; is a string &quot;a&quot; when checked --&gt;</span><br><span class="line">&lt;input type&#x3D;&quot;radio&quot; v-model&#x3D;&quot;picked&quot; value&#x3D;&quot;a&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- &#96;toggle&#96; is either true or false --&gt;</span><br><span class="line">&lt;input type&#x3D;&quot;checkbox&quot; v-model&#x3D;&quot;toggle&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- &#96;selected&#96; is a string &quot;abc&quot; when the first option is selected --&gt;</span><br><span class="line">&lt;select v-model&#x3D;&quot;selected&quot;&gt;</span><br><span class="line">  &lt;option value&#x3D;&quot;abc&quot;&gt;ABC&lt;&#x2F;option&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="true-value-false-value"><a href="#true-value-false-value" class="headerlink" title="true-value,false-value"></a>true-value,false-value</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;&quot;checkbox&quot; v-model&#x3D;&quot;toggle&quot; true-value&#x3D;&quot;yes&quot; false-value&#x3D;&quot;no&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<p>true ==&gt; ‘yes’<br>false ==&gt; ‘false’</p>
+<h4 id="補充-v-model-語法糖寫法"><a href="#補充-v-model-語法糖寫法" class="headerlink" title="補充 v-model 語法糖寫法"></a>補充 v-model 語法糖寫法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#39;checkbox&#39;, &#123;</span><br><span class="line">    model: &#123;</span><br><span class="line">      prop: &#39;checked&#39;,</span><br><span class="line">      event: &#39;change&#39;</span><br><span class="line">    &#125;,</span><br><span class="line">    props: &#123;</span><br><span class="line">      checked: &#123;</span><br><span class="line">        type: Boolean,</span><br><span class="line">        default: false</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template:</span><br><span class="line">          &#96;</span><br><span class="line">      &lt;input type&#x3D;&quot;checkbox&quot; @input&#x3D;&quot;onInput&quot; @change&#x3D;&quot;onChange&quot;&#x2F;&gt;</span><br><span class="line">    &#96;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      onInput (e) &#123;</span><br><span class="line">        console.log(&#39;onInput&#39;, e)</span><br><span class="line">      &#125;,</span><br><span class="line">      onChange (e) &#123;</span><br><span class="line">        console.log(&#39;onChange&#39;, e)</span><br><span class="line">        this.$emit(&#39;change&#39;, e.target.checked)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>注意這邊不是用<code>event.target.value</code>，是用<code>event.target.checked</code>。這個問題讓我卡了幾小時的bug 😢😢😢</p>
+<p>參考來源:</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/107454413" target="_blank" rel="noopener">Vue v-model语法糖 - 知乎</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10209183" target="_blank" rel="noopener">Vue.js Core 30天屠龍記(第26天): 客製事件 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><h3 id="Radio"><a href="#Radio" class="headerlink" title="Radio"></a>Radio</h3></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;&quot;radio&quot; v-model&#x3D;&quot;pick&quot; v-bind:value&#x3D;&quot;a&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; when checked:</span><br><span class="line">vm.pick &#x3D;&#x3D;&#x3D; vm.a</span><br></pre></td></tr></table></figure>
+<h3 id="select-option"><a href="#select-option" class="headerlink" title="select option"></a>select option</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;select v-model&#x3D;&quot;selected&quot;&gt;</span><br><span class="line">  &lt;!-- inline object literal --&gt;</span><br><span class="line">  &lt;option :value&#x3D;&quot;&#123; number: 123 &#125;&quot;&gt;123&lt;&#x2F;option&gt;</span><br><span class="line">&lt;&#x2F;select&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; when selected:</span><br><span class="line">typeof vm.selected &#x2F;&#x2F; &#x3D;&gt; &#39;object&#39;</span><br><span class="line">vm.selected.number &#x2F;&#x2F; &#x3D;&gt; 123</span><br></pre></td></tr></table></figure>
+<h3 id="修飾詞-這邊都是-form-相關-tag-限定"><a href="#修飾詞-這邊都是-form-相關-tag-限定" class="headerlink" title="修飾詞(這邊都是 form 相關 tag 限定)"></a>修飾詞(這邊都是 form 相關 tag 限定)</h3><ol>
+<li>lazy  change event 才做改變值動作</li>
+<li>number</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type&#x3D;&quot;number&quot; v-model.number&#x3D;&quot;xxx&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<p>這邊注意，type沒限定一定要用 number，這邊指令<code>text</code>的話，純文字(沒打英文)會顯示字串。所以搭配 type 還是最好用 <code>number</code>做限定。</p>
+<ol start="4">
+<li>trim</li>
+</ol>
+<p>只能用在 v-model</p>
+<p><a href="https://v3.vuejs.org/guide/component-basics.html#emitting-a-value-with-an-event" target="_blank" rel="noopener">Components Basics | Vue.js</a></p>
+<h2 id="相關文章"><a href="#相關文章" class="headerlink" title="相關文章"></a>相關文章</h2><p><a href="https://vue3js.cn/docs/zh/guide/migration/v-model.html#%E4%BD%BF%E7%94%A8-v-bind-sync" target="_blank" rel="noopener">v-model | Vue3中文文档 - vuejs</a></p>
+<p><a href="https://vue3js.cn/docs/zh/guide/component-custom-events.html#%E5%A4%9A%E4%B8%AA-v-model-%E7%BB%91%E5%AE%9A" target="_blank" rel="noopener">自定义事件 | Vue3中文文档 - vuejs</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/107454413" target="_blank" rel="noopener">Vue v-model语法糖 - 知乎</a> </p>
+<p><a href="https://zhuanlan.zhihu.com/p/354190874" target="_blank" rel="noopener">v-model之vue2与3的差别 - 知乎</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/vue/" rel="tag"># vue</a>
+              <a href="/blog/tags/v-model/" rel="tag"># v-model</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/10/09/CSS-Grid-%E7%AD%86%E8%A8%98/" rel="prev" title="CSS Grid 筆記">
+      <i class="fa fa-chevron-left"></i> CSS Grid 筆記
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/10/09/CSS-%E5%81%BD%E9%80%A0%E5%85%83%E7%B4%A0-before-%E9%A1%AF%E7%A4%BA%E5%BA%8F%E8%99%9F-counter/" rel="next" title="CSS 偽造元素(::before)顯示序號(counter)">
+      CSS 偽造元素(::before)顯示序號(counter) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一般-Component"><span class="nav-number">1.</span> <span class="nav-text">一般 Component</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重點1-簡寫"><span class="nav-number">1.1.</span> <span class="nav-text">重點1(簡寫)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重點2-觸發-Event-改變-ModelValue-值"><span class="nav-number">1.2.</span> <span class="nav-text">重點2(觸發 Event 改變 ModelValue 值)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Form-ModelValue一些方式"><span class="nav-number">2.</span> <span class="nav-text">Form  ModelValue一些方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">2.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#checkbox"><span class="nav-number">2.2.</span> <span class="nav-text">checkbox</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#true-value-false-value"><span class="nav-number">2.2.1.</span> <span class="nav-text">true-value,false-value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#補充-v-model-語法糖寫法"><span class="nav-number">2.2.2.</span> <span class="nav-text">補充 v-model 語法糖寫法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Radio"><span class="nav-number">2.3.</span> <span class="nav-text">Radio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-option"><span class="nav-number">2.4.</span> <span class="nav-text">select option</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修飾詞-這邊都是-form-相關-tag-限定"><span class="nav-number">2.5.</span> <span class="nav-text">修飾詞(這邊都是 form 相關 tag 限定)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關文章"><span class="nav-number">3.</span> <span class="nav-text">相關文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">642</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">86</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">515</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/";
+    this.page.identifier = "2021/10/09/Vue3-v-model-語法糖/";
+    this.page.title = "Vue3 v-model 語法糖";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
