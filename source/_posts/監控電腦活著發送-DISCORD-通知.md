@@ -162,4 +162,10 @@ done
 但這個方法也滿有用的
 先記錄
 
-### 
+## 看到另類 ping 大法
+
+剛好爬到不錯文章，想到之前有類似做這個，可以留著以後參考
+
+[为 ping 添加时间戳后台运行实时输出保存日志 | HelloDog](https://wsgzao.github.io/post/ping/) [備份圖](https://i.imgur.com/TQAsvkP.png)
+[为ping添加时间戳后台运行实时输出保存日志 - 知乎](https://zhuanlan.zhihu.com/p/379244697)[備份圖](https://i.imgur.com/xXwkWbg.png)
+

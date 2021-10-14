@@ -21,6 +21,42 @@ mermaid:
 
 ```
 
+
+可以參考[Mermaid | NexT](https://theme-next.js.org/docs/tag-plugins/mermaid.html?highlight=mermaid)
+
+```
+{% mermaid sequenceDiagram %}
+    Alice->John: Hello John, how are you?
+    loop every minute
+        John-->Alice: Great!
+    end
+{% endmermaid %}
+```
+
+{% mermaid sequenceDiagram %}
+    Alice->John: Hello John, how are you?
+    loop every minute
+        John-->Alice: Great!
+    end
+{% endmermaid %}
+
+```
+{% mermaid graph TD %}
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+{% endmermaid %}
+```
+
+{% mermaid graph TD %}
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+{% endmermaid %}
+
+
 下面可以不用看了!!
 下面可以不用看了!!
 下面可以不用看了!!

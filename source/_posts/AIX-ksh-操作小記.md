@@ -103,7 +103,7 @@ https://ngelinux.com/aix-korn-shell-how-to-set-tab-auto-completion-and-hostname-
 
 ## 實用指令
 
-[AIX中的进程管理 - 春风亭牛二哥 - 博客园](https://www.cnblogs.com/liuxing0007/p/11009901.html)![備份圖]](https://i.imgur.com/1TfZgZ6.png)
+[AIX中的进程管理 - 春风亭牛二哥 - 博客园](https://www.cnblogs.com/liuxing0007/p/11009901.html)[備份圖](https://i.imgur.com/1TfZgZ6.png)
 
 [Canceling a background job - IBM Documentation](https://www.ibm.com/docs/en/zos/2.1.0?topic=job-canceling-background)
 

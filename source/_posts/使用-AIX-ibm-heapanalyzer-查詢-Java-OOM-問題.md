@@ -9,7 +9,7 @@ categories: Java
 
 <!--more-->
 
-[java.lang.OutOfMemoryError Java heap space? 怎麼解? - 技術雜記 Technology Notes - Jack Yu | 傑克](https://yu-jack.github.io/2020/02/24/java-oom/)![備份圖](https://i.imgur.com/VeD71Y2.png)
+[java.lang.OutOfMemoryError Java heap space? 怎麼解? - 技術雜記 Technology Notes - Jack Yu | 傑克](https://yu-jack.github.io/2020/02/24/java-oom/)[備份圖](https://i.imgur.com/VeD71Y2.png)
 
 
 AIX 不會產生 phrof 工具，產生 phd 檔案。跑在分析工具不能跑。最後找了很久發現要用 IBM HeapAnalyzer。
