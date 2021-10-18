@@ -132,3 +132,24 @@ less -> cat, view
 [XXOOXp: AIX版的Linux watch指令...(監控指令的輸出狀態)](http://xxooxp.blogspot.com/2011/09/aixlinux-watch.html)
 
 [AIX ksh使用小技巧_wujay-CSDN博客](https://blog.csdn.net/iteye_20080/article/details/82546705)
+
+
+## 中文亂碼
+
+locale 結果看到不是使用 Big5，所以終端機記得要調 big5。
+
+![](https://i.imgur.com/zyLkI3r.png)
+
+
+![](https://i.imgur.com/6k7YnLZ.png)
+
+
+括號要加跳脫字元!!跟 AIX 沒什麼關係。
+
+![](https://i.imgur.com/5wkvx4C.png)
+
+![](https://i.imgur.com/kB9XV8H.png)
+
+
+[在 Korn shell 或 POSIX shell 中以引號括住字元 - IBM Documentation](https://www.ibm.com/docs/zh-tw/aix/7.1?topic=shell-quotation-characters-in-korn-posix)
+
