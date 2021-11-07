@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="大部分教學都不太一樣，後來發現 Electron-builder 的 Autodater 跟 Electron 的 Autoupdater 不太一樣。Electron 內建必須做 codesign 簽章，但不知道能不能用 mkcert ，但感覺不太能做的樣子。avast 一直對我build 出來 msi,exe 做掃描，聽說 codesign 能改善這個問題? codesign 感覺也是大坑，這篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Electron Autoupdater 程式自動更新方法 &amp; GITHUB 更新方法">
+<meta property="og:url" content="https://malagege.github.io/blog/2021/11/07/Electron-Autoupdater-%E7%A8%8B%E5%BC%8F%E8%87%AA%E5%8B%95%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95-GITHUB-%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="大部分教學都不太一樣，後來發現 Electron-builder 的 Autodater 跟 Electron 的 Autoupdater 不太一樣。Electron 內建必須做 codesign 簽章，但不知道能不能用 mkcert ，但感覺不太能做的樣子。avast 一直對我build 出來 msi,exe 做掃描，聽說 codesign 能改善這個問題? codesign 感覺也是大坑，這篇">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/Vrgie9v.png">
+<meta property="og:image" content="https://i.imgur.com/BTYRhUU.png">
+<meta property="og:image" content="https://i.imgur.com/B78YXXn.png">
+<meta property="og:image" content="https://i.imgur.com/VBdRmlk.png">
+<meta property="og:image" content="https://i.imgur.com/j2CHSTy.png">
+<meta property="og:image" content="https://i.imgur.com/kV1qGPZ.png">
+<meta property="og:image" content="https://i.imgur.com/kV1qGPZ.png">
+<meta property="article:published_time" content="2021-11-07T14:07:16.000Z">
+<meta property="article:modified_time" content="2021-11-07T14:08:10.291Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="electron">
+<meta property="article:tag" content="autoupdater">
+<meta property="article:tag" content="github">
+<meta property="article:tag" content="action">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/Vrgie9v.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2021/11/07/Electron-Autoupdater-%E7%A8%8B%E5%BC%8F%E8%87%AA%E5%8B%95%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95-GITHUB-%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Electron Autoupdater 程式自動更新方法 & GITHUB 更新方法 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/11/07/Electron-Autoupdater-%E7%A8%8B%E5%BC%8F%E8%87%AA%E5%8B%95%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95-GITHUB-%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Electron Autoupdater 程式自動更新方法 & GITHUB 更新方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-11-07 22:07:16 / 修改時間：22:08:10" itemprop="dateCreated datePublished" datetime="2021-11-07T22:07:16+08:00">2021-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Nodejs/" itemprop="url" rel="index"><span itemprop="name">Nodejs</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/11/07/Electron-Autoupdater-%E7%A8%8B%E5%BC%8F%E8%87%AA%E5%8B%95%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95-GITHUB-%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/11/07/Electron-Autoupdater-程式自動更新方法-GITHUB-更新方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>大部分教學都不太一樣，後來發現 Electron-builder 的 Autodater 跟 Electron 的 Autoupdater 不太一樣。Electron 內建必須做 codesign 簽章，但不知道能不能用 mkcert ，但感覺不太能做的樣子。avast 一直對我build 出來 msi,exe 做掃描，聽說 codesign 能改善這個問題? codesign 感覺也是大坑，這篇先主要把我網路上整理資料先為主，先以 electron-builder為主。</p>
+<a id="more"></a>
+<h2 id="相關爬的文章整理"><a href="#相關爬的文章整理" class="headerlink" title="相關爬的文章整理"></a>相關爬的文章整理</h2><ul>
+<li><a href="https://philo.dev/electron-auto-update-explained/" target="_blank" rel="noopener">Electron auto update introduction</a></li>
+</ul>
+<ul>
+<li><a href="https://github.com/electron/update-electron-app" target="_blank" rel="noopener">electron/update-electron-app: 🌲 A drop-in module that adds autoUpdating capabilities to Electron apps</a></li>
+</ul>
+<ul>
+<li><p><a href="https://github.com/avocode/electron-windows-autoupdate" target="_blank" rel="noopener">avocode/electron-windows-autoupdate: Get Electron AutoUpdater working on Windows</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/56f0b4bad689" target="_blank" rel="noopener">electron-builder+electron-updater实现应用自动更新过程 - 简书</a></p>
+</li>
+<li><p><a href="https://segmentfault.com/a/1190000012904543" target="_blank" rel="noopener">Electron應用使用electron-builder配合electron-updater實現自動更新 - SegmentFault 思否</a></p>
+</li>
+</ul>
+<blockquote>
+<p>注意：這個autoUpdater不是electron中的autoUpdater，是electron-updater的autoUpdater，否則坑你沒商量！</p>
+</blockquote>
+<ul>
+<li><p><a href="https://ithelp.ithome.com.tw/articles/10253168" target="_blank" rel="noopener">[ Day 35 ] - Electron 應用程式 - 更新自動化 ( 說明篇 ) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
+</li>
+<li><p><a href="https://github.com/alondanoch/electron-builder-auto-update-example/tree/master/src" target="_blank" rel="noopener">electron-builder-auto-update-example/src at master · alondanoch/electron-builder-auto-update-example</a></p>
+</li>
+</ul>
+<ul>
+<li><p><a href="https://github.com/ganyouyin/electron-autoupdate-scaffold/blob/master/README.md" target="_blank" rel="noopener">electron-autoupdate-scaffold/README.md at master · ganyouyin/electron-autoupdate-scaffold</a></p>
+</li>
+<li><p><a href="https://github.com/electron/electron/blob/main/docs/tutorial/code-signing.md" target="_blank" rel="noopener">electron/code-signing.md at main · electron/electron</a></p>
+</li>
+<li><p><a href="https://ithelp.ithome.com.tw/articles/10253168" target="_blank" rel="noopener">[ Day 35 ] - Electron 應用程式 - 更新自動化 ( 說明篇 ) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
+</li>
+</ul>
+<h2 id="electron-builder-autoupdater-一般更新"><a href="#electron-builder-autoupdater-一般更新" class="headerlink" title="electron-builder autoupdater 一般更新"></a>electron-builder autoupdater 一般更新</h2><p>非常推薦看<a href="https://wangdaodao.com/20210204/electron-updater.html" target="_blank" rel="noopener">Electron自动更新 - 王叨叨</a>(<a href="https://i.imgur.com/189uSRJ.png" target="_blank" rel="noopener">備份圖</a>)這篇，裡面有詳細介紹各種寫法，還有demo。</p>
+<p><a href="https://blog.csdn.net/daipianpian/article/details/105706814" target="_blank" rel="noopener">使用 electron-builder 及 electron-updater 给项目配置自动更新_一片天空-CSDN博客</a></p>
+<p><a href="https://www.jianshu.com/p/15bde714e198" target="_blank" rel="noopener">electron-updater更新electron应用程序 - 簡書</a></p>
+<p>裡面還有提到electron-log日志，不知道有沒有機會使用到???</p>
+<p>這邊就直接用第一篇文章範例直接操作。<br>git clone <a href="https://github.com/wangdaodao/vue-electron-template" target="_blank" rel="noopener">wangdaodao/vue-electron-template</a> 下來，裡面都已經設定好。</p>
+<p>調整項目</p>
+<ol>
+<li>vue.config.js 更新網址改成本機 IP 就可以更新。<br><img src="https://i.imgur.com/Vrgie9v.png" alt=""></li>
+</ol>
+<ol start="2">
+<li>dist_electron 改成 download HFS 更新，這邊你可以用其他 HTTP Server 都可以。<br><img src="https://i.imgur.com/BTYRhUU.png" alt=""></li>
+</ol>
+<h3 id="Github更新-Electron-程式"><a href="#Github更新-Electron-程式" class="headerlink" title="Github更新 Electron 程式"></a>Github更新 Electron 程式</h3><p><a href="https://www.electron.build/configuration/publish#githuboptions" target="_blank" rel="noopener">Publish - electron-builder</a></p>
+<p>更新官方有幾種方式，有支援AWS空間，其中讓我感興趣是 github 。私有的專案也可以用的，但不知道會不會有什麼限制。文件有提到可以用 Github Actions 發布，我突然想到我的<a href="https://github.com/malagege/vue-electron-Pomodoro" target="_blank" rel="noopener">malagege/vue-electron-Pomodoro</a>參考<a href="https://github.com/cawa-93/vite-electron-builder" target="_blank" rel="noopener">cawa-93/vite-electron-builder: Secure boilerplate for Electron app based on Vite. TypeScript + Vue/React/Angular/Svelte/Vanilla</a>專案做的，裡面有設定 Github Actions。看文章說執行完會在 Github Release 建立草稿，我看之前專案有 build 成功過。</p>
+<p><img src="https://i.imgur.com/B78YXXn.png" alt=""></p>
+<p>我看Release真的有建立。</p>
+<p><img src="https://i.imgur.com/VBdRmlk.png" alt=""></p>
+<p>題外話，這邊發現我Github Actions 後面都錯誤，但大概猜到是因為使用 desktop-idle 關係造成的，最後有排除。<a href="https://github.com/malagege/vue-electron-Pomodoro/commit/e3ffacfcc2cb31a40bc9ca222bd2fb56151157b3" target="_blank" rel="noopener">github actions 失敗問題 · malagege/vue-electron-Pomodoro@e3ffacf</a></p>
+<p><del>最後排除掉，就是設定 provide 設定成 Github，其它要設定什麼，當出我也很疑惑，我這邊卡很久再研究文件，最後發現 Github Actions 會帶 github token ，也會帶 Repo 名稱參數，所以只要設設定<code>設定 provide 設定成 Github</code>。</del>我怎麼沒先動手試試，這邊看了一段時間，哈哈。</p>
+<p>我後來用沒設定前一版沒做 Github 設定，竟然會更新，太神奇了。可能 Action 那一段有做到更新。</p>
+<p>electron.builder.config.js<br><img src="https://i.imgur.com/j2CHSTy.png" alt=""></p>
+<p>打開舊版APP就會跳出更新就是成功了。這邊更新會等關掉程式後更新，還算滿人性化更新。另外，我參考原本程式就有做這段。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Auto-updates</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">import</span>.meta.env.PROD) &#123;</span><br><span class="line">  app.whenReady()</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'electron-updater'</span>))</span><br><span class="line">    .then(<span class="function">(<span class="params">&#123;autoUpdater&#125;</span>) =&gt;</span> autoUpdater.checkForUpdatesAndNotify())</span><br><span class="line">    .catch(<span class="function">(<span class="params">e</span>) =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'Failed check updates:'</span>, e));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/kV1qGPZ.png" alt=""></p>
+<p><a href="https://medium.com/@johndyer24/creating-and-deploying-an-auto-updating-electron-app-for-mac-and-windows-using-electron-builder-6a3982c0cee6" target="_blank" rel="noopener">Creating and deploying an auto-updating Electron app for Mac and Windows using electron-builder | by John Dyer | Medium</a></p>
+<h2 id="手動執行更新"><a href="#手動執行更新" class="headerlink" title="手動執行更新"></a>手動執行更新</h2><p><a href="https://beacelee.com/2019/05-13/electron-2/" target="_blank" rel="noopener">Electron 十问十答（2） | Beace Blog</a><br><a href="https://www.itread01.com/xxcp.html" target="_blank" rel="noopener">[electron]終極奧義 五千字教程丟給你 - IT閱讀</a><br><a href="https://zhuanlan.zhihu.com/p/349508847" target="_blank" rel="noopener">Electron应用实现自动更新 - 知乎</a><br><a href="https://mmelikes.medium.com/electron-auto-updater-with-frontend-manipulation-33d3bc5057f3" target="_blank" rel="noopener">Electron Auto-Updater via Renderer (Frontend) Manipulation | by Meriç Melike Yılmaz | Medium</a><br><a href="https://blog.csdn.net/qq_32900003/article/details/106282787" target="_blank" rel="noopener">electron + nodejs (热更新)_这么近又那么远的博客-CSDN博客</a></p>
+<p>大部分教學都沒有用 bridge 串，所以必須用 ipcmain 去接收是否要做更新。</p>
+<p>通過選單更新<a href="https://github.com/electron-userland/electron-builder/blob/a94532164709a545c0f6551fdc336dbc5377bda8/docs/encapsulated%20manual%20update%20via%20menu.js#L56" target="_blank" rel="noopener">electron-builder/encapsulated manual update via menu.js at a94532164709a545c0f6551fdc336dbc5377bda8 · electron-userland/electron-builder · GitHub</a></p>
+<h2 id="了解-AutoUpdater-函式-事件"><a href="#了解-AutoUpdater-函式-事件" class="headerlink" title="了解 AutoUpdater 函式/事件"></a>了解 AutoUpdater 函式/事件</h2><h3 id="事件-Event"><a href="#事件-Event" class="headerlink" title="事件(Event)"></a>事件(Event)</h3><h4 id="error"><a href="#error" class="headerlink" title="error"></a>error</h4><p>中間發生錯誤觸發 error Event。</p>
+<h4 id="checking-for-update"><a href="#checking-for-update" class="headerlink" title="checking-for-update"></a>checking-for-update</h4><p>更新開始後，馬上觸發這個 Event。</p>
+<h4 id="update-available"><a href="#update-available" class="headerlink" title="update-available"></a>update-available</h4><p>檢查到可以更新後，觸發這個 Event。如果<code>autoDownload</code>設定 <code>true</code>將會自動下載更新程式。</p>
+<p>參數:<br>info UpdateInfo (for generic and github providers) | VersionInfo (for Bintray provider)</p>
+<h4 id="update-not-available"><a href="#update-not-available" class="headerlink" title="update-not-available"></a>update-not-available</h4><p>沒有檢查到更新，觸發這個 Event。</p>
+<h4 id="download-progress"><a href="#download-progress" class="headerlink" title="download-progress"></a>download-progress</h4><p>下載時候觸發Event?</p>
+<h4 id="update-downloaded"><a href="#update-downloaded" class="headerlink" title="update-downloaded"></a>update-downloaded</h4><p>下載完成觸發Event。</p>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><h4 id="checkForUpdates-⇒-Promise-lt-UpdateCheckResult-gt"><a href="#checkForUpdates-⇒-Promise-lt-UpdateCheckResult-gt" class="headerlink" title="checkForUpdates ⇒ Promise&lt;UpdateCheckResult&gt;"></a>checkForUpdates ⇒ <code>Promise&lt;UpdateCheckResult&gt;</code></h4><p>請求Server看是不是有更新。</p>
+<h4 id="checkForUpdatesAndNotify-⇒-Promise-lt-UpdateCheckResult-gt-重點"><a href="#checkForUpdatesAndNotify-⇒-Promise-lt-UpdateCheckResult-gt-重點" class="headerlink" title="checkForUpdatesAndNotify ⇒ Promise&lt;UpdateCheckResult&gt;(重點)"></a>checkForUpdatesAndNotify ⇒ <code>Promise&lt;UpdateCheckResult&gt;</code>(重點)</h4><p>請求Server看是不是有更新，有的畫自動更新和發送通知。</p>
+<p>Call <code>autoUpdater.checkForUpdatesAndNotify()</code>. Or, if you need custom behaviour, implement <code>electron-updater</code> events, check examples below.</p>
+<p>這邊特別說明一下，下面通知是寫死固定，原本看文件以為沒辦法調整，不過看源碼可以帶參數修正文字訊息。<br><img src="https://i.imgur.com/kV1qGPZ.png" alt=""></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">import</span>.meta.env.PROD) &#123;</span><br><span class="line">  app.whenReady()</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'electron-updater'</span>))</span><br><span class="line">    .then(<span class="function">(<span class="params">&#123;autoUpdater&#125;</span>) =&gt;</span> autoUpdater.checkForUpdatesAndNotify(&#123;</span><br><span class="line">      title: <span class="string">'程式已經準備好更新'</span>,</span><br><span class="line">      body: <span class="string">`&#123;appName&#125; 版本 &#123;version&#125; 已經下載完成，重開應用程式可進行安裝`</span>,</span><br><span class="line">    &#125;))</span><br><span class="line">    .catch(<span class="function">(<span class="params">e</span>) =&gt;</span> <span class="built_in">console</span>.error(<span class="string">'Failed check updates:'</span>, e));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/electron-userland/electron-builder/blob/f45110cbf66572d5748d21fc24dc26cabd06f35f/packages/electron-updater/src/AppUpdater.ts" target="_blank" rel="noopener">electron-builder/AppUpdater.ts at f45110cbf66572d5748d21fc24dc26cabd06f35f · electron-userland/electron-builder</a></p>
+<p>彩蛋錯誤</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ipcMain.on(<span class="string">'check-update'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// import &#123;checkForUpdates&#125; from './updater.js'; // 會發生  error  Parsing error: 'import' and 'export' may only appear at the top level</span></span><br><span class="line">  (<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./updater.js'</span>))().then(<span class="function">(<span class="params">&#123;checkForUpdates&#125;</span>)=&gt;</span> checkForUpdates());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="https://blog.csdn.net/qq_26909801/article/details/105970679" target="_blank" rel="noopener">vue CLI异步组件报错import’ and ‘export’ may only appear at the top level_郑伟斌的博客-CSDN博客</a></p>
+<p>這篇有空再整理 import 用法(有時間的話，哈哈)</p>
+<h4 id="downloadUpdate"><a href="#downloadUpdate" class="headerlink" title="downloadUpdate"></a>downloadUpdate</h4><p><code>autoDownload = false</code> 自動下載關閉，可以使用這個method下載。</p>
+<h4 id="getFeedURL"><a href="#getFeedURL" class="headerlink" title="getFeedURL"></a>getFeedURL</h4><p>設定 update provider</p>
+<h4 id="quitAndInstall"><a href="#quitAndInstall" class="headerlink" title="quitAndInstall"></a>quitAndInstall</h4><p>appUpdater.quitAndInstall(isSilent, isForceRunAfter)</p>
+<p>關閉程式並且更新。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Restarts the app and installs the update after it has been downloaded. It should only be called after update-downloaded has been emitted.</span><br><span class="line"></span><br><span class="line">Note: Like Electron’s built-in quitAndInstall method, autoUpdater.quitAndInstall() will close all application windows first and only emit before-quit event on app after that. This is different from the normal quit event sequence (i.e. not during an update). As a result you should listen to Electron’s before-quit-for-update event (on electron.autoUpdater) if you wish to perform actions before the windows are closed while a process is quitting, as well as listening to before-quit. However, that is not the case for the (Windows) NSIS or (Linux) AppImage targets. The before-quit-for-update event is not emitted. The before-quit event is emitted first, then windows will be closed.</span><br><span class="line"></span><br><span class="line">isSilent Boolean - windows-only Runs the installer in silent mode. Defaults to false.</span><br><span class="line">isForceRunAfter Boolean - Run the app after finish even on silent install. Not applicable for macOS. Ignored if isSilent is set to false.</span><br></pre></td></tr></table></figure>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>本篇採用 electron-builder 簡單實作用 Github 手動/自動更新程式，這邊設定只是基本調整，其實還有滿多東西沒有整理出來，因為是簡單研究，所以就打算繼續深入，相信以後專案需要做單機版我就可以考慮採用這方案去進行。</p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/electron/" rel="tag"># electron</a>
+              <a href="/blog/tags/autoupdater/" rel="tag"># autoupdater</a>
+              <a href="/blog/tags/github/" rel="tag"># github</a>
+              <a href="/blog/tags/action/" rel="tag"># action</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/11/07/Outlook-%E8%A8%AD%E5%AE%9A%E7%B4%94%E6%96%87%E5%AD%97%E9%A0%90%E8%A6%BD/" rel="prev" title="Outlook 設定純文字預覽">
+      <i class="fa fa-chevron-left"></i> Outlook 設定純文字預覽
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2021/11/07/Electron-%E9%96%8B%E8%AB%8B%E6%96%B0%E8%A6%96%E7%AA%97%E5%BE%8C%E8%99%95%E7%90%86%E5%A4%9A%E8%A6%96%E7%AA%97%E5%95%8F%E9%A1%8C/" rel="next" title="Electron 開請新視窗後處理多視窗問題">
+      Electron 開請新視窗後處理多視窗問題 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相關爬的文章整理"><span class="nav-number">1.</span> <span class="nav-text">相關爬的文章整理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#electron-builder-autoupdater-一般更新"><span class="nav-number">2.</span> <span class="nav-text">electron-builder autoupdater 一般更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Github更新-Electron-程式"><span class="nav-number">2.1.</span> <span class="nav-text">Github更新 Electron 程式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手動執行更新"><span class="nav-number">3.</span> <span class="nav-text">手動執行更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解-AutoUpdater-函式-事件"><span class="nav-number">4.</span> <span class="nav-text">了解 AutoUpdater 函式&#x2F;事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件-Event"><span class="nav-number">4.1.</span> <span class="nav-text">事件(Event)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#error"><span class="nav-number">4.1.1.</span> <span class="nav-text">error</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#checking-for-update"><span class="nav-number">4.1.2.</span> <span class="nav-text">checking-for-update</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#update-available"><span class="nav-number">4.1.3.</span> <span class="nav-text">update-available</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#update-not-available"><span class="nav-number">4.1.4.</span> <span class="nav-text">update-not-available</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#download-progress"><span class="nav-number">4.1.5.</span> <span class="nav-text">download-progress</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#update-downloaded"><span class="nav-number">4.1.6.</span> <span class="nav-text">update-downloaded</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method"><span class="nav-number">4.2.</span> <span class="nav-text">Method</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#checkForUpdates-⇒-Promise-lt-UpdateCheckResult-gt"><span class="nav-number">4.2.1.</span> <span class="nav-text">checkForUpdates ⇒ Promise&lt;UpdateCheckResult&gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#checkForUpdatesAndNotify-⇒-Promise-lt-UpdateCheckResult-gt-重點"><span class="nav-number">4.2.2.</span> <span class="nav-text">checkForUpdatesAndNotify ⇒ Promise&lt;UpdateCheckResult&gt;(重點)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#downloadUpdate"><span class="nav-number">4.2.3.</span> <span class="nav-text">downloadUpdate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getFeedURL"><span class="nav-number">4.2.4.</span> <span class="nav-text">getFeedURL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#quitAndInstall"><span class="nav-number">4.2.5.</span> <span class="nav-text">quitAndInstall</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#結論"><span class="nav-number">4.3.</span> <span class="nav-text">結論</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2021/11/07/Electron-Autoupdater-%E7%A8%8B%E5%BC%8F%E8%87%AA%E5%8B%95%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95-GITHUB-%E6%9B%B4%E6%96%B0%E6%96%B9%E6%B3%95/";
+    this.page.identifier = "2021/11/07/Electron-Autoupdater-程式自動更新方法-GITHUB-更新方法/";
+    this.page.title = "Electron Autoupdater 程式自動更新方法 & GITHUB 更新方法";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
