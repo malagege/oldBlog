@@ -65,3 +65,5 @@ date: 2018-05-14 21:24:11
 - [LEMONSYS|个人博客](https://www.lemonsys.cn/)
 - [Welcome.Web.World](https://hsiangfeng.github.io/)
 - [技術雜記 Technology Notes - Jack Yu | 傑克](https://yu-jack.github.io/)
+- [安德魯的部落格](https://columns.chicken-house.net/)
+- [EL PSY CONGROO | 陳文俊的博客](https://yo-cwj.com/)

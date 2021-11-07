@@ -9,7 +9,7 @@ categories: Vue
 
 <!--more-->
 
-## 安裝 Vue router 4
+## 安裝 Vue router 4(重點提醒!!注意幾點)
 
 ```bash=
 npm install vue-router@4
@@ -50,6 +50,7 @@ createApp(App).use(router).mount('#app')
 2.  routes 宣告
 3. router 宣告(使用 createRouter, createWebHashHistory)
 4. createApp use vue-router
+5. html `<router-view>` 記得加上這個 HTML (重要!!!我很常忘記)
 
 
 App.vue
