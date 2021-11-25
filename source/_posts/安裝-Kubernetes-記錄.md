@@ -35,7 +35,7 @@ sudo mv minikube-linux-amd64 /usr/local/bin/minikube
 我這邊是用 ElementaryOS (Ubuntu 18.04)
 下載完成用 `sudo apt install ./xxx.deb` 指令安裝
 
-#### kubectl
+#### 安裝  kubectl
 
 單節點
 
@@ -67,6 +67,17 @@ minikube start
 
 最後可以下`minikube dashboard`
 看有沒有問題
+
+##### minikube start 選項功能(沒用 vagrant 可以跳過)
+
+```bash
+--vm-drivers(default 是Virtualbox)
+none 是用本機
+
+--Bootstrapper(預設使用kubeadm)
+```
+
+在 vagrant 安裝 minikube 可以做`minikube start --vm-drivers=none`
 
 ### 遇到錯誤
 
@@ -109,12 +120,45 @@ end
 ### 查看 cluster-info 資訊
 
 ```
+sudo minIkube kubectl cluster-info
+```
+或
+```
 kubectl cluster-info
 Kubernetes control plane is running at https://192.168.99.100:8443
 KubeDNS is running at https://192.168.99.100:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 ```
 
 成功完成
+
+用 vagrant 安裝可能會遇到權限問題可以使用問題，如下圖。
+![圖片](https://user-images.githubusercontent.com/6058558/143443354-9a49f358-82a4-484b-9845-1ad8c5bbed09.png)
+加上`sudo`可以解決。
+
+![圖片](https://user-images.githubusercontent.com/6058558/143443576-49415c78-41ec-446c-b4b7-f9fcab390aec.png)
+
+
+
+
+#### 權限問題(使用vagrant)
+
+![圖片](https://user-images.githubusercontent.com/6058558/143443902-0cc3e0ae-0a4c-4c3e-bbcb-95c66dfc202e.png)
+
+因為用 `sudo`安裝關係，設定檔有些是 root，照`minikube start`跑完上面設定有叫你下那些指令後，就可以正常使用。
+
+```bash
+#主要是第二段
+sudo mv /home/vagrant/.kube /home/vagrant/.minikube $HOME
+sudo chown -R $USER $HOME/.kube $HOME/.minikube
+```
+
+
+### 查看 minikube 的原件
+
+![圖片](https://user-images.githubusercontent.com/6058558/143445101-2bf56d11-1c6b-4291-884d-15f06d9f7a91.png)
+
+這邊可以看到他跟預設 k8s 安裝原件有差異，所以滿多人不建義用這個玩k8s。
+多了Storage Provisioner，少了Flannel CNI。
 
 ### 刪除 minikube
 
@@ -235,3 +279,26 @@ kubectl config use-context minikube
 [不同Kubernetes构建工具的介绍 - 知乎](https://zhuanlan.zhihu.com/p/117558052)
 
 [使用 WSL 2 與 Docker Desktop 架設 Kubernetes 多節點叢集環境 (KinD) | The Will Will Web](https://blog.miniasp.com/post/2020/08/21/Install-Kubernetes-cluster-in-WSL-2-Docker-on-Windows-using-kind)
+
+
+### 查看 minikube plugin
+
+```
+sudo minikube addons list
+```
+
+![圖片](https://user-images.githubusercontent.com/6058558/143445533-37c3308b-dfa2-43d8-9a0d-46ec1af5c67d.png)
+
+可以快速安裝 k8s 原件。
+
+```
+sudo minikube addons enable dashboard
+```
+
+![圖片](https://user-images.githubusercontent.com/6058558/143446012-17d4491c-36d1-440c-b666-a4c7ebbffcdc.png)
+
+
+上圖可以看到他建立新的容器。對外測試連結容器可以用
+```
+kubectl port-forward --address  _IPADDRESS_-n kubernetes-dashboard service/kubernetes-dashboard 8888:80
+```

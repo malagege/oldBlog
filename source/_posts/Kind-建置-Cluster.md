@@ -5,13 +5,19 @@ tags: [Kubernetes]
 categories: Kuberenetes
 ---
 
-最近看 Kuberenets 看到 DaemonSet
-由於目前 Kind 跟 MiniKube 都是使用單結點
-沒有用 Cluster
-今天照 Kind 實作看看
+最近看 Kuberenets 看到 DaemonSet，由於目前 Kind 跟 MiniKube 都是使用單結點，沒辦法用 Cluster，今天照 Kind 實作看看。
 
 <!--more-->
 
+## 安裝 Kind
+
+```
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+chmod +x ./kind
+mv ./kind /some-dir-in-your-PATH/kind
+
+```
+可以看[kind – Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 
 ## 建置 Cluster
 

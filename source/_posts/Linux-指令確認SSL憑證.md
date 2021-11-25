@@ -71,4 +71,49 @@ Test HTTPS certificate
 openssl s_client -connect server.yourwebhoster.eu:443 -servername mail.domain.com
 ```
 
+讀取網站憑證指紋
+
+```
+echo | openssl s_client -connect www.cgmh.org.tw:443 |& openssl x509 -fingerprint -noout
+```
+
+網站憑證鏈指紋
+
+```
+ echo "" | openssl s_client -showcerts \
+                             -connect saucelabs.com:443 2>&1 | \
+    sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p;
+             /-END CERTIFICATE-/a\\x0' |\
+    sed -e '$ d' | xargs -0rl -I% sh -c "echo '%' | \
+    openssl x509 -fingerprint -noout -sha256 -subject"
+```
+參考[sni - Different SHA1 fingerprint in browser and openssl - Stack Overflow](https://stackoverflow.com/questions/48298302/different-sha1-fingerprint-in-browser-and-openssl)
+但根憑證好像算錯了?
+
+sha1,sha256,md5
+
+
+    SHA-256
+
+```
+    openssl x509 -noout -fingerprint -sha256 -inform pem -in [certificate-file.crt]
+```
+    SHA-1
+
+```
+    openssl x509 -noout -fingerprint -sha1 -inform pem -in [certificate-file.crt]
+```
+    MD5
+
+```
+    openssl x509 -noout -fingerprint -md5 -inform pem -in [certificate-file.crt]
+```
+[How to view a certificate fingerprint as SHA-256, SHA-1 or MD5 using OpenSSL for RSA Authentication ... - RSA Link - 4230](https://community.rsa.com/t5/securid-access-knowledge-base/how-to-view-a-certificate-fingerprint-as-sha-256-sha-1-or-md5/ta-p/4230)
+
+[Certificate Decoder - Decode certificates to view their contents](https://www.sslshopper.com/certificate-decoder.html)
+
 [SSL 相關的測試工具 – 軟體品管的專業思維](https://www.qa-knowhow.com/?p=3888)
+
+[SSLScan - 瞭解網站是否安全的好用小工具](http://dog0416.blogspot.com/2020/11/sslscan.html)
+
+[OpenSSL command cheatsheet](https://www.freecodecamp.org/news/openssl-command-cheatsheet-b441be1e8c4a/)

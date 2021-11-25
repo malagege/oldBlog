@@ -11,11 +11,14 @@ categories: JavaScript
 
 {% mermaid sequenceDiagram %} 
     JavaScript->>JavaScript: 建立new FileReader();
+    JavaScript->>JavaScript: 建立 change 事件。
+    JavaScript->>JavaScript: 建立 load 事件。
     HTML-->>JavaScript: 人為出發HTML input(file)檔案，會觸發file change Event
-    JavaScript-->>JavaScript: 建立 change 事件!
+    JavaScript-->>JavaScript: 觸發 change 事件!
     participant JavaScript
-    Note right of JavaScript: 使用 fileReader.readAsDataURL(this.files[0])事件讀第一個files[0]，會出發onload Event
-    JavaScript-->>JavaScript: 建立 load 事件!
+    Note right of JavaScript: 使用 fileReader.readAs*(this.files[0])事件讀第一個files[0]，會出發onload Event
+    Note right of JavaScript: 這邊的 readAs* 圖片要用 readAsDataURL，文字要用 readAsText。
+    JavaScript-->>JavaScript: 觸發 load 事件!
     Note right of JavaScript: 使用 this.result 讀出檔案內容
 {% endmermaid %}
 
@@ -52,6 +55,19 @@ fileReader.addEventListener("load", function(event) {
 ```
 
 參考:[生活記事簿: 使用FileReader讀取file資料 - javascript](http://hklifenote.blogspot.com/2016/08/filereaderfile-javascript.html)
+
+## FileReader.readas*
+
+> 下述方法可以將 File / Blob 物件轉換成 TypedArray
+>
+>    FileReader.readAsArrayBuffer()：以 TypedArray 的方式顯示檔案內容。
+>    FileReader.readAsDataURL()：以 data:`<MIME Type>`;base64,... 的方式顯示檔案內容，讀取的資料是圖檔的話會轉成 Base64，**可以直接用於 `<img src="BASE_64">` 中；讀取的資料是 CSS 等若無法直接辨識的檔案類型，會轉成 application/octet-stream 的 Base 64 檔案。
+>    FileReader.readAsText()：以純文字的方式顯示檔案內容，預設是 UTF-8。
+>    FileReader.readAsBinaryString()：以原始二進制顯示檔案內容。
+>
+>    ⚠️ 這個 DataURL 取得的字串不能直接進行 Base64 解碼，必須把前綴 data:*/*;base64, 從字串裡刪除以後，再進行解碼。
+
+上面範例是使用`FileReader.readAsDataURL()`放到圖片去，要讀取文字要用`FileReader.readAsText()`
 
 詳細可以看: [[WebAPIs] Blob, File 和 FileReader | PJCHENder 未整理筆記](https://pjchender.dev/webapis/webapis-blob-file/)，裡面有一堆寶。
 
