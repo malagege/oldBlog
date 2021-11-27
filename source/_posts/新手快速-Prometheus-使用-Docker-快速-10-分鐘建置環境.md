@@ -13,8 +13,11 @@ categories: Prometheus
 
 ## 快速實例
 
-https://github.com/Kev1nChan/docker-prometheus
+使用 GIT 下載 [Kev1nChan/docker-prometheus: 使用Docker-compose部署Grafana+Prometheus](https://github.com/Kev1nChan/docker-prometheus)
 
+```
+git clone https://github.com/Kev1nChan/docker-prometheus.git
+```
 
 我找到一個 Github 實例，可以馬上 docker-compose 吃到 Node Exporter 設備
 其他 Project 都不能順利執行...
@@ -29,7 +32,7 @@ git clone 下來
 
 
 
-這邊可以window 可以把 `$PWD` 改成`.`
+這邊`docker-compose.yml`可以window 可以把 `$PWD` 改成`.`
 powershell 才不會執行有問題
 
 
@@ -45,9 +48,9 @@ powershell 才不會執行有問題
 
 
 注意!!這邊由於是裝在 docker 裡面
-我們這邊 URL 路徑是要輸入 prometheus:
+我們這邊 URL 路徑是要輸入 prometheus:9090
 
-
+![](https://i.imgur.com/pwh7sEL.png)
 ### 匯入 Dashboard 
 
 很多教學，都沒有說要怎麼匯入別人寫好的 Dashboard 
@@ -66,8 +69,6 @@ https://grafana.com/grafana/dashboards/8919
 
 
 這邊 Grafana 就設定完了
-
-### 通知教學
 
 
 
@@ -190,3 +191,110 @@ curl -H "Content-type: application/json" -X POST -d '{"recei"status":"firing","a
 [Exporters and integrations | Prometheus](https://prometheus.io/docs/instrumenting/exporters/)
 
 接下來還有很長一段要學習的路
+
+
+## 使用 vagrant 快速部屬
+
+因為我沒有做 docker-compose 安裝，特別做個快速做出環境。首先必須安裝 vagrant + virtualbox，這邊網路上還滿多的，可以參照網路設定。
+
+### 安裝 vagrant + virtualbox
+
+- [在 Windows 上安裝 Vagrant 軟體 | 軟體架構・絮語](https://school.soft-arch.net/blog/1060/install-vagrant-on-win)
+- [超詳細的 Vagrant 上手指南 | IT人](https://iter01.com/535414.html)
+- [使用Vagrant進行伺服器環境部屬](https://www.cc.ntu.edu.tw/chinese/epaper/0040/20170320_4006.html)
+
+
+### 設定 Vagrantfile 執行 vagrant
+
+建立 Vagrantfile
+```
+Vagrant.configure("2") do |config|
+  # 設定 vm image, 版本,hostname,名稱
+  config.vm.box = "bento/ubuntu-18.04"
+  config.vm.box_version ='201912.14.0'
+  config.vm.hostname = 'dev'
+  config.vm.define vm_name = 'dev'
+
+  # provision (Shell Script)
+  config.vm.provision "shell", privileged: false,  inline: <<-SHELL
+    set -e -x -u
+    export DEBIAN_FRONTEND=noninteractive
+
+    #change the source.list
+    sudo apt-get update
+    sudo apt-get install -y vim git cmake build-essential  bash-completion
+    # Install Docker
+    export DOCKER_VERSION="5:19.03.5~3-0~ubuntu-bionic"
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get install -y docker-ce=${DOCKER_VERSION}
+    sudo usermod -aG docker $USER
+
+    #Disable swap
+    #https://github.com/kubernetes/kubernetes/issues/53533
+    sudo swapoff -a && sudo sysctl -w vm.swappiness=0
+    sudo sed '/vagrant--vg-swap/d' -i /etc/fstab
+
+
+    git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+    bash ~/.bash_it/install.sh -s
+
+    # install docker-compose
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+    git clone https://github.com/Kev1nChan/docker-prometheus.git
+    cd docker-prometheus
+    sudo /usr/local/bin/docker-compose up -d
+
+  SHELL
+
+  # 設定IP
+  config.vm.network :private_network, ip: "172.17.8.111"
+  #設定硬體
+  config.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--cpus", 2]
+      v.customize ["modifyvm", :id, "--memory", 4096]
+      v.customize ['modifyvm', :id, '--nicpromisc1', 'allow-all']
+  end
+end
+```
+
+```bash
+# 執行 vagrant
+vagrant up 
+```
+
+
+開瀏覽器 
+
+grafana: http://172.17.8.111:3000
+帳號/密碼: admin/qwe123!@#
+prometheus: http://172.17.8.111:9090
+node_exporter: http://172.17.8.111:9100
+cadvisor: http://172.17.8.111:8080
+alertmanager: http://172.17.8.111:9093
+
+
+這邊就重複上面教的流程
+
+1. 進入設定新增 Prometheus
+![](https://i.imgur.com/hJ51LOG.png)
+![](https://i.imgur.com/LC54mz5.png)
+
+
+2. 新增 Prometheus 設定
+網址可以設定IP或hostname，這邊跟docker網路連線有關係，所以不解釋太多。
+
+![](https://i.imgur.com/YMEJt0o.png)
+![](https://i.imgur.com/pwh7sEL.png)
+
+
+3. 新增 dashboard
+
+![](https://i.imgur.com/FSuhihx.png)
+![](https://i.imgur.com/diVrhAw.png)
+
+
+大概就這樣
