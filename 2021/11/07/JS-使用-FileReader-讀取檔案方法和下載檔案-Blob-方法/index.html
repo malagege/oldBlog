@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/265F5Bb.png">
 <meta property="article:published_time" content="2021-11-07T14:12:30.000Z">
-<meta property="article:modified_time" content="2021-11-07T14:18:59.211Z">
+<meta property="article:modified_time" content="2021-11-09T12:27:11.487Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="filereader">
@@ -240,10 +240,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2021-11-07 22:12:30 / 修改時間：22:18:59" itemprop="dateCreated datePublished" datetime="2021-11-07T22:12:30+08:00">2021-11-07</time>
+              <time title="創建時間：2021-11-07 22:12:30" itemprop="dateCreated datePublished" datetime="2021-11-07T22:12:30+08:00">2021-11-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-11-09 20:27:11" itemprop="dateModified" datetime="2021-11-09T20:27:11+08:00">2021-11-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -310,16 +316,25 @@
             sequenceDiagram
              
 JavaScript->>JavaScript: 建立new FileReader();
+JavaScript->>JavaScript: 建立 change 事件。
+JavaScript->>JavaScript: 建立 load 事件。
 HTML-->>JavaScript: 人為出發HTML input(file)檔案，會觸發file change Event
-JavaScript-->>JavaScript: 建立 change 事件!
+JavaScript-->>JavaScript: 觸發 change 事件!
 participant JavaScript
-Note right of JavaScript: 使用 fileReader.readAsDataURL(this.files[0])事件讀第一個files[0]，會出發onload Event
-JavaScript-->>JavaScript: 建立 load 事件!
+Note right of JavaScript: 使用 fileReader.readAs*(this.files[0])事件讀第一個files[0]，會出發onload Event
+Note right of JavaScript: 這邊的 readAs* 圖片要用 readAsDataURL，文字要用 readAsText。
+JavaScript-->>JavaScript: 觸發 load 事件!
 Note right of JavaScript: 使用 this.result 讀出檔案內容
           </pre>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input id&#x3D;&quot;fileUploader&quot; type&#x3D;&quot;file&quot; &#x2F;&gt;</span><br><span class="line">&lt;div&gt;圖片預覽：&lt;&#x2F;div&gt;</span><br><span class="line">&lt;img id&#x3D;&quot;imageView&quot; src&#x3D;&quot;&quot; style&#x3D;&quot;width:200px; height200px;&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fileUploader = <span class="built_in">document</span>.getElementById(<span class="string">"fileUploader"</span>);</span><br><span class="line"><span class="keyword">var</span> imageView = <span class="built_in">document</span>.getElementById(<span class="string">"imageView"</span>);</span><br><span class="line"><span class="comment">//用來讀取file資料的FileReader</span></span><br><span class="line"><span class="keyword">var</span> fileReader = <span class="keyword">new</span> FileReader();</span><br><span class="line"></span><br><span class="line"><span class="comment">//監控#fileUploader的值變化</span></span><br><span class="line">fileUploader.addEventListener(<span class="string">"change"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.files.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  	<span class="comment">//有選取file時，使用fileReader讀取file資料</span></span><br><span class="line">    <span class="comment">//readAsDataURL可以將讀取到的file資料轉成</span></span><br><span class="line">		<span class="comment">//data:......的URL型式</span></span><br><span class="line">    fileReader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>]);</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  	<span class="comment">//沒有選取file時，例如選擇取消，</span></span><br><span class="line">    <span class="comment">//將&lt;img&gt;的src設成""</span></span><br><span class="line">  	imageView.src = <span class="string">""</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">fileReader.addEventListener(<span class="string">"load"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//讀取後設定&lt;img&gt;的src</span></span><br><span class="line">  imageView.src = <span class="keyword">this</span>.result;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
 <p>參考:<a href="http://hklifenote.blogspot.com/2016/08/filereaderfile-javascript.html" target="_blank" rel="noopener">生活記事簿: 使用FileReader讀取file資料 - javascript</a></p>
+<h2 id="FileReader-readas"><a href="#FileReader-readas" class="headerlink" title="FileReader.readas*"></a>FileReader.readas*</h2><blockquote>
+<p>下述方法可以將 File / Blob 物件轉換成 TypedArray</p>
+<p>   FileReader.readAsArrayBuffer()：以 TypedArray 的方式顯示檔案內容。<br>   FileReader.readAsDataURL()：以 data:<code>&lt;MIME Type&gt;</code>;base64,… 的方式顯示檔案內容，讀取的資料是圖檔的話會轉成 Base64，**可以直接用於 <code>&lt;img src=&quot;BASE_64&quot;&gt;</code> 中；讀取的資料是 CSS 等若無法直接辨識的檔案類型，會轉成 application/octet-stream 的 Base 64 檔案。<br>   FileReader.readAsText()：以純文字的方式顯示檔案內容，預設是 UTF-8。<br>   FileReader.readAsBinaryString()：以原始二進制顯示檔案內容。</p>
+<p>   ⚠️ 這個 DataURL 取得的字串不能直接進行 Base64 解碼，必須把前綴 data:<em>/</em>;base64, 從字串裡刪除以後，再進行解碼。</p>
+</blockquote>
+<p>上面範例是使用<code>FileReader.readAsDataURL()</code>放到圖片去，要讀取文字要用<code>FileReader.readAsText()</code></p>
 <p>詳細可以看: <a href="https://pjchender.dev/webapis/webapis-blob-file/" target="_blank" rel="noopener">[WebAPIs] Blob, File 和 FileReader | PJCHENder 未整理筆記</a>，裡面有一堆寶。</p>
 <p>最近用 Vue 元件做讀檔動作有參考: <a href="https://www.digitalocean.com/community/tutorials/vuejs-file-reader-component" target="_blank" rel="noopener">Creating a Vue.js File Reader Component Using the FileReader API | DigitalOcean</a>，順便改個可以客製內容，可以參考<a href="https://github.com/malagege/vue-myanimelist/commit/68ba65151c370e15a0c70ae95055fa8d2411749a" target="_blank" rel="noopener">匯入匯出基本功能 · malagege/vue-myanimelist@68ba651 · GitHub</a>。</p>
 <h2 id="Blob"><a href="#Blob" class="headerlink" title="Blob"></a>Blob</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// new Blob(array [, options])</span></span><br><span class="line"><span class="comment">// - array 是字元串或二進位物件（ArrayBuffer, ArrayBufferView, Blob, DOMString）</span></span><br><span class="line"><span class="comment">// - options 用來指定 MIME Type</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> htmlFragment = <span class="string">'&lt;div&gt;&lt;h1&gt;Hello Blob&lt;/h1&gt;&lt;/div&gt;'</span>;</span><br><span class="line"><span class="keyword">var</span> htmlBlob = <span class="keyword">new</span> Blob([htmlFragment], &#123; <span class="attr">type</span>: <span class="string">'text/html'</span> &#125;);</span><br><span class="line"><span class="comment">// Blob &#123;size: 30, type: 'text/html'&#125;</span></span><br></pre></td></tr></table></figure>
@@ -449,7 +464,7 @@ Note right of JavaScript: 使用 this.result 讀出檔案內容
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Blob"><span class="nav-number">1.</span> <span class="nav-text">Blob</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#files-0-gt-blob"><span class="nav-number">2.</span> <span class="nav-text">files[0] &#x3D;&#x3D;&gt; blob</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#儲存-Blob（createObjectURL）"><span class="nav-number">3.</span> <span class="nav-text">儲存 Blob（createObjectURL）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#createObjectURL"><span class="nav-number">3.1.</span> <span class="nav-text">createObjectURL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blob-其他相關"><span class="nav-number">4.</span> <span class="nav-text">Blob 其他相關</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob-怎麼用-Form-網頁表單-傳資料"><span class="nav-number">4.1.</span> <span class="nav-text">Blob 怎麼用 Form(網頁表單) 傳資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob-播放影片相關"><span class="nav-number">4.2.</span> <span class="nav-text">Blob 播放影片相關</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FileReader-readas"><span class="nav-number">1.</span> <span class="nav-text">FileReader.readas*</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blob"><span class="nav-number">2.</span> <span class="nav-text">Blob</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#files-0-gt-blob"><span class="nav-number">3.</span> <span class="nav-text">files[0] &#x3D;&#x3D;&gt; blob</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#儲存-Blob（createObjectURL）"><span class="nav-number">4.</span> <span class="nav-text">儲存 Blob（createObjectURL）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#createObjectURL"><span class="nav-number">4.1.</span> <span class="nav-text">createObjectURL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blob-其他相關"><span class="nav-number">5.</span> <span class="nav-text">Blob 其他相關</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob-怎麼用-Form-網頁表單-傳資料"><span class="nav-number">5.1.</span> <span class="nav-text">Blob 怎麼用 Form(網頁表單) 傳資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob-播放影片相關"><span class="nav-number">5.2.</span> <span class="nav-text">Blob 播放影片相關</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
