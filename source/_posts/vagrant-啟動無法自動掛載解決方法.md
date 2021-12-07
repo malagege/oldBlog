@@ -25,6 +25,7 @@ The error output from the command was:
 <!--more-->
 
 其實只要安裝
+```bash
 vagrant plugin install vagrant-vbguest
-
+```
 就解決了

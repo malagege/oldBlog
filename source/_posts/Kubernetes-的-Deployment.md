@@ -244,7 +244,10 @@ kubectl rollout history deployment kuard-deployment --revision=12
 #   Volumes:      <none>
 ```
 
-## 退回版本
+## 退回版本(Rollback)
+
+1. 可以重新修改 deployment.yml 再做 `kubectl apply -f deployment.yml`
+2. 可以用`kubectl rollout`指令，如下
 
 ```bash
 # 退回前一個版本
@@ -279,9 +282,9 @@ kubectl rollout history deployment kuard-deployment --to-revision=0
 
 1. Recreate 策略
 
-會把現有的 ReplicaSet 的 Image 換掉，所有 Pod 都會機高新建置。
+會把現有的 ReplicaSet 的 Pod刪掉，全部新建新的Pod。但會使服務中斷，通常不會使用
 
-2. RollingUpdate
+2. RollingUpdate(預設、重要)
 
 滾動方式不停機情況下更新
 
@@ -327,6 +330,103 @@ kubectl rollout history deployment kuard-deployment --to-revision=0
 
 [[Kubernetes] Deployment Overview | 小信豬的原始部落](https://godleon.github.io/blog/Kubernetes/k8s-Deployment-Overview/)
 
+## rolling update 更新順序圖(重要)
+
+怕之後忘記，特別紀錄一下更新過程。
+
+1. 最原始 Deployment 狀況
+
+{% mermaid TD %}
+    A[Deparment] -->B(ReplicaSet 1)
+    B --> D[Pod 1]
+    B --> E[Pod 2]
+    B --> F[Pod 3]
+{% endmermaid %}
+
+2. 佈署新版本，會新增 ReplicaSet 會如下
+
+{% mermaid TD %}
+    A[Deparment] -->B(ReplicaSet 1)
+    A -->B2(ReplicaSet 2)
+    B --> D[Pod 1]
+    B --> E[Pod 2]
+    B --> F[Pod 3]
+{% endmermaid %}
+
+3. 剛加的 ReplicaSet 會把Pod先建立，成功的話，才會把ReplicaSet 舊的刪掉，查看下面兩個圖比較清楚。
+
+{% mermaid TD %}
+    A[Deparment] -->B|Repica: 3|(ReplicaSet 1)
+    A -->|Repica: 1 |B2(ReplicaSet 2)
+    B --> D[Pod 1]
+    B --> E[Pod 2]
+    B --> F[Pod 3]
+    B2 -->| 先建立一個pod| G[Pod 4]
+{% endmermaid %}
+
+{% mermaid TD %}
+    A[Deparment] -->|Repica: 2|B(ReplicaSet 1)
+    A -->|Repica: 1 |B2(ReplicaSet 2)
+    B .->|刪除一個Pod| D[Pod 1]
+    B --> E[Pod 2]
+    B --> F[Pod 3]
+    B2 -->G[Pod 4]
+{% endmermaid %}
+
+
+4. 剛加的 ReplicaSet 會把Pod先建立，成功的話，才會把ReplicaSet 舊的刪掉(loop第二次)
+
+
+{% mermaid TD %}
+    A[Deparment] -->|Repica: 2|B(ReplicaSet 1)
+    A -->|Repica: 2 |B2(ReplicaSet 2)
+    B --> E[Pod 2]
+    B --> F[Pod 3]
+    B2 -->G[Pod 4]
+    B2 -->|建立一個Pod|H[Pod 5]
+{% endmermaid %}
+
+{% mermaid TD %}
+    A[Deparment] -->|Repica: 1|B(ReplicaSet 1)
+    A -->|Repica: 2 |B2(ReplicaSet 2)
+    B .->|刪除一個Pod| E[Pod 2]
+    B --> F[Pod 3]
+    B2 -->G[Pod 4]
+    B2 -->H[Pod 5]
+{% endmermaid %}
+
+5. 剛加的 ReplicaSet 會把Pod先建立，成功的話，才會把ReplicaSet 舊的刪掉(loop第三次)
+
+
+{% mermaid TD %}
+    A[Deparment] -->|Repica: 1|B(ReplicaSet 1)
+    A -->|Repica: 3 |B2(ReplicaSet 2)
+    B --> F[Pod 3]
+    B2 -->G[Pod 4]
+    B2 -->H[Pod 5]
+    B2 -->|建立新的Pod|J[Pod 6]
+{% endmermaid %}
+
+{% mermaid TD %}
+    A[Deparment] -->|Repica: 0|B(ReplicaSet 1)
+    A -->|Repica: 3 |B2(ReplicaSet 2)
+    B .-> |刪除一個Pod|F[Pod 3]
+    B2 -->G[Pod 4]
+    B2 -->H[Pod 5]
+    B2 -->J[Pod 6]
+{% endmermaid %}
+
+{% mermaid TD %}
+    A[Deparment] -->|Repica: 0|B(ReplicaSet 1)
+    A -->|Repica: 3 |B2(ReplicaSet 2)
+    B .-> |刪除一個Pod|F[Pod 3]
+    B2 -->G[Pod 4]
+    B2 -->H[Pod 5]
+    B2 -->J[Pod 6]
+{% endmermaid %}
+
+**這邊要注意**舊的ReplicaSet不會刪除掉，因為之後RollBack程式透過上面機制可以做相反。
+
 ## 刪除 Deployment
 
 ```bash
@@ -344,3 +444,10 @@ kubectl delete deployments kuard-deployment
 不是會有舊新同時運行狀況
 後面書上有提到前端到後端，前端要做好版本前後相容問題
 這樣在切換上才不會發生問題
+
+
+## 小記
+
+Deployment 就是用 ReplicaSet 進行的 Pod 做版本更新(升級、降級)。
+一個 Deployment ->最新兩個ReplicasSet ->Pod，做 Rolling  Update 這個流程很重要，可以看上面更新流程圖
+

@@ -207,3 +207,18 @@ kubectl delete rs frontend --cascade=orphan
 [StatefulSet介绍 - taotaozh - 博客园](https://www.cnblogs.com/hsyw/p/14173542.html)
 不知道跟這個有沒有關係
 暫時不研究
+
+
+## 小記重點
+
+1. 確保在任何時間點會有幾個副本。
+2. 相同Pod都是可用的，取決你設定的數字。
+3. 透過 selector 綁定在一起
+
+## 觀察指令
+
+```
+kubectl describe rs
+kubectl get pods
+# Controller By 可以觀察是誰操控 Pod
+```

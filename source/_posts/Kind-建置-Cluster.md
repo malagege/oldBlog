@@ -14,7 +14,7 @@ categories: Kuberenetes
 ```
 curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
 chmod +x ./kind
-mv ./kind /some-dir-in-your-PATH/kind
+sudo mv ./kind /usr/local/bin/
 
 ```
 可以看[kind – Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
@@ -101,3 +101,26 @@ kind create cluster --config kind-example-config.yaml
 
 **發現重開機，kubectl 就會連不到**
 所以，應該只能重建
+
+後來有爬到原因，原因是 Kind 是使用 Docker in Docker 技術，所以Container 建立的時候是使用容器的 IP，所以重開機的時候，重啟IP會不一樣，Kubernetes 會連不到之前設定，所以重建會比較快。
+
+## 安裝 kubectl
+
+
+```bash
+ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+ curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+
+ echo "$(<kubectl.sha256) kubectl" | sha256sum --check
+
+
+ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# 
+# chmod +x kubectl
+# mkdir -p ~/.local/bin/kubectl
+# mv ./kubectl ~/.local/bin/kubectl
+# and then add ~/.local/bin/kubectl to $PATH
+
+ ```

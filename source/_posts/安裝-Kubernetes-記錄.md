@@ -1,5 +1,5 @@
 ---
-title: 安裝 Kubernetes 記錄
+title: 安裝 Minikube 記錄
 date: 2021-01-14 22:53:44
 tags: [kubernetes]
 categories: Kubernetes
@@ -77,7 +77,7 @@ none 是用本機
 --Bootstrapper(預設使用kubeadm)
 ```
 
-在 vagrant 安裝 minikube 可以做`minikube start --vm-drivers=none`
+在 vagrant 安裝 minikube 可以做`sudo minikube start --vm-drivers=none`
 
 ### 遇到錯誤
 
@@ -117,10 +117,26 @@ end
 
 就是安裝錯版本
 
+
+### 修改權限
+
+```bash
+sudo chown `id -u`:`id -u` -R .minikube/
+```
+
+### 使用 minikube 的 kubectl
+
+```bash
+sudo minikube kubectl 
+
+
+minikube kubectl --  -n kube-system get pods
+```
+
 ### 查看 cluster-info 資訊
 
 ```
-sudo minIkube kubectl cluster-info
+sudo minIkube kubectl -- cluster-info
 ```
 或
 ```

@@ -11,12 +11,12 @@ categories: JavaScript
 
 {% mermaid sequenceDiagram %} 
     JavaScript->>JavaScript: 建立new FileReader();
-    JavaScript->>JavaScript: 建立 change 事件。
-    JavaScript->>JavaScript: 建立 load 事件。
+    JavaScript->>JavaScript: 建立 input_file change 事件。
+    JavaScript->>JavaScript: 建立 fileReader load 事件。
     HTML-->>JavaScript: 人為出發HTML input(file)檔案，會觸發file change Event
-    JavaScript-->>JavaScript: 觸發 change 事件!
+    JavaScript-->>JavaScript: 觸發 input change 事件!
     participant JavaScript
-    Note right of JavaScript: 使用 fileReader.readAs*(this.files[0])事件讀第一個files[0]，會出發onload Event
+    Note right of JavaScript: 使用 fileReader.readAs*(this.files[0])事件讀第一個files[0]，會出發filereader load Event
     Note right of JavaScript: 這邊的 readAs* 圖片要用 readAsDataURL，文字要用 readAsText。
     JavaScript-->>JavaScript: 觸發 load 事件!
     Note right of JavaScript: 使用 this.result 讀出檔案內容
