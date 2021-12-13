@@ -17,6 +17,23 @@ DaemonSet 可以讓每一台 node 運行 Pod。
 使用 DaemonSet 會在所有 node 建立 Pod。如先前所講，跟 Docker Swarm 很像的 agent mode :global 很像
 也可以針對 nodename 來建立 Pod。
 
+### 後記
+
+確保每個節點都會有一份運行的Pod。
+
+1. Storage daemon 每台機器都要裝
+2. CNI daemon
+3. 日誌收集
+4. 監控收集
+
+taint 的 NoSchedule 可以阻擋 DaemonSet 部屬。
+
+### DaemonSet 概念圖
+
+原有兩台節點(Node)
+
+後面加上一個Node就會部屬Pod
+
 ## 建立 DaemonSet 
 
 [examples/9-1-fluentd.yaml at master · kubernetes-up-and-running/examples](https://github.com/kubernetes-up-and-running/examples/blob/master/9-1-fluentd.yaml)
@@ -223,3 +240,56 @@ Pod 都沒有出來
 ```bash
 kubectl delete daemonset nginx-fast-storage
 ```
+
+
+## DaemonSet Tree
+
+
+DaemonSet -> ControllerRevision -> Pod
+
+DaemonSet因為有ControllerRevision 可以控制版本。但無法做到Replica一樣功能。
+
+
+
+### kube-system 有用到 DaemonSet
+
+```bash
+kubectl -n kube-system get ds
+```
+
+```
+NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+kindnet      3         3         3       3            3           <none>                   10d
+kube-proxy   3         3         3       3            3           kubernetes.io/os=linux   10d
+```
+
+
+
+# StatefulSets 
+
+有狀態的Pod。
+
+常運用儲存、網路結合。
+
+### Network
+
+StatefulSet -> Pod-1 
+-> Pod-2
+-> Pod-3
+
+每個Pod都有個自Dns。
+
+### Storage
+
+Pod-1 -> Volume-1
+
+Pod-2 -> Volume-2
+
+
+### 更新策略
+
+從後面先動作，先關掉再建立Pod。
+
+
+### Tree
+StatefulSet->ControllerRevision->Pod 
