@@ -9,6 +9,89 @@ Kubernetes  Service 筆記
 
 <!--more-->
 
+## 抽象圖小記
+
+{% mermaid graph TD %}
+    subgraph Kubernetes Cluster
+    A[Service] --> N1[Nginx]
+    A --> |Endpoints|N2[Nginx]
+    A --> N3[Nginx]
+    A --> N4[Nginx]
+    APP -->|Access Service 訪問Virutal Server| A
+    
+    subgraph Node1
+    N1
+    N2
+    end
+
+    subgraph Node2
+    N3
+    end
+
+    subgraph Node3 
+
+    N4
+    APP
+    end
+    end
+{% endmermaid %}
+
+簡單記錄一下，在沒有 Service，有很多服務，要怎麼分享出去使用是一個重要的課題。
+不可能在程式設定多個IP，Service 透過 Virtual IP做分享內部服務。
+
+Virtual IP 主要是做備援(HA)機制。不是在做LB。但是K8S是會做SLB。可以看相關 keepalived，[利用LVS+keepalived的主從模式實現http的高可用性_實用技巧_程式人生](https://www.796t.com/article.php?id=122795)，不過我沒有實做過。
+
+使用上會使用DNS，`${service}.${namespade}.cluster.local`。
+
+實現 VIP和 Endpoint 轉化，有:
+
+2. Iptable(預設)
+1. Userspace
+3. IPVS
+
+切換方法，是透過 `kube-proxy --proxy-mode`做切換。
+
+Kubernates Service Type
+- ClusterIP
+- NodePort
+- Loadbalancer
+- ExternalName
+- Headless
+
+[Kubernetes — Service Types Overview | by Ashish Patel | DevOps Mojo | Medium](https://medium.com/devops-mojo/kubernetes-service-types-overview-introduction-to-k8s-service-types-what-are-types-of-kubernetes-services-ea6db72c3f8c#:~:text=There%20are%20four%20types%20of%20Kubernetes%20services%20%E2%80%94,network.%20Read%20about%20Kubernetes%20Services%20and%20Ingress%201.)
+
+### ClusterIP
+
+來源端必須屬於 Cluster 內部，內部是指「各節點與運行中的Pod」。
+
+沒有指定type，預設是 clusterIP
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+```
+範例參考: [Service | Kubernetes](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+1. Port  對外存取的port。
+2. targetPort pod上面的對外的 port
+詳細可看:https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#serviceport-v1-core
+
+ServicePort v1 core裡面有寫詳細。
+
+
+
+
+## Kubernetes 元件處理 Service 流程
+
 ```bash
 kubectl run alpaca-prod \
 --image=gcr.io/kuar-demo/kuard-amd64:blue \
@@ -30,7 +113,7 @@ kubectl expose pod alpaca-prod
 #     app: alpaca
 #     env: prod
 #     ver: "1"
-#是用 selector 對印
+#是用 selector 對應
 
 kubectl get services -o wide
 
@@ -108,7 +191,7 @@ kubectl  edit deployment/alpaca-prod
 
 
 ### 用 endpoints 觀察
-使用 endpint 是尋找 service 將流量發送到何處地方
+使用 endpint 是尋找 service 將流量發送到何處地方，這邊會抓所有pod IP收集。
 
 ```
 kubectl get endpoints alpaca-prod --watch
@@ -117,6 +200,14 @@ kubectl get endpoints alpaca-prod --watch
 
 ## NodePort
 
+ClusterIP功能都有，除了內部訪問，主機外面的
+對每個節點(node)IP都可以被訪問Pod。
+
+port: port Mapping(VIP使用)
+targetPort: Service 8080 to Pod :80
+nodePort: Node Port  30123 to Pod :80
+
+nodePort 範圍 default(30000~32767)，可以用 `--service-node-port-range`調整。
 ```
 kubectl edit service alpaca-prod
 ```

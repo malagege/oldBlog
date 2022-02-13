@@ -733,6 +733,50 @@ RAM 看起來都正常...
 後來我猜測是 Prometheus 問題
 把 volumes 清掉就正常
 
+## 解決樹梅派遇到記憶體問題
+
+2021-12-15
+
+最近~~在回味~~重新看這篇時候，發現我沒有補上我調整完設定。不確定新版會不會修正，不過先留個紀錄。
+主要是加這段`     - '--storage.tsdb.retention.size=500MB'`。
+留個prometheus docker-compose 紀錄
+```yaml
+services:
+  prometheus:
+    image: prom/prometheus-linux-armv7
+    container_name: prometheus
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $PWD/prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      #- '--storage.tsdb.retention=90d'
+      #- '--storage.tsdb.min-block-duration=2h'
+      #- '--storage.tsdb.max-block-duration=2h'
+      - '--storage.tsdb.retention.size=500MB'
+    networks:
+      - monitoring
+    links:
+      - alertmanager
+      - cadvisor
+    expose:
+      - '9090'
+    ports:
+      - 9090:9090
+    depends_on:
+      - cadvisor
+
+```
+
+下面留個失敗紀錄
+
+### 失敗紀錄
+
 [rpi4 docker panic: mmap, size 134217728: cannot allocate memory · Issue #8661 · prometheus/prometheus · GitHub](https://github.com/prometheus/prometheus/issues/8661)
 ~~後來我有找到這個跟我一樣問題~~
 ~~我目前估計用docker-compose up 執行是跑舊版~~

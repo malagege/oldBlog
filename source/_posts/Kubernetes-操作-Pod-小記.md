@@ -392,15 +392,41 @@ Pod 起來就會背景睡眠，CNI會掛載到Pause Container
 
  ## kubectl plugin
 
-```
-/usr/local/bin/kubectl-xxxx
+kubectl 可以放置應用程式在`usr/local/bin`放置`kubectl-*`，這邊用 ls 看例子。
 
-kubectl xxxx
+例如
+> 放置 /usr/local/bin/kubectl-xxxx
+> 可執行 kubectl xxxx
+
+
+```bash
+sudo cp /bin/ls  /usr/local/bin/
+kubectl ls 
+# 顯示當前路徑
 ```
+
+### 安裝 krew
+1. 安裝 Git
+2. 執行 [Installing · Krew](https://krew.sigs.k8s.io/docs/user-guide/setup/install/)裡面指令
+3. 加入 krew 還境變數
+4. 重啟 bash/zsh
+
 
 Krew 管理 Plugin 套件 
 
+```bash
 kubectl krew install tree
+```
+
+```bash
+kubectl tree -n kube-system  ds kindnet
+# NAMESPACE    NAME                                     READY  REASON  AGE
+# kube-system  DaemonSet/kindnet                        -              14d
+# kube-system  ├─ControllerRevision/kindnet-5b547684d9  -              14d
+# kube-system  ├─Pod/kindnet-74l9s                      True           14d
+# kube-system  ├─Pod/kindnet-kcwbr                      True           14d
+# kube-system  └─Pod/kindnet-zrzkp                      True           14d
+```
 
 ### Deployment
 
