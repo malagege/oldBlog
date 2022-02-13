@@ -28,7 +28,7 @@
 <meta property="og:description" content="記錄">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-01-19T14:18:36.000Z">
-<meta property="article:modified_time" content="2021-06-27T08:05:07.863Z">
+<meta property="article:modified_time" content="2021-12-13T15:13:04.327Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="pod">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-12-13 23:13:04" itemprop="dateModified" datetime="2021-12-13T23:13:04+08:00">2021-12-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -309,7 +309,43 @@
         <p>記錄</p>
 <a id="more"></a>
 <p>使用前建議使用<a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/#enabling-shell-autocompletion" target="_blank" rel="noopener">Install and Set Up kubectl | Kubernetes</a><br>方便操作指令使用</p>
-<h2 id="建立-Pod"><a href="#建立-Pod" class="headerlink" title="建立 Pod"></a>建立 Pod</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl run kuard --generator=run-pod/v1 --image=gcr.io/kuar-demo/kuard-amd64:blue</span><br><span class="line"><span class="comment"># Flag --generator has been deprecated, has no effect and will be removed in the future.</span></span><br></pre></td></tr></table></figure>
+<h2 id="小記知識"><a href="#小記知識" class="headerlink" title="小記知識"></a>小記知識</h2><p>K8s 最小運算單原，一個 Pod 可以跑多個 Container。</p>
+<ul>
+<li>Pod</li>
+<li>Pod Controllers</li>
+</ul>
+<p>一個 Pod 可以共享的有</p>
+<ul>
+<li>網路( IP Address, Port , routing system)</li>
+<li>儲存(可以選擇相同儲存空間)</li>
+<li>IPC(Inter Process Communication)</li>
+</ul>
+<p>05:08 補圖(相同網路，內部是127.0.0.1)</p>
+<p>Container 狀態</p>
+<ul>
+<li>Running</li>
+<li>Terminated 執行完成(成功或失敗)</li>
+<li>Waiting 還沒跑起來</li>
+</ul>
+<p>Pod 狀態</p>
+<ul>
+<li>Pending 還沒有起來</li>
+<li>Running 程式運行中</li>
+<li>Successed 執行成功</li>
+<li>Failed  執行失敗</li>
+<li>Unknown </li>
+</ul>
+<p>Pods 重啟機制</p>
+<ul>
+<li>Never</li>
+<li>Always 總是重啟</li>
+<li>OnFailure 失敗重啟</li>
+</ul>
+<p>Node Affinity 靠近<br>Node taints 遠離</p>
+<p>Control Plane 不能部屬 Pod (No Schedule)<br>kubeadm 預設情況下不能部屬 Pod 在 Control Plane </p>
+<p>可以設定標籤(Label,NodeSelector)</p>
+<h2 id="建立-Pod-Imperative-Commands"><a href="#建立-Pod-Imperative-Commands" class="headerlink" title="建立 Pod(Imperative Commands)"></a>建立 Pod(Imperative Commands)</h2><p>Imperative Commands 通常測試開發才會使用。正式部屬不建議這樣使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl run kuard --generator=run-pod/v1 --image=gcr.io/kuar-demo/kuard-amd64:blue</span><br><span class="line"><span class="comment"># Flag --generator has been deprecated, has no effect and will be removed in the future.</span></span><br></pre></td></tr></table></figure>
 <p><a href="https://www.voidking.com/dev-kubectl/" target="_blank" rel="noopener">kubectl常用命令 | 好好学习的郝</a><br><a href="https://blog.csdn.net/CANGYE0504/article/details/106179563" target="_blank" rel="noopener">kubectl –generator 参数被弃用问题解决_沧夜-CSDN博客</a><br><a href="https://kubernetes.io/zh/docs/reference/kubectl/conventions/#kubectl-run" target="_blank" rel="noopener">kubectl 的用法约定 | Kubernetes</a></p>
 <p>啟動完會看到 pods 有成功</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods</span><br><span class="line"><span class="comment"># NAME    READY   STATUS    RESTARTS   AGE</span></span><br><span class="line"><span class="comment"># kuard   1/1     Running   0          12s</span></span><br></pre></td></tr></table></figure>
@@ -351,6 +387,47 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete namespace cpu-example</span><br></pre></td></tr></table></figure>
 <h2 id="Volumes"><a href="#Volumes" class="headerlink" title="Volumes"></a>Volumes</h2><p><a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank" rel="noopener">Volumes | Kubernetes</a></p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>相關 YAML API 文件<br><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/" target="_blank" rel="noopener">Kubernetes API Reference Docs</a></p>
+<h2 id="taint"><a href="#taint" class="headerlink" title="taint"></a>taint</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看Taints: 狀態</span></span><br><span class="line">kubectl describe </span><br><span class="line"><span class="comment"># 移掉 noschedule 狀態(可以在 Control Pane 操作)</span></span><br><span class="line">kubectl taint node k8s-dev node-role.kubernetes.io/master:NoSchedule-</span><br></pre></td></tr></table></figure>
+<h2 id="建立-Pod-Imperative-Object"><a href="#建立-Pod-Imperative-Object" class="headerlink" title="建立 Pod(Imperative Object)"></a>建立 Pod(Imperative Object)</h2><p>使用 Yaml或 JSON 格式寫設定。</p>
+<p><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/" target="_blank" rel="noopener">https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f xxxx.yml</span><br><span class="line">kubectl edit pod xxxx</span><br><span class="line"><span class="comment"># 手動更改 yaml</span></span><br><span class="line"><span class="comment"># (覆蓋檔案會友先前檔案執行的yaml不一致，，不實用)</span></span><br><span class="line">kubectl replace -f xxxx.yml</span><br><span class="line">kubectl get pod xxxx -o yaml &gt; new.yml</span><br><span class="line"><span class="comment"># 修改 new.yml</span></span><br><span class="line">kubectl replace -f xxxx.yml</span><br></pre></td></tr></table></figure>
+<h2 id="建立-Pod-Declarative-Object"><a href="#建立-Pod-Declarative-Object" class="headerlink" title="建立 Pod(Declarative Object)"></a>建立 Pod(Declarative Object)</h2><p>前面提到 <code>Imperative Object</code> kubectl replace 會有當下資源不一致，原因kubectl create 不會計紀錄，但是kubectl apply 會記錄你每次傳指令yaml檔案內容，所以kubectl apply 不會有像 replace 一樣問題。</p>
+<p>所以釐清kubectl apply 和 kubectl create 還是有差異的，書中提到用 <code>kubectl apply</code>就對了XD</p>
+<h2 id="Pod-amp-Pause-Container"><a href="#Pod-amp-Pause-Container" class="headerlink" title="Pod &amp; Pause Container"></a>Pod &amp; Pause Container</h2><ol>
+<li>基於 network  namespace  實作網路隔離化</li>
+<li>kubeadm 我發現 container 控制元件都是使用 <code>host</code> network namespace，所以跟主機IP一樣</li>
+</ol>
+<p>Pod 所有container 都是使用第一個建立 container，docker實作如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=ubuntu1 dersimn/netutils  tail -f /dev/null</span><br><span class="line">docker run -d --name=ubuntu2 --net=container:ubuntu1 dersimn/netutils  tail -f /dev/null</span><br><span class="line"></span><br><span class="line"><span class="comment">## 下面兩個指令你會看到 IP 都相等</span></span><br><span class="line">docker <span class="built_in">exec</span> ubuntu1 ifconfig</span><br><span class="line">docker <span class="built_in">exec</span> ubuntu2 ifconfig</span><br><span class="line"><span class="comment"># eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span></span><br><span class="line"><span class="comment">#         inet 172.18.0.2  netmask 255.255.0.0  broadcast 172.18.255.255</span></span><br><span class="line"><span class="comment">#         ether 02:42:ac:12:00:02  txqueuelen 0  (Ethernet)</span></span><br><span class="line"><span class="comment">#         RX packets 9  bytes 1046 (1.0 KB)</span></span><br><span class="line"><span class="comment">#         RX errors 0  dropped 0  overruns 0  frame 0</span></span><br><span class="line"><span class="comment">#         TX packets 0  bytes 0 (0.0 B)</span></span><br><span class="line"><span class="comment">#         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span></span><br><span class="line"><span class="comment">#         inet 127.0.0.1  netmask 255.0.0.0</span></span><br><span class="line"><span class="comment">#         loop  txqueuelen 1000  (Local Loopback)</span></span><br><span class="line"><span class="comment">#         RX packets 0  bytes 0 (0.0 B)</span></span><br><span class="line"><span class="comment">#         RX errors 0  dropped 0  overruns 0  frame 0</span></span><br><span class="line"><span class="comment">#         TX packets 0  bytes 0 (0.0 B)</span></span><br><span class="line"><span class="comment">#         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ubuntu1 刪掉 container ，ubuntu2 也會連帶刪除</span></span><br><span class="line"></span><br><span class="line">docker rm -f ubuntu1</span><br><span class="line">docker <span class="built_in">exec</span> ubuntu2 ifconfig</span><br><span class="line"><span class="comment"># lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span></span><br><span class="line"><span class="comment">#         inet 127.0.0.1  netmask 255.0.0.0</span></span><br><span class="line"><span class="comment">#         loop  txqueuelen 1000  (Local Loopback)</span></span><br><span class="line"><span class="comment">#         RX packets 0  bytes 0 (0.0 B)</span></span><br><span class="line"><span class="comment">#         RX errors 0  dropped 0  overruns 0  frame 0</span></span><br><span class="line"><span class="comment">#         TX packets 0  bytes 0 (0.0 B)</span></span><br><span class="line"><span class="comment">#         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 獨立 ip</span></span><br><span class="line">docker run -d --name=ubuntu3 --net=host  dersimn/netutils</span><br></pre></td></tr></table></figure>
+<p>也可用<a href="https://github.com/hwchiu/netutils" target="_blank" rel="noopener">hwchiu/netutils: Docker image contains useful network tools</a></p>
+<p>簡短的說，Container網路共用同網卡問題，砍掉1，2就會看不到。<br>這邊你看到刪除container1 後 container2 IP就會不見，依照這個狀況下，K8S網路連線這是一個很大問題，所以使用<code>Pause Container</code>。</p>
+<p>Pause Container<br>Pod 起來就會背景睡眠，CNI會掛載到Pause Container<br>讓你container 1 掛掉不會影響其他 container 2 網路</p>
+<h2 id="Workload-Pod-Controller"><a href="#Workload-Pod-Controller" class="headerlink" title="Workload/Pod Controller"></a>Workload/Pod Controller</h2><ol>
+<li>ReplicaSet</li>
+<li>Deployment</li>
+<li>Daemonset</li>
+<li>StatefulSet</li>
+<li>Job</li>
+<li><p>CronJob</p>
+<h3 id="ReplicaSet"><a href="#ReplicaSet" class="headerlink" title="ReplicaSet"></a>ReplicaSet</h3><p>Kubernetes 的 ReplicaSet</p>
+</li>
+</ol>
+<h2 id="kubectl-plugin"><a href="#kubectl-plugin" class="headerlink" title="kubectl plugin"></a>kubectl plugin</h2><p>kubectl 可以放置應用程式在<code>usr/local/bin</code>放置<code>kubectl-*</code>，這邊用 ls 看例子。</p>
+<p>例如</p>
+<blockquote>
+<p>放置 /usr/local/bin/kubectl-xxxx<br>可執行 kubectl xxxx</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /bin/ls  /usr/<span class="built_in">local</span>/bin/</span><br><span class="line">kubectl ls </span><br><span class="line"><span class="comment"># 顯示當前路徑</span></span><br></pre></td></tr></table></figure>
+<h3 id="安裝-krew"><a href="#安裝-krew" class="headerlink" title="安裝 krew"></a>安裝 krew</h3><ol>
+<li>安裝 Git</li>
+<li>執行 <a href="https://krew.sigs.k8s.io/docs/user-guide/setup/install/" target="_blank" rel="noopener">Installing · Krew</a>裡面指令</li>
+<li>加入 krew 還境變數</li>
+<li>重啟 bash/zsh</li>
+</ol>
+<p>Krew 管理 Plugin 套件 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl krew install tree</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">kubectl tree -n kube-system  ds kindnet</span><br><span class="line"><span class="comment"># NAMESPACE    NAME                                     READY  REASON  AGE</span></span><br><span class="line"><span class="comment"># kube-system  DaemonSet/kindnet                        -              14d</span></span><br><span class="line"><span class="comment"># kube-system  ├─ControllerRevision/kindnet-5b547684d9  -              14d</span></span><br><span class="line"><span class="comment"># kube-system  ├─Pod/kindnet-74l9s                      True           14d</span></span><br><span class="line"><span class="comment"># kube-system  ├─Pod/kindnet-kcwbr                      True           14d</span></span><br><span class="line"><span class="comment"># kube-system  └─Pod/kindnet-zrzkp                      True           14d</span></span><br></pre></td></tr></table></figure>
+<h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><p>Kubernetes 的 Deployment</p>
 
     </div>
 
@@ -459,7 +536,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-Pod"><span class="nav-number">1.</span> <span class="nav-text">建立 Pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#運行-Pod"><span class="nav-number">2.</span> <span class="nav-text">運行 Pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除-Pod"><span class="nav-number">3.</span> <span class="nav-text">移除 Pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轉發-port"><span class="nav-number">4.</span> <span class="nav-text">轉發 port</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看-log"><span class="nav-number">5.</span> <span class="nav-text">查看 log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exec-執行程式"><span class="nav-number">6.</span> <span class="nav-text">exec 執行程式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器複製檔案"><span class="nav-number">7.</span> <span class="nav-text">容器複製檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#健康檢查"><span class="nav-number">8.</span> <span class="nav-text">健康檢查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#資源限制"><span class="nav-number">9.</span> <span class="nav-text">資源限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Limit"><span class="nav-number">9.1.</span> <span class="nav-text">Request,Limit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Volumes"><span class="nav-number">10.</span> <span class="nav-text">Volumes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">11.</span> <span class="nav-text">其他</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小記知識"><span class="nav-number">1.</span> <span class="nav-text">小記知識</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-Pod-Imperative-Commands"><span class="nav-number">2.</span> <span class="nav-text">建立 Pod(Imperative Commands)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#運行-Pod"><span class="nav-number">3.</span> <span class="nav-text">運行 Pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除-Pod"><span class="nav-number">4.</span> <span class="nav-text">移除 Pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轉發-port"><span class="nav-number">5.</span> <span class="nav-text">轉發 port</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看-log"><span class="nav-number">6.</span> <span class="nav-text">查看 log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exec-執行程式"><span class="nav-number">7.</span> <span class="nav-text">exec 執行程式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器複製檔案"><span class="nav-number">8.</span> <span class="nav-text">容器複製檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#健康檢查"><span class="nav-number">9.</span> <span class="nav-text">健康檢查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#資源限制"><span class="nav-number">10.</span> <span class="nav-text">資源限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Limit"><span class="nav-number">10.1.</span> <span class="nav-text">Request,Limit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Volumes"><span class="nav-number">11.</span> <span class="nav-text">Volumes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">12.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#taint"><span class="nav-number">13.</span> <span class="nav-text">taint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-Pod-Imperative-Object"><span class="nav-number">14.</span> <span class="nav-text">建立 Pod(Imperative Object)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-Pod-Declarative-Object"><span class="nav-number">15.</span> <span class="nav-text">建立 Pod(Declarative Object)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pod-amp-Pause-Container"><span class="nav-number">16.</span> <span class="nav-text">Pod &amp; Pause Container</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Workload-Pod-Controller"><span class="nav-number">17.</span> <span class="nav-text">Workload&#x2F;Pod Controller</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ReplicaSet"><span class="nav-number">17.1.</span> <span class="nav-text">ReplicaSet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kubectl-plugin"><span class="nav-number">18.</span> <span class="nav-text">kubectl plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-krew"><span class="nav-number">18.1.</span> <span class="nav-text">安裝 krew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deployment"><span class="nav-number">18.2.</span> <span class="nav-text">Deployment</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -473,20 +550,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -516,7 +593,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

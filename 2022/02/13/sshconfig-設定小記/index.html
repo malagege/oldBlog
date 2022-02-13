@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="一般我們在 ssh 連線都會用 putty，但是在多台機器管理上不是很方便，所以回換成 xshell 相關工具做連線查詢，最近在做Bastion Host，發現ssh 也可以做到簡單管理設定，這邊就做個筆記。 首先，可以在 .ssh&#x2F;config 做多個 ssh 連線設定，裡面設定值不分大小寫，可看官網文件。SSH config file syntax and how-tos for config">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sshconfig 設定小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="一般我們在 ssh 連線都會用 putty，但是在多台機器管理上不是很方便，所以回換成 xshell 相關工具做連線查詢，最近在做Bastion Host，發現ssh 也可以做到簡單管理設定，這邊就做個筆記。 首先，可以在 .ssh&#x2F;config 做多個 ssh 連線設定，裡面設定值不分大小寫，可看官網文件。SSH config file syntax and how-tos for config">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-02-13T15:15:16.000Z">
+<meta property="article:modified_time" content="2022-02-13T15:15:36.174Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="sshconfig">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>sshconfig 設定小記 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sshconfig 設定小記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 23:15:16 / 修改時間：23:15:36" itemprop="dateCreated datePublished" datetime="2022-02-13T23:15:16+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/sshconfig-設定小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>一般我們在 ssh 連線都會用 putty，但是在多台機器管理上不是很方便，所以回換成 xshell 相關工具做連線查詢，最近在做<code>Bastion Host</code>，發現ssh 也可以做到簡單管理設定，這邊就做個筆記。</p>
+<p>首先，可以在 <code>.ssh/config</code> 做多個 ssh 連線設定，裡面設定值不分大小寫，可看官網文件。<a href="https://www.ssh.com/academy/ssh/config" target="_blank" rel="noopener">SSH config file syntax and how-tos for configuring the OpenSSH client</a></p>
+<blockquote>
+<p>The possible keywords and their meanings are as follows (note that keywords are case-insensitive and arguments are case-sensitive):</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="常用設定"><a href="#常用設定" class="headerlink" title="常用設定"></a>常用設定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># - master</span><br><span class="line">Host            master                # 代號</span><br><span class="line">Hostname        192.168.11.24        # IP or Domain name</span><br><span class="line">Port            2222                # 指定埠口</span><br><span class="line">User            jonny                # 使用者名稱</span><br><span class="line">identityfile    ~&#x2F;.ssh&#x2F;id_rsa_24    # 指定金鑰</span><br><span class="line"></span><br><span class="line"># - slave</span><br><span class="line">Host            slave                # 代號</span><br><span class="line">Hostname        192.168.11.25        # IP or Domain name</span><br><span class="line">Port            2223                # 指定埠口</span><br><span class="line">User            jonny                # 使用者名稱</span><br><span class="line">identityfile    ~&#x2F;.ssh&#x2F;id_rsa_25    # 指定金鑰</span><br></pre></td></tr></table></figure>
+<p>參考:<a href="https://chusiang.gitbooks.io/working-on-gnu-linux/content/20.ssh_config.html" target="_blank" rel="noopener">增進 SSH 使用效率 - ssh_config · 完全用 GNU/Linux 工作</a></p>
+<p>有看到有人會做編排，在排版上面會比較好處理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host            slave                # 代號</span><br><span class="line">    Hostname        192.168.11.25        # IP or Domain name</span><br><span class="line">    Port            2223                # 指定埠口</span><br><span class="line">    User            jonny                # 使用者名稱</span><br><span class="line">    identityfile    ~&#x2F;.ssh&#x2F;id_rsa_25    # 指定金鑰</span><br></pre></td></tr></table></figure>
+<h3 id="詳細設定"><a href="#詳細設定" class="headerlink" title="詳細設定"></a>詳細設定</h3><p>有做過ControlMaster 設定，可以參考  這篇。</p>
+<p>官網其他設定可以看<a href="https://www.ssh.com/academy/ssh/config" target="_blank" rel="noopener">SSH config file syntax and how-tos for configuring the OpenSSH client</a></p>
+<h2 id="其他應用"><a href="#其他應用" class="headerlink" title="其他應用"></a>其他應用</h2><p>有看到<a href="https://medium.com/%E6%B5%A6%E5%B3%B6%E5%A4%AA%E9%83%8E%E7%9A%84%E6%B0%B4%E6%97%8F%E7%BC%B8/how-to-setup-ssh-config-%E4%BD%BF%E7%94%A8-ssh-%E8%A8%AD%E5%AE%9A%E6%AA%94-74ad46f99818" target="_blank" rel="noopener">How to setup SSH config ：使用 SSH 設定檔簡化指令與連線網址 | by awonwon | 浦島太郎的水族缸 | Medium</a>，這篇可以用設定 ssh 連線，在做 git 不需要打那麼長。</p>
+<p>剩下有看到什麼在補這邊</p>
+<h2 id="金鑰管理"><a href="#金鑰管理" class="headerlink" title="金鑰管理"></a>金鑰管理</h2><p>我一直在想為什麼 ssh 連線會自動吃<code>.ssh/id_rsa</code>檔案，但是雖然可以產生別的 key，但我最近在想是不是使用 Linux帳號去管理這件事會比較好?因為切換帳號可以直接ssh 連線，然後正常安裝程式也會建議使用該程式帳號去做建置，這可能是我目前想到比較好作法。</p>
+<h2 id="ssh-autocomplete"><a href="#ssh-autocomplete" class="headerlink" title="ssh autocomplete"></a>ssh autocomplete</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">_complete_ssh_hosts ()</span><br><span class="line">&#123;</span><br><span class="line">        COMPREPLY=()</span><br><span class="line">        cur="$&#123;COMP_WORDS[COMP_CWORD]&#125;"</span><br><span class="line">        comp_ssh_hosts=`cat ~/.ssh/known_hosts | \</span><br><span class="line">                        cut -f 1 -d ' ' | \</span><br><span class="line">                        sed -e s/,.*//g | \</span><br><span class="line">                        grep -v ^# | \</span><br><span class="line">                        uniq | \</span><br><span class="line">                        grep -v "\[" ;</span><br><span class="line">                cat ~/.ssh/config | \</span><br><span class="line">                        grep "^Host " | \</span><br><span class="line">                        awk '&#123;print $2&#125;'</span><br><span class="line">                `</span><br><span class="line">        COMPREPLY=( $(compgen -W "$&#123;comp_ssh_hosts&#125;" -- $cur))</span><br><span class="line">        return 0</span><br><span class="line">&#125;</span><br><span class="line">complete -F _complete_ssh_hosts ssh</span><br></pre></td></tr></table></figure>
+<p>上面加在 <code>.profile</code> 就可以開心始用。:D</p>
+<p>參考:<a href="https://gist.github.com/aliang/1024466" target="_blank" rel="noopener">Add auto complete to your ssh, put into your .bash_profile</a></p>
+<p>相關連結<br><a href="https://blog.csdn.net/iteye_20364/article/details/82537051" target="_blank" rel="noopener">教你高效使用SSH 的16 个技巧_shinepaopao-CSDN博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/ssh/" rel="tag"># ssh</a>
+              <a href="/blog/tags/sshconfig/" rel="tag"># sshconfig</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8F-ssh-%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/" rel="prev" title="使用 Bastion Host 方式 ssh 方式登入主機">
+      <i class="fa fa-chevron-left"></i> 使用 Bastion Host 方式 ssh 方式登入主機
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/" rel="next" title="ssh 使用 ControlMaster 做第二連線自動登入(xshell,putty)">
+      ssh 使用 ControlMaster 做第二連線自動登入(xshell,putty) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用設定"><span class="nav-number">1.</span> <span class="nav-text">常用設定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#詳細設定"><span class="nav-number">1.1.</span> <span class="nav-text">詳細設定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他應用"><span class="nav-number">2.</span> <span class="nav-text">其他應用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#金鑰管理"><span class="nav-number">3.</span> <span class="nav-text">金鑰管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-autocomplete"><span class="nav-number">4.</span> <span class="nav-text">ssh autocomplete</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">689</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/";
+    this.page.identifier = "2022/02/13/sshconfig-設定小記/";
+    this.page.title = "sshconfig 設定小記";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

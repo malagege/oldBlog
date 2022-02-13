@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="我家本身有用 Traefik，想讓 traefik 可以做 SSO 控制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Authelia 設定和 實作 2FA 登入驗證">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/02/13/Authelia-%E8%A8%AD%E5%AE%9A%E5%92%8C-%E5%AF%A6%E4%BD%9C-2FA-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="我家本身有用 Traefik，想讓 traefik 可以做 SSO 控制。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-02-13T15:38:28.000Z">
+<meta property="article:modified_time" content="2022-02-13T16:31:37.657Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="2fa">
+<meta property="article:tag" content="sso">
+<meta property="article:tag" content="authelia">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/02/13/Authelia-%E8%A8%AD%E5%AE%9A%E5%92%8C-%E5%AF%A6%E4%BD%9C-2FA-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Authelia 設定和 實作 2FA 登入驗證 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/Authelia-%E8%A8%AD%E5%AE%9A%E5%92%8C-%E5%AF%A6%E4%BD%9C-2FA-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Authelia 設定和 實作 2FA 登入驗證
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-02-13 23:38:28" itemprop="dateCreated datePublished" datetime="2022-02-13T23:38:28+08:00">2022-02-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-02-14 00:31:37" itemprop="dateModified" datetime="2022-02-14T00:31:37+08:00">2022-02-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%A8%8B%E5%BC%8F%E5%BF%83%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">程式心法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/Authelia-%E8%A8%AD%E5%AE%9A%E5%92%8C-%E5%AF%A6%E4%BD%9C-2FA-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/Authelia-設定和-實作-2FA-登入驗證/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>我家本身有用 Traefik，想讓 traefik 可以做 SSO 控制。</p>
+<a id="more"></a>
+<h2 id="官方簡單實作"><a href="#官方簡單實作" class="headerlink" title="官方簡單實作"></a>官方簡單實作</h2><p>需使用root帳號，參考<a href="https://www.authelia.com/docs/deployment/deployment-lite.html" target="_blank" rel="noopener">Deployment - Lite - Authelia</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/authelia/authelia.git</span><br><span class="line"><span class="built_in">cd</span> authelia/examples/compose/<span class="built_in">local</span> <span class="comment">#  這邊我是使用local</span></span><br><span class="line">git checkout $(git describe --tags `git rev-list --tags --max-count=1`)<span class="comment"># 或者用master也可以</span></span><br><span class="line">sudo ./setup.sh <span class="comment"># 他會加 hostname  特定網域如: *.example.com</span></span><br></pre></td></tr></table></figure>
+<p>記得改 configuration.yml 裡面 <code>encryption_key</code>，參考:<a href="https://www.authelia.com/docs/configuration/storage/sqlite.html#encryption_key" target="_blank" rel="noopener">SQLite - Authelia</a></p>
+<p>啟動可以會遇到全權限問題，可以參考: <strong>docker 設定 user 文章</strong></p>
+<p><strong>我的設定</strong></p>
+<h3 id="設定-2FA"><a href="#設定-2FA" class="headerlink" title="設定 2FA"></a>設定 2FA</h3><p>設定上非常簡單，這邊小記重點，下面有範例看。</p>
+<h4 id="測試用-mail"><a href="#測試用-mail" class="headerlink" title="測試用 mail"></a>測試用 mail</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">notifier:</span></span><br><span class="line">  <span class="attr">disable_startup_check:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">filesystem:</span></span><br><span class="line">    <span class="attr">filename:</span> <span class="string">/config/notification.txt</span></span><br></pre></td></tr></table></figure>
+<p>可以 less 查看 mail 內容。</p>
+<p><a href="https://www.authelia.com/docs/configuration/notifier/" target="_blank" rel="noopener">Notifier - Authelia</a></p>
+<h4 id="產生-users-database-yml-的-hash密碼值"><a href="#產生-users-database-yml-的-hash密碼值" class="headerlink" title="產生 users_database.yml 的 hash密碼值"></a>產生 users_database.yml 的 hash密碼值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(sudo docker run authelia/authelia authelia <span class="built_in">hash</span>-password __你要加密的密碼__ | sed <span class="string">'s/Password hash: //g'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="設定網路區域"><a href="#設定網路區域" class="headerlink" title="設定網路區域"></a>設定網路區域</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">access_control:</span></span><br><span class="line">  <span class="attr">networks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">internal</span> <span class="comment"># 設定區域網路 Range</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">10.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">/8</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">172.16</span><span class="number">.0</span><span class="number">.0</span><span class="string">/12</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span><span class="string">/18</span></span><br></pre></td></tr></table></figure>
+<h2 id="運用在SERVER"><a href="#運用在SERVER" class="headerlink" title="運用在SERVER"></a>運用在SERVER</h2><h3 id="樹梅派安裝"><a href="#樹梅派安裝" class="headerlink" title="樹梅派安裝"></a>樹梅派安裝</h3><p>官方有做 arm 版本。所以直接docker run 可以正常運行。我使用local版本，因為是在樹梅派關係，人數也沒有很多人在用，所以使用local版本。官方有lite,kubernetes 版本可以看。</p>
+<h3 id="程式參考設定"><a href="#程式參考設定" class="headerlink" title="程式參考設定"></a>程式參考設定</h3><p>authelia/configuration.yml 設定</p>
+<p>簡單記錄重點</p>
+<ol>
+<li>改多欄位key</li>
+<li>可針對區域網路做設定</li>
+<li>rule 可設定多網域登入</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">jwt_secret:</span> <span class="string">must_change_secret_key</span> <span class="comment"># 改變</span></span><br><span class="line"><span class="attr">default_redirection_url:</span> <span class="string">https://public.xxxx.com.tw</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">host:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">9091</span></span><br><span class="line"></span><br><span class="line"><span class="attr">log:</span></span><br><span class="line">  <span class="attr">level:</span> <span class="string">debug</span></span><br><span class="line"></span><br><span class="line"><span class="attr">totp:</span></span><br><span class="line">  <span class="attr">issuer:</span> <span class="string">xxxx.org.tw</span> <span class="comment"># authentication 登入名稱</span></span><br><span class="line"></span><br><span class="line"><span class="attr">authentication_backend:</span></span><br><span class="line">  <span class="attr">file:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">/config/users_database.yml</span></span><br><span class="line"></span><br><span class="line"><span class="attr">access_control:</span></span><br><span class="line">  <span class="attr">networks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">internal</span> <span class="comment"># 設定區域網路 Range</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">10.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">/8</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">172.16</span><span class="number">.0</span><span class="number">.0</span><span class="string">/12</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span><span class="string">/18</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">default_policy:</span> <span class="string">deny</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">domain:</span> <span class="string">xxxxxx.com.tw</span>  <span class="comment"># 設定網站規則</span></span><br><span class="line">      <span class="attr">policy:</span> <span class="string">bypass</span></span><br><span class="line">      <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">internal</span>  <span class="comment"># 區域網路不做驗證</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">domain:</span> <span class="string">xxxxxx.com.tw</span>  <span class="comment"># 設定網站規則</span></span><br><span class="line">      <span class="attr">policy:</span> <span class="string">two_factor</span>   <span class="comment"># 雙重驗證</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">domain:</span> <span class="string">secure.xxxx.com.tw</span></span><br><span class="line">      <span class="attr">policy:</span> <span class="string">one_factor</span>   <span class="comment"># 密碼驗證</span></span><br><span class="line"></span><br><span class="line"><span class="attr">session:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">authelia_session</span></span><br><span class="line">  <span class="attr">secret:</span> <span class="string">must_change_secret_key</span></span><br><span class="line">  <span class="attr">domain:</span> <span class="string">xxxx.com.tw</span>  <span class="comment"># Should match whatever your root protected domain is</span></span><br><span class="line"></span><br><span class="line"><span class="attr">regulation:</span> <span class="comment"># 失敗次數會做 動作</span></span><br><span class="line">  <span class="attr">max_retries:</span> <span class="number">3</span></span><br><span class="line">  <span class="comment"># find_time: 120</span></span><br><span class="line">  <span class="comment"># ban_time: 300</span></span><br><span class="line"></span><br><span class="line"><span class="attr">storage:</span></span><br><span class="line">  <span class="attr">encryption_key:</span> <span class="string">must_change_secret_key#</span> <span class="string">須設定key</span></span><br><span class="line">  <span class="attr">local:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">/config/db.sqlite3</span></span><br><span class="line"></span><br><span class="line"><span class="attr">notifier:</span></span><br><span class="line">  <span class="attr">filesystem:</span></span><br><span class="line">    <span class="attr">filename:</span> <span class="string">/config/notification.txt</span> <span class="comment"># 沒有SMTP，可以到這邊看</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">authelia/users_database.yml</span></span><br><span class="line"><span class="string">```yaml</span></span><br><span class="line"><span class="attr">users:</span></span><br><span class="line">  <span class="attr">user:</span></span><br><span class="line">    <span class="attr">displayname:</span> <span class="string">"user"</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">"取代 hash值"</span></span><br><span class="line">    <span class="attr">email:</span> <span class="string">user@example.com</span></span><br><span class="line">    <span class="attr">groups:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">admins</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dev</span></span><br></pre></td></tr></table></figure>
+<h3 id="docker-設定"><a href="#docker-設定" class="headerlink" title="docker 設定"></a>docker 設定</h3><h4 id="authelia"><a href="#authelia" class="headerlink" title="authelia"></a>authelia</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">version: &#39;3.3&#39;</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  traefik_network:</span><br><span class="line">    external: true</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  authelia:</span><br><span class="line">    image: authelia&#x2F;authelia</span><br><span class="line">    container_name: authelia</span><br><span class="line">    volumes:</span><br><span class="line">      - .&#x2F;authelia:&#x2F;config</span><br><span class="line">    networks:</span><br><span class="line">      - traefik_network</span><br><span class="line">    labels:</span><br><span class="line">      - &#39;traefik.enable&#x3D;true&#39;</span><br><span class="line">      - &#39;traefik.http.routers.authelia.rule&#x3D;Host(&#96;authelia.xxxxx.xxxxx.org&#96;)&#39;</span><br><span class="line">      - &#39;traefik.http.routers.authelia.tls&#x3D;true&#39;</span><br><span class="line">      - &#39;traefik.http.routers.authelia.tls.options&#x3D;default&#39;</span><br><span class="line">      - &#39;traefik.http.middlewares.authelia.forwardauth.address&#x3D;http:&#x2F;&#x2F;authelia:9091&#x2F;api&#x2F;verify?rd&#x3D;https:&#x2F;&#x2F;authelia.xxxxx.xxxxx.org&#39;  </span><br><span class="line">      - &#39;traefik.http.middlewares.authelia.forwardauth.trustForwardHeader&#x3D;true&#39;</span><br><span class="line">      - &#39;traefik.http.middlewares.authelia.forwardauth.authResponseHeaders&#x3D;Remote-User,Remote-Groups,Remote-Name,Remote-Email&#39; </span><br><span class="line">    expose:</span><br><span class="line">      - 9091</span><br><span class="line">    restart: unless-stopped</span><br><span class="line">    healthcheck:</span><br><span class="line">      disable: true</span><br><span class="line">    environment:</span><br><span class="line">      - TZ&#x3D;Asia&#x2F;Taipei</span><br></pre></td></tr></table></figure>
+<h3 id="服務設定label"><a href="#服務設定label" class="headerlink" title="服務設定label"></a>服務設定label</h3><p>主要重點只有一個<code>traefik.http.routers.ncp.middlewares=authelia@docker</code>，請參考下面設定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">version: &quot;3&quot;</span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  nextcloudpi:</span><br><span class="line">#    image:  ownyourbits&#x2F;nextcloudpi</span><br><span class="line">#    後來發現 nextcloudpi 有 nextcloudpi-armhf image</span><br><span class="line">    image: ownyourbits&#x2F;nextcloudpi-armhf</span><br><span class="line">    command: &quot;192.168.1.202&quot;</span><br><span class="line">    networks:</span><br><span class="line">        - traefik_network</span><br><span class="line">    labels:</span><br><span class="line">      - &quot;traefik.backend&#x3D;ncp&quot;</span><br><span class="line">      - &quot;traefik.http.routers.ncp.rule&#x3D;Host(&#96;xxx.xxx.xxx.org&#96;)&quot;</span><br><span class="line">      - &quot;traefik.http.routers.ncp.tls&#x3D;true&quot;</span><br><span class="line">      - &quot;traefik.http.services.ncp.loadbalancer.server.port&#x3D;80&quot;</span><br><span class="line">      - &#39;traefik.http.routers.ncp.middlewares&#x3D;authelia@docker&#39;</span><br><span class="line">    restart: always</span><br><span class="line">    ports:</span><br><span class="line">      #- &quot;1180:80&quot; # 暫時使用</span><br><span class="line">      #- &quot;11443:443&quot; # 暫時使用</span><br><span class="line">      - &quot;4443:4443&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - &#x2F;media&#x2F;USBdrive&#x2F;ncp2:&#x2F;data</span><br><span class="line">      - &#x2F;etc&#x2F;localtime:&#x2F;etc&#x2F;localtime:ro</span><br><span class="line">    environment:</span><br><span class="line">      - &quot;UMASK&#x3D;002&quot;</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">  traefik_network:</span><br><span class="line">    external: true</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/2fa/" rel="tag"># 2fa</a>
+              <a href="/blog/tags/sso/" rel="tag"># sso</a>
+              <a href="/blog/tags/authelia/" rel="tag"># authelia</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/%E7%99%BB%E5%85%A5%E9%96%8B%E6%BA%90%E7%B3%BB%E7%B5%B1-%E5%8C%85%E5%90%AB%E6%9C%892FA-%E6%95%B4%E7%90%86/" rel="prev" title="登入開源系統(包含有2FA)整理">
+      <i class="fa fa-chevron-left"></i> 登入開源系統(包含有2FA)整理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/two-factor-%E7%9B%B8%E9%97%9C%E7%9F%A5%E8%AD%98%E5%92%8C%E5%B7%A5%E5%85%B7%E6%95%B4%E7%90%86/" rel="next" title="two factor 相關知識和工具整理">
+      two factor 相關知識和工具整理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#官方簡單實作"><span class="nav-number">1.</span> <span class="nav-text">官方簡單實作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#設定-2FA"><span class="nav-number">1.1.</span> <span class="nav-text">設定 2FA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#測試用-mail"><span class="nav-number">1.1.1.</span> <span class="nav-text">測試用 mail</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#產生-users-database-yml-的-hash密碼值"><span class="nav-number">1.1.2.</span> <span class="nav-text">產生 users_database.yml 的 hash密碼值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#設定網路區域"><span class="nav-number">1.1.3.</span> <span class="nav-text">設定網路區域</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#運用在SERVER"><span class="nav-number">2.</span> <span class="nav-text">運用在SERVER</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#樹梅派安裝"><span class="nav-number">2.1.</span> <span class="nav-text">樹梅派安裝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程式參考設定"><span class="nav-number">2.2.</span> <span class="nav-text">程式參考設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-設定"><span class="nav-number">2.3.</span> <span class="nav-text">docker 設定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#authelia"><span class="nav-number">2.3.1.</span> <span class="nav-text">authelia</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服務設定label"><span class="nav-number">2.4.</span> <span class="nav-text">服務設定label</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">689</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/02/13/Authelia-%E8%A8%AD%E5%AE%9A%E5%92%8C-%E5%AF%A6%E4%BD%9C-2FA-%E7%99%BB%E5%85%A5%E9%A9%97%E8%AD%89/";
+    this.page.identifier = "2022/02/13/Authelia-設定和-實作-2FA-登入驗證/";
+    this.page.title = "Authelia 設定和 實作 2FA 登入驗證";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

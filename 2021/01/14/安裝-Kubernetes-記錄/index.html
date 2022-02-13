@@ -22,7 +22,7 @@
 
   <meta name="description" content="minkube安裝 minikube必備安裝  VirtualBox minikube kubectl  Minikube(這邊請去官網看OS載點替換) kubernetes&#x2F;minikube 1234curl -LO https:&#x2F;&#x2F;github.com&#x2F;kubernetes&#x2F;minikube&#x2F;releases&#x2F;download&#x2F;v1.6.2&#x2F;minikube-linux-amd64(這邊請去官">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安裝 Kubernetes 記錄">
+<meta property="og:title" content="安裝 Minikube 記錄">
 <meta property="og:url" content="https://malagege.github.io/blog/2021/01/14/%E5%AE%89%E8%A3%9D-Kubernetes-%E8%A8%98%E9%8C%84/index.html">
 <meta property="og:site_name" content="程式狂想筆記">
 <meta property="og:description" content="minkube安裝 minikube必備安裝  VirtualBox minikube kubectl  Minikube(這邊請去官網看OS載點替換) kubernetes&#x2F;minikube 1234curl -LO https:&#x2F;&#x2F;github.com&#x2F;kubernetes&#x2F;minikube&#x2F;releases&#x2F;download&#x2F;v1.6.2&#x2F;minikube-linux-amd64(這邊請去官">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/6058558/143445533-37c3308b-dfa2-43d8-9a0d-46ec1af5c67d.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/6058558/143446012-17d4491c-36d1-440c-b666-a4c7ebbffcdc.png">
 <meta property="article:published_time" content="2021-01-14T14:53:44.000Z">
-<meta property="article:modified_time" content="2021-11-25T13:03:32.695Z">
+<meta property="article:modified_time" content="2021-11-29T12:00:29.401Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="kubernetes">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>安裝 Kubernetes 記錄 | 程式狂想筆記</title>
+  <title>安裝 Minikube 記錄 | 程式狂想筆記</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
     <script>
@@ -234,7 +234,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          安裝 Kubernetes 記錄
+          安裝 Minikube 記錄
         </h1>
 
         <div class="post-meta">
@@ -251,7 +251,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-11-25 21:03:32" itemprop="dateModified" datetime="2021-11-25T21:03:32+08:00">2021-11-25</time>
+                <time title="修改時間：2021-11-29 20:00:29" itemprop="dateModified" datetime="2021-11-29T20:00:29+08:00">2021-11-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -329,7 +329,7 @@
 <h4 id="minikube-start"><a href="#minikube-start" class="headerlink" title="minikube start"></a>minikube start</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br><span class="line"><span class="comment"># 會安裝會用到的 iso</span></span><br><span class="line">😄  minikube v1.6.2 on Debian buster/sid</span><br><span class="line">✨  Automatically selected the <span class="string">'virtualbox'</span> driver (alternates: [none])</span><br><span class="line">🔥  Creating virtualbox VM (CPUs=2, Memory=2000MB, Disk=20000MB) ...</span><br><span class="line">🐳  Preparing Kubernetes v1.17.0 on Docker <span class="string">'19.03.5'</span> ...</span><br><span class="line">🚜  Pulling images ...</span><br><span class="line">🚀  Launching Kubernetes ... </span><br><span class="line">⌛  Waiting <span class="keyword">for</span> cluster to come online ...</span><br><span class="line">🏄  Done! kubectl is now configured to use <span class="string">"minikube"</span></span><br></pre></td></tr></table></figure>
 <p>最後可以下<code>minikube dashboard</code><br>看有沒有問題</p>
 <h5 id="minikube-start-選項功能-沒用-vagrant-可以跳過"><a href="#minikube-start-選項功能-沒用-vagrant-可以跳過" class="headerlink" title="minikube start 選項功能(沒用 vagrant 可以跳過)"></a>minikube start 選項功能(沒用 vagrant 可以跳過)</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--vm-drivers(default 是Virtualbox)</span><br><span class="line">none 是用本機</span><br><span class="line"></span><br><span class="line">--Bootstrapper(預設使用kubeadm)</span><br></pre></td></tr></table></figure>
-<p>在 vagrant 安裝 minikube 可以做<code>minikube start --vm-drivers=none</code></p>
+<p>在 vagrant 安裝 minikube 可以做<code>sudo minikube start --vm-drivers=none</code></p>
 <h3 id="遇到錯誤"><a href="#遇到錯誤" class="headerlink" title="遇到錯誤"></a>遇到錯誤</h3><h4 id="VM-64-bit-不能安裝-64-bit-OS"><a href="#VM-64-bit-不能安裝-64-bit-OS" class="headerlink" title="VM 64 bit 不能安裝 64 bit OS"></a>VM 64 bit 不能安裝 64 bit OS</h4><p><strong>先說結論:不能用 VM 跑樣子</strong></p>
 <p>用 VM 裝可能遇到的問題<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">💣  Unable to start VM. Please investigate and run &#39;minikube delete&#39; if possible</span><br><span class="line">❌  Error: [VBOX_VTX_DISABLED] create: precreate: This computer doesn&#39;t have VT-X&#x2F;AMD-v enabled. Enabling it in the BIOS is mandatory</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config.vm.provider :virtualbox do |vb|  </span><br><span class="line">  vb.customize [&quot;modifyvm&quot;, :id, &quot;--hwvirtex&quot;, &quot;off&quot;]     </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
@@ -346,7 +346,9 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
 <p>bash: /usr/local/bin/kubectl: cannot execute binary file: Exec format error</p>
 </blockquote>
 <p>就是安裝錯版本</p>
-<h3 id="查看-cluster-info-資訊"><a href="#查看-cluster-info-資訊" class="headerlink" title="查看 cluster-info 資訊"></a>查看 cluster-info 資訊</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo minIkube kubectl cluster-info</span><br></pre></td></tr></table></figure>
+<h3 id="修改權限"><a href="#修改權限" class="headerlink" title="修改權限"></a>修改權限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown `id -u`:`id -u` -R .minikube/</span><br></pre></td></tr></table></figure>
+<h3 id="使用-minikube-的-kubectl"><a href="#使用-minikube-的-kubectl" class="headerlink" title="使用 minikube 的 kubectl"></a>使用 minikube 的 kubectl</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo minikube kubectl </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">minikube kubectl --  -n kube-system get pods</span><br></pre></td></tr></table></figure>
+<h3 id="查看-cluster-info-資訊"><a href="#查看-cluster-info-資訊" class="headerlink" title="查看 cluster-info 資訊"></a>查看 cluster-info 資訊</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo minIkube kubectl -- cluster-info</span><br></pre></td></tr></table></figure>
 <p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl cluster-info</span><br><span class="line">Kubernetes control plane is running at https:&#x2F;&#x2F;192.168.99.100:8443</span><br><span class="line">KubeDNS is running at https:&#x2F;&#x2F;192.168.99.100:8443&#x2F;api&#x2F;v1&#x2F;namespaces&#x2F;kube-system&#x2F;services&#x2F;kube-dns:dns&#x2F;proxy</span><br></pre></td></tr></table></figure></p>
 <p>成功完成</p>
 <p>用 vagrant 安裝可能會遇到權限問題可以使用問題，如下圖。<br><img src="https://user-images.githubusercontent.com/6058558/143443354-9a49f358-82a4-484b-9845-1ad8c5bbed09.png" alt="圖片"><br>加上<code>sudo</code>可以解決。</p>
@@ -494,7 +496,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#minkube"><span class="nav-number">1.</span> <span class="nav-text">minkube</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-minikube"><span class="nav-number">1.1.</span> <span class="nav-text">安裝 minikube</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Minikube"><span class="nav-number">1.1.1.</span> <span class="nav-text">Minikube</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Virtualbox"><span class="nav-number">1.1.2.</span> <span class="nav-text">Virtualbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝-kubectl"><span class="nav-number">1.1.3.</span> <span class="nav-text">安裝  kubectl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#minikube-start"><span class="nav-number">1.1.4.</span> <span class="nav-text">minikube start</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#minikube-start-選項功能-沒用-vagrant-可以跳過"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">minikube start 選項功能(沒用 vagrant 可以跳過)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到錯誤"><span class="nav-number">1.2.</span> <span class="nav-text">遇到錯誤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VM-64-bit-不能安裝-64-bit-OS"><span class="nav-number">1.2.1.</span> <span class="nav-text">VM 64 bit 不能安裝 64 bit OS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Exec-format-error"><span class="nav-number">1.2.2.</span> <span class="nav-text">Exec format error</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-cluster-info-資訊"><span class="nav-number">1.3.</span> <span class="nav-text">查看 cluster-info 資訊</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#權限問題-使用vagrant"><span class="nav-number">1.3.1.</span> <span class="nav-text">權限問題(使用vagrant)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-minikube-的原件"><span class="nav-number">1.4.</span> <span class="nav-text">查看 minikube 的原件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刪除-minikube"><span class="nav-number">1.5.</span> <span class="nav-text">刪除 minikube</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遠端連-dashboard"><span class="nav-number">1.6.</span> <span class="nav-text">遠端連 dashboard</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝-UI"><span class="nav-number">1.6.1.</span> <span class="nav-text">安裝 UI</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#簡單-Hello-World"><span class="nav-number">1.7.</span> <span class="nav-text">簡單 Hello World</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kind"><span class="nav-number">2.</span> <span class="nav-text">Kind</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-Docker"><span class="nav-number">2.1.</span> <span class="nav-text">安裝 Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#設定-docker-權限"><span class="nav-number">2.1.1.</span> <span class="nav-text">設定 docker 權限</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-Kind"><span class="nav-number">2.2.</span> <span class="nav-text">安裝 Kind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#啟用集群"><span class="nav-number">2.3.</span> <span class="nav-text">啟用集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刪除集群"><span class="nav-number">2.4.</span> <span class="nav-text">刪除集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-minikube-plugin"><span class="nav-number">2.5.</span> <span class="nav-text">查看 minikube plugin</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#minkube"><span class="nav-number">1.</span> <span class="nav-text">minkube</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-minikube"><span class="nav-number">1.1.</span> <span class="nav-text">安裝 minikube</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Minikube"><span class="nav-number">1.1.1.</span> <span class="nav-text">Minikube</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Virtualbox"><span class="nav-number">1.1.2.</span> <span class="nav-text">Virtualbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝-kubectl"><span class="nav-number">1.1.3.</span> <span class="nav-text">安裝  kubectl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#minikube-start"><span class="nav-number">1.1.4.</span> <span class="nav-text">minikube start</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#minikube-start-選項功能-沒用-vagrant-可以跳過"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">minikube start 選項功能(沒用 vagrant 可以跳過)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到錯誤"><span class="nav-number">1.2.</span> <span class="nav-text">遇到錯誤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VM-64-bit-不能安裝-64-bit-OS"><span class="nav-number">1.2.1.</span> <span class="nav-text">VM 64 bit 不能安裝 64 bit OS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Exec-format-error"><span class="nav-number">1.2.2.</span> <span class="nav-text">Exec format error</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改權限"><span class="nav-number">1.3.</span> <span class="nav-text">修改權限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-minikube-的-kubectl"><span class="nav-number">1.4.</span> <span class="nav-text">使用 minikube 的 kubectl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-cluster-info-資訊"><span class="nav-number">1.5.</span> <span class="nav-text">查看 cluster-info 資訊</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#權限問題-使用vagrant"><span class="nav-number">1.5.1.</span> <span class="nav-text">權限問題(使用vagrant)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-minikube-的原件"><span class="nav-number">1.6.</span> <span class="nav-text">查看 minikube 的原件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刪除-minikube"><span class="nav-number">1.7.</span> <span class="nav-text">刪除 minikube</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遠端連-dashboard"><span class="nav-number">1.8.</span> <span class="nav-text">遠端連 dashboard</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝-UI"><span class="nav-number">1.8.1.</span> <span class="nav-text">安裝 UI</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#簡單-Hello-World"><span class="nav-number">1.9.</span> <span class="nav-text">簡單 Hello World</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kind"><span class="nav-number">2.</span> <span class="nav-text">Kind</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-Docker"><span class="nav-number">2.1.</span> <span class="nav-text">安裝 Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#設定-docker-權限"><span class="nav-number">2.1.1.</span> <span class="nav-text">設定 docker 權限</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-Kind"><span class="nav-number">2.2.</span> <span class="nav-text">安裝 Kind</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#啟用集群"><span class="nav-number">2.3.</span> <span class="nav-text">啟用集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刪除集群"><span class="nav-number">2.4.</span> <span class="nav-text">刪除集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-minikube-plugin"><span class="nav-number">2.5.</span> <span class="nav-text">查看 minikube plugin</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -508,20 +510,20 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -551,7 +553,7 @@ You cannot run a 64-Bit VM within a nested VirtualBox.
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -642,7 +644,7 @@ if (document.querySelectorAll('pre.mermaid').length) {
   var disqus_config = function() {
     this.page.url = "https://malagege.github.io/blog/2021/01/14/%E5%AE%89%E8%A3%9D-Kubernetes-%E8%A8%98%E9%8C%84/";
     this.page.identifier = "2021/01/14/安裝-Kubernetes-記錄/";
-    this.page.title = "安裝 Kubernetes 記錄";
+    this.page.title = "安裝 Minikube 記錄";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {

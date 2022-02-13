@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="有時候我們連一台主機。不可能只開一個 ssh 連線。每次連線都要重新輸入帳號密碼，真的也很花時間。無形之中又多做一次驗證，最近看到這個方法，簡單研究一下，希望能幫我開發上縮短幾次幾秒鐘XD。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssh 使用 ControlMaster 做第二連線自動登入(xshell,putty)">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="有時候我們連一台主機。不可能只開一個 ssh 連線。每次連線都要重新輸入帳號密碼，真的也很花時間。無形之中又多做一次驗證，最近看到這個方法，簡單研究一下，希望能幫我開發上縮短幾次幾秒鐘XD。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/hJcHWNF.png">
+<meta property="og:image" content="https://i.imgur.com/yafSD1n.png">
+<meta property="og:image" content="https://i.imgur.com/FPovctc.png">
+<meta property="og:image" content="https://i.imgur.com/BMTC3ht.png">
+<meta property="og:image" content="https://i.imgur.com/N73h99V.png">
+<meta property="article:published_time" content="2022-02-13T15:15:59.000Z">
+<meta property="article:modified_time" content="2022-02-13T15:16:29.803Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="sshconfig">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/hJcHWNF.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>ssh 使用 ControlMaster 做第二連線自動登入(xshell,putty) | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ssh 使用 ControlMaster 做第二連線自動登入(xshell,putty)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 23:15:59 / 修改時間：23:16:29" itemprop="dateCreated datePublished" datetime="2022-02-13T23:15:59+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/ssh-使用-ControlMaster-做第二連線自動登入-xshell-putty/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>有時候我們連一台主機。不可能只開一個 ssh 連線。每次連線都要重新輸入帳號密碼，真的也很花時間。無形之中又多做一次驗證，最近看到這個方法，簡單研究一下，希望能幫我開發上縮短幾次幾秒鐘XD。</p>
+<a id="more"></a>
+<h2 id="ssh-ControlMaster"><a href="#ssh-ControlMaster" class="headerlink" title="ssh(ControlMaster)"></a>ssh(ControlMaster)</h2><p><img src="https://i.imgur.com/hJcHWNF.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ControlMaster   auto</span><br><span class="line">ControlPath     &#x2F;tmp&#x2F;ssh-%r@%h:%p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -vvv master</span><br></pre></td></tr></table></figure>
+<p>可以看到 log 沒有做金鑰驗證。<br><img src="https://i.imgur.com/yafSD1n.png" alt=""></p>
+<p>使用密碼方式也能用這個方法喔!!!</p>
+<p>參考:<a href="https://chusiang.gitbooks.io/working-on-gnu-linux/content/20.ssh_config.html" target="_blank" rel="noopener">增進 SSH 使用效率 - ssh_config · 完全用 GNU/Linux 工作</a></p>
+<p>更多設定可以看<a href="https://www.twblogs.net/a/5c4b594ebd9eee6e7e06d6c9" target="_blank" rel="noopener">SSH Config 那些你所知道和不知道的事 - 台部落</a>。</p>
+<h2 id="putty"><a href="#putty" class="headerlink" title="putty"></a>putty</h2><p>登入前設定下面選項<br>(Putty Configuration -&gt; Connection-&gt; SSH -&gt; <code>Share SSH connections if possible</code> 打勾)</p>
+<p><img src="https://i.imgur.com/FPovctc.png" alt=""></p>
+<p>第二視窗一樣要做這個選項，登入就不需要密碼了。</p>
+<p><img src="https://i.imgur.com/BMTC3ht.png" alt=""></p>
+<h2 id="xshell"><a href="#xshell" class="headerlink" title="xshell"></a>xshell</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xshell克隆一個新的終端:shift + alt + t</span><br></pre></td></tr></table></figure>
+<p>參考連結：<a href="https://blog.csdn.net/marion158/article/details/90690394" target="_blank" rel="noopener">xshell克隆會話_Marion的博客-CSDN博客_xshell 複製會話</a></p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Windows篇</span><br><span class="line"></span><br><span class="line">利用xshell和SecureCRT session clone的思路，以xshell為例。對跳板機的會話屬性做如下設置：</span><br><span class="line"></span><br><span class="line">1. 在會話屬性--連接--用戶身份驗證中的方法，選擇keyboard Interactive，輸入用戶名和密碼。</span><br><span class="line"></span><br><span class="line">2. 這樣登陸時，密碼都可省略，直接輸入token即可。</span><br><span class="line"></span><br><span class="line">3. 在已經登陸的session上，右鍵點擊tab頁，選擇複製ssh渠道，就可以免token無限複製啦。</span><br></pre></td></tr></table></figure>
+<p>參考:<a href="https://www.cnblogs.com/solontan/p/4048847.html" target="_blank" rel="noopener">登陸跳板機每天只輸入一次token的方法——ssh clone session - Solon Tan - 博客園</a></p>
+<p><img src="https://i.imgur.com/N73h99V.png" alt=""></p>
+<p>這邊看起來要用 私鑰登入</p>
+<h2 id="ssh-autocomplete"><a href="#ssh-autocomplete" class="headerlink" title="ssh autocomplete"></a>ssh autocomplete</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">_complete_ssh_hosts ()</span><br><span class="line">&#123;</span><br><span class="line">        COMPREPLY=()</span><br><span class="line">        cur="$&#123;COMP_WORDS[COMP_CWORD]&#125;"</span><br><span class="line">        comp_ssh_hosts=`cat ~/.ssh/known_hosts | \</span><br><span class="line">                        cut -f 1 -d ' ' | \</span><br><span class="line">                        sed -e s/,.*//g | \</span><br><span class="line">                        grep -v ^# | \</span><br><span class="line">                        uniq | \</span><br><span class="line">                        grep -v "\[" ;</span><br><span class="line">                cat ~/.ssh/config | \</span><br><span class="line">                        grep "^Host " | \</span><br><span class="line">                        awk '&#123;print $2&#125;'</span><br><span class="line">                `</span><br><span class="line">        COMPREPLY=( $(compgen -W "$&#123;comp_ssh_hosts&#125;" -- $cur))</span><br><span class="line">        return 0</span><br><span class="line">&#125;</span><br><span class="line">complete -F _complete_ssh_hosts ssh</span><br></pre></td></tr></table></figure>
+<p>上面加在 <code>.profile</code> 就可以開心始用。:D</p>
+<p>參考:<a href="https://gist.github.com/aliang/1024466" target="_blank" rel="noopener">Add auto complete to your ssh, put into your .bash_profile</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/ssh/" rel="tag"># ssh</a>
+              <a href="/blog/tags/sshconfig/" rel="tag"># sshconfig</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/" rel="prev" title="sshconfig 設定小記">
+      <i class="fa fa-chevron-left"></i> sshconfig 設定小記
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/Docker-compose-%E5%81%9A-scale-%E7%AD%86%E8%A8%98/" rel="next" title="Docker compose 做 scale 筆記">
+      Docker compose 做 scale 筆記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-ControlMaster"><span class="nav-number">1.</span> <span class="nav-text">ssh(ControlMaster)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#putty"><span class="nav-number">2.</span> <span class="nav-text">putty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xshell"><span class="nav-number">3.</span> <span class="nav-text">xshell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法1"><span class="nav-number">3.1.</span> <span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法2"><span class="nav-number">3.2.</span> <span class="nav-text">方法2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh-autocomplete"><span class="nav-number">4.</span> <span class="nav-text">ssh autocomplete</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">689</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/";
+    this.page.identifier = "2022/02/13/ssh-使用-ControlMaster-做第二連線自動登入-xshell-putty/";
+    this.page.title = "ssh 使用 ControlMaster 做第二連線自動登入(xshell,putty)";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

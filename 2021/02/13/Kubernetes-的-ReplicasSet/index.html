@@ -28,7 +28,7 @@
 <meta property="og:description" content="我目前看書上是舊版範例所以使用官方ReplicaSet | Kubernetes範例目前推薦 [Kubernetes] ReplicaSet 介紹 | 小信豬的原始部落這邊只是會放操作紀錄，不會很專業解說">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-12T18:10:07.000Z">
-<meta property="article:modified_time" content="2021-06-27T08:05:07.880Z">
+<meta property="article:modified_time" content="2021-12-07T12:55:23.587Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="kubernetes">
 <meta property="article:tag" content="replicasset">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-12-07 20:55:23" itemprop="dateModified" datetime="2021-12-07T20:55:23+08:00">2021-12-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -329,6 +329,12 @@
 <h2 id="刪除-ReplicaSet-不刪除-pod"><a href="#刪除-ReplicaSet-不刪除-pod" class="headerlink" title="刪除 ReplicaSet 不刪除 pod"></a>刪除 ReplicaSet 不刪除 pod</h2><p>刪除 ReplicaSet 會一起刪除 pod<br>要刪除 ReplicaSet 不刪除 pod 情況下要使用</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 書上這樣寫，但好像廢棄了</span></span><br><span class="line">kubectl delete rs fronted --cascade=<span class="literal">false</span></span><br><span class="line"><span class="comment"># warning: --cascade=false is deprecated (boolean value) and can be replaced with --cascade=orphan.</span></span><br><span class="line">kubectl delete rs frontend --cascade=orphan</span><br><span class="line"><span class="comment"># 也能正常運作</span></span><br></pre></td></tr></table></figure>
 <p><a href="https://www.cnblogs.com/hsyw/p/14173542.html" target="_blank" rel="noopener">StatefulSet介绍 - taotaozh - 博客园</a><br>不知道跟這個有沒有關係<br>暫時不研究</p>
+<h2 id="小記重點"><a href="#小記重點" class="headerlink" title="小記重點"></a>小記重點</h2><ol>
+<li>確保在任何時間點會有幾個副本。</li>
+<li>相同Pod都是可用的，取決你設定的數字。</li>
+<li>透過 selector 綁定在一起</li>
+</ol>
+<h2 id="觀察指令"><a href="#觀察指令" class="headerlink" title="觀察指令"></a>觀察指令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe rs</span><br><span class="line">kubectl get pods</span><br><span class="line"># Controller By 可以觀察是誰操控 Pod</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -438,7 +444,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立有-template-的-ReplicaSet"><span class="nav-number">2.</span> <span class="nav-text">建立有 template 的 ReplicaSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#無-template-建立"><span class="nav-number">3.</span> <span class="nav-text">無 template 建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#擴展-ReplicaSet"><span class="nav-number">4.</span> <span class="nav-text">擴展 ReplicaSet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">4.1.</span> <span class="nav-text">指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kubectl-apply-套用"><span class="nav-number">5.</span> <span class="nav-text">kubectl apply 套用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自動擴展"><span class="nav-number">6.</span> <span class="nav-text">自動擴展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-ReplicaSet-不刪除-pod"><span class="nav-number">7.</span> <span class="nav-text">刪除 ReplicaSet 不刪除 pod</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立有-template-的-ReplicaSet"><span class="nav-number">2.</span> <span class="nav-text">建立有 template 的 ReplicaSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#無-template-建立"><span class="nav-number">3.</span> <span class="nav-text">無 template 建立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#擴展-ReplicaSet"><span class="nav-number">4.</span> <span class="nav-text">擴展 ReplicaSet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">4.1.</span> <span class="nav-text">指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kubectl-apply-套用"><span class="nav-number">5.</span> <span class="nav-text">kubectl apply 套用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自動擴展"><span class="nav-number">6.</span> <span class="nav-text">自動擴展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-ReplicaSet-不刪除-pod"><span class="nav-number">7.</span> <span class="nav-text">刪除 ReplicaSet 不刪除 pod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小記重點"><span class="nav-number">8.</span> <span class="nav-text">小記重點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#觀察指令"><span class="nav-number">9.</span> <span class="nav-text">觀察指令</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -452,20 +458,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -495,7 +501,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

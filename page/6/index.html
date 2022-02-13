@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/JavaScript-Object-%E7%B9%BC%E6%89%BF%E7%89%A9%E4%BB%B6%E5%B1%AC%E6%80%A7%E5%A4%A7%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -222,7 +222,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">查看 IP 指令和路由筆記</a>
+            <a href="/blog/2021/10/09/JavaScript-Object-%E7%B9%BC%E6%89%BF%E7%89%A9%E4%BB%B6%E5%B1%AC%E6%80%A7%E5%A4%A7%E6%B3%95/" class="post-title-link" itemprop="url">JavaScript Object 繼承物件屬性大法</a>
         </h2>
 
         <div class="post-meta">
@@ -231,17 +231,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2021-07-14 20:45:37 / 修改時間：21:18:14" itemprop="dateCreated datePublished" datetime="2021-07-14T20:45:37+08:00">2021-07-14</time>
+              <time title="創建時間：2021-10-09 23:24:36" itemprop="dateCreated datePublished" datetime="2021-10-09T23:24:36+08:00">2021-10-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-10-10 01:06:28" itemprop="dateModified" datetime="2021-10-10T01:06:28+08:00">2021-10-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
+                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
                 </span>
             </span>
 
@@ -254,8 +260,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/查看-IP-指令和路由筆記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/10/09/JavaScript-Object-%E7%B9%BC%E6%89%BF%E7%89%A9%E4%BB%B6%E5%B1%AC%E6%80%A7%E5%A4%A7%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/JavaScript-Object-繼承物件屬性大法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -285,10 +291,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>之前寫<a href="https://malagege.github.io/blog/2020/05/30/%E4%B8%80%E5%BC%B5%E7%B6%B2%E5%8D%A1%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%B5%84-IP-%E6%96%B9%E6%B3%95/#%E4%BD%BF%E7%94%A8%E4%B8%8A%E8%A8%AD%E5%AE%9A%E9%98%B2%E7%81%AB%E7%89%86%E9%99%B7%E9%98%B1">一張網卡使用多組 IP 方法 - 使用上設定防火牆陷阱 | 程式狂想筆記</a>有談過<code>使用上設定防火牆陷阱</code>，彈要怎麼看出去方法<code>ip route show</code>，但我對輸出出來資訊不太懂，今天特別研究一下。</p>
+          <p>有時候自幹套件，使用 Object 去設定會非常簡單，但是會有物件繼承問題。要如何快速解決問題呢?我之前有使用過 <code>jQuery.extend</code> 來解決這個問題。但是最近寫 Vue，不太可能使用 Query ，我相信 ES6 應該有新寫法(還真的有)，這邊來整理一下。<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2021/10/09/JavaScript-Object-%E7%B9%BC%E6%89%BF%E7%89%A9%E4%BB%B6%E5%B1%AC%E6%80%A7%E5%A4%A7%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -312,7 +318,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Vite-%E6%90%AD%E9%85%8D-Electron-%E6%95%B4%E7%90%86-%E4%B8%8D%E4%BD%BF%E7%94%A8TypeScript/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -326,7 +332,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/" class="post-title-link" itemprop="url">Dbeaver 使用變數 做SQL 範本 和查詢設定 title</a>
+            <a href="/blog/2021/10/09/Vite-%E6%90%AD%E9%85%8D-Electron-%E6%95%B4%E7%90%86-%E4%B8%8D%E4%BD%BF%E7%94%A8TypeScript/" class="post-title-link" itemprop="url">Vite 搭配 Electron 整理(不使用TypeScript)</a>
         </h2>
 
         <div class="post-meta">
@@ -337,7 +343,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2021-07-14 20:43:41 / 修改時間：20:45:02" itemprop="dateCreated datePublished" datetime="2021-07-14T20:43:41+08:00">2021-07-14</time>
+              <time title="創建時間：2021-10-09 23:23:32 / 修改時間：23:23:50" itemprop="dateCreated datePublished" datetime="2021-10-09T23:23:32+08:00">2021-10-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -345,7 +351,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
+                  <a href="/blog/categories/Vite/" itemprop="url" rel="index"><span itemprop="name">Vite</span></a>
                 </span>
             </span>
 
@@ -358,8 +364,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/Dbeaver-使用變數-做SQL-範本-和查詢設定-title/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/10/09/Vite-%E6%90%AD%E9%85%8D-Electron-%E6%95%B4%E7%90%86-%E4%B8%8D%E4%BD%BF%E7%94%A8TypeScript/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Vite-搭配-Electron-整理-不使用TypeScript/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -389,10 +395,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Dbeaver 使用變數 做SQL 範本 和查詢設定 title</p>
+          <h1 id="Vite-搭配-Electron-整理-不使用TypeScript"><a href="#Vite-搭配-Electron-整理-不使用TypeScript" class="headerlink" title="Vite 搭配 Electron 整理(不使用TypeScript)"></a>Vite 搭配 Electron 整理(不使用TypeScript)</h1><ol>
+<li><a href="https://github.com/cawa-93/vite-electron-builder" target="_blank" rel="noopener">cawa-93/vite-electron-builder: Secure boilerplate for Electron app based on Vite. TypeScript + Vue/React/Angular/Svelte/Vanilla</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/181015456" target="_blank" rel="noopener">Vue3+Electron整合方式 - 知乎</a></li>
+</ol>
+<p>目前好像沒有官方推薦的，不過我選方案一，因為官方有特別註明怎麼調回 JavaScript，我 TypeScript 還沒有學。Orz</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/#more" rel="contents">
+              <a class="btn" href="/blog/2021/10/09/Vite-%E6%90%AD%E9%85%8D-Electron-%E6%95%B4%E7%90%86-%E4%B8%8D%E4%BD%BF%E7%94%A8TypeScript/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -416,7 +426,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/CSS-%E5%81%BD%E9%80%A0%E5%85%83%E7%B4%A0-before-%E9%A1%AF%E7%A4%BA%E5%BA%8F%E8%99%9F-counter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -430,7 +440,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/" class="post-title-link" itemprop="url">Vite 使用 https 憑證服務方法(搭 mkcert )</a>
+            <a href="/blog/2021/10/09/CSS-%E5%81%BD%E9%80%A0%E5%85%83%E7%B4%A0-before-%E9%A1%AF%E7%A4%BA%E5%BA%8F%E8%99%9F-counter/" class="post-title-link" itemprop="url">CSS 偽造元素(::before)顯示序號(counter)</a>
         </h2>
 
         <div class="post-meta">
@@ -441,7 +451,118 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2021-07-04 22:36:08 / 修改時間：22:39:34" itemprop="dateCreated datePublished" datetime="2021-07-04T22:36:08+08:00">2021-07-04</time>
+              <time title="創建時間：2021-10-09 23:22:41 / 修改時間：23:22:54" itemprop="dateCreated datePublished" datetime="2021-10-09T23:22:41+08:00">2021-10-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/10/09/CSS-%E5%81%BD%E9%80%A0%E5%85%83%E7%B4%A0-before-%E9%A1%AF%E7%A4%BA%E5%BA%8F%E8%99%9F-counter/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/CSS-偽造元素-before-顯示序號-counter/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="CSS-偽造元素-before-顯示序號-counter"><a href="#CSS-偽造元素-before-顯示序號-counter" class="headerlink" title="CSS 偽造元素(::before)顯示序號(counter)"></a>CSS 偽造元素(::before)顯示序號(counter)</h1><ul>
+<li><p><a href="https://titangene.github.io/article/css-selector-pseudo-element.html" target="_blank" rel="noopener">重新認識 CSS - Pseudo-element (偽元素) | Titangene Blog</a></p>
+</li>
+<li><p><a href="https://css-tricks.com/custom-list-number-styling/" target="_blank" rel="noopener">Custom List Number Styling | CSS-Tricks</a></p>
+</li>
+<li><p><a href="https://blog.hinablue.me/use-css-counter-to-make-your-own-toc/" target="_blank" rel="noopener">[CSS 年終特賣] 讓 CSS 自動幫你數數</a></p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/10/09/CSS-%E5%81%BD%E9%80%A0%E5%85%83%E7%B4%A0-before-%E9%A1%AF%E7%A4%BA%E5%BA%8F%E8%99%9F-counter/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/" class="post-title-link" itemprop="url">Vue3 v-model 語法糖</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-10-09 23:22:02 / 修改時間：23:22:24" itemprop="dateCreated datePublished" datetime="2021-10-09T23:22:02+08:00">2021-10-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -462,8 +583,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/04/Vite-使用-https-憑證服務方法-搭-mkcert/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Vue3-v-model-語法糖/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -493,10 +614,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>現在很多開發都需要 HTTPS ，但是在 localhost 預設是沒有 HTTPS，要怎麼在 Vite 快速在開發環境用 HTTPS？爬了一些 Google 文章，來記錄一下。</p>
+          <p>之前在學 Vue 2 的時候，稍微釐清 v-model 觀念。但一陣子沒用了，忘了差不多，今天在讀 Vue3 順便來回顧一下之前觀念，順便來筆記一下。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/#more" rel="contents">
+              <a class="btn" href="/blog/2021/10/09/Vue3-v-model-%E8%AA%9E%E6%B3%95%E7%B3%96/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -520,7 +641,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/CSS-Grid-%E7%AD%86%E8%A8%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -534,7 +655,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/" class="post-title-link" itemprop="url">.Net Core 建置 Docker 映像檔</a>
+            <a href="/blog/2021/10/09/CSS-Grid-%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">CSS Grid 筆記</a>
         </h2>
 
         <div class="post-meta">
@@ -545,7 +666,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2021-06-27 15:02:16 / 修改時間：16:05:08" itemprop="dateCreated datePublished" datetime="2021-06-27T15:02:16+08:00">2021-06-27</time>
+              <time title="創建時間：2021-10-09 23:21:15 / 修改時間：23:21:37" itemprop="dateCreated datePublished" datetime="2021-10-09T23:21:15+08:00">2021-10-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -553,7 +674,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                  <a href="/blog/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
                 </span>
             </span>
 
@@ -566,8 +687,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/Net-Core-建置-Docker-映像檔/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/10/09/CSS-Grid-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/CSS-Grid-筆記/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -597,10 +718,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近同事收到要把<code>.Net Core</code>程式轉移到 K8S，但是維運不會處理 Image，剛好我對 Docker 有小小的研究，但對 .Net Core 不是很熟，最後爬了文章，成功處理 Image。</p>
+          <h1 id="CSS-Grid-筆記-writed"><a href="#CSS-Grid-筆記-writed" class="headerlink" title="CSS Grid 筆記(writed)"></a>CSS Grid 筆記(writed)</h1><p>推薦新法先看<a href="https://blog.hinablue.me/css-grid-layout/" target="_blank" rel="noopener">[CSS] 關於 Grid Layout 的使用姿勢</a>，了解觀念在看語法內容比較不會誤會。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/#more" rel="contents">
+              <a class="btn" href="/blog/2021/10/09/CSS-Grid-%E7%AD%86%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -624,7 +745,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/Linux-%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -638,7 +759,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/06/27/Linux-%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">Linux Bash 操作技巧</a>
+            <a href="/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">Vue 動畫過渡(Transition) 筆記</a>
         </h2>
 
         <div class="post-meta">
@@ -647,126 +768,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
+              
 
-              <time title="創建時間：2021-06-27 14:55:00" itemprop="dateCreated datePublished" datetime="2021-06-27T14:55:00+08:00">2021-06-27</time>
+              <time title="創建時間：2021-10-09 23:20:30 / 修改時間：23:20:56" itemprop="dateCreated datePublished" datetime="2021-10-09T23:20:30+08:00">2021-10-09</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-08-23 22:18:44" itemprop="dateModified" datetime="2021-08-23T22:18:44+08:00">2021-08-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/06/27/Linux-%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/Linux-操作技巧/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://www.youtube.com/watch?v=V8EUdia_kOE" target="_blank" rel="noopener">My 5 Favorite Linux Shell Tricks for SPEEEEEED (and efficiency) - YouTube</a><br>看到 Youtube 推薦 Linux 操作技巧，感覺特別有趣，所以紀錄一下。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/06/27/Linux-%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/Vuex-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/06/27/Vuex-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">Vuex 學習筆記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-06-27 14:48:05" itemprop="dateCreated datePublished" datetime="2021-06-27T14:48:05+08:00">2021-06-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-07-14 21:15:47" itemprop="dateModified" datetime="2021-07-14T21:15:47+08:00">2021-07-14</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -786,8 +791,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/06/27/Vuex-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/Vuex-學習筆記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Vue-動畫過渡-Transition-筆記/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -817,10 +822,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>這篇 Vuex 學習筆記，會大量引用<a href="https://next.vuex.vuejs.org/zh/" target="_blank" rel="noopener">Vuex 官方文章</a>，算是自己學習重點筆記。</p>
+          <p>Vue 動畫過渡(Transition) 筆記</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/06/27/Vuex-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2021/10/09/Vue-%E5%8B%95%E7%95%AB%E9%81%8E%E6%B8%A1-Transition-%E7%AD%86%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -844,7 +849,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/%E7%9C%8B-HTTP-%E5%92%8C-HTTPS-API-%E6%9C%8D%E5%8B%99%E5%B0%81%E5%8C%85%E5%8F%83%E6%95%B8%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -858,7 +863,103 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/06/27/%E7%9C%8B-HTTP-%E5%92%8C-HTTPS-API-%E6%9C%8D%E5%8B%99%E5%B0%81%E5%8C%85%E5%8F%83%E6%95%B8%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">看 HTTP 和 HTTPS API 服務封包參數方法</a>
+            <a href="/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95-1/" class="post-title-link" itemprop="url"># Maven 下載 Jar 方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-10-09 23:20:11" itemprop="dateCreated datePublished" datetime="2021-10-09T23:20:11+08:00">2021-10-09</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95-1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Maven-下載-Jar-方法-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Maven 下載 Jar 方法</a>
         </h2>
 
         <div class="post-meta">
@@ -869,7 +970,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2021-06-27 14:46:39 / 修改時間：16:05:08" itemprop="dateCreated datePublished" datetime="2021-06-27T14:46:39+08:00">2021-06-27</time>
+              <time title="創建時間：2021-10-09 23:19:08 / 修改時間：23:19:29" itemprop="dateCreated datePublished" datetime="2021-10-09T23:19:08+08:00">2021-10-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -877,7 +978,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
                 </span>
             </span>
 
@@ -890,8 +991,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/06/27/%E7%9C%8B-HTTP-%E5%92%8C-HTTPS-API-%E6%9C%8D%E5%8B%99%E5%B0%81%E5%8C%85%E5%8F%83%E6%95%B8%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/看-HTTP-和-HTTPS-API-服務封包參數方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Maven-下載-Jar-方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -921,12 +1022,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近程式測試API，有時候好奇程式傳出去內容是否跟 Postman 一樣，但是 DEBUG 時候真的不方便。最近在想有什麼方法(或工具)可以做到?<br>之前有看到有用 <code>SSLKEYLOGFILE</code> 可以用 Wireshark 解封包。<a href="https://www.facebook.com/119279178101235/videos/374050803968418" target="_blank" rel="noopener">深入理解 TLS/SSL 安全加密協定</a><br>雖然 Java 也有看到類似方法，但是要特別設定 <a href="https://jsslkeylog.github.io/" target="_blank" rel="noopener">jSSLKeyLog</a>，還要安裝 Wireshark 軟體，所以覺得很麻煩?<br>最近看有沒有比較簡單方式測試?稍微爬一下文整理</p>
-<p><a href="https://stackoverflow.com/questions/5725430/http-test-server-accepting-get-post-requests/" target="_blank" rel="noopener">HTTP test server accepting GET/POST requests - Stack Overflow</a></p>
-<p>裡面看到 socat 大法最方便，可看封包又能轉傳！</p>
+          <p>之前就有簡單小記<a href="https://malagege.github.io/blog/2021/01/04/springframework3-with-struts2-%E4%BD%BF%E7%94%A8-swagger-%E5%B7%A5%E5%85%B7%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/">springframework3 with struts2 使用 swagger 工具注解使用 | 程式狂想筆記</a></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/06/27/%E7%9C%8B-HTTP-%E5%92%8C-HTTPS-API-%E6%9C%8D%E5%8B%99%E5%B0%81%E5%8C%85%E5%8F%83%E6%95%B8%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/blog/2021/10/09/Maven-%E4%B8%8B%E8%BC%89-Jar-%E6%96%B9%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -950,7 +1049,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -964,7 +1063,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url"> Vue Router 4 學習筆記</a>
+            <a href="/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">Vite 部屬到 Github Actions 小記</a>
         </h2>
 
         <div class="post-meta">
@@ -973,16 +1072,114 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
+              
 
-              <time title="創建時間：2021-06-27 14:44:45" itemprop="dateCreated datePublished" datetime="2021-06-27T14:44:45+08:00">2021-06-27</time>
+              <time title="創建時間：2021-10-09 23:18:01 / 修改時間：23:18:46" itemprop="dateCreated datePublished" datetime="2021-10-09T23:18:01+08:00">2021-10-09</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-10-21 23:09:02" itemprop="dateModified" datetime="2021-10-21T23:09:02+08:00">2021-10-21</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vite/" itemprop="url" rel="index"><span itemprop="name">Vite</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/Vite-部屬到-Github-Actions-小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近研究如何發布或定期執行程式，所以就找了一下並整理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/10/09/Vite-%E9%83%A8%E5%B1%AC%E5%88%B0-Github-Actions-%E5%B0%8F%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/10/09/%E4%BD%BF%E7%94%A8-unplugin-icons-vite-plugin-icons-%E5%88%9D%E9%AB%94%E9%A9%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/10/09/%E4%BD%BF%E7%94%A8-unplugin-icons-vite-plugin-icons-%E5%88%9D%E9%AB%94%E9%A9%97/" class="post-title-link" itemprop="url">使用 unplugin-icons (vite-plugin-icons) 初體驗</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-10-09 23:16:38 / 修改時間：23:17:25" itemprop="dateCreated datePublished" datetime="2021-10-09T23:16:38+08:00">2021-10-09</time>
+            </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1002,8 +1199,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/Vue-Router-4-學習筆記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/10/09/%E4%BD%BF%E7%94%A8-unplugin-icons-vite-plugin-icons-%E5%88%9D%E9%AB%94%E9%A9%97/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/10/09/使用-unplugin-icons-vite-plugin-icons-初體驗/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1033,230 +1230,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>這篇 Vue Router 4 學習筆記，大部份都是抄<a href="https://next.router.vuejs.org/zh/" target="_blank" rel="noopener">官方</a>文件內容，有簡單實作小記，可參考 GIT 練習，算是自己學習重點筆記。</p>
+          <p>今天正要使用 vite-plugin-icons 看看，發現套件名子改掉了，剛好我順便紀錄。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/06/27/Vue-Router-4-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/Word-docx-%E8%BD%89-pdf-%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/06/27/Word-docx-%E8%BD%89-pdf-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Word (docx) 轉 pdf 方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-06-27 14:43:05" itemprop="dateCreated datePublished" datetime="2021-06-27T14:43:05+08:00">2021-06-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-07-03 20:43:37" itemprop="dateModified" datetime="2021-07-03T20:43:37+08:00">2021-07-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/06/27/Word-docx-%E8%BD%89-pdf-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/Word-docx-轉-pdf-方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前有做過類似做處理 Word 文章<br><a href="https://malagege.github.io/blog/2019/09/03/php-excel-templator-%E7%94%A8%E7%AF%84%E6%9C%AC-template-%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9FExcel%E6%96%B9%E6%B3%95/">php-excel-templator 用範本(template)快速產生Excel方法 | 程式狂想筆記</a><br><a href="https://malagege.github.io/blog/2019/05/05/Word-Excel%E7%9A%84%E7%9B%B8%E9%97%9Ctemplate%E5%A5%97%E4%BB%B6%E5%B0%8F%E8%A8%98/">Word,Excel的相關template套件小記 | 程式狂想筆記</a><br>但沒對做轉 PDF 方法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/06/27/Word-docx-%E8%BD%89-pdf-%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/14/Spring-Boot-%E8%A8%AD%E5%AE%9A%E5%95%9F%E5%8B%95%E6%99%82-Banner/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/06/14/Spring-Boot-%E8%A8%AD%E5%AE%9A%E5%95%9F%E5%8B%95%E6%99%82-Banner/" class="post-title-link" itemprop="url">Spring Boot 設定啟動時 Banner</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-06-14 14:34:05" itemprop="dateCreated datePublished" datetime="2021-06-14T14:34:05+08:00">2021-06-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Spring-Boot/" itemprop="url" rel="index"><span itemprop="name">Spring Boot</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/06/14/Spring-Boot-%E8%A8%AD%E5%AE%9A%E5%95%9F%E5%8B%95%E6%99%82-Banner/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/14/Spring-Boot-設定啟動時-Banner/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近再找Spring Boot 設定動態網址<br>突然看到這篇文章 <a href="https://developer.aliyun.com/article/669697" target="_blank" rel="noopener">SpringBoot | 番外：使用小技巧合集-阿里云开发者社区</a><br>覺得還滿有趣的</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/06/14/Spring-Boot-%E8%A8%AD%E5%AE%9A%E5%95%9F%E5%8B%95%E6%99%82-Banner/#more" rel="contents">
+              <a class="btn" href="/blog/2021/10/09/%E4%BD%BF%E7%94%A8-unplugin-icons-vite-plugin-icons-%E5%88%9D%E9%AB%94%E9%A9%97/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1279,7 +1256,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/5/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/66/">66</a><a class="extend next" rel="next" href="/blog/page/7/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/5/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/69/">69</a><a class="extend next" rel="next" href="/blog/page/7/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1345,20 +1322,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -1388,7 +1365,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

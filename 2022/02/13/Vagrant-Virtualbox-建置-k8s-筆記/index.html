@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="Vagrant + Virtualbox 建置 k8s 筆記">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vagrant + Virtualbox 建置 k8s 筆記">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/02/13/Vagrant-Virtualbox-%E5%BB%BA%E7%BD%AE-k8s-%E7%AD%86%E8%A8%98/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="Vagrant + Virtualbox 建置 k8s 筆記">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/2HFKw9C.png">
+<meta property="og:image" content="https://i.imgur.com/ubpx4KH.png">
+<meta property="og:image" content="https://i.imgur.com/oecoyGJ.png">
+<meta property="og:image" content="https://i.imgur.com/FYNDADm.png">
+<meta property="og:image" content="https://i.imgur.com/0g6mhmx.png">
+<meta property="og:image" content="https://i.imgur.com/pEYjMKI.png">
+<meta property="og:image" content="https://i.imgur.com/gyPYAxD.png">
+<meta property="og:image" content="https://i.imgur.com/rbNlZfG.png">
+<meta property="article:published_time" content="2022-02-13T15:47:20.000Z">
+<meta property="article:modified_time" content="2022-02-13T16:18:41.997Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="vagrant">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="virtualbox">
+<meta property="article:tag" content="vm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/2HFKw9C.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/02/13/Vagrant-Virtualbox-%E5%BB%BA%E7%BD%AE-k8s-%E7%AD%86%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Vagrant + Virtualbox 建置 k8s 筆記 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/Vagrant-Virtualbox-%E5%BB%BA%E7%BD%AE-k8s-%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vagrant + Virtualbox 建置 k8s 筆記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-02-13 23:47:20" itemprop="dateCreated datePublished" datetime="2022-02-13T23:47:20+08:00">2022-02-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-02-14 00:18:41" itemprop="dateModified" datetime="2022-02-14T00:18:41+08:00">2022-02-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/Vagrant-Virtualbox-%E5%BB%BA%E7%BD%AE-k8s-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/Vagrant-Virtualbox-建置-k8s-筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>Vagrant + Virtualbox 建置 k8s 筆記</p>
+<a id="more"></a>
+<h2 id="Vagrant-Build-Image"><a href="#Vagrant-Build-Image" class="headerlink" title="Vagrant Build Image"></a>Vagrant Build Image</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></span><br><span class="line">  <span class="comment"># 設定 vm image, 版本,hostname,名稱</span></span><br><span class="line">  config.vm.box = <span class="string">"bento/ubuntu-18.04"</span></span><br><span class="line">  config.vm.box_version =<span class="string">'201912.14.0'</span></span><br><span class="line">  config.vm.hostname = <span class="string">'k8s-dev'</span></span><br><span class="line">  config.vm.define vm_name = <span class="string">'k8s'</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># provision (Shell Script)</span></span><br><span class="line">  config.vm.provision <span class="string">"shell"</span>, <span class="symbol">privileged:</span> <span class="literal">false</span>, <span class="symbol">inline:</span> &lt;&lt;-SHELL</span><br><span class="line">    set -e -x -u</span><br><span class="line">    export DEBIAN_FRONTEND=noninteractive</span><br><span class="line"></span><br><span class="line">    <span class="comment">#change the source.list</span></span><br><span class="line">    sudo apt-get update</span><br><span class="line">    sudo apt-get install -y vim git cmake build-essential tcpdump tig jq socat bash-completion</span><br><span class="line">    <span class="comment"># Install Docker</span></span><br><span class="line">    export DOCKER_VERSION=<span class="string">"5:19.03.5~3-0~ubuntu-bionic"</span></span><br><span class="line">    curl -fsSL <span class="symbol">https:</span>/<span class="regexp">/download.docker.com/linux</span><span class="regexp">/ubuntu/gpg</span> <span class="params">| sudo apt-key add -</span></span><br><span class="line"><span class="params">    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</span></span><br><span class="line"><span class="params">    sudo apt-get update</span></span><br><span class="line"><span class="params">    sudo apt-get install -y docker-ce=$&#123;DOCKER_VERSION&#125;</span></span><br><span class="line"><span class="params">    sudo usermod -aG docker $USER</span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">    #Disable swap</span></span><br><span class="line"><span class="params">    #https://github.com/kubernetes/kubernetes/issues/53533</span></span><br><span class="line"><span class="params">    sudo swapoff -a &amp;&amp; sudo sysctl -w vm.swappiness=0</span></span><br><span class="line"><span class="params">    sudo sed '/vagrant--vg-swap/d' -i /etc/fstab</span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">    git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it</span></span><br><span class="line"><span class="params">    bash ~/.bash_it/install.sh -s</span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">  SHELL</span></span><br><span class="line"><span class="params"></span></span><br><span class="line"><span class="params">  # 設定IP</span></span><br><span class="line"><span class="params">  config.vm.network :private_network, ip: "172.17.8.111"</span></span><br><span class="line"><span class="params">  #設定硬體</span></span><br><span class="line"><span class="params">  config.vm.provider :virtualbox <span class="keyword">do</span> |</span>v<span class="params">|</span></span><br><span class="line"><span class="params">      v.customize ["modifyvm", :id, "--cpus", 2]</span></span><br><span class="line"><span class="params">      v.customize ["modifyvm", :id, "--memory", 4096]</span></span><br><span class="line"><span class="params">      v.customize ['modifyvm', :id, '--nicpromisc1', 'allow-all']</span></span><br><span class="line"><span class="params">  <span class="keyword">end</span></span></span><br><span class="line"><span class="params"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="安裝-Kubeadm-Kubectl-Kubelet"><a href="#安裝-Kubeadm-Kubectl-Kubelet" class="headerlink" title="安裝 Kubeadm Kubectl Kubelet"></a>安裝 Kubeadm Kubectl Kubelet</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> KUBE_VERSION=<span class="string">"1.17.0"</span></span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https curl</span><br><span class="line">curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -</span><br><span class="line">cat &lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list</span><br><span class="line">deb https://apt.kubernetes.io/ kubernetes-xenial main</span><br><span class="line">EOF</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y kubeadm=<span class="variable">$&#123;KUBE_VERSION&#125;</span>-00 kubelet=<span class="variable">$&#123;KUBE_VERSION&#125;</span>-00 kubectl=<span class="variable">$&#123;KUBE_VERSION&#125;</span>-00</span><br></pre></td></tr></table></figure>
+<p>Service<br><img src="https://i.imgur.com/2HFKw9C.png" alt=""></p>
+<p>初始化 Kubernetes Cluster</p>
+<p>CNI 使用fannel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo kubeadm init --pod-network-cidr&#x3D;10.244.0.0&#x2F;16</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line"><span class="comment"># 設定檔(TOKEN,驗證)</span></span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 多節點加入可以使用</span></span><br><span class="line">kubeadm join 10.0.2.15:6443 --token h4927u.xc4i5epds3aw0kbs \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:92787d0bba51786f879304229b07e2a58878bc775cbf12a6f9bf4e95a8794f97</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/ubpx4KH.png" alt=""></p>
+<p><img src="https://i.imgur.com/oecoyGJ.png" alt=""><br>coredns pending 原因是因為 CNI 還沒安裝，安裝Flannel (CNI)就會自動執行。</p>
+<p>/etc/kubernetes/manifests kubeadmin 安裝玩會放對應設定到這個路徑，啟動 kubelet會參照這邊設定。</p>
+<h2 id="kubeadm-快速部屬工具"><a href="#kubeadm-快速部屬工具" class="headerlink" title="kubeadm(快速部屬工具)"></a>kubeadm(快速部屬工具)</h2><p>Static /Dynamic 兩種安裝方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo kubeadm init --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
+<p>設定檔</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system get pods</span><br></pre></td></tr></table></figure>
+<h2 id="取得資訊"><a href="#取得資訊" class="headerlink" title="取得資訊"></a>取得資訊</h2><h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p>幫 Bash 設定 kubectl 自動補齊<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> &lt;(kubectl completion bash)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get <span class="variable">$resource_type</span> <span class="variable">$name</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system get pods</span><br></pre></td></tr></table></figure>
+<h3 id="wide"><a href="#wide" class="headerlink" title="wide"></a>wide</h3><h3 id="describe"><a href="#describe" class="headerlink" title="describe"></a>describe</h3><p>檢查常用這個指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system describe pods xxxx</span><br></pre></td></tr></table></figure>
+<h3 id="Cluster-Info"><a href="#Cluster-Info" class="headerlink" title="Cluster Info"></a>Cluster Info</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kubectl version</span><br><span class="line"><span class="comment"># 叢集資訊</span></span><br><span class="line">kubectl cluster-info</span><br><span class="line">kubectl top node</span><br><span class="line"></span><br><span class="line">kubectl top pod</span><br><span class="line"></span><br><span class="line">kubectl api-versions</span><br></pre></td></tr></table></figure>
+<h2 id="Interacting-with-Container"><a href="#Interacting-with-Container" class="headerlink" title="Interacting with Container"></a>Interacting with Container</h2><p>kubectl logs $name</p>
+<p>kubectl -n kube-system -f logs $name</p>
+<ul>
+<li><a href="https://github.com/boz/kail" target="_blank" rel="noopener">boz/kail: kubernetes log viewer</a></li>
+<li><a href="https://github.com/wercker/stern" target="_blank" rel="noopener">wercker/stern: ⎈ Multi pod and container log tailing for Kubernetes</a></li>
+</ul>
+<h2 id="複製檔案"><a href="#複製檔案" class="headerlink" title="複製檔案"></a>複製檔案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system cp xxx node:ooo</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl -n kube-system <span class="built_in">exec</span> _pod_name_ ls</span><br><span class="line"></span><br><span class="line">kubectl -n kube-system <span class="built_in">exec</span> _pod_name_ ip addr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl -n kube-system <span class="built_in">exec</span> -it _pod_name_  sh</span><br></pre></td></tr></table></figure>
+<h3 id="port-forward"><a href="#port-forward" class="headerlink" title="port-forward"></a>port-forward</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo kubectl -n kube-system port-forward pod/coredns-xxxx 53:53</span><br></pre></td></tr></table></figure>
+<h2 id="vagrant-snapshot"><a href="#vagrant-snapshot" class="headerlink" title="vagrant snapshot"></a>vagrant snapshot</h2><p>每次 vagrant destroy 真的要花滿多時間，之前跟朋友聊到 snapshot(快照)回復VM會比較快，檔案也不會吃很多。我之前沒這麼使用過，今天花點時間測試。</p>
+<p>大量指令參照<a href="https://ithelp.ithome.com.tw/articles/10229090" target="_blank" rel="noopener">Vagrant Boxes - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a>這篇文章。</p>
+<p>更多操作可以看<a href="https://vagrantpi.github.io/2018/02/11/vagrant/" target="_blank" rel="noopener">Vagrant 學習筆記 - VagrantPi Blog</a></p>
+<p><strong>這邊注意 <code>vagrant destroy</code>會連帶刪除 snapshot</strong><br><strong>這邊注意 <code>vagrant destroy</code>會連帶刪除 snapshot</strong><br><strong>這邊注意 <code>vagrant destroy</code>會連帶刪除 snapshot</strong></p>
+<h3 id="vagrant-snapshot-1"><a href="#vagrant-snapshot-1" class="headerlink" title="vagrant snapshot"></a>vagrant snapshot</h3><p>我對 snapshot 很陌生，但沒想到使用上非常方便。</p>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p>顯示有哪些 snapshot</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant snapshot list</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/FYNDADm.png" alt=""></p>
+<h3 id="save"><a href="#save" class="headerlink" title="save"></a>save</h3><p>儲存當下 vm snapshot。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant snapshot save k8s(這邊是放 snapshot 名稱)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/0g6mhmx.png" alt=""></p>
+<h3 id="restore"><a href="#restore" class="headerlink" title="restore"></a>restore</h3><p>回原 vm snapshot。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant snapshot restore k8s(snapshot name)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/pEYjMKI.png" alt=""></p>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><p>刪除 vm snapshot。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant snapshot delete k8s(snapshot name)</span><br></pre></td></tr></table></figure>
+<h3 id="push-pop"><a href="#push-pop" class="headerlink" title="push,pop"></a>push,pop</h3><p>這邊跟 Git stash push/pop 很像，但我目前想不到什麼時候會用到這個，好處不需要想名稱，哈哈。<br>注意這邊不會影響到<code>vagrant snapshot save</code>指令新增的 snapshot。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant snapshot push</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/gyPYAxD.png" alt=""></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant snapshot pop</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/rbNlZfG.png" alt=""></p>
+<h2 id="vagrant-port-forward"><a href="#vagrant-port-forward" class="headerlink" title="vagrant port-forward"></a>vagrant port-forward</h2><p><a href="https://serverfault.com/questions/519429/vagrant-forward-a-range-of-ports" target="_blank" rel="noopener">Vagrant forward a range of ports - Server Fault</a><br><a href="https://www.vagrantup.com/docs/networking/forwarded_ports" target="_blank" rel="noopener">Forwarded Ports - Networking | Vagrant by HashiCorp</a></p>
+<h2 id="備份"><a href="#備份" class="headerlink" title="備份"></a>備份</h2><p><a href="https://stackoverflow.com/questions/43411734/correct-way-to-back-up-and-restore-vagrant-box-variable-vvv" target="_blank" rel="noopener">wordpress - Correct way to back-up and restore vagrant box + Variable VVV - Stack Overflow</a></p>
+<p><a href="https://terryl.in/zh/vagrant-package-virtualbox-backup/" target="_blank" rel="noopener">使用 vagrant package 備份指令打包 VirtualBox 環境 - TerryL</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/vagrant/" rel="tag"># vagrant</a>
+              <a href="/blog/tags/kubernetes/" rel="tag"># kubernetes</a>
+              <a href="/blog/tags/virtualbox/" rel="tag"># virtualbox</a>
+              <a href="/blog/tags/vm/" rel="tag"># vm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/Switch-pro-%E6%90%96%E6%A1%BF-%E5%92%8C-%E8%89%AF%E5%80%BC%E5%9B%9B%E4%BB%A3-%E6%90%96%E6%A1%BF%E9%96%8B%E7%AE%B1%E7%B4%80%E9%8C%84/" rel="prev" title="Switch pro 搖桿 和 良值四代 搖桿開箱紀錄">
+      <i class="fa fa-chevron-left"></i> Switch pro 搖桿 和 良值四代 搖桿開箱紀錄
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/Git-%E4%B8%AD%E6%96%87%E9%A1%AF%E7%A4%BA%E4%BA%82%E7%A2%BC/" rel="next" title="Git 中文顯示亂碼">
+      Git 中文顯示亂碼 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vagrant-Build-Image"><span class="nav-number">1.</span> <span class="nav-text">Vagrant Build Image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-Kubeadm-Kubectl-Kubelet"><span class="nav-number">2.</span> <span class="nav-text">安裝 Kubeadm Kubectl Kubelet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kubeadm-快速部屬工具"><span class="nav-number">3.</span> <span class="nav-text">kubeadm(快速部屬工具)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取得資訊"><span class="nav-number">4.</span> <span class="nav-text">取得資訊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">4.1.</span> <span class="nav-text">Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wide"><span class="nav-number">4.2.</span> <span class="nav-text">wide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#describe"><span class="nav-number">4.3.</span> <span class="nav-text">describe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster-Info"><span class="nav-number">4.4.</span> <span class="nav-text">Cluster Info</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interacting-with-Container"><span class="nav-number">5.</span> <span class="nav-text">Interacting with Container</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#複製檔案"><span class="nav-number">6.</span> <span class="nav-text">複製檔案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#port-forward"><span class="nav-number">6.1.</span> <span class="nav-text">port-forward</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vagrant-snapshot"><span class="nav-number">7.</span> <span class="nav-text">vagrant snapshot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vagrant-snapshot-1"><span class="nav-number">7.1.</span> <span class="nav-text">vagrant snapshot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">7.2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#save"><span class="nav-number">7.3.</span> <span class="nav-text">save</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#restore"><span class="nav-number">7.4.</span> <span class="nav-text">restore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">7.5.</span> <span class="nav-text">delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#push-pop"><span class="nav-number">7.6.</span> <span class="nav-text">push,pop</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vagrant-port-forward"><span class="nav-number">8.</span> <span class="nav-text">vagrant port-forward</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#備份"><span class="nav-number">9.</span> <span class="nav-text">備份</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">689</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/02/13/Vagrant-Virtualbox-%E5%BB%BA%E7%BD%AE-k8s-%E7%AD%86%E8%A8%98/";
+    this.page.identifier = "2022/02/13/Vagrant-Virtualbox-建置-k8s-筆記/";
+    this.page.title = "Vagrant + Virtualbox 建置 k8s 筆記";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/265F5Bb.png">
 <meta property="article:published_time" content="2021-11-07T14:12:30.000Z">
-<meta property="article:modified_time" content="2021-11-09T12:27:11.487Z">
+<meta property="article:modified_time" content="2022-02-13T16:21:34.312Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="filereader">
@@ -248,7 +248,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-11-09 20:27:11" itemprop="dateModified" datetime="2021-11-09T20:27:11+08:00">2021-11-09</time>
+                <time title="修改時間：2022-02-14 00:21:34" itemprop="dateModified" datetime="2022-02-14T00:21:34+08:00">2022-02-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -316,12 +316,12 @@
             sequenceDiagram
              
 JavaScript->>JavaScript: 建立new FileReader();
-JavaScript->>JavaScript: 建立 change 事件。
-JavaScript->>JavaScript: 建立 load 事件。
+JavaScript->>JavaScript: 建立 input_file change 事件。
+JavaScript->>JavaScript: 建立 fileReader load 事件。
 HTML-->>JavaScript: 人為出發HTML input(file)檔案，會觸發file change Event
-JavaScript-->>JavaScript: 觸發 change 事件!
+JavaScript-->>JavaScript: 觸發 input change 事件!
 participant JavaScript
-Note right of JavaScript: 使用 fileReader.readAs*(this.files[0])事件讀第一個files[0]，會出發onload Event
+Note right of JavaScript: 使用 fileReader.readAs*(this.files[0])事件讀第一個files[0]，會出發filereader load Event
 Note right of JavaScript: 這邊的 readAs* 圖片要用 readAsDataURL，文字要用 readAsText。
 JavaScript-->>JavaScript: 觸發 load 事件!
 Note right of JavaScript: 使用 this.result 讀出檔案內容
@@ -478,20 +478,20 @@ Note right of JavaScript: 使用 this.result 讀出檔案內容
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -521,7 +521,7 @@ Note right of JavaScript: 使用 this.result 讀出檔案內容
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

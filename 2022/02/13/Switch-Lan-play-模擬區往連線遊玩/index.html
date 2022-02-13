@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="官網詳細教學:LAN Play Status | lan-play.com 123456# 下載程式wget https:&#x2F;&#x2F;github.com&#x2F;spacemeowx2&#x2F;switch-lan-play&#x2F;releases&#x2F;download&#x2F;v0.2.3&#x2F;lan-play-linux# 執行權限chmod +x lan-play-linux# root 執行程式sudo .&#x2F;lan-play-lin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Switch Lan play 模擬區往連線遊玩">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/02/13/Switch-Lan-play-%E6%A8%A1%E6%93%AC%E5%8D%80%E5%BE%80%E9%80%A3%E7%B7%9A%E9%81%8A%E7%8E%A9/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="官網詳細教學:LAN Play Status | lan-play.com 123456# 下載程式wget https:&#x2F;&#x2F;github.com&#x2F;spacemeowx2&#x2F;switch-lan-play&#x2F;releases&#x2F;download&#x2F;v0.2.3&#x2F;lan-play-linux# 執行權限chmod +x lan-play-linux# root 執行程式sudo .&#x2F;lan-play-lin">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://imgur.com/ht9dKbV.png">
+<meta property="og:image" content="https://i.imgur.com/zaklbCL.png">
+<meta property="article:published_time" content="2022-02-13T14:55:18.000Z">
+<meta property="article:modified_time" content="2022-02-13T14:57:43.287Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="switch">
+<meta property="article:tag" content="lan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgur.com/ht9dKbV.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/02/13/Switch-Lan-play-%E6%A8%A1%E6%93%AC%E5%8D%80%E5%BE%80%E9%80%A3%E7%B7%9A%E9%81%8A%E7%8E%A9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Switch Lan play 模擬區往連線遊玩 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/Switch-Lan-play-%E6%A8%A1%E6%93%AC%E5%8D%80%E5%BE%80%E9%80%A3%E7%B7%9A%E9%81%8A%E7%8E%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Switch Lan play 模擬區往連線遊玩
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 22:55:18 / 修改時間：22:57:43" itemprop="dateCreated datePublished" datetime="2022-02-13T22:55:18+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/Switch-Lan-play-%E6%A8%A1%E6%93%AC%E5%8D%80%E5%BE%80%E9%80%A3%E7%B7%9A%E9%81%8A%E7%8E%A9/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/Switch-Lan-play-模擬區往連線遊玩/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>官網詳細教學:<a href="http://www.lan-play.com/install-switch" target="_blank" rel="noopener">LAN Play Status | lan-play.com</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下載程式</span></span><br><span class="line">wget https://github.com/spacemeowx2/switch-lan-play/releases/download/v0.2.3/lan-play-linux</span><br><span class="line"><span class="comment"># 執行權限</span></span><br><span class="line">chmod +x lan-play-linux</span><br><span class="line"><span class="comment"># root 執行程式</span></span><br><span class="line">sudo ./lan-play-linux --relay-server-addr switchlanplay-tw.ddns.net:11451 --netif  __你的網路卡__</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>不知道是不是我朋友有防火牆(Fortigate)關係，他少一個 log。所以我們沒連線成功…</p>
+<p>我的 Client<br><img src="https://imgur.com/ht9dKbV.png" alt=""><br>我朋友的 Client<br><img src="https://i.imgur.com/zaklbCL.png" alt=""></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>詳細內容: <a href="https://www.huangyunkun.com/2020/04/08/switch-lan-play/" target="_blank" rel="noopener">Switch lan-play原理 – 夜明的孤行燈</a><a href="https://i.imgur.com/hOduBFh.png" target="_blank" rel="noopener">備份圖</a></p>
+<p>我沒有想到可以用程式方式去做轉送封包，這個解法很有趣。感覺能運用在某些地方。不過這種方法必須2台當 Router。所以沒有說到實用。<br>從官網看到PS4也能做到。</p>
+<h2 id="嘗試區網研究資料-彩蛋"><a href="#嘗試區網研究資料-彩蛋" class="headerlink" title="嘗試區網研究資料(彩蛋)"></a>嘗試區網研究資料(彩蛋)</h2><p>本來想試試這個能不能簡單用區網連線，查看原理需要四台電腦，不過遊玩電腦會沒辦法連線上網，所以這種可能也不是很好遊玩體驗。因為我想試試連線功能，但是我家沒有 vlan 設備機器，想看看 VM 是不是可以做 vlan 動作，從 PVE 看到 KVM(libvirt)，因為不太想重灌，PVE設定 openSwitch 好像又是一道門檻，想直接模擬出來最好，有看到 iproute2 用 vlan ，在安裝ubuntu 時候有看到 mutlipass 這套工具，可以像 vagrant 快速建立好 KVM，不過 mutlipass networks 無法使用，好像目前沒有對此作設定，所以我透過GUI設定選到 bridge(vlan) ，不過用完電腦整台連線會有問題…，所以目前失敗。也許用實體swtich 測試實體機器會比較快，但是就是沒機器…，不過這次也讓我玩到 KVM 這一塊，單單啟動一台虛擬機器 multipass 不會輸給 vagrant， 快速建置 ubuntu 真的很方便。有時間我再來研究這個。</p>
+<p>以下我爬到的文章，這邊就不整理了，隨便紀錄。</p>
+<p><a href="https://www.cnblogs.com/rongfengliang/p/9667003.html" target="_blank" rel="noopener">socat 广播以及多播 - 荣锋亮 - 博客园</a></p>
+<p><a href="https://samkuo.me/post/2020/06/vagrant-libvirt-ubuntu-devops-env/" target="_blank" rel="noopener">Ubuntu 上 Vagrant+Libvirt 虛擬環境 - 我是山姆鍋</a><br><a href="https://github.com/aesirteam/openvswitch-demo" target="_blank" rel="noopener">GitHub - aesirteam/openvswitch-demo</a><br><a href="https://www.twblogs.net/a/5c99d887bd9eee42500804e5" target="_blank" rel="noopener">手把手教你 Linux 是如何實現 VLAN 的 - 台部落</a><br><a href="http://zhongm.in/2017/01/17/Learning-Linux-Vlan-2/" target="_blank" rel="noopener">Linux下vlan的学习（下） | 污力大熊的博客</a></p>
+<p><a href="https://foofunc.com/how-to-configure-vlan-network-in-ubuntu/" target="_blank" rel="noopener">How to configure VLAN network in Ubuntu - {With examples}</a></p>
+<p><a href="https://askubuntu.com/questions/1305542/how-do-i-configure-a-vlan-linked-bridge-in-netplan-to-serve-a-vm" target="_blank" rel="noopener">networking - How do I configure a vlan-linked bridge in netplan to serve a VM? - Ask Ubuntu</a></p>
+<p><a href="https://medium.com/@restu.nursobah/create-bonding-vlan-bridge-interface-in-ubuntu-18-using-netplan-and-networkd-a1189848c639" target="_blank" rel="noopener">Create Bonding, Vlan, Bridge Interface in Ubuntu 18 Using Netplan and networkd | by Restu Nursobah | Medium</a></p>
+<p><a href="https://jackkuo-tw.medium.com/multipass-%E5%A6%82-docker-%E8%88%AC%E7%9A%84%E8%99%9B%E6%93%AC%E6%A9%9F-e19e3e36aec3" target="_blank" rel="noopener">Multipass — 如 Docker 般的虛擬機. 好讀版： | by Jack Kuo | Medium</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">multipass launch 16.04 -c 4 -m 4G -d 20G -n ubuntu </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">service networking force-reload </span><br><span class="line"></span><br><span class="line">multipass launch 16.04 -c 1 -m 512M -d 2G -n kvm1 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">multipass launch 16.04 -c 1 -m 256M -d 20G -n ubuntu --network name&#x3D;brvlan1,mode&#x3D;manual</span><br><span class="line"></span><br><span class="line">##</span><br><span class="line">auto wlp3s0.1</span><br><span class="line">iface wlp3s0.1 inet manual</span><br><span class="line">        vlan-raw-device wlp3s0</span><br><span class="line"></span><br><span class="line">auto brvlan1</span><br><span class="line">iface brvlan1 inet manual</span><br><span class="line">        bridge_stp off</span><br><span class="line">        bridge_waitport 0</span><br><span class="line">        bridge_fd 0</span><br><span class="line">        bridge_ports wlp3s0.1</span><br><span class="line"></span><br><span class="line">auto wlp3s0.2</span><br><span class="line">iface wlp3s0.2 inet manual</span><br><span class="line">        vlan-raw-device wlp3s0</span><br><span class="line"></span><br><span class="line">auto brvlan2</span><br><span class="line">iface brvlan2 inet manual</span><br><span class="line">        bridge_stp off</span><br><span class="line">        bridge_waitport 0</span><br><span class="line">        bridge_fd 0</span><br><span class="line">        bridge_ports wlp3s0.2</span><br><span class="line"></span><br><span class="line">##</span><br><span class="line">sudo ip link add link wlp3s0 name wlp3s0.100 type vlan id 100</span><br><span class="line">sudo ip link set dev wlp3s0.100 up</span><br><span class="line">sudo ip link add link wlp3s0 name wlp3s0.200 type vlan id 200</span><br><span class="line">sudo ip link set dev wlp3s0.100 master brvlan1</span><br><span class="line">sudo ip link set dev wlp3s0.200 master brvlan2</span><br><span class="line"></span><br><span class="line">sudo ip link set dev wlp3s0.200 up</span><br><span class="line">sudo ip link add name brvlan1 type bridge</span><br><span class="line">sudo ip link set dev brvlan1 up</span><br><span class="line">sudo ip link add name brvlan2 type bridge</span><br><span class="line">sudo ip link set dev brvlan2 up</span><br></pre></td></tr></table></figure>
+<p><a href="https://multipass.run/docs/additional-networks" target="_blank" rel="noopener">Additional network interfaces | Multipass documentation</a></p>
+<p><a href="https://www.cnblogs.com/qiuhom-1874/p/13508231.html" target="_blank" rel="noopener">虚拟化技术之kvm管理工具virsh常用基础命令（一） - Linux-1874 - 博客园</a></p>
+<p><a href="https://www.redhat.com/sysadmin/vlans-configuration" target="_blank" rel="noopener">How to configure a VLAN in Linux | Enable Sysadmin</a></p>
+<p><a href="https://www.gushiciku.cn/pl/pop3/zh-tw" target="_blank" rel="noopener">Linux Bridge 詳解_我在對面的角落 - MdEditor</a><br><a href="https://www.cnblogs.com/bakari/p/10613710.html" target="_blank" rel="noopener">Linux 虚拟网络设备 veth-pair 详解，看这一篇就够了 - 猿大白 - 博客园</a></p>
+<p><a href="https://www.gushiciku.cn/pl/pnf1/zh-tw" target="_blank" rel="noopener">Linux網路裝置veth pair和netns_我在對面的角落 - MdEditor</a></p>
+<p><a href="https://opengers.github.io/openstack/openstack-base-virtual-network-devices-bridge-and-vlan/" target="_blank" rel="noopener">云计算底层技术-虚拟网络设备(Bridge,VLAN) | opengers</a></p>
+<p><a href="http://www.panticz.de/linux-vlan-bridge" target="_blank" rel="noopener">Create VLAN bridge under Linux (trunk, IEEE 802.1Q) | panticz.de</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/switch/" rel="tag"># switch</a>
+              <a href="/blog/tags/lan/" rel="tag"># lan</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/Vagrant-%E9%97%9C%E6%A9%9F%E6%B2%92%E7%94%A8%E5%88%B0%E7%9A%84%E6%A9%9F%E5%99%A8/" rel="prev" title="Vagrant 關機沒用到的機器">
+      <i class="fa fa-chevron-left"></i> Vagrant 關機沒用到的機器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/02/13/%E4%BD%BF%E7%94%A8-OWASP-Enterprise-Security-API-ESAPI-%E8%A7%A3%E6%B1%BA-SQL-Injection-%E5%95%8F%E9%A1%8C/" rel="next" title="使用 OWASP Enterprise Security API (ESAPI) 解決 SQL Injection 問題">
+      使用 OWASP Enterprise Security API (ESAPI) 解決 SQL Injection 問題 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嘗試區網研究資料-彩蛋"><span class="nav-number">2.</span> <span class="nav-text">嘗試區網研究資料(彩蛋)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">689</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/02/13/Switch-Lan-play-%E6%A8%A1%E6%93%AC%E5%8D%80%E5%BE%80%E9%80%A3%E7%B7%9A%E9%81%8A%E7%8E%A9/";
+    this.page.identifier = "2022/02/13/Switch-Lan-play-模擬區往連線遊玩/";
+    this.page.title = "Switch Lan play 模擬區往連線遊玩";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

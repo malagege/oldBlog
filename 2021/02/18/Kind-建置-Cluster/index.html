@@ -28,7 +28,7 @@
 <meta property="og:description" content="最近看 Kuberenets 看到 DaemonSet，由於目前 Kind 跟 MiniKube 都是使用單結點，沒辦法用 Cluster，今天照 Kind 實作看看。">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-18T14:30:59.000Z">
-<meta property="article:modified_time" content="2021-11-25T13:11:44.155Z">
+<meta property="article:modified_time" content="2021-12-07T13:55:30.526Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-11-25 21:11:44" itemprop="dateModified" datetime="2021-11-25T21:11:44+08:00">2021-11-25</time>
+                <time title="修改時間：2021-12-07 21:55:30" itemprop="dateModified" datetime="2021-12-07T21:55:30+08:00">2021-12-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -308,7 +308,7 @@
 </script>
         <p>最近看 Kuberenets 看到 DaemonSet，由於目前 Kind 跟 MiniKube 都是使用單結點，沒辦法用 Cluster，今天照 Kind 實作看看。</p>
 <a id="more"></a>
-<h2 id="安裝-Kind"><a href="#安裝-Kind" class="headerlink" title="安裝 Kind"></a>安裝 Kind</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -Lo .&#x2F;kind https:&#x2F;&#x2F;kind.sigs.k8s.io&#x2F;dl&#x2F;v0.11.1&#x2F;kind-linux-amd64</span><br><span class="line">chmod +x .&#x2F;kind</span><br><span class="line">mv .&#x2F;kind &#x2F;some-dir-in-your-PATH&#x2F;kind</span><br></pre></td></tr></table></figure>
+<h2 id="安裝-Kind"><a href="#安裝-Kind" class="headerlink" title="安裝 Kind"></a>安裝 Kind</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -Lo .&#x2F;kind https:&#x2F;&#x2F;kind.sigs.k8s.io&#x2F;dl&#x2F;v0.11.1&#x2F;kind-linux-amd64</span><br><span class="line">chmod +x .&#x2F;kind</span><br><span class="line">sudo mv .&#x2F;kind &#x2F;usr&#x2F;local&#x2F;bin&#x2F;</span><br></pre></td></tr></table></figure>
 <p>可以看<a href="https://kind.sigs.k8s.io/docs/user/quick-start/#installation" target="_blank" rel="noopener">kind – Quick Start</a></p>
 <h2 id="建置-Cluster"><a href="#建置-Cluster" class="headerlink" title="建置 Cluster"></a>建置 Cluster</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 預設 cluster context 名稱為 `kind`.</span></span><br><span class="line">kind create cluster </span><br><span class="line"></span><br><span class="line"><span class="comment"># 名稱為 kind-2</span></span><br><span class="line">kind create cluster --name kind-2</span><br></pre></td></tr></table></figure>
 <p>這邊建立出來會有兩個 Cluster<br>但這兩個 Cluster 是分開的</p>
@@ -325,7 +325,8 @@
 <p>看完，真的是白擔心了<br>真的可以單結點來測試</p>
 <p>不過，DaemonSet 好像能控制在哪個 nodes 執行<br>建立 Cluster 多 node 也不錯</p>
 <p><strong>發現重開機，kubectl 就會連不到</strong><br>所以，應該只能重建</p>
-
+<p>後來有爬到原因，原因是 Kind 是使用 Docker in Docker 技術，所以Container 建立的時候是使用容器的 IP，所以重開機的時候，重啟IP會不一樣，Kubernetes 會連不到之前設定，所以重建會比較快。</p>
+<h2 id="安裝-kubectl"><a href="#安裝-kubectl" class="headerlink" title="安裝 kubectl"></a>安裝 kubectl</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> curl -LO <span class="string">"https://dl.k8s.io/release/<span class="variable">$(curl -L -s https://dl.k8s.io/release/stable.txt)</span>/bin/linux/amd64/kubectl"</span></span><br><span class="line"></span><br><span class="line"> curl -LO <span class="string">"https://dl.k8s.io/<span class="variable">$(curl -L -s https://dl.k8s.io/release/stable.txt)</span>/bin/linux/amd64/kubectl.sha256"</span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">echo</span> <span class="string">"<span class="variable">$(&lt;kubectl.sha256)</span> kubectl"</span> | sha256sum --check</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> sudo install -o root -g root -m 0755 kubectl /usr/<span class="built_in">local</span>/bin/kubectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># chmod +x kubectl</span></span><br><span class="line"><span class="comment"># mkdir -p ~/.local/bin/kubectl</span></span><br><span class="line"><span class="comment"># mv ./kubectl ~/.local/bin/kubectl</span></span><br><span class="line"><span class="comment"># and then add ~/.local/bin/kubectl to $PATH</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -433,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-Kind"><span class="nav-number">1.</span> <span class="nav-text">安裝 Kind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建置-Cluster"><span class="nav-number">2.</span> <span class="nav-text">建置 Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看哪些-Cluster"><span class="nav-number">3.</span> <span class="nav-text">查看哪些 Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-Cluster"><span class="nav-number">4.</span> <span class="nav-text">刪除 Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-node-clusters"><span class="nav-number">5.</span> <span class="nav-text">Multi-node clusters</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-Kind"><span class="nav-number">1.</span> <span class="nav-text">安裝 Kind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建置-Cluster"><span class="nav-number">2.</span> <span class="nav-text">建置 Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看哪些-Cluster"><span class="nav-number">3.</span> <span class="nav-text">查看哪些 Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-Cluster"><span class="nav-number">4.</span> <span class="nav-text">刪除 Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-node-clusters"><span class="nav-number">5.</span> <span class="nav-text">Multi-node clusters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-kubectl"><span class="nav-number">6.</span> <span class="nav-text">安裝 kubectl</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -447,20 +448,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -490,7 +491,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

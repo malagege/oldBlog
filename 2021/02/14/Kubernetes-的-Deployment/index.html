@@ -28,7 +28,7 @@
 <meta property="og:description" content="感覺是滿多的功能但頁數比較想像中的少趕緊消化">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-14T11:14:24.000Z">
-<meta property="article:modified_time" content="2021-06-27T08:05:07.872Z">
+<meta property="article:modified_time" content="2021-12-07T15:42:17.713Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="kubernetes">
 <meta property="article:tag" content="deployment">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-12-07 23:42:17" itemprop="dateModified" datetime="2021-12-07T23:42:17+08:00">2021-12-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -332,7 +332,11 @@
 <p><del>TODO: 這邊 deployment 程式後，不知道 Service LB 進去會等全部上完好，才會連到新的POD，還是會綜合?</del><br>建立 4 個 ReplicaSets 去跑<br><code>kubectl get endpoints kuard-service --watch -o yaml</code><br>查看變化，看來<strong>舊新</strong>在跑的時候會同時 LB 舊新(綜合)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 暫停部屬</span></span><br><span class="line">kubectl rollout pause deployments kuard-deployment</span><br><span class="line"><span class="comment"># 繼續部屬</span></span><br><span class="line">kubectl rollout resume deployments kuard-deployment</span><br></pre></td></tr></table></figure>
 <h2 id="查詢歷史狀態"><a href="#查詢歷史狀態" class="headerlink" title="查詢歷史狀態"></a>查詢歷史狀態</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 Deployment 的歷史紀錄</span></span><br><span class="line">kubectl rollout <span class="built_in">history</span> deployment kuard-deployment</span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment </span></span><br><span class="line"><span class="comment"># REVISION  CHANGE-CAUSE</span></span><br><span class="line"><span class="comment"># 7         &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 8         &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 9         &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 12        &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 13        &lt;none&gt;</span></span><br><span class="line"><span class="comment"># 查看 Deployment 詳細資訊</span></span><br><span class="line">kubectl rollout <span class="built_in">history</span> deployment kuard-deployment --revision=12</span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment with revision #12</span></span><br><span class="line"><span class="comment"># Pod Template:</span></span><br><span class="line"><span class="comment">#   Labels:       app=kuard</span></span><br><span class="line"><span class="comment">#         pod-template-hash=bd94b5dbb</span></span><br><span class="line"><span class="comment">#   Containers:</span></span><br><span class="line"><span class="comment">#    kuard:</span></span><br><span class="line"><span class="comment">#     Image:      gcr.io/kuar-demo/kuard-amd64:blue</span></span><br><span class="line"><span class="comment">#     Port:       8080/TCP</span></span><br><span class="line"><span class="comment">#     Host Port:  0/TCP</span></span><br><span class="line"><span class="comment">#     Environment:        &lt;none&gt;</span></span><br><span class="line"><span class="comment">#     Mounts:     &lt;none&gt;</span></span><br><span class="line"><span class="comment">#   Volumes:      &lt;none&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="退回版本"><a href="#退回版本" class="headerlink" title="退回版本"></a>退回版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 退回前一個版本</span></span><br><span class="line">kubectl rollout undo deployments kuard-deployment</span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment rolled back</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 replica 數</span></span><br><span class="line">kubectl get replicasets -o wide</span><br><span class="line"><span class="comment"># NAME                          DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                               SELECTOR</span></span><br><span class="line"><span class="comment"># kuard-deployment-5984cbd7dd   0         0         0       22h   kuard        gcr.io/kuar-demo/kuard-amd64:green   app=kuard,pod-template-hash=5984cbd7dd</span></span><br><span class="line"><span class="comment"># kuard-deployment-697c6c85     0         0         0       21h   kuard        gcr.io/kuar-demo/kuard-amd64:green   app=kuard,pod-template-hash=697c6c85</span></span><br><span class="line"><span class="comment"># kuard-deployment-6cd695495f   0         0         0       29h   kuard        gcr.io/kuar-demo/kuard-amd64:blue    app=kuard,pod-template-hash=6cd695495f</span></span><br><span class="line"><span class="comment"># kuard-deployment-bd94b5dbb    4         4         4       21h   kuard        gcr.io/kuar-demo/kuard-amd64:blue    app=kuard,pod-template-hash=bd94b5dbb</span></span><br><span class="line"><span class="comment"># kuard-deployment-f948c99d9    0         0         0       21h   kuard        gcr.io/kuar-demo/kuard-amd64:1       app=kuard,pod-template-hash=f948c99d9</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 退回某一版 --to-revision</span></span><br><span class="line">kubectl rollout undo deployments kuard-deployment --to-revision=11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指令上一個版本 =&gt; --to-revision=0</span></span><br><span class="line">kubectl rollout <span class="built_in">history</span> deployment kuard-deployment --to-revision=0</span><br></pre></td></tr></table></figure>
+<h2 id="退回版本-Rollback"><a href="#退回版本-Rollback" class="headerlink" title="退回版本(Rollback)"></a>退回版本(Rollback)</h2><ol>
+<li>可以重新修改 deployment.yml 再做 <code>kubectl apply -f deployment.yml</code></li>
+<li>可以用<code>kubectl rollout</code>指令，如下</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 退回前一個版本</span></span><br><span class="line">kubectl rollout undo deployments kuard-deployment</span><br><span class="line"><span class="comment"># deployment.apps/kuard-deployment rolled back</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 replica 數</span></span><br><span class="line">kubectl get replicasets -o wide</span><br><span class="line"><span class="comment"># NAME                          DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                               SELECTOR</span></span><br><span class="line"><span class="comment"># kuard-deployment-5984cbd7dd   0         0         0       22h   kuard        gcr.io/kuar-demo/kuard-amd64:green   app=kuard,pod-template-hash=5984cbd7dd</span></span><br><span class="line"><span class="comment"># kuard-deployment-697c6c85     0         0         0       21h   kuard        gcr.io/kuar-demo/kuard-amd64:green   app=kuard,pod-template-hash=697c6c85</span></span><br><span class="line"><span class="comment"># kuard-deployment-6cd695495f   0         0         0       29h   kuard        gcr.io/kuar-demo/kuard-amd64:blue    app=kuard,pod-template-hash=6cd695495f</span></span><br><span class="line"><span class="comment"># kuard-deployment-bd94b5dbb    4         4         4       21h   kuard        gcr.io/kuar-demo/kuard-amd64:blue    app=kuard,pod-template-hash=bd94b5dbb</span></span><br><span class="line"><span class="comment"># kuard-deployment-f948c99d9    0         0         0       21h   kuard        gcr.io/kuar-demo/kuard-amd64:1       app=kuard,pod-template-hash=f948c99d9</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 退回某一版 --to-revision</span></span><br><span class="line">kubectl rollout undo deployments kuard-deployment --to-revision=11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指令上一個版本 =&gt; --to-revision=0</span></span><br><span class="line">kubectl rollout <span class="built_in">history</span> deployment kuard-deployment --to-revision=0</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>清理策略</p>
 <p>你可以在 Deployment 中設置 .spec.revisionHistoryLimit 字段以指定保留此 Deployment 的多少個舊有 ReplicaSet。其餘的 ReplicaSet 將在後台被&gt; 垃圾回收。 默認情況下，此值為 10。</p>
@@ -341,9 +345,9 @@
 <h2 id="Deployment-策略"><a href="#Deployment-策略" class="headerlink" title="Deployment 策略"></a>Deployment 策略</h2><ol>
 <li>Recreate 策略</li>
 </ol>
-<p>會把現有的 ReplicaSet 的 Image 換掉，所有 Pod 都會機高新建置。</p>
+<p>會把現有的 ReplicaSet 的 Pod刪掉，全部新建新的Pod。但會使服務中斷，通常不會使用</p>
 <ol start="2">
-<li>RollingUpdate</li>
+<li>RollingUpdate(預設、重要)</li>
 </ol>
 <p>滾動方式不停機情況下更新</p>
 <h2 id="滾動更新設定"><a href="#滾動更新設定" class="headerlink" title="滾動更新設定"></a>滾動更新設定</h2><blockquote>
@@ -361,9 +365,105 @@
 </blockquote>
 <p>參考:<a href="https://tachingchen.com/tw/blog/kubernetes-rolling-update-with-deployment/" target="_blank" rel="noopener">透過 Kubernetes Deployments 實現滾動升級 | Kubernetes</a></p>
 <p><a href="https://godleon.github.io/blog/Kubernetes/k8s-Deployment-Overview/" target="_blank" rel="noopener">[Kubernetes] Deployment Overview | 小信豬的原始部落</a></p>
+<h2 id="rolling-update-更新順序圖-重要"><a href="#rolling-update-更新順序圖-重要" class="headerlink" title="rolling update 更新順序圖(重要)"></a>rolling update 更新順序圖(重要)</h2><p>怕之後忘記，特別紀錄一下更新過程。</p>
+<ol>
+<li>最原始 Deployment 狀況</li>
+</ol>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->B(ReplicaSet 1)
+B --> D[Pod 1]
+B --> E[Pod 2]
+B --> F[Pod 3]
+          </pre>
+<ol start="2">
+<li>佈署新版本，會新增 ReplicaSet 會如下</li>
+</ol>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->B(ReplicaSet 1)
+A -->B2(ReplicaSet 2)
+B --> D[Pod 1]
+B --> E[Pod 2]
+B --> F[Pod 3]
+          </pre>
+<ol start="3">
+<li>剛加的 ReplicaSet 會把Pod先建立，成功的話，才會把ReplicaSet 舊的刪掉，查看下面兩個圖比較清楚。</li>
+</ol>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->B|Repica: 3|(ReplicaSet 1)
+A -->|Repica: 1 |B2(ReplicaSet 2)
+B --> D[Pod 1]
+B --> E[Pod 2]
+B --> F[Pod 3]
+B2 -->| 先建立一個pod| G[Pod 4]
+          </pre>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->|Repica: 2|B(ReplicaSet 1)
+A -->|Repica: 1 |B2(ReplicaSet 2)
+B .->|刪除一個Pod| D[Pod 1]
+B --> E[Pod 2]
+B --> F[Pod 3]
+B2 -->G[Pod 4]
+          </pre>
+<ol start="4">
+<li>剛加的 ReplicaSet 會把Pod先建立，成功的話，才會把ReplicaSet 舊的刪掉(loop第二次)</li>
+</ol>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->|Repica: 2|B(ReplicaSet 1)
+A -->|Repica: 2 |B2(ReplicaSet 2)
+B --> E[Pod 2]
+B --> F[Pod 3]
+B2 -->G[Pod 4]
+B2 -->|建立一個Pod|H[Pod 5]
+          </pre>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->|Repica: 1|B(ReplicaSet 1)
+A -->|Repica: 2 |B2(ReplicaSet 2)
+B .->|刪除一個Pod| E[Pod 2]
+B --> F[Pod 3]
+B2 -->G[Pod 4]
+B2 -->H[Pod 5]
+          </pre>
+<ol start="5">
+<li>剛加的 ReplicaSet 會把Pod先建立，成功的話，才會把ReplicaSet 舊的刪掉(loop第三次)</li>
+</ol>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->|Repica: 1|B(ReplicaSet 1)
+A -->|Repica: 3 |B2(ReplicaSet 2)
+B --> F[Pod 3]
+B2 -->G[Pod 4]
+B2 -->H[Pod 5]
+B2 -->|建立新的Pod|J[Pod 6]
+          </pre>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->|Repica: 0|B(ReplicaSet 1)
+A -->|Repica: 3 |B2(ReplicaSet 2)
+B .-> |刪除一個Pod|F[Pod 3]
+B2 -->G[Pod 4]
+B2 -->H[Pod 5]
+B2 -->J[Pod 6]
+          </pre>
+<pre class="mermaid" style="text-align: center;">
+            TD
+            A[Deparment] -->|Repica: 0|B(ReplicaSet 1)
+A -->|Repica: 3 |B2(ReplicaSet 2)
+B .-> |刪除一個Pod|F[Pod 3]
+B2 -->G[Pod 4]
+B2 -->H[Pod 5]
+B2 -->J[Pod 6]
+          </pre>
+<p><strong>這邊要注意</strong>舊的ReplicaSet不會刪除掉，因為之後RollBack程式透過上面機制可以做相反。</p>
 <h2 id="刪除-Deployment"><a href="#刪除-Deployment" class="headerlink" title="刪除 Deployment"></a>刪除 Deployment</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployments kuard-deployment</span><br></pre></td></tr></table></figure>
 <p>所有的 Pod ,ReplicaSet 都會一起刪除</p>
 <h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>上面我測試 Service 更做更新的時候<br>不是會有舊新同時運行狀況<br>後面書上有提到前端到後端，前端要做好版本前後相容問題<br>這樣在切換上才不會發生問題</p>
+<h2 id="小記"><a href="#小記" class="headerlink" title="小記"></a>小記</h2><p>Deployment 就是用 ReplicaSet 進行的 Pod 做版本更新(升級、降級)。<br>一個 Deployment -&gt;最新兩個ReplicasSet -&gt;Pod，做 Rolling  Update 這個流程很重要，可以看上面更新流程圖</p>
 
     </div>
 
@@ -473,7 +573,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立一個-Deployment"><span class="nav-number">2.</span> <span class="nav-text">建立一個 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理-Deployment"><span class="nav-number">3.</span> <span class="nav-text">管理 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改容器的映像檔"><span class="nav-number">4.</span> <span class="nav-text">更改容器的映像檔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查詢歷史狀態"><span class="nav-number">5.</span> <span class="nav-text">查詢歷史狀態</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#退回版本"><span class="nav-number">6.</span> <span class="nav-text">退回版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deployment-策略"><span class="nav-number">7.</span> <span class="nav-text">Deployment 策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滾動更新設定"><span class="nav-number">8.</span> <span class="nav-text">滾動更新設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-Deployment"><span class="nav-number">9.</span> <span class="nav-text">刪除 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感想"><span class="nav-number">10.</span> <span class="nav-text">感想</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立一個-Deployment"><span class="nav-number">2.</span> <span class="nav-text">建立一個 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理-Deployment"><span class="nav-number">3.</span> <span class="nav-text">管理 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改容器的映像檔"><span class="nav-number">4.</span> <span class="nav-text">更改容器的映像檔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查詢歷史狀態"><span class="nav-number">5.</span> <span class="nav-text">查詢歷史狀態</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#退回版本-Rollback"><span class="nav-number">6.</span> <span class="nav-text">退回版本(Rollback)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deployment-策略"><span class="nav-number">7.</span> <span class="nav-text">Deployment 策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滾動更新設定"><span class="nav-number">8.</span> <span class="nav-text">滾動更新設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rolling-update-更新順序圖-重要"><span class="nav-number">9.</span> <span class="nav-text">rolling update 更新順序圖(重要)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-Deployment"><span class="nav-number">10.</span> <span class="nav-text">刪除 Deployment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感想"><span class="nav-number">11.</span> <span class="nav-text">感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小記"><span class="nav-number">12.</span> <span class="nav-text">小記</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -487,20 +587,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -530,7 +630,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

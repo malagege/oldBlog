@@ -28,7 +28,7 @@
 <meta property="og:description" content="Deployment 和 ReplicaSet 通常使用多個 replica 時候，都是建在各 nodes 隨機安裝。DaemonSet 可以讓每一台 node 運行 Pod。感覺這個跟 docker swarm 的 agent mode :global  一樣 docker swarm 一些指令相關整理 | 程式狂想筆記立馬實作看看">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-18T15:11:50.000Z">
-<meta property="article:modified_time" content="2021-06-27T08:05:07.858Z">
+<meta property="article:modified_time" content="2021-12-09T13:25:54.593Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="daemonset">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-12-09 21:25:54" itemprop="dateModified" datetime="2021-12-09T21:25:54+08:00">2021-12-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,6 +310,16 @@
         <p>Deployment 和 ReplicaSet 通常使用多個 replica 時候，都是建在各 nodes 隨機安裝。<br>DaemonSet 可以讓每一台 node 運行 Pod。<br>感覺這個跟 docker swarm 的 agent mode :global  一樣 <a href="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/">docker swarm 一些指令相關整理 | 程式狂想筆記</a><br>立馬實作看看</p>
 <a id="more"></a>
 <h2 id="DaemonSet"><a href="#DaemonSet" class="headerlink" title="DaemonSet"></a>DaemonSet</h2><p>使用 DaemonSet 會在所有 node 建立 Pod。如先前所講，跟 Docker Swarm 很像的 agent mode :global 很像<br>也可以針對 nodename 來建立 Pod。</p>
+<h3 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h3><p>確保每個節點都會有一份運行的Pod。</p>
+<ol>
+<li>Storage daemon 每台機器都要裝</li>
+<li>CNI daemon</li>
+<li>日誌收集</li>
+<li>監控收集</li>
+</ol>
+<p>taint 的 NoSchedule 可以阻擋 DaemonSet 部屬。</p>
+<h3 id="DaemonSet-概念圖"><a href="#DaemonSet-概念圖" class="headerlink" title="DaemonSet 概念圖"></a>DaemonSet 概念圖</h3><p>原有兩台節點(Node)</p>
+<p>後面加上一個Node就會部屬Pod</p>
 <h2 id="建立-DaemonSet"><a href="#建立-DaemonSet" class="headerlink" title="建立 DaemonSet"></a>建立 DaemonSet</h2><p><a href="https://github.com/kubernetes-up-and-running/examples/blob/master/9-1-fluentd.yaml" target="_blank" rel="noopener">examples/9-1-fluentd.yaml at master · kubernetes-up-and-running/examples</a></p>
 <p>這邊版本太舊<br>no matches for kind “DaemonSet” in version “extensions/v1beta1<br><a href="https://github.com/gluster/gluster-kubernetes/issues/627" target="_blank" rel="noopener">no matches for kind “DaemonSet” in version “extensions/v1beta1” · Issue #627 · gluster/gluster-kubernetes</a></p>
 <blockquote>
@@ -330,6 +340,19 @@ added selector
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tolerations:</span></span><br><span class="line"><span class="comment"># this toleration is to have the daemonset runnable on master nodes</span></span><br><span class="line"><span class="comment"># remove it if your masters can't run pods</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">key:</span> <span class="string">node-role.kubernetes.io/master</span></span><br><span class="line">  <span class="attr">effect:</span> <span class="string">NoSchedule</span></span><br></pre></td></tr></table></figure>
 <p>這行家這個就能跑了…<br>在研究什麼原因</p>
 <h2 id="刪除-DaemonSet"><a href="#刪除-DaemonSet" class="headerlink" title="刪除 DaemonSet"></a>刪除 DaemonSet</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete daemonset nginx-fast-storage</span><br></pre></td></tr></table></figure>
+<h2 id="DaemonSet-Tree"><a href="#DaemonSet-Tree" class="headerlink" title="DaemonSet Tree"></a>DaemonSet Tree</h2><p>DaemonSet -&gt; ControllerRevision -&gt; Pod</p>
+<p>DaemonSet因為有ControllerRevision 可以控制版本。但無法做到Replica一樣功能。</p>
+<h3 id="kube-system-有用到-DaemonSet"><a href="#kube-system-有用到-DaemonSet" class="headerlink" title="kube-system 有用到 DaemonSet"></a>kube-system 有用到 DaemonSet</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system get ds</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE</span><br><span class="line">kindnet      3         3         3       3            3           &lt;none&gt;                   10d</span><br><span class="line">kube-proxy   3         3         3       3            3           kubernetes.io&#x2F;os&#x3D;linux   10d</span><br></pre></td></tr></table></figure>
+<h1 id="StatefulSets"><a href="#StatefulSets" class="headerlink" title="StatefulSets"></a>StatefulSets</h1><p>有狀態的Pod。</p>
+<p>常運用儲存、網路結合。</p>
+<h3 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h3><p>StatefulSet -&gt; Pod-1<br>-&gt; Pod-2<br>-&gt; Pod-3</p>
+<p>每個Pod都有個自Dns。</p>
+<h3 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h3><p>Pod-1 -&gt; Volume-1</p>
+<p>Pod-2 -&gt; Volume-2</p>
+<h3 id="更新策略"><a href="#更新策略" class="headerlink" title="更新策略"></a>更新策略</h3><p>從後面先動作，先關掉再建立Pod。</p>
+<h3 id="Tree"><a href="#Tree" class="headerlink" title="Tree"></a>Tree</h3><p>StatefulSet-&gt;ControllerRevision-&gt;Pod </p>
+
     </div>
 
     
@@ -438,7 +461,7 @@ added selector
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DaemonSet"><span class="nav-number">1.</span> <span class="nav-text">DaemonSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-DaemonSet"><span class="nav-number">2.</span> <span class="nav-text">建立 DaemonSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-新增一個-Label"><span class="nav-number">3.</span> <span class="nav-text">node 新增一個 Label</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-DaemonSet"><span class="nav-number">4.</span> <span class="nav-text">刪除 DaemonSet</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DaemonSet"><span class="nav-number">1.</span> <span class="nav-text">DaemonSet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#後記"><span class="nav-number">1.1.</span> <span class="nav-text">後記</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DaemonSet-概念圖"><span class="nav-number">1.2.</span> <span class="nav-text">DaemonSet 概念圖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立-DaemonSet"><span class="nav-number">2.</span> <span class="nav-text">建立 DaemonSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-新增一個-Label"><span class="nav-number">3.</span> <span class="nav-text">node 新增一個 Label</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刪除-DaemonSet"><span class="nav-number">4.</span> <span class="nav-text">刪除 DaemonSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DaemonSet-Tree"><span class="nav-number">5.</span> <span class="nav-text">DaemonSet Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kube-system-有用到-DaemonSet"><span class="nav-number">5.1.</span> <span class="nav-text">kube-system 有用到 DaemonSet</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#StatefulSets"><span class="nav-number"></span> <span class="nav-text">StatefulSets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Network"><span class="nav-number">0.1.</span> <span class="nav-text">Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Storage"><span class="nav-number">0.2.</span> <span class="nav-text">Storage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新策略"><span class="nav-number">0.3.</span> <span class="nav-text">更新策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tree"><span class="nav-number">0.4.</span> <span class="nav-text">Tree</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -452,20 +475,20 @@ added selector
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -495,7 +518,7 @@ added selector
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -28,7 +28,7 @@
 <meta property="og:description" content="參考:docker-prometheus&#x2F;docker-compose.yml at master · Kev1nChan&#x2F;docker-prometheus · GitHub 使用 Raspberry Pi 3&#x2F;4 注意使用 32 位元都會有機會遇到記憶體問題建議使用 64 bituname -m不是 arrch64 都是 32bit">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-04-05T10:23:31.000Z">
-<meta property="article:modified_time" content="2021-06-27T08:05:08.091Z">
+<meta property="article:modified_time" content="2021-12-15T15:42:57.944Z">
 <meta property="article:author" content="malagege">
 <meta name="twitter:card" content="summary">
 
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+                <time title="修改時間：2021-12-15 23:42:57" itemprop="dateModified" datetime="2021-12-15T23:42:57+08:00">2021-12-15</time>
               </span>
 
           
@@ -393,7 +393,10 @@
 <p>docker-compose restart 好像都失敗<br>所以<code>docker-compose down -v</code>直接清掉重啟就正常…</p>
 <p>swap 都設2GB<br>RAM 看起來都正常…</p>
 <p>後來我猜測是 Prometheus 問題<br>把 volumes 清掉就正常</p>
-<p><a href="https://github.com/prometheus/prometheus/issues/8661" target="_blank" rel="noopener">rpi4 docker panic: mmap, size 134217728: cannot allocate memory · Issue #8661 · prometheus/prometheus · GitHub</a><br><del>後來我有找到這個跟我一樣問題</del><br><del>我目前估計用docker-compose up 執行是跑舊版</del><br><del>後來我跑最新版</del><br><del>但是我沒清掉 volumes 關係?(忘記)</del><br><del>看似 issue 問題也是升級問題</del><br><del>但我是跑到第五天才遇到問題</del><br><del>麻煩的是 alertmanager 沒發通知</del><br><del>很容易沒注意到</del><br>確定我過5天後又發生問題</p>
+<h2 id="解決樹梅派遇到記憶體問題"><a href="#解決樹梅派遇到記憶體問題" class="headerlink" title="解決樹梅派遇到記憶體問題"></a>解決樹梅派遇到記憶體問題</h2><p>2021-12-15</p>
+<p>最近<del>在回味</del>重新看這篇時候，發現我沒有補上我調整完設定。不確定新版會不會修正，不過先留個紀錄。<br>主要是加這段<code>- &#39;--storage.tsdb.retention.size=500MB&#39;</code>。<br>留個prometheus docker-compose 紀錄<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">prometheus:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">prom/prometheus-linux-armv7</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">prometheus</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$PWD/prometheus/:/etc/prometheus/</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">prometheus_data:/prometheus</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'--config.file=/etc/prometheus/prometheus.yml'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'--storage.tsdb.path=/prometheus'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'--web.console.libraries=/usr/share/prometheus/console_libraries'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'--web.console.templates=/usr/share/prometheus/consoles'</span></span><br><span class="line">      <span class="comment">#- '--storage.tsdb.retention=90d'</span></span><br><span class="line">      <span class="comment">#- '--storage.tsdb.min-block-duration=2h'</span></span><br><span class="line">      <span class="comment">#- '--storage.tsdb.max-block-duration=2h'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'--storage.tsdb.retention.size=500MB'</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">monitoring</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">alertmanager</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cadvisor</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'9090'</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9090</span><span class="string">:9090</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cadvisor</span></span><br></pre></td></tr></table></figure></p>
+<p>下面留個失敗紀錄</p>
+<h3 id="失敗紀錄"><a href="#失敗紀錄" class="headerlink" title="失敗紀錄"></a>失敗紀錄</h3><p><a href="https://github.com/prometheus/prometheus/issues/8661" target="_blank" rel="noopener">rpi4 docker panic: mmap, size 134217728: cannot allocate memory · Issue #8661 · prometheus/prometheus · GitHub</a><br><del>後來我有找到這個跟我一樣問題</del><br><del>我目前估計用docker-compose up 執行是跑舊版</del><br><del>後來我跑最新版</del><br><del>但是我沒清掉 volumes 關係?(忘記)</del><br><del>看似 issue 問題也是升級問題</del><br><del>但我是跑到第五天才遇到問題</del><br><del>麻煩的是 alertmanager 沒發通知</del><br><del>很容易沒注意到</del><br>確定我過5天後又發生問題</p>
 <p>這邊當初我應該不用下<code>docker-compose down -v</code><br>應該先 <code>docker-compose stop prometheus</code><br><code>docker volume rm (volume_name)</code>才對</p>
 <p><strong>2021-04-25</strong></p>
 <p>最近又遇到這個問題<br>查了一下，可能跟 Raspberry PI OS 32 位元有關係<br>聽說64 位元能解決?!(不確定)<br>參考:</p>
@@ -518,7 +521,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架設-Prometheus"><span class="nav-number">1.</span> <span class="nav-text">架設 Prometheus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-Exporter"><span class="nav-number">2.</span> <span class="nav-text">Node Exporter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tranmission"><span class="nav-number">3.</span> <span class="nav-text">tranmission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traefik"><span class="nav-number">4.</span> <span class="nav-text">traefik</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-exporter"><span class="nav-number">5.</span> <span class="nav-text">process exporter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blackbox-Exporter"><span class="nav-number">6.</span> <span class="nav-text">Blackbox Exporter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官方-exporter-清單"><span class="nav-number">7.</span> <span class="nav-text">官方 exporter 清單</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-alertmanager-discord"><span class="nav-number">8.</span> <span class="nav-text">安裝 alertmanager-discord</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接下來學習目標"><span class="nav-number">9.</span> <span class="nav-text">接下來學習目標</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暫時用的-alertmanager-rule"><span class="nav-number">10.</span> <span class="nav-text">暫時用的 alertmanager rule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2021-04-14-發生問題"><span class="nav-number">11.</span> <span class="nav-text">2021-04-14 發生問題</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架設-Prometheus"><span class="nav-number">1.</span> <span class="nav-text">架設 Prometheus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-Exporter"><span class="nav-number">2.</span> <span class="nav-text">Node Exporter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tranmission"><span class="nav-number">3.</span> <span class="nav-text">tranmission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traefik"><span class="nav-number">4.</span> <span class="nav-text">traefik</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-exporter"><span class="nav-number">5.</span> <span class="nav-text">process exporter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blackbox-Exporter"><span class="nav-number">6.</span> <span class="nav-text">Blackbox Exporter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官方-exporter-清單"><span class="nav-number">7.</span> <span class="nav-text">官方 exporter 清單</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-alertmanager-discord"><span class="nav-number">8.</span> <span class="nav-text">安裝 alertmanager-discord</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接下來學習目標"><span class="nav-number">9.</span> <span class="nav-text">接下來學習目標</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暫時用的-alertmanager-rule"><span class="nav-number">10.</span> <span class="nav-text">暫時用的 alertmanager rule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2021-04-14-發生問題"><span class="nav-number">11.</span> <span class="nav-text">2021-04-14 發生問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解決樹梅派遇到記憶體問題"><span class="nav-number">12.</span> <span class="nav-text">解決樹梅派遇到記憶體問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#失敗紀錄"><span class="nav-number">12.1.</span> <span class="nav-text">失敗紀錄</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -532,20 +535,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -575,7 +578,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

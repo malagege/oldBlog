@@ -28,7 +28,7 @@
 <meta property="og:description" content="直接進入重點">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-02-22T11:08:59.000Z">
-<meta property="article:modified_time" content="2021-06-27T08:05:07.858Z">
+<meta property="article:modified_time" content="2021-12-13T13:53:15.300Z">
 <meta property="article:author" content="malagege">
 <meta property="article:tag" content="kubernetes">
 <meta property="article:tag" content="job">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-12-13 21:53:15" itemprop="dateModified" datetime="2021-12-13T21:53:15+08:00">2021-12-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -309,6 +309,48 @@
 </script>
         <p>直接進入重點</p>
 <a id="more"></a>
+<h2 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h2><p>會結束的程式。不會結束的會稱為Daemon。</p>
+<h2 id="執行方式"><a href="#執行方式" class="headerlink" title="執行方式"></a>執行方式</h2><h3 id="Completions-Parallelism"><a href="#Completions-Parallelism" class="headerlink" title="Completions/Parallelism"></a>Completions/Parallelism</h3><p>Completions: 啟動任務要執行幾次<br>Parallelism: 同時間執行幾個程式</p>
+<h4 id="Job-Completions-2-Parallelism-1"><a href="#Job-Completions-2-Parallelism-1" class="headerlink" title="Job Completions: 2 , Parallelism: 1"></a>Job Completions: 2 , Parallelism: 1</h4><pre class="mermaid" style="text-align: center;">
+            graph
+            A[Job Completions: 2 , Parallelism: 1] -->|Step.1| B[建立 Pod]
+B --> |Step.2| C[Pod執行中]
+C --> |Step.3| D[Pod 執行完成]
+D -->|Step.4 Observe| A
+A --> |Step.5| B1[建立 Pod]
+B1 --> |Step.6|C1[Pod執行中]
+C1 --> |Step.7|D1[Pod 執行完成]
+D1 -->|Step.8  Observe| A
+          </pre>
+<h4 id="Job-Completions-2-Parallelism-2"><a href="#Job-Completions-2-Parallelism-2" class="headerlink" title="Job Completions: 2 , Parallelism: 2"></a>Job Completions: 2 , Parallelism: 2</h4><p>用程式觀點，簡單說就是2個<code>執行緒</code>執行`，同時間執行兩個工作。</p>
+<pre class="mermaid" style="text-align: center;">
+            graph
+            A[Job Completions: 2 , Parallelism: 2] -->|Step1.1| B[建立 Pod]
+B --> |Step-1.2| C[Pod執行中]
+C --> |Step-2.3| D[Pod 執行完成]
+D -->|Step-1.4 Observe| A
+A --> |Step-2.1| B1[建立 Pod]
+B1 --> |Step-2.2|C1[Pod執行中]
+C1 --> |Step-2.3|D1[Pod 執行完成]
+D1 -->|Step-2.4  Observe| A 
+          </pre>
+<p>上面圖片Step1,Step2 是一起做的。我多加一個Thread 來表示可能會比較清楚。</p>
+<pre class="mermaid" style="text-align: center;">
+            graph
+            ST[StartJob]  --> |Step-1 and 2|B & B1
+subgraph thread1
+B[建立 Pod] --> |Step-1.2| C[Pod執行中]
+C --> |Step-1.3| D[Pod 執行完成]
+end
+subgraph thread2
+B1[建立 Pod] --> |Step-2.2|C1[Pod執行中]
+C1 --> |Step-2.3|D1[Pod 執行完成]
+end
+D & D1 --> END[EndJob]
+          </pre>
+<h3 id="backofflimit"><a href="#backofflimit" class="headerlink" title="backofflimit"></a>backofflimit</h3><p>跑失敗幾次就不跑</p>
+<h3 id="activeDeadLineSeconds"><a href="#activeDeadLineSeconds" class="headerlink" title="activeDeadLineSeconds"></a>activeDeadLineSeconds</h3><p>執行超過多久會自動關閉，Pod狀態會變成failed。</p>
+<h3 id="Tree"><a href="#Tree" class="headerlink" title="Tree"></a>Tree</h3><p>Job-&gt;Pod*</p>
 <h2 id="官方實例"><a href="#官方實例" class="headerlink" title="官方實例"></a>官方實例</h2><figure class="highlight yml"><figcaption><span>job.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">batch/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Job</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pi</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pi</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">perl</span></span><br><span class="line">        <span class="attr">command:</span> <span class="string">["perl",</span>  <span class="string">"-Mbignum=bpi"</span><span class="string">,</span> <span class="string">"-wle"</span><span class="string">,</span> <span class="string">"print bpi(2000)"</span><span class="string">]</span></span><br><span class="line">      <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br><span class="line">  <span class="attr">backoffLimit:</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://kubernetes.io/examples/controllers/job.yaml</span><br></pre></td></tr></table></figure>
 <h2 id="自動清理"><a href="#自動清理" class="headerlink" title="自動清理"></a>自動清理</h2><p>完成 100 秒就會清除，我在 kind 沒有效果…</p>
@@ -322,6 +364,8 @@
 <li><a href="https://kubernetes.io/zh/docs/tasks/job/coarse-parallel-processing-work-queue/" target="_blank" rel="noopener">使用工作队列进行粗粒度并行处理 | Kubernetes</a></li>
 <li><a href="https://draveness.me/kubernetes-job-cronjob/" target="_blank" rel="noopener">详解 Kubernetes Job 和 CronJob 的实现原理 - 面向信仰编程</a></li>
 </ul>
+<h2 id="Tree-1"><a href="#Tree-1" class="headerlink" title="Tree"></a>Tree</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl tree cronjob xxx</span><br></pre></td></tr></table></figure>
+<p>CronJob-&gt;Job-&gt;Pod</p>
 
     </div>
 
@@ -431,7 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#官方實例"><span class="nav-number">1.</span> <span class="nav-text">官方實例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自動清理"><span class="nav-number">2.</span> <span class="nav-text">自動清理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Crontab"><span class="nav-number">3.</span> <span class="nav-text">Crontab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Queue-Work"><span class="nav-number">4.</span> <span class="nav-text">Queue Work</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Job"><span class="nav-number">1.</span> <span class="nav-text">Job</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#執行方式"><span class="nav-number">2.</span> <span class="nav-text">執行方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Completions-Parallelism"><span class="nav-number">2.1.</span> <span class="nav-text">Completions&#x2F;Parallelism</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Job-Completions-2-Parallelism-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">Job Completions: 2 , Parallelism: 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Job-Completions-2-Parallelism-2"><span class="nav-number">2.1.2.</span> <span class="nav-text">Job Completions: 2 , Parallelism: 2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backofflimit"><span class="nav-number">2.2.</span> <span class="nav-text">backofflimit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#activeDeadLineSeconds"><span class="nav-number">2.3.</span> <span class="nav-text">activeDeadLineSeconds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tree"><span class="nav-number">2.4.</span> <span class="nav-text">Tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#官方實例"><span class="nav-number">3.</span> <span class="nav-text">官方實例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自動清理"><span class="nav-number">4.</span> <span class="nav-text">自動清理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Crontab"><span class="nav-number">5.</span> <span class="nav-text">Crontab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Queue-Work"><span class="nav-number">6.</span> <span class="nav-text">Queue Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tree-1"><span class="nav-number">7.</span> <span class="nav-text">Tree</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -445,20 +489,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">653</span>
+          <span class="site-state-item-count">689</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">89</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">522</span>
+        <span class="site-state-item-count">550</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -488,7 +532,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
