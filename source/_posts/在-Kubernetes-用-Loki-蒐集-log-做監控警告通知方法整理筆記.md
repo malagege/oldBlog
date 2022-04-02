@@ -31,7 +31,7 @@ categories: Kubernetes
 
 第一次接觸 Web 管理虛擬主機不是很習慣，我本來就像 Virtalbox 那樣建立機器就可以了，但看到網路有要設定路由器，剛看介面完全不知道要怎麼使用，看文件有些細節也不知道要如何使用，如用路由器綁定浮動 IP 。最後有請教我朋友做網路工程師，他有看文件大概跟我講一些設定，但他說有些設定他也不是很懂，如找不到Portfording 設定...，總之我順利開啟機器。
 
-![圖片](https://user-images.githubusercontent.com/6058558/161392241-c4349952-624c-41bd-bedd-4e970d1c6e46.png)
+![圖片](https://user-images.githubusercontent.com/6058558/161395932-092de0c8-1482-4b8d-927d-c5ce0d7f05c4.png)
 ![圖片](https://user-images.githubusercontent.com/6058558/161392274-a22f0a6e-75f8-4394-a352-afba818aba00.png)
 
 設定IP也滿有趣的，以前 ifconfig 設定主機IP，這個系統可以直接設定主機IP安裝就會自動配置，後來我發現設兩個IP就不能了，後來發現主機有配置第一個 interface 做 DHCP，所以才會吃到 IP 設定，所以機器添加第二個就不會自動設定，最新版換 IP 配置用 yaml，對於遠端連線設定 IP 也是非常方便，就算設錯超過確認時間，也會幫你設定回去，可參考:[Ubuntu 18.04 透過 netplan 設定網路卡 IP - Soul & Shell Blog](https://blog.toright.com/posts/6293/ubuntu-18-04-%E9%80%8F%E9%81%8E-netplan-%E8%A8%AD%E5%AE%9A%E7%B6%B2%E8%B7%AF%E5%8D%A1-ip.html)。
