@@ -68,3 +68,5 @@ date: 2018-05-14 21:24:11
 - [安德魯的部落格](https://columns.chicken-house.net/)
 - [EL PSY CONGROO | 陳文俊的博客](https://yo-cwj.com/)
 - [骏马金龙](https://www.junmajinlong.com/)
+- [Faryne的程式設計館](https://blog.faryne.dev/)
+- [眈眈逐逐 - 博客园](https://www.cnblogs.com/xjzyy/)

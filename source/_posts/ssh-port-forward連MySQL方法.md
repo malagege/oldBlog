@@ -134,3 +134,5 @@ Filezilla預設沒有做ssh tunnel
 * [瀏覽器設定 proxy 透過 SSH Tunnel 連線網站 | SSORC.tw](https://ssorc.tw/6866)
 * [DownloadManager实现版本更新，监听下载进度 - 简书](https://www.jianshu.com/p/bb4cde6e88c6)
 
+* [SSH Tunneling (Port Forwarding) 詳解 · John Engineering Stuff](https://johnliu55.tw/ssh-tunnel.html) {% asset_link https://imgur.com/Xb5Xo1D.png 備份圖 %}
+發現上面介紹很清楚，忘記可以回來看。

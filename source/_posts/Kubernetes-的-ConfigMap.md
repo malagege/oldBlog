@@ -5,9 +5,24 @@ tags: [configmap]
 categories: Kuberenetes
 ---
 
+Kubernetes 的 ConfigMap 常常會跟 Storage 有關係。
+ 
 
+可以針對
+
+- volume(檔案設定檔)
+- environment variable (環境變數)
 
 <!--more-->
+
+## 設定關鍵字
+
+掛載檔案方式:
+- 使用 `Volume` 掛在 Pod
+- 使用 `VolumeMount` 掛在 Container
+
+套用環境變數上:
+- 使用 `configMapKeyRef` 掛在 環境變數
 
 ## 建立 Clusters
 
@@ -377,3 +392,29 @@ kubectl create -f https://kubernetes.io/examples/pods/pod-multiple-configmap-env
 
 
 TODO: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-with-data-from-multiple-configmaps
+
+
+## cheatsheet
+
+
+```bash
+kubectl apply -R -f intrudction/configmap
+kubectl get configmap
+kubectl get pods
+kubectl exec pods
+ls /tmp/config
+env
+```
+
+
+## 同步時間
+
+apiserver -> kubelet -> volume
+一個箭頭 大約一分鐘
+
+總共加起來需要兩分鐘。
+
+
+## env 安全性問題
+
+取得 node 節點可以看到 container 環境設定變數問題
