@@ -208,6 +208,693 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/" class="post-title-link" itemprop="url">安裝 ELK(ElasticSearch,Logstash,Kibana),filebeat 初體驗</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-05-02 20:32:04" itemprop="dateCreated datePublished" datetime="2021-05-02T20:32:04+08:00">2021-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/ELK/" itemprop="url" rel="index"><span itemprop="name">ELK</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/05/02/安裝-ELK-ElasticSearch-Logstash-Kibana-filebeat-初體驗/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="安裝-ELK-ElasticSearch-Logstash-Kibana-filebeat-初體驗"><a href="#安裝-ELK-ElasticSearch-Logstash-Kibana-filebeat-初體驗" class="headerlink" title="安裝 ELK(ElasticSearch,Logstash,Kibana),filebeat 初體驗"></a>安裝 ELK(ElasticSearch,Logstash,Kibana),filebeat 初體驗</h1><p>本文章參考: <a href="https://hackmd.io/@QCZ_Kvv1ScixyAPzRYDKWQ/ry2Inu5HE?type=view" target="_blank" rel="noopener">Elastic stack（安裝篇) - HackMD</a><br>大量操作參照如上</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/" class="post-title-link" itemprop="url">Loki 初體驗教學(在Raspberry 啟用 Docker-Loki-Driver)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-04-18 02:19:32" itemprop="dateCreated datePublished" datetime="2021-04-18T02:19:32+08:00">2021-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Loki/" itemprop="url" rel="index"><span itemprop="name">Loki</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/18/Loki-初體驗教學/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近在三台樹梅派使用 Docker 架設服務<br>但是查看 log 真的不是很方便<br>最近剛完 Prometheus 看到 Loki<br>跟 Prometheus 很像，又是跟 Container 很有關係<br>看了一下佈署流程，並不是非常難<br>所以就食做看看</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/" class="post-title-link" itemprop="url">抓出 Docker 裡面檔案設定檔出來</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-04-15 21:35:32" itemprop="dateCreated datePublished" datetime="2021-04-15T21:35:32+08:00">2021-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/15/抓出-Docker-裡面檔案設定檔出來/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前這篇有提到 cp 指令<a href="https://malagege.github.io/blog/2017/08/20/logdown/2017-08-20-2201711/">Docker 新手筆記 | 程式狂想筆記</a><br>但一直找有什麼方便複製 image 檔案<br>今天看到相關網站方法<br>整理出來</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/" class="post-title-link" itemprop="url">使用 GitKrakn GIT 簽章(PGP)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-04-11 23:43:57" itemprop="dateCreated datePublished" datetime="2021-04-11T23:43:57+08:00">2021-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/11/使用-GitKrakn-GIT-簽章-PGP/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近因緣際會下用到 PGP<br>因為我們公司有用 gitlab<br>之前就想研究 Git 簽章怎麼用<br>但一直都沒有去嘗試<br>最近碰到 PGP 加密<br>竟然碰到相關問題，馬上使用看看</p>
+<p>Git mail 使用者名稱都可以自己改上傳<br>使用簽章後，能證明GIT commit 是誰做的</p>
+<p>本篇是以方便使用 GUI 介面操作(Gitkrakn)<br>並非以指令方式去做<br>相關指令推薦爬相關專業文章</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/11/PGP-%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/04/11/PGP-%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">PGP 筆記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-04-11 23:32:06" itemprop="dateCreated datePublished" datetime="2021-04-11T23:32:06+08:00">2021-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/04/11/PGP-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/11/PGP-筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+          <p>第一次使用 PGP加密筆記，原本看到 GPG 跟 Git 做簽章<br>想說GPG 跟 PGP 應該沒甚麼關係<br>但是後來爬文一下，GPG(GunPG)是產生和管理 PGP 金鑰軟體<br>看來有空順便來研究 GIT 簽章</p>
+<h2 id="測線上加密網站"><a href="#測線上加密網站" class="headerlink" title="測線上加密網站"></a>測線上加密網站</h2><p><a href="https://github.com/Gaff/pgp.help" target="_blank" rel="noopener">https://github.com/Gaff/pgp.help</a><br><a href="https://pgp.help/#/" target="_blank" rel="noopener">pgp.help - Modern javascript client-side PGP encryption and decryption tool</a></p>
+<p><a href="https://smartninja-pgp.appspot.com/" target="_blank" rel="noopener">SmartNinja Online PGP</a></p>
+<p><a href="https://www.ilovefreesoftware.com/21/featured/online-pgp-encryption-websites-free-encrypt-email-text.html" target="_blank" rel="noopener">5 Online PGP Encryption Websites Free to Encrypt Email, Text</a></p>
+<p><a href="https://pgptool.github.io/" target="_blank" rel="noopener">PGPTool - use this tool to encrypt and decrypt PGP files. OpenPGP compatible</a></p>
+<h2 id="測試-pgp-加解密"><a href="#測試-pgp-加解密" class="headerlink" title="測試 pgp 加解密"></a>測試 pgp 加解密</h2><p>簡單來講，就次把private key 和 public key 匯入到 gpg<br>然後使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">gpg --import &#123;private/public key&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加密：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># recipient指定接收者的公鑰ID</span></span><br><span class="line">gpg --recipient &#123;keyid/uid&#125; --output encrypt.txt --encrypt input.txt</span><br><span class="line"><span class="comment"># 也可以按喜好加上--armor選項等</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 我更喜歡用 </span></span><br><span class="line">gpg  -se  -o  encrypt.txt  -r  &#123;keyid/uid&#125;   input.txt  </span><br><span class="line"><span class="comment"># s代表簽名  e代表加密</span></span><br><span class="line"><span class="comment"># o是 將結果 輸出到檔案  encrypt.txt</span></span><br><span class="line"><span class="comment"># r後面跟 接收者的 uid或者 key id， 接收者的公鑰必須已經匯入過</span></span><br><span class="line"><span class="comment"># input.txt 是你要加密的檔案</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解密：</span></span><br><span class="line">gpg  --output decrypt.txt  --decrypt encrypt.txt </span><br><span class="line"><span class="comment"># 也可以</span></span><br><span class="line">gpg -d encrypt.txt   <span class="comment"># 輸出到終端 直接檢視</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://www.mdeditor.tw/pl/gW1n/zh-tw" target="_blank" rel="noopener">2021年，用更現代的方法使用PGP（上）_UCloud雲端計算 - MdEditor</a><br>後來發現原始文章，放在下面</p>
+<p><a href="http://pre.tir.tw/008/blog/output/gnupg-gpg-jin-yao-guan-li.html" target="_blank" rel="noopener">[GnuPG] gpg 金鑰管理 · Hello, World!</a></p>
+<p><a href="https://zhoubofsy.github.io/2017/05/18/security/gpg-usage/" target="_blank" rel="noopener">GPG(GunPG)的使用 | Bolog</a></p>
+<p><a href="https://www.ecnetworker.com/2019/08/26/pgp%EF%BC%8Copenpgp%E5%92%8Cgnupg%E5%8A%A0%E5%AF%86%E4%B9%8B%E9%96%93%E7%9A%84%E5%8D%80%E5%88%A5/" target="_blank" rel="noopener">PGP，OpenPGP和GnuPG加密之間的區別 – 易璽科技 ECNETWORKER</a></p>
+<h2 id="看起來實用工具"><a href="#看起來實用工具" class="headerlink" title="看起來實用工具"></a>看起來實用工具</h2><p><a href="https://www.secn.net/article/107917.html" target="_blank" rel="noopener">Java GPG解密关于:encrypted message contains a signed message - not literal data.的解决_程序地带</a></p>
+<p><a href="https://www.openpgp.org/software/kleopatra/" target="_blank" rel="noopener">Kleopatra - OpenPGP</a></p>
+<p><a href="https://zh.wikipedia.org/wiki/Gpg4win" target="_blank" rel="noopener">Gpg4win - 維基百科，自由的百科全書</a></p>
+<pre><code>GnuPG: 核心加密工具
+Kleopatra: 用於OpenPGP與X.509的憑證管理。
+GPA: 另一個可選的憑證管理
+GpgOL: Microsoft Outlook外掛程式，用於電子郵件加密
+GpgEX: Windows Explorer外掛程式，用於檔案加密
+Gpg4win Compendium: Gpg4win2的文件
+</code></pre><p><a href="https://gnupg.org/related_software/swlist.html" target="_blank" rel="noopener">GnuPG - Software list</a></p>
+<h2 id="更多-GPG-教學"><a href="#更多-GPG-教學" class="headerlink" title="更多 GPG 教學"></a>更多 GPG 教學</h2><p>目前只有使用加解密跟 GIT 簽章<br>不過好像還有更進階用法<br>但是…目前好像用不太到<br>先預留一下爬到不錯文章</p>
+<p><a href="https://ulyc.github.io/2021/01/13/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8A/" target="_blank" rel="noopener">2021年，用更现代的方法使用PGP（上） - C的博客 |UlyC</a><br><a href="https://imgur.com/wkvbboi.png" target="_blank" rel="noopener">備份圖</a></p>
+<p><a href="https://ulyc.github.io/2021/01/18/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%AD/" target="_blank" rel="noopener">2021年，用更现代的方法使用PGP（中） - C的博客 |UlyC</a> <a href="https://imgur.com/LWYWSsm.png" target="_blank" rel="noopener">備份圖</a></p>
+<p><a href="https://ulyc.github.io/2021/01/26/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8B/" target="_blank" rel="noopener">2021年，用更现代的方法使用PGP（下） - C的博客 |UlyC</a> <a href="https://imgur.com/V07AWzh.png" target="_blank" rel="noopener">備份圖</a></p>
+<h2 id="InvalidKeyException-Illegal-key-size-測試解決成功"><a href="#InvalidKeyException-Illegal-key-size-測試解決成功" class="headerlink" title="InvalidKeyException: Illegal key size(測試解決成功)"></a>InvalidKeyException: Illegal key size(測試解決成功)</h2><p>要安裝 JCE，原本不相信，但真的測試嚇一跳。還真的要安裝…<br>PS: 我專案是Java1.7，1.8竟然可以跑</p>
+<p><img src="https://i.imgur.com/XJscXex.png" alt=""></p>
+<p><a href="https://www.xuchengen.cn/451" target="_blank" rel="noopener">InvalidKeyException: Illegal key size异常解决方案 – 思码老徐</a></p>
+<p><a href="https://blog.csdn.net/weixin_44102477/article/details/88717815" target="_blank" rel="noopener">关于PGP解密基于Java Bouncy Castle_-0.0-的博客-CSDN博客</a></p>
+<p><a href="https://askie.today/git-pgp-keys/" target="_blank" rel="noopener">新增 Git GPG Key 增加安全性 - Askie’s Coding Life</a></p>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><p><a href="http://sloanseaman.com/wordpress/2011/08/11/pgp-encryptiondecryption-in-java/" target="_blank" rel="noopener">PGP Encryption/Decryption in Java | Waiting for Wit</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/" class="post-title-link" itemprop="url">Raspberry Pi 部屬 Prometheus</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-04-05 18:23:31" itemprop="dateCreated datePublished" datetime="2021-04-05T18:23:31+08:00">2021-04-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-12-15 23:42:57" itemprop="dateModified" datetime="2021-12-15T23:42:57+08:00">2021-12-15</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/05/Raspberry-Pi-部屬-Prometheus/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>參考:<a href="https://github.com/Kev1nChan/docker-prometheus/blob/master/docker-compose.yml" target="_blank" rel="noopener">docker-prometheus/docker-compose.yml at master · Kev1nChan/docker-prometheus · GitHub</a></p>
+<p><strong>使用 Raspberry Pi 3/4 注意使用 32 位元都會有機會遇到記憶體問題</strong><br>建議使用 64 bit<br><code>uname -m</code><br>不是 arrch64 都是 32bit</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -644,703 +1331,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/28/%E5%9C%A8-Raspberry-Pi-%E5%BB%BA%E7%BD%AE-V2ray/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/28/%E5%9C%A8-Raspberry-Pi-%E5%BB%BA%E7%BD%AE-V2ray/" class="post-title-link" itemprop="url">在 Raspberry Pi 建置 V2ray</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-28 16:35:29" itemprop="dateCreated datePublished" datetime="2021-03-28T16:35:29+08:00">2021-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/VPN/" itemprop="url" rel="index"><span itemprop="name">VPN</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/28/%E5%9C%A8-Raspberry-Pi-%E5%BB%BA%E7%BD%AE-V2ray/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/28/在-Raspberry-Pi-建置-V2ray/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近想讓樹莓派做 VPN<br>後來有找到這個<br>不同VPN使用方法，這個有點像做代理<br>後來選這個是因為做 https 可以用 traefik 做更新憑證<br>這樣我就可以省一步</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/03/28/%E5%9C%A8-Raspberry-Pi-%E5%BB%BA%E7%BD%AE-V2ray/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/28/x86-%E6%A9%9F%E5%99%A8-build-arm-Docker-Image-%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/28/x86-%E6%A9%9F%E5%99%A8-build-arm-Docker-Image-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">x86 機器 build arm Docker Image 方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-28 16:17:49" itemprop="dateCreated datePublished" datetime="2021-03-28T16:17:49+08:00">2021-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/28/x86-%E6%A9%9F%E5%99%A8-build-arm-Docker-Image-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/28/x86-機器-build-arm-Docker-Image-方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近要build arm image<br>但是…在Raspberry Pi build 的時間非常久<br>在想x86有沒有辦法做到<br>結果真得可以</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/03/28/x86-%E6%A9%9F%E5%99%A8-build-arm-Docker-Image-%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/28/%E5%BB%BA%E7%BD%AE-sshwifty-Web-shell-%E9%80%A3%E7%B7%9A%E5%B7%A5%E5%85%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/28/%E5%BB%BA%E7%BD%AE-sshwifty-Web-shell-%E9%80%A3%E7%B7%9A%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">建置 sshwifty (Web shell) 連線工具</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-28 15:51:06" itemprop="dateCreated datePublished" datetime="2021-03-28T15:51:06+08:00">2021-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/28/%E5%BB%BA%E7%BD%AE-sshwifty-Web-shell-%E9%80%A3%E7%B7%9A%E5%B7%A5%E5%85%B7/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/28/建置-sshwifty-Web-shell-連線工具/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近有遠端需求<br>所以在找類似這個工具</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/03/28/%E5%BB%BA%E7%BD%AE-sshwifty-Web-shell-%E9%80%A3%E7%B7%9A%E5%B7%A5%E5%85%B7/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/08/%E7%A8%8B%E5%BC%8F%E5%8D%8A%E5%9E%8B%E8%BD%89%E5%85%A8%E5%9E%8B%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/08/%E7%A8%8B%E5%BC%8F%E5%8D%8A%E5%9E%8B%E8%BD%89%E5%85%A8%E5%9E%8B%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">程式半型轉全型方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-08 20:38:33" itemprop="dateCreated datePublished" datetime="2021-03-08T20:38:33+08:00">2021-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/08/%E7%A8%8B%E5%BC%8F%E5%8D%8A%E5%9E%8B%E8%BD%89%E5%85%A8%E5%9E%8B%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/08/程式半型轉全型方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Keep Learning…</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/03/08/%E7%A8%8B%E5%BC%8F%E5%8D%8A%E5%9E%8B%E8%BD%89%E5%85%A8%E5%9E%8B%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/08/%E7%B7%A8%E8%BC%AF%E5%99%A8%E6%8A%93%E5%8F%96-Emoji/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/08/%E7%B7%A8%E8%BC%AF%E5%99%A8%E6%8A%93%E5%8F%96-Emoji/" class="post-title-link" itemprop="url">編輯器抓取 Emoji 文字方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-08 20:31:48" itemprop="dateCreated datePublished" datetime="2021-03-08T20:31:48+08:00">2021-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/08/%E7%B7%A8%E8%BC%AF%E5%99%A8%E6%8A%93%E5%8F%96-Emoji/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/08/編輯器抓取-Emoji/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最進工作維運上要抓 Emoji 文字<br>常常用肉眼去找 表情符號<br>後來發現 TW,JP 也有 Emoji<br>肉眼不一定抓的到<br>所以看一下有沒有 Regex<br>真的可以用…後來發現不是每一個 Editor 都可以用<br>在這邊整理一下</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/03/08/%E7%B7%A8%E8%BC%AF%E5%99%A8%E6%8A%93%E5%8F%96-Emoji/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/03/Kubernetes-%E7%9A%84-ConfigMap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/03/Kubernetes-%E7%9A%84-ConfigMap/" class="post-title-link" itemprop="url">Kubernetes 的 ConfigMap</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-03 20:54:32" itemprop="dateCreated datePublished" datetime="2021-03-03T20:54:32+08:00">2021-03-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Kuberenetes/" itemprop="url" rel="index"><span itemprop="name">Kuberenetes</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/03/Kubernetes-%E7%9A%84-ConfigMap/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/03/Kubernetes-的-ConfigMap/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <a id="more"></a>
-<h2 id="建立-Clusters"><a href="#建立-Clusters" class="headerlink" title="建立 Clusters"></a>建立 Clusters</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap &lt;map-name&gt; &lt;data-source&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the local directory</span></span><br><span class="line">mkdir -p configure-pod-container/configmap/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download the sample files into `configure-pod-container/configmap/` directory</span></span><br><span class="line">wget https://kubernetes.io/examples/configmap/game.properties -O configure-pod-container/configmap/game.properties</span><br><span class="line">wget https://kubernetes.io/examples/configmap/ui.properties -O configure-pod-container/configmap/ui.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the configmap</span></span><br><span class="line">kubectl create configmap game-config --from-file=configure-pod-container/configmap/</span><br></pre></td></tr></table></figure>
-<p>這邊有點有趣，client 端做，nodes 竟然可以吃到抓下來的 properties<br>不知道底層原理怎麼做到</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get configmaps game-config -o yaml</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="number">2016</span><span class="number">-02</span><span class="string">-18T18:52:05Z</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">game-config</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">  <span class="attr">resourceVersion:</span> <span class="string">"516"</span></span><br><span class="line">  <span class="attr">uid:</span> <span class="string">b4952dc3-d670-11e5-8cd0-68f728db1985</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">game.properties:</span> <span class="string">|</span></span><br><span class="line">    <span class="string">enemies=aliens</span></span><br><span class="line">    <span class="string">lives=3</span></span><br><span class="line">    <span class="string">enemies.cheat=true</span></span><br><span class="line">    <span class="string">enemies.cheat.level=noGoodRotten</span></span><br><span class="line">    <span class="string">secret.code.passphrase=UUDDLRLRBABAS</span></span><br><span class="line">    <span class="string">secret.code.allowed=true</span></span><br><span class="line">    <span class="string">secret.code.lives=30</span>    </span><br><span class="line">  <span class="attr">ui.properties:</span> <span class="string">|</span></span><br><span class="line">    <span class="string">color.good=purple</span></span><br><span class="line">    <span class="string">color.bad=yellow</span></span><br><span class="line">    <span class="string">allow.textmode=true</span></span><br><span class="line">    <span class="string">how.nice.to.look=fairlyNice</span></span><br></pre></td></tr></table></figure>
-<h3 id="從檔案建立-ConfigMap"><a href="#從檔案建立-ConfigMap" class="headerlink" title="從檔案建立 ConfigMap"></a>從檔案建立 ConfigMap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap game-config-2 --from-file=configure-pod-container/configmap/game.properties</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe configmaps game-config-2</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Name:         game-config-2</span><br><span class="line">Namespace:    default</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  &lt;none&gt;</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">game.properties:</span><br><span class="line">----</span><br><span class="line">enemies&#x3D;aliens</span><br><span class="line">lives&#x3D;3</span><br><span class="line">enemies.cheat&#x3D;true</span><br><span class="line">enemies.cheat.level&#x3D;noGoodRotten</span><br><span class="line">secret.code.passphrase&#x3D;UUDDLRLRBABAS</span><br><span class="line">secret.code.allowed&#x3D;true</span><br><span class="line">secret.code.lives&#x3D;30</span><br><span class="line">Events:  &lt;none&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同時使用--from-file 載入多個檔案</span></span><br><span class="line">kubectl create configmap game-config-2 --from-file=configure-pod-container/configmap/game.properties --from-file=configure-pod-container/configmap/ui.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 ConfigMap 內容</span></span><br><span class="line">kubectl describe configmaps game-config-2</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Name:         game-config-2</span><br><span class="line">Namespace:    default</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  &lt;none&gt;</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">game.properties:</span><br><span class="line">----</span><br><span class="line">enemies&#x3D;aliens</span><br><span class="line">lives&#x3D;3</span><br><span class="line">enemies.cheat&#x3D;true</span><br><span class="line">enemies.cheat.level&#x3D;noGoodRotten</span><br><span class="line">secret.code.passphrase&#x3D;UUDDLRLRBABAS</span><br><span class="line">secret.code.allowed&#x3D;true</span><br><span class="line">secret.code.lives&#x3D;30</span><br><span class="line">ui.properties:</span><br><span class="line">----</span><br><span class="line">color.good&#x3D;purple</span><br><span class="line">color.bad&#x3D;yellow</span><br><span class="line">allow.textmode&#x3D;true</span><br><span class="line">how.nice.to.look&#x3D;fairlyNice</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Download the sample files into `configure-pod-container/configmap/` directory</span></span><br><span class="line">wget https://kubernetes.io/examples/configmap/game-env-file.properties -O configure-pod-container/configmap/game-env-file.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># The env-file `game-env-file.properties` looks like below</span></span><br><span class="line">cat configure-pod-container/configmap/game-env-file.properties</span><br><span class="line">enemies=aliens</span><br><span class="line">lives=3</span><br><span class="line">allowed=<span class="string">"true"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This comment and the empty line above it are ignored</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl get configmap game-config-env-file -o yaml</span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2017-12-27T18:36:28Z</span></span><br><span class="line"><span class="comment">#   name: game-config-env-file</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "809965"</span></span><br><span class="line"><span class="comment">#   uid: d9d1ca5b-eb34-11e7-887b-42010a8002b8</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   allowed: '"true"'</span></span><br><span class="line"><span class="comment">#   enemies: aliens</span></span><br><span class="line"><span class="comment">#   lives: "3"</span></span><br></pre></td></tr></table></figure>
-<p>使用多個<code>--from-env-file</code> </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Download the sample files into `configure-pod-container/configmap/` directory</span></span><br><span class="line">wget https://kubernetes.io/examples/configmap/ui-env-file.properties -O configure-pod-container/configmap/ui-env-file.properties</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the configmap</span></span><br><span class="line">kubectl create configmap config-multi-env-files \</span><br><span class="line">        --from-env-file=configure-pod-container/configmap/game-env-file.properties \</span><br><span class="line">        --from-env-file=configure-pod-container/configmap/ui-env-file.properties</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kubectl get configmap config-multi-env-files -o yaml</span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2017-12-27T18:38:34Z</span></span><br><span class="line"><span class="comment">#   name: config-multi-env-files</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "810136"</span></span><br><span class="line"><span class="comment">#   uid: 252c4572-eb35-11e7-887b-42010a8002b8</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   color: purple</span></span><br><span class="line"><span class="comment">#   how: fairlyNice</span></span><br><span class="line"><span class="comment">#   textmode: "true"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#kubectl create configmap game-config-3 --from-file=&lt;my-key-name&gt;=&lt;path-to-file&gt;</span></span><br><span class="line">kubectl create configmap game-config-3 --from-file=game-special-key=configure-pod-container/configmap/game.properties</span><br><span class="line"></span><br><span class="line">kubectl get configmaps game-config-3 -o yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2016-02-18T18:54:22Z</span></span><br><span class="line"><span class="comment">#   name: game-config-3</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "530"</span></span><br><span class="line"><span class="comment">#   uid: 05f8da22-d671-11e5-8cd0-68f728db1985</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   game-special-key: |</span></span><br><span class="line"><span class="comment">#     enemies=aliens</span></span><br><span class="line"><span class="comment">#     lives=3</span></span><br><span class="line"><span class="comment">#     enemies.cheat=true</span></span><br><span class="line"><span class="comment">#     enemies.cheat.level=noGoodRotten</span></span><br><span class="line"><span class="comment">#     secret.code.passphrase=UUDDLRLRBABAS</span></span><br><span class="line"><span class="comment">#     secret.code.allowed=true</span></span><br><span class="line"><span class="comment">#     secret.code.lives=30</span></span><br></pre></td></tr></table></figure>
-<p>指令內文 key</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap special-config --from-literal=special.how=very --from-literal=special.type=charm</span><br><span class="line">kubectl get configmaps special-config -o yaml</span><br><span class="line"><span class="comment"># apiVersion: v1</span></span><br><span class="line"><span class="comment"># kind: ConfigMap</span></span><br><span class="line"><span class="comment"># metadata:</span></span><br><span class="line"><span class="comment">#   creationTimestamp: 2016-02-18T19:14:38Z</span></span><br><span class="line"><span class="comment">#   name: special-config</span></span><br><span class="line"><span class="comment">#   namespace: default</span></span><br><span class="line"><span class="comment">#   resourceVersion: "651"</span></span><br><span class="line"><span class="comment">#   uid: dadce046-d673-11e5-8cd0-68f728db1985</span></span><br><span class="line"><span class="comment"># data:</span></span><br><span class="line"><span class="comment">#   special.how: very</span></span><br><span class="line"><span class="comment">#   special.type: charm</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a kustomization.yaml file with ConfigMapGenerator</span></span><br><span class="line">cat &lt;&lt;EOF &gt;./kustomization.yaml</span><br><span class="line">configMapGenerator:</span><br><span class="line">- name: game-config-4</span><br><span class="line">  files:</span><br><span class="line">  - configure-pod-container/configmap/game.properties</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl apply -k .</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl describe configmaps/game-config-4-m9dm2f92bt</span><br></pre></td></tr></table></figure>
-<p>定義 key Mapping 到 檔案</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a kustomization.yaml file with ConfigMapGenerator</span></span><br><span class="line">cat &lt;&lt;EOF &gt;./kustomization.yaml</span><br><span class="line">configMapGenerator:</span><br><span class="line">- name: game-config-5</span><br><span class="line">  files:</span><br><span class="line">  - game-special-key=configure-pod-container/configmap/game.properties</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl apply -k .</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Create a kustomization.yaml file with ConfigMapGenerator</span><br><span class="line">cat &lt;&lt;EOF &gt;.&#x2F;kustomization.yaml</span><br><span class="line">configMapGenerator:</span><br><span class="line">- name: special-config-2</span><br><span class="line">  literals:</span><br><span class="line">  - special.how&#x3D;very</span><br><span class="line">  - special.type&#x3D;charm</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubectl apply -k .</span><br></pre></td></tr></table></figure>
-<h2 id="在-Pod-使用-ConfigMap"><a href="#在-Pod-使用-ConfigMap" class="headerlink" title="在 Pod 使用 ConfigMap"></a>在 Pod 使用 ConfigMap</h2><h3 id="使用環境變數"><a href="#使用環境變數" class="headerlink" title="使用環境變數"></a>使用環境變數</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap special-config --from-literal=special.how=very</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">dapi-test-pod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">test-container</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">k8s.gcr.io/busybox</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">[</span> <span class="string">"/bin/sh"</span><span class="string">,</span> <span class="string">"-c"</span><span class="string">,</span> <span class="string">"env"</span> <span class="string">]</span></span><br><span class="line">      <span class="attr">env:</span></span><br><span class="line">        <span class="comment"># Define the environment variable</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SPECIAL_LEVEL_KEY</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">            <span class="attr">configMapKeyRef:</span></span><br><span class="line">              <span class="comment"># The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">special-config</span></span><br><span class="line">              <span class="comment"># Specify the key associated with the value</span></span><br><span class="line">              <span class="attr">key:</span> <span class="string">special.how</span></span><br><span class="line">  <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://kubernetes.io/examples/pods/pod-single-configmap-env-variable.yaml</span><br></pre></td></tr></table></figure>
-<p>使用多個 ConfigMap</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  name: special-config</span><br><span class="line">  namespace: default</span><br><span class="line">data:</span><br><span class="line">  special.how: very</span><br><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  name: env-config</span><br><span class="line">  namespace: default</span><br><span class="line">data:</span><br><span class="line">  log_level: INFO</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://kubernetes.io/examples/configmap/configmaps.yaml</span><br></pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">dapi-test-pod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">test-container</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">k8s.gcr.io/busybox</span></span><br><span class="line">      <span class="attr">command:</span> <span class="string">[</span> <span class="string">"/bin/sh"</span><span class="string">,</span> <span class="string">"-c"</span><span class="string">,</span> <span class="string">"env"</span> <span class="string">]</span></span><br><span class="line">      <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">SPECIAL_LEVEL_KEY</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">            <span class="attr">configMapKeyRef:</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">special-config</span></span><br><span class="line">              <span class="attr">key:</span> <span class="string">special.how</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">LOG_LEVEL</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">            <span class="attr">configMapKeyRef:</span></span><br><span class="line">              <span class="attr">name:</span> <span class="string">env-config</span></span><br><span class="line">              <span class="attr">key:</span> <span class="string">log_level</span></span><br><span class="line">  <span class="attr">restartPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://kubernetes.io/examples/pods/pod-multiple-configmap-env-variable.yaml</span><br></pre></td></tr></table></figure>
-<p>TODO: <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-with-data-from-multiple-configmaps" target="_blank" rel="noopener">https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-container-environment-variables-with-data-from-multiple-configmaps</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/12/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/blog/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/69/">69</a><a class="extend next" rel="next" href="/blog/page/14/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/12/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/blog/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/70/">70</a><a class="extend next" rel="next" href="/blog/page/14/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1406,7 +1400,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">689</span>
+          <span class="site-state-item-count">695</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="之前都是在VM測試用Ubuntu 18.04 快速用 apt 安裝，但發現 20.04 沒有這麼順利，所以這邊就簡單照網路操作安裝，順便紀錄一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雲端虛擬機 Ubuntu 20.04 安裝 Kubernetes">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/04/02/%E9%9B%B2%E7%AB%AF%E8%99%9B%E6%93%AC%E6%A9%9F-Ubuntu-20-04-%E5%AE%89%E8%A3%9D-Kubernetes/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="之前都是在VM測試用Ubuntu 18.04 快速用 apt 安裝，但發現 20.04 沒有這麼順利，所以這邊就簡單照網路操作安裝，順便紀錄一下。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/QJ6RzSx.png">
+<meta property="og:image" content="https://i.imgur.com/vrlSbBn.png">
+<meta property="og:image" content="https://i.imgur.com/pU1ikYU.png">
+<meta property="og:image" content="https://i.imgur.com/t8WkLdz.png">
+<meta property="og:image" content="https://i.imgur.com/Rzk1l9i.png">
+<meta property="article:published_time" content="2022-04-02T15:58:27.000Z">
+<meta property="article:modified_time" content="2022-04-02T16:01:07.885Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/QJ6RzSx.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/04/02/%E9%9B%B2%E7%AB%AF%E8%99%9B%E6%93%AC%E6%A9%9F-Ubuntu-20-04-%E5%AE%89%E8%A3%9D-Kubernetes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>雲端虛擬機 Ubuntu 20.04 安裝 Kubernetes | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/04/02/%E9%9B%B2%E7%AB%AF%E8%99%9B%E6%93%AC%E6%A9%9F-Ubuntu-20-04-%E5%AE%89%E8%A3%9D-Kubernetes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          雲端虛擬機 Ubuntu 20.04 安裝 Kubernetes
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-04-02 23:58:27" itemprop="dateCreated datePublished" datetime="2022-04-02T23:58:27+08:00">2022-04-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-04-03 00:01:07" itemprop="dateModified" datetime="2022-04-03T00:01:07+08:00">2022-04-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/04/02/%E9%9B%B2%E7%AB%AF%E8%99%9B%E6%93%AC%E6%A9%9F-Ubuntu-20-04-%E5%AE%89%E8%A3%9D-Kubernetes/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/04/02/雲端虛擬機-Ubuntu-20-04-安裝-Kubernetes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>之前都是在VM測試用Ubuntu 18.04 快速用 apt 安裝，但發現 20.04 沒有這麼順利，所以這邊就簡單照網路操作安裝，順便紀錄一下。</p>
+<a id="more"></a>
+<h2 id="安裝-K8S"><a href="#安裝-K8S" class="headerlink" title="安裝 K8S"></a>安裝 K8S</h2><h3 id="安裝kubelet-kubeadm-and-kubectl"><a href="#安裝kubelet-kubeadm-and-kubectl" class="headerlink" title="安裝kubelet, kubeadm and kubectl"></a>安裝kubelet, kubeadm and kubectl</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt -y install curl apt-transport-https</span><br><span class="line">curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb https://apt.kubernetes.io/ kubernetes-xenial main"</span> | sudo tee /etc/apt/sources.list.d/kubernetes.list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt -y install vim git curl wget kubelet kubeadm kubectl</span><br><span class="line">sudo apt-mark hold kubelet kubeadm kubectl</span><br></pre></td></tr></table></figure>
+<h4 id="確認結果"><a href="#確認結果" class="headerlink" title="確認結果"></a>確認結果</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl version --client &amp;&amp; kubeadm version</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/QJ6RzSx.png" alt=""></p>
+<h3 id="關掉swap"><a href="#關掉swap" class="headerlink" title="關掉swap"></a>關掉swap</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i <span class="string">'/ swap / s/^\(.*\)$/#\1/g'</span> /etc/fstab</span><br><span class="line">sudo swapoff -a</span><br></pre></td></tr></table></figure>
+<h3 id="設定-kernel-modules"><a href="#設定-kernel-modules" class="headerlink" title="設定 kernel modules"></a>設定 kernel modules</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Enable kernel modules</span></span><br><span class="line">sudo modprobe overlay</span><br><span class="line">sudo modprobe br_netfilter</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add some settings to sysctl</span></span><br><span class="line">sudo tee /etc/sysctl.d/kubernetes.conf&lt;&lt;EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reload sysctl</span></span><br><span class="line">sudo sysctl --system</span><br></pre></td></tr></table></figure>
+<h4 id="確認執行結果"><a href="#確認執行結果" class="headerlink" title="確認執行結果"></a>確認執行結果</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep br_netfilter</span><br></pre></td></tr></table></figure>
+<h3 id="安裝-Container-runtime"><a href="#安裝-Container-runtime" class="headerlink" title="安裝 Container runtime"></a>安裝 Container runtime</h3><h4 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add repo and Install packages</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 上下面這段要分開複製執行</span></span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y containerd.io docker-ce docker-ce-cli</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create required directories</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create daemon json config file</span></span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"exec-opts"</span>: [<span class="string">"native.cgroupdriver=systemd"</span>],</span><br><span class="line">  <span class="string">"log-driver"</span>: <span class="string">"json-file"</span>,</span><br><span class="line">  <span class="string">"log-opts"</span>: &#123;</span><br><span class="line">    <span class="string">"max-size"</span>: <span class="string">"100m"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"storage-driver"</span>: <span class="string">"overlay2"</span></span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start and enable Services</span></span><br><span class="line">sudo systemctl daemon-reload </span><br><span class="line">sudo systemctl restart docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+<h3 id="啟用-kubelet"><a href="#啟用-kubelet" class="headerlink" title="啟用 kubelet"></a>啟用 kubelet</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> kubelet</span><br></pre></td></tr></table></figure>
+<h3 id="pull-相關-kubernetes-image-元件"><a href="#pull-相關-kubernetes-image-元件" class="headerlink" title="pull 相關 kubernetes image 元件"></a>pull 相關 kubernetes image 元件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo kubeadm config images pull</span><br></pre></td></tr></table></figure>
+<h3 id="kubernetes-master-初始化-kubernetes-網路"><a href="#kubernetes-master-初始化-kubernetes-網路" class="headerlink" title="kubernetes-master 初始化 kubernetes 網路"></a>kubernetes-master 初始化 kubernetes 網路</h3><p><strong>kubernetes-master 需要做，worker跳過</strong><br><strong>kubernetes-master 需要做，worker跳過</strong><br><strong>kubernetes-master 需要做，worker跳過</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># calic 的網路範圍，但我後來失敗改用flannel</span><br><span class="line"># sudo kubeadm init \</span><br><span class="line">  --pod-network-cidr&#x3D;192.168.0.0&#x2F;16</span><br><span class="line"># flannel IP範圍是  10.244.0.0 &#x2F;16</span><br><span class="line">sudo kubeadm init --pod-network-cidr&#x3D;10.244.0.0&#x2F;16</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>The screenshot below shows that the initialization was successful. We have also added a flag to specify the pod network with the IP 10.244.0.0, It’s the default IP that the kube-flannel uses. We will discuss more on the pod network in the next step.</p>
+</blockquote>
+<p>這邊有失敗的話，可以執行<code>kubeadm reset</code>重設定。再重新執行</p>
+<p>參考:<a href="https://blog.csdn.net/u013004700/article/details/81326706" target="_blank" rel="noopener">初始化 Kubernetes 问题（端口占用）_u013004700的专栏-CSDN博客_k8s端口占用</a></p>
+<p>結果下面會顯示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Your Kubernetes control-plane has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  mkdir -p $HOME&#x2F;.kube</span><br><span class="line">  sudo cp -i &#x2F;etc&#x2F;kubernetes&#x2F;admin.conf $HOME&#x2F;.kube&#x2F;config</span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME&#x2F;.kube&#x2F;config</span><br><span class="line"></span><br><span class="line">Alternatively, if you are the root user, you can run:</span><br><span class="line"></span><br><span class="line">  export KUBECONFIG&#x3D;&#x2F;etc&#x2F;kubernetes&#x2F;admin.conf</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:</span><br><span class="line">  https:&#x2F;&#x2F;kubernetes.io&#x2F;docs&#x2F;concepts&#x2F;cluster-administration&#x2F;addons&#x2F;</span><br><span class="line"></span><br><span class="line">Then you can join any number of worker nodes by running the following on each as root:</span><br><span class="line"></span><br><span class="line">kubeadm join 192.168.100.11:6443 --token a3egpo.22u4srzgnrmoaxfe \</span><br><span class="line">        --discovery-token-ca-cert-hash sha256:ca6ab702a4247c0d7dd0daf040e9c53d90b8e5c3085dada496bec7ec4e98ed55</span><br></pre></td></tr></table></figure>
+<h3 id="kubectl-連線設定"><a href="#kubectl-連線設定" class="headerlink" title="kubectl 連線設定"></a>kubectl 連線設定</h3><p>kubectl 連線設定套用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -f /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure></p>
+<p>可以看到安裝完某些服務<code>Pendding</code><br><img src="https://i.imgur.com/vrlSbBn.png" alt=""></p>
+<h3 id="查加-worker1-指令"><a href="#查加-worker1-指令" class="headerlink" title="查加 worker1 指令"></a>查加 worker1 指令</h3><p>忘記怎麼加可以下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm token create --print-join-command</span><br></pre></td></tr></table></figure>
+<p>會顯示加 worker指令</p>
+<p><img src="https://i.imgur.com/pU1ikYU.png" alt=""></p>
+<p>接下來要加 worker 指令</p>
+<h3 id="加入-bash-auto-completion"><a href="#加入-bash-auto-completion" class="headerlink" title="加入 bash auto-completion"></a>加入 bash auto-completion</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'source &lt;(kubectl completion bash)'</span> &gt;&gt;~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>重新 ssh 進來就可以正常使用。</p>
+<p>參考:<a href="https://kubernetes.io/docs/tasks/tools/included/optional-kubectl-configs-bash-linux/" target="_blank" rel="noopener">bash auto-completion on Linux | Kubernetes</a></p>
+<h3 id="怎麼移除-worker"><a href="#怎麼移除-worker" class="headerlink" title="怎麼移除 worker"></a>怎麼移除 worker</h3><h4 id="Master"><a href="#Master" class="headerlink" title="Master"></a>Master</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 停用 node 掉度</span></span><br><span class="line">kubectl drain k8s-worker1 --delete-local-data --force --ignore-daemonsets</span><br><span class="line"><span class="comment"># 刪掉 node(worker)</span></span><br><span class="line">kubectl delete node k8s-worker1</span><br></pre></td></tr></table></figure>
+<h4 id="Worker"><a href="#Worker" class="headerlink" title="Worker"></a>Worker</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo kubeadm reset</span><br></pre></td></tr></table></figure>
+<p>參考:</p>
+<ul>
+<li><a href="https://blog.csdn.net/javahuazaili/article/details/114197605" target="_blank" rel="noopener">kubernetes集群新增/移除work節點_change the door-CSDN博客_k8s增加work節點</a></li>
+<li><a href="https://www.itread01.com/content/1525714713.html" target="_blank" rel="noopener">向Kubernetes集群添加／刪除Node - IT閱讀</a></li>
+</ul>
+<h3 id="安裝-K8S-網路套件-calic"><a href="#安裝-K8S-網路套件-calic" class="headerlink" title="安裝 K8S 網路套件(calic)"></a>安裝 K8S 網路套件(calic)</h3><p>建議使用IP 範圍選172開頭，我最後選擇flannel ，跑網路這一快才成功。因為我IP是10開頭，不確定是不是因為這樣撞到IP，所以我才換flannel。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml </span><br><span class="line">kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml</span><br></pre></td></tr></table></figure>
+<h3 id="flannel"><a href="#flannel" class="headerlink" title="flannel"></a>flannel</h3><p>參考<a href="https://www.cloudsigma.com/how-to-install-and-use-kubernetes-on-ubuntu-20-04/" target="_blank" rel="noopener">How to Install and Use Kubernetes on Ubuntu 20.04 • CloudSigma</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml</span><br></pre></td></tr></table></figure></p>
+<p>可以查看結果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch kubectl get pods --all-namespaces</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.mianshigee.com/tutorial/kubernetes-practice-guide/deploy-manual-bootstrapping-worker-nodes.md" target="_blank" rel="noopener">部署 Worker 节点-Kubernetes 实践指南（Kubernetes Practice Guide）-面试哥</a></p>
+<h3 id="也許不需要操作-worker"><a href="#也許不需要操作-worker" class="headerlink" title="也許不需要操作 worker"></a>也許不需要操作 worker</h3><p>我剛開始很想在 worker主機看當下主機資源，但操作不能看到，因為之前玩 Docker Swarm 時候我有當下 docker ps 看當下主機資源，後來發現應該要到<code>control-plane</code>去操作。</p>
+<p><img src="https://i.imgur.com/t8WkLdz.png" alt=""></p>
+<p>其實 join 進去的時候就有寫上。</p>
+<p><img src="https://i.imgur.com/Rzk1l9i.png" alt=""></p>
+<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><p><a href="https://blog.csdn.net/networken/article/details/120491802" target="_blank" rel="noopener">kubernetes部署loki日志系统_willblog-CSDN博客</a><br><a href="https://medium.com/%E6%93%8D%E4%BD%9C%E4%B8%80%E4%B8%8B/%E5%BE%9E0%E5%88%B01%E7%9A%84%E9%9B%B2%E7%AB%AF%E6%AD%B7%E7%A8%8B-2021-aws-cloud-practitioner-%E8%AD%89%E7%85%A7%E6%BA%96%E5%82%99-6de1870bdbd4" target="_blank" rel="noopener">從0到1的雲端歷程 ｜2021 AWS CCP_Cloud Practitioner 證照準備 | 操作一下</a><br><a href="https://zhuanlan.zhihu.com/p/343868046" target="_blank" rel="noopener">一文搞懂Kubernetes网络策略(上) - 知乎</a><br><a href="https://q.cnblogs.com/q/124871/" target="_blank" rel="noopener">k8s 中如何修改 pod-network-cidr 地址范围<em>已解决</em>博问_博客园</a><br><a href="https://iter01.com/510519.html" target="_blank" rel="noopener">簡單5步，輕鬆debug K8S服務！ | IT人</a><br><a href="https://betterprogramming.pub/debug-your-kubernetes-service-in-5-easy-steps-1457974f024c" target="_blank" rel="noopener">Debug Your Kubernetes Service in 5 Easy Steps | by Ram Rai | Better Programming</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/kubernetes/" rel="tag"># kubernetes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/04/02/Kubernetes-pod-network-cidr-%E8%A8%AD%E9%8C%AF%E6%9C%83%E7%99%BC%E7%94%9F%E4%BB%80%E9%BA%BC%E4%BA%8B%E6%83%85/" rel="prev" title="Kubernetes pod-network-cidr 設錯會發生什麼事情">
+      <i class="fa fa-chevron-left"></i> Kubernetes pod-network-cidr 設錯會發生什麼事情
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/04/03/%E4%BD%BF%E7%94%A8-helm-%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA-Traefik-Ingress-Controller/" rel="next" title="使用 Helm 快速搭建 Traefik Ingress Controller">
+      使用 Helm 快速搭建 Traefik Ingress Controller <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝-K8S"><span class="nav-number">1.</span> <span class="nav-text">安裝 K8S</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝kubelet-kubeadm-and-kubectl"><span class="nav-number">1.1.</span> <span class="nav-text">安裝kubelet, kubeadm and kubectl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#確認結果"><span class="nav-number">1.1.1.</span> <span class="nav-text">確認結果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#關掉swap"><span class="nav-number">1.2.</span> <span class="nav-text">關掉swap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#設定-kernel-modules"><span class="nav-number">1.3.</span> <span class="nav-text">設定 kernel modules</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#確認執行結果"><span class="nav-number">1.3.1.</span> <span class="nav-text">確認執行結果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-Container-runtime"><span class="nav-number">1.4.</span> <span class="nav-text">安裝 Container runtime</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker"><span class="nav-number">1.4.1.</span> <span class="nav-text">docker</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#啟用-kubelet"><span class="nav-number">1.5.</span> <span class="nav-text">啟用 kubelet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pull-相關-kubernetes-image-元件"><span class="nav-number">1.6.</span> <span class="nav-text">pull 相關 kubernetes image 元件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubernetes-master-初始化-kubernetes-網路"><span class="nav-number">1.7.</span> <span class="nav-text">kubernetes-master 初始化 kubernetes 網路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubectl-連線設定"><span class="nav-number">1.8.</span> <span class="nav-text">kubectl 連線設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查加-worker1-指令"><span class="nav-number">1.9.</span> <span class="nav-text">查加 worker1 指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入-bash-auto-completion"><span class="nav-number">1.10.</span> <span class="nav-text">加入 bash auto-completion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#怎麼移除-worker"><span class="nav-number">1.11.</span> <span class="nav-text">怎麼移除 worker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Master"><span class="nav-number">1.11.1.</span> <span class="nav-text">Master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Worker"><span class="nav-number">1.11.2.</span> <span class="nav-text">Worker</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安裝-K8S-網路套件-calic"><span class="nav-number">1.12.</span> <span class="nav-text">安裝 K8S 網路套件(calic)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flannel"><span class="nav-number">1.13.</span> <span class="nav-text">flannel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#也許不需要操作-worker"><span class="nav-number">1.14.</span> <span class="nav-text">也許不需要操作 worker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#彩蛋"><span class="nav-number">2.</span> <span class="nav-text">彩蛋</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">695</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/04/02/%E9%9B%B2%E7%AB%AF%E8%99%9B%E6%93%AC%E6%A9%9F-Ubuntu-20-04-%E5%AE%89%E8%A3%9D-Kubernetes/";
+    this.page.identifier = "2022/04/02/雲端虛擬機-Ubuntu-20-04-安裝-Kubernetes/";
+    this.page.title = "雲端虛擬機 Ubuntu 20.04 安裝 Kubernetes";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

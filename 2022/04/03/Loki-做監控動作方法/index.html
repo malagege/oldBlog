@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="選 Loki 做監控主要是動物機架一個 Web 服務，天天查看 log 都有被攻擊跡象。我使用 Loki LogQL 去做查詢，雖然有做一層 網域才顯示內容，前正子使用 Autleia 做 雙因子驗證，更久以前還有設定 iptable 台灣 IP 才能連，但現在有做 TLS 關係，所以不能擋 IP，不知道 Docker 能不能跟 fail2ban 做結合。最近也有看 traefik plugnin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Loki 做監控動作方法">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/04/03/Loki-%E5%81%9A%E7%9B%A3%E6%8E%A7%E5%8B%95%E4%BD%9C%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="選 Loki 做監控主要是動物機架一個 Web 服務，天天查看 log 都有被攻擊跡象。我使用 Loki LogQL 去做查詢，雖然有做一層 網域才顯示內容，前正子使用 Autleia 做 雙因子驗證，更久以前還有設定 iptable 台灣 IP 才能連，但現在有做 TLS 關係，所以不能擋 IP，不知道 Docker 能不能跟 fail2ban 做結合。最近也有看 traefik plugnin">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/GNbpxmu.png">
+<meta property="og:image" content="https://i.imgur.com/szhUj0b.png">
+<meta property="og:image" content="https://i.imgur.com/pQQbw19.png">
+<meta property="article:published_time" content="2022-04-02T16:09:18.000Z">
+<meta property="article:modified_time" content="2022-04-02T16:13:34.160Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="loki">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/GNbpxmu.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/04/03/Loki-%E5%81%9A%E7%9B%A3%E6%8E%A7%E5%8B%95%E4%BD%9C%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Loki 做監控動作方法 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/04/03/Loki-%E5%81%9A%E7%9B%A3%E6%8E%A7%E5%8B%95%E4%BD%9C%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Loki 做監控動作方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-04-03 00:09:18 / 修改時間：00:13:34" itemprop="dateCreated datePublished" datetime="2022-04-03T00:09:18+08:00">2022-04-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/04/03/Loki-%E5%81%9A%E7%9B%A3%E6%8E%A7%E5%8B%95%E4%BD%9C%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/04/03/Loki-做監控動作方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>選 Loki 做監控主要是動物機架一個 Web 服務，天天查看 log 都有被攻擊跡象。我使用 Loki LogQL 去做查詢，雖然有做一層 網域才顯示內容，前正子使用 Autleia 做 雙因子驗證，更久以前還有設定 iptable 台灣 IP 才能連，但現在有做 TLS 關係，所以不能擋 IP，不知道 Docker 能不能跟 fail2ban 做結合。最近也有看 traefik plugnin 也有fail2ban ，改天有空也能研究看看。</p>
+<p>這兩天還攻擊滿可觀的。<br><img src="https://i.imgur.com/GNbpxmu.png" alt=""></p>
+<p>查詢不友善的IP訪問，這邊我之前寫的 LogQL，暫時放在這邊。之前想特別紀錄，但久久就忘記規則怎麼用，但所幸參考範例改一改還是能試出來。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;container_name&#x3D;&quot;rpi-traefik_traefik_1&quot;,host&#x3D;&quot;PI202&quot;&#125; | json | ClientHost!~&quot;192.168.+|排除IP&quot; RequestPath !&#x3D; &quot;&#x2F;&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;container_name&#x3D;&quot;rpi-traefik_traefik_1&quot;,host&#x3D;&quot;PI202&quot;&#125; | json | ClientHost!~&quot;192.168.+|排除IP&quot; RequestPath !&#x3D; &quot;&#x2F;&quot; DownstreamStatus !&#x3D; &quot;404&quot;  | line_format &quot;&#123;&#123;.ClientHost&#125;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>本章節(筆記)還是重點還是放在，Open Beta 主機架設 Kubernetes 怎麼抓 Loki log資訊做監控。</p>
+<a id="more"></a>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><pre class="mermaid" style="text-align: center;">
+            flowchart LR
+            Promtail ----> Loki
+Promtail -- metrics 增加 prometheus 資料 --> Prometheus
+Prometheus --> AlertManager
+          </pre>
+<p>主要參照<a href="https://www.qikqiak.com/post/use-loki-monitor-alert/" target="_blank" rel="noopener">使用 Loki 进行日志监控和报警-阳明的博客|Kubernetes|Istio|Prometheus|Python|Golang|云原生</a>文章，操作中發現現有版本設定有改，但修正也能正常使用。</p>
+<h2 id="實作流程"><a href="#實作流程" class="headerlink" title="實作流程"></a>實作流程</h2><p>參考文章</p>
+<ul>
+<li><a href="https://www.qikqiak.com/post/use-loki-monitor-alert/" target="_blank" rel="noopener">使用 Loki 进行日志监控和报警-阳明的博客|Kubernetes|Istio|Prometheus|Python|Golang|云原生</a></li>
+<li><a href="https://www.cnblogs.com/lvzhenjiang/p/15639174.html#32-%E4%BF%AE%E6%94%B9valuesyaml%E6%96%87%E4%BB%B6" target="_blank" rel="noopener">Kubernetes轻量级日志收集系统Loki-Stack - 吕振江 - 博客园</a></li>
+<li><a href="https://blog.ruanbekker.com/blog/2020/11/06/how-to-setup-alerting-with-loki/" target="_blank" rel="noopener">How to Setup Alerting With Loki - Ruan Bekker’s Blog</a></li>
+</ul>
+<h2 id="設定-loki-stack-yml-helm-values-yml"><a href="#設定-loki-stack-yml-helm-values-yml" class="headerlink" title="設定 loki-stack.yml(helm values.yml)"></a>設定 loki-stack.yml(helm values.yml)</h2><p>主要重點在這段<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">promtail:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">pipelineStages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">match:</span></span><br><span class="line">      <span class="attr">selector:</span> <span class="string">'&#123;app="nginx"&#125;'</span></span><br><span class="line">      <span class="attr">stages:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">regex:</span></span><br><span class="line">          <span class="attr">expression:</span> <span class="string">'.*(?P&lt;hits&gt;GET /.*)'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">metrics:</span></span><br><span class="line">          <span class="attr">nginx_hits:</span> </span><br><span class="line">            <span class="attr">type:</span> <span class="string">Counter</span></span><br><span class="line">            <span class="attr">description:</span> <span class="string">"Total nginx requests"</span></span><br><span class="line">            <span class="attr">source:</span> <span class="string">hits</span></span><br><span class="line">            <span class="attr">config:</span></span><br><span class="line">              <span class="attr">action:</span> <span class="string">inc</span></span><br></pre></td></tr></table></figure></p>
+<p><code>pipelineStages</code>可以看相關看官方文件，他這個有點像pipeline 交給後續處理，前面處理失敗，所以後面就不會監控到，可以查看 Grafana 的log 格式調整設定檔內容。可參考:<a href="https://grafana.com/docs/loki/latest/clients/promtail/stages/" target="_blank" rel="noopener">Stages | Grafana Labs</a></p>
+<p>loki-stacl.yml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">loki:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">promtail:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">pipelineStages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">docker:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">match:</span></span><br><span class="line">      <span class="attr">selector:</span> <span class="string">'&#123;app="nginx"&#125;'</span></span><br><span class="line">      <span class="attr">stages:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">regex:</span></span><br><span class="line">          <span class="attr">expression:</span> <span class="string">'.*(?P&lt;hits&gt;GET /.*)'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">metrics:</span></span><br><span class="line">          <span class="attr">nginx_hits:</span> </span><br><span class="line">            <span class="attr">type:</span> <span class="string">Counter</span></span><br><span class="line">            <span class="attr">description:</span> <span class="string">"Total nginx requests"</span></span><br><span class="line">            <span class="attr">source:</span> <span class="string">hits</span></span><br><span class="line">            <span class="attr">config:</span></span><br><span class="line">              <span class="attr">action:</span> <span class="string">inc</span></span><br><span class="line"></span><br><span class="line"><span class="attr">fluent-bit:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">grafana:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">sidecar:</span></span><br><span class="line">    <span class="attr">datasources:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">tag:</span> <span class="number">8.3</span><span class="number">.5</span></span><br><span class="line"></span><br><span class="line"><span class="attr">prometheus:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">persistentVolume:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">alertmanager:</span></span><br><span class="line">    <span class="attr">persistentVolume:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">filebeat:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">filebeatConfig:</span></span><br><span class="line">    <span class="attr">filebeat.yml:</span> <span class="string">|</span></span><br><span class="line">      <span class="comment"># logging.level: debug</span></span><br><span class="line">      <span class="attr">filebeat.inputs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">container</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">/var/log/containers/*.log</span></span><br><span class="line">        <span class="attr">processors:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">add_kubernetes_metadata:</span></span><br><span class="line">            <span class="attr">host:</span> <span class="string">$&#123;NODE_NAME&#125;</span></span><br><span class="line">            <span class="attr">matchers:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">logs_path:</span></span><br><span class="line">                <span class="attr">logs_path:</span> <span class="string">"/var/log/containers/"</span></span><br><span class="line">      <span class="attr">output.logstash:</span></span><br><span class="line">        <span class="attr">hosts:</span> <span class="string">["logstash-loki:5044"]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">logstash:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">grafana/logstash-output-loki</span></span><br><span class="line">  <span class="attr">imageTag:</span> <span class="number">1.0</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">filters:</span></span><br><span class="line">    <span class="attr">main:</span> <span class="string">|-</span></span><br><span class="line">      <span class="string">filter</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">if</span> <span class="string">[kubernetes]</span> <span class="string">&#123;</span></span><br><span class="line">          <span class="string">mutate</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="string">add_field</span> <span class="string">=&gt;</span> <span class="string">&#123;</span></span><br><span class="line">              <span class="string">"container_name"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][container][name]&#125;</span>"</span></span><br><span class="line">              <span class="string">"namespace"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][namespace]&#125;</span>"</span></span><br><span class="line">              <span class="string">"pod"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][pod][name]&#125;</span>"</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">            <span class="string">replace</span> <span class="string">=&gt;</span> <span class="string">&#123;</span> <span class="string">"host"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][node][name]&#125;</span>"</span><span class="string">&#125;</span></span><br><span class="line">          <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">        <span class="string">mutate</span> <span class="string">&#123;</span></span><br><span class="line">          <span class="string">remove_field</span> <span class="string">=&gt;</span> <span class="string">["tags"]</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">      <span class="string">&#125;</span></span><br><span class="line">  <span class="attr">outputs:</span></span><br><span class="line">    <span class="attr">main:</span> <span class="string">|-</span></span><br><span class="line">      <span class="string">output</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">loki</span> <span class="string">&#123;</span></span><br><span class="line">          <span class="string">url</span> <span class="string">=&gt;</span> <span class="string">"http://loki:3100/loki/api/v1/push"</span></span><br><span class="line">          <span class="comment">#username =&gt; "test"</span></span><br><span class="line">          <span class="comment">#password =&gt; "test"</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">        <span class="comment"># stdout &#123; codec =&gt; rubydebug &#125;</span></span><br><span class="line">      <span class="string">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm upgrade --install loki grafana/loki-stack -f loki-stack.yml</span><br></pre></td></tr></table></figure>
+<p>接下來用 Grafana 查詢 Promethus 看有沒有抓到資料，有資料代表成功了。原本以為可能要加時間控制抓5分鐘內，但我後來發現好像不需要做這件事，通知會在超過時間之前就發解決，可能後續我在看文件有沒有預設會抓多久。</p>
+<p><img src="https://i.imgur.com/szhUj0b.png" alt=""></p>
+<p><img src="https://i.imgur.com/pQQbw19.png" alt=""></p>
+<h2 id="架設-alertmanger-discord"><a href="#架設-alertmanger-discord" class="headerlink" title="架設 alertmanger-discord"></a>架設 alertmanger-discord</h2><p>建立 deployment 和 service 後，設定好 webhook 就能使用了。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">alertmanager-discord-deployment</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">alertmanager-discord</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">alertmanager-discord</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">alertmanager-discord</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">alertmanager-discord</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">benjojo/alertmanager-discord</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">9094</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">DISCORD_WEBHOOK</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">https://discord.com/api/webhooks/***</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">alertmanager-discord</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">alertmanager-discord</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">9094</span></span><br></pre></td></tr></table></figure>
+<p>可以<code>kubectl get svc</code>查看 service 的IP，可以簡單做<code>curl IP:9094</code>看有沒有失敗訊息，如果有可以確認 Label 有沒有打錯字，可以查看 endpoint 是不是有IP。</p>
+<h2 id="設定-alertmanger-通知"><a href="#設定-alertmanger-通知" class="headerlink" title="設定 alertmanger 通知"></a>設定 alertmanger 通知</h2><p>可以參考:<a href="https://github.com/prometheus-community/helm-charts/blob/main/charts/alertmanager/values.yaml#L144" target="_blank" rel="noopener">helm-charts/values.yaml at main · prometheus-community/helm-charts</a></p>
+<p>我查看裡面有<code>Kuberetes@CRDS</code>可以用，但我這個還不熟悉，之後在接觸。感覺用這個就不需要設定檔案，之前Traefik 有用到 CRDS。<br>可看<a href="https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/alerting.md" target="_blank" rel="noopener">prometheus-operator/alerting.md at main · prometheus-operator/prometheus-operator</a>，之後會做簡單嘗試。</p>
+<p>其實會寫對照設定還滿簡單的，查看我之前在動物機設定，根本可以抄。</p>
+<p>動物機設定<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">global:</span></span><br><span class="line">  <span class="comment">#163服务器</span></span><br><span class="line">  <span class="attr">smtp_smarthost:</span> <span class="string">'smtp.qq.com:465'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱</span></span><br><span class="line">  <span class="attr">smtp_from:</span> <span class="string">'your-email@foxmail.com'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱用户名，也就是你的邮箱　　　　　</span></span><br><span class="line">  <span class="attr">smtp_auth_username:</span> <span class="string">'your-email@foxmail.com'</span></span><br><span class="line">  <span class="comment">#发邮件的邮箱密码</span></span><br><span class="line">  <span class="attr">smtp_auth_password:</span> <span class="string">'your-password'</span></span><br><span class="line">  <span class="comment">#进行tls验证</span></span><br><span class="line">  <span class="attr">smtp_require_tls:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">route:</span></span><br><span class="line">  <span class="attr">group_by:</span> <span class="string">['alertname']</span></span><br><span class="line">  <span class="attr">group_wait:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">group_interval:</span> <span class="string">10s</span></span><br><span class="line">  <span class="attr">repeat_interval:</span> <span class="string">60m</span></span><br><span class="line">  <span class="attr">receiver:</span> <span class="string">discord_webhook</span></span><br><span class="line"></span><br><span class="line"><span class="attr">receivers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'discord_webhook'</span></span><br><span class="line">  <span class="attr">webhook_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">url:</span> <span class="string">'http://192.168.1.203:9094'</span></span><br></pre></td></tr></table></figure></p>
+<p>loki-stack.yml 的 prometheus 設定</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">prometheus:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">persistentVolume:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">alertmanager:</span></span><br><span class="line">    <span class="attr">config:</span></span><br><span class="line">      <span class="attr">receivers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'discord_webhook'</span></span><br><span class="line">          <span class="attr">webhook_configs:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">url:</span> <span class="string">'http://alertmanger-discord:9094'</span></span><br><span class="line">    <span class="attr">persistentVolume:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h2 id="設定-Prometheus-監控自訂的-metrics"><a href="#設定-Prometheus-監控自訂的-metrics" class="headerlink" title="設定 Prometheus 監控自訂的 metrics"></a>設定 Prometheus 監控自訂的 metrics</h2><p>官方建議使用<code>alerting_rules.yml</code>去做設定，不建議使用<code>alerts</code>。<br>參考:<a href="https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus/values.yaml#L1398" target="_blank" rel="noopener">helm-charts/values.yaml at main · prometheus-community/helm-charts</a></p>
+<p>但應該也是有相對應 CRD 去做調整。因為我還沒學到那邊，我覺得我先不使用這方式去做。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">prometheus:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">persistentVolume:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">serverFiles:</span></span><br><span class="line">    <span class="attr">alerting_rules.yml:</span> </span><br><span class="line">      <span class="attr">groups:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">example</span></span><br><span class="line">          <span class="attr">rules:</span>         </span><br><span class="line">          <span class="bullet">-</span> <span class="attr">alert:</span> <span class="string">nginx_hits</span></span><br><span class="line">            <span class="attr">expr:</span> <span class="string">promtail_custom_nginx_hits</span></span><br><span class="line">            <span class="attr">for:</span> <span class="string">30s</span></span><br><span class="line">            <span class="attr">annotations:</span></span><br><span class="line">              <span class="attr">summary:</span> <span class="string">"Instance <span class="template-variable">&#123;&#123; $labels.instance &#125;&#125;</span> nginx hits"</span></span><br><span class="line">              <span class="attr">description:</span> <span class="string">"<span class="template-variable">&#123;&#123; $labels.instance &#125;&#125;</span> of job <span class="template-variable">&#123;&#123; $labels.job &#125;&#125;</span> has been nginx hits for more than 30 seconds."</span></span><br><span class="line">  <span class="attr">alertmanagerFiles:</span></span><br><span class="line">    <span class="attr">alertmanager.yml:</span></span><br><span class="line">      <span class="attr">receivers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'default-receiver'</span></span><br><span class="line">          <span class="attr">webhook_configs:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">url:</span> <span class="string">'http://alertmanager-discord:9094'</span></span><br><span class="line">  <span class="attr">persistentVolume:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>這邊我們達成使用 Loki 針對 Nginx 訪問直接做跳出提醒，做出簡單很廢的實例，這邊可以改寫正規方法，可以抓到自己想要錯誤內容，使用上難度也沒很高。</p>
+<h2 id="DEBUG"><a href="#DEBUG" class="headerlink" title="DEBUG"></a>DEBUG</h2><p>蒐集網路上一些 debug 方法:</p>
+<ul>
+<li><p><a href="https://hackmd.io/@fwfly/SJe1JiGwU" target="_blank" rel="noopener">alertmanager - HackMD</a><br>可以打 Alertmanager 測試看看，可以看看 discord 有沒有收到通知。沒有可能要繼續找…，我後來發現是我 alertmanagerFile: 裡面 service 打錯，所以沒有收到通知。😅</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">alerts1=<span class="string">'[</span></span><br><span class="line"><span class="string">  &#123;</span></span><br><span class="line"><span class="string">    "labels": &#123;</span></span><br><span class="line"><span class="string">       "alertname": "test name",</span></span><br><span class="line"><span class="string">       "severity" : "Warning"</span></span><br><span class="line"><span class="string">     &#125;,</span></span><br><span class="line"><span class="string">     "annotations": &#123;</span></span><br><span class="line"><span class="string">        "Threshold": "&lt;= 2",</span></span><br><span class="line"><span class="string">        "dashboard": "test",</span></span><br><span class="line"><span class="string">        "description":"test",</span></span><br><span class="line"><span class="string">        "infoURL":"test",</span></span><br><span class="line"><span class="string">        "summary":"this is a test mail",</span></span><br><span class="line"><span class="string">        "value":"2"</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">]'</span></span><br><span class="line">curl -XPOST -d <span class="string">"<span class="variable">$alerts1</span>"</span> http://&lt;alertmanager url&gt;/api/v1/alerts</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://blog.yowko.com/prometheus-alertmanager/" target="_blank" rel="noopener">Prometheus 搭配 Alertmanager 發送警示 - Yowko’s Notes</a><br>修改 <code>proxy_url</code> 設定，可以使用 Fiddler 等等相關工具去調整。我目前 Alertmanger 沒有問題，看到這種 debug 特別紀錄一下。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">receivers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'null'</span> <span class="comment"># 不做事</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'email'</span></span><br><span class="line">  <span class="attr">email_configs:</span> <span class="comment"># 指定 email config 來處理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">to:</span> <span class="string">'xxx@yowko.com'</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'webhook'</span></span><br><span class="line">  <span class="attr">webhook_configs:</span> <span class="comment"># 指定 webhook config 來處理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">url:</span> <span class="string">'http://blog.yowko.com'</span></span><br><span class="line">    <span class="attr">http_config:</span></span><br><span class="line">      <span class="attr">proxy_url:</span> <span class="string">'http://192.168.80.3:8866'</span> <span class="comment"># proxy 是個人 debug 用途</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="最後完成-loki-stack-yml-helm-value-yml"><a href="#最後完成-loki-stack-yml-helm-value-yml" class="headerlink" title="最後完成 loki-stack.yml(helm value.yml)"></a>最後完成 loki-stack.yml(helm value.yml)</h2><p>把最後實作重新貼到這邊</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">loki:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">promtail:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">pipelineStages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">match:</span></span><br><span class="line">      <span class="attr">selector:</span> <span class="string">'&#123;app="nginx"&#125;'</span></span><br><span class="line">      <span class="attr">stages:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">regex:</span></span><br><span class="line">          <span class="attr">expression:</span> <span class="string">'.*(?P&lt;hits&gt;GET /.*)'</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">metrics:</span></span><br><span class="line">          <span class="attr">nginx_hits:</span> </span><br><span class="line">            <span class="attr">type:</span> <span class="string">Counter</span></span><br><span class="line">            <span class="attr">description:</span> <span class="string">"Total nginx requests"</span></span><br><span class="line">            <span class="attr">source:</span> <span class="string">hits</span></span><br><span class="line">            <span class="attr">config:</span></span><br><span class="line">              <span class="attr">action:</span> <span class="string">inc</span></span><br><span class="line"></span><br><span class="line"><span class="attr">fluent-bit:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">grafana:</span></span><br><span class="line">  <span class="attr">grafana.ini:</span></span><br><span class="line">    <span class="attr">server:</span></span><br><span class="line">      <span class="attr">root_url:</span> <span class="string">"http://localhost:3000/grafana"</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">sidecar:</span></span><br><span class="line">    <span class="attr">datasources:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">image:</span></span><br><span class="line">    <span class="attr">tag:</span> <span class="number">8.3</span><span class="number">.5</span></span><br><span class="line"></span><br><span class="line"><span class="attr">prometheus:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">persistentVolume:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">serverFiles:</span></span><br><span class="line">    <span class="attr">alerting_rules.yml:</span> </span><br><span class="line">      <span class="attr">groups:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">example</span></span><br><span class="line">          <span class="attr">rules:</span>         </span><br><span class="line">          <span class="bullet">-</span> <span class="attr">alert:</span> <span class="string">nginx_hits</span></span><br><span class="line">            <span class="attr">expr:</span> <span class="string">promtail_custom_nginx_hits</span></span><br><span class="line">            <span class="attr">for:</span> <span class="string">30s</span></span><br><span class="line">            <span class="attr">annotations:</span></span><br><span class="line">              <span class="attr">summary:</span> <span class="string">"Instance <span class="template-variable">&#123;&#123; $labels.instance &#125;&#125;</span> nginx hits"</span></span><br><span class="line">              <span class="attr">description:</span> <span class="string">"<span class="template-variable">&#123;&#123; $labels.instance &#125;&#125;</span> of job <span class="template-variable">&#123;&#123; $labels.job &#125;&#125;</span> has been nginx hits for more than 30 seconds."</span></span><br><span class="line">  <span class="attr">alertmanagerFiles:</span></span><br><span class="line">    <span class="attr">alertmanager.yml:</span></span><br><span class="line">      <span class="attr">receivers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">'default-receiver'</span></span><br><span class="line">          <span class="attr">webhook_configs:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">url:</span> <span class="string">'http://alertmanager-discord:9094'</span></span><br><span class="line">  <span class="attr">persistentVolume:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">filebeat:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">filebeatConfig:</span></span><br><span class="line">    <span class="attr">filebeat.yml:</span> <span class="string">|</span></span><br><span class="line">      <span class="comment"># logging.level: debug</span></span><br><span class="line">      <span class="attr">filebeat.inputs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">type:</span> <span class="string">container</span></span><br><span class="line">        <span class="attr">paths:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">/var/log/containers/*.log</span></span><br><span class="line">        <span class="attr">processors:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">add_kubernetes_metadata:</span></span><br><span class="line">            <span class="attr">host:</span> <span class="string">$&#123;NODE_NAME&#125;</span></span><br><span class="line">            <span class="attr">matchers:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">logs_path:</span></span><br><span class="line">                <span class="attr">logs_path:</span> <span class="string">"/var/log/containers/"</span></span><br><span class="line">      <span class="attr">output.logstash:</span></span><br><span class="line">        <span class="attr">hosts:</span> <span class="string">["logstash-loki:5044"]</span></span><br><span class="line"></span><br><span class="line"><span class="attr">logstash:</span></span><br><span class="line">  <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">grafana/logstash-output-loki</span></span><br><span class="line">  <span class="attr">imageTag:</span> <span class="number">1.0</span><span class="number">.1</span></span><br><span class="line">  <span class="attr">filters:</span></span><br><span class="line">    <span class="attr">main:</span> <span class="string">|-</span></span><br><span class="line">      <span class="string">filter</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">if</span> <span class="string">[kubernetes]</span> <span class="string">&#123;</span></span><br><span class="line">          <span class="string">mutate</span> <span class="string">&#123;</span></span><br><span class="line">            <span class="string">add_field</span> <span class="string">=&gt;</span> <span class="string">&#123;</span></span><br><span class="line">              <span class="string">"container_name"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][container][name]&#125;</span>"</span></span><br><span class="line">              <span class="string">"namespace"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][namespace]&#125;</span>"</span></span><br><span class="line">              <span class="string">"pod"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][pod][name]&#125;</span>"</span></span><br><span class="line">            <span class="string">&#125;</span></span><br><span class="line">            <span class="string">replace</span> <span class="string">=&gt;</span> <span class="string">&#123;</span> <span class="string">"host"</span> <span class="string">=&gt;</span> <span class="string">"<span class="template-variable">%&#123;[kubernetes][node][name]&#125;</span>"</span><span class="string">&#125;</span></span><br><span class="line">          <span class="string">&#125;</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">        <span class="string">mutate</span> <span class="string">&#123;</span></span><br><span class="line">          <span class="string">remove_field</span> <span class="string">=&gt;</span> <span class="string">["tags"]</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">      <span class="string">&#125;</span></span><br><span class="line">  <span class="attr">outputs:</span></span><br><span class="line">    <span class="attr">main:</span> <span class="string">|-</span></span><br><span class="line">      <span class="string">output</span> <span class="string">&#123;</span></span><br><span class="line">        <span class="string">loki</span> <span class="string">&#123;</span></span><br><span class="line">          <span class="string">url</span> <span class="string">=&gt;</span> <span class="string">"http://loki:3100/loki/api/v1/push"</span></span><br><span class="line">          <span class="comment">#username =&gt; "test"</span></span><br><span class="line">          <span class="comment">#password =&gt; "test"</span></span><br><span class="line">        <span class="string">&#125;</span></span><br><span class="line">        <span class="comment"># stdout &#123; codec =&gt; rubydebug &#125;</span></span><br><span class="line">      <span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm upgrade --install loki grafana/loki-stack -f loki-stack.yml</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/kubernetes/" rel="tag"># kubernetes</a>
+              <a href="/blog/tags/loki/" rel="tag"># loki</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/04/03/%E4%BD%BF%E7%94%A8-Helm-%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%9D-Loki/" rel="prev" title="使用 Helm 快速安裝 Loki">
+      <i class="fa fa-chevron-left"></i> 使用 Helm 快速安裝 Loki
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/04/03/%E5%9C%A8-Kubernetes-%E7%94%A8-Loki-%E8%92%90%E9%9B%86-log-%E5%81%9A%E7%9B%A3%E6%8E%A7%E8%AD%A6%E5%91%8A%E9%80%9A%E7%9F%A5%E6%96%B9%E6%B3%95%E6%95%B4%E7%90%86%E7%AD%86%E8%A8%98/" rel="next" title="在 Kubernetes 用 Loki 蒐集 log 做監控警告通知方法整理筆記">
+      在 Kubernetes 用 Loki 蒐集 log 做監控警告通知方法整理筆記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">1.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#實作流程"><span class="nav-number">2.</span> <span class="nav-text">實作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定-loki-stack-yml-helm-values-yml"><span class="nav-number">3.</span> <span class="nav-text">設定 loki-stack.yml(helm values.yml)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架設-alertmanger-discord"><span class="nav-number">4.</span> <span class="nav-text">架設 alertmanger-discord</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定-alertmanger-通知"><span class="nav-number">5.</span> <span class="nav-text">設定 alertmanger 通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#設定-Prometheus-監控自訂的-metrics"><span class="nav-number">6.</span> <span class="nav-text">設定 Prometheus 監控自訂的 metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEBUG"><span class="nav-number">7.</span> <span class="nav-text">DEBUG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最後完成-loki-stack-yml-helm-value-yml"><span class="nav-number">8.</span> <span class="nav-text">最後完成 loki-stack.yml(helm value.yml)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">695</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/04/03/Loki-%E5%81%9A%E7%9B%A3%E6%8E%A7%E5%8B%95%E4%BD%9C%E6%96%B9%E6%B3%95/";
+    this.page.identifier = "2022/04/03/Loki-做監控動作方法/";
+    this.page.title = "Loki 做監控動作方法";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

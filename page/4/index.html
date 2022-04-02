@@ -208,6 +208,626 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/" class="post-title-link" itemprop="url">ssh 使用 ControlMaster 做第二連線自動登入(xshell,putty)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 23:15:59 / 修改時間：23:16:29" itemprop="dateCreated datePublished" datetime="2022-02-13T23:15:59+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/ssh-使用-ControlMaster-做第二連線自動登入-xshell-putty/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有時候我們連一台主機。不可能只開一個 ssh 連線。每次連線都要重新輸入帳號密碼，真的也很花時間。無形之中又多做一次驗證，最近看到這個方法，簡單研究一下，希望能幫我開發上縮短幾次幾秒鐘XD。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2022/02/13/ssh-%E4%BD%BF%E7%94%A8-ControlMaster-%E5%81%9A%E7%AC%AC%E4%BA%8C%E9%80%A3%E7%B7%9A%E8%87%AA%E5%8B%95%E7%99%BB%E5%85%A5-xshell-putty/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">sshconfig 設定小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 23:15:16 / 修改時間：23:15:36" itemprop="dateCreated datePublished" datetime="2022-02-13T23:15:16+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/sshconfig-設定小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一般我們在 ssh 連線都會用 putty，但是在多台機器管理上不是很方便，所以回換成 xshell 相關工具做連線查詢，最近在做<code>Bastion Host</code>，發現ssh 也可以做到簡單管理設定，這邊就做個筆記。</p>
+<p>首先，可以在 <code>.ssh/config</code> 做多個 ssh 連線設定，裡面設定值不分大小寫，可看官網文件。<a href="https://www.ssh.com/academy/ssh/config" target="_blank" rel="noopener">SSH config file syntax and how-tos for configuring the OpenSSH client</a></p>
+<blockquote>
+<p>The possible keywords and their meanings are as follows (note that keywords are case-insensitive and arguments are case-sensitive):</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8F-ssh-%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8F-ssh-%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/" class="post-title-link" itemprop="url">使用 Bastion Host 方式 ssh 方式登入主機</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-02-13 23:13:50" itemprop="dateCreated datePublished" datetime="2022-02-13T23:13:50+08:00">2022-02-13</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8F-ssh-%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/使用-Bastion-Host-方式-ssh-方式登入主機/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8Fssh%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8Fssh%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/" class="post-title-link" itemprop="url">使用 Bastion Host 方式ssh方式登入主機</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 23:09:21 / 修改時間：23:14:35" itemprop="dateCreated datePublished" datetime="2022-02-13T23:09:21+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8Fssh%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/使用-Bastion-Host-方式ssh方式登入主機/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近參照<a href="https://github.com/cloud-native-taiwan/Infra-Labs-Docs/blob/main/user-guide/openstack.md" target="_blank" rel="noopener">主機操作文件</a>建置 Bastion Host，常常 ssh 登入主機，覺得操作上不是很方便，所以後來改用 Xshell,Pietty(putty) 連線 Linux 主機，發現 ssh 也滿強的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8Fssh%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/curl-%E7%B0%A1%E5%96%AE%E6%B8%AC%E8%A9%A6%E7%B6%B2%E8%B7%AF%E6%98%AF%E5%90%A6%E5%BB%B6%E9%81%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2022/02/13/curl-%E7%B0%A1%E5%96%AE%E6%B8%AC%E8%A9%A6%E7%B6%B2%E8%B7%AF%E6%98%AF%E5%90%A6%E5%BB%B6%E9%81%B2/" class="post-title-link" itemprop="url">curl 簡單測試網路是否延遲</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 23:08:24 / 修改時間：23:08:55" itemprop="dateCreated datePublished" datetime="2022-02-13T23:08:24+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/curl-%E7%B0%A1%E5%96%AE%E6%B8%AC%E8%A9%A6%E7%B6%B2%E8%B7%AF%E6%98%AF%E5%90%A6%E5%BB%B6%E9%81%B2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/curl-簡單測試網路是否延遲/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>因為最近 Line 測試 API，有少數情況會 connection timed out，所以簡單測試是不是打 API 會不會 timedout ，測試發現會失敗。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2022/02/13/curl-%E7%B0%A1%E5%96%AE%E6%B8%AC%E8%A9%A6%E7%B6%B2%E8%B7%AF%E6%98%AF%E5%90%A6%E5%BB%B6%E9%81%B2/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/Java-%E9%81%87%E5%88%B0-connection-timed-out-%E5%95%8F%E9%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2022/02/13/Java-%E9%81%87%E5%88%B0-connection-timed-out-%E5%95%8F%E9%A1%8C/" class="post-title-link" itemprop="url">Java 遇到 connection timed out 問題</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-02-13 23:00:45 / 修改時間：23:01:39" itemprop="dateCreated datePublished" datetime="2022-02-13T23:00:45+08:00">2022-02-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/02/13/Java-%E9%81%87%E5%88%B0-connection-timed-out-%E5%95%8F%E9%A1%8C/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/Java-遇到-connection-timed-out-問題/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="遇到問題"><a href="#遇到問題" class="headerlink" title="遇到問題"></a>遇到問題</h2><p>最近公司發現發 LINE 推播時候發現 log 會有失敗 Exception，仔細看了一下訊息寫<code>connection timed out</code>，到底為什麼發生這個問題，是系統？是網路？是路由器？由於不是100%會發生，最好狀況沒發生，最高一天發生6次失敗，一天的量最多大概200多，所以失敗機率雖低，但這個遇到的情況還滿高的。這邊我蒐集一些方法，順便紀錄一下。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2022/02/13/Java-%E9%81%87%E5%88%B0-connection-timed-out-%E5%95%8F%E9%A1%8C/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/vLan-%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AD%98%E5%B0%8F%E8%A8%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -628,640 +1248,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/Websocket-%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%E6%95%B4%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2022/02/13/Websocket-%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">Websocket 一些基本知識整理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-              
-
-              <time title="創建時間：2022-02-13 22:50:17 / 修改時間：22:50:41" itemprop="dateCreated datePublished" datetime="2022-02-13T22:50:17+08:00">2022-02-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2022/02/13/Websocket-%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%E6%95%B4%E7%90%86/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/Websocket-一些基本知識整理/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="我的錯誤印象-應該沒有人要看，可跳過"><a href="#我的錯誤印象-應該沒有人要看，可跳過" class="headerlink" title="我的錯誤印象(應該沒有人要看，可跳過)"></a>我的錯誤印象(應該沒有人要看，可跳過)</h2><p>在看 websocket 之前，我以為 websocket 是在 HTTP 協定，因為跟 EventSource(server sent events)很像，只是是做單方面傳輸，又簡單看相關文章，EventSource會有Proxy問題，但是websocket 不會有問題，websocket 有 SLB問題。在文章都有提到 HTTP header 相關，開發工具也可以看到相關資訊，以為傳輸資料就是一般request/response，但最近時實作發現我錯了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2022/02/13/Websocket-%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%E6%95%B4%E7%90%86/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/02/13/GPG-window-%E8%B7%AF%E5%BE%91%E8%88%87-Git-%E8%A8%AD%E5%AE%9A%E7%B0%BD%E7%AB%A0%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2022/02/13/GPG-window-%E8%B7%AF%E5%BE%91%E8%88%87-Git-%E8%A8%AD%E5%AE%9A%E7%B0%BD%E7%AB%A0%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">GPG window 路徑與 Git 設定簽章方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-              
-
-              <time title="創建時間：2022-02-13 22:45:43 / 修改時間：22:46:37" itemprop="dateCreated datePublished" datetime="2022-02-13T22:45:43+08:00">2022-02-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2022/02/13/GPG-window-%E8%B7%AF%E5%BE%91%E8%88%87-Git-%E8%A8%AD%E5%AE%9A%E7%B0%BD%E7%AB%A0%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/02/13/GPG-window-路徑與-Git-設定簽章方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前<a href="https://malagege.github.io/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/">使用 GitKrakn GIT 簽章(PGP) | 程式狂想筆記</a>有紀錄怎麼在GUI(Window)模式快速使用 GPG 簽章，但我最近對 GitKrakn pull幫我做 stash 感到厭煩，所以有找解決方法。<a href="https://www.reddit.com/r/git/comments/9yr5vy/gitkraken_how_to_stop_stash_before_pull/" target="_blank" rel="noopener">GitKraken : how to stop stash before pull ? : git</a>裡面有提到換工具或下指令，所以我只能跟 GitKrakn 說掰掰。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2022/02/13/GPG-window-%E8%B7%AF%E5%BE%91%E8%88%87-Git-%E8%A8%AD%E5%AE%9A%E7%B0%BD%E7%AB%A0%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/11/07/BigDecimal-intValue-%E8%B6%85%E9%81%8E-int-%E9%95%B7%E5%BA%A6%E6%9C%83%E8%AE%8A%E6%88%90%E8%B2%A0%E8%99%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/11/07/BigDecimal-intValue-%E8%B6%85%E9%81%8E-int-%E9%95%B7%E5%BA%A6%E6%9C%83%E8%AE%8A%E6%88%90%E8%B2%A0%E8%99%9F/" class="post-title-link" itemprop="url">BigDecimal.intValue 超過 int 長度會變成負號</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-              
-
-              <time title="創建時間：2021-11-07 22:14:18 / 修改時間：22:17:22" itemprop="dateCreated datePublished" datetime="2021-11-07T22:14:18+08:00">2021-11-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/11/07/BigDecimal-intValue-%E8%B6%85%E9%81%8E-int-%E9%95%B7%E5%BA%A6%E6%9C%83%E8%AE%8A%E6%88%90%E8%B2%A0%E8%99%9F/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/11/07/BigDecimal-intValue-超過-int-長度會變成負號/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近發現我的專案很多都用bigdecimal.intvalue()去做結果。結果有一筆99億額計算出了大問題。建議不要亂轉 intValue。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/11/07/BigDecimal-intValue-%E8%B6%85%E9%81%8E-int-%E9%95%B7%E5%BA%A6%E6%9C%83%E8%AE%8A%E6%88%90%E8%B2%A0%E8%99%9F/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/11/07/JS-%E4%BD%BF%E7%94%A8-FileReader-%E8%AE%80%E5%8F%96%E6%AA%94%E6%A1%88%E6%96%B9%E6%B3%95%E5%92%8C%E4%B8%8B%E8%BC%89%E6%AA%94%E6%A1%88-Blob-%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/11/07/JS-%E4%BD%BF%E7%94%A8-FileReader-%E8%AE%80%E5%8F%96%E6%AA%94%E6%A1%88%E6%96%B9%E6%B3%95%E5%92%8C%E4%B8%8B%E8%BC%89%E6%AA%94%E6%A1%88-Blob-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">JS 使用 FileReader 讀取檔案方法和下載檔案(Blob)方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-11-07 22:12:30" itemprop="dateCreated datePublished" datetime="2021-11-07T22:12:30+08:00">2021-11-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-02-14 00:21:34" itemprop="dateModified" datetime="2022-02-14T00:21:34+08:00">2022-02-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/11/07/JS-%E4%BD%BF%E7%94%A8-FileReader-%E8%AE%80%E5%8F%96%E6%AA%94%E6%A1%88%E6%96%B9%E6%B3%95%E5%92%8C%E4%B8%8B%E8%BC%89%E6%AA%94%E6%A1%88-Blob-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/11/07/JS-使用-FileReader-讀取檔案方法和下載檔案-Blob-方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>想畫個圖，有時候過很久再回來看這個就忘記怎麼用，但想簡單使用所以用 <code>sequenceDiagram</code> 來描述內容，哈哈，懶得自己畫圖描述。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/11/07/JS-%E4%BD%BF%E7%94%A8-FileReader-%E8%AE%80%E5%8F%96%E6%AA%94%E6%A1%88%E6%96%B9%E6%B3%95%E5%92%8C%E4%B8%8B%E8%BC%89%E6%AA%94%E6%A1%88-Blob-%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/11/07/%E7%94%A8-SQL-%E6%8A%93%E5%87%BA%E7%95%B6%E5%91%A8%E6%98%9F%E6%9C%9F%E4%B8%80%E6%97%A5%E6%9C%9F%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/11/07/%E7%94%A8-SQL-%E6%8A%93%E5%87%BA%E7%95%B6%E5%91%A8%E6%98%9F%E6%9C%9F%E4%B8%80%E6%97%A5%E6%9C%9F%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">用 SQL 抓出當周星期一日期方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-              
-
-              <time title="創建時間：2021-11-07 22:11:22 / 修改時間：22:11:37" itemprop="dateCreated datePublished" datetime="2021-11-07T22:11:22+08:00">2021-11-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/11/07/%E7%94%A8-SQL-%E6%8A%93%E5%87%BA%E7%95%B6%E5%91%A8%E6%98%9F%E6%9C%9F%E4%B8%80%E6%97%A5%E6%9C%9F%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/11/07/用-SQL-抓出當周星期一日期方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近維運常常每周都用SQL抓前一個禮拜內容，日期都是手動調整，長久下來都會怕忘記調整，最近再找有什麼方法可以抓到當周的禮拜一，爬文還真的有找到，趕快紀錄下來。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/11/07/%E7%94%A8-SQL-%E6%8A%93%E5%87%BA%E7%95%B6%E5%91%A8%E6%98%9F%E6%9C%9F%E4%B8%80%E6%97%A5%E6%9C%9F%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/11/07/Electron-%E4%BD%BF%E7%94%A8-vue-router-%E9%96%8B%E5%95%9F%E8%A6%96%E7%AA%97%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/11/07/Electron-%E4%BD%BF%E7%94%A8-vue-router-%E9%96%8B%E5%95%9F%E8%A6%96%E7%AA%97%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Electron 使用 vue router 開啟視窗方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-              
-
-              <time title="創建時間：2021-11-07 22:10:24 / 修改時間：22:10:46" itemprop="dateCreated datePublished" datetime="2021-11-07T22:10:24+08:00">2021-11-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Nodejs/" itemprop="url" rel="index"><span itemprop="name">Nodejs</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/11/07/Electron-%E4%BD%BF%E7%94%A8-vue-router-%E9%96%8B%E5%95%9F%E8%A6%96%E7%AA%97%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/11/07/Electron-使用-vue-router-開啟視窗方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近發生蠢事，我原本看到網路上使用 Electron 可以用 Browserwindow 控制視窗內容，但我發現網路方法竟然都失效，結果我爬到一篇發現是我犯蠢了，<a href="https://segmentfault.com/q/1010000040297139" target="_blank" rel="noopener">vue electron 创建子窗口后内容和父窗口一样 配置vue-router无效？ - SegmentFault 思否</a>跟裡面作者一樣忘記加 <code>&lt;router-view&gt;</code>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/11/07/Electron-%E4%BD%BF%E7%94%A8-vue-router-%E9%96%8B%E5%95%9F%E8%A6%96%E7%AA%97%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/3/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/69/">69</a><a class="extend next" rel="next" href="/blog/page/5/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/3/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/blog/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/70/">70</a><a class="extend next" rel="next" href="/blog/page/5/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1327,7 +1317,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">689</span>
+          <span class="site-state-item-count">695</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
