@@ -15,7 +15,7 @@ categories: Kubernetes
 
 ## 筆記
 
-### 連線主機前置動作
+### 主機建置(Bastion Host)
 
 - [sshconfig 設定小記](https://malagege.github.io/blog/2022/02/13/sshconfig-%E8%A8%AD%E5%AE%9A%E5%B0%8F%E8%A8%98/)
 - [使用 Bastion Host 方式ssh方式登入主機](https://malagege.github.io/blog/2022/02/13/%E4%BD%BF%E7%94%A8-Bastion-Host-%E6%96%B9%E5%BC%8Fssh%E6%96%B9%E5%BC%8F%E7%99%BB%E5%85%A5%E4%B8%BB%E6%A9%9F/)
