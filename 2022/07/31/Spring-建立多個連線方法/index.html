@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="有一部分寫到一半沒寫完。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 建立多個連線方法">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/07/31/Spring-%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%80%8B%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="有一部分寫到一半沒寫完。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/qUkJKEr.png">
+<meta property="article:published_time" content="2022-07-30T18:26:05.000Z">
+<meta property="article:modified_time" content="2022-07-30T18:26:39.913Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/qUkJKEr.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/07/31/Spring-%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%80%8B%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Spring 建立多個連線方法 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/07/31/Spring-%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%80%8B%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring 建立多個連線方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-07-31 02:26:05 / 修改時間：02:26:39" itemprop="dateCreated datePublished" datetime="2022-07-31T02:26:05+08:00">2022-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/07/31/Spring-%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%80%8B%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/07/31/Spring-建立多個連線方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>有一部分寫到一半沒寫完。</p>
+<a id="more"></a>
+<h2 id="網路上整理資料"><a href="#網路上整理資料" class="headerlink" title="網路上整理資料"></a>網路上整理資料</h2><p><a href="https://www.jianshu.com/p/c5b3d8c74f81" target="_blank" rel="noopener">Spring的多事务配置（多个Transaction Manager）和使用方法 - 简书</a></p>
+<p><a href="https://blog.csdn.net/ClementAD/article/details/47275227?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522163572921416780366523245%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&amp;request_id=163572921416780366523245&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_v2~rank_v29-1-47275227.pc_v2_rank_blog_default&amp;utm_term=transactin+manager+&amp;spm=1018.2226.3001.4450" target="_blank" rel="noopener">Spring的多事务配置（多个Transaction Manager）和使用方法_Clement-Xu的专栏-CSDN博客</a></p>
+<p><a href="https://www.itread01.com/article/1494722449.html" target="_blank" rel="noopener">Spring3.0配置多個事務管理器的方法 - IT閱讀</a></p>
+<p><a href="https://blog.csdn.net/Zzrdark_/article/details/54427907" target="_blank" rel="noopener">DataSource和SessionFactory的区别<em>Zzrdark</em>的博客-CSDN博客</a></p>
+<p><a href="https://www.cnblogs.com/duanxz/p/4516388.html" target="_blank" rel="noopener">如何在spring框架中解决多数据源的问题 - duanxz - 博客园</a></p>
+<p><a href="https://blog.csdn.net/runming56/article/details/18727447" target="_blank" rel="noopener">如何在spring框架中解决多数据源的问题_runming56的专栏-CSDN博客</a></p>
+<blockquote>
+<p>The txManager bean in this case is of the HibernateTransactionManager type. In the same way as the DataSourceTransactionManager needs a reference to the DataSource, the HibernateTransactionManager needs a reference to the SessionFactory.</p>
+</blockquote>
+<p><a href="https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/transaction.html#transaction-strategies" target="_blank" rel="noopener">16. Transaction Management</a></p>
+<p><a href="https://docs.spring.io/spring-framework/docs/3.0.0.M4/reference/html/ch13s03.html" target="_blank" rel="noopener">13.3 Hibernate</a></p>
+<h2 id="transactionManager-預設抓-transactionManager"><a href="#transactionManager-預設抓-transactionManager" class="headerlink" title="transactionManager 預設抓 transactionManager"></a>transactionManager 預設抓 transactionManager</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The default &lt;tx:annotation-driven&gt; target bean name transactionManager will still be used if no specifically qualified PlatformTransactionManager bean is found.</span><br><span class="line"></span><br><span class="line">在配置檔案中，預設情況下，&lt;tx:annotation-driven&gt;會自動使用名稱為transactionManager的事務管理器。所以，如果定義的事務管理器名稱為transactionManager，那麼就可以直接使用&lt;tx:annotation-driven&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="我公司的專案使用上面方法無效"><a href="#我公司的專案使用上面方法無效" class="headerlink" title="我公司的專案使用上面方法無效"></a>我公司的專案使用上面方法無效</h2><p>參照<a href="https://www.jianshu.com/p/c5b3d8c74f81" target="_blank" rel="noopener">Spring的多事务配置（多个Transaction Manager）和使用方法 - 简书</a>，照上面各種設定發現我的傳案無法正常使用，後來發現Dao繼承的<code>GenericDao</code>裡面的<code>SessionFactory</code>寫死，所以上面怎麼設定都會連到，想嘗試抓現在SessionFactory，看目前沒有想到方法。</p>
+<h3 id="Workaround-解決方法"><a href="#Workaround-解決方法" class="headerlink" title="Workaround 解決方法"></a>Workaround 解決方法</h3><ol>
+<li><p>設定 applicationContext.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"> 	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jndi.JndiObjectFactoryBean"</span>&gt;</span> </span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jndiName"</span>&gt;</span> </span><br><span class="line">			<span class="tag">&lt;<span class="name">value</span>&gt;</span>java:/xxxPool<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">value</span>&gt;</span>java:comp/env/xxxPool<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cache"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span>	 </span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSourceHistory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jndi.JndiObjectFactoryBean"</span>&gt;</span> </span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"jndiName"</span>&gt;</span> </span><br><span class="line">			<span class="tag">&lt;<span class="name">value</span>&gt;</span>java:comp/env/xxxPool<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"cache"</span> <span class="attr">value</span>=<span class="string">"false"</span> /&gt;</span>	 </span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sessionFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.LocalSessionFactoryBean"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"packagesToScan"</span> <span class="attr">value</span>=<span class="string">"com.Project.persistence.entity"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernateProperties"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.dialect"</span>&gt;</span></span><br><span class="line">                    org.hibernate.dialect.PostgreSQLDialect</span><br><span class="line">                <span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"javax.persistence.validation.mode"</span>&gt;</span>none<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.show_sql"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.format_sql"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- prop key="hibernate.default_schema"&gt;Project&lt;/prop --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.current_session_context_class"</span>&gt;</span>org.springframework.orm.hibernate4.SpringSessionContext<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mappingResources"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">value</span>&gt;</span>com/Project/conf/xxxx_sql.xml<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">property</span>&gt;</span>	</span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"historySessionFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.LocalSessionFactoryBean"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSourceHistory"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"packagesToScan"</span> <span class="attr">value</span>=<span class="string">"com.Project.persistence.history.entity"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernateProperties"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.dialect"</span>&gt;</span></span><br><span class="line">                    org.hibernate.dialect.PostgreSQLDialect</span><br><span class="line">                <span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"javax.persistence.validation.mode"</span>&gt;</span>none<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.show_sql"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.format_sql"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.default_schema"</span>&gt;</span>history<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.current_session_context_class"</span>&gt;</span>org.springframework.orm.hibernate4.SpringSessionContext<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">"transactionManager"</span>/&gt;</span></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.HibernateTransactionManager"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span> <span class="attr">ref</span>=<span class="string">"sessionFactory"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">value</span>=<span class="string">"ProjectTx"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"historyTransactionManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.HibernateTransactionManager"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span> <span class="attr">ref</span>=<span class="string">"historySessionFactory"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">qualifier</span> <span class="attr">value</span>=<span class="string">"historyTx"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>針對原本 Bean 建立物件，去做 ForHistory名稱，原因是 packagesToScan 時候，不能用相同 Entry 名稱，所以要特別命名。</p>
+</li>
+</ol>
+<p>XXXX.java ==&gt; XXXXForHistory.java</p>
+<ol start="3">
+<li>複製 <code>GenericDaoImpl</code> 維 <code>GenericDaoForHistoryImpl</code></li>
+</ol>
+<p>因為<code>GenericDaoImpl</code> 裡面 SessionFactory 寫死，所以為什麼上面設定怎麼調整，所以沒法修改到連線，這邊也是我目前沒辦法動態載入到連線(SessionFactory)地方。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericDaoImpl</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">GenericDao</span>&lt;<span class="title">T</span>&gt; </span>&#123; </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Class&lt;T&gt; clazz;  </span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GenericDaoImpl</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        ParameterizedType type = (ParameterizedType) <span class="keyword">this</span>.getClass().getGenericSuperclass();  </span><br><span class="line">        clazz = (Class&lt;T&gt;) type.getActualTypeArguments()[<span class="number">0</span>];</span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span>  </span><br><span class="line">    <span class="keyword">private</span> SessionFactory sessionFactory;</span><br></pre></td></tr></table></figure>
+<p>改為<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Resource</span>  </span><br><span class="line"><span class="keyword">private</span> SessionFactory historySessionFactory;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/qUkJKEr.png" alt=""></p>
+<p><code>@Resource</code>可以參考 <a href="https://malagege.github.io/blog/2020/05/11/Spring-%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/">Spring 自動注入小記 | 程式狂想筆記</a></p>
+<ol start="4">
+<li>查詢SQL設定<code>@Transactional</code>另一條連線</li>
+</ol>
+<p>我們這邊applicationContext.xml 有設定<code>historyTransactionManager</code>裡面的<code>&lt;qualifier value=&quot;historyTx&quot;/&gt;</code>記得設定對應資料</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span>(<span class="string">"datasource1Tx"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="HibernateTransactionManager-LocalEntityManagerFactoryBean-差異"><a href="#HibernateTransactionManager-LocalEntityManagerFactoryBean-差異" class="headerlink" title="HibernateTransactionManager LocalEntityManagerFactoryBean 差異"></a>HibernateTransactionManager LocalEntityManagerFactoryBean 差異</h2><p><a href="https://blog.supercalifragilisticexpialidociouser.com/page/2/" target="_blank" rel="noopener">https://blog.supercalifragilisticexpialidociouser.com/page/2/</a></p>
+<p><a href="https://github.com/yogi0209/spring-mvc-multi-datasource" target="_blank" rel="noopener">yogi0209/spring-mvc-multi-datasource</a></p>
+<p>尚未整理</p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/java/" rel="tag"># java</a>
+              <a href="/blog/tags/spring/" rel="tag"># spring</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/%E7%9B%B8%E9%97%9C%E7%B8%AE%E5%9C%96%E4%BC%BA%E6%9C%8D%E5%99%A8%E6%95%B4%E7%90%86/" rel="prev" title="相關縮圖伺服器整理">
+      <i class="fa fa-chevron-left"></i> 相關縮圖伺服器整理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/Java-Lambdas-%E7%AD%86%E8%A8%98/" rel="next" title="Java Lambdas 筆記">
+      Java Lambdas 筆記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#網路上整理資料"><span class="nav-number">1.</span> <span class="nav-text">網路上整理資料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transactionManager-預設抓-transactionManager"><span class="nav-number">2.</span> <span class="nav-text">transactionManager 預設抓 transactionManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我公司的專案使用上面方法無效"><span class="nav-number">3.</span> <span class="nav-text">我公司的專案使用上面方法無效</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Workaround-解決方法"><span class="nav-number">3.1.</span> <span class="nav-text">Workaround 解決方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HibernateTransactionManager-LocalEntityManagerFactoryBean-差異"><span class="nav-number">4.</span> <span class="nav-text">HibernateTransactionManager LocalEntityManagerFactoryBean 差異</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">747</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">590</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/07/31/Spring-%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%80%8B%E9%80%A3%E7%B7%9A%E6%96%B9%E6%B3%95/";
+    this.page.identifier = "2022/07/31/Spring-建立多個連線方法/";
+    this.page.title = "Spring 建立多個連線方法";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

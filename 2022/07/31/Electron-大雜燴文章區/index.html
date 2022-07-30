@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="尚未整理完成，有空整理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Electron 大雜燴文章區">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/07/31/Electron-%E5%A4%A7%E9%9B%9C%E7%87%B4%E6%96%87%E7%AB%A0%E5%8D%80/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="尚未整理完成，有空整理。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/n6M86ZK.png">
+<meta property="og:image" content="https://i.imgur.com/bBvxe3o.png">
+<meta property="article:published_time" content="2022-07-30T18:21:00.000Z">
+<meta property="article:modified_time" content="2022-07-30T18:21:38.057Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="electron">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/n6M86ZK.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/07/31/Electron-%E5%A4%A7%E9%9B%9C%E7%87%B4%E6%96%87%E7%AB%A0%E5%8D%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Electron 大雜燴文章區 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/07/31/Electron-%E5%A4%A7%E9%9B%9C%E7%87%B4%E6%96%87%E7%AB%A0%E5%8D%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Electron 大雜燴文章區
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-07-31 02:21:00 / 修改時間：02:21:38" itemprop="dateCreated datePublished" datetime="2022-07-31T02:21:00+08:00">2022-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/07/31/Electron-%E5%A4%A7%E9%9B%9C%E7%87%B4%E6%96%87%E7%AB%A0%E5%8D%80/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/07/31/Electron-大雜燴文章區/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>尚未整理完成，有空整理。</p>
+<a id="more"></a>
+<h2 id="架構-amp-生命週期"><a href="#架構-amp-生命週期" class="headerlink" title="架構 &amp; 生命週期"></a>架構 &amp; 生命週期</h2><p><a href="https://github.com/cawa-93/vite-electron-builder" target="_blank" rel="noopener">cawa-93/vite-electron-builder: Secure boilerplate for Electron app based on Vite. TypeScript + Vue/React/Angular/Svelte/Vanilla</a><br><img src="https://i.imgur.com/n6M86ZK.png" alt=""></p>
+<p><a href="https://ithelp.ithome.com.tw/articles/10233853" target="_blank" rel="noopener">[ Day 3 ] - 桌面小圖示(二) - Electron 架構說明 - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
+<p><img src="https://i.imgur.com/bBvxe3o.png" alt=""></p>
+<p><a href="https://www.gushiciku.cn/pl/gcfd/zh-tw" target="_blank" rel="noopener">Electron 生命週期看這篇就夠了_淘系前端團隊 - MdEditor</a></p>
+<h3 id="preload-js"><a href="#preload-js" class="headerlink" title="preload.js"></a>preload.js</h3><p><a href="https://www.electronjs.org/docs/api/context-bridge" target="_blank" rel="noopener">contextBridge | Electron</a></p>
+<p>nodejs 跟 存 web 溝通頁面。</p>
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><p>nodejs 程式。</p>
+<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><p>web 程式。</p>
+<p>就跟上面圖示差不多。</p>
+<h2 id="Electron-log"><a href="#Electron-log" class="headerlink" title="Electron log"></a>Electron log</h2><p><a href="https://github.com/megahertz/electron-log" target="_blank" rel="noopener">GitHub - megahertz/electron-log: Just a simple logging module for your Electron application</a></p>
+<h2 id="Electron-安全性"><a href="#Electron-安全性" class="headerlink" title="Electron 安全性"></a>Electron 安全性</h2><ul>
+<li><p><a href="https://www.zhihu.com/question/266893700" target="_blank" rel="noopener">electron的安全问题需要注意哪些问题？ - 知乎</a></p>
+</li>
+<li><p><a href="https://yuzhigang5460.gitbook.io/electron/tutorial/security" target="_blank" rel="noopener">安全，本地功能和你的责任 - Electron中文手册</a></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">这并不是万无一失的，但至少，你应该尝试以下内容：</span><br><span class="line">只显示安全的内容(https)</span><br><span class="line">在显示远程内容的所有渲染器中禁用 Node 集成 (在 webPreferences 中设置 nodeIntegration 为 false)</span><br><span class="line">在显示远程内容的所有渲染器中启用上下文隔离 (在 webPreferences 中设置 contextIsolation 为 true)</span><br><span class="line">在所有加载远程内容的会话中使用 ses.setPermissionRequestHandler() .</span><br><span class="line">不要禁用 webSecurity. 禁用它将禁用同源策略.</span><br><span class="line">定义一个 Content-Security-Policy</span><br><span class="line">, 并使用限制规则 (即： script-src &#39;self&#39;)</span><br><span class="line">覆盖并禁用 eval</span><br><span class="line">, 它允许字符串作为代码执行.</span><br><span class="line">不要设置 allowRunningInsecureContent 为 true.</span><br><span class="line">不要启用 experimentalFeatures 或 experimentalCanvasFeatures 除非你知道你在做什么.</span><br><span class="line">不要使用 blinkFeatures 除非你知道你在做什么.</span><br><span class="line">WebViews: 不要填加 nodeintegration 属性.</span><br><span class="line">WebViews: 不要使用 disablewebsecurity</span><br><span class="line">WebViews: 不要使用 allowpopups</span><br><span class="line">WebViews: 不要使用 insertCSS 或 executeJavaScript 操作远程 CSS&#x2F;JS.</span><br><span class="line">WebViews: 在 will-attach-webview事件之前,应验证 &lt;webview&gt;所有的选项或参数:</span><br></pre></td></tr></table></figure>
+<p>目前看 render 程是不要擺上危險執行程式，產生出來 aser 可以被解壓縮出來，所以別人可以看到程式或調整程式。</p>
+<p>prelaod.js 用到程式不確定會有問題，不過目前猜測應該不會有問題才是。main 那邊就不用說了，這邊是安全區域。</p>
+<h2 id="Electron-開機啟動"><a href="#Electron-開機啟動" class="headerlink" title="Electron 開機啟動"></a>Electron 開機啟動</h2><p><a href="https://segmentfault.com/a/1190000018894782" target="_blank" rel="noopener">electron实现开机自启+通过链接调起应用(windows) - SegmentFault 思否</a></p>
+<h2 id="Electron-注冊桌面軟體-protocol-模塊"><a href="#Electron-注冊桌面軟體-protocol-模塊" class="headerlink" title="Electron 注冊桌面軟體(protocol 模塊)"></a>Electron 注冊桌面軟體(protocol 模塊)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const &#123; app, protocol &#125; &#x3D; require(&quot;electron&quot;);</span><br><span class="line">const path &#x3D; require(&quot;path&quot;);</span><br><span class="line"></span><br><span class="line">app.on(&quot;ready&quot;, () &#x3D;&gt; &#123;</span><br><span class="line">  protocol.registerFileProtocol(</span><br><span class="line">    &quot;uinika&quot;,</span><br><span class="line">    (request, callback) &#x3D;&gt; &#123;</span><br><span class="line">      const url &#x3D; request.url.substr(7);</span><br><span class="line">      callback(&#123; path: path.normalize(&#96;$&#123;__dirname&#125;&#x2F;$&#123;url&#125;&#96;) &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    error &#x3D;&gt; &#123;</span><br><span class="line">      if (error) console.error(&quot;協議註冊失敗！&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>參考<a href="https://zhuanlan.zhihu.com/p/52991793" target="_blank" rel="noopener">使用Electron打造跨平台桌面應用 - 知乎</a>，裡面參滿多好康內容，推薦進去看。</p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/electron/" rel="tag"># electron</a>
+              <a href="/blog/tags/nodejs/" rel="tag"># nodejs</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/axios-%E6%93%8D%E4%BD%9C%E5%B0%8F%E8%A8%98/" rel="prev" title="axios 操作小記">
+      <i class="fa fa-chevron-left"></i> axios 操作小記
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/Puppeteer-%E7%88%AC%E8%9F%B2%E5%B0%8F%E8%A9%A6/" rel="next" title="Puppeteer 爬蟲小試">
+      Puppeteer 爬蟲小試 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架構-amp-生命週期"><span class="nav-number">1.</span> <span class="nav-text">架構 &amp; 生命週期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#preload-js"><span class="nav-number">1.1.</span> <span class="nav-text">preload.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-number">1.2.</span> <span class="nav-text">main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#render"><span class="nav-number">1.3.</span> <span class="nav-text">render</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Electron-log"><span class="nav-number">2.</span> <span class="nav-text">Electron log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Electron-安全性"><span class="nav-number">3.</span> <span class="nav-text">Electron 安全性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Electron-開機啟動"><span class="nav-number">4.</span> <span class="nav-text">Electron 開機啟動</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Electron-注冊桌面軟體-protocol-模塊"><span class="nav-number">5.</span> <span class="nav-text">Electron 注冊桌面軟體(protocol 模塊)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">747</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">590</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/07/31/Electron-%E5%A4%A7%E9%9B%9C%E7%87%B4%E6%96%87%E7%AB%A0%E5%8D%80/";
+    this.page.identifier = "2022/07/31/Electron-大雜燴文章區/";
+    this.page.title = "Electron 大雜燴文章區";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/04/08/Hexo%E8%A8%AD%E5%AE%9Ablog%E5%AD%90%E8%B3%87%E6%96%99%E5%A4%BE%E7%B6%B2%E5%9D%80/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/05/14/PHP%E7%9A%84array-slice%E8%88%87array-splice%E5%B7%AE%E5%88%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -222,7 +222,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/04/08/Hexo%E8%A8%AD%E5%AE%9Ablog%E5%AD%90%E8%B3%87%E6%96%99%E5%A4%BE%E7%B6%B2%E5%9D%80/" class="post-title-link" itemprop="url">Hexo設定blog子資料夾網址</a>
+            <a href="/blog/2018/05/14/PHP%E7%9A%84array-slice%E8%88%87array-splice%E5%B7%AE%E5%88%A5/" class="post-title-link" itemprop="url">PHP的array_slice與array_splice差別</a>
         </h2>
 
         <div class="post-meta">
@@ -232,7 +232,246 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-04-08 21:18:09" itemprop="dateCreated datePublished" datetime="2018-04-08T21:18:09+08:00">2018-04-08</time>
+              <time title="創建時間：2018-05-14 20:57:05" itemprop="dateCreated datePublished" datetime="2018-05-14T20:57:05+08:00">2018-05-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/05/14/PHP%E7%9A%84array-slice%E8%88%87array-splice%E5%B7%AE%E5%88%A5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/14/PHP的array-slice與array-splice差別/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+          <h2 id="回傳值"><a href="#回傳值" class="headerlink" title="回傳值"></a>回傳值</h2><p><code>array_slice</code>回傳是提取出來陣列<br><code>array_splice</code>回傳是提取出來陣列</p>
+<p>看來return 出來東西都是一樣</p>
+<h2 id="帶進度array參數"><a href="#帶進度array參數" class="headerlink" title="帶進度array參數"></a>帶進度array參數</h2><ul>
+<li><code>array array_slice</code> ( array $array , int $offset [, int $length = NULL [, bool $preserve_keys = FALSE ]] )</li>
+<li><code>array array_splice</code> ( array <code>&amp;</code>$input , int $offset [, int $length = count($input) [, mixed $replacement = array() ]] )</li>
+</ul>
+<p>會發現上面兩者回傳都一樣，但帶進去陣列參數執行結果不一樣</p>
+<p>array_splice大致上跟JavaScript的splice一樣</p>
+<h2 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h2><p>兩者最大不同是一個call by reference一個call by value<br>怎麼看呢?看文件上面有個<code>&amp;</code></p>
+<p>PHP Object好像也是call by reference(address)</p>
+<p>參考來源:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/12932529/why-array-slice-and-array-splice-doing-the-same" target="_blank" rel="noopener">php - why array_slice() and array_splice() doing the same? - Stack Overflow</a></li>
+<li><a href="https://stackoverflow.com/questions/3585966/php-how-to-cut-my-array/3585995#3585995" target="_blank" rel="noopener">PHP: how to ‘cut’ my array? - Stack Overflow</a></li>
+<li><a href="http://php.net/manual/en/language.oop5.references.php" target="_blank" rel="noopener">PHP: Objects and references - Manual</a></li>
+<li><a href="http://www.techug.com/post/10-things-not-to-do-in-php-7.html" target="_blank" rel="noopener">10件在PHP7中不要做的事情 | 程序师</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/05/13/audio%E5%92%8Cvideo%E5%9C%A8%E6%89%8B%E6%A9%9F%E4%B8%8A%E4%B8%8D%E8%83%BDautoplay%E5%95%8F%E9%A1%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/05/13/audio%E5%92%8Cvideo%E5%9C%A8%E6%89%8B%E6%A9%9F%E4%B8%8A%E4%B8%8D%E8%83%BDautoplay%E5%95%8F%E9%A1%8C/" class="post-title-link" itemprop="url">audio和video在手機上不能autoplay問題</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-05-13 21:07:47" itemprop="dateCreated datePublished" datetime="2018-05-13T21:07:47+08:00">2018-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/05/13/audio%E5%92%8Cvideo%E5%9C%A8%E6%89%8B%E6%A9%9F%E4%B8%8A%E4%B8%8D%E8%83%BDautoplay%E5%95%8F%E9%A1%8C/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/13/audio和video在手機上不能autoplay問題/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近做專案都用到audio autoplay，但發現手機chrome不能自動播放，但是Firefox<br>這根手機瀏覽器設定有關係，現在像chrome預設都是用 媒體 自動關閉播放<br>我去設定看Firefox播放…，難怪在播放音樂清單網頁，Firefox在螢幕關閉<br>音樂還可以繼續放，但Chrome就不行了…，現在大概知道應該就是這個原因<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2018/05/13/audio%E5%92%8Cvideo%E5%9C%A8%E6%89%8B%E6%A9%9F%E4%B8%8A%E4%B8%8D%E8%83%BDautoplay%E5%95%8F%E9%A1%8C/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/05/09/2018%E5%B9%B4%E7%94%A8elementaryOS%E5%A0%B1%E7%A8%85%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/05/09/2018%E5%B9%B4%E7%94%A8elementaryOS%E5%A0%B1%E7%A8%85%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">2018年用elementaryOS報稅小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-05-09 21:07:20" itemprop="dateCreated datePublished" datetime="2018-05-09T21:07:20+08:00">2018-05-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -247,7 +486,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%AB%E7%A8%8B%E5%BC%8F%E4%B8%80%E4%BA%9B%E4%BA%8B/" itemprop="url" rel="index"><span itemprop="name">寫程式一些事</span></a>
+                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
                 </span>
             </span>
 
@@ -260,8 +499,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/04/08/Hexo%E8%A8%AD%E5%AE%9Ablog%E5%AD%90%E8%B3%87%E6%96%99%E5%A4%BE%E7%B6%B2%E5%9D%80/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/08/Hexo設定blog子資料夾網址/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/05/09/2018%E5%B9%B4%E7%94%A8elementaryOS%E5%A0%B1%E7%A8%85%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/09/2018年用elementaryOS報稅小記/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -291,10 +530,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>設定筆記紀錄</p>
+          <p>最近看到報稅能用Mac或Linux<br>剛好又懶的請假去現場排隊<br>家裡有一個Linux<br>就當勇者，用Linux報稅(一堆教學都是Mac… orz)</p>
+<p>這邊只做踩到雷筆記</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/04/08/Hexo%E8%A8%AD%E5%AE%9Ablog%E5%AD%90%E8%B3%87%E6%96%99%E5%A4%BE%E7%B6%B2%E5%9D%80/#more" rel="contents">
+              <a class="btn" href="/blog/2018/05/09/2018%E5%B9%B4%E7%94%A8elementaryOS%E5%A0%B1%E7%A8%85%E5%B0%8F%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -318,7 +558,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/31/logdown/2018-03-31-linux-command-background-execution-turn-off-continue-work/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/05/01/HTML5%E6%8E%A7%E5%88%B6audio%E5%88%9D%E9%AB%94%E9%A9%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -332,7 +572,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/03/31/logdown/2018-03-31-linux-command-background-execution-turn-off-continue-work/" class="post-title-link" itemprop="url">Linux [nohup]背景執行(command關掉繼續work)</a>
+            <a href="/blog/2018/05/01/HTML5%E6%8E%A7%E5%88%B6audio%E5%88%9D%E9%AB%94%E9%A9%97/" class="post-title-link" itemprop="url">HTML5控制audio初體驗</a>
         </h2>
 
         <div class="post-meta">
@@ -342,14 +582,14 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-03-31 07:06:00" itemprop="dateCreated datePublished" datetime="2018-03-31T07:06:00+08:00">2018-03-31</time>
+              <time title="創建時間：2018-05-01 19:05:24" itemprop="dateCreated datePublished" datetime="2018-05-01T19:05:24+08:00">2018-05-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -357,7 +597,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                  <a href="/blog/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
                 </span>
             </span>
 
@@ -370,8 +610,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/03/31/logdown/2018-03-31-linux-command-background-execution-turn-off-continue-work/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/31/logdown/2018-03-31-linux-command-background-execution-turn-off-continue-work/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/05/01/HTML5%E6%8E%A7%E5%88%B6audio%E5%88%9D%E9%AB%94%E9%A9%97/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/01/HTML5控制audio初體驗/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -401,10 +641,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近有一台樹莓派網路比較不穩<br>想到另外一台做ping的動作<br>但是command line怎麼背景執行??</p>
+          <p>平常沒什麼在用audio<br>最近專案有用到，就簡單來記錄一下</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/03/31/logdown/2018-03-31-linux-command-background-execution-turn-off-continue-work/#more" rel="contents">
+              <a class="btn" href="/blog/2018/05/01/HTML5%E6%8E%A7%E5%88%B6audio%E5%88%9D%E9%AB%94%E9%A9%97/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -428,7 +668,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/31/logdown/2018-03-31-raspberry-pi-uses-usb-to-ttl-connection/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/05/01/%E5%A5%BD%E7%94%A8%E7%9A%84%E4%BE%BF%E5%88%A9%E8%B2%BC%E8%BB%9F%E9%AB%94/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -442,7 +682,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/03/31/logdown/2018-03-31-raspberry-pi-uses-usb-to-ttl-connection/" class="post-title-link" itemprop="url">Raspberry pi 使用USB To TTL連接</a>
+            <a href="/blog/2018/05/01/%E5%A5%BD%E7%94%A8%E7%9A%84%E4%BE%BF%E5%88%A9%E8%B2%BC%E8%BB%9F%E9%AB%94/" class="post-title-link" itemprop="url">好用的便利貼軟體</a>
         </h2>
 
         <div class="post-meta">
@@ -452,812 +692,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-03-31 05:16:00" itemprop="dateCreated datePublished" datetime="2018-03-31T05:16:00+08:00">2018-03-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/03/31/logdown/2018-03-31-raspberry-pi-uses-usb-to-ttl-connection/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/31/logdown/2018-03-31-raspberry-pi-uses-usb-to-ttl-connection/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近樹梅派網路越來越不穩定…<br>有時候對突然連不到…<br>重開主機就可以了<br>但這樣下去 不是辦法<br>所以買一個USB To TTL這個東西跟Raspberry PI 連接</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2018/03/31/logdown/2018-03-31-raspberry-pi-uses-usb-to-ttl-connection/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/29/logdown/2018-03-29-7072140/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/03/29/logdown/2018-03-29-7072140/" class="post-title-link" itemprop="url">動畫特效繪制框架(Sketch.js)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-03-29 15:39:00" itemprop="dateCreated datePublished" datetime="2018-03-29T15:39:00+08:00">2018-03-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E7%B6%B2%E9%A0%81%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">網頁特效</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/03/29/logdown/2018-03-29-7072140/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/29/logdown/2018-03-29-7072140/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <p>Sketch.js</p>
-<p>最近看到<a href="http://lost-song.com/" target="_blank" rel="noopener">TVアニメ『LOST SONG』</a>網站還滿酷的<br>所以研究了一下，發現是使用<a href="http://soulwire.github.io/sketch.js/" target="_blank" rel="noopener">sketch.js</a></p>
-<p>本來想說是很復雜的東西<br>結果看了一下，發現是用官網範例<a href="http://soulwire.github.io/Plasmatic-Isosurface/" target="_blank" rel="noopener">Plasmatic Isosurface</a><br>好像把<code>dat.ui</code>拿掉就跑出上面樣子</p>
-<p>插點看WebGL那邊去了XD<br>不過發現圖象矩陣，感覺也是一門大<del>坑</del>學問</p>
-<p><a href="http://lost-song.com/" target="_blank" rel="noopener">TVアニメ『LOST SONG』</a><br><a href="http://soulwire.github.io/sketch.js/" target="_blank" rel="noopener">sketch.js</a><br><a href="https://ithelp.ithome.com.tw/articles/10197789" target="_blank" rel="noopener">2018鐵人賽索引和心得(圖多慎入) - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><br><a href="http://soulwire.github.io/Plasmatic-Isosurface/" target="_blank" rel="noopener">Plasmatic Isosurface</a><br><a href="http://taobaofed.org/blog/2015/12/21/webgl-handbook/" target="_blank" rel="noopener">WebGL 技术储备指南 | Taobao FED | 淘宝前端团队</a><br><a href="https://github.com/soulwire/Plasmatic-Isosurface" target="_blank" rel="noopener">soulwire/Plasmatic-Isosurface: A 2 dimensional plasma simulation running on the GPU, written in GLSL and CoffeeScript and rendered with WebGL.</a></p>
-<p>矩陣</p>
-<ul>
-<li><a href="https://lfkid.github.io/2016/05/03/%E8%AF%A6%E8%A7%A3CSS%E7%9A%84%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0matrix/" target="_blank" rel="noopener">详解CSS的矩阵变换函数matrix() | 中二病也要玩 front end</a></li>
-<li><a href="https://www.youtube.com/watch?v=ywmWnccKXDA" target="_blank" rel="noopener">【介紹】Geogebra 與線性變換矩陣（1／8）：矩陣變換與圖形 - YouTube</a></li>
-<li><a href="https://lfkid.github.io/2016/05/03/%E8%AF%A6%E8%A7%A3CSS%E7%9A%84%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2%E5%87%BD%E6%95%B0matrix/" target="_blank" rel="noopener">详解CSS的矩阵变换函数matrix() | 中二病也要玩 front end</a></li>
-<li><a href="http://www.eion.com.tw/Blogger/?Pid=1168" target="_blank" rel="noopener">CSS3 transform-function matrix 變形矩陣</a></li>
-<li><a href="http://www.liangshunet.com/ca/201707/793190018.htm" target="_blank" rel="noopener">CSS3 matrix双板划水、拉伸、打板动画实例animation-亮术网</a></li>
-<li><a href="http://ncase.me/matrix/" target="_blank" rel="noopener">THE MAGNIFICENT 2D MATRIX</a></li>
-<li><a href="https://blog.csdn.net/u010884130/article/details/50005437" target="_blank" rel="noopener">如何通过js获取到CSS3里面transform rotate旋转角度的度数，matrix解析 - CSDN博客</a></li>
-<li><a href="http://thecodeplayer.com/walkthrough/matrix-rain-animation-html5-canvas-javascript" target="_blank" rel="noopener">Matrix rain animation using HTML5 canvas and javascript</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/26/logdown/2018-03-26-7062187/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/03/26/logdown/2018-03-26-7062187/" class="post-title-link" itemprop="url">連續打指令&& 與;差別</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-03-26 19:36:00" itemprop="dateCreated datePublished" datetime="2018-03-26T19:36:00+08:00">2018-03-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/03/26/logdown/2018-03-26-7062187/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/26/logdown/2018-03-26-7062187/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <p><a href="https://community.hpe.com/t5/System-Administration/cron-question-about-multiple-commands/td-p/3444393" target="_blank" rel="noopener">Solved: cron question about multiple commands - Hewlett Packard Enterprise Community</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Re: cron question about multiple commands</span><br><span class="line">&quot;echo ; ls&quot; will execute both echo and ls, whatever is echo exit code.</span><br><span class="line"></span><br><span class="line">&quot;echo &amp;&amp; ls&quot; will execute ls only if echo exit code is 0.</span><br><span class="line"></span><br><span class="line">Maybe you should do a script. Complex lines in crontab make it not clear and harder to maintain.</span><br><span class="line"></span><br><span class="line">Regards,</span><br><span class="line"></span><br><span class="line">Fred</span><br><span class="line">--</span><br><span class="line"></span><br><span class="line">&quot;Reality is just a point of view.&quot; (P. K. D.)</span><br></pre></td></tr></table></figure><br>我有做個小實驗，簡單來講exit code<code>;</code>會傳回最後一個<br>但是<code>&amp;&amp;</code>會兩個看有沒有有沒有成功<br><a href="https://i.imgur.com/ei5cDId.png" target="_blank" rel="noopener">Imgur</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/26/logdown/2018-03-26-7060577/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/03/26/logdown/2018-03-26-7060577/" class="post-title-link" itemprop="url">開機執行程式(/etc/rc.d/rc.local、Update-rc.d)筆記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-03-26 13:59:00" itemprop="dateCreated datePublished" datetime="2018-03-26T13:59:00+08:00">2018-03-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/03/26/logdown/2018-03-26-7060577/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/26/logdown/2018-03-26-7060577/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <p>最近玩linux用到…<br>不過還沒實作過<br>因為要做logdown移轉動作<br>先筆記存檔一下</p>
-<ul>
-<li><a href="https://www.linuxidc.com/Linux/2017-09/147166.htm" target="_blank" rel="noopener">Ubuntu 16.04设置rc.local开机启动命令/脚本的方法_Linux教程_Linux公社-Linux系统门户网站</a></li>
-<li><a href="https://blog.csdn.net/wzy_1988/article/details/8476901" target="_blank" rel="noopener">Update-rc.d &amp;&amp; rc.local管理Ubuntu的开机启动 - CSDN博客</a></li>
-<li><a href="http://fecbob.pixnet.net/blog/post/39347095-linux%E9%96%8B%E6%A9%9F%E8%87%AA%E5%8B%95%E5%95%9F%E5%8B%95" target="_blank" rel="noopener">fecbob.pixnet.net/blog/post/39347095-linux%E9%96%8B%E6%A9%9F%E8%87%AA%E5%8B%95%E5%95%9F%E5%8B%95</a></li>
-</ul>
-<p>centos<br><a href="http://imchao.wang/2014/02/21/make-your-service-autostart-on-linux/" target="_blank" rel="noopener">在CentOS下配置自启动服务 | 王超的技术博客</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/26/logdown/2018-03-26-7060547/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/03/26/logdown/2018-03-26-7060547/" class="post-title-link" itemprop="url">Raspberry pi 遇到emergency mode問題</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-03-26 13:47:00" itemprop="dateCreated datePublished" datetime="2018-03-26T13:47:00+08:00">2018-03-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/03/26/logdown/2018-03-26-7060547/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/26/logdown/2018-03-26-7060547/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>很奇怪…今天Raspberry pi 開機遇到emergency mode<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Welcome to emergency mode! After logging in, type &quot;journalctl -xb&quot; to view</span><br><span class="line">system logs, &quot;systemctl reboot&quot; to reboot, &quot;systemctl default&quot; to try again</span><br><span class="line">to boot into default mode.</span><br><span class="line">Give root password for maintenance</span><br><span class="line">(or type Control-D to continue):</span><br></pre></td></tr></table></figure><br>平常沒有用鍵盤USB，剛好最近買一個機械式鍵盤剛好是USB<br>剛好可以插在上面，原本還滿擔心可能不能用的問題<br>好險沒有</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2018/03/26/logdown/2018-03-26-7060547/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/25/logdown/2018-03-25-7057276/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/03/25/logdown/2018-03-25-7057276/" class="post-title-link" itemprop="url">css的小箭頭原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-03-25 16:57:00" itemprop="dateCreated datePublished" datetime="2018-03-25T16:57:00+08:00">2018-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E7%B6%B2%E9%A0%81%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">網頁特效</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/03/25/logdown/2018-03-25-7057276/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/25/logdown/2018-03-25-7057276/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <p>因為要做blog轉移，所以我就簡單的說明…<br><a href="https://wcc723.github.io/css/2013/09/04/css-arrow/" target="_blank" rel="noopener">CSS的小箭頭 | 前端，沒有極限</a><br>上面說得很清楚，是用border繪制出來的<br>在把其他地方沒用到border顏色改成<code>transparent</code><br>只不過從來沒有想過border可以這樣運用</p>
-<p>參考來源：<br><a href="http://www.cssarrowplease.com/" target="_blank" rel="noopener">cssarrowplease</a><br><a href="https://wcc723.github.io/css/2013/09/04/css-arrow/" target="_blank" rel="noopener">CSS的小箭頭 | 前端，沒有極限</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/25/logdown/2018-03-25-7057242/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/03/25/logdown/2018-03-25-7057242/" class="post-title-link" itemprop="url">svg畫邊特效</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-03-25 16:34:00" itemprop="dateCreated datePublished" datetime="2018-03-25T16:34:00+08:00">2018-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E7%B6%B2%E9%A0%81%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">網頁特效</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/03/25/logdown/2018-03-25-7057242/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/25/logdown/2018-03-25-7057242/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="例用CSS-ANIMTION畫邊框"><a href="#例用CSS-ANIMTION畫邊框" class="headerlink" title="例用CSS ANIMTION畫邊框"></a>例用CSS ANIMTION畫邊框</h1><p><a href="https://jsbin.com/huteruhopa/edit?html,css,output" target="_blank" rel="noopener">https://jsbin.com/huteruhopa/edit?html,css,output</a><br>上面例用CSS Animation做繪制邊框、填色動作<br>參考了<a href="https://wcc723.github.io/svg/2014/06/15/svg-css-stroke-animation/" target="_blank" rel="noopener">CSS + SVG stroke 動態描繪 | 前端，沒有極限</a></p>
-<p><a href="http://www.oxxostudio.tw/articles/201406/svg-06-stroke.html" target="_blank" rel="noopener">SVG 研究之路 (6) - stroke 邊框 - OXXO.STUDIO</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2018/03/25/logdown/2018-03-25-7057242/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/03/25/logdown/2018-03-25-terminal-recording-tool-asciinema/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/03/25/logdown/2018-03-25-terminal-recording-tool-asciinema/" class="post-title-link" itemprop="url">終端機錄制工具 asciinema</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-03-25 11:39:00" itemprop="dateCreated datePublished" datetime="2018-03-25T11:39:00+08:00">2018-03-25</time>
+              <time title="創建時間：2018-05-01 00:35:36" itemprop="dateCreated datePublished" datetime="2018-05-01T00:35:36+08:00">2018-05-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1285,8 +720,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/03/25/logdown/2018-03-25-terminal-recording-tool-asciinema/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/25/logdown/2018-03-25-terminal-recording-tool-asciinema/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/05/01/%E5%A5%BD%E7%94%A8%E7%9A%84%E4%BE%BF%E5%88%A9%E8%B2%BC%E8%BB%9F%E9%AB%94/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/01/好用的便利貼軟體/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1316,11 +751,562 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近想記錄我在筆電上面的終端機設定<br>但以經放著多天，最近在最有空的時候準備整理一下<br>本來想用圖片整理，但logdown不能上傳圖片<br>未來會考慮用hexo來用…</p>
-<p>不過在用hexo之後，剛好看到asciinema可以錄制command指令<br>想說先用這個東西來試試</p>
+          <p>最近由於工作連各各主機，帳號密碼都不一樣<br>每次都需要點開信件/文件去複製<br>這之中希望能縮短時間</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/03/25/logdown/2018-03-25-terminal-recording-tool-asciinema/#more" rel="contents">
+              <a class="btn" href="/blog/2018/05/01/%E5%A5%BD%E7%94%A8%E7%9A%84%E4%BE%BF%E5%88%A9%E8%B2%BC%E8%BB%9F%E9%AB%94/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/04/26/%E4%BD%BF%E7%94%A8CSS%E8%87%AA%E8%A8%82checkbox%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/04/26/%E4%BD%BF%E7%94%A8CSS%E8%87%AA%E8%A8%82checkbox%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">使用CSS自訂checkbox方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-04-26 20:24:29" itemprop="dateCreated datePublished" datetime="2018-04-26T20:24:29+08:00">2018-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%B6%B2%E9%A0%81%E7%89%B9%E6%95%88/" itemprop="url" rel="index"><span itemprop="name">網頁特效</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/04/26/%E4%BD%BF%E7%94%A8CSS%E8%87%AA%E8%A8%82checkbox%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/26/使用CSS自訂checkbox方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>平常在用<code>checkout</code>都用在分支<br>不過今天查看<code>checkout</code>也可以用在還原<br>其實這是用checkbox css hack方法<br>之前有一篇寫過了…但沒想到之前那篇沒寫完整<br>還有之前有看過改CSS取消原本樣式<br>改天來記錄一下吧!!<br><a href="http://jsbin.com/hapineqoca/edit?css,output" target="_blank" rel="noopener">[CSS] checkbox hack 模擬在網頁開視窗</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2018/04/26/%E4%BD%BF%E7%94%A8CSS%E8%87%AA%E8%A8%82checkbox%E6%96%B9%E6%B3%95/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/04/25/%E5%9C%A8display-none%E6%83%85%E6%B3%81%E4%B8%8BGIF%E4%B8%8D%E6%9C%83%E8%A2%ABrender/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/04/25/%E5%9C%A8display-none%E6%83%85%E6%B3%81%E4%B8%8BGIF%E4%B8%8D%E6%9C%83%E8%A2%ABrender/" class="post-title-link" itemprop="url">在display-none情況下GIF不會被render</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-04-25 19:46:12" itemprop="dateCreated datePublished" datetime="2018-04-25T19:46:12+08:00">2018-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/04/25/%E5%9C%A8display-none%E6%83%85%E6%B3%81%E4%B8%8BGIF%E4%B8%8D%E6%9C%83%E8%A2%ABrender/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/25/在display-none情況下GIF不會被render/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天看到了gif在<code>display:block</code> 竟然動畫才開始動<br>查了一下下，原來這跟render有關係<br>在此做一下筆記…</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2018/04/25/%E5%9C%A8display-none%E6%83%85%E6%B3%81%E4%B8%8BGIF%E4%B8%8D%E6%9C%83%E8%A2%ABrender/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/04/24/jquery%E8%87%AA%E8%A8%82%E7%9A%84ajax%20Event/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/04/24/jquery%E8%87%AA%E8%A8%82%E7%9A%84ajax%20Event/" class="post-title-link" itemprop="url">jQuery自訂的ajax Event</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-04-24 20:39:39" itemprop="dateCreated datePublished" datetime="2018-04-24T20:39:39+08:00">2018-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/jQuery/" itemprop="url" rel="index"><span itemprop="name">jQuery</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/04/24/jquery%E8%87%AA%E8%A8%82%E7%9A%84ajax%20Event/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/24/jquery自訂的ajax Event/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天看到<a href="https://dotblogs.com.tw/brooke/2016/07/10/142933" target="_blank" rel="noopener">Ajax-Global Ajax Event Handlers .ajaxComplete()、.ajaxError()、.ajaxSend()、.ajaxStart()、.ajaxStop()、.ajaxSuccess() | 阿沙布魯 - 點部落</a><br>平常都不會這樣寫，發現這樣寫可以模組化<br>今天用少部份時間，來研究出來ajax event來實做出動畫特效<br><strong>備註：ajax event都是jQuery自訂的，原JavaScript沒有這個東西</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2018/04/24/jquery%E8%87%AA%E8%A8%82%E7%9A%84ajax%20Event/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/04/23/git%E9%82%84%E5%8E%9Fcommit%E6%99%82%E5%80%99%E6%AA%94%E6%A1%88%E7%8B%80%E6%85%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/04/23/git%E9%82%84%E5%8E%9Fcommit%E6%99%82%E5%80%99%E6%AA%94%E6%A1%88%E7%8B%80%E6%85%8B/" class="post-title-link" itemprop="url">git還原commit時候檔案狀態</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-04-23 19:51:50" itemprop="dateCreated datePublished" datetime="2018-04-23T19:51:50+08:00">2018-04-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/04/23/git%E9%82%84%E5%8E%9Fcommit%E6%99%82%E5%80%99%E6%AA%94%E6%A1%88%E7%8B%80%E6%85%8B/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/23/git還原commit時候檔案狀態/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/04/22/CSS%E8%A3%A1active%E9%BB%9E%E6%93%8A%E4%BA%8B%E4%BB%B6%E5%A6%99%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/04/22/CSS%E8%A3%A1active%E9%BB%9E%E6%93%8A%E4%BA%8B%E4%BB%B6%E5%A6%99%E7%94%A8/" class="post-title-link" itemprop="url">CSS:active點擊事件妙用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-04-22 01:41:37" itemprop="dateCreated datePublished" datetime="2018-04-22T01:41:37+08:00">2018-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/04/22/CSS%E8%A3%A1active%E9%BB%9E%E6%93%8A%E4%BA%8B%E4%BB%B6%E5%A6%99%E7%94%A8/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/04/22/CSS裡active點擊事件妙用/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一般我們學CSS很常看到:link,:active,:visited,:hover這幾個很常用在<code>a</code><br>不過今天我看到一個範例<br>是用:active對<code>div</code>做點擊換背景事件!!!<br>沒想到竟然可以對<code>div</code>做變化<br>一般很常用mousedown,mouseup做處理<br>這樣可以用CSS一次解決寫兩個JavaScript<br>趕快來筆記一下</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2018/04/22/CSS%E8%A3%A1active%E9%BB%9E%E6%93%8A%E4%BA%8B%E4%BB%B6%E5%A6%99%E7%94%A8/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1343,7 +1329,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/56/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/56/">56</a><span class="page-number current">57</span><a class="page-number" href="/blog/page/58/">58</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/73/">73</a><a class="extend next" rel="next" href="/blog/page/58/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/56/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/56/">56</a><span class="page-number current">57</span><a class="page-number" href="/blog/page/58/">58</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/75/">75</a><a class="extend next" rel="next" href="/blog/page/58/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1409,20 +1395,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">729</span>
+          <span class="site-state-item-count">747</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">577</span>
+        <span class="site-state-item-count">590</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

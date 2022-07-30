@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/03/07/%E5%BF%AB%E9%80%9F%E7%94%A8-docker-%E5%BB%BA%E7%BD%AE-oracle-%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/30/%E4%B8%80%E5%BC%B5%E7%B6%B2%E5%8D%A1%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%B5%84-IP-%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -222,7 +222,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2020/03/07/%E5%BF%AB%E9%80%9F%E7%94%A8-docker-%E5%BB%BA%E7%BD%AE-oracle-%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">快速用 docker 建置 oracle 環境方法</a>
+            <a href="/blog/2020/05/30/%E4%B8%80%E5%BC%B5%E7%B6%B2%E5%8D%A1%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%B5%84-IP-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">一張網卡使用多組 IP 方法</a>
         </h2>
 
         <div class="post-meta">
@@ -232,7 +232,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-03-07 01:14:59" itemprop="dateCreated datePublished" datetime="2020-03-07T01:14:59+08:00">2020-03-07</time>
+              <time title="創建時間：2020-05-30 01:56:29" itemprop="dateCreated datePublished" datetime="2020-05-30T01:56:29+08:00">2020-05-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -247,7 +247,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                  <a href="/blog/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
                 </span>
             </span>
 
@@ -260,8 +260,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2020/03/07/%E5%BF%AB%E9%80%9F%E7%94%A8-docker-%E5%BB%BA%E7%BD%AE-oracle-%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/07/快速用-docker-建置-oracle-環境方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2020/05/30/%E4%B8%80%E5%BC%B5%E7%B6%B2%E5%8D%A1%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%B5%84-IP-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/30/一張網卡使用多組-IP-方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -291,10 +291,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近要看 DB 工具是否能正常連 Oracle<br>簡單使用 Docker 來架設環境</p>
+          <p>故事是這樣的，最近我們公司有多個專案，聽到都是放在獨立機器，各自一組IP。<br>最近我不小心 FTP 設定錯 IP，但是上傳檔案上去。發現 http server(IP對的)竟然更新了。<br>我覺得很奇怪不是不同台電腦，後來發現那一台設定很多虛擬 IP。<br><del>讓我們研究公司是如何省錢的</del></p>
+<p>其實這個用途看到用一台電腦需要跨網段使用<br>不需要切換 IP<br>但不知道數量是不是有限制<br>用台多會不會有缺點?</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2020/03/07/%E5%BF%AB%E9%80%9F%E7%94%A8-docker-%E5%BB%BA%E7%BD%AE-oracle-%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/blog/2020/05/30/%E4%B8%80%E5%BC%B5%E7%B6%B2%E5%8D%A1%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%B5%84-IP-%E6%96%B9%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -318,7 +319,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/03/07/sqldeveloper-%E6%89%93%E9%96%8B%E9%96%83%E9%80%80%E6%AA%A2%E6%9F%A5%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/30/Linux-%E6%8C%87%E4%BB%A4%E7%A2%BA%E8%AA%8DSSL%E6%86%91%E8%AD%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -332,7 +333,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2020/03/07/sqldeveloper-%E6%89%93%E9%96%8B%E9%96%83%E9%80%80%E6%AA%A2%E6%9F%A5%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">sqldeveloper 打開閃退解決方法</a>
+            <a href="/blog/2020/05/30/Linux-%E6%8C%87%E4%BB%A4%E7%A2%BA%E8%AA%8DSSL%E6%86%91%E8%AD%89/" class="post-title-link" itemprop="url">Linux 指令確認SSL憑證</a>
         </h2>
 
         <div class="post-meta">
@@ -342,124 +343,14 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-03-07 01:14:03" itemprop="dateCreated datePublished" datetime="2020-03-07T01:14:03+08:00">2020-03-07</time>
+              <time title="創建時間：2020-05-30 01:52:35" itemprop="dateCreated datePublished" datetime="2020-05-30T01:52:35+08:00">2020-05-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/03/07/sqldeveloper-%E6%89%93%E9%96%8B%E9%96%83%E9%80%80%E6%AA%A2%E6%9F%A5%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/07/sqldeveloper-打開閃退檢查方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近使用 sqldeveloper 開啟出現問題，瞬間打開會閃退<br>網路上查到一些原因<br>但都無法解決</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/03/07/sqldeveloper-%E6%89%93%E9%96%8B%E9%96%83%E9%80%80%E6%AA%A2%E6%9F%A5%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/03/07/%E6%AA%A2%E6%9F%A5%E5%A4%A7%E9%87%8F%E4%B8%8D%E5%90%8C-IP-%E8%B7%9F-Port-%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/03/07/%E6%AA%A2%E6%9F%A5%E5%A4%A7%E9%87%8F%E4%B8%8D%E5%90%8C-IP-%E8%B7%9F-Port-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">檢查大量不同 IP 跟 Port 方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-03-07 01:12:49" itemprop="dateCreated datePublished" datetime="2020-03-07T01:12:49+08:00">2020-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-07-01 20:29:47" itemprop="dateModified" datetime="2021-07-01T20:29:47+08:00">2021-07-01</time>
+                <time title="修改時間：2021-11-09 22:58:53" itemprop="dateModified" datetime="2021-11-09T22:58:53+08:00">2021-11-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -480,8 +371,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2020/03/07/%E6%AA%A2%E6%9F%A5%E5%A4%A7%E9%87%8F%E4%B8%8D%E5%90%8C-IP-%E8%B7%9F-Port-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/07/檢查大量不同-IP-跟-Port-方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2020/05/30/Linux-%E6%8C%87%E4%BB%A4%E7%A2%BA%E8%AA%8DSSL%E6%86%91%E8%AD%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/30/Linux-指令確認SSL憑證/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -511,10 +402,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近要測試大量主機 Port ，看裡面東西有沒有開通<br>使用大量 <code>telnet ip port</code> 非常花很多時間<br>最近在想有沒有好用的工具方便我們檢查</p>
+          <p>單純紀錄</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2020/03/07/%E6%AA%A2%E6%9F%A5%E5%A4%A7%E9%87%8F%E4%B8%8D%E5%90%8C-IP-%E8%B7%9F-Port-%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/blog/2020/05/30/Linux-%E6%8C%87%E4%BB%A4%E7%A2%BA%E8%AA%8DSSL%E6%86%91%E8%AD%89/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -538,7 +429,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/02/20/%E4%BD%BF%E7%94%A8-MySQL-%E5%81%9A%E6%AD%A3%E8%A6%8F%E5%8C%96-REGEXP-%E5%92%8C-%E6%9F%A5%E8%A9%A2%E5%90%AB%E6%9C%89%E4%B8%AD%E6%96%87%E5%AD%97%E4%B8%B2%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/30/0-0-0-0-%E6%98%AF%E4%BB%80%E9%BA%BC%E5%B0%8F%E7%9F%A5%E8%AD%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -552,7 +443,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2020/02/20/%E4%BD%BF%E7%94%A8-MySQL-%E5%81%9A%E6%AD%A3%E8%A6%8F%E5%8C%96-REGEXP-%E5%92%8C-%E6%9F%A5%E8%A9%A2%E5%90%AB%E6%9C%89%E4%B8%AD%E6%96%87%E5%AD%97%E4%B8%B2%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">使用 MySQL 做正規化 (REGEXP) 和 查詢含有中文字串方法</a>
+            <a href="/blog/2020/05/30/0-0-0-0-%E6%98%AF%E4%BB%80%E9%BA%BC%E5%B0%8F%E7%9F%A5%E8%AD%98/" class="post-title-link" itemprop="url">0.0.0.0 是什麼小知識</a>
         </h2>
 
         <div class="post-meta">
@@ -562,7 +453,227 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-02-20 22:04:59" itemprop="dateCreated datePublished" datetime="2020-02-20T22:04:59+08:00">2020-02-20</time>
+              <time title="創建時間：2020-05-30 00:44:06" itemprop="dateCreated datePublished" datetime="2020-05-30T00:44:06+08:00">2020-05-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2020/05/30/0-0-0-0-%E6%98%AF%E4%BB%80%E9%BA%BC%E5%B0%8F%E7%9F%A5%E8%AD%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/30/0-0-0-0-是什麼小知識/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我們常常使用架一些程式服務<br>都會設定 host(0.0.0.0)<br>通常都會認為開 port<br>也知道對 ip 設定 192.168.1.111<br>也有看過對 192.168.1.0 設定（會當下看網路卡 ip）<br>我沒認真探討<br>此篇可能有誤，歡迎指正，<del>請手下留情</del></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2020/05/30/0-0-0-0-%E6%98%AF%E4%BB%80%E9%BA%BC%E5%B0%8F%E7%9F%A5%E8%AD%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/28/Java-%E4%BD%BF%E7%94%A8-Enum-%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2020/05/28/Java-%E4%BD%BF%E7%94%A8-Enum-%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">Java 使用 Enum 小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-05-28 20:09:16" itemprop="dateCreated datePublished" datetime="2020-05-28T20:09:16+08:00">2020-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-08-03 23:52:44" itemprop="dateModified" datetime="2021-08-03T23:52:44+08:00">2021-08-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2020/05/28/Java-%E4%BD%BF%E7%94%A8-Enum-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/28/Java-使用-Enum-小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>平常不怎麼使用 Enum ，非常地不熟悉，今天剛好用到，順便記錄一下。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2020/05/28/Java-%E4%BD%BF%E7%94%A8-Enum-%E5%B0%8F%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/16/%E6%89%8B%E5%8B%95%E9%85%8D%E7%BD%AE-XML-%E6%B3%A8%E5%85%A5-Bean-%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2020/05/16/%E6%89%8B%E5%8B%95%E9%85%8D%E7%BD%AE-XML-%E6%B3%A8%E5%85%A5-Bean-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">手動配置 XML 注入 Bean 方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-05-16 23:11:02" itemprop="dateCreated datePublished" datetime="2020-05-16T23:11:02+08:00">2020-05-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -577,7 +688,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
                 </span>
             </span>
 
@@ -590,8 +701,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2020/02/20/%E4%BD%BF%E7%94%A8-MySQL-%E5%81%9A%E6%AD%A3%E8%A6%8F%E5%8C%96-REGEXP-%E5%92%8C-%E6%9F%A5%E8%A9%A2%E5%90%AB%E6%9C%89%E4%B8%AD%E6%96%87%E5%AD%97%E4%B8%B2%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/20/使用-MySQL-做正規化-REGEXP-和-查詢含有中文字串方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2020/05/16/%E6%89%8B%E5%8B%95%E9%85%8D%E7%BD%AE-XML-%E6%B3%A8%E5%85%A5-Bean-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/16/手動配置-XML-注入-Bean-方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -621,11 +732,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近報表需要撈出中文字<br>找了一些方法可以用 SELECT 句子撈出</p>
-<p>這篇尚未整理，有空再測試<br>
+          <p>這邊主要是講手動注入</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2020/02/20/%E4%BD%BF%E7%94%A8-MySQL-%E5%81%9A%E6%AD%A3%E8%A6%8F%E5%8C%96-REGEXP-%E5%92%8C-%E6%9F%A5%E8%A9%A2%E5%90%AB%E6%9C%89%E4%B8%AD%E6%96%87%E5%AD%97%E4%B8%B2%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/blog/2020/05/16/%E6%89%8B%E5%8B%95%E9%85%8D%E7%BD%AE-XML-%E6%B3%A8%E5%85%A5-Bean-%E6%96%B9%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -649,7 +759,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/02/19/%E5%A4%A7%E9%87%8FA%E8%A1%A8%E6%8E%92%E9%99%A4%E7%89%B9%E5%AE%9AB%E8%A1%A8-id-%E6%8E%92%E9%99%A4%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/13/JavaConfig-%E8%A8%AD%E5%AE%9A-bean-%E7%89%A9%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -663,7 +773,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2020/02/19/%E5%A4%A7%E9%87%8FA%E8%A1%A8%E6%8E%92%E9%99%A4%E7%89%B9%E5%AE%9AB%E8%A1%A8-id-%E6%8E%92%E9%99%A4%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">大量A表排除特定B表 id 排除方法小記</a>
+            <a href="/blog/2020/05/13/JavaConfig-%E8%A8%AD%E5%AE%9A-bean-%E7%89%A9%E4%BB%B6/" class="post-title-link" itemprop="url">JavaConfig 設定 bean 物件</a>
         </h2>
 
         <div class="post-meta">
@@ -673,7 +783,117 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-02-19 22:44:55" itemprop="dateCreated datePublished" datetime="2020-02-19T22:44:55+08:00">2020-02-19</time>
+              <time title="創建時間：2020-05-13 22:07:44" itemprop="dateCreated datePublished" datetime="2020-05-13T22:07:44+08:00">2020-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2020/05/13/JavaConfig-%E8%A8%AD%E5%AE%9A-bean-%E7%89%A9%E4%BB%B6/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/13/JavaConfig-設定-bean-物件/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>這邊不使用自動載入</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2020/05/13/JavaConfig-%E8%A8%AD%E5%AE%9A-bean-%E7%89%A9%E4%BB%B6/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/11/Spring-%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2020/05/11/Spring-%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">Spring 自動注入小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-05-11 23:41:17" itemprop="dateCreated datePublished" datetime="2020-05-11T23:41:17+08:00">2020-05-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -688,7 +908,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
                 </span>
             </span>
 
@@ -701,8 +921,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2020/02/19/%E5%A4%A7%E9%87%8FA%E8%A1%A8%E6%8E%92%E9%99%A4%E7%89%B9%E5%AE%9AB%E8%A1%A8-id-%E6%8E%92%E9%99%A4%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/19/大量A表排除特定B表-id-排除方法小記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2020/05/11/Spring-%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/11/Spring-自動注入小記/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -732,10 +952,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近需求需要A表過濾B表<br>但是資料量非常大<br>處理時間非常久</p>
+          <p>自動注入筆記</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2020/02/19/%E5%A4%A7%E9%87%8FA%E8%A1%A8%E6%8E%92%E9%99%A4%E7%89%B9%E5%AE%9AB%E8%A1%A8-id-%E6%8E%92%E9%99%A4%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2020/05/11/Spring-%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -759,7 +979,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/02/19/mysqldump-%E5%8C%AF%E5%87%BA-CSV-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/10/JSP-%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%9C%8B%E6%A8%99%E7%B1%A4%E5%B0%8F%E8%A8%98-JSTL-EL-ONGL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -773,7 +993,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2020/02/19/mysqldump-%E5%8C%AF%E5%87%BA-CSV-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">mysqldump  匯出 CSV 方法小記</a>
+            <a href="/blog/2020/05/10/JSP-%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%9C%8B%E6%A8%99%E7%B1%A4%E5%B0%8F%E8%A8%98-JSTL-EL-ONGL/" class="post-title-link" itemprop="url">JSP 一些常看標籤小記(JSTL, EL, ONGL)</a>
         </h2>
 
         <div class="post-meta">
@@ -783,7 +1003,117 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-02-19 22:30:43" itemprop="dateCreated datePublished" datetime="2020-02-19T22:30:43+08:00">2020-02-19</time>
+              <time title="創建時間：2020-05-10 15:16:14" itemprop="dateCreated datePublished" datetime="2020-05-10T15:16:14+08:00">2020-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2020/05/10/JSP-%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%9C%8B%E6%A8%99%E7%B1%A4%E5%B0%8F%E8%A8%98-JSTL-EL-ONGL/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/10/JSP-一些常看標籤小記-JSTL-EL-ONGL/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近使用 struts2 <code>&lt;s:property value=&quot;text&quot;&gt;</code><br>但在 JSP 頁面要做 if 判斷<br>我今天抓不到 struts2 test值<br>剛好網路爬文就找到這篇<a href="https://blog.csdn.net/qq30211478/article/details/77188991" target="_blank" rel="noopener">EL、OGNL、JSTL和struts标签的区别_数据库_qq30211478的博客-CSDN博客</a><br>順便整理</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2020/05/10/JSP-%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%9C%8B%E6%A8%99%E7%B1%A4%E5%B0%8F%E8%A8%98-JSTL-EL-ONGL/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/05/02/Spring-%E5%BB%BA%E7%AB%8B%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E8%B5%B7%E6%89%8B%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2020/05/02/Spring-%E5%BB%BA%E7%AB%8B%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E8%B5%B7%E6%89%8B%E5%BC%8F/" class="post-title-link" itemprop="url">Spring 建立應用程式起手式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-05-02 14:01:16" itemprop="dateCreated datePublished" datetime="2020-05-02T14:01:16+08:00">2020-05-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -798,7 +1128,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
+                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
                 </span>
             </span>
 
@@ -811,8 +1141,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2020/02/19/mysqldump-%E5%8C%AF%E5%87%BA-CSV-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/19/mysqldump-匯出-CSV-方法小記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2020/05/02/Spring-%E5%BB%BA%E7%AB%8B%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E8%B5%B7%E6%89%8B%E5%BC%8F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/05/02/Spring-建立應用程式起手式/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -842,10 +1172,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>這篇只記錄，尚未測試</p>
+          <p>最近看了一些 Spring 教學<br>這篇整理一下建制 Spring 需要步驟</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2020/02/19/mysqldump-%E5%8C%AF%E5%87%BA-CSV-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2020/05/02/Spring-%E5%BB%BA%E7%AB%8B%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F%E8%B5%B7%E6%89%8B%E5%BC%8F/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -869,7 +1199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/02/17/Redis-%E5%B0%8F%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/04/26/%E6%A8%A1%E6%93%AC%E4%B8%8D%E8%89%AF%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -883,7 +1213,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2020/02/17/Redis-%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">Redis 小記</a>
+            <a href="/blog/2020/04/26/%E6%A8%A1%E6%93%AC%E4%B8%8D%E8%89%AF%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">模擬不良網路環境方法</a>
         </h2>
 
         <div class="post-meta">
@@ -893,227 +1223,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-02-17 16:45:25" itemprop="dateCreated datePublished" datetime="2020-02-17T16:45:25+08:00">2020-02-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/02/17/Redis-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/17/Redis-小記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>常常專案使用 redis<br>但並沒有深入了解<br>因為 Redis 一般看範例就知道怎麼使用了<br>真的非常簡單<br>但我覺得用那麼多次<br>沒深入了解不是很好<br>這篇整理一下</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/02/17/Redis-%E5%B0%8F%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/02/15/vagrant-%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8-ansible-%E5%92%8C-docker-%E6%9E%B6%E8%A8%AD-redis-%E5%B0%8F%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/02/15/vagrant-%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8-ansible-%E5%92%8C-docker-%E6%9E%B6%E8%A8%AD-redis-%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">vagrant 搭配使用 ansible 和 docker 架設 redis 小記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-02-15 18:43:43" itemprop="dateCreated datePublished" datetime="2020-02-15T18:43:43+08:00">2020-02-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Vagrant/" itemprop="url" rel="index"><span itemprop="name">Vagrant</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/02/15/vagrant-%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8-ansible-%E5%92%8C-docker-%E6%9E%B6%E8%A8%AD-redis-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/15/vagrant-搭配使用-ansible-和-docker-架設-redis-小記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>常常我們需要做布署安裝<br>多台可能需要<br>最近看到 vagrant 可以搭配 ansible 使用<br>網路上隨便找一個範例小記<br>意外發現 <code>/var/run</code> 一些程式設定方法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/02/15/vagrant-%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8-ansible-%E5%92%8C-docker-%E6%9E%B6%E8%A8%AD-redis-%E5%B0%8F%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">socat 實用網路工具 和 使用解析 unix socket 方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-02-14 17:17:15" itemprop="dateCreated datePublished" datetime="2020-02-14T17:17:15+08:00">2020-02-14</time>
+              <time title="創建時間：2020-04-26 01:03:47" itemprop="dateCreated datePublished" datetime="2020-04-26T01:03:47+08:00">2020-04-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1141,8 +1251,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/14/socat-實用網路工具-和-使用解析-unix-socket-方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2020/04/26/%E6%A8%A1%E6%93%AC%E4%B8%8D%E8%89%AF%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/26/模擬不良網路環境方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1172,120 +1282,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近要看 unix socket 傳送資料而苦惱<br>剛好最近這個工具<a href="https://plantegg.github.io/2018/01/01/%E9%80%9A%E8%BF%87tcpdump%E5%AF%B9Unix%20Socket%20%E8%BF%9B%E8%A1%8C%E6%8A%93%E5%8C%85%E8%A7%A3%E6%9E%90/" target="_blank" rel="noopener">通过tcpdump对Unix Domain Socket 进行抓包解析 | plantegg</a><br><a href="https://plantegg.github.io/2019/04/04/%E5%B0%B1%E6%98%AF%E8%A6%81%E4%BD%A0%E6%87%82%E6%8A%93%E5%8C%85--Unix-Socket%E6%8A%93%E5%8C%85/" target="_blank" rel="noopener">就是要你懂Unix Socket 进行抓包解析 | plantegg</a><br>馬上實作看看!!!</p>
+          <p>之前有跟別的廠商藉接機器<br>但是後來覺得網路順斷，機器不會自動連線<br>一直在想有什麼可以模擬這種網路狀況<br>機器還可不可以運作<br>最近有爬到一些文章</p>
+<p><strong>最後嘗試，我這種情境還是沒辦法模擬出當時狀況</strong><br><strong>所以這篇就單純紀錄</strong><br>因為最近動物機載 BT ，偶爾會發生連不到動物機狀態<br>嚴重是完全連不到，輕微拔掉網路線就會正常一下，過一會就 ping 不到<br>我朋友估計是樹梅派問題，重開機就會正常…<br>log 也沒有看到哪裡出問題，不知道公司狀況也是不是這一種?<br>連線方法可以參考(下面內容):<a href="https://malagege.github.io/blog/2019/01/27/Linux%E5%9C%A8Wifi%E4%BD%BF%E7%94%A8pppoe%E9%80%A3%E7%B7%9A%E5%BE%8C%EF%BC%8C%E9%87%8D%E9%96%8B%E6%A9%9F%E4%B8%8D%E8%83%BD%E9%80%A3%E7%B7%9A%E4%B8%8A%E7%B6%B2/">Linux在Wifi使用pppoe連線後，重開機不能連線上網 | 程式狂想筆記</a></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2020/02/14/socat-%E5%AF%A6%E7%94%A8%E7%B6%B2%E8%B7%AF%E5%B7%A5%E5%85%B7-%E5%92%8C-%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90-unix-socket-%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/02/10/PHP-DI-%E7%B0%A1%E5%96%AE%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/02/10/PHP-DI-%E7%B0%A1%E5%96%AE%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">PHP-DI 簡單自動注入小記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-02-10 21:10:54" itemprop="dateCreated datePublished" datetime="2020-02-10T21:10:54+08:00">2020-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/02/10/PHP-DI-%E7%B0%A1%E5%96%AE%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/02/10/PHP-DI-簡單自動注入小記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近跑去看 PHP-DI<br>簡單實作小記</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/02/10/PHP-DI-%E7%B0%A1%E5%96%AE%E8%87%AA%E5%8B%95%E6%B3%A8%E5%85%A5%E5%B0%8F%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2020/04/26/%E6%A8%A1%E6%93%AC%E4%B8%8D%E8%89%AF%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83%E6%96%B9%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1308,7 +1309,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/26/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/blog/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/73/">73</a><a class="extend next" rel="next" href="/blog/page/28/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/26/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/blog/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/75/">75</a><a class="extend next" rel="next" href="/blog/page/28/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1374,20 +1375,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">729</span>
+          <span class="site-state-item-count">747</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">577</span>
+        <span class="site-state-item-count">590</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

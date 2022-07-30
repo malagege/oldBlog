@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/01/07/Java-%E5%AF%A6%E4%BD%9C-Memory-Cache-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/22/Kuberenetes-%E7%9A%84-Job/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -222,7 +222,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/01/07/Java-%E5%AF%A6%E4%BD%9C-Memory-Cache-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">Java 實作 Memory Cache 方法小記</a>
+            <a href="/blog/2021/02/22/Kuberenetes-%E7%9A%84-Job/" class="post-title-link" itemprop="url">Kubernetes 的 Job</a>
         </h2>
 
         <div class="post-meta">
@@ -232,7 +232,667 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2021-01-07 23:15:17" itemprop="dateCreated datePublished" datetime="2021-01-07T23:15:17+08:00">2021-01-07</time>
+              <time title="創建時間：2021-02-22 19:08:59" itemprop="dateCreated datePublished" datetime="2021-02-22T19:08:59+08:00">2021-02-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-12-13 21:53:15" itemprop="dateModified" datetime="2021-12-13T21:53:15+08:00">2021-12-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/02/22/Kuberenetes-%E7%9A%84-Job/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/22/Kuberenetes-的-Job/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>直接進入重點</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/02/22/Kuberenetes-%E7%9A%84-Job/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/21/SVN-%E7%A7%BB%E8%BD%89-GIT-%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/02/21/SVN-%E7%A7%BB%E8%BD%89-GIT-%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">SVN 移轉 GIT 小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-02-21 01:13:25" itemprop="dateCreated datePublished" datetime="2021-02-21T01:13:25+08:00">2021-02-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/02/21/SVN-%E7%A7%BB%E8%BD%89-GIT-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/21/SVN-移轉-GIT-小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近公司 SVN Repository 要備廢除<br>由於先前案子是使用 SVN，此專案也是交接下來的<br>不希望把 SVN 修改記錄刪除<br>很多專案都是把檔案從丟新的到 GIT<br>但我不是這樣做<br>花了一點時間找工具轉<br>趕緊紀錄，因為沒有在家實作<br>所以大概季錄一下</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/02/21/SVN-%E7%A7%BB%E8%BD%89-GIT-%E5%B0%8F%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/18/Kuberentes-%E7%9A%84-DaemonSet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/02/18/Kuberentes-%E7%9A%84-DaemonSet/" class="post-title-link" itemprop="url">Kubernetes 的 DaemonSet</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-02-18 23:11:50" itemprop="dateCreated datePublished" datetime="2021-02-18T23:11:50+08:00">2021-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-12-09 21:25:54" itemprop="dateModified" datetime="2021-12-09T21:25:54+08:00">2021-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kuberenetes/" itemprop="url" rel="index"><span itemprop="name">Kuberenetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/02/18/Kuberentes-%E7%9A%84-DaemonSet/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/18/Kuberentes-的-DaemonSet/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Deployment 和 ReplicaSet 通常使用多個 replica 時候，都是建在各 nodes 隨機安裝。<br>DaemonSet 可以讓每一台 node 運行 Pod。<br>感覺這個跟 docker swarm 的 agent mode :global  一樣 <a href="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/">docker swarm 一些指令相關整理 | 程式狂想筆記</a><br>立馬實作看看</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/02/18/Kuberentes-%E7%9A%84-DaemonSet/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/18/Kind-%E5%BB%BA%E7%BD%AE-Cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/02/18/Kind-%E5%BB%BA%E7%BD%AE-Cluster/" class="post-title-link" itemprop="url">Kind 建置 Cluster</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-02-18 22:30:59" itemprop="dateCreated datePublished" datetime="2021-02-18T22:30:59+08:00">2021-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-12-07 21:55:30" itemprop="dateModified" datetime="2021-12-07T21:55:30+08:00">2021-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kuberenetes/" itemprop="url" rel="index"><span itemprop="name">Kuberenetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/02/18/Kind-%E5%BB%BA%E7%BD%AE-Cluster/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/18/Kind-建置-Cluster/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近看 Kuberenets 看到 DaemonSet，由於目前 Kind 跟 MiniKube 都是使用單結點，沒辦法用 Cluster，今天照 Kind 實作看看。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/02/18/Kind-%E5%BB%BA%E7%BD%AE-Cluster/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/14/Kubernetes-%E7%9A%84-Deployment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/02/14/Kubernetes-%E7%9A%84-Deployment/" class="post-title-link" itemprop="url">Kubernetes 的 Deployment</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-02-14 19:14:24" itemprop="dateCreated datePublished" datetime="2021-02-14T19:14:24+08:00">2021-02-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-12-07 23:42:17" itemprop="dateModified" datetime="2021-12-07T23:42:17+08:00">2021-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/02/14/Kubernetes-%E7%9A%84-Deployment/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/14/Kubernetes-的-Deployment/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>感覺是滿多的功能<br>但頁數比較想像中的少<br>趕緊消化</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/02/14/Kubernetes-%E7%9A%84-Deployment/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/" class="post-title-link" itemprop="url">Kubernetes 的 ReplicaSet</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-02-13 02:10:07" itemprop="dateCreated datePublished" datetime="2021-02-13T02:10:07+08:00">2021-02-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-12-07 20:55:23" itemprop="dateModified" datetime="2021-12-07T20:55:23+08:00">2021-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/13/Kubernetes-的-ReplicasSet/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我目前看書上是舊版範例<br>所以使用官方<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/replicaset/#how-a-replicaset-works" target="_blank" rel="noopener">ReplicaSet | Kubernetes</a>範例<br>目前推薦 <a href="https://godleon.github.io/blog/Kubernetes/k8s-ReplicaSet-Overview/" target="_blank" rel="noopener">[Kubernetes] ReplicaSet 介紹 | 小信豬的原始部落</a><br>這邊只是會放操作紀錄，不會很專業解說</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/02/13/Kubernetes-%E7%9A%84-ReplicasSet/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/" class="post-title-link" itemprop="url">Kubernetes 使用 Ingress 做負載平衡</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-02-11 16:37:01" itemprop="dateCreated datePublished" datetime="2021-02-11T16:37:01+08:00">2021-02-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -247,7 +907,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
                 </span>
             </span>
 
@@ -260,8 +920,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/01/07/Java-%E5%AF%A6%E4%BD%9C-Memory-Cache-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/07/Java-實作-Memory-Cache-方法小記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/11/Kubernetes-使用-Ingress-做負載平衡/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -291,10 +951,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近程式會頻繁撈取資料庫<br>想有沒有減輕資料庫負擔<br>後來想到之前 swoole 課程有提到 Memory Cache<br>今天網路找了一下 Java 實作<br>發現還滿多實作可以直接使用</p>
+          <p>最近我在學習 Kubernetes，我有問我 K8S 裡面使用 load balance 能不能做到 Cookies 第一次指向到某一台 Server<br>我那時後才學到 Service ，Service 是使用 iptable 所以應該無法做到<br>我剛看到 Ingress 章節，應該是可以做到我朋友需求<br>但仔細想想，探討這個問題也應該沒有意義<br>使用 K8S 應該就是使用微服務架構，探討 Server 會不會掛掉或更新， Pod 都一定會重置</p>
+<p>搜為網路上看一下， 單獨 Ingress 不是可以做到，需要一個 Ingress Controller 才能做到(這邊這個好像就是 nginx 這種東西)<br>不過，Ingress 和 Ingress Controller </p>
+<blockquote>
+<p>Ingress 本身並沒有提供負載平衡的功能，還需要透過 Ingress Controller 來實現。Ingress Controller 目前主要支援兩種型別 GCE 與 Nginx，而今天我們將透過 Nginx Ingress Controller 在 Kubernetes Cluster 內部架設 load balancer。</p>
+</blockquote>
+<p>來源: <a href="https://ithelp.ithome.com.tw/articles/10196261" target="_blank" rel="noopener">[Day 19] 在 Kubernetes 中實現負載平衡 - Ingress Controller - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a></p>
+<p><strong>2021-02-04</strong><br>我找到我朋友說的<code>使用 load balance 能不能做到 Cookies 第一次指向到某一台 Server</code><br>專有述語叫做 <code>Sticky Session</code><br>Nginx Ingress Controller 可以做到</p>
+<ul>
+<li><a href="https://kubernetes.github.io/ingress-nginx/examples/affinity/cookie/" target="_blank" rel="noopener">Sticky Sessions - NGINX Ingress Controller</a></li>
+<li><a href="https://doc.traefik.io/traefik/routing/services/#sticky-sessions" target="_blank" rel="noopener">Services - Traefik</a></li>
+<li><a href="https://blog.csdn.net/linuxerlin/article/details/107561912" target="_blank" rel="noopener">Ingress session sticky_总结、分享、交流-CSDN博客</a><br>結論還是能做到的</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/01/07/Java-%E5%AF%A6%E4%BD%9C-Memory-Cache-%E6%96%B9%E6%B3%95%E5%B0%8F%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2021/02/11/Kubernetes-%E4%BD%BF%E7%94%A8-Ingress-%E5%81%9A%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -318,7 +989,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/01/04/JVM-%E6%9F%A5%E7%9C%8B%E8%A8%98%E6%86%B6%E9%AB%94%E4%BD%BF%E7%94%A8%E6%83%85%E6%B3%81%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/04/Kubernetes-%E6%9C%8D%E5%8B%99%E6%8E%A2%E7%B4%A2-Service-Discovery/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -332,7 +1003,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/01/04/JVM-%E6%9F%A5%E7%9C%8B%E8%A8%98%E6%86%B6%E9%AB%94%E4%BD%BF%E7%94%A8%E6%83%85%E6%B3%81%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">JVM 查看記憶體使用情況方法</a>
+            <a href="/blog/2021/02/04/Kubernetes-%E6%9C%8D%E5%8B%99%E6%8E%A2%E7%B4%A2-Service-Discovery/" class="post-title-link" itemprop="url">Kubernetes 服務探索(Service Discovery)</a>
         </h2>
 
         <div class="post-meta">
@@ -342,7 +1013,117 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2021-01-04 23:18:56" itemprop="dateCreated datePublished" datetime="2021-01-04T23:18:56+08:00">2021-01-04</time>
+              <time title="創建時間：2021-02-04 21:48:46" itemprop="dateCreated datePublished" datetime="2021-02-04T21:48:46+08:00">2021-02-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-01-04 00:13:40" itemprop="dateModified" datetime="2022-01-04T00:13:40+08:00">2022-01-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/02/04/Kubernetes-%E6%9C%8D%E5%8B%99%E6%8E%A2%E7%B4%A2-Service-Discovery/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/04/Kubernetes-服務探索-Service-Discovery/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Kubernetes  Service 筆記</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/02/04/Kubernetes-%E6%9C%8D%E5%8B%99%E6%8E%A2%E7%B4%A2-Service-Discovery/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/02/Kubernetes-%E7%9A%84-Label-%E5%92%8C-Annotation-%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/02/02/Kubernetes-%E7%9A%84-Label-%E5%92%8C-Annotation-%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">Kubernetes 的 Label 和 Annotation 小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-02-02 22:07:39" itemprop="dateCreated datePublished" datetime="2021-02-02T22:07:39+08:00">2021-02-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -357,7 +1138,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                  <a href="/blog/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
                 </span>
             </span>
 
@@ -370,8 +1151,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/01/04/JVM-%E6%9F%A5%E7%9C%8B%E8%A8%98%E6%86%B6%E9%AB%94%E4%BD%BF%E7%94%A8%E6%83%85%E6%B3%81%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/04/JVM-查看記憶體使用情況方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/02/02/Kubernetes-%E7%9A%84-Label-%E5%92%8C-Annotation-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/02/Kubernetes-的-Label-和-Annotation-小記/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -401,129 +1182,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <a id="more"></a>
-<h2 id="使用清單"><a href="#使用清單" class="headerlink" title="使用清單"></a>使用清單</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  檢視當前機器上所有執行的java程序名稱與pid(程序編號)</span></span><br><span class="line">jps -l</span><br><span class="line"><span class="comment">#  顯示指定的jvm程序所有的屬性設定和配置引數</span></span><br><span class="line">jinfo pid</span><br></pre></td></tr></table></figure>
-<p>TODO: 整理</p>
-<p><a href="https://my.oschina.net/u/4416802/blog/3845052" target="_blank" rel="noopener">利用jmap和MAT等工具查看JVM运行时堆内存 - osc_3wmngxzc的个人空间 - OSCHINA - 中文开源技术交流社区</a><br><a href="https://blog.yosheng.tw/jvm-out-of-memory" target="_blank" rel="noopener">JVM 記憶體溢出 - 夜升筆談</a></p>
-<p><a href="https://cloud.tencent.com/developer/article/1518274" target="_blank" rel="noopener">JVM故障分析及性能优化实战(VII)——使用MAT的Histogram和Dominator Tree定位溢出源 - 云+社区 - 腾讯云</a></p>
-<p><a href="https://codingnote.cc/zh-tw/p/152324/" target="_blank" rel="noopener">JVM(完成度95%,不斷更新) - ⎝⎛CodingNote.cc ⎞⎠</a></p>
-<p><a href="https://www.itread01.com/p/580598.html" target="_blank" rel="noopener">JVM引數對J2EE效能優化的影響 - IT閱讀</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/01/04/springframework3-with-struts2-%E4%BD%BF%E7%94%A8-swagger-%E5%B7%A5%E5%85%B7%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/01/04/springframework3-with-struts2-%E4%BD%BF%E7%94%A8-swagger-%E5%B7%A5%E5%85%B7%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">springframework3 with struts2 使用 swagger 工具注解使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-01-04 23:01:51" itemprop="dateCreated datePublished" datetime="2021-01-04T23:01:51+08:00">2021-01-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/01/04/springframework3-with-struts2-%E4%BD%BF%E7%94%A8-swagger-%E5%B7%A5%E5%85%B7%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/04/springframework3-with-struts2-使用-swagger-工具注解使用/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>搭在 spring 3 網路上很多教學都是使用 spring MVC 去做串接<br>由於公司上使用是舊版<br>所以找找有沒有能用的方法<br>最後成功來記錄一下</p>
+          <p>Kubernetes 的 Label 和 Annotation 小記</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/01/04/springframework3-with-struts2-%E4%BD%BF%E7%94%A8-swagger-%E5%B7%A5%E5%85%B7%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/#more" rel="contents">
+              <a class="btn" href="/blog/2021/02/02/Kubernetes-%E7%9A%84-Label-%E5%92%8C-Annotation-%E5%B0%8F%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -547,7 +1209,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/12/24/Oracle-%E4%BD%BF%E7%94%A8-listagg-%E5%A4%9A%E5%88%97%E7%BE%A4%E7%B5%84%E5%90%88%E6%88%90%E5%90%8C%E4%B8%80%E5%88%97%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/02/02/%E7%94%A8-XSD-%E9%A9%97%E8%AD%89-XML-%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -561,7 +1223,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2020/12/24/Oracle-%E4%BD%BF%E7%94%A8-listagg-%E5%A4%9A%E5%88%97%E7%BE%A4%E7%B5%84%E5%90%88%E6%88%90%E5%90%8C%E4%B8%80%E5%88%97%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Oracle 使用 listagg 多列群組合成同一列方法</a>
+            <a href="/blog/2021/02/02/%E7%94%A8-XSD-%E9%A9%97%E8%AD%89-XML-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">用 XSD 驗證 XML 方法</a>
         </h2>
 
         <div class="post-meta">
@@ -571,24 +1233,15 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2020-12-24 22:07:05" itemprop="dateCreated datePublished" datetime="2020-12-24T22:07:05+08:00">2020-12-24</time>
+              <time title="創建時間：2021-02-02 21:54:26" itemprop="dateCreated datePublished" datetime="2021-02-02T21:54:26+08:00">2021-02-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+                <time title="修改時間：2021-08-22 16:05:08" itemprop="dateModified" datetime="2021-08-22T16:05:08+08:00">2021-08-22</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
-                </span>
-            </span>
 
           
   
@@ -599,8 +1252,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2020/12/24/Oracle-%E4%BD%BF%E7%94%A8-listagg-%E5%A4%9A%E5%88%97%E7%BE%A4%E7%B5%84%E5%90%88%E6%88%90%E5%90%8C%E4%B8%80%E5%88%97%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/24/Oracle-使用-listagg-多列群組合成同一列方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/02/02/%E7%94%A8-XSD-%E9%A9%97%E8%AD%89-XML-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/02/02/用-XSD-驗證-XML-方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -630,681 +1283,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>之前有在 MySQL 用過這個需求用過這個需求<a href="https://malagege.github.io/blog/2019/09/02/group-cancat-%E5%92%8C-concat-ws-%E5%A4%9A%E5%80%8B%E6%A9%AB%E6%AC%84%E5%92%8C%E7%B8%B1%E6%AC%84%E7%B5%84%E5%9C%A8%E4%B8%80%E8%B5%B7%E6%96%B9%E6%B3%95/">GROUP_CONCAT 和 CONCAT_WS 多個橫欄和縱欄組在一起方法 | 程式狂想筆記</a><br>但是 Oracle 用上有差異<br>還多了一堆限制(如:字數不能超過 4000)<br>distinct 還會被禁用??!</p>
+          <p>維運常常遇到 XML 裡面格式<br>規則不是很清楚<br>後來</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2020/12/24/Oracle-%E4%BD%BF%E7%94%A8-listagg-%E5%A4%9A%E5%88%97%E7%BE%A4%E7%B5%84%E5%90%88%E6%88%90%E5%90%8C%E4%B8%80%E5%88%97%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/12/07/Command-Injection-%E5%B0%8F%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/12/07/Command-Injection-%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">Command Injection 小記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-12-07 23:27:34" itemprop="dateCreated datePublished" datetime="2020-12-07T23:27:34+08:00">2020-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/12/07/Command-Injection-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/07/Command-Injection-小記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>command injection </p>
-<p>平常沒什麼看過<br>今天程式做弱點掃描發現這個問題<br>程式call web service 掃出弱點<br>等等web service 怎麼掃出 command injection ，改不會是誤判了<br>本片重點在 command injection</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/12/07/Command-Injection-%E5%B0%8F%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/12/07/Systemd-%E6%99%82%E9%96%93%E6%8E%92%E7%A8%8B%E7%AD%86%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/12/07/Systemd-%E6%99%82%E9%96%93%E6%8E%92%E7%A8%8B%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">Systemd 時間排程筆記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-12-07 23:01:20" itemprop="dateCreated datePublished" datetime="2020-12-07T23:01:20+08:00">2020-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/12/07/Systemd-%E6%99%82%E9%96%93%E6%8E%92%E7%A8%8B%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/07/Systemd-時間排程筆記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>一般我們使用排程都是用 crontab<br>再搭配使用flock 去做程式執行管控，這一段也有可能時間寫死程式一個flag，這無疑是要佔用檔案了<br>前幾天我看到 systemd 可以做排程設定<br>所以就簡單研究一下</p>
-<p>其實之前就有簡單研究<br>一直覺得這個東西非常實用<br>用配置就能完成程式複雜判斷</p>
-<p>網路上還滿多相關教學<br>應該可以用在正式環境上面</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/12/07/Systemd-%E6%99%82%E9%96%93%E6%8E%92%E7%A8%8B%E7%AD%86%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/11/25/Docker-%E4%BD%BF%E7%94%A8%E5%AE%B9%E9%87%8F%E6%92%90%E7%88%86-Raspberry-PI-%E7%A1%AC%E7%A2%9F%E7%A9%BA%E9%96%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/11/25/Docker-%E4%BD%BF%E7%94%A8%E5%AE%B9%E9%87%8F%E6%92%90%E7%88%86-Raspberry-PI-%E7%A1%AC%E7%A2%9F%E7%A9%BA%E9%96%93/" class="post-title-link" itemprop="url">Docker 使用容量撐爆 Raspberry PI 硬碟空間</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-11-25 19:53:11" itemprop="dateCreated datePublished" datetime="2020-11-25T19:53:11+08:00">2020-11-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/11/25/Docker-%E4%BD%BF%E7%94%A8%E5%AE%B9%E9%87%8F%E6%92%90%E7%88%86-Raspberry-PI-%E7%A1%AC%E7%A2%9F%E7%A9%BA%E9%96%93/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/11/25/Docker-使用容量撐爆-Raspberry-PI-硬碟空間/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>使用 Docker 我們知道rm container 所有東西不會被保留<br>但我往往會忽略有 images 占空間<br>我發現 PI 1 已經吃 14GB (總共空間 15GB)<br>後來發現是裝太多 images<br>原因是我往往先丟 PI 1 測試能不能跑<br>日積月累爆掉<br>PS: 是更新 apt upgrade 才發現   哈哈</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/11/25/Docker-%E4%BD%BF%E7%94%A8%E5%AE%B9%E9%87%8F%E6%92%90%E7%88%86-Raspberry-PI-%E7%A1%AC%E7%A2%9F%E7%A9%BA%E9%96%93/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/11/24/%E4%BD%BF%E7%94%A8-Wiremock-%E6%90%AD%E5%BB%BA-mockapi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/11/24/%E4%BD%BF%E7%94%A8-Wiremock-%E6%90%AD%E5%BB%BA-mockapi/" class="post-title-link" itemprop="url">使用 Wiremock 搭建 mockapi</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-11-24 22:04:49" itemprop="dateCreated datePublished" datetime="2020-11-24T22:04:49+08:00">2020-11-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E8%BB%9F%E9%AB%94/" itemprop="url" rel="index"><span itemprop="name">實用軟體</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/11/24/%E4%BD%BF%E7%94%A8-Wiremock-%E6%90%AD%E5%BB%BA-mockapi/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/11/24/使用-Wiremock-搭建-mockapi/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前有使用<a href="https://malagege.github.io/blog/2018/09/25/vscode%E5%A5%97%E4%BB%B6Rest-Client%E6%90%AD%E9%85%8DJSON-Server%E7%B0%A1%E5%96%AE%E4%BD%BF%E7%94%A8%E5%B0%8F%E8%A8%98/">vscode套件Rest Client搭配JSON-Server簡單使用小記 | 程式狂想筆記</a><br>但我覺得設定還不是很好用</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/11/24/%E4%BD%BF%E7%94%A8-Wiremock-%E6%90%AD%E5%BB%BA-mockapi/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/11/24/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA-web-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-server/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/11/24/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA-web-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-server/" class="post-title-link" itemprop="url">快速搭建 web 反向代理 server</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-11-24 21:40:51" itemprop="dateCreated datePublished" datetime="2020-11-24T21:40:51+08:00">2020-11-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/11/24/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA-web-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-server/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/11/24/快速搭建-web-反向代理-server/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前有聽過 apache, nginx, frp, caddy server 都能做 web 反向代理<br>但都沒有實際工作用到<br>最近因為有搭建 mockapi 和 jboss 想對外測試line webhook<br>有想到代理對外窗口使用 ngrok<br>但…反向代理花了不少時間<br>希望下次複製及所用<br>這邊應該會以window 環境<br>畢竟公司開發環境是 window</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/11/24/%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA-web-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86-server/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/11/15/frp-%E5%85%A7%E7%B6%B2%E7%A9%BF%E9%80%8F%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/11/15/frp-%E5%85%A7%E7%B6%B2%E7%A9%BF%E9%80%8F%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">frp 內網穿透使用筆記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-11-15 02:16:25" itemprop="dateCreated datePublished" datetime="2020-11-15T02:16:25+08:00">2020-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/frp/" itemprop="url" rel="index"><span itemprop="name">frp</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/frp/traefik/" itemprop="url" rel="index"><span itemprop="name">traefik</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/frp/traefik/ssh-tunnel/" itemprop="url" rel="index"><span itemprop="name">ssh tunnel</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2020/11/15/frp-%E5%85%A7%E7%B6%B2%E7%A9%BF%E9%80%8F%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/11/15/frp-內網穿透使用筆記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近看 frp 文章<br>我看反向代理不用設定在 server 那邊<br>這邊方法有點跟 traefik 跟 label 實作有點像<br>但網路上說這兩個用途有點不太一樣<br>我認真看一下 frp 官網文件<br>真的還是有差!!</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2020/11/15/frp-%E5%85%A7%E7%B6%B2%E7%A9%BF%E9%80%8F%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2021/02/02/%E7%94%A8-XSD-%E9%A9%97%E8%AD%89-XML-%E6%96%B9%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1327,7 +1309,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/19/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/blog/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/73/">73</a><a class="extend next" rel="next" href="/blog/page/21/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/19/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/blog/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/75/">75</a><a class="extend next" rel="next" href="/blog/page/21/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1393,20 +1375,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">729</span>
+          <span class="site-state-item-count">747</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">577</span>
+        <span class="site-state-item-count">590</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
