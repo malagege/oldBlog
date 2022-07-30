@@ -108,6 +108,10 @@ server {
 ![](https://i.imgur.com/YHOvINY.png)
 
 
+Websocket 設定 SLB 反向代理設定可以參考
+[从websocket服务的nginx配置说起](https://echizen.github.io/tech/2018/10-21-nginx-websocket)
+* [小程序WebSocket通过F5无法转发问题解决](http://www.360doc.com/content/20/0214/16/835902_891986448.shtml) [備份圖](https://imgur.com/l0U3rko.png)
+
 ## 遇到錯誤問題
 
 ### docker-compose port 雷

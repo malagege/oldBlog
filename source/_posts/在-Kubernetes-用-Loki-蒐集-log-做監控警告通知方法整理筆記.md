@@ -27,9 +27,11 @@ categories: Kubernetes
 - [使用 Helm 快速安裝 Loki](https://malagege.github.io/blog/2022/04/03/%E4%BD%BF%E7%94%A8-Helm-%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%9D-Loki/)
 - [Loki 做監控動作方法](https://malagege.github.io/blog/2022/04/03/Loki-%E5%81%9A%E7%9B%A3%E6%8E%A7%E5%8B%95%E4%BD%9C%E6%96%B9%E6%B3%95/)
 
+最後檔案存放[FileName.tar](https://www.mediafire.com/file/ygw0ukj7s01jn4e/FileName.tar/file)
+
 ## 感言
 
-第一次接觸 Web 管理虛擬主機不是很習慣，我本來就像 Virtalbox 那樣建立機器就可以了，但看到網路有要設定路由器，剛看介面完全不知道要怎麼使用，看文件有些細節也不知道要如何使用，如用路由器綁定浮動 IP 。最後有請教我朋友做網路工程師，他有看文件大概跟我講一些設定，但他說有些設定他也不是很懂，如找不到Portfording 設定...，總之我順利開啟機器。
+第一次接觸 Web 管理虛擬主機不是很習慣，我本來就像 Virtualbox 那樣建立機器就可以了，但看到網路有要設定路由器，剛看介面完全不知道要怎麼使用，看文件有些細節也不知道要如何使用，如用路由器綁定浮動 IP 。最後有請教我朋友做網路工程師，他有看文件大概跟我講一些設定，但他說有些設定他也不是很懂，如找不到Portfording 設定...，總之我順利開啟機器。
 
 ![圖片](https://user-images.githubusercontent.com/6058558/161395932-092de0c8-1482-4b8d-927d-c5ce0d7f05c4.png)
 ![圖片](https://user-images.githubusercontent.com/6058558/161392274-a22f0a6e-75f8-4394-a352-afba818aba00.png)
