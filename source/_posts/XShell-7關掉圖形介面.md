@@ -5,6 +5,8 @@ tags: [xshell]
 categories: XShell
 ---
 
+小記
+<!--more-->
 ## XShell 7連線屬性設定
 
 如果有在用XShell 7做維運，連線屬性設定->連線->SSH->通道->X11轉寄[預設會勾選，建議取消勾選]

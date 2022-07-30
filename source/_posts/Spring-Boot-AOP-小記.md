@@ -221,7 +221,7 @@ Object getThis();	獲取代理物件
 
 這邊源碼我有丟到 Github: [malagege/spring-boot-aop-example: 範例測試](https://github.com/malagege/spring-boot-aop-example)
 
-我以為很難，其實寫出範例又好像很好。後來想到滿多機制能用這個寫，像重試API測試，我們也可以透過AOP方式，後來我很好奇有沒有別人現成寫好的工具，發現`spring-retry`可以做到這些事情。
+我以為很難，其實寫出範例又好像很簡單。後來想到滿多機制能用這個寫，像重試API測試，我們也可以透過AOP方式，後來我很好奇有沒有別人現成寫好的工具，發現`spring-retry`可以做到這些事情。
 
 文章整理:
 - [spring-retry 重試機制](https://www.tpisoftware.com/tpu/articleDetails/1407)
