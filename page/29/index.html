@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/09/CSV-%E5%8C%AF%E5%85%A5%E5%88%B0-MySQL-%E5%A4%B1%E6%95%97%E5%B0%8F%E8%A8%98-Data-truncation-Incorrect-date-value-for-column-date-col-at-row-1/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2020/01/02/%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9F%E8%B3%87%E6%96%99%E8%A1%A8-alter-table-%E8%AA%9E%E6%B3%95-schemalex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -222,7 +222,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2019/09/09/CSV-%E5%8C%AF%E5%85%A5%E5%88%B0-MySQL-%E5%A4%B1%E6%95%97%E5%B0%8F%E8%A8%98-Data-truncation-Incorrect-date-value-for-column-date-col-at-row-1/" class="post-title-link" itemprop="url">CSV 匯入到 MySQL 失敗小記(Data truncation: Incorrect date value: '' for column 'date_col' at row 1)</a>
+            <a href="/blog/2020/01/02/%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9F%E8%B3%87%E6%96%99%E8%A1%A8-alter-table-%E8%AA%9E%E6%B3%95-schemalex/" class="post-title-link" itemprop="url">快速產生資料表 alter table 語法 schemalex</a>
         </h2>
 
         <div class="post-meta">
@@ -232,887 +232,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2019-09-09 22:33:55" itemprop="dateCreated datePublished" datetime="2019-09-09T22:33:55+08:00">2019-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/09/CSV-%E5%8C%AF%E5%85%A5%E5%88%B0-MySQL-%E5%A4%B1%E6%95%97%E5%B0%8F%E8%A8%98-Data-truncation-Incorrect-date-value-for-column-date-col-at-row-1/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/09/CSV-匯入到-MySQL-失敗小記-Data-truncation-Incorrect-date-value-for-column-date-col-at-row-1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近自己產生出來的 csv 匯入 DB遇到一些問題<br>之前 <a href="https://malagege.github.io/blog/2019/08/21/csv-%E5%BF%AB%E9%80%9F%E5%BB%BA%E7%AB%8B-MySQL-%E8%B3%87%E6%96%99%E8%A1%A8%E6%96%B9%E6%B3%95/">csv 快速建立 MySQL 資料表方法 | 程式狂想筆記</a> 真的建立資料表很方便<br>但最近採到一些雷<br>在這邊整理一下</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/09/CSV-%E5%8C%AF%E5%85%A5%E5%88%B0-MySQL-%E5%A4%B1%E6%95%97%E5%B0%8F%E8%A8%98-Data-truncation-Incorrect-date-value-for-column-date-col-at-row-1/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/08/%E5%9F%B7%E8%A1%8C-SQL-%E5%81%9A-rollback-%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/08/%E5%9F%B7%E8%A1%8C-SQL-%E5%81%9A-rollback-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">執行 SQL 做 rollback 方法 & 訂單編號高併發的小記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-08 18:00:05" itemprop="dateCreated datePublished" datetime="2019-09-08T18:00:05+08:00">2019-09-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/08/%E5%9F%B7%E8%A1%8C-SQL-%E5%81%9A-rollback-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/08/執行-SQL-做-rollback-方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近在想 phpmyadmin 到底能不能做到錯誤時 rollback<br>先講結論…應該是不行的<br>執行 phpmyadmin 時候好像沒被法判斷有沒有錯誤(指令的好像也一樣…)<br>有什麼新發現，之後再修改</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/08/%E5%9F%B7%E8%A1%8C-SQL-%E5%81%9A-rollback-%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/08/PHP-return-%E7%89%B9%E5%88%A5%E7%9A%84%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/08/PHP-return-%E7%89%B9%E5%88%A5%E7%9A%84%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">PHP return 特別的用法小記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-08 17:27:22" itemprop="dateCreated datePublished" datetime="2019-09-08T17:27:22+08:00">2019-09-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/08/PHP-return-%E7%89%B9%E5%88%A5%E7%9A%84%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/08/PHP-return-特別的用法小記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天看到我同事用 <code>return</code> 寫在 xxx.php(沒有寫在 return 裡面)<br>我印象中 return 通常都寫在 function 裡面<br>查看了一下官方文件 <a href="https://www.php.net/manual/zh/function.return.php" target="_blank" rel="noopener">PHP: return - Manual</a><br>可以寫在 function 外面</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/08/PHP-return-%E7%89%B9%E5%88%A5%E7%9A%84%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/07/XSD-%E7%9C%8B-XML-%E7%B5%90%E6%A7%8B%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/07/XSD-%E7%9C%8B-XML-%E7%B5%90%E6%A7%8B%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">XSD 看 XML 結構一些工具</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-07 01:16:58" itemprop="dateCreated datePublished" datetime="2019-09-07T01:16:58+08:00">2019-09-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/XML/" itemprop="url" rel="index"><span itemprop="name">XML</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/07/XSD-%E7%9C%8B-XML-%E7%B5%90%E6%A7%8B%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/07/XSD-看-XML-結構一些工具/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近看 XSD 檔案，覺得這個東西有轉成圖片來看<br>不過找了一些工具試試</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/07/XSD-%E7%9C%8B-XML-%E7%B5%90%E6%A7%8B%E4%B8%80%E4%BA%9B%E5%B7%A5%E5%85%B7/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/05/XML-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9F%A5%E8%A9%A2%E5%B7%A5%E5%85%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/05/XML-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9F%A5%E8%A9%A2%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">XML 好用的查詢工具</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-05 23:05:07" itemprop="dateCreated datePublished" datetime="2019-09-05T23:05:07+08:00">2019-09-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/XML/" itemprop="url" rel="index"><span itemprop="name">XML</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/05/XML-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9F%A5%E8%A9%A2%E5%B7%A5%E5%85%B7/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/05/XML-好用的查詢工具/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近做 Digital Data Exchange 介接資料<br>XML 平常是會用，有知道一些 Library 可以解析裡面資料<br>但進階的 xpath 平常沒有什麼用到<br>就找找看有什麼實用工具<br>讓未來 debug 有更快的方法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/05/XML-%E5%A5%BD%E7%94%A8%E7%9A%84%E6%9F%A5%E8%A9%A2%E5%B7%A5%E5%85%B7/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/03/MySQL-MariaDB-%E6%9F%A5%E8%A9%A2-JSON-%E8%B3%87%E6%96%99%E5%B0%8F%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/03/MySQL-MariaDB-%E6%9F%A5%E8%A9%A2-JSON-%E8%B3%87%E6%96%99%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">MySQL / MariaDB 查詢 JSON 資料小記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-03 20:47:35" itemprop="dateCreated datePublished" datetime="2019-09-03T20:47:35+08:00">2019-09-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/03/MySQL-MariaDB-%E6%9F%A5%E8%A9%A2-JSON-%E8%B3%87%E6%96%99%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/03/MySQL-MariaDB-查詢-JSON-資料小記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近剛好要撈出某一台 DB 特別的值<br>但那個欄位都是 JSON 格式<br>剛好那台 DB 是 MySQL 5.7.x<br>可以用 JSON，就趁個這個機會做筆記</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/03/MySQL-MariaDB-%E6%9F%A5%E8%A9%A2-JSON-%E8%B3%87%E6%96%99%E5%B0%8F%E8%A8%98/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/03/php-excel-templator-%E7%94%A8%E7%AF%84%E6%9C%AC-template-%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9FExcel%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/03/php-excel-templator-%E7%94%A8%E7%AF%84%E6%9C%AC-template-%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9FExcel%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">php-excel-templator 用範本(template)快速產生Excel方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-03 19:36:21" itemprop="dateCreated datePublished" datetime="2019-09-03T19:36:21+08:00">2019-09-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/03/php-excel-templator-%E7%94%A8%E7%AF%84%E6%9C%AC-template-%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9FExcel%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/03/php-excel-templator-用範本-template-快速產生Excel方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近在工作上常常做報表(Excel)<br>常常用程式控制 Excel 格式<br>非常不方便<br>最近在找找有沒有用 template 好用工具</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/03/php-excel-templator-%E7%94%A8%E7%AF%84%E6%9C%AC-template-%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9FExcel%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/02/group-cancat-%E5%92%8C-concat-ws-%E5%A4%9A%E5%80%8B%E6%A9%AB%E6%AC%84%E5%92%8C%E7%B8%B1%E6%AC%84%E7%B5%84%E5%9C%A8%E4%B8%80%E8%B5%B7%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/02/group-cancat-%E5%92%8C-concat-ws-%E5%A4%9A%E5%80%8B%E6%A9%AB%E6%AC%84%E5%92%8C%E7%B8%B1%E6%AC%84%E7%B5%84%E5%9C%A8%E4%B8%80%E8%B5%B7%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">GROUP_CONCAT 和 CONCAT_WS 多個橫欄和縱欄組在一起方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-02 21:15:45" itemprop="dateCreated datePublished" datetime="2019-09-02T21:15:45+08:00">2019-09-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2019/09/02/group-cancat-%E5%92%8C-concat-ws-%E5%A4%9A%E5%80%8B%E6%A9%AB%E6%AC%84%E5%92%8C%E7%B8%B1%E6%AC%84%E7%B5%84%E5%9C%A8%E4%B8%80%E8%B5%B7%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/02/group-cancat-和-concat-ws-多個橫欄和縱欄組在一起方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前有使用 group_concat ，但沒有特別做筆記<br>今天剛好查報表資料，就特別來筆記</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2019/09/02/group-cancat-%E5%92%8C-concat-ws-%E5%A4%9A%E5%80%8B%E6%A9%AB%E6%AC%84%E5%92%8C%E7%B8%B1%E6%AC%84%E7%B5%84%E5%9C%A8%E4%B8%80%E8%B5%B7%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/02/%E5%85%A9%E5%80%8B%E8%B3%87%E6%96%99%E6%AF%94%E5%B0%8D%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2019/09/02/%E5%85%A9%E5%80%8B%E8%B3%87%E6%96%99%E6%AF%94%E5%B0%8D%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">兩個資料比對方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2019-09-02 20:21:31" itemprop="dateCreated datePublished" datetime="2019-09-02T20:21:31+08:00">2019-09-02</time>
+              <time title="創建時間：2020-01-02 22:26:32" itemprop="dateCreated datePublished" datetime="2020-01-02T22:26:32+08:00">2020-01-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1140,8 +260,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2019/09/02/%E5%85%A9%E5%80%8B%E8%B3%87%E6%96%99%E6%AF%94%E5%B0%8D%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/02/兩個資料比對方法/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2020/01/02/%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9F%E8%B3%87%E6%96%99%E8%A1%A8-alter-table-%E8%AA%9E%E6%B3%95-schemalex/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/02/快速產生資料表-alter-table-語法-schemalex/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1171,10 +291,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近做兩個資料比較<br>一直常常做這件事情<br>不知道有沒有比較發便的做法</p>
+          <p>常常我們在測試 DB 環境<br>不會馬上上到正式環境<br>但都是分開改 alter table<br>之前有在 Dbeaver 有 migrate table 功能<br>但大致上我們工程師沒有 DB 的權限<br>要如何快速產生 alter table 語法呢?</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2019/09/02/%E5%85%A9%E5%80%8B%E8%B3%87%E6%96%99%E6%AF%94%E5%B0%8D%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/blog/2020/01/02/%E5%BF%AB%E9%80%9F%E7%94%A2%E7%94%9F%E8%B3%87%E6%96%99%E8%A1%A8-alter-table-%E8%AA%9E%E6%B3%95-schemalex/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1198,7 +318,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/09/01/JS-%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95%E5%81%9A%E5%88%B0-jQuery-one-%E4%BA%8B%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/12/29/wget-%E5%81%9A-POST-%E8%A1%A8%E5%96%AE%E7%99%BC%E9%80%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -1212,7 +332,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2019/09/01/JS-%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95%E5%81%9A%E5%88%B0-jQuery-one-%E4%BA%8B%E4%BB%B6/" class="post-title-link" itemprop="url">JS 原生方法做到 jQuery one 事件</a>
+            <a href="/blog/2019/12/29/wget-%E5%81%9A-POST-%E8%A1%A8%E5%96%AE%E7%99%BC%E9%80%81/" class="post-title-link" itemprop="url">wget 做 POST 表單發送</a>
         </h2>
 
         <div class="post-meta">
@@ -1222,14 +342,14 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2019-09-01 22:08:16" itemprop="dateCreated datePublished" datetime="2019-09-01T22:08:16+08:00">2019-09-01</time>
+              <time title="創建時間：2019-12-29 19:22:13" itemprop="dateCreated datePublished" datetime="2019-12-29T19:22:13+08:00">2019-12-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1237,7 +357,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
                 </span>
             </span>
 
@@ -1250,8 +370,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2019/09/01/JS-%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95%E5%81%9A%E5%88%B0-jQuery-one-%E4%BA%8B%E4%BB%B6/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/01/JS-原生方法做到-jQuery-one-事件/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2019/12/29/wget-%E5%81%9A-POST-%E8%A1%A8%E5%96%AE%E7%99%BC%E9%80%81/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/29/wget-做-POST-表單發送/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1281,10 +401,904 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>今天想用 jQuery one 監聽事件<br>想找原生簡單使用方法<br>原本想 Event 直接取消監聽<br>但還是有爬到比較簡單的做法，簡單紀錄一下</p>
+          <p>最近收到一個工單<br>是有關於做大量資料做修改<br>目前有一隻程式做單一資料置換<br>要怎麼快速對大量資料直接用現有程式做呢?<br>那就多批發送表單吧</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2019/09/01/JS-%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95%E5%81%9A%E5%88%B0-jQuery-one-%E4%BA%8B%E4%BB%B6/#more" rel="contents">
+              <a class="btn" href="/blog/2019/12/29/wget-%E5%81%9A-POST-%E8%A1%A8%E5%96%AE%E7%99%BC%E9%80%81/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/12/29/%E4%BD%BF%E7%94%A8-SVP-%E8%A3%9C%E5%B9%80-4K-%E8%9E%A2%E5%B9%95%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/12/29/%E4%BD%BF%E7%94%A8-SVP-%E8%A3%9C%E5%B9%80-4K-%E8%9E%A2%E5%B9%95%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">使用 SVP 補幀 4K 螢幕小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-12-29 14:33:15" itemprop="dateCreated datePublished" datetime="2019-12-29T14:33:15+08:00">2019-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%BD%B1%E9%9F%B3/" itemprop="url" rel="index"><span itemprop="name">影音</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/12/29/%E4%BD%BF%E7%94%A8-SVP-%E8%A3%9C%E5%B9%80-4K-%E8%9E%A2%E5%B9%95%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/29/使用-SVP-補幀-4K-螢幕小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近買了 ET322QK C 螢幕<br>有 4K 跟 10bit 畫質<br>順便也換了 Nivda GTX 2060 顯示卡<br>之前舊的顯示卡是用 AMD<br>有使用 AMD FM 補幀<br>最近設定補幀研究設定<br>在這邊做個簡單紀錄<br>(不一定適合每一台電腦)<br>當然我也遇到一些問題</p>
+<p>話說比較新的AMD 顯示卡不能做FM了<br>買新 AMD 顯示卡需要注意!!!</p>
+<p>SVP4 PRO 2020-12-03 最近快轉速度比較不會卡頓了<br>然後我發現用 MPC-HC 播放抖動其況比 PotPlayer 好<br>我原本以為撥放器都一樣…<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2019/12/29/%E4%BD%BF%E7%94%A8-SVP-%E8%A3%9C%E5%B9%80-4K-%E8%9E%A2%E5%B9%95%E5%B0%8F%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/12/19/%E5%BF%AB%E9%80%9F%E8%AA%BF%E6%95%B4-INERT-UPDATE-SQL-%E8%AA%9E%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/12/19/%E5%BF%AB%E9%80%9F%E8%AA%BF%E6%95%B4-INERT-UPDATE-SQL-%E8%AA%9E%E6%B3%95/" class="post-title-link" itemprop="url">快速調整 INERT / UPDATE SQL 語法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-12-19 20:37:36" itemprop="dateCreated datePublished" datetime="2019-12-19T20:37:36+08:00">2019-12-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/SQL/" itemprop="url" rel="index"><span itemprop="name">SQL</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/12/19/%E5%BF%AB%E9%80%9F%E8%AA%BF%E6%95%B4-INERT-UPDATE-SQL-%E8%AA%9E%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/19/快速調整-INERT-UPDATE-SQL-語法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近公司兩台 DB 資料不一致<br>我可以直接使用 Dbeaver 生產 SQL<br>但我發現相關欄位另外一台 DB 沒有<br>移除爛為在 Editor 欄位和數值非常傷眼睛又很花時間</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2019/12/19/%E5%BF%AB%E9%80%9F%E8%AA%BF%E6%95%B4-INERT-UPDATE-SQL-%E8%AA%9E%E6%B3%95/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">docker swarm 一些指令相關整理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-12-07 20:06:28" itemprop="dateCreated datePublished" datetime="2019-12-07T20:06:28+08:00">2019-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/07/docker-swarm-一些指令相關整理/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基本教學網站"><a href="#基本教學網站" class="headerlink" title="基本教學網站"></a>基本教學網站</h2><p><a href="https://github.com/twtrubiks/docker-swarm-tutorial" target="_blank" rel="noopener">twtrubiks/docker-swarm-tutorial: Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide📝</a></p>
+<p><a href="https://outmanzzq.github.io/2019/06/18/docker-swarm-manager-ha/" target="_blank" rel="noopener">Docker Swarm 管理节点高可用分析 — outmanzzq</a></p>
+<p>由於上面網站都教的非常清楚<br>我這邊只記錄如何操作跟小筆記(或我覺得重要的)<br>不會詳細介紹，我覺得以上都說得很細</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2019/12/07/docker-swarm-%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E7%9B%B8%E9%97%9C%E6%95%B4%E7%90%86/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">php pcntl_fork 多程序小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-11-21 20:43:51" itemprop="dateCreated datePublished" datetime="2019-11-21T20:43:51+08:00">2019-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/21/php-pcntl-fork-多程序小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前在 swoole 有簡單紀錄 pcntl_fork<br>我在寫那篇之前，以為 pcntl_fork 執行子程序大概不會收到執行結果<br>不過今天仔細看，可以接收到程式執行結果<br>但還是不能傳接收參數值</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2019/11/21/php-pcntl-fork-%E5%A4%9A%E7%A8%8B%E5%BA%8F%E5%B0%8F%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/11/12/Shell-%E5%BF%AB%E9%80%9F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99%E5%A4%BE%E4%B8%8B%E5%BA%95%E5%B1%A4%E6%AA%94%E6%A1%88%E6%95%B8%E9%87%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/11/12/Shell-%E5%BF%AB%E9%80%9F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99%E5%A4%BE%E4%B8%8B%E5%BA%95%E5%B1%A4%E6%AA%94%E6%A1%88%E6%95%B8%E9%87%8F/" class="post-title-link" itemprop="url">Shell 快速統計資料夾下底層檔案數量</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-11-12 21:26:38" itemprop="dateCreated datePublished" datetime="2019-11-12T21:26:38+08:00">2019-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/11/12/Shell-%E5%BF%AB%E9%80%9F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99%E5%A4%BE%E4%B8%8B%E5%BA%95%E5%B1%A4%E6%AA%94%E6%A1%88%E6%95%B8%E9%87%8F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/12/Shell-快速統計資料夾下底層檔案數量/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> */ .*/ ; <span class="keyword">do</span>      <span class="built_in">echo</span> -n <span class="variable">$i</span><span class="string">": "</span> ;      (find <span class="string">"<span class="variable">$i</span>/"</span> -maxdepth 1 -mindepth 1 -<span class="built_in">type</span> d | wc -l) ;  <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>mindepth 0 數字是指<code>.</code>本層開始搜尋的(包含.)自己，但通常會用 1(不包含 <code>.</code>)<br>maxdepth 1 數字是使<code>.</code>往後搜尋資料夾</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> */ .*/ ; <span class="keyword">do</span>      <span class="built_in">echo</span> -n <span class="variable">$i</span><span class="string">": "</span> ;      (find <span class="string">"<span class="variable">$i</span>"</span> -maxdepth 3 -<span class="built_in">type</span> f -name <span class="string">"*.docx"</span> | wc -l) ;  <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/9157138/recursively-counting-files-in-a-linux-directory" target="_blank" rel="noopener">Recursively counting files in a Linux directory - Stack Overflow</a></p>
+<h2 id="find-確認資料夾是否有檔案"><a href="#find-確認資料夾是否有檔案" class="headerlink" title="find 確認資料夾是否有檔案"></a>find 確認資料夾是否有檔案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ `find . -mindepth 1  | wc -l ` -gt 0 ]; <span class="keyword">then</span> <span class="built_in">echo</span> <span class="string">"test"</span>; <span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h2 id="awk-指令"><a href="#awk-指令" class="headerlink" title="awk 指令"></a>awk 指令</h2><p>echo 1 2 3 4 5 | awk {print 1}</p>
+<h2 id="深入-find-指令"><a href="#深入-find-指令" class="headerlink" title="深入 find 指令"></a>深入 find 指令</h2><p>發現 find 指令順序也有關係</p>
+<p><a href="http://lifegoo.pluskid.org/wiki/UtilFind.html" target="_blank" rel="noopener">find 实用程序</a><br><a href="https://www.oracle.com/technetwork/cn/topics/calish-find-096463-zhs.html" target="_blank" rel="noopener">Linux Find 命令精通指南</a><br><a href="http://www.voidcn.com/article/p-bgvmodwd-pg.html" target="_blank" rel="noopener">find命令的几个例子解析(-a,-o,-path,-wholename,-prnue,-print) - 程序园</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/11/12/Docker-%E5%9F%B7%E8%A1%8C%E5%B0%88%E6%A1%88%E7%9A%84-PHP-Composer-%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/11/12/Docker-%E5%9F%B7%E8%A1%8C%E5%B0%88%E6%A1%88%E7%9A%84-PHP-Composer-%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Docker 執行專案的 PHP Composer 方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-11-12 21:17:33" itemprop="dateCreated datePublished" datetime="2019-11-12T21:17:33+08:00">2019-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/PHP/" itemprop="url" rel="index"><span itemprop="name">PHP</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/11/12/Docker-%E5%9F%B7%E8%A1%8C%E5%B0%88%E6%A1%88%E7%9A%84-PHP-Composer-%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/12/Docker-執行專案的-PHP-Composer-方法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近找了一下方法<br>記錄一下</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2019/11/12/Docker-%E5%9F%B7%E8%A1%8C%E5%B0%88%E6%A1%88%E7%9A%84-PHP-Composer-%E6%96%B9%E6%B3%95/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/11/07/Python-3-7-%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/11/07/Python-3-7-%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">在 Ubutnu 安裝 Python 3.7 筆記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-11-07 23:31:47" itemprop="dateCreated datePublished" datetime="2019-11-07T23:31:47+08:00">2019-11-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/11/07/Python-3-7-%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/07/Python-3-7-安裝筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近在 Linux 安裝 Python 3.7 發現原生 <code>apt</code> 沒有包<br>需要手動編譯安裝<br>但遇到很多問題<br>在這邊小記</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2019/11/07/Python-3-7-%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2019/11/06/shell-script-%E5%B8%83%E6%9E%97%E9%81%8B%E7%AE%97%E9%A0%86%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2019/11/06/shell-script-%E5%B8%83%E6%9E%97%E9%81%8B%E7%AE%97%E9%A0%86%E5%BA%8F/" class="post-title-link" itemprop="url">shell script 布林運算順序</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-11-06 23:01:59" itemprop="dateCreated datePublished" datetime="2019-11-06T23:01:59+08:00">2019-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2019/11/06/shell-script-%E5%B8%83%E6%9E%97%E9%81%8B%E7%AE%97%E9%A0%86%E5%BA%8F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/06/shell-script-布林運算順序/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一般寫程式都有 not and or 順序去做運算<br>但今天我發現 shell script 運算結果跟(別的)程式結果不太一樣<br>查了一下發現，shell script 是由<code>左往右</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2019/11/06/shell-script-%E5%B8%83%E6%9E%97%E9%81%8B%E7%AE%97%E9%A0%86%E5%BA%8F/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1307,7 +1321,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/28/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/blog/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/70/">70</a><a class="extend next" rel="next" href="/blog/page/30/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/28/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/blog/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/73/">73</a><a class="extend next" rel="next" href="/blog/page/30/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1373,20 +1387,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">695</span>
+          <span class="site-state-item-count">729</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-count">577</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

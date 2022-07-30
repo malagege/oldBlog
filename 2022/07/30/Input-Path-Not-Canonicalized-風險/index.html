@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="常常遇到一些問題，網路上找到一些方法筆記一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Input Path Not Canonicalized 風險">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/07/30/Input-Path-Not-Canonicalized-%E9%A2%A8%E9%9A%AA/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="常常遇到一些問題，網路上找到一些方法筆記一下。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-07-30T15:55:13.000Z">
+<meta property="article:modified_time" content="2022-07-30T15:56:43.391Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="path">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/07/30/Input-Path-Not-Canonicalized-%E9%A2%A8%E9%9A%AA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Input Path Not Canonicalized 風險 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/07/30/Input-Path-Not-Canonicalized-%E9%A2%A8%E9%9A%AA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Input Path Not Canonicalized 風險
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-07-30 23:55:13 / 修改時間：23:56:43" itemprop="dateCreated datePublished" datetime="2022-07-30T23:55:13+08:00">2022-07-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E6%BA%90%E7%A2%BC%E6%8E%83%E6%8F%8F/" itemprop="url" rel="index"><span itemprop="name">源碼掃描</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/07/30/Input-Path-Not-Canonicalized-%E9%A2%A8%E9%9A%AA/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/07/30/Input-Path-Not-Canonicalized-風險/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>常常遇到一些問題，網路上找到一些方法筆記一下。</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">sanitizePathTraversal</span><span class="params">(String filename)</span> </span>&#123;</span><br><span class="line"> Path p = Paths.get(filename);</span><br><span class="line"> <span class="keyword">return</span> p.getFileName().toString();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getFileContents_fixed</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> ServletException,</span></span><br><span class="line"><span class="function">FileNotFoundException, IOException </span>&#123;</span><br><span class="line">String filename = sanitizePathTraversal(request.getParameter(<span class="string">"filename"</span>)); <span class="comment">// Ensures access only to files in a given folder, no traversal</span></span><br><span class="line">Path path = Paths.get(SERVED_FILES_DIR + filename);</span><br><span class="line"><span class="keyword">byte</span>[] fileContentBytes = Files.readAllBytes(path);</span><br><span class="line">String fileContents = <span class="keyword">new</span> String(fileContentBytes, FILE_CONTENT_ENCODING_STRING);</span><br><span class="line"> <span class="keyword">return</span> fileContents;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>簡單說就是讓使用者 request 檔案名稱不可以帶入資料夾相關資料，看上面範例。但不知道Java有沒有現成安全的套件，目前是沒看到有。</p>
+<h2 id="Path-Manipulation"><a href="#Path-Manipulation" class="headerlink" title="Path Manipulation"></a>Path Manipulation</h2><p>自己覺得可以用白名單確認，可能是最好。再來是過濾特殊字元。最後就算沒有改 Code，正常主機設定的權限也應該要嚴謹，也不會有安全性的問題。</p>
+<h3 id="白名單"><a href="#白名單" class="headerlink" title="白名單"></a>白名單</h3><p>參考:<a href="http://fortifyissue.blogspot.com/2014/08/path-manipulation.html" target="_blank" rel="noopener">Path Manipulation | Fix Fortify Issue</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String UMD_EXCEPTION =<span class="string">"/fxxxxbs3/UMD_EXCE/"</span>;</span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, String&gt; UMD_EXCEPTION_OMC = Collections.unmodifiableMap(<span class="keyword">new</span> HashMap&lt;String, String&gt;()&#123;&#123;</span><br><span class="line">  <span class="keyword">for</span>(String omcCode :OmcUnit.ALL_CODES)&#123;</span><br><span class="line">   put(omcCode,UMD_EXCEPTION+File.separator+omcCode); </span><br><span class="line">  &#125;</span><br><span class="line"> &#125;&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(OmcUnit omcUnit :omcList)&#123;</span><br><span class="line">    String fileName = <span class="string">"omc"</span>+omcUnit.getCode()+<span class="string">"."</span>+inputDateRoc+<span class="string">".all"</span>;</span><br><span class="line">    String path = FileFullPathUrl.UMD_EXCEPTION_OMC.get(omcUnit.getCode());</span><br><span class="line">File path = <span class="keyword">new</span> File(path);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="過濾特殊字元"><a href="#過濾特殊字元" class="headerlink" title="過濾特殊字元"></a>過濾特殊字元</h3><p>參考<br><a href="https://blog.csdn.net/dazhong2012/article/details/88564067" target="_blank" rel="noopener">Fortify漏洞之 Path Manipulation 路徑篡改問題解決筆記_dazhong2012的博客-CSDN博客_pathmanipulation</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 過濾字符串幫助類</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CleanPathUtil</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">cleanString</span><span class="params">(String aString)</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">if</span> (aString == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	    String cleanString = \<span class="string">"\";</span></span><br><span class="line"><span class="string">	    for (int i = 0; i &lt; aString.length(); ++i) &#123;</span></span><br><span class="line"><span class="string">	        cleanString += cleanChar(aString.charAt(i));</span></span><br><span class="line"><span class="string">	    &#125;</span></span><br><span class="line"><span class="string">	    return cleanString;</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	private static char cleanChar(char aChar) &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	    // 0 - 9</span></span><br><span class="line"><span class="string">	    for (int i = 48; i &lt; 58; ++i) &#123;</span></span><br><span class="line"><span class="string">	        if (aChar == i) return (char) i;</span></span><br><span class="line"><span class="string">	    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	    // 'A' - 'Z'</span></span><br><span class="line"><span class="string">	    for (int i = 65; i &lt; 91; ++i) &#123;</span></span><br><span class="line"><span class="string">	        if (aChar == i) return (char) i;</span></span><br><span class="line"><span class="string">	    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	    // 'a' - 'z'</span></span><br><span class="line"><span class="string">	    for (int i = 97; i &lt; 123; ++i) &#123;</span></span><br><span class="line"><span class="string">	        if (aChar == i) return (char) i;</span></span><br><span class="line"><span class="string">	    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	    // other valid characters</span></span><br><span class="line"><span class="string">	    switch (aChar) &#123;</span></span><br><span class="line"><span class="string">	        case '/':</span></span><br><span class="line"><span class="string">	            return '/';</span></span><br><span class="line"><span class="string">	        case '.':</span></span><br><span class="line"><span class="string">	            return '.';</span></span><br><span class="line"><span class="string">	        case '-':</span></span><br><span class="line"><span class="string">	            return '-';</span></span><br><span class="line"><span class="string">	        case '_':</span></span><br><span class="line"><span class="string">	            return '_';</span></span><br><span class="line"><span class="string">	        case ' ':</span></span><br><span class="line"><span class="string">	            return ' ';</span></span><br><span class="line"><span class="string">	    &#125;</span></span><br><span class="line"><span class="string">	    return '%';</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>可能還有其他做法，改天看到再補。<br><a href="https://wiki.sei.cmu.edu/confluence/display/java/FIO16-J.+Canonicalize+path+names+before+validating+them" target="_blank" rel="noopener">FIO16-J. Canonicalize path names before validating them - SEI CERT Oracle Coding Standard for Java - Confluence</a></p>
+<h2 id="以下方法為不可用"><a href="#以下方法為不可用" class="headerlink" title="以下方法為不可用"></a>以下方法為不可用</h2><p>以下為不可用安全。<del>我差點用了。</del></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.nio.file.*;</span><br><span class="line"></span><br><span class="line">String path  = System.getenv(variableName);</span><br><span class="line">Path p = Paths.get(path);</span><br><span class="line">Path normalizedPath = p.normalize();</span><br><span class="line">path = <span class="keyword">new</span> File(normalizedPath.toString());</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.io.FilenameUtils;</span><br><span class="line"></span><br><span class="line">String path  = System.getenv(variableName);</span><br><span class="line">path = <span class="keyword">new</span> File(FilenameUtils.normalize(path));</span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/66171030/input-path-not-canonicalized-pathtravesal-vulnerability-in-checkmarx" target="_blank" rel="noopener">path - Input_Path_Not_Canonicalized - PathTravesal Vulnerability in checkmarx - Stack Overflow</a><br><a href="https://commons.apache.org/proper/commons-io/apidocs/org/apache/commons/io/FilenameUtils.html#normalize-java.lang.String-" target="_blank" rel="noopener">FilenameUtils (Apache Commons IO 2.11.0 API)</a><br><a href="https://www.upguard.com/blog/top-20-owasp-vulnerabilities-and-how-to-fix-them" target="_blank" rel="noopener">Top 20 OWASP Vulnerabilities And How To Fix Them Infographic | UpGuard</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/path/" rel="tag"># path</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/30/MultipartFile-transferTo-%E9%81%87%E5%88%B0-FileNotFoundException-%E5%95%8F%E9%A1%8C/" rel="prev" title="MultipartFile.transferTo 遇到 FileNotFoundException 問題">
+      <i class="fa fa-chevron-left"></i> MultipartFile.transferTo 遇到 FileNotFoundException 問題
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/30/itextpdf-%E4%BD%BF%E7%94%A8-PdfReader-%E9%81%87%E5%88%B0%E6%AA%94%E6%A1%88-lcok-%E4%BD%8F%E5%95%8F%E9%A1%8C/" rel="next" title="itextpdf 使用 PdfReader 遇到檔案 lock 住問題">
+      itextpdf 使用 PdfReader 遇到檔案 lock 住問題 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Path-Manipulation"><span class="nav-number">1.</span> <span class="nav-text">Path Manipulation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#白名單"><span class="nav-number">1.1.</span> <span class="nav-text">白名單</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#過濾特殊字元"><span class="nav-number">1.2.</span> <span class="nav-text">過濾特殊字元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以下方法為不可用"><span class="nav-number">2.</span> <span class="nav-text">以下方法為不可用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">729</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">577</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/07/30/Input-Path-Not-Canonicalized-%E9%A2%A8%E9%9A%AA/";
+    this.page.identifier = "2022/07/30/Input-Path-Not-Canonicalized-風險/";
+    this.page.title = "Input Path Not Canonicalized 風險";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

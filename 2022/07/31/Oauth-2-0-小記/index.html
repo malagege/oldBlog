@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="Oauth 2.0 小記，有些沒紀錄完整，有空回來補。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oauth 2.0 小記">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/07/31/Oauth-2-0-%E5%B0%8F%E8%A8%98/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="Oauth 2.0 小記，有些沒紀錄完整，有空回來補。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/RxIbXXv.png">
+<meta property="og:image" content="https://i.imgur.com/3L1LFAU.png">
+<meta property="og:image" content="https://i.imgur.com/MqEI5P5.png">
+<meta property="og:image" content="https://i.imgur.com/bUANaxm.png">
+<meta property="og:image" content="https://i.imgur.com/LZdP0bt.png">
+<meta property="og:image" content="https://i.imgur.com/bFukCEq.png">
+<meta property="article:published_time" content="2022-07-30T16:55:20.000Z">
+<meta property="article:modified_time" content="2022-07-30T16:55:43.219Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="oauth">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/RxIbXXv.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/07/31/Oauth-2-0-%E5%B0%8F%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Oauth 2.0 小記 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/07/31/Oauth-2-0-%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Oauth 2.0 小記
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-07-31 00:55:20 / 修改時間：00:55:43" itemprop="dateCreated datePublished" datetime="2022-07-31T00:55:20+08:00">2022-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%A8%8B%E5%BC%8F%E5%BF%83%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">程式心法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/07/31/Oauth-2-0-%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/07/31/Oauth-2-0-小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>Oauth 2.0 小記，有些沒紀錄完整，有空回來補。</p>
+<a id="more"></a>
+<h2 id="上課小記"><a href="#上課小記" class="headerlink" title="上課小記"></a>上課小記</h2><p>怕課堂上的課忘記或先前錯誤觀念，簡單小記。</p>
+<p>OAuth 2.0 常見有四種流程</p>
+<ol>
+<li>Authorization Code Flow</li>
+</ol>
+<p>簡單敘述，最安全，使用者  Resouce Owner 是人，前面主要先取得授權碼(Authorization Code)再跟 Client(AP Server)去跟 Oauth Provider 去要 token 動作，使用者不會知道 token 資料。state 是 client 要去做判斷，防止 DDOS 被破解攻擊。</p>
+<ol start="2">
+<li>Implicit Flow</li>
+</ol>
+<p>通常純前端使用，但沒有用到 Secret ID ，因為用了就不安全。相對密碼就給別人看，純前端使用 Authorization Code Flow 非常危險。<br>這個相對第一個流程沒有取得 Authorization Code 去換，當然安全性會比第一種方法危險一點。(如意被XSS 攻擊，讓使用者 token 惡意 JS 被偷走)</p>
+<p>沒有 refresh token 。</p>
+<ol start="3">
+<li>Resource Owner Password Flow</li>
+</ol>
+<p>不需要 refresh token。Client 讓使用者輸入帳號、密碼，最後程式做完要清除掉，此方法已經在 Oauth 2.1 被廢除。</p>
+<ol start="4">
+<li>Client Credentials Flow</li>
+</ol>
+<p>當 Resource Owner 不是人，程式進行溝通不需要做授權確認，可採取方式。有點像帳號密碼登入。</p>
+<h2 id="相關名詞筆記"><a href="#相關名詞筆記" class="headerlink" title="相關名詞筆記"></a>相關名詞筆記</h2><p>OIDC(OpenID Connect)</p>
+<p>接近使用 OAuth 2.0 模式實作，OAuth 2.0 取得 Token(Access Token)，可一併取得 ID TOKEN。</p>
+<p>ID TOKEN<br>是一種 JWT 格式，裡面存放使用者資料。</p>
+<p>JWT<br>一種簽章過格式，可以驗證 payload 是否被串改，達到資料可驗證(使用私鑰)。但這不是對資料加密。</p>
+<p>可以把 JWT 貼到<a href="https://jwt.io/" target="_blank" rel="noopener">JSON Web Tokens - jwt.io</a>上面資訊看內容。</p>
+<p>URL Fragment<br><code>http://xxxx/#abc=123</code>，透過 hash 使用帶一些內容，<strong>但是這些內容不會傳到後端</strong>。</p>
+<p>Implicit Flow 最後回傳接收參數是使用<code>URL Fragment</code>，這種方式資料不會傳送到 server 上面。</p>
+<p>Device<br>Client(指的電視、硬體裝置)會先去 Authorization Endpoint 去要依些資料，如Device Code、驗證碼等等資訊。</p>
+<p>可參考:<a href="https://docs.github.com/en/enterprise-server@3.2/developers/apps/building-oauth-apps/authorizing-oauth-apps#device-flow" target="_blank" rel="noopener">Authorizing OAuth Apps - GitHub Docs</a></p>
+<p>IdentityServer4 ，正常 Auth Provider 不會有註冊會員功能，他只有時實作使用者登入、權杖(OAuth、OIDC)。剛開始我以為可以不用做註冊密碼，因該這些功能都會包進去，但老師說正常不會有這些實作，有點像 Middleware 概念，我後來有仔細思考，確實不該有這個功能。</p>
+<p>可以看這張圖<a href="https://docs.identityserver.io/en/latest/intro/big_picture.html#how-identityserver4-can-help" target="_blank" rel="noopener">The Big Picture — IdentityServer4 1.0.0 documentation</a>，結論還是乖乖做註冊會員XD。</p>
+<p>網路找到現有範例<a href="https://github.com/benscabbia/identityserver4-dockersample-dotnetcore-nginx" target="_blank" rel="noopener">benscabbia/identityserver4-dockersample-dotnetcore-nginx: IdentityServer4, ASP.NET Core, NGINX, HTTPS, Docker Compose</a></p>
+<h2 id="細說流程圖"><a href="#細說流程圖" class="headerlink" title="細說流程圖"></a>細說流程圖</h2><h3 id="Authorization-Code-Flow"><a href="#Authorization-Code-Flow" class="headerlink" title="Authorization Code Flow"></a>Authorization Code Flow</h3><p>Resource owner =&gt; 人<br>User-agent =&gt; 瀏覽器(Chrome)<br>Client =&gt; WEB 後端程式</p>
+<p><img src="https://i.imgur.com/RxIbXXv.png" alt=""><br>圖片參照:<a href="https://www.ibm.com/docs/sk/sva/9.0.4?topic=SSPREK_9.0.4/com.ibm.isam.doc/config/concept/con_oauth20_workflow.html" target="_blank" rel="noopener">OAuth 2.0 and OIDC workflows - IBM Documentation</a></p>
+<ol>
+<li>user-agent 瀏覽器會發送 Request 到 Client 後端程式。Client 會導向 (Redirect) Authorization Server。</li>
+</ol>
+<p><img src="https://i.imgur.com/3L1LFAU.png" alt=""></p>
+<ol start="2">
+<li>如果使用者未登入到 Authorization Server，會讓使用者登入資訊，在做授權動作。</li>
+</ol>
+<p><img src="https://i.imgur.com/MqEI5P5.png" alt=""></p>
+<ol start="3">
+<li>授權完動作，使用者拿到 Authorization code ，傳送到Client程式。</li>
+</ol>
+<p><img src="https://i.imgur.com/bUANaxm.png" alt=""></p>
+<ol start="4">
+<li><p>Client 程式會發送 authorization code 和 redirect URI。</p>
+</li>
+<li><p>取得 Access Token ，這邊看文件有沒有 refresh token。</p>
+</li>
+</ol>
+<p>4和5流程就不詳細化畫流程。</p>
+<h3 id="Implicit-隱碼"><a href="#Implicit-隱碼" class="headerlink" title="Implicit 隱碼"></a>Implicit 隱碼</h3><p><img src="https://i.imgur.com/LZdP0bt.png" alt=""></p>
+<p>詳細流程可看:<a href="https://blog.yorkxin.org/posts/oauth2-4-2-implicit-grant-flow.html" target="_blank" rel="noopener">OAuth 2.0 筆記 (4.2) Implicit Grant Flow 細節 – Yu-Cheng Chuang’s Blog</a></p>
+<p>簡單記錄我的小記</p>
+<p>(A). 最下面紅色箭頭(User-Agent訪問 Client)，回傳到User-Agent，導向 Authorization Server 。藍線 Redirect 到 User-Agent 讓使用者(Resource Owner) 做登入動作。</p>
+<p>(B). 使用者(Resource Owner)輸入帳號密碼，導向Authorization Server 做授權動作。</p>
+<p>(C). 授權後會 Redirect URI with Fragment 到 User-Agent。</p>
+<p>(D). 導向 Web 前端頁面，注意 URL (#)後面資訊不會傳到 Server上面。</p>
+<p>(E)(F). Script 去抓 Access Token。</p>
+<p>(G).  Access Token 訪問 Resource Server。</p>
+<h4 id="parse-location-fragment-資料"><a href="#parse-location-fragment-資料" class="headerlink" title="parse location (fragment 資料)"></a>parse location (fragment 資料)</h4><p><a href="https://stackoverflow.com/questions/12271736/javascript-access-to-location-headers-url-fragment-for-oauth-2" target="_blank" rel="noopener">https://stackoverflow.com/questions/12271736/javascript-access-to-location-headers-url-fragment-for-oauth-2</a></p>
+<h3 id="Client-Credentials-Grant"><a href="#Client-Credentials-Grant" class="headerlink" title="Client Credentials Grant"></a>Client Credentials Grant</h3><p><img src="https://i.imgur.com/bFukCEq.png" alt=""></p>
+<p>可參考:<a href="https://blog.yorkxin.org/posts/oauth2-4-4-client-credentials-grant-flow.html" target="_blank" rel="noopener">OAuth 2.0 筆記 (4.4) Client Credentials Grant Flow 細節 – Yu-Cheng Chuang’s Blog</a></p>
+<p>簡單說明就是，Resource Owner 不是人，和當下使用者無法做 Authorization 時候，可以採用這個模式。</p>
+<h2 id="Device-Code"><a href="#Device-Code" class="headerlink" title="Device Code"></a>Device Code</h2><p>User Code 指的是驗證碼。</p>
+<ol>
+<li><p>Client 使用 Secret Id 去訪問 Authorization Server 取得 Device_id &amp; User Code。</p>
+</li>
+<li><p>導頁 user 讓使用者輸入驗證碼頁面</p>
+</li>
+<li><p>持續 pull client_id,device_code,grant_type=device_code 訪問 Authorization Server 取得 Access Token</p>
+</li>
+</ol>
+<p><a href="https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps#step-1-app-requests-the-device-and-user-verification-codes-from-github" target="_blank" rel="noopener">Step 1: App requests the device and user verification codes from GitHub</a></p>
+<h2 id="查看特別案例"><a href="#查看特別案例" class="headerlink" title="查看特別案例"></a>查看特別案例</h2><h3 id="Line-Notify-手機頁面自動登入"><a href="#Line-Notify-手機頁面自動登入" class="headerlink" title="Line Notify 手機頁面自動登入"></a>Line Notify 手機頁面自動登入</h3><p>Line Notify 手機點選登入，可以自動登入，我發現他是使用 Line APP 做登入的。注意這邊我發現要用預設瀏覽器才不會有問題，導向 LINE APP時候再跳回瀏覽器是開「預設瀏覽器」，才能做到自動登入。目前猜測是state寫在sessions那邊。</p>
+<h3 id="state-可使用-session-id"><a href="#state-可使用-session-id" class="headerlink" title="state 可使用 session_id"></a>state 可使用 session_id</h3><p>可看上參考，沒有expire，可以多存變數使用。</p>
+<p><a href="https://pipedrive.readme.io/docs/marketplace-oauth-authorization-state-parameter" target="_blank" rel="noopener">State parameter</a></p>
+<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><p><a href="http://www.flyknows.com/2020/08/13/deeplink%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8/" target="_blank" rel="noopener">Electron系列文章 - deeplink打开应用 - FlyKnows</a></p>
+<p><a href="https://ithelp.ithome.com.tw/articles/10281440" target="_blank" rel="noopener">【雜談】 今天就來點閒聊吧② - iT 邦幫忙::一起幫忙解決難題，拯救 IT 人的一天</a><br><a href="https://www.oauth.com/" target="_blank" rel="noopener">OAuth.com - OAuth 2.0 Simplified</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/oauth/" rel="tag"># oauth</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/%E5%A5%BD%E7%94%A8%E6%89%8B%E6%A9%9F%E6%B8%AC%E8%A9%A6-WEB-%E5%B7%A5%E5%85%B7-VConsole/" rel="prev" title="好用手機測試 WEB 工具(VConsole)">
+      <i class="fa fa-chevron-left"></i> 好用手機測試 WEB 工具(VConsole)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/ElasticSearch-%E5%89%8D%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E6%9D%B1%E8%A5%BF/" rel="next" title="ElasticSearch 前需要了解東西">
+      ElasticSearch 前需要了解東西 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#上課小記"><span class="nav-number">1.</span> <span class="nav-text">上課小記</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關名詞筆記"><span class="nav-number">2.</span> <span class="nav-text">相關名詞筆記</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#細說流程圖"><span class="nav-number">3.</span> <span class="nav-text">細說流程圖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Authorization-Code-Flow"><span class="nav-number">3.1.</span> <span class="nav-text">Authorization Code Flow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implicit-隱碼"><span class="nav-number">3.2.</span> <span class="nav-text">Implicit 隱碼</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#parse-location-fragment-資料"><span class="nav-number">3.2.1.</span> <span class="nav-text">parse location (fragment 資料)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-Credentials-Grant"><span class="nav-number">3.3.</span> <span class="nav-text">Client Credentials Grant</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Device-Code"><span class="nav-number">4.</span> <span class="nav-text">Device Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看特別案例"><span class="nav-number">5.</span> <span class="nav-text">查看特別案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Line-Notify-手機頁面自動登入"><span class="nav-number">5.1.</span> <span class="nav-text">Line Notify 手機頁面自動登入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#state-可使用-session-id"><span class="nav-number">5.2.</span> <span class="nav-text">state 可使用 session_id</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#彩蛋"><span class="nav-number">6.</span> <span class="nav-text">彩蛋</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">729</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">577</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/07/31/Oauth-2-0-%E5%B0%8F%E8%A8%98/";
+    this.page.identifier = "2022/07/31/Oauth-2-0-小記/";
+    this.page.title = "Oauth 2.0 小記";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

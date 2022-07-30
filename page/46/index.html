@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-%E5%92%8C-Java-JDBC%E9%A0%90%E8%A8%ADsql-mode%E7%82%BA%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/11/09/DB%E5%88%B0%E5%BA%95%E6%9C%89%E6%B2%92%E6%9C%89boolean%E5%9E%8B%E6%85%8B%E5%91%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -222,7 +222,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-%E5%92%8C-Java-JDBC%E9%A0%90%E8%A8%ADsql-mode%E7%82%BA%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">Truncated incorrect DOUBLE value: '785+712' 和 Java JDBC預設sql_mode為嚴格模式</a>
+            <a href="/blog/2018/11/09/DB%E5%88%B0%E5%BA%95%E6%9C%89%E6%B2%92%E6%9C%89boolean%E5%9E%8B%E6%85%8B%E5%91%A2/" class="post-title-link" itemprop="url">DB到底有沒有boolean型態呢</a>
         </h2>
 
         <div class="post-meta">
@@ -232,14 +232,14 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-09-10 22:29:49" itemprop="dateCreated datePublished" datetime="2018-09-10T22:29:49+08:00">2018-09-10</time>
+              <time title="創建時間：2018-11-09 22:16:00" itemprop="dateCreated datePublished" datetime="2018-11-09T22:16:00+08:00">2018-11-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,8 +260,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-%E5%92%8C-Java-JDBC%E9%A0%90%E8%A8%ADsql-mode%E7%82%BA%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-和-Java-JDBC預設sql-mode為嚴格模式/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/11/09/DB%E5%88%B0%E5%BA%95%E6%9C%89%E6%B2%92%E6%9C%89boolean%E5%9E%8B%E6%85%8B%E5%91%A2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/09/DB到底有沒有boolean型態呢/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -291,10 +291,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近遇到一些MySQL地雷，要好好好整理一下<br>正常DB已經設定非嚴格模式<br>今天遇到Java執行遇到Warning不會過<br>SQL執行如insert xxxx …..  select xxx ….<br>語法也沒有錯<br>phpmyadmin可以執行<br>java執行就是過不了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-09-05 09:45:10,428 ERROR &#123;Thread-0&#125; [xxxxx.rbt.client.lib.Function] : insertMusicBoxReportLog com.mysql.jdbc.MysqlDataTruncation: Data truncation: Truncated incorrect DOUBLE value: &#39;785+712&#39;</span><br></pre></td></tr></table></figure><br>這就非常讓我疑惑</p>
+          <p>最近做<code>SELECT TRUE</code> 在SQL的時候<br>發現adminer跑出來結果是<code>1</code><br>覺得有點不科學</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/09/10/Truncated-incorrect-DOUBLE-value-785-712-%E5%92%8C-Java-JDBC%E9%A0%90%E8%A8%ADsql-mode%E7%82%BA%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+              <a class="btn" href="/blog/2018/11/09/DB%E5%88%B0%E5%BA%95%E6%9C%89%E6%B2%92%E6%9C%89boolean%E5%9E%8B%E6%85%8B%E5%91%A2/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -318,7 +318,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/09/01/%E9%81%87%E5%88%B0Data-truncated-for-column-d-at-row-%E5%92%8C%E6%94%B9sql-mode%E9%82%A3%E4%BA%9B%E4%BA%8B/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/11/09/git%E6%9F%A5%E7%9C%8B%E5%85%A9%E5%80%8Bcommit%E7%95%B0%E5%8B%95%E6%9C%89%E5%93%AA%E4%BA%9B%E6%AA%94%E6%A1%88%E5%92%8C%E6%89%93%E5%8C%85%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -332,7 +332,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/09/01/%E9%81%87%E5%88%B0Data-truncated-for-column-d-at-row-%E5%92%8C%E6%94%B9sql-mode%E9%82%A3%E4%BA%9B%E4%BA%8B/" class="post-title-link" itemprop="url">遇到Data truncated for column 'd' at row 和改sql_mode那些事</a>
+            <a href="/blog/2018/11/09/git%E6%9F%A5%E7%9C%8B%E5%85%A9%E5%80%8Bcommit%E7%95%B0%E5%8B%95%E6%9C%89%E5%93%AA%E4%BA%9B%E6%AA%94%E6%A1%88%E5%92%8C%E6%89%93%E5%8C%85%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">git查看兩個commit異動有哪些檔案和打包方法</a>
         </h2>
 
         <div class="post-meta">
@@ -342,7 +342,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-09-01 11:25:46" itemprop="dateCreated datePublished" datetime="2018-09-01T11:25:46+08:00">2018-09-01</time>
+              <time title="創建時間：2018-11-09 21:13:17" itemprop="dateCreated datePublished" datetime="2018-11-09T21:13:17+08:00">2018-11-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -357,7 +357,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                  <a href="/blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
                 </span>
             </span>
 
@@ -370,8 +370,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/09/01/%E9%81%87%E5%88%B0Data-truncated-for-column-d-at-row-%E5%92%8C%E6%94%B9sql-mode%E9%82%A3%E4%BA%9B%E4%BA%8B/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/01/遇到Data-truncated-for-column-d-at-row-和改sql-mode那些事/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/11/09/git%E6%9F%A5%E7%9C%8B%E5%85%A9%E5%80%8Bcommit%E7%95%B0%E5%8B%95%E6%9C%89%E5%93%AA%E4%BA%9B%E6%AA%94%E6%A1%88%E5%92%8C%E6%89%93%E5%8C%85%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/09/git查看兩個commit異動有哪些檔案和打包方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -401,10 +401,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近公司報表出問題了<br>繼上次DB還原<a href="https://malagege.github.io/blog/2018/08/28/MySQL%E5%9C%A8Linux%E4%B8%8B%E9%A0%90%E8%A8%AD%E6%9C%89%E5%88%86%E5%A4%A7%E5%B0%8F%E5%AF%AB%E5%92%8CIncorrect-integer-value-for-column-num-%E5%95%8F%E9%A1%8C/">MySQL在Linux下預設有分大小寫和Incorrect integer value: ‘’ for column ‘num’ 問題 | 程式狂想筆記</a>，有些設定跑掉<br>這次出現這個<code>Data truncated for column &#39;d&#39; at row</code><br>因為重新設定還原sql_mode是嚴格模式…</p>
+          <p>最近有同事需要我異動有哪些檔案<br>我找一個(方便)方法到用git看方法<br>在這邊小記</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/09/01/%E9%81%87%E5%88%B0Data-truncated-for-column-d-at-row-%E5%92%8C%E6%94%B9sql-mode%E9%82%A3%E4%BA%9B%E4%BA%8B/#more" rel="contents">
+              <a class="btn" href="/blog/2018/11/09/git%E6%9F%A5%E7%9C%8B%E5%85%A9%E5%80%8Bcommit%E7%95%B0%E5%8B%95%E6%9C%89%E5%93%AA%E4%BA%9B%E6%AA%94%E6%A1%88%E5%92%8C%E6%89%93%E5%8C%85%E6%96%B9%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -428,7 +428,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/09/01/GO%E7%B7%A8%E8%AD%AF%E7%A8%8B%E5%BC%8F%E7%B4%80%E9%8C%84/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/11/09/git-reset-%E5%92%8Cgit-reflog%E5%B0%8F%E8%A8%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -442,7 +442,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/09/01/GO%E7%B7%A8%E8%AD%AF%E7%A8%8B%E5%BC%8F%E7%B4%80%E9%8C%84/" class="post-title-link" itemprop="url">GO編譯程式紀錄</a>
+            <a href="/blog/2018/11/09/git-reset-%E5%92%8Cgit-reflog%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">git reset 和git reflog小記</a>
         </h2>
 
         <div class="post-meta">
@@ -452,117 +452,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-09-01 02:04:50" itemprop="dateCreated datePublished" datetime="2018-09-01T02:04:50+08:00">2018-09-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/GO/" itemprop="url" rel="index"><span itemprop="name">GO</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/09/01/GO%E7%B7%A8%E8%AD%AF%E7%A8%8B%E5%BC%8F%E7%B4%80%E9%8C%84/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/09/01/GO編譯程式紀錄/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近玩golang最喜歡它編譯可以直接跨平台執行<br>而且看了一下<br>真的很簡單，只需要一行<code>go build</code><br>但真的是這樣的嗎?<br>(不然也不會有這一篇了XD)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2018/09/01/GO%E7%B7%A8%E8%AD%AF%E7%A8%8B%E5%BC%8F%E7%B4%80%E9%8C%84/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/08/28/MySQL%E5%9C%A8Linux%E4%B8%8B%E9%A0%90%E8%A8%AD%E6%9C%89%E5%88%86%E5%A4%A7%E5%B0%8F%E5%AF%AB%E5%92%8CIncorrect-integer-value-for-column-num-%E5%95%8F%E9%A1%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/08/28/MySQL%E5%9C%A8Linux%E4%B8%8B%E9%A0%90%E8%A8%AD%E6%9C%89%E5%88%86%E5%A4%A7%E5%B0%8F%E5%AF%AB%E5%92%8CIncorrect-integer-value-for-column-num-%E5%95%8F%E9%A1%8C/" class="post-title-link" itemprop="url">MySQL在Linux下預設有分大小寫和Incorrect integer value: '' for column 'num' 問題</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-08-28 21:48:51" itemprop="dateCreated datePublished" datetime="2018-08-28T21:48:51+08:00">2018-08-28</time>
+              <time title="創建時間：2018-11-09 20:37:22" itemprop="dateCreated datePublished" datetime="2018-11-09T20:37:22+08:00">2018-11-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -577,7 +467,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%AB%E7%A8%8B%E5%BC%8F%E4%B8%80%E4%BA%9B%E4%BA%8B/" itemprop="url" rel="index"><span itemprop="name">寫程式一些事</span></a>
+                  <a href="/blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
                 </span>
             </span>
 
@@ -590,8 +480,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/08/28/MySQL%E5%9C%A8Linux%E4%B8%8B%E9%A0%90%E8%A8%AD%E6%9C%89%E5%88%86%E5%A4%A7%E5%B0%8F%E5%AF%AB%E5%92%8CIncorrect-integer-value-for-column-num-%E5%95%8F%E9%A1%8C/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/28/MySQL在Linux下預設有分大小寫和Incorrect-integer-value-for-column-num-問題/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/11/09/git-reset-%E5%92%8Cgit-reflog%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/09/git-reset-和git-reflog小記/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -621,10 +511,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>其實對MySQL管理那一塊真的不是很熟<br>但最近踩到一堆雷<br>還是記一下 Linux跟Windows運行MySQL會不一樣的雷<br>哪天說不定還會踩到orz</p>
+          <p>最近在改程式，所以我重新上一個commit<code>git commit --amend</code><br>但做完發現…，我忘記做<code>git add xxx</code>了<br>當下<code>Ctrl+C</code>都不能中斷<br>只能QQ<code>:q!</code>or<code>:qa!</code></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/08/28/MySQL%E5%9C%A8Linux%E4%B8%8B%E9%A0%90%E8%A8%AD%E6%9C%89%E5%88%86%E5%A4%A7%E5%B0%8F%E5%AF%AB%E5%92%8CIncorrect-integer-value-for-column-num-%E5%95%8F%E9%A1%8C/#more" rel="contents">
+              <a class="btn" href="/blog/2018/11/09/git-reset-%E5%92%8Cgit-reflog%E5%B0%8F%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -648,7 +538,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/08/27/go%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98-gopath%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/11/08/%E4%BD%BF%E7%94%A8docker%E6%9E%B6%E8%A8%ADdb2%E7%92%B0%E5%A2%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -662,7 +552,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/08/27/go%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98-gopath%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/" class="post-title-link" itemprop="url">go安裝筆記&gopath環境變數設定</a>
+            <a href="/blog/2018/11/08/%E4%BD%BF%E7%94%A8docker%E6%9E%B6%E8%A8%ADdb2%E7%92%B0%E5%A2%83/" class="post-title-link" itemprop="url">使用docker架設db2環境</a>
         </h2>
 
         <div class="post-meta">
@@ -672,7 +562,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-08-27 00:20:03" itemprop="dateCreated datePublished" datetime="2018-08-27T00:20:03+08:00">2018-08-27</time>
+              <time title="創建時間：2018-11-08 20:49:45" itemprop="dateCreated datePublished" datetime="2018-11-08T20:49:45+08:00">2018-11-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -687,7 +577,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/GO/" itemprop="url" rel="index"><span itemprop="name">GO</span></a>
+                  <a href="/blog/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
                 </span>
             </span>
 
@@ -700,8 +590,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/08/27/go%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98-gopath%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/27/go安裝筆記-gopath環境變數設定/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/11/08/%E4%BD%BF%E7%94%A8docker%E6%9E%B6%E8%A8%ADdb2%E7%92%B0%E5%A2%83/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/08/使用docker架設db2環境/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -731,10 +621,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近想玩玩看GO<br>在ElementaryOS安裝GO<br>踩幾個雷，紀錄一下筆記<br>這次的雷還深深了解以前code設定環境變數用途<br>
+          <p>最近要實驗boolean在db2<br>會有什麼結果<br>所以找找有沒有docker簡單架設方法<br>可以在docker api玩</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/08/27/go%E5%AE%89%E8%A3%9D%E7%AD%86%E8%A8%98-gopath%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8%E8%A8%AD%E5%AE%9A/#more" rel="contents">
+              <a class="btn" href="/blog/2018/11/08/%E4%BD%BF%E7%94%A8docker%E6%9E%B6%E8%A8%ADdb2%E7%92%B0%E5%A2%83/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -758,7 +648,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/08/26/elementary-OS%E6%9B%B4%E6%8F%9BTerminal%E5%AD%97%E5%BD%A2-%E8%A8%AD%E5%AE%9Azsh%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/11/07/%E6%99%82%E9%96%93%E6%8F%9B%E7%AE%97%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -772,7 +662,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/08/26/elementary-OS%E6%9B%B4%E6%8F%9BTerminal%E5%AD%97%E5%BD%A2-%E8%A8%AD%E5%AE%9Azsh%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8/" class="post-title-link" itemprop="url">elementary OS更換Terminal字形 & 設定zsh環境變數</a>
+            <a href="/blog/2018/11/07/%E6%99%82%E9%96%93%E6%8F%9B%E7%AE%97%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">時間換算的小技巧</a>
         </h2>
 
         <div class="post-meta">
@@ -782,7 +672,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-08-26 23:17:22" itemprop="dateCreated datePublished" datetime="2018-08-26T23:17:22+08:00">2018-08-26</time>
+              <time title="創建時間：2018-11-07 21:29:02" itemprop="dateCreated datePublished" datetime="2018-11-07T21:29:02+08:00">2018-11-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -797,7 +687,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
                 </span>
             </span>
 
@@ -810,8 +700,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/08/26/elementary-OS%E6%9B%B4%E6%8F%9BTerminal%E5%AD%97%E5%BD%A2-%E8%A8%AD%E5%AE%9Azsh%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/26/elementary-OS更換Terminal字形-設定zsh環境變數/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/11/07/%E6%99%82%E9%96%93%E6%8F%9B%E7%AE%97%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/07/時間換算的小技巧/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -841,130 +731,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <p>To change font in the Terminal you need dconf-editor. Install it, if you haven’t done so:</p>
-<p>sudo apt-get install dconf-tools</p>
-<p>Run it and go to path org &gt; gnome &gt; desktop &gt; interface &gt; monospace-font-name. </p>
-<p><a href="https://www.facebook.com/groups/199493136812961/permalink/1544001102362151/?__xts__%5B0%5D=68.ARC1KrGOX9zJkDFN4oR8J3H5qUpRcg4qwmQqIuL9msps-za6SyHMsgZJBkwg5PyLQVaSV5S9sIzyG5WI982VuimrBiaxzKkLE88JdlPNUY1UQSfEt2d1yeNj2_rXMCr2zrN8ODo&amp;__tn__=-R" target="_blank" rel="noopener">FB</a><br><a href="https://elementaryos.stackexchange.com/questions/1149/how-can-i-change-the-default-terminal-font/1153#1153" target="_blank" rel="noopener">themes - How can I change the default Terminal font? - elementary OS Stack Exchange</a></p>
-<p>.zshrc</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">下面修改环境变量，将~&#x2F;.composer&#x2F;vendor&#x2F;bin写入 PATH 环境变量里。</span><br><span class="line"></span><br><span class="line">注意： 如果你的命令行安装了zsh和oh-my-zsh，修改环境变量时有些小的变化。</span><br><span class="line"></span><br><span class="line">我遇到的就是这个问题，怎么修改，环境变量都不生效，比如我修改的是~&#x2F;.bash_profile，那么必须&#96;source</span><br><span class="line">~&#x2F;.bash_profile&#96;才能生效，而且重启后继续无效，为什么呢？因为 zsh ！我的终端是</span><br><span class="line">iTerm2，它很炫酷，但是就是环境变量搞不成。Google 找到了问题所在，安装 zsh</span><br><span class="line">后，~&#x2F;.bash_profile并没有被执行，所以需要编辑 zsh 的配置文件~&#x2F;.zshrc，在该文件里加入</span><br><span class="line"></span><br><span class="line">source ~&#x2F;.bash_profile 现在我们应该可以用homestead命令了。</span><br></pre></td></tr></table></figure>
-<p><a href="https://segmentfault.com/q/1010000004376181/a-1020000004377872" target="_blank" rel="noopener">https://segmentfault.com/q/1010000004376181/a-1020000004377872</a></p>
-<p>發現這篇很久沒補<br>就先寫重點吧…</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/08/22/window%E6%A1%8C%E9%9D%A2%E6%96%B0%E5%A2%9E%E6%AA%94%E6%A1%88-%E8%B3%87%E6%96%99%E5%A4%BE%EF%BC%8C%E7%95%AB%E9%9D%A2%E4%B8%8D%E6%9C%83%E5%8D%B3%E6%99%82%E6%9B%B4%E5%8B%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2018/08/22/window%E6%A1%8C%E9%9D%A2%E6%96%B0%E5%A2%9E%E6%AA%94%E6%A1%88-%E8%B3%87%E6%96%99%E5%A4%BE%EF%BC%8C%E7%95%AB%E9%9D%A2%E4%B8%8D%E6%9C%83%E5%8D%B3%E6%99%82%E6%9B%B4%E5%8B%95/" class="post-title-link" itemprop="url">window桌面新增檔案/資料夾，畫面不會即時更動</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2018-08-22 22:28:21" itemprop="dateCreated datePublished" datetime="2018-08-22T22:28:21+08:00">2018-08-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E7%B6%AD%E4%BF%AE%E5%B0%8F%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">維修小記</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2018/08/22/window%E6%A1%8C%E9%9D%A2%E6%96%B0%E5%A2%9E%E6%AA%94%E6%A1%88-%E8%B3%87%E6%96%99%E5%A4%BE%EF%BC%8C%E7%95%AB%E9%9D%A2%E4%B8%8D%E6%9C%83%E5%8D%B3%E6%99%82%E6%9B%B4%E5%8B%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/22/window桌面新增檔案-資料夾，畫面不會即時更動/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>公司電腦桌面新增檔案，畫面不會即時…<br>網路找都找不到是什麼問題?<br>最後找到這一篇<a href="https://www.mobile01.com/topicdetail.php?f=512&amp;t=1931352&amp;p=1#31381395" target="_blank" rel="noopener">資料夾怪怪的,不能即時更新 - 其他應用軟體 - 電腦討論區 - Mobile01</a></p>
+          <p>01:10 字串換算秒數很麻煩<br>今天看到神奇的解法<br>筆記筆記</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/08/22/window%E6%A1%8C%E9%9D%A2%E6%96%B0%E5%A2%9E%E6%AA%94%E6%A1%88-%E8%B3%87%E6%96%99%E5%A4%BE%EF%BC%8C%E7%95%AB%E9%9D%A2%E4%B8%8D%E6%9C%83%E5%8D%B3%E6%99%82%E6%9B%B4%E5%8B%95/#more" rel="contents">
+              <a class="btn" href="/blog/2018/11/07/%E6%99%82%E9%96%93%E6%8F%9B%E7%AE%97%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -988,7 +758,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/08/20/vscode%E5%98%97%E8%A9%A6%E4%BD%BF%E7%94%A8ftp%E5%A5%97%E4%BB%B6%E5%BF%83%E5%BE%97/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/11/05/postman%E9%A9%97%E8%AD%89JSON-Schema%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -1002,7 +772,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/08/20/vscode%E5%98%97%E8%A9%A6%E4%BD%BF%E7%94%A8ftp%E5%A5%97%E4%BB%B6%E5%BF%83%E5%BE%97/" class="post-title-link" itemprop="url">vscode嘗試使用ftp套件心得</a>
+            <a href="/blog/2018/11/05/postman%E9%A9%97%E8%AD%89JSON-Schema%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">postman驗證JSON Schema方法</a>
         </h2>
 
         <div class="post-meta">
@@ -1012,7 +782,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-08-20 20:51:28" itemprop="dateCreated datePublished" datetime="2018-08-20T20:51:28+08:00">2018-08-20</time>
+              <time title="創建時間：2018-11-05 20:17:57" itemprop="dateCreated datePublished" datetime="2018-11-05T20:17:57+08:00">2018-11-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1040,8 +810,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/08/20/vscode%E5%98%97%E8%A9%A6%E4%BD%BF%E7%94%A8ftp%E5%A5%97%E4%BB%B6%E5%BF%83%E5%BE%97/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/20/vscode嘗試使用ftp套件心得/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/11/05/postman%E9%A9%97%E8%AD%89JSON-Schema%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/11/05/postman驗證JSON-Schema方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1071,10 +841,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Sublime Text 有一個很好用sftp套件<br>但最近換到vscode<br>很缺一個方便看ftp<br>嘗試了3個ftp套件<br><a href="https://marketplace.visualstudio.com/items?itemName=ruakr.ftp-kr#review-details" target="_blank" rel="noopener">ftp-kr - Visual Studio Marketplace</a><br><a href="https://marketplace.visualstudio.com/items?itemName=humy2833.ftp-simple#review-details" target="_blank" rel="noopener">ftp-simple - Visual Studio Marketplace</a><br><a href="https://marketplace.visualstudio.com/items?itemName=liximomo.sftp#review-details" target="_blank" rel="noopener">sftp - Visual Studio Marketplace</a></p>
+          <p>最近在實作 API，發現上次只有做 VSCODE 檢查<br>postman 假如可以用的話，也很方便</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/08/20/vscode%E5%98%97%E8%A9%A6%E4%BD%BF%E7%94%A8ftp%E5%A5%97%E4%BB%B6%E5%BF%83%E5%BE%97/#more" rel="contents">
+              <a class="btn" href="/blog/2018/11/05/postman%E9%A9%97%E8%AD%89JSON-Schema%E6%96%B9%E6%B3%95/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1098,7 +868,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/08/20/vscode%E4%BD%BF%E7%94%A8svn%E5%81%9A%E7%89%88%E6%8E%A7%E7%B0%A1%E5%96%AE%E7%AD%86%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/10/30/%E4%BD%BF%E7%94%A8nodemailer%E5%81%9A%E6%89%B9%E6%AC%A1%E5%AF%84%E4%BF%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -1112,7 +882,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/08/20/vscode%E4%BD%BF%E7%94%A8svn%E5%81%9A%E7%89%88%E6%8E%A7%E7%B0%A1%E5%96%AE%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">vscode使用svn做版控簡單筆記</a>
+            <a href="/blog/2018/10/30/%E4%BD%BF%E7%94%A8nodemailer%E5%81%9A%E6%89%B9%E6%AC%A1%E5%AF%84%E4%BF%A1/" class="post-title-link" itemprop="url">使用nodemailer做批次寄信</a>
         </h2>
 
         <div class="post-meta">
@@ -1122,7 +892,117 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-08-20 20:09:25" itemprop="dateCreated datePublished" datetime="2018-08-20T20:09:25+08:00">2018-08-20</time>
+              <time title="創建時間：2018-10-30 21:03:30" itemprop="dateCreated datePublished" datetime="2018-10-30T21:03:30+08:00">2018-10-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/10/30/%E4%BD%BF%E7%94%A8nodemailer%E5%81%9A%E6%89%B9%E6%AC%A1%E5%AF%84%E4%BF%A1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/30/使用nodemailer做批次寄信/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>由於之前工單信件寫錯…<br>需要補寄信件給使用者<br>今天研究nodejs使用nodemailer發信<br>發現真的還滿簡單好用<br>說不定下次就有機會可以用到</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2018/10/30/%E4%BD%BF%E7%94%A8nodemailer%E5%81%9A%E6%89%B9%E6%AC%A1%E5%AF%84%E4%BF%A1/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/10/30/%E6%88%AA%E5%9C%96%E5%B7%A5%E5%85%B7%E7%B4%80%E9%8C%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/10/30/%E6%88%AA%E5%9C%96%E5%B7%A5%E5%85%B7%E7%B4%80%E9%8C%84/" class="post-title-link" itemprop="url">截圖工具紀錄</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-10-30 20:59:18" itemprop="dateCreated datePublished" datetime="2018-10-30T20:59:18+08:00">2018-10-30</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1150,8 +1030,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/08/20/vscode%E4%BD%BF%E7%94%A8svn%E5%81%9A%E7%89%88%E6%8E%A7%E7%B0%A1%E5%96%AE%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/20/vscode使用svn做版控簡單筆記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/10/30/%E6%88%AA%E5%9C%96%E5%B7%A5%E5%85%B7%E7%B4%80%E9%8C%84/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/30/截圖工具紀錄/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1181,10 +1061,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>由於公司舊專案都是用SVN去開發的<br>但最近…接觸的案子都是舊專案<br>平常看這次修改差異都要切到TortoiseSVN<br>但今天鼓起勇氣嘗試<a href="https://marketplace.visualstudio.com/items?itemName=johnstoncode.svn-scm" target="_blank" rel="noopener">SVN - Visual Studio Marketplace</a><br>在此做個筆記</p>
+          <p>最近朋友問我有甚麼好用截圖工具<br>但我也沒有用過<br>所以找了幾款<br>之後說不定哪天我也會用到</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/08/20/vscode%E4%BD%BF%E7%94%A8svn%E5%81%9A%E7%89%88%E6%8E%A7%E7%B0%A1%E5%96%AE%E7%AD%86%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2018/10/30/%E6%88%AA%E5%9C%96%E5%B7%A5%E5%85%B7%E7%B4%80%E9%8C%84/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1208,7 +1088,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/08/18/xargs-%E5%8F%83%E6%95%B8%E4%BB%A3%E6%8F%9B%E7%B0%A1%E5%96%AE%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/10/25/flex-%E9%87%8D%E7%9B%B4%E7%BD%AE%E4%B8%AD-%E5%85%A7%E5%AE%B9%E5%A4%A7%E6%96%BC%E7%95%AB%E9%9D%A2%EF%BC%8C%E4%B8%8A%E9%9D%A2%E8%A2%AB%E6%88%AA%E6%8E%89%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -1222,7 +1102,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2018/08/18/xargs-%E5%8F%83%E6%95%B8%E4%BB%A3%E6%8F%9B%E7%B0%A1%E5%96%AE%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">xargs 參數代換簡單使用筆記</a>
+            <a href="/blog/2018/10/25/flex-%E9%87%8D%E7%9B%B4%E7%BD%AE%E4%B8%AD-%E5%85%A7%E5%AE%B9%E5%A4%A7%E6%96%BC%E7%95%AB%E9%9D%A2%EF%BC%8C%E4%B8%8A%E9%9D%A2%E8%A2%AB%E6%88%AA%E6%8E%89%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">flex 重直置中 內容大於畫面，上面被截掉解決方法</a>
         </h2>
 
         <div class="post-meta">
@@ -1232,7 +1112,7 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2018-08-18 13:19:03" itemprop="dateCreated datePublished" datetime="2018-08-18T13:19:03+08:00">2018-08-18</time>
+              <time title="創建時間：2018-10-25 22:58:08" itemprop="dateCreated datePublished" datetime="2018-10-25T22:58:08+08:00">2018-10-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1247,7 +1127,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                  <a href="/blog/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
                 </span>
             </span>
 
@@ -1260,8 +1140,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2018/08/18/xargs-%E5%8F%83%E6%95%B8%E4%BB%A3%E6%8F%9B%E7%B0%A1%E5%96%AE%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/18/xargs-參數代換簡單使用筆記/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2018/10/25/flex-%E9%87%8D%E7%9B%B4%E7%BD%AE%E4%B8%AD-%E5%85%A7%E5%AE%B9%E5%A4%A7%E6%96%BC%E7%95%AB%E9%9D%A2%EF%BC%8C%E4%B8%8A%E9%9D%A2%E8%A2%AB%E6%88%AA%E6%8E%89%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/25/flex-重直置中-內容大於畫面，上面被截掉解決方法/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1291,10 +1171,120 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近做<code>find . -mmin -60 |  ls -l</code>發現怎麼不能讀ls內容<br>原來我以為 <code>|</code>pipe 就是把輸出結果加到後面去<br>但是並非跟<code>&lt;,&lt;&lt;</code>一樣<br>所以我在stackoverflow找到<a href="https://stackoverflow.com/questions/18210956/unix-pipe-into-ls" target="_blank" rel="noopener">linux - Unix pipe into ls - Stack Overflow</a><br>要使用xargs<br>不過我真的對這個不太熟</p>
+          <p>之前寫程式發現用flex垂直至中超出畫面會有問題<br>一直以為都是用flex這個缺點不能用在大畫面上面<br>不過今天網路上找到兩個答案<br>簡單紀錄</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2018/08/18/xargs-%E5%8F%83%E6%95%B8%E4%BB%A3%E6%8F%9B%E7%B0%A1%E5%96%AE%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98/#more" rel="contents">
+              <a class="btn" href="/blog/2018/10/25/flex-%E9%87%8D%E7%9B%B4%E7%BD%AE%E4%B8%AD-%E5%85%A7%E5%AE%B9%E5%A4%A7%E6%96%BC%E7%95%AB%E9%9D%A2%EF%BC%8C%E4%B8%8A%E9%9D%A2%E8%A2%AB%E6%88%AA%E6%8E%89%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2018/10/24/vue-chat-scroll%E5%92%8CMutationObserver%E5%B0%8F%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2018/10/24/vue-chat-scroll%E5%92%8CMutationObserver%E5%B0%8F%E8%A8%98/" class="post-title-link" itemprop="url">vue-chat-scroll和MutationObserver小記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2018-10-24 22:10:09" itemprop="dateCreated datePublished" datetime="2018-10-24T22:10:09+08:00">2018-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2018/10/24/vue-chat-scroll%E5%92%8CMutationObserver%E5%B0%8F%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/10/24/vue-chat-scroll和MutationObserver小記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近突然想起以前看到有一個加項目，卷軸超過其範圍會自動往下<br>印象中…是個DOM改變會自動偵測<br>所以我以為是listiner<br>但不是….</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2018/10/24/vue-chat-scroll%E5%92%8CMutationObserver%E5%B0%8F%E8%A8%98/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1317,7 +1307,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/45/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/blog/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/70/">70</a><a class="extend next" rel="next" href="/blog/page/47/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/45/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/blog/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/73/">73</a><a class="extend next" rel="next" href="/blog/page/47/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1383,20 +1373,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">695</span>
+          <span class="site-state-item-count">729</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-count">577</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

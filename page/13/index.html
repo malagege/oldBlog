@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -222,7 +222,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/" class="post-title-link" itemprop="url">安裝 ELK(ElasticSearch,Logstash,Kibana),filebeat 初體驗</a>
+            <a href="/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/" class="post-title-link" itemprop="url">Window 防火牆設定完成無法連通的問題</a>
         </h2>
 
         <div class="post-meta">
@@ -231,23 +231,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
+              
 
-              <time title="創建時間：2021-05-02 20:32:04" itemprop="dateCreated datePublished" datetime="2021-05-02T20:32:04+08:00">2021-05-02</time>
+              <time title="創建時間：2021-07-17 22:21:10 / 修改時間：23:09:26" itemprop="dateCreated datePublished" datetime="2021-07-17T22:21:10+08:00">2021-07-17</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/ELK/" itemprop="url" rel="index"><span itemprop="name">ELK</span></a>
+                  <a href="/blog/categories/Window/" itemprop="url" rel="index"><span itemprop="name">Window</span></a>
                 </span>
             </span>
 
@@ -260,8 +254,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/05/02/安裝-ELK-ElasticSearch-Logstash-Kibana-filebeat-初體驗/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/17/Window-防火牆設定完成無法聯通的問題/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -291,10 +285,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="安裝-ELK-ElasticSearch-Logstash-Kibana-filebeat-初體驗"><a href="#安裝-ELK-ElasticSearch-Logstash-Kibana-filebeat-初體驗" class="headerlink" title="安裝 ELK(ElasticSearch,Logstash,Kibana),filebeat 初體驗"></a>安裝 ELK(ElasticSearch,Logstash,Kibana),filebeat 初體驗</h1><p>本文章參考: <a href="https://hackmd.io/@QCZ_Kvv1ScixyAPzRYDKWQ/ry2Inu5HE?type=view" target="_blank" rel="noopener">Elastic stack（安裝篇) - HackMD</a><br>大量操作參照如上</p>
+          <p>我這台電腦 hfs 無法對外連線，有設定開通防火牆，一直找不出什麼問題。最近看了<a href="https://blog.miniasp.com/post/2021/06/14/Docker-Desktop-for-Windows-Windows-Firewall-Issues" target="_blank" rel="noopener">Docker Desktop for Windows 啟動的容器無法透過遠端連接的靈異事件簿 | The Will Will Web</a>，嘗試著調整防火牆，別台電腦終於可以連了。</p>
+<p>雖然保哥紀錄已經夠完整了，建議可以看上面文章，這邊還是紀錄我的筆記。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/05/02/%E5%AE%89%E8%A3%9D-ELK-ElasticSearch-Logstash-Kibana-filebeat-%E5%88%9D%E9%AB%94%E9%A9%97/#more" rel="contents">
+              <a class="btn" href="/blog/2021/07/17/Window-%E9%98%B2%E7%81%AB%E7%89%86%E8%A8%AD%E5%AE%9A%E5%AE%8C%E6%88%90%E7%84%A1%E6%B3%95%E8%81%AF%E9%80%9A%E7%9A%84%E5%95%8F%E9%A1%8C/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -318,7 +313,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/%E7%94%A8-Sublime-%E5%88%86%E5%89%B2-SQL-%E8%AA%9E%E5%8F%A5-LIKE-1000%E7%AD%86%E8%B3%87%E6%96%99-%E8%AA%9E%E5%8F%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -332,7 +327,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/" class="post-title-link" itemprop="url">Loki 初體驗教學(在Raspberry 啟用 Docker-Loki-Driver)</a>
+            <a href="/blog/2021/07/14/%E7%94%A8-Sublime-%E5%88%86%E5%89%B2-SQL-%E8%AA%9E%E5%8F%A5-LIKE-1000%E7%AD%86%E8%B3%87%E6%96%99-%E8%AA%9E%E5%8F%A5/" class="post-title-link" itemprop="url">用 Sublime 分割 SQL 語句 LIKE 1000筆資料 語句</a>
         </h2>
 
         <div class="post-meta">
@@ -342,14 +337,14 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2021-04-18 02:19:32" itemprop="dateCreated datePublished" datetime="2021-04-18T02:19:32+08:00">2021-04-18</time>
+              <time title="創建時間：2021-07-14 20:58:32" itemprop="dateCreated datePublished" datetime="2021-07-14T20:58:32+08:00">2021-07-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:07" itemprop="dateModified" datetime="2021-06-27T16:05:07+08:00">2021-06-27</time>
+                <time title="修改時間：2021-08-05 23:12:51" itemprop="dateModified" datetime="2021-08-05T23:12:51+08:00">2021-08-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -357,7 +352,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Loki/" itemprop="url" rel="index"><span itemprop="name">Loki</span></a>
+                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
                 </span>
             </span>
 
@@ -370,8 +365,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/18/Loki-初體驗教學/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/07/14/%E7%94%A8-Sublime-%E5%88%86%E5%89%B2-SQL-%E8%AA%9E%E5%8F%A5-LIKE-1000%E7%AD%86%E8%B3%87%E6%96%99-%E8%AA%9E%E5%8F%A5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/用-Sublime-分割-SQL-語句-LIKE-1000筆資料-語句/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -401,10 +396,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>最近在三台樹梅派使用 Docker 架設服務<br>但是查看 log 真的不是很方便<br>最近剛完 Prometheus 看到 Loki<br>跟 Prometheus 很像，又是跟 Container 很有關係<br>看了一下佈署流程，並不是非常難<br>所以就食做看看</p>
+          <p>Oralce 有限制 Like 不能超過 1000 多筆。之前有寫過相關文章如下</p>
+<ol>
+<li><a href="https://malagege.github.io/blog/2020/10/28/%E5%AF%AB%E7%A8%8B%E5%BC%8F%E4%BD%BF%E7%94%A8-split-%E5%88%87%E5%89%B2%E4%B8%8D%E6%9C%83%E6%B3%A8%E6%84%8F%E5%88%B0%E7%9A%84%E9%99%B7%E9%98%B1/">寫程式使用 split 切割不會注意到的陷阱 | 程式狂想筆記</a></li>
+<li><a href="https://malagege.github.io/blog/2021/01/12/Oracle-WHERE-IN-%E6%A2%9D%E4%BB%B6%E5%A1%9E%E5%85%A5%E8%B6%85%E9%81%8E-500-%E7%AD%86%E6%9F%A5%E8%A9%A2%E6%A2%9D%E4%BB%B6%E6%96%B9%E6%B3%95/">Oracle WHERE IN 條件塞入超過 500 筆查詢條件方法 | 程式狂想筆記</a></li>
+</ol>
+<p>但這些虛要手動處理太多，不能一次喝成，有時候資料量真的太大，只能分開查。最近想到 Sublime Text 方法，簡單做個記錄。<br>還是需要滿多步驟</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/04/18/Loki-%E5%88%9D%E9%AB%94%E9%A9%97%E6%95%99%E5%AD%B8/#more" rel="contents">
+              <a class="btn" href="/blog/2021/07/14/%E7%94%A8-Sublime-%E5%88%86%E5%89%B2-SQL-%E8%AA%9E%E5%8F%A5-LIKE-1000%E7%AD%86%E8%B3%87%E6%96%99-%E8%AA%9E%E5%8F%A5/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -428,7 +428,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/%E5%AF%A6%E9%A9%97-Sublime-Text-%E5%92%8C-vscode-%E6%A1%86%E9%81%B8%E5%A4%9A%E8%A1%8C%E8%B2%BC%E4%B8%8A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
@@ -442,7 +442,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/" class="post-title-link" itemprop="url">抓出 Docker 裡面檔案設定檔出來</a>
+            <a href="/blog/2021/07/14/%E5%AF%A6%E9%A9%97-Sublime-Text-%E5%92%8C-vscode-%E6%A1%86%E9%81%B8%E5%A4%9A%E8%A1%8C%E8%B2%BC%E4%B8%8A/" class="post-title-link" itemprop="url">實驗 Sublime Text 和 vscode 框選多行貼上</a>
         </h2>
 
         <div class="post-meta">
@@ -451,16 +451,745 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
+              
 
-              <time title="創建時間：2021-04-15 21:35:32" itemprop="dateCreated datePublished" datetime="2021-04-15T21:35:32+08:00">2021-04-15</time>
+              <time title="創建時間：2021-07-14 20:53:35 / 修改時間：20:57:18" itemprop="dateCreated datePublished" datetime="2021-07-14T20:53:35+08:00">2021-07-14</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/14/%E5%AF%A6%E9%A9%97-Sublime-Text-%E5%92%8C-vscode-%E6%A1%86%E9%81%B8%E5%A4%9A%E8%A1%8C%E8%B2%BC%E4%B8%8A/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/實驗-Sublime-Text-和-vscode-框選多行貼上/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近要做 SQL 語句 LIKE 超過 1000 筆，就無法執行。我想透過 Sublime Text 方式去做出來，還踩了一個雷。這個雷是這樣的，我框選 1000 筆(1筆含多行)，貼到我要貼得1000多行，結果貼上超過 1000 多筆資料。</p>
+<p>當然簡單研究結果，找出到原因。原因很簡單，就是換行的問題</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/07/14/%E5%AF%A6%E9%A9%97-Sublime-Text-%E5%92%8C-vscode-%E6%A1%86%E9%81%B8%E5%A4%9A%E8%A1%8C%E8%B2%BC%E4%B8%8A/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/Vite-%E4%BD%BF%E7%94%A8-Bootstrap-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/07/14/Vite-%E4%BD%BF%E7%94%A8-Bootstrap-5/" class="post-title-link" itemprop="url">Vite 使用 Bootstrap 5</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-14 20:50:45 / 修改時間：21:09:56" itemprop="dateCreated datePublished" datetime="2021-07-14T20:50:45+08:00">2021-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/14/Vite-%E4%BD%BF%E7%94%A8-Bootstrap-5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/Vite-使用-Bootstrap-5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>使用小記</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/07/14/Vite-%E4%BD%BF%E7%94%A8-Bootstrap-5/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/vue-computed-%E7%84%A1%E6%B3%95%E8%A7%B8%E7%99%BC%E5%8E%9F%E5%9B%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/07/14/vue-computed-%E7%84%A1%E6%B3%95%E8%A7%B8%E7%99%BC%E5%8E%9F%E5%9B%A0/" class="post-title-link" itemprop="url">Vue computed 無法觸發原因</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-14 20:48:58 / 修改時間：20:50:10" itemprop="dateCreated datePublished" datetime="2021-07-14T20:48:58+08:00">2021-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/14/vue-computed-%E7%84%A1%E6%B3%95%E8%A7%B8%E7%99%BC%E5%8E%9F%E5%9B%A0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/vue-computed-無法觸發原因/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>view 或者 methods 中有没有用到 pages，如果没有用到，那么是不会触发 computed 的</p>
+</blockquote>
+<ul>
+<li><a href="https://segmentfault.com/q/1010000020845026/" target="_blank" rel="noopener">【VUE】当依赖属性改变时，computed为何没有被触发? - SegmentFault 思否</a></li>
+<li><a href="https://pjchender.blogspot.com/2017/05/vue-computed-getter-setter.html" target="_blank" rel="noopener">那些關於 Vue 的小細節 - Computed 中 getter 和 setter 觸發的時間點 ~ PJCHENder 那些沒告訴你的小細節</a>這篇詳細講了 getter 和 setter 實作，簡單來說 view 或 methods執行 沒有用到 computed 的屬性，就不會執行 getter 資料，所以就無法執行!</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/07/14/vue-computed-%E7%84%A1%E6%B3%95%E8%A7%B8%E7%99%BC%E5%8E%9F%E5%9B%A0/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/Vue-%E4%BD%BF%E7%94%A8%E7%B6%81%E5%AE%9A-class-%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/07/14/Vue-%E4%BD%BF%E7%94%A8%E7%B6%81%E5%AE%9A-class-%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">Vue 使用綁定 class  筆記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-14 20:47:20 / 修改時間：20:47:51" itemprop="dateCreated datePublished" datetime="2021-07-14T20:47:20+08:00">2021-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/14/Vue-%E4%BD%BF%E7%94%A8%E7%B6%81%E5%AE%9A-class-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/Vue-使用綁定-class-筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在使用 Bootstrap 會用到 Navbar 選單，做到動態選單時候會用到 isActive，要怎麼透過 Vue 綁定到 class 上面?照官方實作可以簡單完成。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/07/14/Vue-%E4%BD%BF%E7%94%A8%E7%B6%81%E5%AE%9A-class-%E7%AD%86%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">查看 IP 指令和路由筆記</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-14 20:45:37 / 修改時間：21:18:14" itemprop="dateCreated datePublished" datetime="2021-07-14T20:45:37+08:00">2021-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/查看-IP-指令和路由筆記/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前寫<a href="https://malagege.github.io/blog/2020/05/30/%E4%B8%80%E5%BC%B5%E7%B6%B2%E5%8D%A1%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%B5%84-IP-%E6%96%B9%E6%B3%95/#%E4%BD%BF%E7%94%A8%E4%B8%8A%E8%A8%AD%E5%AE%9A%E9%98%B2%E7%81%AB%E7%89%86%E9%99%B7%E9%98%B1">一張網卡使用多組 IP 方法 - 使用上設定防火牆陷阱 | 程式狂想筆記</a>有談過<code>使用上設定防火牆陷阱</code>，彈要怎麼看出去方法<code>ip route show</code>，但我對輸出出來資訊不太懂，今天特別研究一下。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/07/14/%E6%9F%A5%E7%9C%8B-IP-%E6%8C%87%E4%BB%A4%E5%92%8C%E8%B7%AF%E7%94%B1%E7%AD%86%E8%A8%98/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/" class="post-title-link" itemprop="url">Dbeaver 使用變數 做SQL 範本 和查詢設定 title</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-14 20:43:41 / 修改時間：20:45:02" itemprop="dateCreated datePublished" datetime="2021-07-14T20:43:41+08:00">2021-07-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/14/Dbeaver-使用變數-做SQL-範本-和查詢設定-title/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Dbeaver 使用變數 做SQL 範本 和查詢設定 title</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/07/14/Dbeaver-%E4%BD%BF%E7%94%A8%E8%AE%8A%E6%95%B8-%E5%81%9ASQL-%E7%AF%84%E6%9C%AC-%E5%92%8C%E6%9F%A5%E8%A9%A2%E8%A8%AD%E5%AE%9A-title/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/" class="post-title-link" itemprop="url">Vite 使用 https 憑證服務方法(搭 mkcert )</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-07-04 22:36:08 / 修改時間：22:39:34" itemprop="dateCreated datePublished" datetime="2021-07-04T22:36:08+08:00">2021-07-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/07/04/Vite-使用-https-憑證服務方法-搭-mkcert/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>現在很多開發都需要 HTTPS ，但是在 localhost 預設是沒有 HTTPS，要怎麼在 Vite 快速在開發環境用 HTTPS？爬了一些 Google 文章，來記錄一下。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/07/04/Vite-%E4%BD%BF%E7%94%A8-https-%E6%86%91%E8%AD%89%E6%9C%8D%E5%8B%99%E6%96%B9%E6%B3%95-%E6%90%AD-mkcert/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/" class="post-title-link" itemprop="url">.Net Core 建置 Docker 映像檔</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-06-27 15:02:16 / 修改時間：16:05:08" itemprop="dateCreated datePublished" datetime="2021-06-27T15:02:16+08:00">2021-06-27</time>
+            </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -480,8 +1209,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/15/抓出-Docker-裡面檔案設定檔出來/" itemprop="commentCount"></span>
+    <a title="disqus" href="/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/27/Net-Core-建置-Docker-映像檔/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -511,807 +1240,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>之前這篇有提到 cp 指令<a href="https://malagege.github.io/blog/2017/08/20/logdown/2017-08-20-2201711/">Docker 新手筆記 | 程式狂想筆記</a><br>但一直找有什麼方便複製 image 檔案<br>今天看到相關網站方法<br>整理出來</p>
+          <p>最近同事收到要把<code>.Net Core</code>程式轉移到 K8S，但是維運不會處理 Image，剛好我對 Docker 有小小的研究，但對 .Net Core 不是很熟，最後爬了文章，成功處理 Image。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/2021/04/15/%E6%8A%93%E5%87%BA-Docker-%E8%A3%A1%E9%9D%A2%E6%AA%94%E6%A1%88%E8%A8%AD%E5%AE%9A%E6%AA%94%E5%87%BA%E4%BE%86/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/" class="post-title-link" itemprop="url">使用 GitKrakn GIT 簽章(PGP)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-04-11 23:43:57" itemprop="dateCreated datePublished" datetime="2021-04-11T23:43:57+08:00">2021-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/11/使用-GitKrakn-GIT-簽章-PGP/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近因緣際會下用到 PGP<br>因為我們公司有用 gitlab<br>之前就想研究 Git 簽章怎麼用<br>但一直都沒有去嘗試<br>最近碰到 PGP 加密<br>竟然碰到相關問題，馬上使用看看</p>
-<p>Git mail 使用者名稱都可以自己改上傳<br>使用簽章後，能證明GIT commit 是誰做的</p>
-<p>本篇是以方便使用 GUI 介面操作(Gitkrakn)<br>並非以指令方式去做<br>相關指令推薦爬相關專業文章</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/04/11/%E4%BD%BF%E7%94%A8-GitKrakn-GIT-%E7%B0%BD%E7%AB%A0-PGP/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/11/PGP-%E7%AD%86%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/04/11/PGP-%E7%AD%86%E8%A8%98/" class="post-title-link" itemprop="url">PGP 筆記</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-04-11 23:32:06" itemprop="dateCreated datePublished" datetime="2021-04-11T23:32:06+08:00">2021-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/04/11/PGP-%E7%AD%86%E8%A8%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/11/PGP-筆記/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-1439458814178865"
-     data-ad-slot="2236653478"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-          <p>第一次使用 PGP加密筆記，原本看到 GPG 跟 Git 做簽章<br>想說GPG 跟 PGP 應該沒甚麼關係<br>但是後來爬文一下，GPG(GunPG)是產生和管理 PGP 金鑰軟體<br>看來有空順便來研究 GIT 簽章</p>
-<h2 id="測線上加密網站"><a href="#測線上加密網站" class="headerlink" title="測線上加密網站"></a>測線上加密網站</h2><p><a href="https://github.com/Gaff/pgp.help" target="_blank" rel="noopener">https://github.com/Gaff/pgp.help</a><br><a href="https://pgp.help/#/" target="_blank" rel="noopener">pgp.help - Modern javascript client-side PGP encryption and decryption tool</a></p>
-<p><a href="https://smartninja-pgp.appspot.com/" target="_blank" rel="noopener">SmartNinja Online PGP</a></p>
-<p><a href="https://www.ilovefreesoftware.com/21/featured/online-pgp-encryption-websites-free-encrypt-email-text.html" target="_blank" rel="noopener">5 Online PGP Encryption Websites Free to Encrypt Email, Text</a></p>
-<p><a href="https://pgptool.github.io/" target="_blank" rel="noopener">PGPTool - use this tool to encrypt and decrypt PGP files. OpenPGP compatible</a></p>
-<h2 id="測試-pgp-加解密"><a href="#測試-pgp-加解密" class="headerlink" title="測試 pgp 加解密"></a>測試 pgp 加解密</h2><p>簡單來講，就次把private key 和 public key 匯入到 gpg<br>然後使用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">gpg --import &#123;private/public key&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加密：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># recipient指定接收者的公鑰ID</span></span><br><span class="line">gpg --recipient &#123;keyid/uid&#125; --output encrypt.txt --encrypt input.txt</span><br><span class="line"><span class="comment"># 也可以按喜好加上--armor選項等</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 我更喜歡用 </span></span><br><span class="line">gpg  -se  -o  encrypt.txt  -r  &#123;keyid/uid&#125;   input.txt  </span><br><span class="line"><span class="comment"># s代表簽名  e代表加密</span></span><br><span class="line"><span class="comment"># o是 將結果 輸出到檔案  encrypt.txt</span></span><br><span class="line"><span class="comment"># r後面跟 接收者的 uid或者 key id， 接收者的公鑰必須已經匯入過</span></span><br><span class="line"><span class="comment"># input.txt 是你要加密的檔案</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解密：</span></span><br><span class="line">gpg  --output decrypt.txt  --decrypt encrypt.txt </span><br><span class="line"><span class="comment"># 也可以</span></span><br><span class="line">gpg -d encrypt.txt   <span class="comment"># 輸出到終端 直接檢視</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://www.mdeditor.tw/pl/gW1n/zh-tw" target="_blank" rel="noopener">2021年，用更現代的方法使用PGP（上）_UCloud雲端計算 - MdEditor</a><br>後來發現原始文章，放在下面</p>
-<p><a href="http://pre.tir.tw/008/blog/output/gnupg-gpg-jin-yao-guan-li.html" target="_blank" rel="noopener">[GnuPG] gpg 金鑰管理 · Hello, World!</a></p>
-<p><a href="https://zhoubofsy.github.io/2017/05/18/security/gpg-usage/" target="_blank" rel="noopener">GPG(GunPG)的使用 | Bolog</a></p>
-<p><a href="https://www.ecnetworker.com/2019/08/26/pgp%EF%BC%8Copenpgp%E5%92%8Cgnupg%E5%8A%A0%E5%AF%86%E4%B9%8B%E9%96%93%E7%9A%84%E5%8D%80%E5%88%A5/" target="_blank" rel="noopener">PGP，OpenPGP和GnuPG加密之間的區別 – 易璽科技 ECNETWORKER</a></p>
-<h2 id="看起來實用工具"><a href="#看起來實用工具" class="headerlink" title="看起來實用工具"></a>看起來實用工具</h2><p><a href="https://www.secn.net/article/107917.html" target="_blank" rel="noopener">Java GPG解密关于:encrypted message contains a signed message - not literal data.的解决_程序地带</a></p>
-<p><a href="https://www.openpgp.org/software/kleopatra/" target="_blank" rel="noopener">Kleopatra - OpenPGP</a></p>
-<p><a href="https://zh.wikipedia.org/wiki/Gpg4win" target="_blank" rel="noopener">Gpg4win - 維基百科，自由的百科全書</a></p>
-<pre><code>GnuPG: 核心加密工具
-Kleopatra: 用於OpenPGP與X.509的憑證管理。
-GPA: 另一個可選的憑證管理
-GpgOL: Microsoft Outlook外掛程式，用於電子郵件加密
-GpgEX: Windows Explorer外掛程式，用於檔案加密
-Gpg4win Compendium: Gpg4win2的文件
-</code></pre><p><a href="https://gnupg.org/related_software/swlist.html" target="_blank" rel="noopener">GnuPG - Software list</a></p>
-<h2 id="更多-GPG-教學"><a href="#更多-GPG-教學" class="headerlink" title="更多 GPG 教學"></a>更多 GPG 教學</h2><p>目前只有使用加解密跟 GIT 簽章<br>不過好像還有更進階用法<br>但是…目前好像用不太到<br>先預留一下爬到不錯文章</p>
-<p><a href="https://ulyc.github.io/2021/01/13/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8A/" target="_blank" rel="noopener">2021年，用更现代的方法使用PGP（上） - C的博客 |UlyC</a><br><a href="https://imgur.com/wkvbboi.png" target="_blank" rel="noopener">備份圖</a></p>
-<p><a href="https://ulyc.github.io/2021/01/18/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%AD/" target="_blank" rel="noopener">2021年，用更现代的方法使用PGP（中） - C的博客 |UlyC</a> <a href="https://imgur.com/LWYWSsm.png" target="_blank" rel="noopener">備份圖</a></p>
-<p><a href="https://ulyc.github.io/2021/01/26/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8B/" target="_blank" rel="noopener">2021年，用更现代的方法使用PGP（下） - C的博客 |UlyC</a> <a href="https://imgur.com/V07AWzh.png" target="_blank" rel="noopener">備份圖</a></p>
-<h2 id="InvalidKeyException-Illegal-key-size-測試解決成功"><a href="#InvalidKeyException-Illegal-key-size-測試解決成功" class="headerlink" title="InvalidKeyException: Illegal key size(測試解決成功)"></a>InvalidKeyException: Illegal key size(測試解決成功)</h2><p>要安裝 JCE，原本不相信，但真的測試嚇一跳。還真的要安裝…<br>PS: 我專案是Java1.7，1.8竟然可以跑</p>
-<p><img src="https://i.imgur.com/XJscXex.png" alt=""></p>
-<p><a href="https://www.xuchengen.cn/451" target="_blank" rel="noopener">InvalidKeyException: Illegal key size异常解决方案 – 思码老徐</a></p>
-<p><a href="https://blog.csdn.net/weixin_44102477/article/details/88717815" target="_blank" rel="noopener">关于PGP解密基于Java Bouncy Castle_-0.0-的博客-CSDN博客</a></p>
-<p><a href="https://askie.today/git-pgp-keys/" target="_blank" rel="noopener">新增 Git GPG Key 增加安全性 - Askie’s Coding Life</a></p>
-<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><p><a href="http://sloanseaman.com/wordpress/2011/08/11/pgp-encryptiondecryption-in-java/" target="_blank" rel="noopener">PGP Encryption/Decryption in Java | Waiting for Wit</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/" class="post-title-link" itemprop="url">Raspberry Pi 部屬 Prometheus</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-04-05 18:23:31" itemprop="dateCreated datePublished" datetime="2021-04-05T18:23:31+08:00">2021-04-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-12-15 23:42:57" itemprop="dateModified" datetime="2021-12-15T23:42:57+08:00">2021-12-15</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/05/Raspberry-Pi-部屬-Prometheus/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>參考:<a href="https://github.com/Kev1nChan/docker-prometheus/blob/master/docker-compose.yml" target="_blank" rel="noopener">docker-prometheus/docker-compose.yml at master · Kev1nChan/docker-prometheus · GitHub</a></p>
-<p><strong>使用 Raspberry Pi 3/4 注意使用 32 位元都會有機會遇到記憶體問題</strong><br>建議使用 64 bit<br><code>uname -m</code><br>不是 arrch64 都是 32bit</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/04/05/Raspberry-Pi-%E9%83%A8%E5%B1%AC-Prometheus/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/" class="post-title-link" itemprop="url">新手快速 Prometheus 使用 Docker 快速 10 分鐘建置環境</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-04-05 18:20:48" itemprop="dateCreated datePublished" datetime="2021-04-05T18:20:48+08:00">2021-04-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-11-27 22:03:50" itemprop="dateModified" datetime="2021-11-27T22:03:50+08:00">2021-11-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Prometheus/" itemprop="url" rel="index"><span itemprop="name">Prometheus</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/05/新手快速-Prometheus-使用-Docker-快速-10-分鐘建置環境/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>首先，最近再找能跑的 prometheus 的 docker-compose 檔案<br>快速建置流程，體驗裡面介面功能</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/04/05/%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F-Prometheus-%E4%BD%BF%E7%94%A8-Docker-%E5%BF%AB%E9%80%9F-10-%E5%88%86%E9%90%98%E5%BB%BA%E7%BD%AE%E7%92%B0%E5%A2%83/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/04/04/Raspberry-Pi-%E8%AA%BF%E6%95%B4-swap-%E8%99%9B%E6%93%AC%E8%A8%98%E6%86%B6%E9%AB%94/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/04/04/Raspberry-Pi-%E8%AA%BF%E6%95%B4-swap-%E8%99%9B%E6%93%AC%E8%A8%98%E6%86%B6%E9%AB%94/" class="post-title-link" itemprop="url">Raspberry Pi 調整 swap 虛擬記憶體</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-04-04 15:56:05" itemprop="dateCreated datePublished" datetime="2021-04-04T15:56:05+08:00">2021-04-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/04/04/Raspberry-Pi-%E8%AA%BF%E6%95%B4-swap-%E8%99%9B%E6%93%AC%E8%A8%98%E6%86%B6%E9%AB%94/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/04/04/Raspberry-Pi-調整-swap-虛擬記憶體/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近用 prometheus 設定兩台樹梅派<br>Swap 吃到99%~100%<br>樹梅派預設都是設定100MB<br>目前曾經 transmission 有因為記憶體不足關係<br>有中斷過…，因為記憶體關係</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/04/04/Raspberry-Pi-%E8%AA%BF%E6%95%B4-swap-%E8%99%9B%E6%93%AC%E8%A8%98%E6%86%B6%E9%AB%94/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/31/wiremock-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/31/wiremock-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">wiremock 反向代理方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-31 21:06:59" itemprop="dateCreated datePublished" datetime="2021-03-31T21:06:59+08:00">2021-03-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/31/wiremock-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/31/wiremock-反向代理方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近寫好 mock api 完後，剛好開發環境也完成了<br>想直接在本機測試<br>想說 wiremock 有沒有反向代理方法<br>結果還真的有耶!!</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/03/31/wiremock-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="malagege">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程式狂想筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">多個 Excel(xlsx) 合併方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2021-03-31 20:30:25" itemprop="dateCreated datePublished" datetime="2021-03-31T20:30:25+08:00">2021-03-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2021-06-27 16:05:08" itemprop="dateModified" datetime="2021-06-27T16:05:08+08:00">2021-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/%E5%AF%A6%E7%94%A8%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">實用工具</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/03/31/多個-Excel-xlsx-合併方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <div class="post-meta-adsense">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- typeart_post_body_end -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1439458814178865"
-             data-ad-slot="4661282975"
-             data-ad-format="fluid"
-             data-ad-layout-key="-gw-3+1f-3d+2z"
-             data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>平常維運大量資料，需要分批去撈資料<br>需要把資料合併又要花很多工<br>最近在找有什麼好用的方法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/2021/03/31/%E5%A4%9A%E5%80%8B-Excel-xlsx-%E5%90%88%E4%BD%B5%E6%96%B9%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/blog/2021/06/27/Net-Core-%E5%BB%BA%E7%BD%AE-Docker-%E6%98%A0%E5%83%8F%E6%AA%94/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -1334,7 +1266,7 @@ Gpg4win Compendium: Gpg4win2的文件
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/blog/page/12/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/blog/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/70/">70</a><a class="extend next" rel="next" href="/blog/page/14/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/blog/page/12/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/blog/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/73/">73</a><a class="extend next" rel="next" href="/blog/page/14/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -1400,20 +1332,20 @@ Gpg4win Compendium: Gpg4win2的文件
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">695</span>
+          <span class="site-state-item-count">729</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">550</span>
+        <span class="site-state-item-count">577</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

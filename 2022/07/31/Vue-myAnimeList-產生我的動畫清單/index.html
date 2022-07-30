@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="完成品:我的新番清單 因為先前用 jQuery 寫出來版本不能跟朋友討論最近新番。連結在這:201507新番表 我想實作可以類似可以討論作品，就做出這個玩意。小記這版特點  使用 Github Action 更新清單 右鍵可以做動畫排名(中圖想到功能) 這邊看到功能有兩大項，一個是本季月番，另一個是總月番顯示內容這個是我朋友開的 Issue，因為我朋友說不能跨季排名，這個非常不方便。這邊我原本煩惱">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue-myAnimeList 產生我的動畫清單">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/07/31/Vue-myAnimeList-%E7%94%A2%E7%94%9F%E6%88%91%E7%9A%84%E5%8B%95%E7%95%AB%E6%B8%85%E5%96%AE/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="完成品:我的新番清單 因為先前用 jQuery 寫出來版本不能跟朋友討論最近新番。連結在這:201507新番表 我想實作可以類似可以討論作品，就做出這個玩意。小記這版特點  使用 Github Action 更新清單 右鍵可以做動畫排名(中圖想到功能) 這邊看到功能有兩大項，一個是本季月番，另一個是總月番顯示內容這個是我朋友開的 Issue，因為我朋友說不能跨季排名，這個非常不方便。這邊我原本煩惱">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-07-30T16:21:49.000Z">
+<meta property="article:modified_time" content="2022-07-30T16:42:35.909Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/07/31/Vue-myAnimeList-%E7%94%A2%E7%94%9F%E6%88%91%E7%9A%84%E5%8B%95%E7%95%AB%E6%B8%85%E5%96%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Vue-myAnimeList 產生我的動畫清單 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/07/31/Vue-myAnimeList-%E7%94%A2%E7%94%9F%E6%88%91%E7%9A%84%E5%8B%95%E7%95%AB%E6%B8%85%E5%96%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue-myAnimeList 產生我的動畫清單
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-07-31 00:21:49 / 修改時間：00:42:35" itemprop="dateCreated datePublished" datetime="2022-07-31T00:21:49+08:00">2022-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/07/31/Vue-myAnimeList-%E7%94%A2%E7%94%9F%E6%88%91%E7%9A%84%E5%8B%95%E7%95%AB%E6%B8%85%E5%96%AE/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/07/31/Vue-myAnimeList-產生我的動畫清單/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>完成品:<a href="https://malagege.github.io/vue-myanimelist/">我的新番清單</a></p>
+<p>因為先前用 jQuery 寫出來版本不能跟朋友討論最近新番。連結在這:<a href="http://malagege.github.io/generator-myanimelist/">201507新番表</a></p>
+<p>我想實作可以類似可以討論作品，就做出這個玩意。<br>小記這版特點</p>
+<ol>
+<li>使用 Github Action 更新清單</li>
+<li>右鍵可以做動畫排名(中圖想到功能)</li>
+<li>這邊看到功能有兩大項，一個是本季月番，另一個是總月番顯示內容<br>這個是我朋友開的 Issue，因為我朋友說不能跨季排名，這個非常不方便。這邊我原本煩惱要怎麼做比較好，原本想說多那個功能需要花七天時間，後來再想有沒有更好的做法，後來想到可以用模組化，大大減少我程式撰寫，花了三天時間完成(下班時間，一天大概2~3小時)。源碼:<a href="https://github.com/malagege/vue-myanimelist/blob/master/src/components/MyAnimeList.vue" target="_blank" rel="noopener">vue-myanimelist/MyAnimeList.vue at master · malagege/vue-myanimelist</a></li>
+<li>可以用網址分享</li>
+<li>可存檔功能，這也是我朋友開的 issue 。因為他覺得要紀錄網址太麻煩了。我原本也不太能確定有時間時作，因為要用這個特別做這個功能要額外花時間太麻煩了(身為上班族下班時間可是非常寶貴)，我在想有沒有更簡單的作法。後來想到共用方法可以寫元件，想說值得嘗試。源碼<a href="https://github.com/malagege/vue-myanimelist/blob/master/src/components/SettingManager.vue" target="_blank" rel="noopener">vue-myanimelist/SettingManager.vue at master · malagege/vue-myanimelist</a></li>
+</ol>
+<p>上面<code>3</code>和<code>5</code>真的讓我寫這個非常有成就，我覺得如何寫出共用元件可以讓下一個專案使用，減少我們後續製作程式的成本這個非常重要。<br>最後我其實是後端工程師，久久寫 Vue，不知道下次寫我還記得 Vue 有多少…</p>
+<p>可改進:</p>
+<ol>
+<li>url 那一段載入很亂，因為有 bug 之下，寫到有點暈，所以就暴力寫出來了</li>
+<li>SettingManager 讀取有 bug ，因為要點兩下</li>
+<li>當下同網頁貼別人網址無法載入清單</li>
+</ol>
+<a id="more"></a>
+<h2 id="參考項目-連結"><a href="#參考項目-連結" class="headerlink" title="參考項目/連結:"></a>參考項目/連結:</h2><p><a href="https://blog.bgpsekai.club/newban-auto-downloader-intro/" target="_blank" rel="noopener">做了一個自動補新番工具</a></p>
+<p><a href="https://github.com/a9650615/dmhy_newban_downloader/blob/51662aba9e0caf3c7b76fdc24484db36c59fc76a/src/lib/NewBanCrawler.js#L32" target="_blank" rel="noopener">dmhy_newban_downloader/NewBanCrawler.js at 51662aba9e0caf3c7b76fdc24484db36c59fc76a · a9650615/dmhy_newban_downloader</a></p>
+<p><a href="https://github.com/ACGNTaiwan/Anime-List" target="_blank" rel="noopener">ACGNTaiwan/Anime-List: 展示新番的清單</a></p>
+<p><a href="https://yuc.wiki/" target="_blank" rel="noopener">YuC’s AnimeList</a></p>
+<p><a href="https://go2think.com/bangumi-animelist/" target="_blank" rel="noopener">全网最全的动漫新番放送表情报信息网站推荐 - Go 2 Think</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">let</span> res = <span class="built_in">Array</span>(<span class="built_in">document</span>.querySelectorAll(<span class="string">'.title_cn'</span>).length).fill(&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"date"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"time"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"carrier"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"season"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"originalName"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"img"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"official"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"description"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"staff"</span>:<span class="string">""</span>,</span><br><span class="line">&#125;)</span><br><span class="line">res = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(res))</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">'.title_cn'</span>).forEach(<span class="function">(<span class="params">el, i</span>) =&gt;</span> &#123;</span><br><span class="line">    res[i].name = el.textContent.replace(<span class="regexp">/第(.+)期/</span>, <span class="string">''</span>)</span><br><span class="line">    res[i].season = <span class="built_in">parseInt</span>(el.textContent.match(<span class="regexp">/第(.+)期/</span>) ? el.textContent.match(<span class="regexp">/第(.+)期/</span>)[<span class="number">1</span>] : <span class="number">1</span>)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">'.title_jp'</span>).forEach(<span class="function">(<span class="params">el, i</span>) =&gt;</span> &#123;</span><br><span class="line">    res[i].originalName = el.textContent.replace(<span class="regexp">/第(.+)期/</span>, <span class="string">''</span>)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">'.link_a'</span>).forEach(<span class="function">(<span class="params">el, i</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> qsA = el.querySelector(<span class="string">'a'</span>)</span><br><span class="line">    <span class="keyword">if</span> (qsA) res[i].official = qsA.href</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">`td[class^="type"]:nth-child(even)`</span>).forEach(<span class="function">(<span class="params">el, i</span>) =&gt;</span> &#123;</span><br><span class="line">    res[i].carrier = &#123; <span class="attr">a</span>: <span class="string">"Original"</span>, <span class="attr">b</span>: <span class="string">"Comic"</span>, <span class="attr">c</span>: <span class="string">"Novel"</span>, <span class="attr">d</span>: <span class="string">"Game"</span> &#125;[el.className.replace(<span class="string">`type_`</span>, <span class="string">''</span>)] || <span class="string">"Original"</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">'img[width="180px"]'</span>).forEach(<span class="function">(<span class="params">el, i</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (el) res[i].img = el.src</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">document</span>.querySelectorAll(<span class="string">'.staff'</span>).forEach(<span class="function">(<span class="params">el, i</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (el) res[i].staff = el.textContent</span><br><span class="line">&#125;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">urls = $(<span class="string">'.links-of-blogroll-item a'</span>).get().map(<span class="function"><span class="params">el</span> =&gt;</span> el.href)</span><br><span class="line">listname = $(<span class="string">'.links-of-blogroll-item a'</span>).get()</span><br><span class="line">        .map(<span class="function"><span class="params">el</span>=&gt;</span> el.innerHTML)</span><br><span class="line">        .filter(<span class="function"><span class="params">str</span> =&gt;</span> str.indexOf(<span class="string">'新番'</span>) &gt; <span class="number">0</span>)</span><br><span class="line">        .map(<span class="function"><span class="params">str</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">const</span> regex = <span class="regexp">/(\d+年\d+月新番)/gm</span>;</span><br><span class="line">            m = regex.exec(str)</span><br><span class="line">            <span class="keyword">return</span> m[<span class="number">0</span>]</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/PHP-JAVA-Session-%E8%99%95%E7%90%86%E6%A9%9F%E5%88%B6/" rel="prev" title="PHP JAVA Session 處理機制">
+      <i class="fa fa-chevron-left"></i> PHP JAVA Session 處理機制
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/31/VSCode-%E8%A8%AD%E5%AE%9A-Java-debug-console-%E8%88%87-log4j2-hightlight/" rel="next" title="VSCode 設定 Java debug console 與 log4j2 hightlight">
+      VSCode 設定 Java debug console 與 log4j2 hightlight <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#參考項目-連結"><span class="nav-number">1.</span> <span class="nav-text">參考項目&#x2F;連結:</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">729</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">577</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/07/31/Vue-myAnimeList-%E7%94%A2%E7%94%9F%E6%88%91%E7%9A%84%E5%8B%95%E7%95%AB%E6%B8%85%E5%96%AE/";
+    this.page.identifier = "2022/07/31/Vue-myAnimeList-產生我的動畫清單/";
+    this.page.title = "Vue-myAnimeList 產生我的動畫清單";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

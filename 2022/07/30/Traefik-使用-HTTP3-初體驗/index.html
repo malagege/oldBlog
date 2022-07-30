@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"malagege.github.io","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="HTTP3 這麼潮當然要跟者流行阿，所以就實作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Traefik 使用 HTTP3 初體驗">
+<meta property="og:url" content="https://malagege.github.io/blog/2022/07/30/Traefik-%E4%BD%BF%E7%94%A8-HTTP3-%E5%88%9D%E9%AB%94%E9%A9%97/index.html">
+<meta property="og:site_name" content="程式狂想筆記">
+<meta property="og:description" content="HTTP3 這麼潮當然要跟者流行阿，所以就實作。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/PhofIBf.png">
+<meta property="article:published_time" content="2022-07-30T15:47:20.000Z">
+<meta property="article:modified_time" content="2022-07-30T15:48:06.589Z">
+<meta property="article:author" content="malagege">
+<meta property="article:tag" content="http">
+<meta property="article:tag" content="traefik">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/PhofIBf.png">
+
+<link rel="canonical" href="https://malagege.github.io/blog/2022/07/30/Traefik-%E4%BD%BF%E7%94%A8-HTTP3-%E5%88%9D%E9%AB%94%E9%A9%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Traefik 使用 HTTP3 初體驗 | 程式狂想筆記</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105195903-2"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105195903-2');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">程式狂想筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個攻城師奮鬥史</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/blog/links/" rel="section"><i class="fa fa-link fa-fw"></i>好站連結</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+<!-- head AdSense -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: 'ca-pub-1439458814178865',
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://malagege.github.io/blog/2022/07/30/Traefik-%E4%BD%BF%E7%94%A8-HTTP3-%E5%88%9D%E9%AB%94%E9%A9%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="malagege">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程式狂想筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Traefik 使用 HTTP3 初體驗
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-07-30 23:47:20 / 修改時間：23:48:06" itemprop="dateCreated datePublished" datetime="2022-07-30T23:47:20+08:00">2022-07-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/blog/2022/07/30/Traefik-%E4%BD%BF%E7%94%A8-HTTP3-%E5%88%9D%E9%AB%94%E9%A9%97/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/07/30/Traefik-使用-HTTP3-初體驗/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <div class="post-meta-adsense">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- typeart_post_body_end -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1439458814178865"
+             data-ad-slot="4661282975"
+             data-ad-format="fluid"
+             data-ad-layout-key="-gw-3+1f-3d+2z"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-1439458814178865"
+     data-ad-slot="2236653478"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <p>HTTP3 這麼潮當然要跟者流行阿，所以就實作。</p>
+<a id="more"></a>
+<h2 id="使用步驟"><a href="#使用步驟" class="headerlink" title="使用步驟"></a>使用步驟</h2><h3 id="1-Traefik-設定"><a href="#1-Traefik-設定" class="headerlink" title="1. Traefik 設定"></a>1. Traefik 設定</h3><h3 id="2-防火牆-Docker-設定-443-UDP-PORT"><a href="#2-防火牆-Docker-設定-443-UDP-PORT" class="headerlink" title="2. 防火牆(Docker 設定 443) UDP PORT"></a>2. 防火牆(Docker 設定 443) UDP PORT</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">updateDuckDNSIP:</span></span><br><span class="line">    <span class="comment"># used to update duckdns</span></span><br><span class="line">    <span class="comment"># if you have a static IP, yu can comment this out</span></span><br><span class="line">    <span class="comment"># using busybox due to it having an image for almost every platform</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">armhf/ubuntu</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">/bin/sh</span> <span class="string">-c</span> <span class="string">"apt update -y &amp;&amp; apt install curl -y &amp;&amp; while true; do echo url=\"https://www.duckdns.org/update?domains=$&#123;DUCKDNS_SUBDOMAIN&#125;&amp;token=$&#123;DUCKDNS_TOKEN&#125;\" | curl -k -o duck.log -K -; sleep 300; done"</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"traefik.enable=false"</span></span><br><span class="line">  <span class="attr">traefik:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">traefik</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">command:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--api.insecure=true"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--providers.docker"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--entrypoints.web.address=:80"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--entrypoints.web-secure.address=:443"</span></span><br><span class="line">      <span class="comment">#- "--entrypoints.web.http.redirections.entryPoint.to=web-secure"</span></span><br><span class="line">      <span class="comment">#- "--entrypoints.web.http.redirections.entryPoint.scheme=https"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.dnschallenge=true"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.email=s9714020@gmail.com"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.storage=acme.json"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=duckdns"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--certificatesresolvers.letsencrypt.acme.dnschallenge.delaybeforecheck=0"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--accesslog=true"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--metrics.prometheus=true"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--accesslog.format=json"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--experimental.http3=true"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"--entrypoints.web-secure.http3=true"</span></span><br><span class="line">      <span class="comment">#- "--log.level=DEBUG"</span></span><br><span class="line">      <span class="comment">#- "--api.dashboard=true"</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"80:80"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"443:443/udp"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"443:443/tcp"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"8080:8080"</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./acme.json:/acme.json</span></span><br><span class="line">      <span class="comment">#- ./traefik.yml:/etc/traefik/traefik.yml</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">traefik_network</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DUCKDNS_TOKEN=$&#123;DUCKDNS_TOKEN&#125;</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"traefik.enable=false"</span></span><br><span class="line">      <span class="comment">#- "traefik.http.routers.traefik.tls=true"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"traefik.http.routers.traefik.tls.certresolver=letsencrypt"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"traefik.http.routers.traefik.tls.domains[0].main=$&#123;DUCKDNS_SUBDOMAIN&#125;.duckdns.org"</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"traefik.http.routers.traefik.tls.domains[0].sans=*.$&#123;DUCKDNS_SUBDOMAIN&#125;.duckdns.org,$&#123;DUCKDNS_SUBDOMAIN&#125;.duckdns.org"</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">traefik_network:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#your duck dns token</span><br><span class="line">DUCKDNS_TOKEN&#x3D;2b42****</span><br><span class="line"></span><br><span class="line">#your duck dns subdomain (not the full domain)</span><br><span class="line">#use &quot;test&quot; not &quot;test.duckdns.org</span><br><span class="line">DUCKDNS_SUBDOMAIN&#x3D;***</span><br></pre></td></tr></table></figure>
+<h3 id="3-確認是否有吃到-HTTP3"><a href="#3-確認是否有吃到-HTTP3" class="headerlink" title="3. 確認是否有吃到 HTTP3"></a>3. 確認是否有吃到 HTTP3</h3><p><img src="https://i.imgur.com/PhofIBf.png" alt=""></p>
+<h3 id="4-清除瀏覽器-HSTS-紀錄"><a href="#4-清除瀏覽器-HSTS-紀錄" class="headerlink" title="4. 清除瀏覽器 HSTS 紀錄"></a>4. 清除瀏覽器 HSTS 紀錄</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Chrome 的 HSTS 清除方法</span><br><span class="line"></span><br><span class="line">    開啟 Chrome</span><br><span class="line">    在網址列輸入：chrome:&#x2F;&#x2F;net-internals&#x2F;#hsts</span><br><span class="line">    先在上面 Query domain 輸入網域名稱查詢看看 # 可以略過此步驟</span><br><span class="line">    用最下方的 Delete domain security policies：輸入「網域名稱」delete 即可</span><br><span class="line">    或者：chrome:&#x2F;&#x2F;net-internals&#x2F;#dns → clear host cache</span><br><span class="line"></span><br><span class="line">Firefox 的 HSTS 清除方法</span><br><span class="line"></span><br><span class="line">    開啟 Firefox</span><br><span class="line">    方法1：</span><br><span class="line">        Ctrl + Shift + H (Mac：Cmd + Shift + H)</span><br><span class="line">        右上角「搜尋瀏覽紀錄」輸入網域名稱</span><br><span class="line">        對要刪除的資料按右鍵 → 選擇「刪除與此網站有關的紀錄」</span><br><span class="line">    方法2：</span><br><span class="line">        偏好設定</span><br><span class="line">        隱私權與安全性</span><br><span class="line">        瀏覽紀錄</span><br><span class="line">        設定：Firefox 將 &quot;保留所有歷史紀錄&quot;</span><br><span class="line">        設定：清除瀏覽紀錄</span><br></pre></td></tr></table></figure>
+<p>參考:<a href="https://blog.longwin.com.tw/2018/06/how-to-clear-hsts-setting-browser-chrome-firefox-2018/" target="_blank" rel="noopener">如何清除 Firefox 與 Chrome 的 HSTS 設定 – Tsung’s Blog</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+<div class="post-end-adsense">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- typeart_post_body_end -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-client="ca-pub-1439458814178865"
+         data-ad-slot="2236653478"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/http/" rel="tag"># http</a>
+              <a href="/blog/tags/traefik/" rel="tag"># traefik</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/30/SSRF-%E9%A2%A8%E9%9A%AA/" rel="prev" title="SSRF 風險">
+      <i class="fa fa-chevron-left"></i> SSRF 風險
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2022/07/30/Java-%E5%81%9A-Base64-Url-Encode/" rel="next" title="Java 做 Base64 Url Encode">
+      Java 做 Base64 Url Encode <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用步驟"><span class="nav-number">1.</span> <span class="nav-text">使用步驟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Traefik-設定"><span class="nav-number">1.1.</span> <span class="nav-text">1. Traefik 設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-防火牆-Docker-設定-443-UDP-PORT"><span class="nav-number">1.2.</span> <span class="nav-text">2. 防火牆(Docker 設定 443) UDP PORT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-確認是否有吃到-HTTP3"><span class="nav-number">1.3.</span> <span class="nav-text">3. 確認是否有吃到 HTTP3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-清除瀏覽器-HSTS-紀錄"><span class="nav-number">1.4.</span> <span class="nav-text">4. 清除瀏覽器 HSTS 紀錄</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">malagege</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">729</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">577</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">malagege</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://malagege-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://malagege.github.io/blog/2022/07/30/Traefik-%E4%BD%BF%E7%94%A8-HTTP3-%E5%88%9D%E9%AB%94%E9%A9%97/";
+    this.page.identifier = "2022/07/30/Traefik-使用-HTTP3-初體驗/";
+    this.page.title = "Traefik 使用 HTTP3 初體驗";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://malagege-blog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
