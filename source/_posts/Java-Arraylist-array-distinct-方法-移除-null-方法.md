@@ -5,6 +5,9 @@ tags: [java,array,arraylist,distinct]
 categories: Java
 ---
 
+整理網路文章方法小記。
+
+<!--more-->
 
 [list - Get unique values from ArrayList in Java - Stack Overflow](https://stackoverflow.com/questions/13429119/get-unique-values-from-arraylist-in-java)
 

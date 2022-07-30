@@ -1,8 +1,8 @@
 ---
 title: 使用 OWASP Enterprise Security API (ESAPI) 解決 SQL Injection 問題
 date: 2022-02-13 22:58:02
-tags: [owasp,sql]
-categories: Java
+tags: [owasp,sql,injection]
+categories: 源碼掃描
 ---
 
 
