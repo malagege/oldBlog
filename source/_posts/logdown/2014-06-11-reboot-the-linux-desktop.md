@@ -4,7 +4,7 @@ title: '重啟Linux桌面方法'
 date: 2014-06-11 20:32
 comments: true
 categories: Linux
-tags: Linux,tty,
+tags: [Linux,tty]
 ---
 最近使用Ezgo  11有時都會當機不動...
 最後都跳到tty1直接`sudo reboot`

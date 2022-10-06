@@ -1,8 +1,8 @@
 ---
 title: 對瀏覽器 混合內容（mixed content）的認識
 date: 2019-11-06 22:08:03
-tags: Web
-categories: [https, web]
+tags: [https, web]
+categories: Web
 ---
 
 我們常常在改 https 的時候會發現，css 跟 js 沒有調成 https:// 或 //

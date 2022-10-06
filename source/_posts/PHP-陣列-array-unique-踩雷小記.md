@@ -1,7 +1,7 @@
 ---
 title: PHP 陣列 array_unique 踩雷小記
 date: 2019-04-21 16:13:07
-tags: php
+tags: [php]
 categories: PHP
 ---
 

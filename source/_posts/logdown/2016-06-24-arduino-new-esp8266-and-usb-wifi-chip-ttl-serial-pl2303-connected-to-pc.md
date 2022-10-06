@@ -4,7 +4,7 @@ title: '[Arduino]新手用 Wifi 晶片 ESP8266 和 USB TTL Serial(PL2303)接上P
 date: 2016-06-24 16:33
 comments: true
 categories: Arduino
-tags: Arduino
+tags: ['Arduino']
 ---
 ![thumb.jpg](http://user-image.logdown.io/user/8284/blog/8171/post/745009/bsmdGiIZTWm0zhuttVIV_thumb.jpg)
 最近同事揪來 ~~玩~~ 學Arduino

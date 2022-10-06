@@ -1,7 +1,7 @@
 ---
 title: gitea試玩合併分支(PR)
 date: 2018-12-06 23:47:29
-tags: git
+tags: [git]
 categories: Git
 ---
 

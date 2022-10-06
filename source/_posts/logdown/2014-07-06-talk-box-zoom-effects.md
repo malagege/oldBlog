@@ -4,7 +4,7 @@ title: '說話框放大縮小特效、背景置中'
 date: 2014-07-06 19:26
 comments: true
 categories: 網頁特效
-tags: vertical-align
+tags: ['vertical-align']
 ---
 前幾天逛到[暗殺教室動畫官網](http://ansatsu-anime.com/main.php)
 ![暗殺1.png](http://user-image.logdown.io/user/8284/blog/8171/post/208517/qEtVYRBzTvCwqT5HmhGf_%E6%9A%97%E6%AE%BA1.png)

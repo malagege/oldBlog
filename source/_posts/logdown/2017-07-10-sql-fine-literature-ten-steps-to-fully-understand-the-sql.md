@@ -4,7 +4,7 @@ title: 'SQL好文分享 - 十步完全理解 SQL'
 date: 2017-07-10 13:18
 comments: true
 categories: SQL
-tags: sql
+tags: ['sql']
 ---
 今天找SQL 的IN ,EXISTS,=ANY差別找到這篇文章 [十步完全理解 SQL](http://blog.jobbole.com/48369/)
 看了覺得該簡討一下

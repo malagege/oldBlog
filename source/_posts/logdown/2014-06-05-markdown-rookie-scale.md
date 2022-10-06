@@ -4,7 +4,7 @@ title: 'Markdown新手小試'
 date: 2014-06-05 13:17
 comments: true
 categories: Markdown
-tags: Markdown
+tags: ['Markdown']
 ---
 在前幾年有Markdown這個東西，有嘗試著練習。不過...太久沒用了，也沒有實戰用到…，所以全部忘光光囧，但最近看到LogDown這個玩意，就突然想寫寫看。
 LogDown是台灣xdite大大做的，也算是台灣之光，所以也來支持一下^^

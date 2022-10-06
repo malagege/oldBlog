@@ -4,7 +4,7 @@ title: 'SQL判斷快否有小數點'
 date: 2017-12-23 16:00
 comments: true
 categories: SQL
-tags: sql
+tags: ['sql']
 ---
 今天要查詢商品價格有小數點的，爬一下Google
 有查到不錯方法，記錄一下

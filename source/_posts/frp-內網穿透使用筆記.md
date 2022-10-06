@@ -1,8 +1,8 @@
 ---
 title: frp 內網穿透使用筆記
 date: 2020-11-15 02:16:25
-tags: 實用工具
-categories: [frp, traefik, ssh tunnel]
+tags: [frp, traefik, ssh tunnel]
+categories: 實用工具
 ---
 
 最近看 frp 文章

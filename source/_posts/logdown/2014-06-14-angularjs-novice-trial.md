@@ -4,7 +4,7 @@ title: 'AngularJS新手小試'
 date: 2014-06-14 06:46
 comments: true
 categories: AngularJS
-tags: AngularJS
+tags: ['AngularJS']
 ---
 AngularJS是一個MVC架構JavaScript Framework，是這幾年比較紅的。[詳細介紹維基](http://zh.wikipedia.org/wiki/AngularJS)
 

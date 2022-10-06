@@ -4,7 +4,7 @@ title: '終端機錄制工具 asciinema'
 date: 2018-03-25 11:39
 comments: true
 categories: 實用工具
-tags: asciinema
+tags: ['asciinema']
 ---
 最近想記錄我在筆電上面的終端機設定
 但以經放著多天，最近在最有空的時候準備整理一下

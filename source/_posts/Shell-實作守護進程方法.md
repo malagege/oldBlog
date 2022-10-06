@@ -1,7 +1,7 @@
 ---
 title: Shell 實作守護進程方法
 date: 2021-01-28 21:36:17
-tags: shell
+tags: ['shell']
 categories: Linux
 ---
 

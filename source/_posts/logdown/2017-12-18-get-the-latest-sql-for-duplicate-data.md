@@ -4,7 +4,7 @@ title: '取得重覆資料最新SQL'
 date: 2017-12-18 13:13
 comments: true
 categories: SQL
-tags: sql
+tags: ['sql']
 ---
 在[Backend 台灣 (Backend Tw)](https://www.facebook.com/groups/616369245163622/permalink/1222070147926859/)看到
 如下

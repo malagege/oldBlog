@@ -1,7 +1,7 @@
 ---
 title: git刪除遠端(remote)分支和強制pull下來分支
 date: 2018-11-26 20:56:00
-tags: git
+tags: [git]
 categories: Git
 ---
 

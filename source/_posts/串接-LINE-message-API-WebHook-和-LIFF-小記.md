@@ -1,8 +1,8 @@
 ---
 title: 串接 LINE message API(WebHook)  和 LIFF 小記
 date: 2020-04-16 21:02:29
-tags: LINE
-categories: [LIFF]
+tags: [LIFF]
+categories: LINE
 ---
 
 TODO: 尚未整理完成

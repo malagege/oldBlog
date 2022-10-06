@@ -1,7 +1,7 @@
 ---
 title: 'CSS:active點擊事件妙用'
 date: 2018-04-22 01:41:37
-tags: [CSS, :active]
+tags: [CSS, \:active]
 categories: CSS
 ---
 

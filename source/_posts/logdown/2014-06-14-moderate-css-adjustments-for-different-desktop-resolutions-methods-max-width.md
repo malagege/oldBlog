@@ -4,7 +4,7 @@ title: '不同桌面解析度用CSS調整圖適中的方法(max-width)'
 date: 2014-06-14 21:05
 comments: true
 categories: CSS
-tags: max-width,CSS
+tags: ['max-width','CSS']
 ---
 今天用平板電腦看[Glayer](http://www.glayer.net/)
 發現橫向、直向看某圖大小非常不一樣。

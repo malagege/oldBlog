@@ -1,7 +1,7 @@
 ---
 title: SASS 學習小記
 date: 2019-06-02 18:41:31
-tags: css
+tags: [css]
 categories: SASS
 ---
 
